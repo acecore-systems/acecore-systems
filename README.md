@@ -1,4 +1,4 @@
-# acecore-systems-site
+# acecore-systems
 
 Acecore Systems の日本語専用サイトです。
 

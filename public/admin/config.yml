@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: acecore-systems/acecore-systems-site
+  repo: acecore-systems/acecore-systems
   branch: main
 
 locale: ja

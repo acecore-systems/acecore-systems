@@ -1,5 +1,5 @@
 {
-  "name": "acecore-systems-site",
+  "name": "acecore-systems",
   "type": "module",
   "version": "0.1.0",
   "private": true,
@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name acecore-systems-site",
+    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name acecore-systems",
     "format:check": "prettier . --check"
   },
   "dependencies": {
