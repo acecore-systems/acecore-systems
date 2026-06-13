@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import data from '../data/pricing.json'
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container pricing-grid">
+      {data.items.map((item) => (
+        <article class="price-card">
+          <h2>{item.label}</h2>
+          <p class="price">{item.price}</p>
+          <p>{item.note}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <h2>正式な金額は要件整理後に見積ります。</h2>
+        <p>目的、希望時期、現在の課題、予算感があればフォームに記入してください。</p>
+      </div>
+      <a class="btn primary" href="/contact/">見積りを相談する</a>
+    </div>
+  </section>
+</BaseLayout>

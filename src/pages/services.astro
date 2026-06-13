@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import data from '../data/services.json'
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container grid-2">
+      {data.services.map((service) => (
+        <article class="card" id={service.id}>
+          <h2>{service.title}</h2>
+          <p>{service.body}</p>
+          <ul>
+            {service.examples.map((example) => <li>{example}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>進め方</h2>
+        <p>最初から大きく作り込まず、確認できる単位で段階的に進めます。</p>
+      </div>
+      <div class="process-grid">
+        {data.process.map((step, index) => (
+          <article class="process-step">
+            <span class="step-index">Step {index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container cta-panel">
+      <div>
+        <h2>具体的な進め方を相談する</h2>
+        <p>業務の流れ、現在のツール、困っている点を書ける範囲で送ってください。</p>
+      </div>
+      <a class="btn primary" href="/contact/">問い合わせる</a>
+    </div>
+  </section>
+</BaseLayout>

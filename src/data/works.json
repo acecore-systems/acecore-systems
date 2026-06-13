@@ -1,0 +1,28 @@
+{
+  "title": "実績",
+  "description": "Acecore Systemsに関連する公開可能な取り組みです。",
+  "heroTitle": "公開できる範囲で、取り組みを紹介します。",
+  "heroLead": "業務システムは非公開案件が多いため、公開可能な自社・関連プロジェクトを中心に掲載しています。",
+  "cases": [
+    {
+      "title": "Acecore公式サイトの問い合わせ導線改善",
+      "category": "フォーム・AI導線・CMS",
+      "summary": "サービス選定、見積り相談、問い合わせ前の不安を減らすため、固定ページ、FAQ、AIチャット、CMS管理項目を整理しました。",
+      "challenge": "訪問者が何を相談できるか判断しづらく、問い合わせ内容も分散しやすい状態でした。",
+      "proposal": "サービス別の導線、問い合わせ種別、FAQ、AIによる事前案内を組み合わせ、必要な情報をフォームに集約しました。",
+      "result": "相談前の確認と正式な問い合わせを分け、見積りやサービス相談に進みやすい流れになりました。",
+      "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "externalUrl": "https://acecore.net/contact/"
+    },
+    {
+      "title": "Aceserver運用で得た安定化・監視の知見",
+      "category": "サーバー運用・コミュニティ基盤",
+      "summary": "Minecraft公開サーバーの運用を通じて、接続安定性、監視、バックアップ、案内導線を継続的に改善しています。",
+      "challenge": "参加者が増えるほど、接続安定性、情報共有、障害対応、運用ルールの整備が必要になります。",
+      "proposal": "技術運用とコミュニティ運営を分けず、サーバー構成、監視、バックアップ、Web導線をまとめて改善しました。",
+      "result": "長期運用で得た知見を、業務システムの監視・運用設計にも活かせるようになりました。",
+      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "externalUrl": "https://asv.acecore.net/"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import data from '../data/works.json'
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container grid-2">
+      {data.cases.map((work) => (
+        <article class="work-card">
+          {work.image && <img src={work.image} alt="" width="1000" height="680" loading="lazy" />}
+          <div class="work-body">
+            <p class="category">{work.category}</p>
+            <h2>{work.title}</h2>
+            <p>{work.summary}</p>
+            <div class="detail-grid">
+              <p><strong>課題</strong>{work.challenge}</p>
+              <p><strong>提案</strong>{work.proposal}</p>
+              <p><strong>成果</strong>{work.result}</p>
+            </div>
+            {work.externalUrl && <a class="btn outline" href={work.externalUrl}>関連サイトを見る</a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

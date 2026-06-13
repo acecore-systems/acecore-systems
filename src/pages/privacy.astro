@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import data from '../data/privacy.json'
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{data.title}</h1>
+      <p class="page-lead">{data.description}</p>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container" style="max-width: 840px;">
+      {data.sections.map((section) => (
+        <article class="policy-section">
+          <h2>{section.title}</h2>
+          <p>{section.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+{
+  "name": "Acecore Systems",
+  "description": "Acecore Systemsは、業務システム・Webアプリ・データ活用基盤を、要件整理から開発、運用改善まで一貫して支援するAcecoreの開発サービスです。",
+  "siteUrl": "https://systems.acecore.net",
+  "acecoreUrl": "https://acecore.net",
+  "contactFormAction": "https://ssgform.com/s/a4JOVjLjyygh",
+  "lineUrl": "https://lin.ee/DjIrdqj",
+  "email": "info@acecore.net",
+  "phone": "050-8890-2788",
+  "nav": [
+    { "label": "サービス", "href": "/services/" },
+    { "label": "料金", "href": "/pricing/" },
+    { "label": "実績", "href": "/works/" },
+    { "label": "お問い合わせ", "href": "/contact/" }
+  ],
+  "footerLinks": [
+    { "label": "Acecore", "href": "https://acecore.net" },
+    { "label": "サービス", "href": "/services/" },
+    { "label": "料金", "href": "/pricing/" },
+    { "label": "実績", "href": "/works/" },
+    { "label": "お問い合わせ", "href": "/contact/" },
+    { "label": "プライバシー", "href": "/privacy/" }
+  ]
+}

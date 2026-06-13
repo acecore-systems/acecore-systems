@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import site from '../data/site.json'
+import data from '../data/contact.json'
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container form-shell">
+      <aside>
+        <div class="section-head">
+          <h2>相談内容を送る</h2>
+          <p>{data.formLead}</p>
+        </div>
+        <div class="faq-list">
+          {data.faqs.map((faq) => (
+            <details>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </aside>
+      <form class="form-panel form-grid" action={site.contactFormAction} method="post">
+        <input type="hidden" name="_subject" value="Acecore Systems へのお問い合わせ" />
+        <input type="hidden" name="source" value="systems.acecore.net" />
+        <div class="field">
+          <label for="category">お問い合わせ種別</label>
+          <select id="category" name="category" required>
+            <option value="">選択してください</option>
+            <option>業務システム開発について</option>
+            <option>Webアプリ・管理画面について</option>
+            <option>データ連携・自動化について</option>
+            <option>見積り相談</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="name">お名前</label>
+          <input id="name" name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="subject">件名</label>
+          <input id="subject" name="subject" required />
+        </div>
+        <div class="field">
+          <label for="message">お問い合わせ内容</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button class="btn primary" type="submit">送信する</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

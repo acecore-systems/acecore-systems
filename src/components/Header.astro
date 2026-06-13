@@ -1,0 +1,16 @@
+---
+import site from '../data/site.json'
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Acecore Systems">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span>{site.name}</span>
+    </a>
+    <nav class="nav" aria-label="メインナビゲーション">
+      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <a class="header-cta" href="/contact/">相談する</a>
+  </div>
+</header>

@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import home from '../data/home.json'
+---
+
+<BaseLayout title={home.title} description={home.description} image={home.heroImage}>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1>{home.heroTitle}</h1>
+        <p class="hero-lead">{home.heroLead}</p>
+        <p class="hero-body">{home.heroBody}</p>
+        <div class="actions">
+          <a class="btn primary" href="/contact/">{home.primaryCta}</a>
+          <a class="btn outline" href="/pricing/">{home.secondaryCta}</a>
+        </div>
+      </div>
+      <figure class="hero-media">
+        <img src={home.heroImage} alt="システム開発の作業風景" width="1600" height="1100" loading="eager" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container">
+      <div class="section-head">
+        <h2>現場で使われる形まで一緒に考えます。</h2>
+        <p>機能を増やすだけでなく、運用、例外処理、保守性まで含めて設計します。</p>
+      </div>
+      <div class="grid-3">
+        {home.strengths.map((item) => (
+          <article class="card">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>相談できること</h2>
+        <p>業務システム、Webアプリ、データ連携を中心に、必要な範囲から段階的に進めます。</p>
+      </div>
+      <div class="grid-3">
+        {home.serviceHighlights.map((item) => (
+          <a class="card" href={item.href}>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container cta-panel">
+      <div>
+        <h2>業務の整理から相談できます。</h2>
+        <p>作りたいものが決まっていなくても、現状と困っていることから一緒に整理します。</p>
+      </div>
+      <a class="btn primary" href="/contact/">無料で相談する</a>
+    </div>
+  </section>
+</BaseLayout>

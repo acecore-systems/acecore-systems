@@ -1,0 +1,172 @@
+backend:
+  name: github
+  repo: acecore-systems/acecore-systems-site
+  branch: main
+
+locale: ja
+media_folder: public/uploads
+public_folder: /uploads
+publish_mode: editorial_workflow
+
+collections:
+  - name: settings
+    label: サイト設定
+    files:
+      - name: site
+        label: 共通設定
+        file: src/data/site.json
+        format: json
+        fields:
+          - { name: name, label: サイト名, widget: string }
+          - { name: description, label: サイト説明, widget: text }
+          - { name: siteUrl, label: サイトURL, widget: string }
+          - { name: acecoreUrl, label: Acecore URL, widget: string }
+          - { name: contactFormAction, label: フォーム送信先, widget: string }
+          - { name: lineUrl, label: LINE URL, widget: string }
+          - { name: email, label: メール, widget: string }
+          - { name: phone, label: 電話番号, widget: string }
+          - label: ナビゲーション
+            name: nav
+            widget: list
+            fields:
+              - { name: label, label: 表示名, widget: string }
+              - { name: href, label: リンク, widget: string }
+          - label: フッターリンク
+            name: footerLinks
+            widget: list
+            fields:
+              - { name: label, label: 表示名, widget: string }
+              - { name: href, label: リンク, widget: string }
+  - name: pages
+    label: 固定ページ
+    files:
+      - name: home
+        label: ホーム
+        file: src/data/home.json
+        format: json
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: heroTitle, label: ヒーロータイトル, widget: string }
+          - { name: heroLead, label: ヒーローリード, widget: text }
+          - { name: heroBody, label: ヒーロー本文, widget: text }
+          - { name: primaryCta, label: 主要CTA, widget: string }
+          - { name: secondaryCta, label: 補助CTA, widget: string }
+          - {
+              name: heroImage,
+              label: ヒーロー画像,
+              widget: image,
+              required: false,
+            }
+          - label: 強み
+            name: strengths
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+          - label: 支援領域
+            name: serviceHighlights
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - { name: href, label: リンク, widget: string }
+      - name: services
+        label: サービス
+        file: src/data/services.json
+        format: json
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: heroTitle, label: ヒーロータイトル, widget: string }
+          - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: サービス項目
+            name: services
+            widget: list
+            fields:
+              - { name: id, label: ID, widget: string }
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - {
+                  name: examples,
+                  label: 対応例,
+                  widget: list,
+                  field: { name: item, label: 項目, widget: string },
+                }
+          - label: 進め方
+            name: process
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+      - name: pricing
+        label: 料金
+        file: src/data/pricing.json
+        format: json
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: heroTitle, label: ヒーロータイトル, widget: string }
+          - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: 料金項目
+            name: items
+            widget: list
+            fields:
+              - { name: label, label: ラベル, widget: string }
+              - { name: price, label: 料金, widget: string }
+              - { name: note, label: 補足, widget: text }
+      - name: works
+        label: 実績
+        file: src/data/works.json
+        format: json
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: heroTitle, label: ヒーロータイトル, widget: string }
+          - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: 実績
+            name: cases
+            widget: list
+            fields:
+              - { name: title, label: タイトル, widget: string }
+              - { name: category, label: カテゴリ, widget: string }
+              - { name: summary, label: 概要, widget: text }
+              - { name: challenge, label: 課題, widget: text }
+              - { name: proposal, label: 提案, widget: text }
+              - { name: result, label: 成果, widget: text }
+              - { name: image, label: 画像, widget: image, required: false }
+              - {
+                  name: externalUrl,
+                  label: 外部URL,
+                  widget: string,
+                  required: false,
+                }
+      - name: contact
+        label: お問い合わせ
+        file: src/data/contact.json
+        format: json
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: heroTitle, label: ヒーロータイトル, widget: string }
+          - { name: heroLead, label: ヒーローリード, widget: text }
+          - { name: formLead, label: フォーム説明, widget: text }
+          - label: よくある質問
+            name: faqs
+            widget: list
+            fields:
+              - { name: question, label: 質問, widget: string }
+              - { name: answer, label: 回答, widget: text }
+      - name: privacy
+        label: プライバシー
+        file: src/data/privacy.json
+        format: json
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - label: セクション
+            name: sections
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
