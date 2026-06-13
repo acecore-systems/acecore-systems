@@ -10,6 +10,7 @@
   "nav": [
     { "label": "サービス", "href": "/services/" },
     { "label": "料金", "href": "/pricing/" },
+    { "label": "導入ガイド", "href": "/guide/" },
     { "label": "実績", "href": "/works/" },
     { "label": "お問い合わせ", "href": "/contact/" }
   ],
@@ -17,6 +18,7 @@
     { "label": "Acecore", "href": "https://acecore.net" },
     { "label": "サービス", "href": "/services/" },
     { "label": "料金", "href": "/pricing/" },
+    { "label": "導入ガイド", "href": "/guide/" },
     { "label": "実績", "href": "/works/" },
     { "label": "お問い合わせ", "href": "/contact/" },
     { "label": "プライバシー", "href": "/privacy/" }

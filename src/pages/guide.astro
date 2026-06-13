@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import data from '../data/guide.json'
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <section class="page-hero">
+    <div class="container">
+      <h1>{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container">
+      <div class="section-head">
+        <h2>{data.introTitle}</h2>
+        <p>{data.introBody}</p>
+      </div>
+      <div class="grid-3">
+        {
+          data.insights.map((item) => (
+            <article class="card">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>{data.tipsTitle}</h2>
+        <p>{data.tipsLead}</p>
+      </div>
+      <div class="grid-2">
+        {
+          data.tips.map((tip, index) => (
+            <article class="card">
+              <span class="step-index">Point {String(index + 1).padStart(2, '0')}</span>
+              <h2>{tip.title}</h2>
+              <p>{tip.body}</p>
+              <ul>
+                {tip.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container">
+      <div class="section-head">
+        <h2>{data.faqTitle}</h2>
+      </div>
+      <div class="faq-list">
+        {
+          data.faqs.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <h2>{data.ctaTitle}</h2>
+        <p>{data.ctaBody}</p>
+      </div>
+      <a class="btn primary" href="/contact/">{data.ctaLabel}</a>
+    </div>
+  </section>
+</BaseLayout>
