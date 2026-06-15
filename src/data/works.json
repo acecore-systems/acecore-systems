@@ -15,6 +15,16 @@
       "externalUrl": "https://acecore.net/contact/"
     },
     {
+      "title": "Acecore公式サイトの機能追加・運用基盤",
+      "category": "CMS・検索・セキュリティ・パフォーマンス",
+      "summary": "静的サイトにCMS、記事基盤、サイト内検索、構造化データ、CSP、アクセシビリティ改善、表示速度改善を段階的に追加しました。",
+      "challenge": "情報発信や問い合わせ導線を強化する一方で、静的サイトの速度や運用しやすさを崩さない設計が必要でした。",
+      "proposal": "Astro、Cloudflare Pages、Sveltia CMS、Pagefind、構造化データ、セキュリティヘッダーを組み合わせ、必要な機能を小さく追加できる形に整理しました。",
+      "result": "ブログ、固定ページ、検索、問い合わせ導線を運用しながら改善できる基盤になり、同種のサイト機能追加案件へ転用しやすい知見がまとまりました。",
+      "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "externalUrl": "https://acecore.net/blog/"
+    },
+    {
       "title": "Aceserver運用で得た安定化・監視の知見",
       "category": "サーバー運用・コミュニティ基盤",
       "summary": "Minecraft公開サーバーの運用を通じて、接続安定性、監視、バックアップ、案内導線を継続的に改善しています。",
