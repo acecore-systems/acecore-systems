@@ -1,66 +1,58 @@
 **Findings**
 
-- No actionable P0/P1/P2 findings remain after the 864px fidelity pass.
-- Residual P3 polish: the hero route geometry is code-native and simpler than the generated concept's curved route details and pictogram-style station marks.
+- No actionable P0/P1/P2 findings remain after the dark route-map fidelity pass.
+- Residual P3 polish: the hero station pictograms and tiny route labels are still not a pixel match to the reference, but the route-map visual is now a raster asset instead of CSS/SVG-like construction.
 
 **Comparison Target**
 
-- Source visual truth path: `C:\Users\gnish\.codex\generated_images\019ec941-4b2f-7d73-84f8-c143b306c1bf\ig_0aa7abb4631dd6cf016a2f81d6c4c081918c15158f414fa800.png`
-- Implementation screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\fidelity-864-after3.png`
-- Mobile screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\fidelity-390-after3.png`
+- Source visual truth path: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-c0391f95-147b-4a76-9076-33698b67547d.png`
+- Previous implementation screenshot path: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-12266610-ca71-44ce-b6a1-d21a62ed4bad.png`
+- Latest implementation screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\fidelity-dark-864-final.png`
+- Latest mobile screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\fidelity-dark-390-final2.png`
 - URL: `http://127.0.0.1:4327/`
-- Viewport: concept/implementation comparison `864x768`, mobile `390x844`
-- State: initial home page, planner default state, and browser console check
+- Viewport: reference/implementation comparison `864px` wide; mobile verification `390x844`
+- State: initial home page and planner default state
 
 **Full-View Comparison Evidence**
 
-- The accepted concept's 864px composition keeps the desktop header/nav and two-column hero; the implementation now keeps that same structure at 864px instead of switching to the mobile stack.
-- Hero vertical rhythm was corrected: `route-section` begins at `386px` in the latest implementation, close to the concept's first-section reveal, and the H1 starts near the same top band.
-- The downstream order now follows the accepted concept: full route table, planner, before/after flow, pricing table, process, cases, and contact.
-- The implementation intentionally keeps the hero route map code-native; the remaining visual gap is route-line curvature/pictograms, not layout, hierarchy, or section order.
+- The homepage now follows the provided dark mockup direction: dark navy hero, overlaid header, generated map/route background, service overview table, planner, before/after strip, pricing, process, cases, and dark contact/footer.
+- The prior white grid hero was replaced by `public/assets/systems-hero-route-map.png`, generated from the reference direction and used as a real raster background.
+- The before/after section now uses `public/assets/systems-workflow-illustration.png` instead of relying only on HTML/CSS diagram shapes.
+- The final contact area has returned to the reference's dark navy band with a compact form and separate contact-method cards.
 
 **Focused Region Comparison Evidence**
 
-- Header/hero: nav remains visible at 864px, the H1 is two lines, CTAs sit in the first viewport, and the route map is no longer a large boxed card.
-- Route table: row height and section padding were compressed to match the sheet-like density of the concept.
-- Planner: default state now reads `Web・サイト機能 + 運用改善`, selected count is `2`, and only route `05` is highlighted in the mini route.
-- Before/after: a central flow bridge was added between the before and after cards to restore the concept's middle process diagram.
-- Contact: the final contact area is back on a white section with a form and contact options, instead of a dark CTA band.
-- Browser verification: no console errors/warnings were captured at `864x768`.
-- Responsive: mobile `390x844` was re-captured after the fidelity pass and remains a clean vertical layout.
+- Hero: white headline, white nav/header, yellow outline contact CTA, dark map texture, and thick multicolor route imagery are now visually aligned with Image #1.
+- Service overview: the route table now uses four colored route bands and four step columns with connector lines, matching the reference structure more closely than the previous six-column grid.
+- Planner: the right card now uses a vertical route proposal list and the default output remains `Web・サイト機能 + 運用改善` with `2` selected items.
+- Before/after: the section now uses left explanatory copy, before/after cards, and a generated workflow illustration, matching the reference composition more closely.
+- Responsive: `390px` mobile has `scrollWidth` equal to `clientWidth` and no detected horizontal overflow.
+- Browser console: no warnings or errors were captured in the final desktop/mobile checks.
 
-**Required Fidelity Surfaces**
+**Assets Generated And Used**
 
-- Fonts and typography: Japanese sans-serif stack is consistent across hero, labels, tables, forms, and buttons. Display scale was reduced after QA to avoid H1 overlap.
-- Spacing and layout rhythm: hero, route table, planner, service rows, pricing rows, process, cases, and contact band follow the selected route-map/table rhythm.
-- Colors and visual tokens: true white/light gray base, yellow primary accent, teal/blue lane accents, navy text/footer, and restrained borders match the selected direction.
-- Image quality and asset fidelity: the selected concept is mostly interface-native rather than photo-led. No stock hero photo or placeholder asset remains on the home page.
-- Copy and content: above-the-fold copy preserves the existing Systems positioning while correcting the scope away from Web-only; Web/site functions are emphasized as one route inside broader systems support.
+- `public/assets/systems-hero-route-map.png`
+- `public/assets/systems-workflow-illustration.png`
 
-**Patches Made Since Previous QA Pass**
+**Patches Made In This Pass**
 
-- Changed the tablet breakpoint so 864px keeps the selected concept's desktop header and two-column hero.
-- Reworked the hero H1 into explicit two-line breaks and removed the extra hero body paragraph.
-- Removed the extra home-page service-table section that was not present in the accepted concept.
-- Converted the planner from stacked fieldsets to a tabbed checklist panel and tightened the output card.
-- Added a before/after flow bridge and changed the contact band back to a white form-led section.
-- Updated route table, section, button, header, and hero spacing to match the concept's denser system-sheet rhythm.
-
-**Open Questions**
-
-- None blocking. A later polish pass could refine the hero route geometry further if a stricter pixel-match to the concept is required.
+- Added `bodyClass` support to `BaseLayout` so the home page can use a dark header without changing other pages.
+- Reworked the home hero around the generated route-map bitmap asset.
+- Replaced the home service overview content and styling with the reference's four-route service table pattern.
+- Converted the planner output from a horizontal dot row to a vertical recommended-route card.
+- Rebuilt the before/after layout around the generated workflow illustration.
+- Restored the dark contact/footer treatment from the reference image.
+- Updated mobile layout rules after visual QA caught a workflow image placement issue.
 
 **Implementation Checklist**
 
-- Build passed with `npm run build`.
-- `npm run build` also reproduced the known sandbox-only Astro resolver failure before passing outside the sandbox.
-- 864px visual comparison completed against the accepted concept image after three correction passes.
-- Browser in-app navigation timed out, so screenshots were captured with installed Playwright Chromium as a fallback.
-- Mobile visual check completed at `390x844`.
-- Planner default state and console health verified at `864x768`.
+- `npm run build` passed.
+- Desktop screenshot captured at `864px` and compared against the user-provided reference image.
+- Mobile screenshot captured at `390x844`.
+- Desktop/mobile console and overflow checks passed.
 
-**Follow-up Polish**
+**Open Questions**
 
-- P3: If the brand should feel more premium, replace the text `A` brand mark with a proper logo asset and align it with the route-map system.
+- None blocking. A further P3-only pass could generate a second hero asset that includes station pictograms positioned even closer to the reference.
 
 final result: passed
