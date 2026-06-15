@@ -1,67 +1,588 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import home from '../data/home.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import home from "../data/home.json";
+import pricing from "../data/pricing.json";
+import site from "../data/site.json";
+import works from "../data/works.json";
+
+const routeSteps = [
+  {
+    number: "01",
+    title: "現状整理",
+    body: "課題を可視化し、優先順位を決める",
+  },
+  {
+    number: "02",
+    title: "業務フロー",
+    body: "流れと役割を整理し、あるべき姿を描く",
+  },
+  {
+    number: "03",
+    title: "管理画面",
+    body: "必要な機能を使いやすく構成する",
+  },
+  {
+    number: "04",
+    title: "データ連携",
+    body: "社内外のデータをつなぎ、整える",
+  },
+  {
+    number: "05",
+    title: "Web・サイト機能",
+    body: "CMS、検索、フォーム、AIチャットなどを組み込む",
+  },
+  {
+    number: "06",
+    title: "運用改善",
+    body: "公開後も継続的に改善し続ける",
+  },
+];
+
+const lanes = [
+  {
+    name: "業務レーン",
+    description: "業務の流れを整える",
+    tone: "gold",
+    cells: [
+      "現場の洗い出し",
+      "業務設計",
+      "申請・承認",
+      "帳票・通知",
+      "受付フォーム",
+      "改善サイクル",
+    ],
+  },
+  {
+    name: "データレーン",
+    description: "データをつなぎ、活かす",
+    tone: "teal",
+    cells: [
+      "入力元の整理",
+      "データ定義",
+      "一覧・検索",
+      "API・ETL",
+      "集計・レポート",
+      "品質管理",
+    ],
+  },
+  {
+    name: "Webレーン",
+    description: "接点と機能を最適化する",
+    tone: "blue",
+    cells: [
+      "要件整理",
+      "画面設計",
+      "UI/UX設計",
+      "CMS設計",
+      "検索・AIチャット",
+      "公開後改善",
+    ],
+  },
+  {
+    name: "運用レーン",
+    description: "継続的に良くしていく",
+    tone: "gray",
+    cells: [
+      "現状の棚卸し",
+      "ルール整理",
+      "権限・教育",
+      "ログ・監視",
+      "移行・公開",
+      "効果測定",
+    ],
+  },
+];
+
+const plannerGroups = [
+  {
+    label: "現場業務",
+    options: [
+      {
+        area: "business",
+        label: "紙やExcelでの管理が多く、ミスや抜け漏れがある",
+      },
+      {
+        area: "business",
+        label: "申請・承認・確認の流れが部門ごとに分かれている",
+      },
+      { area: "ops", label: "担当者依存で、引き継ぎや確認に時間がかかる" },
+    ],
+  },
+  {
+    label: "画面・サイト",
+    options: [
+      { area: "admin", label: "社内向けの管理画面や会員機能を作りたい" },
+      {
+        area: "site",
+        label: "問い合わせ、検索、CMS、AIチャットをサイトに足したい",
+      },
+      {
+        area: "site",
+        label: "フォームから相談内容や種別を整理して受け取りたい",
+      },
+    ],
+  },
+  {
+    label: "データ・連携",
+    options: [
+      {
+        area: "data",
+        label: "外部サービス、API、スプレッドシートをつなぎたい",
+      },
+      { area: "data", label: "二重入力や手作業の転記を減らしたい" },
+      { area: "ops", label: "運用後の改善、保守、監視まで見通したい" },
+    ],
+  },
+];
+
+const serviceRows = [
+  {
+    track: "業務システム",
+    caption: "ワークフロー・申請・案件管理",
+    support:
+      "業務フロー整理からシステム化まで。社内の手戻りや属人運用を減らします。",
+    functions: "申請 / 承認 / 案件管理 / タスク管理",
+    effect: "業務の標準化と生産性の向上",
+    href: "/services/#business-system",
+  },
+  {
+    track: "管理画面",
+    caption: "運用しやすい管理UI・権限設計",
+    support: "毎日使う画面を、役割、権限、ログ、検索まで含めて設計します。",
+    functions: "管理UI / 権限管理 / ログ / 多言語CSV",
+    effect: "安全に自社で更新・運用できる",
+    href: "/services/#web-app",
+  },
+  {
+    track: "データ連携",
+    caption: "API・RPA・外部サービス連携",
+    support:
+      "既存システムや外部サービスをつなぎ、データを活かせる状態にします。",
+    functions: "API連携 / ETL / SaaS連携 / 通知",
+    effect: "二重入力の削減とデータ活用の加速",
+    href: "/services/#integration",
+  },
+  {
+    track: "サイト機能",
+    caption: "CMS・検索・フォーム・AIチャット",
+    support:
+      "Webサイトの更新性と問い合わせ対応を高め、運用に合わせて拡張します。",
+    functions: "CMS / サイト内検索 / フォーム / AIチャット",
+    effect: "問い合わせ対応と情報更新の効率化",
+    href: "/services/#site-functions",
+  },
+  {
+    track: "運用改善",
+    caption: "保守・監視・改善サイクル",
+    support: "公開後の安定運用と、継続的な改善を前提に仕組みを整えます。",
+    functions: "監視 / バックアップ / 改善提案 / 運用設計",
+    effect: "安定運用と継続的な改善",
+    href: "/services/#modernization",
+  },
+];
+
+const pricingRows = pricing.items.slice(0, 4);
+const cases = works.cases.slice(0, 3);
 ---
 
-<BaseLayout title={home.title} description={home.description} image={home.heroImage}>
+<BaseLayout title={home.title} description={home.description}>
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <h1>{home.heroTitle}</h1>
-        <p class="hero-lead">{home.heroLead}</p>
-        <p class="hero-body">{home.heroBody}</p>
+        <h1 class="hero-title-lines">
+          <span>業務を動かす</span>
+          <span>仕組みを、</span>
+          <span>現場に合わせて</span>
+          <span>設計する。</span>
+        </h1>
+        <p class="hero-lead">
+          業務システム、Webアプリ、管理画面、データ連携、サイト機能まで。
+          要件整理から開発・運用改善まで、一気通貫で伴走します。
+        </p>
+        <p class="hero-body">
+          Webだけに閉じず、現場の流れとデータのつながりから設計します。
+          必要な区間を選び、小さく始めて使われ続ける仕組みに育てます。
+        </p>
         <div class="actions">
           <a class="btn primary" href="/contact/">{home.primaryCta}</a>
           <a class="btn outline" href="/pricing/">{home.secondaryCta}</a>
         </div>
       </div>
-      <figure class="hero-media">
-        <img src={home.heroImage} alt="システム開発の作業風景" width="1600" height="1100" loading="eager" />
-      </figure>
+
+      <div class="hero-route" aria-label="支援範囲のルートマップ">
+        <ol class="route-stations">
+          {
+            routeSteps.map((step, index) => (
+              <li class={index === 4 ? "station station-active" : "station"}>
+                <span class="station-number">{step.number}</span>
+                <strong>{step.title}</strong>
+                <small>{step.body}</small>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="route-lanes" aria-hidden="true">
+          <span class="lane gold">業務レーン</span>
+          <span class="lane teal">データレーン</span>
+          <span class="lane blue">Webレーン</span>
+          <span class="lane gray">運用レーン</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section route-section">
+    <div class="container split-head">
+      <div class="section-head">
+        <h2>支援の全体ルート</h2>
+        <p>
+          業務・データ・Web・運用の各レーンを横断し、必要な部分から着手します。
+        </p>
+      </div>
+      <a class="text-link" href="/services/">ルートの詳細を見る</a>
+    </div>
+    <div class="container">
+      <div class="route-table" aria-label="支援ルート表">
+        {
+          lanes.map((lane) => (
+            <article class={`route-row tone-${lane.tone}`}>
+              <div class="route-label">
+                <strong>{lane.name}</strong>
+                <span>{lane.description}</span>
+              </div>
+              <div class="route-cells">
+                {lane.cells.map((cell) => (
+                  <span>{cell}</span>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   <section class="section white">
-    <div class="container">
-      <div class="section-head">
-        <h2>現場で使われる形まで一緒に考えます。</h2>
-        <p>機能を増やすだけでなく、運用、例外処理、保守性まで含めて設計します。</p>
+    <div class="container planner-grid" data-planner>
+      <div>
+        <div class="section-head">
+          <h2>相談内容を組み立てる</h2>
+          <p>
+            該当する課題を選ぶと、必要になりそうな支援ルートが自動で整理されます。
+          </p>
+        </div>
+        <form class="planner-options">
+          {
+            plannerGroups.map((group, groupIndex) => (
+              <fieldset>
+                <legend>{group.label}</legend>
+                {group.options.map((option, optionIndex) => (
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-area={option.area}
+                      checked={groupIndex === 0 || optionIndex === 1}
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </fieldset>
+            ))
+          }
+          <button class="quiet-button" type="button" data-reset-planner
+            >選択をクリア</button
+          >
+        </form>
       </div>
-      <div class="grid-3">
-        {home.strengths.map((item) => (
-          <article class="card">
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-          </article>
-        ))}
-      </div>
+
+      <aside class="planner-output" aria-live="polite">
+        <div class="mini-route">
+          {
+            routeSteps.map((step, index) => (
+              <span class={index === 4 ? "active" : undefined}>
+                {step.number}
+              </span>
+            ))
+          }
+        </div>
+        <p class="output-kicker">おすすめのルート</p>
+        <h3 data-output-title>業務フロー + サイト機能 + 運用改善</h3>
+        <p data-output-body>
+          現場の流れを整理しながら、問い合わせ・検索・CMSなどのサイト機能を業務側の運用へ接続します。
+        </p>
+        <dl class="output-list">
+          <div>
+            <dt>選択中</dt>
+            <dd><span data-selected-count>0</span>件の課題</dd>
+          </div>
+          <div>
+            <dt>検討ポイント</dt>
+            <dd data-output-list>
+              申請・承認、問い合わせ整理、更新運用、改善サイクル
+            </dd>
+          </div>
+        </dl>
+        <a class="btn primary wide" href="/contact/" data-consult-link
+          >この内容で相談する</a
+        >
+      </aside>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <h2>相談できること</h2>
-        <p>業務システム、Webアプリ、データ連携を中心に、必要な範囲から段階的に進めます。</p>
+        <h2>対応できるルート</h2>
+        <p>
+          システムの全体像を支えつつ、必要な領域だけを切り出して相談できます。
+        </p>
       </div>
-      <div class="grid-3">
-        {home.serviceHighlights.map((item) => (
-          <a class="card" href={item.href}>
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-          </a>
-        ))}
+      <div class="service-table" aria-label="対応領域">
+        {
+          serviceRows.map((row) => (
+            <a class="service-row" href={row.href}>
+              <div>
+                <strong>{row.track}</strong>
+                <span>{row.caption}</span>
+              </div>
+              <p>{row.support}</p>
+              <p>{row.functions}</p>
+              <p>{row.effect}</p>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
 
   <section class="section white">
-    <div class="container cta-panel">
-      <div>
-        <h2>業務の整理から相談できます。</h2>
-        <p>作りたいものが決まっていなくても、現状と困っていることから一緒に整理します。</p>
+    <div class="container before-after">
+      <div class="section-head">
+        <h2>仕組みが変わると、仕事の流れが変わる。</h2>
+        <p>
+          手作業・分散・属人化から、つながり・見える化・再現性のある運用へ移します。
+        </p>
       </div>
-      <a class="btn primary" href="/contact/">無料で相談する</a>
+      <div class="flow-change">
+        <article>
+          <h3>Before</h3>
+          <ul>
+            <li>紙・Excel・メールで情報が分散</li>
+            <li>申請や承認の状況が見えない</li>
+            <li>データの集計と確認に時間がかかる</li>
+            <li>サイト更新や問い合わせ対応が属人化</li>
+          </ul>
+        </article>
+        <article class="after">
+          <h3>After</h3>
+          <ul>
+            <li>業務フローが明確で、申請がスムーズ</li>
+            <li>データがつながり、状況をすぐ確認できる</li>
+            <li>管理画面やCMSで必要な情報を更新できる</li>
+            <li>公開後も改善サイクルを回せる</li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container split-head">
+      <div class="section-head">
+        <h2>料金の目安</h2>
+        <p>目的と規模に合わせて組み立てる、シンプルなプラン構成です。</p>
+      </div>
+      <a class="text-link" href="/pricing/">料金の詳細を見る</a>
+    </div>
+    <div class="container">
+      <div class="compact-table" aria-label="料金の目安">
+        {
+          pricingRows.map((item) => (
+            <article>
+              <strong>{item.label}</strong>
+              <p>{item.note}</p>
+              <span>{item.price}</span>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section white">
+    <div class="container">
+      <div class="section-head">
+        <h2>導入の進め方</h2>
+        <p>要件整理から小さく公開し、改善を重ねながら定着させます。</p>
+      </div>
+      <ol class="process-line">
+        {
+          routeSteps.map((step) => (
+            <li>
+              <span>{step.number}</span>
+              <strong>{step.title}</strong>
+              <small>{step.body}</small>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-head">
+      <div class="section-head">
+        <h2>導入事例</h2>
+        <p>公開できる範囲で、課題と支援ルートが見える形に整理しています。</p>
+      </div>
+      <a class="text-link" href="/works/">事例をもっと見る</a>
+    </div>
+    <div class="container case-grid">
+      {
+        cases.map((item) => (
+          <article class="case-card">
+            <span>{item.category}</span>
+            <h3>{item.title}</h3>
+            <p>{item.summary}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section contact-band">
+    <div class="container contact-grid">
+      <div>
+        <h2>まずは、今の課題をお聞かせください。</h2>
+        <p>どこから手をつければいいか、一緒に整理します。</p>
+        <div class="contact-methods">
+          <a href={`mailto:${site.email}`}>メールで相談する</a>
+          <a href={site.lineUrl}>LINEで相談する</a>
+          <a href={`tel:${site.phone}`}>電話で相談する</a>
+        </div>
+      </div>
+      <form class="quick-form" action={site.contactFormAction} method="post">
+        <input
+          type="hidden"
+          name="_subject"
+          value="Acecore Systems トップページからのお問い合わせ"
+        />
+        <input type="hidden" name="source" value="systems.acecore.net" />
+        <label>
+          お名前
+          <input name="name" autocomplete="name" required />
+        </label>
+        <label>
+          メールアドレス
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+        <label>
+          ご相談内容
+          <select name="category" required>
+            <option value="">選択してください</option>
+            <option>業務システム開発について</option>
+            <option>Webアプリ・管理画面について</option>
+            <option>サイト機能追加について</option>
+            <option>データ連携・運用改善について</option>
+          </select>
+        </label>
+        <button class="btn primary" type="submit">内容を送信する</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const planner = document.querySelector("[data-planner]");
+
+    if (planner) {
+      const checkboxes = Array.from(
+        planner.querySelectorAll('input[type="checkbox"][data-area]'),
+      );
+      const resetButton = planner.querySelector("[data-reset-planner]");
+      const count = planner.querySelector("[data-selected-count]");
+      const title = planner.querySelector("[data-output-title]");
+      const body = planner.querySelector("[data-output-body]");
+      const list = planner.querySelector("[data-output-list]");
+      const consultLink = planner.querySelector("[data-consult-link]");
+      const routeDots = Array.from(
+        planner.querySelectorAll(".mini-route span"),
+      );
+      const copy = {
+        business: {
+          title: "業務フロー + 管理画面",
+          body: "現場の申請・承認・確認の流れを整理し、使いやすい管理画面へ落とし込みます。",
+          list: "業務整理、権限、申請フロー、一覧・検索、通知",
+          active: [1, 2, 3],
+        },
+        admin: {
+          title: "管理画面 + Webアプリ",
+          body: "日常運用で使う画面を中心に、入力、検索、CSV、権限、スマートフォン対応を整えます。",
+          list: "UI設計、管理画面、会員機能、CSV、ログ",
+          active: [2, 3],
+        },
+        data: {
+          title: "データ連携 + 業務システム",
+          body: "外部サービスやスプレッドシートをつなぎ、二重入力を減らしてデータを活用できる状態にします。",
+          list: "API連携、データ定義、集計、通知、バックアップ",
+          active: [1, 4],
+        },
+        site: {
+          title: "Web・サイト機能 + 運用改善",
+          body: "CMS、検索、フォーム、AIチャットなどを、問い合わせ対応や情報更新の運用まで含めて設計します。",
+          list: "CMS、サイト内検索、フォーム、AIチャット、問い合わせ導線",
+          active: [3, 5, 6],
+        },
+        ops: {
+          title: "運用改善 + 継続サポート",
+          body: "公開後の安定運用、保守、監視、改善提案まで含めて、長く使える状態を作ります。",
+          list: "運用ルール、監視、保守、改善提案、移行計画",
+          active: [1, 6],
+        },
+      };
+
+      const updatePlanner = () => {
+        const selected = checkboxes.filter((checkbox) => checkbox.checked);
+        const areas = selected
+          .map((checkbox) => checkbox.dataset.area)
+          .filter(Boolean);
+        const uniqueAreas = [...new Set(areas)];
+        const priority = ["site", "business", "data", "admin", "ops"];
+        const primary =
+          priority.find((area) => uniqueAreas.includes(area)) || "site";
+        const selectedCopy = copy[primary];
+        const activeSet = new Set(
+          uniqueAreas.flatMap((area) => copy[area]?.active || []),
+        );
+
+        if (count) count.textContent = String(selected.length);
+        if (title) title.textContent = selectedCopy.title;
+        if (body) body.textContent = selectedCopy.body;
+        if (list)
+          list.textContent = uniqueAreas
+            .map((area) => copy[area]?.list)
+            .filter(Boolean)
+            .join(" / ");
+        if (consultLink) {
+          const scope = encodeURIComponent(selectedCopy.title);
+          consultLink.setAttribute("href", `/contact/?scope=${scope}`);
+        }
+
+        routeDots.forEach((dot, index) => {
+          dot.classList.toggle("active", activeSet.has(index + 1));
+        });
+      };
+
+      checkboxes.forEach((checkbox) =>
+        checkbox.addEventListener("change", updatePlanner),
+      );
+      resetButton?.addEventListener("click", () => {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+        updatePlanner();
+      });
+
+      updatePlanner();
+    }
+  </script>
 </BaseLayout>
