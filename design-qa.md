@@ -1,28 +1,33 @@
 **Findings**
 
-- No actionable P0/P1/P2 findings remain.
+- No actionable P0/P1/P2 findings remain after the 864px fidelity pass.
+- Residual P3 polish: the hero route geometry is code-native and simpler than the generated concept's curved route details and pictogram-style station marks.
 
 **Comparison Target**
 
 - Source visual truth path: `C:\Users\gnish\.codex\generated_images\019ec941-4b2f-7d73-84f8-c143b306c1bf\ig_0aa7abb4631dd6cf016a2f81d6c4c081918c15158f414fa800.png`
-- Implementation screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\page-2026-06-15T05-47-15-046Z.png`
-- Mobile screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\page-2026-06-15T05-48-04-171Z.png`
-- URL: `http://127.0.0.1:4324/`
-- Viewport: desktop `1280x720`, mobile `390x844`
-- State: initial home page plus planner checkbox interaction
+- Implementation screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\fidelity-864-after3.png`
+- Mobile screenshot path: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\fidelity-390-after3.png`
+- URL: `http://127.0.0.1:4327/`
+- Viewport: concept/implementation comparison `864x768`, mobile `390x844`
+- State: initial home page, planner default state, and browser console check
 
 **Full-View Comparison Evidence**
 
-- The accepted concept's white grid background, yellow route highlight, blue/teal/gray lane system, restrained header, bold Japanese hero, and table-led downstream sections are represented in the implementation.
-- The implementation intentionally keeps the hero route map code-native for accessibility and interaction consistency; non-active station microcopy is reduced in the hero to avoid overlap at 1280px, with detail carried into the route table below.
+- The accepted concept's 864px composition keeps the desktop header/nav and two-column hero; the implementation now keeps that same structure at 864px instead of switching to the mobile stack.
+- Hero vertical rhythm was corrected: `route-section` begins at `386px` in the latest implementation, close to the concept's first-section reveal, and the H1 starts near the same top band.
+- The downstream order now follows the accepted concept: full route table, planner, before/after flow, pricing table, process, cases, and contact.
+- The implementation intentionally keeps the hero route map code-native; the remaining visual gap is route-line curvature/pictograms, not layout, hierarchy, or section order.
 
 **Focused Region Comparison Evidence**
 
-- Hero copy: headline, lead, supporting copy, and primary/secondary CTAs are visible in the first viewport without overlap.
-- Route map: station labels 01-06, highlighted Web/site station, and four colored lanes render clearly after the density adjustment.
-- Planner: checkbox interaction changes the output from `Web・サイト機能 + 運用改善` to `業務フロー + 管理画面`, updates selected count from `5` to `4`, and updates the contact link scope.
-- Responsive: mobile `390x844` has `bodyWidth` equal to `clientWidth` and no detected horizontal overflow.
-- Existing pages: `/services/` and `/pricing/` both render with no detected horizontal overflow at `1280x720`.
+- Header/hero: nav remains visible at 864px, the H1 is two lines, CTAs sit in the first viewport, and the route map is no longer a large boxed card.
+- Route table: row height and section padding were compressed to match the sheet-like density of the concept.
+- Planner: default state now reads `Web・サイト機能 + 運用改善`, selected count is `2`, and only route `05` is highlighted in the mini route.
+- Before/after: a central flow bridge was added between the before and after cards to restore the concept's middle process diagram.
+- Contact: the final contact area is back on a white section with a form and contact options, instead of a dark CTA band.
+- Browser verification: no console errors/warnings were captured at `864x768`.
+- Responsive: mobile `390x844` was re-captured after the fidelity pass and remains a clean vertical layout.
 
 **Required Fidelity Surfaces**
 
@@ -34,11 +39,12 @@
 
 **Patches Made Since Previous QA Pass**
 
-- Reworked the hero H1 into explicit safe line breaks to prevent overlap with the route map.
-- Reduced hero type scale and first-viewport vertical density so CTA buttons remain visible.
-- Changed header CTA to yellow to match the selected visual direction.
-- Reduced hero route map microcopy and adjusted station spacing to remove label collisions.
-- Added `.codex-*.log` and `.playwright-cli/` to `.gitignore` so local QA artifacts are not committed.
+- Changed the tablet breakpoint so 864px keeps the selected concept's desktop header and two-column hero.
+- Reworked the hero H1 into explicit two-line breaks and removed the extra hero body paragraph.
+- Removed the extra home-page service-table section that was not present in the accepted concept.
+- Converted the planner from stacked fieldsets to a tabbed checklist panel and tightened the output card.
+- Added a before/after flow bridge and changed the contact band back to a white form-led section.
+- Updated route table, section, button, header, and hero spacing to match the concept's denser system-sheet rhythm.
 
 **Open Questions**
 
@@ -47,10 +53,11 @@
 **Implementation Checklist**
 
 - Build passed with `npm run build`.
-- Desktop visual check completed with Playwright CLI fallback because Browser screenshot capture timed out.
+- `npm run build` also reproduced the known sandbox-only Astro resolver failure before passing outside the sandbox.
+- 864px visual comparison completed against the accepted concept image after three correction passes.
+- Browser in-app navigation timed out, so screenshots were captured with installed Playwright Chromium as a fallback.
 - Mobile visual check completed at `390x844`.
-- Planner interaction verified.
-- Services and pricing pages checked for overflow.
+- Planner default state and console health verified at `864x768`.
 
 **Follow-up Polish**
 

@@ -135,51 +135,14 @@ const plannerGroups = [
   },
 ];
 
-const serviceRows = [
-  {
-    track: "業務システム",
-    caption: "ワークフロー・申請・案件管理",
-    support:
-      "業務フロー整理からシステム化まで。社内の手戻りや属人運用を減らします。",
-    functions: "申請 / 承認 / 案件管理 / タスク管理",
-    effect: "業務の標準化と生産性の向上",
-    href: "/services/#business-system",
-  },
-  {
-    track: "管理画面",
-    caption: "運用しやすい管理UI・権限設計",
-    support: "毎日使う画面を、役割、権限、ログ、検索まで含めて設計します。",
-    functions: "管理UI / 権限管理 / ログ / 多言語CSV",
-    effect: "安全に自社で更新・運用できる",
-    href: "/services/#web-app",
-  },
-  {
-    track: "データ連携",
-    caption: "API・RPA・外部サービス連携",
-    support:
-      "既存システムや外部サービスをつなぎ、データを活かせる状態にします。",
-    functions: "API連携 / ETL / SaaS連携 / 通知",
-    effect: "二重入力の削減とデータ活用の加速",
-    href: "/services/#integration",
-  },
-  {
-    track: "サイト機能",
-    caption: "CMS・検索・フォーム・AIチャット",
-    support:
-      "Webサイトの更新性と問い合わせ対応を高め、運用に合わせて拡張します。",
-    functions: "CMS / サイト内検索 / フォーム / AIチャット",
-    effect: "問い合わせ対応と情報更新の効率化",
-    href: "/services/#site-functions",
-  },
-  {
-    track: "運用改善",
-    caption: "保守・監視・改善サイクル",
-    support: "公開後の安定運用と、継続的な改善を前提に仕組みを整えます。",
-    functions: "監視 / バックアップ / 改善提案 / 運用設計",
-    effect: "安定運用と継続的な改善",
-    href: "/services/#modernization",
-  },
+const plannerTabs = [
+  "現場業務",
+  "管理画面",
+  "データ・連携",
+  "Web・サイト機能",
+  "運用・改善",
 ];
+const plannerOptions = plannerGroups.flatMap((group) => group.options);
 
 const pricingRows = pricing.items.slice(0, 4);
 const cases = works.cases.slice(0, 3);
@@ -190,18 +153,12 @@ const cases = works.cases.slice(0, 3);
     <div class="container hero-grid">
       <div class="hero-copy">
         <h1 class="hero-title-lines">
-          <span>業務を動かす</span>
-          <span>仕組みを、</span>
-          <span>現場に合わせて</span>
-          <span>設計する。</span>
+          <span>業務を動かす仕組みを、</span>
+          <span>現場に合わせて設計する。</span>
         </h1>
         <p class="hero-lead">
           業務システム、Webアプリ、管理画面、データ連携、サイト機能まで。
           要件整理から開発・運用改善まで、一気通貫で伴走します。
-        </p>
-        <p class="hero-body">
-          Webだけに閉じず、現場の流れとデータのつながりから設計します。
-          必要な区間を選び、小さく始めて使われ続ける仕組みに育てます。
         </p>
         <div class="actions">
           <a class="btn primary" href="/contact/">{home.primaryCta}</a>
@@ -272,23 +229,27 @@ const cases = works.cases.slice(0, 3);
           </p>
         </div>
         <form class="planner-options">
-          {
-            plannerGroups.map((group, groupIndex) => (
-              <fieldset>
-                <legend>{group.label}</legend>
-                {group.options.map((option, optionIndex) => (
-                  <label>
-                    <input
-                      type="checkbox"
-                      data-area={option.area}
-                      checked={groupIndex === 0 || optionIndex === 1}
-                    />
-                    <span>{option.label}</span>
-                  </label>
-                ))}
-              </fieldset>
-            ))
-          }
+          <div class="planner-tabs" aria-hidden="true">
+            {
+              plannerTabs.map((tab, index) => (
+                <span class={index === 0 ? "active" : undefined}>{tab}</span>
+              ))
+            }
+          </div>
+          <div class="planner-checkgrid">
+            {
+              plannerOptions.map((option, index) => (
+                <label>
+                  <input
+                    type="checkbox"
+                    data-area={option.area}
+                    checked={[4, 5].includes(index)}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))
+            }
+          </div>
           <button class="quiet-button" type="button" data-reset-planner
             >選択をクリア</button
           >
@@ -306,19 +267,19 @@ const cases = works.cases.slice(0, 3);
           }
         </div>
         <p class="output-kicker">おすすめのルート</p>
-        <h3 data-output-title>業務フロー + サイト機能 + 運用改善</h3>
+        <h3 data-output-title>Web・サイト機能 + 運用改善</h3>
         <p data-output-body>
           現場の流れを整理しながら、問い合わせ・検索・CMSなどのサイト機能を業務側の運用へ接続します。
         </p>
         <dl class="output-list">
           <div>
             <dt>選択中</dt>
-            <dd><span data-selected-count>0</span>件の課題</dd>
+            <dd><span data-selected-count>2</span>件の課題</dd>
           </div>
           <div>
             <dt>検討ポイント</dt>
             <dd data-output-list>
-              申請・承認、問い合わせ整理、更新運用、改善サイクル
+              CMS、サイト内検索、フォーム、AIチャット、問い合わせ導線
             </dd>
           </div>
         </dl>
@@ -326,32 +287,6 @@ const cases = works.cases.slice(0, 3);
           >この内容で相談する</a
         >
       </aside>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2>対応できるルート</h2>
-        <p>
-          システムの全体像を支えつつ、必要な領域だけを切り出して相談できます。
-        </p>
-      </div>
-      <div class="service-table" aria-label="対応領域">
-        {
-          serviceRows.map((row) => (
-            <a class="service-row" href={row.href}>
-              <div>
-                <strong>{row.track}</strong>
-                <span>{row.caption}</span>
-              </div>
-              <p>{row.support}</p>
-              <p>{row.functions}</p>
-              <p>{row.effect}</p>
-            </a>
-          ))
-        }
-      </div>
     </div>
   </section>
 
@@ -373,6 +308,21 @@ const cases = works.cases.slice(0, 3);
             <li>サイト更新や問い合わせ対応が属人化</li>
           </ul>
         </article>
+        <div class="flow-bridge" aria-label="業務データが整理される流れ">
+          <div class="flow-source">
+            <span>申請</span>
+            <span>問い合わせ</span>
+            <span>更新依頼</span>
+          </div>
+          <div class="flow-hub">
+            <strong>整理</strong>
+            <small>ルール化・集約</small>
+          </div>
+          <div class="flow-screen">
+            <strong>管理画面</strong>
+            <small>検索・確認・更新</small>
+          </div>
+        </div>
         <article class="after">
           <h3>After</h3>
           <ul>
@@ -512,13 +462,13 @@ const cases = works.cases.slice(0, 3);
           title: "業務フロー + 管理画面",
           body: "現場の申請・承認・確認の流れを整理し、使いやすい管理画面へ落とし込みます。",
           list: "業務整理、権限、申請フロー、一覧・検索、通知",
-          active: [1, 2, 3],
+          active: [1, 2],
         },
         admin: {
           title: "管理画面 + Webアプリ",
           body: "日常運用で使う画面を中心に、入力、検索、CSV、権限、スマートフォン対応を整えます。",
           list: "UI設計、管理画面、会員機能、CSV、ログ",
-          active: [2, 3],
+          active: [3],
         },
         data: {
           title: "データ連携 + 業務システム",
@@ -530,7 +480,7 @@ const cases = works.cases.slice(0, 3);
           title: "Web・サイト機能 + 運用改善",
           body: "CMS、検索、フォーム、AIチャットなどを、問い合わせ対応や情報更新の運用まで含めて設計します。",
           list: "CMS、サイト内検索、フォーム、AIチャット、問い合わせ導線",
-          active: [3, 5, 6],
+          active: [5],
         },
         ops: {
           title: "運用改善 + 継続サポート",
