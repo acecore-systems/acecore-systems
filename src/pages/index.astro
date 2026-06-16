@@ -143,8 +143,8 @@ const cases = works.cases.slice(0, 3);
     <div class="container hero-grid">
       <div class="hero-copy">
         <h1 class="hero-title-lines">
-          <span>業務を動かす仕組みを、</span>
-          <span>現場に合わせて設計する。</span>
+          <span>業務を動かす<wbr />仕組みを、</span>
+          <span>現場に合わせて<wbr />設計する。</span>
         </h1>
         <p class="hero-lead">
           業務システム、Webアプリ、管理画面、データ連携、サイト機能まで。
@@ -157,6 +157,12 @@ const cases = works.cases.slice(0, 3);
       </div>
 
       <div class="hero-route" aria-label="支援範囲のルートマップ">
+        <img
+          class="hero-route-map"
+          src="/assets/systems-hero-route-map.png"
+          alt=""
+          aria-hidden="true"
+        />
         <ol class="route-stations">
           {
             routeSteps.map((step, index) => (
