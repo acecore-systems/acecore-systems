@@ -1,8 +1,8 @@
 **Findings**
 
 - P0/P1/P2 の未解決事項はありません。
-- P3: 参照コンセプトのヒーロールートは、駅アイコンと一部ラベルが一枚絵として統合された高密度ビジュアルです。実装は高解像度ルート画像にHTMLラベルを重ねているため、ピクセル完全一致ではありません。
-- P3: 参照の全体高 `1822px` に対して、実装の最終 `863px` フルページは `1885px` です。下層セクションの実テキスト量とレスポンシブ可読性を優先しています。
+- P3: 参照のヒーロールートはさらに一枚絵として密に整っています。実装もデスクトップでは駅アイコン・ラベル込みの高解像度ラスタに寄せましたが、完全なピクセル一致ではありません。
+- P3: 参照の全体高 `1822px` に対して、実装の最終 `863px` フルページは `1870px` です。差分は `48px` まで縮小しました。
 
 **Comparison Target**
 
@@ -20,18 +20,18 @@
 
 **Focused Region Evidence**
 
-- Hero route map: low-resolution concept crop was removed. `systems-hero-route-map.png` is used again as the high-resolution base asset.
-- Route stability: desktop and wide map sizing now use `--route-map-left`, `--route-map-top`, and `--route-map-width` tuned to keep the route inside the hero without clipping.
-- Station labels: 01〜06 labels are image-relative and have zero bounding-box overlap at `863px`, `2052px`, and `390px`.
-- Wide viewport: `2052px` capture no longer clips station 01 or the lower route line.
-- Mobile viewport: station labels use the card grid treatment and do not overlap the route background.
+- Hero route map: desktop now uses `systems-hero-route-map-labeled.png`, a high-resolution raster composed from the original route image with station rings, icons, numbers, and labels baked in.
+- Mobile hero route: `picture` source switches mobile back to `systems-hero-route-map.png`, while the station cards remain readable and non-overlapping.
+- Route table labels: left-side route labels now include real transparent PNG icons for business, data, web, and operations routes.
+- Route table density: route rows measure `58px`, matching the compact table rhythm of the reference.
+- Page height: final desktop full-page height is `1870px`, down from the previous `1885px` and much closer to the `1822px` source.
 
 **Required Fidelity Surfaces**
 
-- Fonts and typography: desktop hero remains two lines; mobile wraps naturally. Route labels are intentionally compact like the reference and no longer collide.
-- Spacing and layout rhythm: hero height remains `402px`; map bottom is contained at desktop and wide sizes. Full-page density is within `63px` of the source visual at `863px`.
-- Colors and tokens: navy / teal / gold / white palette remains aligned with the source. Active route, CTA, Web route, and header CTA all keep gold emphasis.
-- Image quality and asset fidelity: high-resolution route raster is used instead of the processed 590px crop, removing the visible jagged/rectangular artifacts.
+- Fonts and typography: desktop hero remains two lines; station labels are now rendered inside the hero raster at a density closer to the source. Mobile keeps live text cards for readability.
+- Spacing and layout rhythm: hero height remains `402px`; route table rows are `58px`; page height is within `48px` of the source visual at `863px`.
+- Colors and tokens: navy / teal / gold / white palette remains aligned with the source. The active 05 route, CTA, Web route, and header CTA keep the gold emphasis.
+- Image quality and asset fidelity: generated desktop hero raster and route label icons are real PNG assets, not CSS/div/SVG placeholders. The previous jagged low-resolution crop is not used.
 - Copy and content: hero, route table, planner, pricing rows, case cards, and contact copy match the selected concept direction.
 
 **Rendered QA**
@@ -41,29 +41,27 @@
 - Framework overlay: Astro dev toolbar is disabled in local dev and `astro-dev-toolbar=false` in captured DOM checks.
 - Console health: final screenshots captured no `warning` or `error` logs.
 - Overflow: desktop `scrollWidth=863`, wide `scrollWidth=2052`, mobile `scrollWidth=390`.
-- Route label overlap: desktop `[]`, wide `[]`, mobile `[]`.
-- Interaction proof: planner checkbox count `9`; first checkbox changed from `false` to `true`; no warning/error logs after interaction.
-- Browser path: in-app Browser was used for live visual checks. Screenshot file saving through Browser failed with `EPERM`, so saved evidence was captured with Playwright Chromium after the Browser pass.
+- Hero map source: desktop and wide use `systems-hero-route-map-labeled.png`; mobile uses `systems-hero-route-map.png`.
+- Route label icons: 4 PNG icons loaded, one for each route label.
+- Mobile station layout: `.route-stations` display is `grid`; desktop display is `none` because the labels are baked into the raster.
 
 **Patches Made Since Previous QA**
 
-- Reverted hero map from the low-resolution concept crop to the high-resolution route raster.
-- Removed the generated temporary concept crop asset from the working tree.
-- Re-enabled desktop station labels and retuned their coordinates against the image, not the route container.
-- Reduced station label width and type size enough to prevent overlap while retaining readability.
-- Adjusted route max width and top offset so wide desktop no longer clips station 01 or the route line.
-- Disabled the Astro dev toolbar in `astro.config.mjs` so local design QA screenshots are clean.
-- Kept mobile route labels in the existing grid treatment to avoid cramped overlay text.
+- Added `systems-hero-route-map-labeled.png`, a high-resolution desktop hero route raster with station icons and labels.
+- Switched the hero image to a `picture` element so mobile keeps the unlabeled route map and card-based station labels.
+- Added route table PNG icons: `route-icon-business.png`, `route-icon-data.png`, `route-icon-web.png`, `route-icon-ops.png`.
+- Updated route label markup and CSS so icon labels remain compact at `58px` row height.
+- Kept Astro dev toolbar disabled for clean local design QA captures.
 
 **Validation**
 
-- Browser visual checks passed at `863x900`, `2052x1200`, and `390x844`.
+- Browser visual checks passed at `863x900` and mobile `390x844`.
 - Saved Playwright screenshots passed at `863x900`, full-page `863px`, `2052x1200`, and `390x844`.
-- Playwright metrics: no console errors/warnings, no horizontal overflow, no route-label overlap, no Astro dev toolbar.
+- Playwright metrics: no console errors/warnings, no horizontal overflow, no Astro dev toolbar, correct desktop/mobile hero image source.
 
 **Follow-up Polish**
 
-- For stricter pixel fidelity, produce a dedicated hero-route bitmap that bakes station icons and labels at high resolution. That would match the concept more closely, but would reduce live text accessibility and responsive control.
-- Service-route row icons remain simplified compared with the concept and can be polished in a separate asset/icon pass.
+- The desktop hero map is now much closer to the concept, but exact placement of every station ring, map texture, and label is still not pixel-identical.
+- Remaining visual polish would be a final pixel pass on hero station coordinates and text sizing after any user preference check.
 
 final result: passed

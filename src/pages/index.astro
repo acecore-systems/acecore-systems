@@ -41,6 +41,7 @@ const lanes = [
     name: "業務ルート",
     description: "仕事の流れを整える",
     tone: "teal",
+    icon: "/assets/route-icon-business.png",
     cells: [
       "業務整理・要件定義",
       "業務設計・最適化",
@@ -52,6 +53,7 @@ const lanes = [
     name: "データルート",
     description: "データをつなぎ、活かす",
     tone: "teal",
+    icon: "/assets/route-icon-data.png",
     cells: [
       "データ設計",
       "API・外部連携",
@@ -63,6 +65,7 @@ const lanes = [
     name: "Webルート",
     description: "Webで価値を届ける",
     tone: "gold",
+    icon: "/assets/route-icon-web.png",
     cells: [
       "Webアプリ開発",
       "管理画面・ダッシュボード",
@@ -74,6 +77,7 @@ const lanes = [
     name: "運用ルート",
     description: "安心して使い続ける",
     tone: "gray",
+    icon: "/assets/route-icon-ops.png",
     cells: [
       "保守・監視",
       "改善提案・追加開発",
@@ -210,12 +214,18 @@ const cases = [
       </div>
 
       <div class="hero-route" aria-label="支援範囲のルートマップ">
-        <img
-          class="hero-route-map"
-          src="/assets/systems-hero-route-map.png"
-          alt=""
-          aria-hidden="true"
-        />
+        <picture>
+          <source
+            media="(max-width: 760px)"
+            srcset="/assets/systems-hero-route-map.png"
+          />
+          <img
+            class="hero-route-map"
+            src="/assets/systems-hero-route-map-labeled.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </picture>
         <ol class="route-stations">
           {
             routeSteps.map((step, index) => (
@@ -251,8 +261,11 @@ const cases = [
           lanes.map((lane) => (
             <article class={`route-row tone-${lane.tone}`}>
               <div class="route-label">
-                <strong>{lane.name}</strong>
-                <span>{lane.description}</span>
+                <img src={lane.icon} alt="" aria-hidden="true" loading="lazy" />
+                <div>
+                  <strong>{lane.name}</strong>
+                  <span>{lane.description}</span>
+                </div>
               </div>
               <div class="route-cells">
                 {lane.cells.map((cell) => (
