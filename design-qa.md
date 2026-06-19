@@ -1,65 +1,66 @@
 **Findings**
 
 - P0/P1/P2 の未解決事項はありません。
-- P3 として、コンセプト画像は生成モック由来の圧縮された縦密度のため、実装側は完全なピクセル一致ではありません。現状はレイアウト構造、色、主要CTA、ロードマップ配置、表・カード密度を合わせたうえで、可読性とレスポンシブ崩れを優先しています。
-- P3 として、サービス全体像の左ラベル内アイコンは未実装です。参照の小アイコンは別途アイコンセットまたは画像アセット化すればさらに近づけられます。
+- P3 として、参照コンセプトのヒーロールートは駅アイコンや一部テキストが画像内に統合された高密度ビジュアルです。実装では高解像度ラスター画像の上にアクセシブルなHTMLラベルを重ねているため、完全なピクセル一致ではありません。
+- P3 として、ページ全体の縦密度は参照モックよりやや長めです。現状はレスポンシブ可読性と実テキストの収まりを優先しています。
 
 **Comparison Target**
 
 - Source visual truth: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-6aa7a799-02be-4e66-b2c3-9cda2c16a3df.png`
-- Earlier rendered mismatch: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-e6afe253-9904-4363-ba44-914acc4f73a7.png`
 - Jagged route report: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-dbd79a35-3b1c-4ad6-bd57-34256032a652.png`
 - Implementation URL: `http://127.0.0.1:4327/`
-- Implementation screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-smooth2-wide.png`
-- Desktop smoke screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-smooth2-desktop.png`
-- Mobile smoke screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-smooth2-mobile.png`
-- Side-by-side comparison evidence: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass2-side-by-side.png`
-- Viewport: desktop `1026x820`, wide `2052x1400`, mobile `390x844`
-- State: top page initial state, planner default selections, one planner checkbox interaction.
+- Final implementation screenshots:
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-polish2-863.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-polish2-wide.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-polish2-mobile.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-polish2-863-full.png`
+- Side-by-side comparison evidence: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-polish2-side-by-side.png`
+- Viewports: reference-width desktop `863x900`, user-reported wide `2052x900`, mobile `390x844`
+- State: top page initial state, planner default selections.
 
 **Focused Region Evidence**
 
-- Hero: ガタつきの原因だった透過処理済みの小さいロードマップ画像を廃止し、高解像度の `systems-hero-route-map.png` に戻しました。
-- Hero: 画像の線は透過加工せず、CSSのマスクと透明度だけでヒーロー背景になじませています。
-- Hero: 再表示した駅ラベルは幅、文字サイズ、位置を再調整し、ロードマップ上で文字が重なりすぎない状態にしました。
-- Hero: 見出しをコンセプト同様に2行構成へ戻し、コピーを上げ、ロードマップと文字のずれ・重なりを解消しました。
-- CTA: ヘッダーCTAをアウトライン表示にし、ヒーロー・相談カード・フォームの主要ボタンに参照と同じ矢印付き文言を入れました。
-- Route table: 行高、ラベル幅、セル文字、リンク位置を圧縮し、参照の薄い表レイアウトに寄せました。
-- Planner: 右カードを「おすすめルートの縦リスト + ボタン」主体へ戻し、余計な説明表を削って参照の構成に合わせました。
-- Pricing / Process / Cases / Contact: 料金表に期間列を追加し、導入プロセスをカード型からライン型へ寄せ、下部CTAを2列フォームに戻して全体の密度を上げました。
+- Hero route map: `systems-hero-route-map.png` is used directly as a high-resolution raster asset. The previously jagged small/processed route image is no longer used.
+- Hero title: desktop and wide viewports now render as two lines: `業務を動かす仕組みを、` / `現場に合わせて設計する。`
+- Route positioning: route image and station labels now share the same CSS coordinate variables, so the line and label positions stay aligned across `863px` and `2052px`.
+- Station labels: 03〜06 are staggered to reduce central overlap, while mobile keeps the card grid treatment.
+- Responsiveness: final screenshots show no horizontal overflow at `863px`, `2052px`, or `390px`.
 
 **Required Fidelity Surfaces**
 
-- Fonts and typography: 日本語ゴシックの太い見出し、太めのUIラベル、小さな表テキストへ調整。ヒーロー見出しは2行、各表・カードは参照に合わせて小さめのサイズへ圧縮済み。
-- Spacing and layout rhythm: hero `402px`、route `343px`、planner `340px`、contact `241px` まで圧縮。初期実装の縦長さから大幅に改善済み。
-- Colors and tokens: navy / teal / gold / white の参照パレットに統一。ヘッダーCTA、Webルート、アクティブステップ、フォームCTAのgold表現を調整済み。
-- Image quality and asset fidelity: ヒーローロードマップは高解像度ラスター画像を直接配置。透過加工によるアンチエイリアス欠けを避け、線のガタつきが出ない状態に戻しました。
-- Copy and content: ヒーローCTAを「料金を見る」へ短縮し、CTA矢印、料金表の期間列、会社名入力、相談タグを参照に合わせて追加しました。
+- Fonts and typography: desktop hero line-break fidelity is restored; mobile still allows natural wrapping. Station labels remain small like the reference and are no longer forced into the route container's old coordinate system.
+- Spacing and layout rhythm: hero height remains `402px`, matching the section break timing of the reference-width capture. Route table and lower sections retain the existing readable implementation density.
+- Colors and tokens: navy / teal / gold / white palette remains aligned with the reference. Web route, active station, CTAs, and header outline use the same gold emphasis.
+- Image quality and asset fidelity: route map is the original high-resolution PNG, avoiding the anti-aliasing loss that caused the visible jagged route.
+- Copy and content: hero CTA, route labels, planner text, pricing rows, and contact copy remain aligned with the selected concept.
 
 **Rendered QA**
 
 - Page identity: `http://127.0.0.1:4327/`, title `業務システム・アプリ開発 | Acecore Systems`
-- Blank-page check: desktop/mobile ともに first meaningful screen が表示されました。
-- Framework overlay: Astro/Vite error overlay なし。
-- Console health: desktop/mobile とも warning/error なし。
-- Screenshot evidence: `route-smooth2-wide.png`, `route-smooth2-desktop.png`, `route-smooth2-mobile.png`
-- Interaction proof: `input[data-area="data"]` をチェック後、`.route-brief-list li.active` が `01`, `04`, `05` になり、相談リンクの `scope` が更新されることを確認しました。
-- Overflow: desktop `scrollWidth=1026`, wide `scrollWidth=2052`, mobile `scrollWidth=390` で横スクロールなし。
+- Blank-page check: desktop, wide, and mobile all render first meaningful content.
+- Framework overlay: no Astro/Vite error overlay visible.
+- Console health: Playwright captured no `warning` or `error` logs for final screenshots.
+- Overflow: desktop `scrollWidth=863`, wide `scrollWidth=2052`, mobile `scrollWidth=390`.
+- Browser path: in-app Browser was available and used for live visual checks. Browser screenshot saving to the worktree failed with `EPERM`, so saved evidence was captured with Playwright Chromium.
 
 **Patches Made Since Previous QA**
 
-- Header CTA label and outline behavior adjusted.
-- Jagged route asset `public/assets/systems-hero-concept-route.png` removed.
-- Hero route image path restored to `public/assets/systems-hero-route-map.png`.
-- Desktop station labels restored and resized to sit on the smooth route map without heavy overlap.
-- Hero copy, route map sizing, and desktop route station behavior adjusted.
-- Planner right card simplified and density reduced.
-- Pricing table rebuilt with four columns.
-- Process line, case cards, and contact CTA compressed to match the concept.
-- Primary CTA copy and arrows aligned to the reference.
+- Desktop hero grid widened so the heading no longer breaks into four lines on wide screens.
+- Desktop `wbr` breaks are suppressed while mobile wrapping remains enabled.
+- Route image placement now uses shared `--route-map-left`, `--route-map-top`, and `--route-map-width` variables.
+- Station label overlay was moved from route-container-relative coordinates to image-relative coordinates.
+- Route image width and left offset were tuned so the flag, 05 highlight, and 06 label fit inside the hero at reference width.
+- Station 03〜06 label positions were staggered to reduce overlap and keep the center route readable.
+
+**Validation**
+
+- `npm run build` passed when run outside the sandbox. The sandboxed run failed first with Vite `spawn EPERM`.
+- `npx prettier --check --plugin=prettier-plugin-astro src/pages/index.astro src/styles/global.css design-qa.md` passed.
+- Playwright screenshot capture passed at `863x900`, `2052x900`, `390x844`, and full-page `863px`.
 
 **Follow-up Polish**
 
-- If exact pixel fidelity is required, create separate icon/image assets for the service route labels and rebuild the whole page against a fixed desktop artboard height. That would trade off some live responsive readability.
+- For stricter pixel fidelity, generate or compose a dedicated hero-route image that bakes the station icons and all label text into one bitmap. That would more closely match the concept art, but reduces live text accessibility and responsive control.
+- Service route label icons are still not image/icon-library matched to the concept. They remain a lower-priority polish item.
 
 final result: passed
