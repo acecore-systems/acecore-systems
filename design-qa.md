@@ -1,37 +1,59 @@
 **Findings**
 
 - P0/P1/P2 の未解決事項はありません。
-- P3 として、生成済みルートマップ画像そのものの道路線・旗・円形マーカーの造形は参照画像と完全なピクセル一致ではありません。ただし、今回指摘された「ロードマップと文字のずれ」は解消済みです。
+- P3 として、コンセプト画像は生成モック由来の圧縮された縦密度のため、実装側は完全なピクセル一致ではありません。現状はレイアウト構造、色、主要CTA、ロードマップ配置、表・カード密度を合わせたうえで、可読性とレスポンシブ崩れを優先しています。
+- P3 として、サービス全体像の左ラベル内アイコンは未実装です。参照の小アイコンは別途アイコンセットまたは画像アセット化すればさらに近づけられます。
 
 **Comparison Target**
 
-- 参照画像: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-c0391f95-147b-4a76-9076-33698b67547d.png`
-- ずれ指摘のスクリーンショット: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-3b564c92-1f2c-41df-acd0-d2ef3d3af3c2.png`
-- 検証 URL: `http://127.0.0.1:4327/`
-- 検証ブラウザ: Browser plugin
-- 検証ビューポート: desktop `1026x900`, mobile `390x844`
-- 状態: トップページ初期表示、プランナー初期選択、プランナーの「選択をクリア」操作
+- Source visual truth: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-6aa7a799-02be-4e66-b2c3-9cda2c16a3df.png`
+- Earlier rendered mismatch: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-e6afe253-9904-4363-ba44-914acc4f73a7.png`
+- Implementation URL: `http://127.0.0.1:4327/`
+- Implementation screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass6-full.png`
+- Mobile smoke screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass6-mobile.png`
+- Side-by-side comparison evidence: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass2-side-by-side.png`
+- Viewport: desktop `863x1822`, mobile `390x844`
+- State: top page initial state, planner default selections, one planner checkbox interaction.
 
-**Focused Comparison Evidence**
+**Focused Region Evidence**
 
-- Hero: ルートマップ画像を右カラム内の `cover` クロップから、実画像比率を保った座標配置に変更し、駅ラベルを画像内マーカーの直下へ寄せました。
-- Hero: 右側画像が見出しを覆っていたため、見出しを前面、ルート画像を背面、駅ラベルをルート画像より前面に整理しました。
-- Hero: 画像の左端・上端が矩形に見えていたため、マスクフェードで暗いヒーロー背景になじませました。
-- Hero: 右端の `06 運用改善` ラベルを内側に戻し、ラベルの右端切れを避けました。
-- Mobile: 見出しが任意位置で割れないよう、`wbr` による意味単位の改行候補を追加しました。
+- Hero: `systems-hero-route-map.png` のSVG的な近似表示から、コンセプト由来のラスター画像 `systems-hero-concept-route.png` に差し替え、暗背景部分を透過処理して四角い画像境界を抑えました。
+- Hero: 見出しをコンセプト同様に2行構成へ戻し、コピーを上げ、ロードマップと文字のずれ・重なりを解消しました。
+- CTA: ヘッダーCTAをアウトライン表示にし、ヒーロー・相談カード・フォームの主要ボタンに参照と同じ矢印付き文言を入れました。
+- Route table: 行高、ラベル幅、セル文字、リンク位置を圧縮し、参照の薄い表レイアウトに寄せました。
+- Planner: 右カードを「おすすめルートの縦リスト + ボタン」主体へ戻し、余計な説明表を削って参照の構成に合わせました。
+- Pricing / Process / Cases / Contact: 料金表に期間列を追加し、導入プロセスをカード型からライン型へ寄せ、下部CTAを2列フォームに戻して全体の密度を上げました。
+
+**Required Fidelity Surfaces**
+
+- Fonts and typography: 日本語ゴシックの太い見出し、太めのUIラベル、小さな表テキストへ調整。ヒーロー見出しは2行、各表・カードは参照に合わせて小さめのサイズへ圧縮済み。
+- Spacing and layout rhythm: hero `402px`、route `343px`、planner `340px`、contact `241px` まで圧縮。初期実装の縦長さから大幅に改善済み。
+- Colors and tokens: navy / teal / gold / white の参照パレットに統一。ヘッダーCTA、Webルート、アクティブステップ、フォームCTAのgold表現を調整済み。
+- Image quality and asset fidelity: ヒーローロードマップは近似SVGではなくラスター画像として配置。透明化により背景となじませ、参照の道路・旗・円形マーカーに寄せました。
+- Copy and content: ヒーローCTAを「料金を見る」へ短縮し、CTA矢印、料金表の期間列、会社名入力、相談タグを参照に合わせて追加しました。
 
 **Rendered QA**
 
-- Desktop first viewport: Browser screenshot で、見出し全文が表示され、駅ラベルがルートマーカー下へ揃っていることを確認しました。
-- Mobile first viewport: Browser screenshot で、見出しの右端切れがなく、駅カードが 2 カラムで崩れないことを確認しました。
-- Overflow: desktop は `clientWidth=1011`, `scrollWidth=1011`、mobile は `clientWidth=375`, `scrollWidth=375` で横スクロールなし。
-- Console: desktop/mobile ともに Browser console の warning/error は 0 件。
-- Interaction: プランナーの「選択をクリア」クリックで、選択数が `2` から `0` に更新されることを確認しました。
+- Page identity: `http://127.0.0.1:4327/`, title `業務システム・アプリ開発 | Acecore Systems`
+- Blank-page check: desktop/mobile ともに first meaningful screen が表示されました。
+- Framework overlay: Astro/Vite error overlay なし。
+- Console health: desktop/mobile とも warning/error なし。
+- Screenshot evidence: `concept-pass6-full.png`, `concept-pass6-mobile.png`, `concept-pass2-side-by-side.png`
+- Interaction proof: `input[data-area="data"]` をチェック後、`.route-brief-list li.active` が `01`, `04`, `05` になり、相談リンクの `scope` が更新されることを確認しました。
+- Overflow: desktop `scrollWidth=863`, mobile `scrollWidth=390` で横スクロールなし。
 
-**Build / Implementation Checks**
+**Patches Made Since Previous QA**
 
-- `npm run build` passed.
-- Astro 6.4.6 / Vite の `astro/entrypoints/prerender` 解決に失敗していたため、既存 Acecore 系リポジトリと同じ Vite alias を `astro.config.mjs` に追加しました。
-- Browser runtime からワークスペースへのスクリーンショット保存は `EPERM` で拒否されたため、スクリーンショットは Browser から会話上へ直接表示して目視比較しました。
+- Header CTA label and outline behavior adjusted.
+- Hero route asset replaced with `public/assets/systems-hero-concept-route.png`.
+- Hero copy, route map sizing, and desktop route station behavior adjusted.
+- Planner right card simplified and density reduced.
+- Pricing table rebuilt with four columns.
+- Process line, case cards, and contact CTA compressed to match the concept.
+- Primary CTA copy and arrows aligned to the reference.
+
+**Follow-up Polish**
+
+- If exact pixel fidelity is required, create separate icon/image assets for the service route labels and rebuild the whole page against a fixed desktop artboard height. That would trade off some live responsive readability.
 
 final result: passed

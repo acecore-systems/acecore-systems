@@ -1,5 +1,5 @@
 ---
-import site from '../data/site.json'
+import site from "../data/site.json";
 ---
 
 <header class="site-header">
@@ -11,6 +11,6 @@ import site from '../data/site.json'
     <nav class="nav" aria-label="メインナビゲーション">
       {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
-    <a class="header-cta" href="/contact/">相談する</a>
+    <a class="header-cta" href="/contact/">お問い合わせ</a>
   </div>
 </header>
