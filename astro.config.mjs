@@ -9,6 +9,9 @@ const astroPrerenderEntry = fileURLToPath(
 export default defineConfig({
   output: "static",
   site: "https://systems.acecore.net",
+  devToolbar: {
+    enabled: false,
+  },
   vite: {
     resolve: {
       alias: {

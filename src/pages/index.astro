@@ -1,9 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import home from "../data/home.json";
-import pricing from "../data/pricing.json";
 import site from "../data/site.json";
-import works from "../data/works.json";
 
 const routeSteps = [
   {
@@ -130,9 +128,63 @@ const plannerGroups = [
 const plannerTabs = ["現場業務", "データ・連携", "Web・サイト", "運用・改善"];
 const plannerOptions = plannerGroups.flatMap((group) => group.options);
 
-const pricingRows = pricing.items.slice(0, 4);
-const pricingPeriods = ["1〜2ヶ月", "2〜4ヶ月", "4ヶ月〜", "継続"];
-const cases = works.cases.slice(0, 3);
+const pricingRows = [
+  {
+    label: "小さく始めるプラン",
+    note: "課題整理〜最小構成のシステム開発",
+    period: "1〜2ヶ月",
+    price: "30〜80万円",
+  },
+  {
+    label: "標準プラン",
+    note: "業務・データ・Webを含む運用基盤を構築",
+    period: "2〜4ヶ月",
+    price: "80〜250万円",
+  },
+  {
+    label: "拡張プラン",
+    note: "複数システム連携・高度なカスタマイズ",
+    period: "4ヶ月〜",
+    price: "250万円〜",
+  },
+  {
+    label: "運用サポート",
+    note: "保守・改善・追加開発の継続サポート",
+    period: "継続",
+    price: "月額2〜10万円〜",
+  },
+];
+const cases = [
+  {
+    title: "製造業｜受注・工程管理システム",
+    category: "業務・データ・管理画面",
+    summary: "紙とExcelでの管理を一元化し、進捗の見える化と二重入力を削減。",
+    tags: ["業務", "データ", "管理画面"],
+    tone: "teal",
+  },
+  {
+    title: "サービス業｜予約・顧客管理",
+    category: "予約・顧客情報・請求",
+    summary: "予約・顧客情報・請求を一元化。スタッフの負担を大幅に削減。",
+    tags: ["業務", "Web", "データ活用"],
+    tone: "teal",
+  },
+  {
+    title: "コーポレートサイト機能強化",
+    category: "CMS・検索・フォーム",
+    summary:
+      "CMS・検索・フォーム・AIチャットを導入し、問い合わせ対応と更新を効率化。",
+    tags: ["Web", "CMS", "AIチャット"],
+    tone: "gold",
+  },
+  {
+    title: "卸売業｜データ連携・自動化",
+    category: "基幹・販売・在庫連携",
+    summary: "基幹・販売・在庫をつなぎ、集計と発注業務を自動化。",
+    tags: ["データ", "自動化", "運用改善"],
+    tone: "olive",
+  },
+];
 ---
 
 <BaseLayout
@@ -347,7 +399,7 @@ const cases = works.cases.slice(0, 3);
             <article>
               <strong>{item.label}</strong>
               <p>{item.note}</p>
-              <small>{pricingPeriods[index]}</small>
+              <small>{item.period}</small>
               <span>{item.price}</span>
             </article>
           ))
@@ -387,10 +439,15 @@ const cases = works.cases.slice(0, 3);
     <div class="container case-grid">
       {
         cases.map((item) => (
-          <article class="case-card">
+          <article class={`case-card tone-${item.tone}`}>
             <span>{item.category}</span>
             <h3>{item.title}</h3>
             <p>{item.summary}</p>
+            <div class="case-tags" aria-label="支援領域">
+              {item.tags.map((tag) => (
+                <em>{tag}</em>
+              ))}
+            </div>
           </article>
         ))
       }
