@@ -394,32 +394,29 @@ main {
 
 .hero-route-map {
   position: absolute;
-  top: clamp(-18px, -1.2vw, -8px);
-  left: clamp(-185px, -16vw, -122px);
-  width: clamp(560px, 67vw, 740px);
+  top: clamp(-34px, -2vw, -14px);
+  left: clamp(-260px, -18vw, -150px);
+  width: clamp(760px, 76vw, 980px);
   height: auto;
   max-width: none;
   -webkit-mask-image:
-    linear-gradient(90deg, transparent 0, #000 4%, #000 100%),
-    linear-gradient(180deg, #000 0, #000 100%);
+    linear-gradient(90deg, transparent 0, #000 20%, #000 100%),
+    linear-gradient(180deg, transparent 0, #000 10%, #000 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(90deg, transparent 0, #000 4%, #000 100%),
-    linear-gradient(180deg, #000 0, #000 100%);
+    linear-gradient(90deg, transparent 0, #000 20%, #000 100%),
+    linear-gradient(180deg, transparent 0, #000 10%, #000 100%);
   mask-composite: intersect;
-  opacity: 0.96;
+  opacity: 0.98;
   pointer-events: none;
 }
 
 .route-stations {
   position: absolute;
   z-index: 2;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
+  inset: 0;
+  display: block;
+  min-height: 334px;
   list-style: none;
   padding: 0;
 }
@@ -431,8 +428,8 @@ main {
 .station {
   position: absolute;
   display: grid;
-  gap: 4px;
-  width: 108px;
+  gap: 2px;
+  width: 84px;
   min-width: 0;
   color: rgba(255, 255, 255, 0.78);
   text-align: center;
@@ -448,42 +445,42 @@ main {
 
 .station:nth-child(1) {
   top: 73%;
-  left: 8%;
+  left: 10%;
 }
 
 .station:nth-child(2) {
   top: 62%;
-  left: 38%;
+  left: 36%;
   transform: translateX(-50%);
 }
 
 .station:nth-child(3) {
   top: 54%;
-  left: 51%;
+  left: 49%;
   transform: translateX(-50%);
 }
 
 .station:nth-child(4) {
   top: 61%;
-  left: 61%;
+  left: 62%;
   transform: translateX(-50%);
 }
 
 .station:nth-child(5) {
   top: 50%;
-  left: 76%;
+  left: 77%;
   transform: translateX(-50%);
 }
 
 .station:nth-child(6) {
   top: 56%;
-  left: 92%;
+  left: 91%;
   transform: translateX(-50%);
 }
 
 .station-active {
   justify-self: center;
-  min-width: 112px;
+  min-width: 96px;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -501,21 +498,21 @@ main {
 .station-number {
   display: block;
   color: var(--gold);
-  font-size: 0.74rem;
+  font-size: 0.62rem;
   font-weight: 950;
 }
 
 .station strong {
   color: white;
-  font-size: 0.82rem;
-  line-height: 1.35;
+  font-size: 0.66rem;
+  line-height: 1.25;
 }
 
 .station small {
   color: rgba(255, 255, 255, 0.68);
-  font-size: 0.62rem;
+  font-size: 0.46rem;
   font-weight: 750;
-  line-height: 1.45;
+  line-height: 1.25;
 }
 
 .hero-route .station:not(.station-active) small {

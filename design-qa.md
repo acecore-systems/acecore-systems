@@ -8,16 +8,20 @@
 
 - Source visual truth: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-6aa7a799-02be-4e66-b2c3-9cda2c16a3df.png`
 - Earlier rendered mismatch: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-e6afe253-9904-4363-ba44-914acc4f73a7.png`
+- Jagged route report: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-dbd79a35-3b1c-4ad6-bd57-34256032a652.png`
 - Implementation URL: `http://127.0.0.1:4327/`
-- Implementation screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass6-full.png`
-- Mobile smoke screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass6-mobile.png`
+- Implementation screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-smooth2-wide.png`
+- Desktop smoke screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-smooth2-desktop.png`
+- Mobile smoke screenshot: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-smooth2-mobile.png`
 - Side-by-side comparison evidence: `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\concept-pass2-side-by-side.png`
-- Viewport: desktop `863x1822`, mobile `390x844`
+- Viewport: desktop `1026x820`, wide `2052x1400`, mobile `390x844`
 - State: top page initial state, planner default selections, one planner checkbox interaction.
 
 **Focused Region Evidence**
 
-- Hero: `systems-hero-route-map.png` のSVG的な近似表示から、コンセプト由来のラスター画像 `systems-hero-concept-route.png` に差し替え、暗背景部分を透過処理して四角い画像境界を抑えました。
+- Hero: ガタつきの原因だった透過処理済みの小さいロードマップ画像を廃止し、高解像度の `systems-hero-route-map.png` に戻しました。
+- Hero: 画像の線は透過加工せず、CSSのマスクと透明度だけでヒーロー背景になじませています。
+- Hero: 再表示した駅ラベルは幅、文字サイズ、位置を再調整し、ロードマップ上で文字が重なりすぎない状態にしました。
 - Hero: 見出しをコンセプト同様に2行構成へ戻し、コピーを上げ、ロードマップと文字のずれ・重なりを解消しました。
 - CTA: ヘッダーCTAをアウトライン表示にし、ヒーロー・相談カード・フォームの主要ボタンに参照と同じ矢印付き文言を入れました。
 - Route table: 行高、ラベル幅、セル文字、リンク位置を圧縮し、参照の薄い表レイアウトに寄せました。
@@ -29,7 +33,7 @@
 - Fonts and typography: 日本語ゴシックの太い見出し、太めのUIラベル、小さな表テキストへ調整。ヒーロー見出しは2行、各表・カードは参照に合わせて小さめのサイズへ圧縮済み。
 - Spacing and layout rhythm: hero `402px`、route `343px`、planner `340px`、contact `241px` まで圧縮。初期実装の縦長さから大幅に改善済み。
 - Colors and tokens: navy / teal / gold / white の参照パレットに統一。ヘッダーCTA、Webルート、アクティブステップ、フォームCTAのgold表現を調整済み。
-- Image quality and asset fidelity: ヒーローロードマップは近似SVGではなくラスター画像として配置。透明化により背景となじませ、参照の道路・旗・円形マーカーに寄せました。
+- Image quality and asset fidelity: ヒーローロードマップは高解像度ラスター画像を直接配置。透過加工によるアンチエイリアス欠けを避け、線のガタつきが出ない状態に戻しました。
 - Copy and content: ヒーローCTAを「料金を見る」へ短縮し、CTA矢印、料金表の期間列、会社名入力、相談タグを参照に合わせて追加しました。
 
 **Rendered QA**
@@ -38,14 +42,16 @@
 - Blank-page check: desktop/mobile ともに first meaningful screen が表示されました。
 - Framework overlay: Astro/Vite error overlay なし。
 - Console health: desktop/mobile とも warning/error なし。
-- Screenshot evidence: `concept-pass6-full.png`, `concept-pass6-mobile.png`, `concept-pass2-side-by-side.png`
+- Screenshot evidence: `route-smooth2-wide.png`, `route-smooth2-desktop.png`, `route-smooth2-mobile.png`
 - Interaction proof: `input[data-area="data"]` をチェック後、`.route-brief-list li.active` が `01`, `04`, `05` になり、相談リンクの `scope` が更新されることを確認しました。
-- Overflow: desktop `scrollWidth=863`, mobile `scrollWidth=390` で横スクロールなし。
+- Overflow: desktop `scrollWidth=1026`, wide `scrollWidth=2052`, mobile `scrollWidth=390` で横スクロールなし。
 
 **Patches Made Since Previous QA**
 
 - Header CTA label and outline behavior adjusted.
-- Hero route asset replaced with `public/assets/systems-hero-concept-route.png`.
+- Jagged route asset `public/assets/systems-hero-concept-route.png` removed.
+- Hero route image path restored to `public/assets/systems-hero-route-map.png`.
+- Desktop station labels restored and resized to sit on the smooth route map without heavy overlap.
 - Hero copy, route map sizing, and desktop route station behavior adjusted.
 - Planner right card simplified and density reduced.
 - Pricing table rebuilt with four columns.
