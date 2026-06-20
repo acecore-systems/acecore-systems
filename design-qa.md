@@ -12,6 +12,7 @@
 - P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
 - P3: ルート表と導入ステップの接続線は今回のパスで小さな矢印頭を追加し、参照にある方向性のある細線表現へ寄せました。モバイルでは表が縦積みになるため追加矢印頭を非表示にしています。
 - P3: Before/After右側の線画は今回のパスでデスクトップのみ少し拡大し、横に薄く伸びて見えていた状態を参照の人物・画面の存在感へ近づけました。モバイルでは拡大を解除しています。
+- P3: フッター左のブランド表示は今回のパスでAマークを追加し、参照と同じ「マーク + Acecore Systems」の形に戻しました。フッターpaddingを調整して最終ページ高 `1822px` は維持しています。
 
 **Comparison Target**
 
@@ -28,6 +29,7 @@
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-normalized-wide-compare.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\arrows-route-process-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mid-before-pricing-compare-2x.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\bottom-contact-footer-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-map-fix-compare.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mobile-390-route-map-fix.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\audit-full-compare-863.png`
@@ -59,6 +61,7 @@
 - Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
 - Connector arrows: route-table connectors and the process-line connectors now include small arrowheads in desktop layouts, matching the source's directional line treatment more closely than the previous plain horizontal strokes.
 - Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. The latest pass restored the reference copy, field placeholders, submit label, and desktop column balance so the center form starts closer to the concept position, while keeping the band at `138px`.
+- Footer brand: the footer now includes the same A mark used by the header, matching the reference footer's brand lockup rather than rendering text alone.
 - Planner options: the checklist now uses the concept's 8 visible options in row-major order, with the same checked items as the reference.
 - Planner route brief: the recommendation list body copy and number colors now follow the concept more closely.
 
@@ -86,6 +89,7 @@
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
 - Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt again after lowering route table, planner, pricing, process, and case-card font weights without changing section heights.
 - Focused contact evidence: `audit-focus-sections-863.png` was rebuilt after matching the contact copy, placeholders, submit label, and desktop form column position while preserving the band height at `138px`.
+- Focused footer evidence: `bottom-contact-footer-compare-2x.png` was rebuilt after adding the footer A mark and restoring the final page height.
 - Focused planner evidence: `focus-planner-compare.png` was rebuilt after aligning checklist copy, order, and default checked state.
 
 **Patches Made Since Previous QA**
@@ -117,11 +121,12 @@
 - Rebuilt `systems-hero-route-map-wide.png`, `systems-hero-route-map-wide-2x.png`, and `systems-hero-route-map-wide-3x.png` so the wide route is no longer a small centered full-hero raster. The regenerated asset keeps the concept header/copy layer and redraws the route larger from the concept crop, with a small top-right texture patch to remove duplicate CTA text from the route crop.
 - Added desktop arrowheads to route-table and process-line connectors, with a responsive guard that hides the added arrowheads once the route table or process line stacks on narrower viewports.
 - Slightly scaled the desktop workflow illustration in the Before/After section, then reset that transform for mobile to preserve the stacked layout.
+- Added the footer brand mark and adjusted the homepage footer padding so the bottom brand lockup matches the source while keeping the final desktop page height at `1822px`.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
-- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `mid-before-pricing-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
+- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
 - Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, desktop 3x and wide 2x rasters selected, and desktop page height is `1822px`.
 
 final result: passed

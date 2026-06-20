@@ -1917,7 +1917,24 @@ main {
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 14px;
   align-items: center;
-  padding-block: 8px;
+  padding-block: 10px;
+}
+
+.footer-brand {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 6px;
+  align-items: center;
+}
+
+.footer-brand .brand-mark {
+  width: 18px;
+  height: 20px;
+  color: white;
+}
+
+.footer-brand p {
+  grid-column: 1 / -1;
 }
 
 .home-page .footer-inner strong {
