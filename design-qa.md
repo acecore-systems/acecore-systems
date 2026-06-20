@@ -3,7 +3,7 @@
 - P0/P1/P2 の未解決事項はありません。
 - P3: ページ全体高さは参照 `1822px` に対して実装も `1822px` です。
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
-- P3: デスクトップ/ワイド用のヒーローは今回のパスで3xラスタへ切り替えました。`863x405` と `1240x405` の表示サイズは変えず、より大きいPNGを縮小表示してルート線の段差感を抑えています。
+- P3: デスクトップのヒーローは3xラスタを維持し、wide用ヒーローは今回のパスで2xラスタへ戻しました。`863x405` と `1240x405` の表示サイズは変えず、人工アップスケールの縮小で出る線のにじみを抑えています。
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
 - P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、今回のパスで左説明・中央フォーム・右連絡枠の3カラム比率も参照へ寄せました。帯の高さは `138px` に固定して参照の縦リズムを維持しています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
@@ -32,9 +32,9 @@
 
 **Focused Region Evidence**
 
-- Hero route map: desktop now uses concept-derived 3x rasters. `863px` uses a `2589x1215` concept crop scaled to `863x405`; `1240px` uses a dedicated `3720x1215` non-distorted wide crop scaled to `1240x405`.
+- Hero route map: desktop now uses concept-derived rasters. `863px` uses a `2589x1215` concept crop scaled to `863x405`; `1240px` uses a dedicated `2480x810` non-distorted wide crop scaled to `1240x405`.
 - Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
-- Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=405` and selects `systems-hero-route-map-wide-3x.png`, so the route is no longer horizontally distorted by `object-fit: fill` or roughened by lower-resolution raster sampling.
+- Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=405` and selects `systems-hero-route-map-wide-2x.png`, so the route is no longer horizontally distorted by `object-fit: fill` and avoids the extra blur from scaling an artificially enlarged 3x source back down.
 - Route stability: desktop route layer has `transform: none`, `mask: none`, and `object-fit: cover`; no generated SVG/CSS route overlay is used. The previous masking and rectangle cleanup that caused jagged-looking gaps has been removed.
 - Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
 - Mid/lower typography tone: route table cells, planner tabs/options, route-brief numbers, pricing values, process labels, and case-card headings now use lighter weights without changing their grid dimensions.
@@ -57,9 +57,9 @@
 - Blank-page check: desktop and mobile render first meaningful content.
 - Overflow: desktop `scrollWidth=863` at `863px`; mobile `scrollWidth=390` at `390px`; no horizontal overflow.
 - Final desktop page height: implementation `1822px` versus source `1822px`.
-- Hero map source: desktop `863px` uses `systems-hero-route-map-concept-3x.png`; wide `1240px` uses `systems-hero-route-map-wide-3x.png`; mobile uses `systems-hero-route-map.png`.
+- Hero map source: desktop `863px` uses `systems-hero-route-map-concept-3x.png`; wide `1240px` uses `systems-hero-route-map-wide-2x.png`; mobile uses `systems-hero-route-map.png`.
 - Hero route metrics: desktop `863px` image reports `naturalWidth=2589`, `naturalHeight=1215`; rendered size is `863x405`.
-- Wide route metrics: desktop `1240px` image reports `naturalWidth=3720`, `naturalHeight=1215`; rendered size is `1240x405`.
+- Wide route metrics: desktop `1240px` image reports `naturalWidth=2480`, `naturalHeight=810`; rendered size is `1240x405`.
 - Contact metric: desktop contact band reports `height=138px` after the form controls were visually reduced.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
@@ -76,7 +76,7 @@
 
 - Regenerated the desktop hero route asset from the concept hero crop instead of trying to mask out individual route/text regions.
 - Added `systems-hero-route-map-wide.png` and `systems-hero-route-map-wide-2x.png` so `1240px` desktop viewports use a non-distorted full-hero raster.
-- Replaced the forced 2x desktop/wide hero route sources with `systems-hero-route-map-concept-3x.png` and `systems-hero-route-map-wide-3x.png`, so the route line and small labels are downsampled from larger rasters without changing layout.
+- Replaced the forced low-density desktop route source with `systems-hero-route-map-concept-3x.png`, and kept wide on the cleaner `systems-hero-route-map-wide-2x.png` source so the route line is not softened by an extra artificial 3x downsample.
 - Changed the desktop hero image from `object-fit: fill` to `object-fit: cover`, preventing horizontal route-map distortion.
 - Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
@@ -94,12 +94,12 @@
 - Adjusted the homepage contact-grid desktop columns from an even form-heavy ratio to a wider left-copy column, narrower center form, and stable right contact-method column.
 - Reworked planner options to match the concept checklist and default checked state.
 - Updated route step body copy and route-brief number colors for the recommendation card.
-- Rebuilt `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `wide-1240-route-map-fix.png`, `route-map-fix-compare.png`, and `mobile-390-route-map-fix.png` after switching the hero route rasters to 3x sources and preserving the latest typography/contact-band pass.
+- Rebuilt `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `wide-1240-route-map-fix.png`, `route-map-fix-compare.png`, and `mobile-390-route-map-fix.png` after returning the wide hero route raster to the cleaner 2x source and preserving the latest typography/contact-band pass.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, and mobile `390x844`.
 - Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `wide-1240-route-map-fix.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, 3x desktop/wide rasters selected, and desktop page height is `1822px`.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, desktop 3x and wide 2x rasters selected, and desktop page height is `1822px`.
 
 final result: passed
