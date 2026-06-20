@@ -737,7 +737,7 @@ main {
   padding: 7px 12px;
   color: var(--text);
   font-size: 0.66rem;
-  font-weight: 850;
+  font-weight: 800;
   line-height: 1.45;
   text-align: center;
 }
@@ -748,7 +748,7 @@ main {
   right: -20px;
   width: 40px;
   height: 1px;
-  background: currentColor;
+  background: var(--route-line, currentColor);
   content: "";
 }
 
@@ -756,20 +756,20 @@ main {
   display: none;
 }
 
-.tone-gold .route-cells span {
-  color: var(--gold-strong);
+.tone-gold .route-cells {
+  --route-line: var(--gold);
 }
 
-.tone-teal .route-cells span {
-  color: var(--teal);
+.tone-teal .route-cells {
+  --route-line: var(--teal);
 }
 
-.tone-blue .route-cells span {
-  color: var(--blue);
+.tone-blue .route-cells {
+  --route-line: var(--blue);
 }
 
-.tone-gray .route-cells span {
-  color: var(--navy-2);
+.tone-gray .route-cells {
+  --route-line: var(--navy-2);
 }
 
 .planner-grid {

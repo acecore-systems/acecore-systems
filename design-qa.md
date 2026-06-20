@@ -6,6 +6,7 @@
 - P3: 広いデスクトップ用のヒーローは `1240x405` の専用ラスタで横伸びを止めました。右端は暗い余白として延長しており、参照幅のルート形状を優先しています。
 - P3: Before/Afterの右イラストはコンセプトよりまだ少し強く見えますが、`object-fit: contain` で人物と画面を含む全体構図を表示し、カード幅とイラスト位置も参照に近づけました。
 - P3: 問い合わせ帯のフォーム外枠は参照に近づけましたが、入力欄のフォントウェイトはまだやや強めです。
+- P3: ルート表は今回のパスでセル文字を落ち着いた濃紺に戻し、矢印だけをルート色にして参照の情報密度へ近づけました。
 - P3: プランナー内の文字ウェイトは参照よりやや強いものの、選択肢の内容・順序・初期チェックはコンセプトに合わせました。料金表・開発ステップ・事例カードは今回のパスで文字ウェイトを落とし、全体密度を参照に近づけました。
 
 **Comparison Target**
@@ -34,6 +35,7 @@
 - Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
 - Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=405` and selects `systems-hero-route-map-wide.png`, so the route is no longer horizontally distorted by `object-fit: fill`.
 - Route stability: desktop route layer has `transform: none`, `mask: none`, and `object-fit: cover`; no generated SVG/CSS route overlay is used. The previous masking and rectangle cleanup that caused jagged-looking gaps has been removed.
+- Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
 - Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
@@ -57,6 +59,7 @@
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, and the section's desktop vertical rhythm.
+- Focused route-table evidence: `audit-focus-sections-863.png` was rebuilt after separating route-cell text color from route connector accent color.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt after lowering pricing/process/case text weight and density.
 - Focused contact evidence: `focus-bottom-compare.png` was rebuilt after removing the quick-form panel background.
@@ -69,6 +72,7 @@
 - Changed the desktop hero image from `object-fit: fill` to `object-fit: cover`, preventing horizontal route-map distortion.
 - Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
+- Changed route table body cells to dark text with colored connector lines only, reducing the overly saturated route-table body from the previous pass.
 - Tuned the Before/After section with a dedicated `change-section` class, narrower card columns, a smaller right illustration, and desktop-only extra vertical rhythm.
 - Changed the Before/After right illustration from a cropped cover frame to `object-fit: contain`, restoring the concept's full people-plus-dashboard line-art composition.
 - Reduced pricing table, process line, and case-card typography weight/size to better match the concept's lighter lower-page density.
