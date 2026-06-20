@@ -594,6 +594,10 @@ main {
   padding-bottom: 18.8px;
 }
 
+.home-page .case-section {
+  padding-bottom: 21.8px;
+}
+
 .section-head {
   max-width: 760px;
   margin-bottom: 10px;
@@ -1388,7 +1392,7 @@ main {
   position: relative;
   overflow: hidden;
   min-height: 76px;
-  padding: 7px 7px 12px;
+  padding: 13px 7px 12px;
 }
 
 .home-page .case-card::after {
@@ -1437,6 +1441,10 @@ main {
 
 .case-card h3 {
   margin-top: 5px;
+}
+
+.home-page .case-card h3 {
+  margin-top: 0;
 }
 
 .case-card p,

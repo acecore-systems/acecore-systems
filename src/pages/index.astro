@@ -491,7 +491,7 @@ const cases = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section case-section">
     <div class="container split-head">
       <div class="section-head">
         <h2>導入事例</h2>
@@ -503,7 +503,6 @@ const cases = [
       {
         cases.map((item) => (
           <article class={`case-card tone-${item.tone}`}>
-            <span>{item.category}</span>
             <h3>{item.title}</h3>
             <p>{item.summary}</p>
             <div class="case-tags" aria-label="支援領域">
