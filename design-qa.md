@@ -4,6 +4,7 @@
 - P3: ページ全体高さは参照 `1822px` に対して実装 `1821px` で、差分は `1px` です。
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
 - P3: Before/Afterの右イラストはコンセプトよりまだ少し強く見えますが、人物が切れて見える状態は改善しました。
+- P3: 問い合わせ帯のフォーム外枠は参照に近づけましたが、入力欄のフォントウェイトはまだやや強めです。
 
 **Comparison Target**
 
@@ -30,6 +31,8 @@
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
 - Before/After flow: the card and illustration columns remain rebalanced from the previous pass, matching the concept's wider line-art presence.
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
+- Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
+- Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept.
 
 **Rendered QA**
 
@@ -43,6 +46,8 @@
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `focus-before-after-compare.png` was rebuilt after widening the illustration slot; the right line-art no longer clips both side figures as aggressively.
+- Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
+- Focused contact evidence: `focus-bottom-compare.png` was rebuilt after removing the quick-form panel background.
 
 **Patches Made Since Previous QA**
 
@@ -53,12 +58,14 @@
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
 - Tuned the Before/After illustration slot to `220px` wide with a small left offset, while resetting mobile to full-width behavior.
 - Changed route/white section surfaces from pure white to `#fbfcfd` to better match the concept's softer page tone.
+- Replaced the process section copy/data with `developmentSteps` so it matches the concept's "開発の進め方" section.
+- Removed the homepage contact quick-form panel background and restored contact-band padding to keep the final page height aligned.
 - Rebuilt `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `desktop-863-concept-route.png`, `wide-1240-concept-route.png`, and `mobile-390-concept-route.png`.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, and mobile `390x844`.
-- Saved comparison evidence: `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `focus-before-after-compare.png`, and `wide-1240-concept-route.png`.
+- Saved comparison evidence: `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, and `wide-1240-concept-route.png`.
 - Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image.
 
 final result: passed

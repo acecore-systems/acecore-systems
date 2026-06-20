@@ -1678,7 +1678,7 @@ main {
 }
 
 .home-page .contact-band {
-  padding-block: 7px;
+  padding-block: 14px;
 }
 
 .home-page .contact-grid {
@@ -1784,6 +1784,12 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px 7px;
   padding: 7px;
+}
+
+.home-page .contact-band .quick-form {
+  border-color: transparent;
+  background: transparent;
+  padding: 0;
 }
 
 .contact-band .quick-form label {

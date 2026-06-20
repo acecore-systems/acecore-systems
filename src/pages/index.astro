@@ -158,6 +158,40 @@ const pricingRows = [
     price: "月額2〜10万円〜",
   },
 ];
+
+const developmentSteps = [
+  {
+    number: "01",
+    title: "現状整理・要件定義",
+    body: "課題を整理し、やるべきことを明確にします。",
+  },
+  {
+    number: "03",
+    title: "設計・プロトタイプ",
+    body: "業務・データ・画面の設計を行います。",
+  },
+  {
+    number: "03",
+    title: "開発・テスト",
+    body: "小さく作って確認しながら開発を進めます。",
+  },
+  {
+    number: "04",
+    title: "小さく公開・導入",
+    body: "必要な範囲から公開し、現場で使い始めます。",
+  },
+  {
+    number: "05",
+    title: "改善・拡張",
+    body: "フィードバックをもとに改善・拡張します。",
+  },
+  {
+    number: "06",
+    title: "運用サポート",
+    body: "安心して使い続けられるよう支援します。",
+  },
+];
+
 const cases = [
   {
     title: "製造業｜受注・工程管理システム",
@@ -437,12 +471,12 @@ const cases = [
   <section class="section white">
     <div class="container">
       <div class="section-head">
-        <h2>導入の進め方</h2>
-        <p>要件整理から小さく公開し、改善を重ねながら定着させます。</p>
+        <h2>開発の進め方</h2>
+        <p>段階的に進めるから、リスクを抑えて成果につながります。</p>
       </div>
       <ol class="process-line">
         {
-          routeSteps.map((step) => (
+          developmentSteps.map((step) => (
             <li>
               <span>{step.number}</span>
               <strong>{step.title}</strong>
