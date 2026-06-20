@@ -2029,7 +2029,7 @@ main {
   }
 }
 
-@media (min-width: 761px) and (max-width: 1100px) {
+@media (min-width: 761px) {
   .home-page .hero-route-map {
     object-fit: fill;
   }
