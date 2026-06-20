@@ -1719,9 +1719,7 @@ main {
 }
 
 .home-page .contact-grid {
-  grid-template-columns:
-    minmax(300px, 1.1fr) minmax(250px, 0.65fr)
-    minmax(142px, 0.42fr);
+  grid-template-columns: minmax(310px, 1.08fr) minmax(270px, 0.94fr) 142px;
   gap: 10px;
 }
 

@@ -520,7 +520,7 @@ const cases = [
   <section class="section contact-band">
     <div class="container contact-grid">
       <div>
-        <h2>まずは、今の課題をお聞かせください。</h2>
+        <h2>まずは、今の課題を聞かせてください。</h2>
         <p>どこから手をつければいいか、一緒に整理します。</p>
         <div class="contact-tags" aria-label="相談しやすい内容">
           <span>オンライン相談OK</span>
@@ -537,15 +537,30 @@ const cases = [
         <input type="hidden" name="source" value="systems.acecore.net" />
         <label>
           お名前
-          <input name="name" autocomplete="name" required />
+          <input
+            name="name"
+            autocomplete="name"
+            placeholder="例）山田 太郎"
+            required
+          />
         </label>
         <label>
           会社名
-          <input name="company" autocomplete="organization" />
+          <input
+            name="company"
+            autocomplete="organization"
+            placeholder="例）株式会社サンプル"
+          />
         </label>
         <label>
           メールアドレス
-          <input name="email" type="email" autocomplete="email" required />
+          <input
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="例）name@example.com"
+            required
+          />
         </label>
         <label>
           ご相談内容
@@ -557,7 +572,7 @@ const cases = [
             <option>データ連携・運用改善について</option>
           </select>
         </label>
-        <button class="btn primary" type="submit">内容を送信する →</button>
+        <button class="btn primary" type="submit">相談内容を送信する →</button>
       </form>
       <div class="contact-methods">
         <a href={site.lineUrl}>
