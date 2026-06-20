@@ -1162,8 +1162,8 @@ main {
   border-radius: var(--radius);
   object-fit: contain;
   object-position: center;
-  opacity: 0.86;
-  filter: drop-shadow(0 12px 24px rgba(9, 28, 43, 0.06));
+  opacity: 0.94;
+  filter: contrast(1.06) drop-shadow(0 12px 24px rgba(9, 28, 43, 0.06));
 }
 
 .flow-change h3 {
