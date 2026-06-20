@@ -3,6 +3,7 @@
 - P0/P1/P2 の未解決事項はありません。
 - P3: ページ全体高さは参照 `1822px` に対して実装 `1821px` で、差分は `1px` です。
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
+- P3: Before/Afterの右イラストはコンセプトよりまだ少し強く見えますが、人物が切れて見える状態は改善しました。
 
 **Comparison Target**
 
@@ -28,6 +29,7 @@
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
 - Before/After flow: the card and illustration columns remain rebalanced from the previous pass, matching the concept's wider line-art presence.
+- Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
 
 **Rendered QA**
 
@@ -40,6 +42,7 @@
 - Wide route metrics: desktop `1240px` image renders `1240x405`; source selected is the `2x` asset.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
+- Focused Before/After evidence: `focus-before-after-compare.png` was rebuilt after widening the illustration slot; the right line-art no longer clips both side figures as aggressively.
 
 **Patches Made Since Previous QA**
 
@@ -48,12 +51,14 @@
 - Changed the desktop hero image from `min(100vw, 863px)` to full viewport width at fixed `405px` height, removing the blank right side on wide screens.
 - Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
+- Tuned the Before/After illustration slot to `220px` wide with a small left offset, while resetting mobile to full-width behavior.
+- Changed route/white section surfaces from pure white to `#fbfcfd` to better match the concept's softer page tone.
 - Rebuilt `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `desktop-863-concept-route.png`, `wide-1240-concept-route.png`, and `mobile-390-concept-route.png`.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, and mobile `390x844`.
-- Saved comparison evidence: `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, and `wide-1240-concept-route.png`.
+- Saved comparison evidence: `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `focus-before-after-compare.png`, and `wide-1240-concept-route.png`.
 - Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image.
 
 final result: passed
