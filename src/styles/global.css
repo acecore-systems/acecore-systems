@@ -1186,6 +1186,8 @@ main {
   object-position: center;
   opacity: 0.94;
   filter: contrast(1.06) drop-shadow(0 12px 24px rgba(9, 28, 43, 0.06));
+  transform: translateY(-1px) scale(1.08);
+  transform-origin: center;
 }
 
 .flow-change h3 {
@@ -2236,6 +2238,7 @@ main {
     height: 180px;
     margin-left: 0;
     object-fit: cover;
+    transform: none;
   }
 
   .section,
