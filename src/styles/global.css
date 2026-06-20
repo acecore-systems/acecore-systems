@@ -742,19 +742,19 @@ main {
   display: grid;
   place-items: center;
   min-height: 52px;
-  padding: 7px 12px;
+  padding: 7px 10px;
   color: var(--text);
-  font-size: 0.66rem;
-  font-weight: 730;
-  line-height: 1.45;
+  font-size: 0.6rem;
+  font-weight: 690;
+  line-height: 1.36;
   text-align: center;
 }
 
 .route-cells span::after {
   position: absolute;
   top: 50%;
-  right: -19px;
-  width: 36px;
+  right: -14px;
+  width: 28px;
   height: 1px;
   background: var(--route-line, currentColor);
   content: "";
@@ -763,7 +763,7 @@ main {
 .route-cells span::before {
   position: absolute;
   top: 50%;
-  right: -22px;
+  right: -17px;
   width: 5px;
   height: 5px;
   border-top: 1px solid var(--route-line, currentColor);

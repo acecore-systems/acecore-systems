@@ -26,7 +26,9 @@
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\focus-planner-compare.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1240-route-map-fix.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1026-dpr2-hero.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-vs-current-1026-dpr2-hero.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-normalized-wide-compare.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-table-final-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\arrows-route-process-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mid-before-pricing-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\bottom-contact-footer-compare-2x.png`
@@ -45,8 +47,10 @@
 - Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
 - Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=405` and selects `systems-hero-route-map-wide-2x.png`. The wide raster was rebuilt by preserving the concept text/header layer, masking the old small route area, and redrawing the route from the high-resolution concept crop so the curve no longer breaks into the title area.
 - Wide high-DPI guard: at `1026px` with `deviceScaleFactor=2`, the same wide 2x source renders at `1026x405` without the jagged route overlap shown in the latest user screenshot.
+- Latest user screenshot comparison: `user-vs-current-1026-dpr2-hero.png` compares the reported `2052px`-wide screenshot against a fresh `1026px @ DPR 2` capture. The current route-map raster no longer shows the broken/stepped route treatment visible in the reported screenshot.
 - Route stability: desktop route layer has `transform: none`, `mask: none`, and `object-fit: cover`; no generated SVG/CSS route overlay is used. The previous masking and rectangle cleanup that caused jagged-looking gaps has been removed.
 - Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
+- Route table density: `route-table-final-compare-2x.png` was rebuilt after reducing route-cell font size/weight and shortening connector arrows so the Web row no longer feels as heavy or crowded against the directional lines.
 - Mid/lower typography tone: route table cells, planner tabs/options, route-brief numbers, pricing values, process labels, and case-card headings now use lighter weights without changing their grid dimensions.
 - Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
@@ -84,6 +88,7 @@
 - Focused workflow illustration evidence: `audit-focus-sections-863.png` was rebuilt after increasing illustration opacity/contrast.
 - Focused mid-page evidence: `mid-before-pricing-compare-2x.png` was rebuilt after the workflow illustration scale pass to confirm it does not collide with the Before/After cards or pricing section.
 - Focused route-table evidence: `audit-focus-sections-863.png` was rebuilt after separating route-cell text color from route connector accent color.
+- Focused route-table final evidence: `route-table-final-compare-2x.png` was rebuilt after tuning route-cell text size/weight and connector length.
 - Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
@@ -122,11 +127,12 @@
 - Added desktop arrowheads to route-table and process-line connectors, with a responsive guard that hides the added arrowheads once the route table or process line stacks on narrower viewports.
 - Slightly scaled the desktop workflow illustration in the Before/After section, then reset that transform for mobile to preserve the stacked layout.
 - Added the footer brand mark and adjusted the homepage footer padding so the bottom brand lockup matches the source while keeping the final desktop page height at `1822px`.
+- Reduced route-table cell text from `0.66rem/730` to `0.6rem/690`, tightened line-height, and shortened connector arrows so dense Web-route labels do not collide with the route direction lines.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
-- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
+- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-vs-current-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
 - Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, desktop 3x and wide 2x rasters selected, and desktop page height is `1822px`.
 
 final result: passed
