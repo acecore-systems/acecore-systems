@@ -8,6 +8,7 @@
 - P3: 問い合わせ帯のフォーム外枠は参照に近づけましたが、入力欄のフォントウェイトはまだやや強めです。
 - P3: ルート表は今回のパスでセル文字を落ち着いた濃紺に戻し、矢印だけをルート色にして参照の情報密度へ近づけました。
 - P3: プランナー内の文字ウェイトは参照よりやや強いものの、選択肢の内容・順序・初期チェックはコンセプトに合わせました。料金表・開発ステップ・事例カードは今回のパスで文字ウェイトを落とし、全体密度を参照に近づけました。
+- P3: セクション見出しは今回のパスで `font-weight: 900` へ落とし、参照より黒く見えていた見出しトーンを軽くしました。
 
 **Comparison Target**
 
@@ -41,6 +42,7 @@
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
 - Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
 - Mid/lower density: pricing table, process line, and case cards use lighter weights and slightly smaller supporting text, reducing the heavier implementation tone visible in the previous comparison.
+- Section heading tone: top-level section headings now use a lighter weight while keeping the same size and line-height, preserving the `1821px` page height and section rhythm.
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
 - Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
 - Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. Desktop contact padding was tightened after adding height back to the Before/After band.
@@ -60,6 +62,7 @@
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, and the section's desktop vertical rhythm.
 - Focused route-table evidence: `audit-focus-sections-863.png` was rebuilt after separating route-cell text color from route connector accent color.
+- Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt after lowering pricing/process/case text weight and density.
 - Focused contact evidence: `focus-bottom-compare.png` was rebuilt after removing the quick-form panel background.
@@ -73,6 +76,7 @@
 - Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
 - Changed route table body cells to dark text with colored connector lines only, reducing the overly saturated route-table body from the previous pass.
+- Reduced section heading weight from `950` to `900` without changing heading size, keeping the vertical layout stable while bringing the text tone closer to the concept.
 - Tuned the Before/After section with a dedicated `change-section` class, narrower card columns, a smaller right illustration, and desktop-only extra vertical rhythm.
 - Changed the Before/After right illustration from a cropped cover frame to `object-fit: contain`, restoring the concept's full people-plus-dashboard line-art composition.
 - Reduced pricing table, process line, and case-card typography weight/size to better match the concept's lighter lower-page density.

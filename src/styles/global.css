@@ -608,7 +608,7 @@ main {
 .contact-band h2 {
   color: var(--ink);
   font-size: clamp(1.45rem, 2.15vw, 1.95rem);
-  font-weight: 950;
+  font-weight: 900;
   line-height: 1.14;
   letter-spacing: 0;
 }
