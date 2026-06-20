@@ -995,8 +995,8 @@ main {
 
 .before-after {
   display: grid;
-  grid-template-columns: 176px minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: 158px minmax(0, 1fr);
+  gap: 22px;
   align-items: center;
 }
 
@@ -1017,9 +1017,7 @@ main {
 
 .flow-change {
   display: grid;
-  grid-template-columns:
-    minmax(154px, 0.84fr) 30px minmax(176px, 0.92fr)
-    minmax(138px, 0.72fr);
+  grid-template-columns: 165px 30px 190px minmax(185px, 1fr);
   gap: 10px;
   align-items: center;
 }

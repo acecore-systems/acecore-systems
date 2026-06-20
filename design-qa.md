@@ -32,7 +32,7 @@
 - Mobile hero route: the `picture` source still switches mobile to `systems-hero-route-map.png`; mobile does not inherit the desktop full-width concept overlay.
 - Planner ratio: the planner grid now measures options `451px` and output `316px` at the `863px` capture, matching the concept's wider right recommendation card.
 - Planner density: checkbox rows and route recommendation rows were tightened so the desktop page height lands within `4px` of the source visual.
-- Before/After flow: the card and illustration columns were rebalanced so the right workflow illustration is no longer oversized versus the concept crop.
+- Before/After flow: the card and illustration columns were rebalanced, and the workflow illustration now uses a wider column with `object-fit: cover` so the line-art visual has concept-like presence without the earlier over-cropped narrow slot.
 - Route table labels: left-side route labels use transparent PNG icons for business, data, web, and operations routes.
 - Contact band: the form, right-side contact methods, icon treatment, and footer remain tightened from the earlier comparison pass.
 
@@ -58,7 +58,7 @@
 - Adjusted the home header container so the logo starts at the concept-like `26px` margin.
 - Rebalanced the planner grid from a wide left table / narrow output card to `451px / 316px` at the reference viewport.
 - Tightened planner rows and CTA height, bringing full-page height from `1850px` to `1818px`.
-- Reduced the Before/After right illustration column so the section no longer reads wider than the source.
+- Rebalanced the Before/After card, arrow, and illustration columns so the section aligns more closely with `focus-before-after-compare.png`.
 
 **Validation**
 
