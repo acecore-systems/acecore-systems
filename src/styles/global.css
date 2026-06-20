@@ -762,8 +762,8 @@ main {
 
 .planner-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(272px, 0.48fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.7fr);
+  gap: 20px;
   align-items: start;
 }
 
@@ -784,7 +784,7 @@ main {
 
 .planner-tabs span {
   display: grid;
-  min-height: 26px;
+  min-height: 24px;
   place-items: center;
   border-right: 1px solid var(--line);
   background: #f6f8fa;
@@ -808,7 +808,7 @@ main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0;
-  padding: 6px 8px;
+  padding: 5px 8px;
 }
 
 .planner-options label {
@@ -816,9 +816,9 @@ main {
   grid-template-columns: 17px minmax(0, 1fr);
   gap: 6px;
   align-items: start;
-  min-height: 22px;
+  min-height: 18px;
   border-bottom: 1px solid var(--line);
-  padding: 3px 6px;
+  padding: 2px 6px;
   color: var(--text);
   font-size: 0.51rem;
   font-weight: 750;
@@ -838,8 +838,8 @@ main {
 
 .quiet-button {
   justify-self: start;
-  min-height: 24px;
-  margin: 0 10px 7px;
+  min-height: 20px;
+  margin: 0 10px 5px;
   border: 0;
   border-bottom: 1px solid var(--line-strong);
   background: transparent;
@@ -872,7 +872,8 @@ main {
   display: grid;
   grid-template-columns: 14px minmax(0, 1fr);
   gap: 6px;
-  min-height: 18px;
+  height: 30px;
+  min-height: 0;
   color: var(--text);
 }
 
@@ -914,14 +915,14 @@ main {
   display: block;
   color: var(--ink);
   font-size: 0.48rem;
-  line-height: 1.18;
+  line-height: 1.1;
 }
 
 .route-brief-list small {
   color: var(--muted);
   font-size: 0.38rem;
   font-weight: 750;
-  line-height: 1.12;
+  line-height: 1.05;
 }
 
 .output-kicker {
@@ -948,6 +949,11 @@ main {
   font-size: 0.6rem;
   font-weight: 800;
   line-height: 1.35;
+}
+
+.planner-output .btn {
+  min-height: 29px;
+  padding-block: 7px;
 }
 
 .service-row {
@@ -1012,8 +1018,8 @@ main {
 .flow-change {
   display: grid;
   grid-template-columns:
-    minmax(142px, 0.84fr) 30px minmax(142px, 0.84fr)
-    minmax(170px, 1fr);
+    minmax(154px, 0.84fr) 30px minmax(176px, 0.92fr)
+    minmax(138px, 0.72fr);
   gap: 10px;
   align-items: center;
 }
