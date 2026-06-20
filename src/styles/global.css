@@ -1155,12 +1155,12 @@ main {
   grid-column: 4;
   grid-row: 1;
   justify-self: start;
-  width: 168px;
+  width: 220px;
   max-width: none;
   height: 100px;
-  margin-left: 24px;
+  margin-left: 0;
   border-radius: var(--radius);
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   opacity: 0.86;
   filter: drop-shadow(0 12px 24px rgba(9, 28, 43, 0.06));

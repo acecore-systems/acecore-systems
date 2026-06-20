@@ -4,7 +4,7 @@
 - P3: ページ全体高さは参照 `1822px` に対して実装 `1826px` で、差分は `4px` です。
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
 - P3: 広いデスクトップ用のヒーローは `1240x405` の専用ラスタで横伸びを止めました。右端は暗い余白として延長しており、参照幅のルート形状を優先しています。
-- P3: Before/Afterの右イラストはコンセプトよりまだ少し強く見えますが、カード幅とイラスト位置は参照に近づけました。
+- P3: Before/Afterの右イラストはコンセプトよりまだ少し強く見えますが、`object-fit: contain` で人物と画面を含む全体構図を表示し、カード幅とイラスト位置も参照に近づけました。
 - P3: 問い合わせ帯のフォーム外枠は参照に近づけましたが、入力欄のフォントウェイトはまだやや強めです。
 - P3: プランナー内の文字ウェイトは参照よりやや強いものの、選択肢の内容・順序・初期チェックはコンセプトに合わせました。
 
@@ -26,6 +26,7 @@
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mobile-390-concept-route.png`
 - Viewports: reference-width desktop `863x900`, wide desktop `1240x900`, mobile `390x844`.
 - State: top page initial state, planner default selections.
+- Browser availability: in-app Browser setup failed with `sandboxPolicy` metadata error; Playwright-managed Chromium fallback was used for rendered QA.
 
 **Focused Region Evidence**
 
@@ -36,7 +37,7 @@
 - Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
-- Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration is smaller and shifted right, and the section is taller so the pricing block no longer rides up as aggressively.
+- Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
 - Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
 - Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. Desktop contact padding was tightened after adding height back to the Before/After band.
@@ -67,6 +68,7 @@
 - Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
 - Tuned the Before/After section with a dedicated `change-section` class, narrower card columns, a smaller right illustration, and desktop-only extra vertical rhythm.
+- Changed the Before/After right illustration from a cropped cover frame to `object-fit: contain`, restoring the concept's full people-plus-dashboard line-art composition.
 - Changed route/white section surfaces from pure white to `#fbfcfd` to better match the concept's softer page tone.
 - Replaced the process section copy/data with `developmentSteps` so it matches the concept's "開発の進め方" section.
 - Removed the homepage contact quick-form panel background and tightened desktop contact-band padding to keep the final page height aligned after the Before/After section was expanded.
