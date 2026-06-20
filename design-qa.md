@@ -5,9 +5,9 @@
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
 - P3: 広いデスクトップ用のヒーローは `2480x810` の専用2xラスタを `1240x405` に縮小表示し、横伸びと高DPI表示時のルート線の粗さを止めました。右端は暗い余白として延長しており、参照幅のルート形状を優先しています。
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
-- P3: 問い合わせ帯のフォーム外枠は参照に近づけましたが、入力欄のフォントウェイトはまだやや強めです。
-- P3: ルート表は今回のパスでセル文字を落ち着いた濃紺に戻し、矢印だけをルート色にして参照の情報密度へ近づけました。
-- P3: プランナー内の文字ウェイトは参照よりやや強いものの、選択肢の内容・順序・初期チェックはコンセプトに合わせました。料金表・開発ステップ・事例カードは今回のパスで文字ウェイトを落とし、全体密度を参照に近づけました。
+- P3: 問い合わせ帯は今回のパスで入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、帯の高さだけ `138px` に固定して参照の縦リズムを維持しました。
+- P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
+- P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
 - P3: セクション見出しは今回のパスで `font-weight: 900` へ落とし、参照より黒く見えていた見出しトーンを軽くしました。
 
 **Comparison Target**
@@ -37,6 +37,7 @@
 - Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=405` and selects `systems-hero-route-map-wide-2x.png`, so the route is no longer horizontally distorted by `object-fit: fill` or roughened by 1x raster sampling.
 - Route stability: desktop route layer has `transform: none`, `mask: none`, and `object-fit: cover`; no generated SVG/CSS route overlay is used. The previous masking and rectangle cleanup that caused jagged-looking gaps has been removed.
 - Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
+- Mid/lower typography tone: route table cells, planner tabs/options, route-brief numbers, pricing values, process labels, and case-card headings now use lighter weights without changing their grid dimensions.
 - Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
@@ -46,7 +47,7 @@
 - Section heading tone: top-level section headings now use a lighter weight while keeping the same size and line-height, preserving the `1821px` page height and section rhythm.
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
 - Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
-- Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. Desktop contact padding was tightened after adding height back to the Before/After band.
+- Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. The latest pass reduced input/button heights and type weights, then fixed the desktop band at `138px` so the full-page height remains aligned.
 - Planner options: the checklist now uses the concept's 8 visible options in row-major order, with the same checked items as the reference.
 - Planner route brief: the recommendation list body copy and number colors now follow the concept more closely.
 
@@ -59,6 +60,7 @@
 - Hero map source: desktop `863px` uses `systems-hero-route-map-concept-2x.png`; wide `1240px` uses `systems-hero-route-map-wide-2x.png`; mobile uses `systems-hero-route-map.png`.
 - Hero route metrics: desktop `863px` image reports `naturalWidth=1726`, `naturalHeight=810`; rendered size is `863x405`.
 - Wide route metrics: desktop `1240px` image reports `naturalWidth=2480`, `naturalHeight=810`; rendered size is `1240x405`.
+- Contact metric: desktop contact band reports `height=138px` after the form controls were visually reduced.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, and the section's desktop vertical rhythm.
@@ -66,8 +68,8 @@
 - Focused route-table evidence: `audit-focus-sections-863.png` was rebuilt after separating route-cell text color from route connector accent color.
 - Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
-- Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt after lowering pricing/process/case text weight and density.
-- Focused contact evidence: `focus-bottom-compare.png` was rebuilt after removing the quick-form panel background.
+- Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt again after lowering route table, planner, pricing, process, and case-card font weights without changing section heights.
+- Focused contact evidence: `audit-focus-sections-863.png` was rebuilt after reducing the contact form controls and restoring the band height to `138px`.
 - Focused planner evidence: `focus-planner-compare.png` was rebuilt after aligning checklist copy, order, and default checked state.
 
 **Patches Made Since Previous QA**
@@ -84,17 +86,19 @@
 - Changed the Before/After right illustration from a cropped cover frame to `object-fit: contain`, restoring the concept's full people-plus-dashboard line-art composition.
 - Increased Before/After workflow illustration opacity and contrast so the line-art density sits closer to the concept.
 - Reduced pricing table, process line, and case-card typography weight/size to better match the concept's lighter lower-page density.
+- Further reduced route-table, planner, pricing, process, and case-card font weights so the mid/lower page reads less heavy without changing layout dimensions.
 - Changed route/white section surfaces from pure white to `#fbfcfd` to better match the concept's softer page tone.
 - Replaced the process section copy/data with `developmentSteps` so it matches the concept's "開発の進め方" section.
 - Removed the homepage contact quick-form panel background and tightened desktop contact-band padding to keep the final page height aligned after the Before/After section was expanded.
+- Reduced the homepage contact-band form fields, submit button, tags, and contact-method buttons, then set the band's desktop minimum height to preserve the reference vertical rhythm.
 - Reworked planner options to match the concept checklist and default checked state.
 - Updated route step body copy and route-brief number colors for the recommendation card.
-- Rebuilt `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `wide-1240-route-map-fix.png`, `route-map-fix-compare.png`, and `mobile-390-route-map-fix.png` after switching desktop/wide route maps to 2x sources.
+- Rebuilt `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `wide-1240-route-map-fix.png`, `route-map-fix-compare.png`, and `mobile-390-route-map-fix.png` after the latest typography/contact-band pass.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, and mobile `390x844`.
 - Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `wide-1240-route-map-fix.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, and no `object-fit: fill` distortion.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, and desktop page height remains `1821px`.
 
 final result: passed

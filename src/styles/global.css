@@ -737,7 +737,7 @@ main {
   padding: 7px 12px;
   color: var(--text);
   font-size: 0.66rem;
-  font-weight: 800;
+  font-weight: 730;
   line-height: 1.45;
   text-align: center;
 }
@@ -802,7 +802,7 @@ main {
   background: #f6f8fa;
   color: var(--ink);
   font-size: 0.56rem;
-  font-weight: 900;
+  font-weight: 820;
   line-height: 1.3;
   text-align: center;
 }
@@ -857,7 +857,7 @@ main {
   background: transparent;
   color: var(--muted);
   font-size: 0.6rem;
-  font-weight: 850;
+  font-weight: 760;
   cursor: pointer;
 }
 
@@ -914,7 +914,7 @@ main {
   background: var(--teal);
   color: white;
   font-size: 0.42rem;
-  font-weight: 950;
+  font-weight: 850;
 }
 
 .route-brief-list li.active span {
@@ -944,14 +944,14 @@ main {
 .route-brief-list small {
   color: var(--muted);
   font-size: 0.38rem;
-  font-weight: 750;
+  font-weight: 650;
   line-height: 1.05;
 }
 
 .output-kicker {
   color: var(--teal);
   font-size: 0.6rem;
-  font-weight: 950;
+  font-weight: 820;
 }
 
 .route-summary {
@@ -1252,12 +1252,12 @@ main {
 .compact-table span {
   color: var(--ink);
   font-size: 0.55rem;
-  font-weight: 900;
+  font-weight: 820;
 }
 
 .home-page .pricing-table article > strong {
   font-size: 0.68rem;
-  font-weight: 850;
+  font-weight: 780;
 }
 
 .home-page .pricing-table article {
@@ -1318,7 +1318,7 @@ main {
   background: var(--navy);
   color: white;
   font-size: 0.52rem;
-  font-weight: 950;
+  font-weight: 850;
 }
 
 .process-line li:nth-child(5) span {
@@ -1329,7 +1329,7 @@ main {
 .process-line strong {
   color: var(--ink);
   font-size: 0.56rem;
-  font-weight: 850;
+  font-weight: 760;
   line-height: 1.35;
 }
 
@@ -1415,7 +1415,7 @@ main {
   display: block;
   color: var(--teal);
   font-size: 0.52rem;
-  font-weight: 900;
+  font-weight: 780;
 }
 
 .case-card h3,
@@ -1426,7 +1426,7 @@ main {
 .process-step h3 {
   color: var(--ink);
   font-size: 0.64rem;
-  font-weight: 850;
+  font-weight: 780;
   line-height: 1.28;
 }
 
@@ -1705,12 +1705,15 @@ main {
 }
 
 .home-page .contact-band {
+  display: grid;
+  align-items: center;
+  min-height: 138px;
   padding-block: 14px;
 }
 
 @media (min-width: 761px) {
   .home-page .contact-band {
-    padding-block: 7px;
+    padding-block: 10px;
   }
 }
 
@@ -1727,7 +1730,8 @@ main {
 }
 
 .home-page .contact-band h2 {
-  font-size: clamp(1.16rem, 1.75vw, 1.5rem);
+  font-size: clamp(1.08rem, 1.58vw, 1.34rem);
+  font-weight: 850;
   line-height: 1.16;
 }
 
@@ -1744,14 +1748,14 @@ main {
 }
 
 .contact-tags span {
-  min-height: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  min-height: 17px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 4px;
-  padding: 4px 7px;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 0.52rem;
-  font-weight: 850;
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.48rem;
+  font-weight: 760;
   line-height: 1.2;
 }
 
@@ -1768,18 +1772,18 @@ main {
 
 .contact-methods a {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 8px;
-  min-height: 43px;
+  grid-template-columns: 25px minmax(0, 1fr);
+  gap: 7px;
+  min-height: 39px;
   align-items: center;
   border: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0;
-  padding: 6px 8px;
+  padding: 5px 7px;
   background: transparent;
   color: white;
-  font-size: 0.58rem;
-  font-weight: 900;
+  font-size: 0.54rem;
+  font-weight: 820;
   text-decoration: none;
 }
 
@@ -1788,8 +1792,8 @@ main {
 }
 
 .contact-methods img {
-  width: 27px;
-  height: 27px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
@@ -1802,8 +1806,8 @@ main {
 
 .contact-methods small {
   color: rgba(255, 255, 255, 0.68);
-  font-size: 0.43rem;
-  font-weight: 750;
+  font-size: 0.4rem;
+  font-weight: 650;
   line-height: 1.2;
 }
 
@@ -1815,7 +1819,7 @@ main {
 
 .contact-band .quick-form {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px 7px;
+  gap: 3px 7px;
   padding: 7px;
 }
 
@@ -1828,18 +1832,28 @@ main {
 .contact-band .quick-form label {
   color: white;
   gap: 3px;
-  font-size: 0.54rem;
+  font-size: 0.5rem;
+  font-weight: 780;
+  line-height: 1.1;
 }
 
 .contact-band .quick-form .btn {
   grid-column: 1 / -1;
-  min-height: 27px;
+  min-height: 24px;
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-size: 0.56rem;
+  font-weight: 850;
+  box-shadow: none;
 }
 
 .contact-band .quick-form input,
 .contact-band .quick-form select {
-  padding: 3px 7px;
-  font-size: 0.6rem;
+  min-height: 22px;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-size: 0.54rem;
+  line-height: 1.25;
 }
 
 .site-footer {
