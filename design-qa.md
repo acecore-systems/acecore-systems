@@ -4,6 +4,7 @@
 - P3: ページ全体高さは参照 `1822px` に対して実装も `1822px` です。
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
 - P3: デスクトップのヒーローは3xラスタを維持し、wide用ヒーローは今回のパスでルート部分を再合成した2xラスタへ更新しました。`863x405` と `1240x405` の表示サイズは変えず、見出しへ食い込んでいたルート線と右側の余白を改善しています。
+- P3: 1026px/DPR2 の中幅デスクトップでは wide 合成画像ではなく `concept-3x` を使うように戻しました。報告スクショで見えていた4行タイトル化とガタついたルート線は、`user-vs-fixed-1026-dpr2-hero.png` で比較済みです。
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
 - P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、今回のパスで参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。左説明・中央フォーム・右連絡枠の3カラム比率も参照へ寄せ、帯の高さは `138px` に固定して参照の縦リズムを維持しています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
@@ -27,6 +28,8 @@
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1240-route-map-fix.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1026-dpr2-hero.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-vs-current-1026-dpr2-hero.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\current-1026-dpr2-hero-latest.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-vs-fixed-1026-dpr2-hero.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-normalized-wide-compare.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-table-final-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-labels-after-icon-tune-4x.png`
@@ -48,9 +51,9 @@
 - Hero route map: desktop now uses concept-derived rasters. `863px` uses a `2589x1215` concept crop scaled to `863x405`; `1240px` uses a dedicated `2480x810` non-distorted wide crop scaled to `1240x405`.
 - Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
 - Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=405` and selects `systems-hero-route-map-wide-2x.png`. The wide raster was rebuilt by preserving the concept text/header layer, masking the old small route area, and redrawing the route from the high-resolution concept crop so the curve no longer breaks into the title area.
-- Wide high-DPI guard: at `1026px` with `deviceScaleFactor=2`, the same wide 2x source renders at `1026x405` without the jagged route overlap shown in the latest user screenshot.
-- Latest user screenshot comparison: `user-vs-current-1026-dpr2-hero.png` compares the reported `2052px`-wide screenshot against a fresh `1026px @ DPR 2` capture. The current route-map raster no longer shows the broken/stepped route treatment visible in the reported screenshot.
-- Route stability: desktop route layer has `transform: none`, `mask: none`, and `object-fit: cover`; no generated SVG/CSS route overlay is used. The previous masking and rectangle cleanup that caused jagged-looking gaps has been removed.
+- Wide high-DPI guard: at `1026px` with `deviceScaleFactor=2`, the desktop source now switches back to `systems-hero-route-map-concept-3x.png` and renders at `1026x405` with `object-fit: fill`; this avoids the wide composite crop that created the jagged route treatment in the latest user screenshot.
+- Latest user screenshot comparison: `user-vs-fixed-1026-dpr2-hero.png` compares the reported `2052px`-wide screenshot against a fresh `1026px @ DPR 2` capture. The fixed capture returns to the concept-style 2-line title and a continuous route map instead of the broken/stepped treatment visible in the report.
+- Route stability: desktop route layer has `transform: none` and `mask: none`; no generated SVG/CSS route overlay is used. The previous masking and wide-composite cleanup that caused jagged-looking gaps is bypassed for the reported middle desktop width.
 - Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
 - Route table density: `route-table-final-compare-2x.png` was rebuilt after reducing route-cell font size/weight and shortening connector arrows so the Web row no longer feels as heavy or crowded against the directional lines.
 - Route label fidelity: `route-labels-after-icon-tune-4x.png` was rebuilt after enlarging the left route-label icons and returning the Web route label to white text, matching the reference's stronger icon/title treatment on the colored chevrons.
@@ -82,7 +85,7 @@
 - Hero map source: desktop `863px` uses `systems-hero-route-map-concept-3x.png`; wide `1240px` uses `systems-hero-route-map-wide-2x.png`; mobile uses `systems-hero-route-map.png`.
 - Hero route metrics: desktop `863px` image reports `naturalWidth=2589`, `naturalHeight=1215`; rendered size is `863x405`.
 - Wide route metrics: desktop `1240px` image reports `naturalWidth=2480`, `naturalHeight=810`; rendered size is `1240x405`.
-- Wide high-DPI metric: desktop `1026px` at DPR 2 uses `systems-hero-route-map-wide-2x.png`, reports `naturalWidth=2480`, `naturalHeight=810`, and renders at `1026x405`.
+- Wide high-DPI metric: desktop `1026px` at DPR 2 uses `systems-hero-route-map-concept-3x.png`, reports `naturalWidth=2589`, `naturalHeight=1215`, `objectFit=fill`, and renders at `1026x405`.
 - Pricing metric: desktop pricing section reports `top=1161.23px`, `height=173.52px`, and the final desktop page height remains `1822px`.
 - Case metric: desktop case section reports `top=1469.63px`, `height=172.88px`; the case cards no longer include the category `span` row.
 - Contact metric: desktop contact band reports `height=138px`; the center form now renders at `x=382px`, `width=291px` at the `863px` comparison viewport.
@@ -136,11 +139,14 @@
 - Reduced route-table cell text from `0.66rem/730` to `0.6rem/690`, tightened line-height, and shortened connector arrows so dense Web-route labels do not collide with the route direction lines.
 - Increased route-label icon size from `18px` to `23px` and changed the Web-route chevron label from dark text back to white text to match the reference route-label treatment.
 - Split the route-table lane tones so business/data labels no longer share the same teal fill, and tuned the Web label yellow closer to the source.
+- Changed the wide hero source breakpoint from `901px` to `1101px`, so the reported `1026px @ DPR 2` viewport uses the cleaner concept raster instead of the wide composite.
+- Added a `761px` to `1100px` desktop guard that renders the concept hero with `object-fit: fill`, preserving the full route map without vertical cropping at middle desktop widths.
+- Used local `capture-hero-1026.cjs` and rebuilt `current-1026-dpr2-hero-latest.png` plus `user-vs-fixed-1026-dpr2-hero.png` to lock the reported screenshot condition into QA evidence.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
-- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-vs-current-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, desktop 3x and wide 2x rasters selected, and desktop page height is `1822px`.
+- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, middle desktop uses concept 3x with `object-fit: fill`, wide desktop still uses the 2x wide raster, and desktop page height is `1822px`.
 
 final result: passed

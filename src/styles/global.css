@@ -2025,6 +2025,12 @@ main {
   }
 }
 
+@media (min-width: 761px) and (max-width: 1100px) {
+  .home-page .hero-route-map {
+    object-fit: fill;
+  }
+}
+
 @media (max-width: 820px) {
   .nav {
     display: none;
