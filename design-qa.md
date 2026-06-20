@@ -8,7 +8,7 @@
 - P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、今回のパスで参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。左説明・中央フォーム・右連絡枠の3カラム比率も参照へ寄せ、帯の高さは `138px` に固定して参照の縦リズムを維持しています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
 - P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
-- P3: セクション見出しは今回のパスで `font-weight: 840` まで落とし、通常セクションの余白を1px戻して、参照と同じページ高のまま黒く強すぎる見出しトーンを抑えました。
+- P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
 
 **Comparison Target**
 
@@ -43,8 +43,8 @@
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
 - Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
 - Before/After illustration tone: the workflow illustration now uses higher opacity and slight contrast to avoid the washed-out look from the previous pass while preserving the full-image framing.
-- Mid/lower density: pricing table, process line, and case cards use lighter weights and slightly smaller supporting text, reducing the heavier implementation tone visible in the previous comparison.
-- Section heading tone: top-level section headings now use a smaller size and lighter `840` weight; the homepage section padding was adjusted to keep the final `1822px` page height aligned with the reference.
+- Mid/lower density: pricing table labels, prices, process line, and case cards use lighter weights and smaller supporting text, reducing the heavier implementation tone visible in the previous comparison.
+- Section heading tone: top-level section headings now use a smaller size and lighter `820` weight; the homepage and pricing section padding were adjusted to keep the final `1822px` page height aligned with the reference.
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
 - Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
 - Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. The latest pass restored the reference copy, field placeholders, submit label, and desktop column balance so the center form starts closer to the concept position, while keeping the band at `138px`.
@@ -60,6 +60,7 @@
 - Hero map source: desktop `863px` uses `systems-hero-route-map-concept-3x.png`; wide `1240px` uses `systems-hero-route-map-wide-2x.png`; mobile uses `systems-hero-route-map.png`.
 - Hero route metrics: desktop `863px` image reports `naturalWidth=2589`, `naturalHeight=1215`; rendered size is `863x405`.
 - Wide route metrics: desktop `1240px` image reports `naturalWidth=2480`, `naturalHeight=810`; rendered size is `1240x405`.
+- Pricing metric: desktop pricing section reports `top=1161.23px`, `height=173.52px`, and the final desktop page height remains `1822px`.
 - Contact metric: desktop contact band reports `height=138px`; the center form now renders at `x=382px`, `width=291px` at the `863px` comparison viewport.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
@@ -81,11 +82,12 @@
 - Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
 - Updated hero lead copy to match the concept wording; mobile still renders it as live text.
 - Changed route table body cells to dark text with colored connector lines only, reducing the overly saturated route-table body from the previous pass.
-- Reduced section heading weight/size further to `font-weight: 840`, then restored normal homepage section padding from `9px` to `10px` so the final desktop page height matches the reference `1822px`.
+- Reduced section heading weight/size further to `font-weight: 820`, then adjusted normal homepage section padding and pricing-section bottom padding so the final desktop page height matches the reference `1822px`.
 - Tuned the Before/After section with a dedicated `change-section` class, narrower card columns, a smaller right illustration, and desktop-only extra vertical rhythm.
 - Changed the Before/After right illustration from a cropped cover frame to `object-fit: contain`, restoring the concept's full people-plus-dashboard line-art composition.
 - Increased Before/After workflow illustration opacity and contrast so the line-art density sits closer to the concept.
 - Reduced pricing table, process line, and case-card typography weight/size to better match the concept's lighter lower-page density.
+- Reduced the pricing table's row labels, price values, and section-heading weight again after a 2x focused comparison showed the implementation still reading heavier than the reference.
 - Further reduced route-table, planner, pricing, process, and case-card font weights so the mid/lower page reads less heavy without changing layout dimensions.
 - Changed route/white section surfaces from pure white to `#fbfcfd` to better match the concept's softer page tone.
 - Replaced the process section copy/data with `developmentSteps` so it matches the concept's "開発の進め方" section.
