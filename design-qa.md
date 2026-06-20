@@ -13,6 +13,7 @@
 - P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
 - P3: ルート表と導入ステップの接続線は今回のパスで小さな矢印頭を追加し、参照にある方向性のある細線表現へ寄せました。モバイルでは表が縦積みになるため追加矢印頭を非表示にしています。
 - P3: プランナー右側のおすすめルートカードは今回のパスで丸番号とステップ文字を少しだけ大きくし、参照より細かく詰まって見えていた状態を緩和しました。リスト行高は維持し、最終ページ高 `1822px` は変えていません。
+- P3: Before/After の After カードは今回のパスで teal の境界線と背景を少し薄くし、参照の淡いカード処理に近づけました。カード寸法とセクション位置は変えていません。
 - P3: Before/After右側の線画は今回のパスでデスクトップのみ少し拡大し、横に薄く伸びて見えていた状態を参照の人物・画面の存在感へ近づけました。モバイルでは拡大を解除しています。
 - P3: フッター左のブランド表示は今回のパスでAマークを追加し、参照と同じ「マーク + Acecore Systems」の形に戻しました。フッターpaddingを調整して最終ページ高 `1822px` は維持しています。
 
@@ -65,6 +66,7 @@
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
 - Planner route brief density: `audit-focus-sections-863.png` was rebuilt after increasing the route-brief number dots from `12px` to `13px` and slightly increasing route-step title/body text while preserving `30px` item rows and the final `1822px` page height.
 - Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
+- Before/After card tone: `before-after-after-tone-2x.png` was rebuilt after reducing the After card border alpha from `0.35` to `0.24` and lightening the card background to reduce the overly strong teal frame.
 - Before/After illustration tone: the workflow illustration now uses higher opacity and slight contrast to avoid the washed-out look from the previous pass while preserving the full-image framing.
 - Before/After illustration scale: the desktop workflow illustration is slightly enlarged with a transform-only adjustment so it reads closer to the source without changing the section geometry.
 - Mid/lower density: pricing table labels, prices, process line, and case cards use lighter weights and smaller supporting text, reducing the heavier implementation tone visible in the previous comparison.
@@ -101,6 +103,7 @@
 - Focused route-label evidence: `route-labels-after-icon-tune-4x.png` was rebuilt after increasing route-label icon size and changing the gold Web label text back to white.
 - Focused route-label tone evidence: `route-labels-final-tone-4x.png` was rebuilt after separating the business and data label colors and lowering the Web-route yellow slightly.
 - Focused planner route evidence: `audit-focus-sections-863.png` was rebuilt after tuning the recommendation card's route-brief number and text density; the page stayed at `scrollHeight=1822`.
+- Focused Before/After card evidence: `before-after-after-tone-2x.png` was rebuilt after softening the After card frame/background; layout metrics stayed unchanged.
 - Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
@@ -146,6 +149,7 @@
 - Added a `761px` to `1100px` desktop guard that renders the concept hero with `object-fit: fill`, preserving the full route map without vertical cropping at middle desktop widths.
 - Used local `capture-hero-1026.cjs` and rebuilt `current-1026-dpr2-hero-latest.png` plus `user-vs-fixed-1026-dpr2-hero.png` to lock the reported screenshot condition into QA evidence.
 - Increased planner recommendation route dots from `12px` to `13px`, with route-brief titles at `0.5rem` and body text at `0.39rem`; kept each route item at `30px` so the section and page heights remain aligned to the concept.
+- Softened the Before/After `After` card by lowering the teal border alpha and lightening the gradient background while keeping dimensions fixed.
 
 **Validation**
 

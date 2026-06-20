@@ -1185,8 +1185,8 @@ main {
 }
 
 .flow-change .after {
-  border-color: rgba(22, 142, 139, 0.35);
-  background: linear-gradient(180deg, white, #f6fffe);
+  border-color: rgba(22, 142, 139, 0.24);
+  background: linear-gradient(180deg, white, #f9fffe);
 }
 
 .workflow-illustration {
@@ -1239,7 +1239,7 @@ main {
 }
 
 .flow-change .after li::before {
-  background: var(--teal);
+  background: #218d8c;
 }
 
 .compact-table article {
