@@ -1,8 +1,8 @@
 **Findings**
 
 - P0/P1/P2 の未解決事項はありません。
-- P3: ページ全体高さは参照 `1822px` に対して実装 `1818px` で、差分は `4px` まで縮小しました。
-- P3: ルートマップはコンセプト由来のラスタへ切り替え、道路形状・駅リング・旗・ラベルのガタつきは解消しました。
+- P3: ページ全体高さは参照 `1822px` に対して実装 `1821px` で、差分は `1px` です。
+- P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
 
 **Comparison Target**
 
@@ -12,9 +12,6 @@
 - Implementation screenshots:
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\hero-compare-concept-route.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\full-compare-concept-route-current.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\focus-planner-compare.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\focus-before-after-compare.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\current-863-hero-concept-route.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\desktop-863-concept-route.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1240-concept-route.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mobile-390-concept-route.png`
@@ -23,47 +20,40 @@
 
 **Focused Region Evidence**
 
-- Hero route map: desktop now uses `systems-hero-route-map-concept.png`, a `1726x810` 2x raster derived from the concept hero top area.
-- Hero route placement: desktop renders the route layer at `x=0 / y=0 / width=863 / height=405` in the `863px` comparison capture, so the route geometry uses the same canvas as the concept.
-- Wide route guard: `1240px` capture keeps the desktop route at `x=0 / width=863 / bottom=405`, so the route is not vertically enlarged or clipped on wider screens.
-- Hero route stability: desktop route layer now has `transform: none` and `mask: none`; the earlier stretched/compressed generated line is no longer used.
-- Text overlap handling: the concept raster removes the bright header/copy/button pixels in the areas covered by live DOM text and controls, while preserving the map and route artwork behind them.
-- Header mark: the brand mark still uses `acecore-mark-mask.png`; the final desktop capture places the brand at `x=26`, matching the concept margin.
-- Mobile hero route: the `picture` source still switches mobile to `systems-hero-route-map.png`; mobile does not inherit the desktop full-width concept overlay.
-- Planner ratio: the planner grid now measures options `451px` and output `316px` at the `863px` capture, matching the concept's wider right recommendation card.
-- Planner density: checkbox rows and route recommendation rows were tightened so the desktop page height lands within `4px` of the source visual.
-- Before/After flow: the card and illustration columns were rebalanced, and the workflow illustration now uses a wider column with `object-fit: cover` so the line-art visual has concept-like presence without the earlier over-cropped narrow slot.
-- Route table labels: left-side route labels use transparent PNG icons for business, data, web, and operations routes.
-- Contact band: the form, right-side contact methods, icon treatment, and footer remain tightened from the earlier comparison pass.
+- Hero route map: desktop now uses the concept hero crop as a raster. `systems-hero-route-map-concept.png` is the exact `863x405` crop; `systems-hero-route-map-concept-2x.png` is available via `srcset` for wider desktop captures.
+- Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
+- Wide route guard: at `1240px`, the image renders at `x=0 / width=1240 / height=405` and selects `systems-hero-route-map-concept-2x.png`, so the route no longer stops at `863px` or leaves a blank right side.
+- Route stability: desktop route layer has `transform: none`, `mask: none`, and no generated SVG/CSS route overlay. The previous masking and rectangle cleanup that caused jagged-looking gaps has been removed.
+- Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
+- Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
+- Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
+- Before/After flow: the card and illustration columns remain rebalanced from the previous pass, matching the concept's wider line-art presence.
 
 **Rendered QA**
 
 - Page identity: `http://127.0.0.1:4327/`, title `業務システム・アプリ開発 | Acecore Systems`.
 - Blank-page check: desktop and mobile render first meaningful content.
 - Overflow: desktop `scrollWidth=863` at `863px`; mobile `scrollWidth=390` at `390px`; no horizontal overflow.
-- Final desktop page height: implementation `1818px` versus source `1822px`.
-- Hero map source: desktop uses `systems-hero-route-map-concept.png`; mobile uses `systems-hero-route-map.png`.
-- Hero route metrics: desktop image reports `naturalWidth=1726`, `naturalHeight=810`; rendered size is `863x405`.
-- Hero route position: desktop capture has `x=0`, `right=863`, `bottom=405`, `transform=none`, `mask=none`.
-- Header metric: brand `x=26`, `y=15`, `width=162.52`, `height=24`.
+- Final desktop page height: implementation `1821px` versus source `1822px`.
+- Hero map source: desktop `863px` uses `systems-hero-route-map-concept.png`; wide `1240px` uses `systems-hero-route-map-concept-2x.png`; mobile uses `systems-hero-route-map.png`.
+- Hero route metrics: desktop `863px` image reports `naturalWidth=863`, `naturalHeight=405`; rendered size is `863x405`.
+- Wide route metrics: desktop `1240px` image renders `1240x405`; source selected is the `2x` asset.
+- Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 
 **Patches Made Since Previous QA**
 
-- Replaced the desktop generated route raster with `systems-hero-route-map-concept.png`, based on the concept hero artwork.
-- Deleted the stale generated desktop asset `systems-hero-route-map-labeled.png`.
-- Changed desktop route positioning from a right-column stretched image to a full-width absolute overlay aligned to the viewport.
-- Removed desktop route mask and transform to avoid jagged/stretched route geometry.
-- Kept the mobile route source and mobile card layout unchanged.
-- Adjusted the home header container so the logo starts at the concept-like `26px` margin.
-- Rebalanced the planner grid from a wide left table / narrow output card to `451px / 316px` at the reference viewport.
-- Tightened planner rows and CTA height, bringing full-page height from `1850px` to `1818px`.
-- Rebalanced the Before/After card, arrow, and illustration columns so the section aligns more closely with `focus-before-after-compare.png`.
+- Regenerated the desktop hero route asset from the concept hero crop instead of trying to mask out individual route/text regions.
+- Added `systems-hero-route-map-concept-2x.png` and `srcset` so wide desktop viewports can select a higher-resolution route raster.
+- Changed the desktop hero image from `min(100vw, 863px)` to full viewport width at fixed `405px` height, removing the blank right side on wide screens.
+- Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
+- Updated hero lead copy to match the concept wording; mobile still renders it as live text.
+- Rebuilt `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `desktop-863-concept-route.png`, `wide-1240-concept-route.png`, and `mobile-390-concept-route.png`.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, and mobile `390x844`.
-- Saved comparison evidence: `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, `focus-planner-compare.png`, and `focus-before-after-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/mobile hero image source, no desktop transform/mask on the route image.
+- Saved comparison evidence: `hero-compare-concept-route.png`, `full-compare-concept-route-current.png`, and `wide-1240-concept-route.png`.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image.
 
 final result: passed

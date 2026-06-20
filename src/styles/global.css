@@ -316,6 +316,10 @@ main {
   line-height: 1.78;
 }
 
+.hero-lead span {
+  display: block;
+}
+
 .hero-body {
   margin-top: 14px;
   color: var(--muted);
@@ -401,9 +405,10 @@ main {
   position: absolute;
   top: 0;
   left: calc((100vw - 100%) / -2);
-  width: min(100vw, 863px);
-  height: auto;
+  width: 100vw;
+  height: 405px;
   max-width: none;
+  object-fit: fill;
   opacity: 1;
   pointer-events: none;
 }
@@ -1862,6 +1867,30 @@ main {
   font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
+}
+
+@media (min-width: 761px) {
+  .home-page .site-header {
+    border-bottom-color: transparent;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .home-page .site-header .brand,
+  .home-page .site-header .nav,
+  .home-page .site-header .header-cta,
+  .home-page .hero-copy {
+    opacity: 0;
+  }
+
+  .home-page .hero::before,
+  .home-page .hero::after {
+    display: none;
+  }
+
+  .home-page .hero-grid {
+    min-height: 405px;
+  }
 }
 
 @media (max-width: 820px) {
