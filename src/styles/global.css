@@ -753,13 +753,26 @@ main {
 .route-cells span::after {
   position: absolute;
   top: 50%;
-  right: -20px;
-  width: 40px;
+  right: -19px;
+  width: 36px;
   height: 1px;
   background: var(--route-line, currentColor);
   content: "";
 }
 
+.route-cells span::before {
+  position: absolute;
+  top: 50%;
+  right: -22px;
+  width: 5px;
+  height: 5px;
+  border-top: 1px solid var(--route-line, currentColor);
+  border-right: 1px solid var(--route-line, currentColor);
+  content: "";
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.route-cells span:last-child::before,
 .route-cells span:last-child::after {
   display: none;
 }
@@ -1308,10 +1321,27 @@ main {
   content: "";
 }
 
+.process-line li::after {
+  position: absolute;
+  top: 9px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid #8aa4ae;
+  border-right: 1px solid #8aa4ae;
+  content: "";
+  transform: rotate(45deg);
+}
+
 .process-line li:nth-child(5)::before {
   background: var(--gold);
 }
 
+.process-line li:nth-child(5)::after {
+  border-color: var(--gold);
+}
+
+.process-line li:last-child::after,
 .process-line li:last-child::before {
   display: none;
 }
@@ -1995,6 +2025,12 @@ main {
   .service-row,
   .compact-table article {
     grid-template-columns: 1fr;
+  }
+
+  .route-cells span::before,
+  .route-cells span::after,
+  .process-line li::after {
+    display: none;
   }
 
   .pricing-head {
