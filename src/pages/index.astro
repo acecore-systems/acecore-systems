@@ -7,32 +7,32 @@ const routeSteps = [
   {
     number: "01",
     title: "現状整理",
-    body: "課題を可視化し、優先順位を決める",
+    body: "課題の見える化と要件の整理",
   },
   {
     number: "02",
     title: "業務フロー",
-    body: "流れと役割を整理し、あるべき姿を描く",
+    body: "業務の流れを整理・最適化",
   },
   {
     number: "03",
     title: "管理画面",
-    body: "必要な機能を使いやすく構成する",
+    body: "現場が使いやすい画面を構築",
   },
   {
     number: "04",
     title: "データ連携",
-    body: "社内外のデータをつなぎ、整える",
+    body: "必要なデータをつなぎ、二重入力を解消",
   },
   {
     number: "05",
     title: "Web・サイト機能",
-    body: "CMS、検索、フォーム、AIチャットなどを組み込む",
+    body: "CMS・検索・フォームで情報発信と導線を強化",
   },
   {
     number: "06",
     title: "運用改善",
-    body: "公開後も継続的に改善し続ける",
+    body: "使いながら継続的に改善",
   },
 ];
 
@@ -93,38 +93,38 @@ const plannerGroups = [
     options: [
       {
         area: "business",
-        label: "紙やExcelでの管理が多く、ミスや抜け漏れがある",
+        label: "紙やExcelでの管理をやめたい",
       },
       {
         area: "business",
-        label: "申請・承認・確認の流れが部門ごとに分かれている",
+        label: "申請・承認の流れを整えたい",
       },
-      { area: "ops", label: "担当者依存で、引き継ぎや確認に時間がかかる" },
-    ],
-  },
-  {
-    label: "画面・サイト",
-    options: [
-      { area: "admin", label: "社内向けの管理画面や会員機能を作りたい" },
-      {
-        area: "site",
-        label: "問い合わせ、検索、CMS、AIチャットをサイトに足したい",
-      },
-      {
-        area: "site",
-        label: "フォームから相談内容や種別を整理して受け取りたい",
-      },
-    ],
-  },
-  {
-    label: "データ・連携",
-    options: [
       {
         area: "data",
-        label: "外部サービス、API、スプレッドシートをつなぎたい",
+        label: "重複入力や転記の手間を減らしたい",
       },
-      { area: "data", label: "二重入力や手作業の転記を減らしたい" },
-      { area: "ops", label: "運用後の改善、保守、監視まで見通したい" },
+      {
+        area: "site",
+        label: "顧客や案件の管理を効率化したい",
+      },
+    ],
+  },
+  {
+    label: "Web・サイト",
+    options: [
+      {
+        area: "ops",
+        label: "業務の進め方が人によってバラバラ",
+      },
+      {
+        area: "data",
+        label: "状況確認のために集計作業が多い",
+      },
+      {
+        area: "business",
+        label: "情報が分散していて探すのが大変",
+      },
+      { area: "ops", label: "その他の課題がある" },
     ],
   },
 ];
@@ -254,6 +254,11 @@ const cases = [
             media="(max-width: 760px)"
             srcset="/assets/systems-hero-route-map.png"
           />
+          <source
+            media="(min-width: 901px)"
+            srcset="/assets/systems-hero-route-map-wide.png 1240w, /assets/systems-hero-route-map-wide-2x.png 2480w"
+            sizes="100vw"
+          />
           <img
             class="hero-route-map"
             srcset="/assets/systems-hero-route-map-concept.png 863w, /assets/systems-hero-route-map-concept-2x.png 1726w"
@@ -338,7 +343,7 @@ const cases = [
                   <input
                     type="checkbox"
                     data-area={option.area}
-                    checked={[4, 5].includes(index)}
+                    checked={[0, 2, 3, 6].includes(index)}
                   />
                   <span>{option.label}</span>
                 </label>

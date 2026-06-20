@@ -408,7 +408,8 @@ main {
   width: 100vw;
   height: 405px;
   max-width: none;
-  object-fit: fill;
+  object-fit: cover;
+  object-position: center top;
   opacity: 1;
   pointer-events: none;
 }
@@ -914,6 +915,17 @@ main {
   border-color: var(--gold);
   background: var(--gold);
   color: #111a20;
+}
+
+.route-brief-list li:nth-child(3) span,
+.route-brief-list li:nth-child(4) span {
+  background: #9fcfba;
+  color: #073123;
+}
+
+.route-brief-list li:nth-child(6) span {
+  background: #8b939a;
+  color: white;
 }
 
 .route-brief-list strong {
