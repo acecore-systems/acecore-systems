@@ -343,7 +343,10 @@ const cases = [
   <section class="section white">
     <div class="container before-after">
       <div class="section-head section-head-side">
-        <h2>仕組みが変わると、現場が変わる。</h2>
+        <h2>
+          <span>仕組みが変わると、</span>
+          <span>現場が変わる。</span>
+        </h2>
         <p>散らばっていた業務が、つながり、回り出します。</p>
         <a class="text-link" href="/guide/">詳しく見る</a>
       </div>
@@ -517,8 +520,20 @@ const cases = [
         <button class="btn primary" type="submit">内容を送信する →</button>
       </form>
       <div class="contact-methods">
-        <a href={site.lineUrl}>LINEで相談する</a>
-        <a href={`mailto:${site.email}`}>メールで相談する</a>
+        <a href={site.lineUrl}>
+          <img src="/assets/contact-icon-line.png" alt="" aria-hidden="true" />
+          <span>
+            LINEで相談する
+            <small>見積に関する相談も受付中</small>
+          </span>
+        </a>
+        <a href={`mailto:${site.email}`}>
+          <img src="/assets/contact-icon-mail.png" alt="" aria-hidden="true" />
+          <span>
+            メールで相談する
+            <small>24時間受付中</small>
+          </span>
+        </a>
       </div>
     </div>
   </section>
