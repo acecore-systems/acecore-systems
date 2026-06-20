@@ -668,8 +668,8 @@ main {
 .route-label {
   position: relative;
   display: grid;
-  grid-template-columns: 20px minmax(0, 1fr);
-  gap: 6px;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 8px;
   align-items: center;
   border-right: 1px solid var(--line);
   padding: 6px 24px 6px 12px;
@@ -684,10 +684,10 @@ main {
 }
 
 .route-label img {
-  width: 18px;
-  height: 18px;
+  width: 23px;
+  height: 23px;
   object-fit: contain;
-  opacity: 0.96;
+  opacity: 0.98;
 }
 
 .route-label div {
@@ -713,11 +713,11 @@ main {
 
 .tone-gold .route-label {
   background: var(--gold);
-  color: #111a20;
+  color: white;
 }
 
 .tone-gold .route-label span {
-  color: rgba(17, 26, 32, 0.7);
+  color: rgba(255, 255, 255, 0.84);
 }
 
 .tone-teal .route-label {
