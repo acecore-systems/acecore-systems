@@ -712,7 +712,7 @@ main {
 }
 
 .tone-gold .route-label {
-  background: var(--gold);
+  background: #efbd20;
   color: white;
 }
 
@@ -722,6 +722,14 @@ main {
 
 .tone-teal .route-label {
   background: var(--teal);
+}
+
+.tone-business .route-label {
+  background: #247f8e;
+}
+
+.tone-data .route-label {
+  background: #399795;
 }
 
 .tone-blue .route-label {
@@ -783,6 +791,14 @@ main {
 
 .tone-teal .route-cells {
   --route-line: var(--teal);
+}
+
+.tone-business .route-cells {
+  --route-line: #168e8b;
+}
+
+.tone-data .route-cells {
+  --route-line: #21a4a0;
 }
 
 .tone-blue .route-cells {

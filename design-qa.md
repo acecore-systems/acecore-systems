@@ -30,6 +30,7 @@
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-normalized-wide-compare.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-table-final-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-labels-after-icon-tune-4x.png`
+  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-labels-final-tone-4x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\arrows-route-process-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mid-before-pricing-compare-2x.png`
   - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\bottom-contact-footer-compare-2x.png`
@@ -53,6 +54,7 @@
 - Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
 - Route table density: `route-table-final-compare-2x.png` was rebuilt after reducing route-cell font size/weight and shortening connector arrows so the Web row no longer feels as heavy or crowded against the directional lines.
 - Route label fidelity: `route-labels-after-icon-tune-4x.png` was rebuilt after enlarging the left route-label icons and returning the Web route label to white text, matching the reference's stronger icon/title treatment on the colored chevrons.
+- Route label tone: `route-labels-final-tone-4x.png` was rebuilt after splitting the business/data label tones. The sampled label averages moved close to the source (`business` source `#398E9D` / implementation `#398C99`, `data` source `#44A09E` / implementation `#4AA09E`).
 - Mid/lower typography tone: route table cells, planner tabs/options, route-brief numbers, pricing values, process labels, and case-card headings now use lighter weights without changing their grid dimensions.
 - Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
@@ -92,6 +94,7 @@
 - Focused route-table evidence: `audit-focus-sections-863.png` was rebuilt after separating route-cell text color from route connector accent color.
 - Focused route-table final evidence: `route-table-final-compare-2x.png` was rebuilt after tuning route-cell text size/weight and connector length.
 - Focused route-label evidence: `route-labels-after-icon-tune-4x.png` was rebuilt after increasing route-label icon size and changing the gold Web label text back to white.
+- Focused route-label tone evidence: `route-labels-final-tone-4x.png` was rebuilt after separating the business and data label colors and lowering the Web-route yellow slightly.
 - Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
@@ -132,11 +135,12 @@
 - Added the footer brand mark and adjusted the homepage footer padding so the bottom brand lockup matches the source while keeping the final desktop page height at `1822px`.
 - Reduced route-table cell text from `0.66rem/730` to `0.6rem/690`, tightened line-height, and shortened connector arrows so dense Web-route labels do not collide with the route direction lines.
 - Increased route-label icon size from `18px` to `23px` and changed the Web-route chevron label from dark text back to white text to match the reference route-label treatment.
+- Split the route-table lane tones so business/data labels no longer share the same teal fill, and tuned the Web label yellow closer to the source.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
-- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-vs-current-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
+- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `wide-1026-dpr2-hero.png`, `user-vs-current-1026-dpr2-hero.png`, `user-normalized-wide-compare.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
 - Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, no desktop transform/mask on the route image, no `object-fit: fill` distortion, desktop 3x and wide 2x rasters selected, and desktop page height is `1822px`.
 
 final result: passed
