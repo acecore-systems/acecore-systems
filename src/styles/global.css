@@ -569,7 +569,7 @@ main {
 }
 
 .home-page .section {
-  padding-block: 9px;
+  padding-block: 10px;
 }
 
 .section.white {
@@ -607,9 +607,9 @@ main {
 .cta-panel h2,
 .contact-band h2 {
   color: var(--ink);
-  font-size: clamp(1.45rem, 2.15vw, 1.95rem);
-  font-weight: 900;
-  line-height: 1.14;
+  font-size: clamp(1.3rem, 1.9vw, 1.72rem);
+  font-weight: 840;
+  line-height: 1.18;
   letter-spacing: 0;
 }
 
@@ -1028,7 +1028,8 @@ main {
 }
 
 .section-head-side h2 {
-  font-size: clamp(1.22rem, 1.75vw, 1.45rem);
+  font-size: clamp(1.12rem, 1.56vw, 1.3rem);
+  font-weight: 840;
   line-height: 1.18;
   word-break: keep-all;
   overflow-wrap: normal;
