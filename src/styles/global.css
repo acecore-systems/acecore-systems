@@ -586,7 +586,7 @@ main {
 
 @media (min-width: 761px) {
   .home-page .change-section {
-    padding-block: 12px 10.5px;
+    padding-block: 12px 14.5px;
   }
 }
 
@@ -919,8 +919,8 @@ main {
 .route-brief-list li {
   position: relative;
   display: grid;
-  grid-template-columns: 14px minmax(0, 1fr);
-  gap: 6px;
+  grid-template-columns: 15px minmax(0, 1fr);
+  gap: 7px;
   height: 30px;
   min-height: 0;
   color: var(--text);
@@ -928,9 +928,9 @@ main {
 
 .route-brief-list li::before {
   position: absolute;
-  top: 11px;
+  top: 12px;
   bottom: -2px;
-  left: 5px;
+  left: 6px;
   width: 2px;
   background: rgba(22, 142, 139, 0.28);
   content: "";
@@ -945,12 +945,12 @@ main {
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   border-radius: 999px;
   background: var(--teal);
   color: white;
-  font-size: 0.42rem;
+  font-size: 0.43rem;
   font-weight: 850;
 }
 
@@ -974,13 +974,13 @@ main {
 .route-brief-list strong {
   display: block;
   color: var(--ink);
-  font-size: 0.5rem;
+  font-size: 0.52rem;
   line-height: 1.12;
 }
 
 .route-brief-list small {
   color: var(--muted);
-  font-size: 0.39rem;
+  font-size: 0.405rem;
   font-weight: 650;
   line-height: 1.08;
 }
@@ -1012,8 +1012,10 @@ main {
 }
 
 .planner-output .btn {
-  min-height: 29px;
-  padding-block: 7px;
+  min-height: 28px;
+  padding-block: 6px;
+  font-size: 0.62rem;
+  font-weight: 820;
 }
 
 .service-row {

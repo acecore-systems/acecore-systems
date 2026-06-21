@@ -12,7 +12,7 @@
 - P3: 導入事例カードは今回のパスで参照にないカテゴリ行を外し、カード先頭がタイトルになるように戻しました。事例セクションの下余白で参照と同じページ高を維持しています。
 - P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
 - P3: ルート表と導入ステップの接続線は今回のパスで小さな矢印頭を追加し、参照にある方向性のある細線表現へ寄せました。モバイルでは表が縦積みになるため追加矢印頭を非表示にしています。
-- P3: プランナー右側のおすすめルートカードは今回のパスで丸番号とステップ文字を少しだけ大きくし、参照より細かく詰まって見えていた状態を緩和しました。リスト行高は維持し、最終ページ高 `1822px` は変えていません。
+- P3: プランナー右側のおすすめルートカードは今回のパスで番号円を `14px` に上げ、タイトル/補足文も少しだけ大きくしました。CTA は少し軽くして、リストよりボタンだけが強く見えていた状態を抑えています。短くなった分は Before/After 下余白へ戻し、最終ページ高 `1822px` を維持しています。
 - P3: Before/After の After カードは今回のパスで teal の境界線と背景を少し薄くし、参照の淡いカード処理に近づけました。カード寸法とセクション位置は変えていません。
 - P3: Before/After カードは今回のパスで参照と同じ5項目構成に戻し、Before は灰色の×入り丸、After は青緑のチェック入り丸を参照から切り出したPNGマーカーで寄せました。カード内容を増やした分、desktop の `change-section` 余白を調整して最終ページ高 `1822px` を維持しています。
 - P3: 料金表は今回のパスで行ラベルと価格のウェイトを少し落とし、参照より硬く見えていた表内の太さを抑えました。表の高さとページ高 `1822px` は維持しています。
@@ -67,7 +67,7 @@
 - Desktop live controls: header links and hero CTA links remain in the DOM and clickable, but are transparent above the raster hero to avoid double-rendered text.
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
-- Planner route brief density: `audit-focus-sections-863.png` was rebuilt after increasing the route-brief number dots from `12px` to `13px` and slightly increasing route-step title/body text while preserving `30px` item rows and the final `1822px` page height.
+- Planner route brief density: `audit-focus-sections-863.png` was rebuilt after increasing the route-brief number dots to `14px`, slightly increasing route-step title/body text, and softening the CTA weight. The route items still keep `30px` rows, and the final page height remains `1822px`.
 - Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
 - Before/After card tone: `before-after-after-tone-2x.png` was rebuilt after reducing the After card border alpha from `0.35` to `0.24` and lightening the card background to reduce the overly strong teal frame.
 - Before/After list fidelity: `audit-focus-sections-863.png` was rebuilt after returning both cards to the concept's 5-item structure and replacing simple red/teal bullets with source-extracted gray circled-x and teal circled-check PNG markers.
@@ -156,7 +156,7 @@
 - Split the route-table lane tones so business/data labels no longer share the same teal fill, and tuned the Web label yellow closer to the source.
 - Updated the desktop guard to `761px+` so the concept hero renders with `object-fit: fill` at both middle and wide desktop widths, preserving the full route map without vertical cropping.
 - Used local `capture-hero-1026.cjs` and rebuilt `current-1026-dpr2-hero-latest.png` plus `user-vs-fixed-1026-dpr2-hero.png` to lock the reported screenshot condition into QA evidence.
-- Increased planner recommendation route dots from `12px` to `13px`, with route-brief titles at `0.5rem` and body text at `0.39rem`; kept each route item at `30px` so the section and page heights remain aligned to the concept.
+- Increased planner recommendation route dots to `14px`, with route-brief titles at `0.52rem` and body text at `0.405rem`; kept each route item at `30px`, softened the CTA, and returned the 4px height difference to the Before/After bottom rhythm so the page stays aligned to the concept.
 - Softened the Before/After `After` card by lowering the teal border alpha and lightening the gradient background while keeping dimensions fixed.
 - Matched Before/After card copy to the concept's 5-item Before and 5-item After lists, replaced simple dot bullets with source-extracted `flow-marker-before.png` and `flow-marker-after.png`, and reduced desktop `change-section` bottom padding so the final desktop page height stayed `1822px`.
 - Lowered homepage pricing row label and price weights to `680` so the table reads closer to the source without altering row height.
