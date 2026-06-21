@@ -1296,11 +1296,12 @@ main {
 
 .home-page .pricing-table article > strong {
   font-size: 0.54rem;
-  font-weight: 680;
+  font-weight: 640;
 }
 
 .home-page .pricing-table article > span {
-  font-weight: 680;
+  color: #162838;
+  font-weight: 650;
 }
 
 .home-page .pricing-table article {
@@ -1309,7 +1310,30 @@ main {
 
 .home-page .pricing-head,
 .home-page .pricing-table article > * {
+  border-color: rgba(23, 45, 61, 0.1);
   padding: 2px 6px;
+}
+
+.home-page .pricing-table {
+  border-color: rgba(23, 45, 61, 0.11);
+}
+
+.home-page .pricing-head {
+  background: #f0f4f6;
+}
+
+.home-page .pricing-head strong {
+  color: #233747;
+  font-weight: 760;
+}
+
+.home-page .pricing-table p {
+  color: #6f7e89;
+}
+
+.home-page .pricing-table small {
+  color: #314453;
+  font-weight: 660;
 }
 
 .process-line {
@@ -1400,6 +1424,32 @@ main {
   line-height: 1.35;
 }
 
+.home-page .process-line li::before {
+  top: 12px;
+  left: 23px;
+  height: 1px;
+  background: #91a7b1;
+}
+
+.home-page .process-line li::after {
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-color: #91a7b1;
+}
+
+.home-page .process-line span {
+  font-size: 0.48rem;
+}
+
+.home-page .process-line strong {
+  font-weight: 720;
+}
+
+.home-page .process-line small {
+  color: #6f7e89;
+}
+
 .case-grid,
 .grid-3,
 .grid-2,
@@ -1442,8 +1492,10 @@ main {
 .home-page .case-card {
   position: relative;
   overflow: hidden;
+  border-color: rgba(23, 45, 61, 0.1);
   min-height: 76px;
   padding: 13px 7px 12px;
+  box-shadow: 0 8px 20px rgba(9, 28, 43, 0.035);
 }
 
 .home-page .case-card::after {
@@ -1496,6 +1548,18 @@ main {
 
 .home-page .case-card h3 {
   margin-top: 0;
+  color: #142536;
+  font-weight: 720;
+}
+
+.home-page .case-card p {
+  color: #6d7d88;
+}
+
+.home-page .case-tags em {
+  border-color: rgba(23, 45, 61, 0.16);
+  color: #72818c;
+  font-weight: 700;
 }
 
 .case-card p,

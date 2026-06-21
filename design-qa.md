@@ -16,6 +16,7 @@
 - P3: Before/After の After カードは今回のパスで teal の境界線と背景を少し薄くし、参照の淡いカード処理に近づけました。カード寸法とセクション位置は変えていません。
 - P3: Before/After カードは今回のパスで参照と同じ5項目構成に戻し、Before は灰色の×入り丸、After は青緑のチェック入り丸を参照から切り出したPNGマーカーで寄せました。カード内容を増やした分、desktop の `change-section` 余白を調整して最終ページ高 `1822px` を維持しています。
 - P3: 料金表は今回のパスで行ラベルと価格のウェイトを少し落とし、参照より硬く見えていた表内の太さを抑えました。表の高さとページ高 `1822px` は維持しています。
+- P3: 料金表、導入ステップ、導入事例は今回のパスで罫線・影・補助テキスト色をさらに薄くし、参照より硬いUI部品感を抑えました。プロセスの丸サイズは維持し、接続線だけを細くして最終ページ高 `1822px` に戻しています。
 - P3: Before/After右側の線画は今回のパスでデスクトップのみ少し拡大し、横に薄く伸びて見えていた状態を参照の人物・画面の存在感へ近づけました。モバイルでは拡大を解除しています。
 - P3: フッター左のブランド表示は今回のパスでAマークを追加し、参照と同じ「マーク + Acecore Systems」の形に戻しました。フッターpaddingを調整して最終ページ高 `1822px` は維持しています。
 
@@ -74,6 +75,7 @@
 - Before/After illustration scale: the desktop workflow illustration is slightly enlarged with a transform-only adjustment so it reads closer to the source without changing the section geometry.
 - Mid/lower density: pricing table labels, prices, process line, and case cards use lighter weights and smaller supporting text, reducing the heavier implementation tone visible in the previous comparison.
 - Pricing table weight: `pricing-weight-tune-2x.png` was rebuilt after lowering homepage pricing row labels and price values from `720` to `680`, keeping the same table geometry.
+- Lower-page surface tone: `audit-focus-sections-863.png` was rebuilt after lightening homepage pricing-table borders/header tone, reducing process connector line thickness to `1px`, and softening case-card borders/shadows/tag weights. The process number circles remain at the previous size so the page stays aligned to the reference height.
 - Case card structure: homepage case cards now start with the case title, matching the concept. The extra green category line that only existed in the implementation was removed.
 - Section heading tone: top-level section headings now use a smaller size and lighter `820` weight; the homepage and pricing section padding were adjusted to keep the final `1822px` page height aligned with the reference.
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
@@ -113,6 +115,7 @@
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
 - Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt again after lowering route table, planner, pricing, process, and case-card font weights without changing section heights.
+- Focused lower-page tone evidence: `audit-focus-sections-863.png` was rebuilt after the latest pricing/process/case border and shadow pass; final `scrollHeight` returned to `1822px` after preserving the process circle size.
 - Focused contact evidence: `audit-focus-sections-863.png` and `latest-bottom-compare.png` were rebuilt after matching the contact copy, placeholders, submit label, desktop form column position, and final `280px` form width while preserving the band height at `138px`.
 - Focused footer evidence: `bottom-contact-footer-compare-2x.png` was rebuilt after adding the footer A mark and restoring the final page height.
 - Focused planner evidence: `focus-planner-compare.png` was rebuilt after aligning checklist copy, order, and default checked state.
@@ -157,6 +160,7 @@
 - Matched Before/After card copy to the concept's 5-item Before and 5-item After lists, replaced simple dot bullets with source-extracted `flow-marker-before.png` and `flow-marker-after.png`, and reduced desktop `change-section` bottom padding so the final desktop page height stayed `1822px`.
 - Lowered homepage pricing row label and price weights to `680` so the table reads closer to the source without altering row height.
 - Added a `1001px+` desktop hero width guard: the concept 4x raster now uses `width: min(calc(100vw - 40px), 1050px)`, centered with a light edge mask, so wide displays no longer force the route map across the full viewport width.
+- Softened lower-page UI chrome by reducing pricing-table border/header contrast, thinning only the process connector line to `1px`, and lowering case-card border/shadow/tag weights while preserving the reference-width page height at `1822px`.
 
 **Validation**
 
