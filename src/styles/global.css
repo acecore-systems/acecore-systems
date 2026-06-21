@@ -1887,7 +1887,7 @@ main {
   min-height: 142px;
   background:
     linear-gradient(180deg, #fbfcfd 0 19px, rgba(251, 252, 253, 0) 19px),
-    linear-gradient(90deg, rgba(4, 20, 31, 0.98), rgba(4, 20, 31, 0.92)),
+    linear-gradient(90deg, rgba(4, 20, 31, 0.985), rgba(4, 20, 31, 0.955)),
     url("/assets/systems-hero-route-map.png");
   padding-block: 14px;
 }
@@ -2131,6 +2131,11 @@ main {
 .home-page .footer-links a {
   font-size: 0.52rem;
   font-weight: 850;
+}
+
+.home-page .footer-links a:first-child,
+.home-page .footer-links a:last-child {
+  display: none;
 }
 
 .footer-copy {

@@ -8,12 +8,14 @@
 - P3: 追加で `621px-760px` の中間幅でも `systems-hero-route-map-concept-4x.png` を等比表示するようにしました。`640px / 700px / 760px @ DPR 2` で 4x source、`object-fit: contain`、live hero copy `opacity=0` を確認し、低解像度のモバイル画像とステーションカードへ落ちてルートが荒く見える状態を避けています。`390px` は従来どおり mobile source のままです。
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
 - P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。今回のパスでは上端19pxをページ面として残して暗色背景の開始位置を合わせ、フォーム幅を `276px`、列幅を `131px` まで絞りました。右連絡枠は `142x102px` に伸ばしてLINE補足文を参照どおり2行へ戻し、footer内コンテンツも下げています。contact領域の平均差分は `56.34` から `23.43` へ、footerは `21.56` から `19.76` へ下がり、最終ページ高 `1822px` は維持しています。
+- P3: 追加パスで問い合わせ帯の背景ルートを少し沈め、ホームフッターの表示リンクを参照と同じ `サービス / 料金 / 導入ガイド / 実績 / お問い合わせ` の5件に絞りました。footer領域の平均差分は `19.76` から `18.47` へ下がっています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
 - P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
 - P3: 導入事例カードは今回のパスで参照にないカテゴリ行を外し、カード先頭がタイトルになるように戻しました。事例セクションの下余白で参照と同じページ高を維持しています。
 - P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
 - P3: ルート表と導入ステップの接続線は今回のパスで小さな矢印頭を追加し、参照にある方向性のある細線表現へ寄せました。モバイルでは表が縦積みになるため追加矢印頭を非表示にしています。
 - P3: プランナー右側のおすすめルートカードは今回のパスで番号円を `14px` に上げ、タイトル/補足文も少しだけ大きくしました。CTA は少し軽くして、リストよりボタンだけが強く見えていた状態を抑えています。短くなった分は Before/After 下余白へ戻し、最終ページ高 `1822px` を維持しています。
+- P3: 追加パスでおすすめルートカードの active 表示を選択領域すべての合算ではなく主ルートだけに戻しました。初期状態は参照どおり `05 Web・サイト機能` のみ強調し、planner領域の平均差分は `20.40` から `20.38` へ下がっています。リセット後に「その他の課題がある」だけを選ぶと `01 / 06` が強調されることを in-app Browser で確認済みです。
 - P3: Before/After の After カードは今回のパスで teal の境界線と背景を少し薄くし、参照の淡いカード処理に近づけました。カード寸法とセクション位置は変えていません。
 - P3: Before/After カードは今回のパスで参照と同じ5項目構成に戻し、Before は灰色の×入り丸、After は青緑のチェック入り丸を参照から切り出したPNGマーカーで寄せました。カード内容を増やした分、desktop の `change-section` 余白を調整して最終ページ高 `1822px` を維持しています。
 - P3: 料金表は今回のパスで行ラベルと価格のウェイトを少し落とし、参照より硬く見えていた表内の太さを抑えました。表の高さとページ高 `1822px` は維持しています。
@@ -72,6 +74,7 @@
 - Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
 - Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
 - Planner route brief density: `audit-focus-sections-863.png` was rebuilt after increasing the route-brief number dots to `14px`, slightly increasing route-step title/body text, and softening the CTA weight. The route items still keep `30px` rows, and the final page height remains `1822px`.
+- Planner route active state: the route brief now highlights only the primary recommendation path instead of every selected-area path. Default state highlights only `05 Web・サイト機能`, matching the concept, and interaction still changes the primary route after reset.
 - Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
 - Before/After card tone: `before-after-after-tone-2x.png` was rebuilt after reducing the After card border alpha from `0.35` to `0.24` and lightening the card background to reduce the overly strong teal frame.
 - Before/After list fidelity: `audit-focus-sections-863.png` was rebuilt after returning both cards to the concept's 5-item structure and replacing simple red/teal bullets with source-extracted gray circled-x and teal circled-check PNG markers.
@@ -104,7 +107,7 @@
 - Pricing metric: desktop pricing section reports `top=1161.94px`, `height=173.52px`, and the final desktop page height remains `1822px`.
 - Process metric: desktop process section reports `top=1335.45px`, `height=134.98px`; the step titles/body were strengthened, and the latest pass changes process-line step colors to teal for 01-03, gold for 04-05, and gray for 06 while the page height remains `1822px`. Process mean image difference improved from `21.05` to `20.23`.
 - Case metric: desktop case section reports `top=1470.44px`, `height=172.88px`; the case cards no longer include the category `span` row.
-- Contact metric: desktop contact band reports `top=1643.31px`, `height=142px`; the center form reports `x=382.16 / width=276 / height=102.91`, right contact methods report `x=683 / width=142 / height=102`, and footer inner reports `height=36`. Rendered input columns are `131px` wide, and the submit button reports `y=1762.77 / width=274 / height=22`. The contact region's mean pixel difference improved from `56.34` to `23.43`; footer improved from `21.56` to `19.76`.
+- Contact metric: desktop contact band reports `top=1643.31px`, `height=142px`; the center form reports `x=382.16 / width=276 / height=102.91`, right contact methods report `x=683 / width=142 / height=102`, and footer inner reports `height=36`. Rendered input columns are `131px` wide, and the submit button reports `y=1762.77 / width=274 / height=22`. The contact region's mean pixel difference improved from `56.34` to `23.41`; footer improved from `21.56` to `18.47`.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, section desktop rhythm, 5-item card content, and source-extracted circled list marker assets.
@@ -123,9 +126,9 @@
 - Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt again after lowering route table, planner, pricing, process, and case-card font weights without changing section heights.
 - Focused lower-page tone evidence: `audit-focus-sections-863.png` was rebuilt after the latest pricing/process/case border and shadow pass; final `scrollHeight` returned to `1822px` after preserving the process circle size.
 - Focused contact evidence: `audit-focus-sections-863.png` and `contact-latest-compare.png` were rebuilt after matching the contact copy, placeholders, submit label, dark-band start, `276px` form width, `131px` input columns, taller right contact-method box, and 2-line LINE helper text while preserving final page height.
-- Focused footer evidence: `audit-focus-sections-863.png` and `contact-latest-compare.png` were rebuilt after lowering the footer inner content and keeping the footer inner height at `36px`.
+- Focused footer evidence: `audit-focus-sections-863.png` was rebuilt after lowering the footer inner content, keeping the footer inner height at `36px`, and hiding the home-only extra `Acecore` / `プライバシー` links to match the concept footer.
 - Focused planner evidence: `focus-planner-compare.png` was rebuilt after aligning checklist copy, order, and default checked state.
-- Interaction evidence: `interaction-check.cjs` passed against `http://127.0.0.1:4322/`; console logs were empty, checking a planner option updated the active recommendation route, and the consultation link stayed pointed at `/contact/?scope=...`.
+- Interaction evidence: `interaction-check.cjs` passed against `http://127.0.0.1:4322/`; console logs were empty, the default recommendation stays on `05`, and the consultation link stays pointed at `/contact/?scope=...`. In-app Browser also verified reset + ops-only selection updates the active recommendation to `01 / 06`.
 
 **Patches Made Since Previous QA**
 
@@ -174,13 +177,15 @@
 - Increased the process-step title/body size and weight, then added a `process-section` class with a 4px lower-padding correction so the improved readability does not change the final `1822px` desktop page height.
 - Updated homepage process-line step colors so 01-03 use teal circles/connectors, 04-05 use gold circles with the 04->05 connector, and 06 uses a gray circle; process mean image difference improved from `21.05` to `20.23`.
 - Moved the home hero mobile `<source>` cutoff to `620px` and added a `621px-760px` hero override so tablet/zoom widths also use the 4x concept raster, hide the live text/station-card layers, and keep the route-map image ratio stable.
+- Changed the planner route-brief active calculation from a union of all selected areas to the current primary route, restoring the default `05`-only emphasis shown in the concept.
+- Slightly darkened the home contact route-map background and hid the home footer's extra first/last links so the visible footer navigation matches the concept's five-link set; footer mean image difference improved from `19.76` to `18.47`.
 
 **Validation**
 
 - Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, intermediate `640/700/760/761/820px @ DPR 2`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
 - In-app Browser check passed for page identity and console health; Playwright-managed Chromium remains the pixel comparison source for exact `863px` captures.
-- Interaction check passed: planner checkbox update, active route state, generated consultation link, and console health.
+- Interaction check passed: planner reset plus ops-only selection changed the active route to `01 / 06`, generated the corresponding consultation link, and console health stayed clean.
 - Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `latest-bottom-compare.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `process-cases-latest-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `hero-bp-640.png`, `hero-bp-700.png`, `hero-bp-760.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, wide desktop uses the concept 4x raster at full viewport width with ratio-preserving height, and the reference-width desktop page height remains `1822px`.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, wide desktop uses the concept 4x raster at full viewport width with ratio-preserving height, visible home footer links match the concept five-link set, and the reference-width desktop page height remains `1822px`.
 
 final result: passed
