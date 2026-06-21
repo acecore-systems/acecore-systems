@@ -1892,6 +1892,12 @@ main {
   padding: 0;
 }
 
+@media (min-width: 761px) {
+  .home-page .contact-band .quick-form {
+    width: 280px;
+  }
+}
+
 .contact-band .quick-form label {
   color: white;
   gap: 3px;
