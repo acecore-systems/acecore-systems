@@ -2088,6 +2088,11 @@ main {
 }
 
 @media (min-width: 761px) {
+  .home-page .hero {
+    --hero-map-width: min(100vw, 1240px);
+    --hero-map-height: calc(var(--hero-map-width) * 405 / 863);
+  }
+
   .home-page .site-header {
     border-bottom-color: transparent;
     background: transparent;
@@ -2107,15 +2112,16 @@ main {
   }
 
   .home-page .hero-grid {
-    min-height: 405px;
+    min-height: var(--hero-map-height);
   }
 }
 
 @media (min-width: 761px) {
   .home-page .hero-route-map {
     left: 50%;
-    width: 100vw;
-    object-fit: fill;
+    width: var(--hero-map-width);
+    height: var(--hero-map-height);
+    object-fit: contain;
     transform: translateX(-50%);
   }
 }
