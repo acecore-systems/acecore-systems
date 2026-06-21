@@ -5,6 +5,7 @@
 - P3: デスクトップのヒーローはコンセプトヒーローをラスタとして表示し、リンク要素を透明オーバーレイとして残しています。見た目の再現度を優先したため、今後の編集性を高めるならテキスト・ナビを再びHTMLで精密配置する余地があります。
 - P3: デスクトップのヒーローは wide 専用の合成画像をやめ、同じ concept-derived 4x ラスタを使っています。今回のパスでは `object-fit: fill` をやめ、画像幅とヒーロー高を `863:405` の比率で連動させました。1240px wide では `1240x581.92`、1026px/DPR2 では `1026x481.48` で等比表示し、ルート線だけが横に詰まって曲線や文字がガタついて見える状態を解消しています。
 - P3: 1026px/DPR2 の中幅デスクトップでは `systems-hero-route-map-concept-4x.png` を `x=0 / width=1026px / height=481.48px / object-fit: contain` で表示し、1240px wide でも `x=0 / width=1240px / height=581.92px / object-fit: contain` で表示することを確認済みです。報告スクショで見えていたガタついたルート線は、最新の `current-1026-dpr2-hero-latest.png` で 4x source 選択と等比表示を確認済みです。
+- P3: 追加で `621px-760px` の中間幅でも `systems-hero-route-map-concept-4x.png` を等比表示するようにしました。`640px / 700px / 760px @ DPR 2` で 4x source、`object-fit: contain`、live hero copy `opacity=0` を確認し、低解像度のモバイル画像とステーションカードへ落ちてルートが荒く見える状態を避けています。`390px` は従来どおり mobile source のままです。
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
 - P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。今回のパスでは上端19pxをページ面として残して暗色背景の開始位置を合わせ、フォーム幅を `276px`、列幅を `131px` まで絞りました。右連絡枠は `142x102px` に伸ばしてLINE補足文を参照どおり2行へ戻し、footer内コンテンツも下げています。contact領域の平均差分は `56.34` から `23.43` へ、footerは `21.56` から `19.76` へ下がり、最終ページ高 `1822px` は維持しています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
@@ -59,6 +60,7 @@
 - Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
 - Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=581.92`, selects `systems-hero-route-map-concept-4x.png`, reports `naturalWidth=3452`, `naturalHeight=1620`, and uses `object-fit: contain`. The route map now scales uniformly instead of being stretched sideways.
 - Wide high-DPI guard: at `1026px` with `deviceScaleFactor=2`, the desktop source uses `systems-hero-route-map-concept-4x.png` and renders at `x=0 / y=0 / width=1026 / height=481.48` with `object-fit: contain`; this keeps the reported screenshot condition on the same source-derived route-map canvas without horizontal distortion.
+- Intermediate breakpoint guard: at `640px`, `700px`, and `760px` with `deviceScaleFactor=2`, the hero now selects `systems-hero-route-map-concept-4x.png`, renders at the same `863:405` ratio, hides the live copy layer, and does not show the mobile station-card overlay. This prevents zoom/tablet widths from falling back to the rough mobile route treatment.
 - Latest user screenshot comparison: `user-vs-fixed-1026-dpr2-hero.png` compares the reported `2052px`-wide screenshot against a fresh `1026px @ DPR 2` capture. The fixed capture returns to the concept-style 2-line title and a continuous route map instead of the broken/stepped treatment visible in the report.
 - Route stability: no generated SVG/CSS route overlay is used. Wide desktop no longer uses a separate width guard or edge mask; the route itself remains the source-derived PNG.
 - Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
@@ -98,6 +100,7 @@
 - Hero route metrics: desktop `863px` image reports `naturalWidth=3452`, `naturalHeight=1620`; rendered size is `863x405`.
 - Wide route metrics: desktop `1240px` image reports `naturalWidth=3452`, `naturalHeight=1620`, `objectFit=contain`; rendered size is `x=0 / y=0 / 1240x581.92`.
 - Wide high-DPI metric: desktop `1026px` at DPR 2 uses `systems-hero-route-map-concept-4x.png`, reports `naturalWidth=3452`, `naturalHeight=1620`, `objectFit=contain`, and renders at `x=0 / y=0 / 1026x481.48`.
+- Intermediate breakpoint metric: `640px`, `700px`, and `760px` at DPR 2 all use `systems-hero-route-map-concept-4x.png` with `objectFit=contain` and `heroCopyOpacity=0`; `390px` mobile still uses `systems-hero-route-map.png`.
 - Pricing metric: desktop pricing section reports `top=1161.94px`, `height=173.52px`, and the final desktop page height remains `1822px`.
 - Process metric: desktop process section reports `top=1335.45px`, `height=134.98px`; the step titles/body were strengthened, and the latest pass changes process-line step colors to teal for 01-03, gold for 04-05, and gray for 06 while the page height remains `1822px`. Process mean image difference improved from `21.05` to `20.23`.
 - Case metric: desktop case section reports `top=1470.44px`, `height=172.88px`; the case cards no longer include the category `span` row.
@@ -170,13 +173,14 @@
 - Softened lower-page UI chrome by reducing pricing-table border/header contrast, thinning only the process connector line to `1px`, and lowering case-card border/shadow/tag weights while preserving the reference-width page height at `1822px`.
 - Increased the process-step title/body size and weight, then added a `process-section` class with a 4px lower-padding correction so the improved readability does not change the final `1822px` desktop page height.
 - Updated homepage process-line step colors so 01-03 use teal circles/connectors, 04-05 use gold circles with the 04->05 connector, and 06 uses a gray circle; process mean image difference improved from `21.05` to `20.23`.
+- Moved the home hero mobile `<source>` cutoff to `620px` and added a `621px-760px` hero override so tablet/zoom widths also use the 4x concept raster, hide the live text/station-card layers, and keep the route-map image ratio stable.
 
 **Validation**
 
-- Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
+- Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, intermediate `640/700/760/761/820px @ DPR 2`, high-DPI wide `1026px @ DPR 2`, and mobile `390x844`.
 - In-app Browser check passed for page identity and console health; Playwright-managed Chromium remains the pixel comparison source for exact `863px` captures.
 - Interaction check passed: planner checkbox update, active route state, generated consultation link, and console health.
-- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `latest-bottom-compare.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `process-cases-latest-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
+- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `latest-bottom-compare.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `process-cases-latest-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `hero-bp-640.png`, `hero-bp-700.png`, `hero-bp-760.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
 - Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, wide desktop uses the concept 4x raster at full viewport width with ratio-preserving height, and the reference-width desktop page height remains `1822px`.
 
 final result: passed

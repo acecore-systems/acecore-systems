@@ -2485,6 +2485,65 @@ main {
   }
 }
 
+@media (min-width: 621px) and (max-width: 760px) {
+  .home-page .hero {
+    --hero-map-width: 100vw;
+    --hero-map-height: calc(var(--hero-map-width) * 405 / 863);
+  }
+
+  .home-page .site-header {
+    border-bottom-color: transparent;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .home-page .site-header .brand,
+  .home-page .site-header .nav,
+  .home-page .site-header .header-cta,
+  .home-page .hero-copy {
+    opacity: 0;
+  }
+
+  .home-page .hero::before,
+  .home-page .hero::after {
+    display: none;
+  }
+
+  .home-page .hero-grid {
+    min-height: var(--hero-map-height);
+    padding-block: 0;
+  }
+
+  .home-page .hero-route {
+    position: static;
+    min-height: 0;
+  }
+
+  .home-page .hero-route-map {
+    position: absolute;
+    inset: auto;
+    top: 0;
+    left: 50%;
+    width: var(--hero-map-width);
+    height: var(--hero-map-height);
+    object-fit: contain;
+    object-position: center top;
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .home-page .route-stations,
+  .home-page .route-lanes {
+    display: none;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 820px) {
+  .home-page .hero-grid {
+    padding-block: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     scroll-behavior: auto;
