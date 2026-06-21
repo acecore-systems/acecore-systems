@@ -586,7 +586,7 @@ main {
 
 @media (min-width: 761px) {
   .home-page .change-section {
-    padding-block: 12px 18px;
+    padding-block: 12px 10.5px;
   }
 }
 
@@ -1086,7 +1086,7 @@ main {
 .flow-change article {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  min-height: 100px;
+  min-height: 112px;
   padding: 8px;
   background: white;
   box-shadow: 0 10px 30px rgba(9, 28, 43, 0.04);
@@ -1221,25 +1221,24 @@ main {
 
 .flow-change li {
   position: relative;
-  padding-left: 14px;
+  padding-left: 15px;
   color: var(--text);
-  font-size: 0.5rem;
-  line-height: 1.32;
+  font-size: 0.48rem;
+  line-height: 1.26;
 }
 
 .flow-change li::before {
   position: absolute;
-  top: 0.8em;
+  top: 0.06em;
   left: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  background: var(--red);
+  width: 10px;
+  height: 10px;
+  background: url("/assets/flow-marker-before.png") center / contain no-repeat;
   content: "";
 }
 
 .flow-change .after li::before {
-  background: #218d8c;
+  background-image: url("/assets/flow-marker-after.png");
 }
 
 .compact-table article {
