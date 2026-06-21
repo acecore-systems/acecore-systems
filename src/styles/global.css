@@ -1911,7 +1911,7 @@ main {
   background: transparent;
   color: white;
   font-size: 0.54rem;
-  font-weight: 820;
+  font-weight: 780;
   text-decoration: none;
 }
 
@@ -1934,7 +1934,7 @@ main {
 
 .contact-methods small {
   color: rgba(255, 255, 255, 0.68);
-  font-size: 0.4rem;
+  font-size: 0.38rem;
   font-weight: 650;
   line-height: 1.2;
 }
@@ -1947,7 +1947,7 @@ main {
 
 .contact-band .quick-form {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3px 7px;
+  gap: 2px 7px;
   padding: 7px;
 }
 
@@ -1965,28 +1965,28 @@ main {
 
 .contact-band .quick-form label {
   color: white;
-  gap: 3px;
-  font-size: 0.5rem;
-  font-weight: 780;
+  gap: 2px;
+  font-size: 0.48rem;
+  font-weight: 760;
   line-height: 1.1;
 }
 
 .contact-band .quick-form .btn {
   grid-column: 1 / -1;
-  min-height: 24px;
+  min-height: 23px;
   border-radius: 3px;
   padding: 4px 10px;
-  font-size: 0.56rem;
-  font-weight: 850;
+  font-size: 0.54rem;
+  font-weight: 820;
   box-shadow: none;
 }
 
 .contact-band .quick-form input,
 .contact-band .quick-form select {
-  min-height: 22px;
+  min-height: 21px;
   border-radius: 3px;
   padding: 2px 6px;
-  font-size: 0.54rem;
+  font-size: 0.52rem;
   line-height: 1.25;
 }
 
