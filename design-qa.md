@@ -17,6 +17,7 @@
 - P3: Before/After カードは今回のパスで参照と同じ5項目構成に戻し、Before は灰色の×入り丸、After は青緑のチェック入り丸を参照から切り出したPNGマーカーで寄せました。カード内容を増やした分、desktop の `change-section` 余白を調整して最終ページ高 `1822px` を維持しています。
 - P3: 料金表は今回のパスで行ラベルと価格のウェイトを少し落とし、参照より硬く見えていた表内の太さを抑えました。表の高さとページ高 `1822px` は維持しています。
 - P3: 料金表、導入ステップ、導入事例は今回のパスで罫線・影・補助テキスト色をさらに薄くし、参照より硬いUI部品感を抑えました。プロセスの丸サイズは維持し、接続線だけを細くして最終ページ高 `1822px` に戻しています。
+- P3: 開発の進め方は今回のパスでステップタイトルと本文を少し大きく・濃くし、丸番号と水平線だけが目立って見えていた状態を抑えました。文字増分で伸びた4pxは `process-section` の下余白で吸収し、最終ページ高 `1822px` を維持しています。
 - P3: Before/After右側の線画は今回のパスでデスクトップのみ少し拡大し、横に薄く伸びて見えていた状態を参照の人物・画面の存在感へ近づけました。モバイルでは拡大を解除しています。
 - P3: フッター左のブランド表示は今回のパスでAマークを追加し、参照と同じ「マーク + Acecore Systems」の形に戻しました。フッターpaddingを調整して最終ページ高 `1822px` は維持しています。
 
@@ -96,9 +97,10 @@
 - Hero route metrics: desktop `863px` image reports `naturalWidth=3452`, `naturalHeight=1620`; rendered size is `863x405`.
 - Wide route metrics: desktop `1240px` image reports `naturalWidth=3452`, `naturalHeight=1620`, `objectFit=fill`; rendered size is `x=0 / y=0 / 1240x405`.
 - Wide high-DPI metric: desktop `1026px` at DPR 2 uses `systems-hero-route-map-concept-4x.png`, reports `naturalWidth=3452`, `naturalHeight=1620`, `objectFit=fill`, and renders at `x=0 / y=0 / 1026x405`.
-- Pricing metric: desktop pricing section reports `top=1161.28px`, `height=173.52px`, and the final desktop page height remains `1822px`.
-- Case metric: desktop case section reports `top=1469.67px`, `height=172.88px`; the case cards no longer include the category `span` row.
-- Contact metric: desktop contact band reports `top=1643.20px`, `height=138px`; the center form now renders at `x=382.16px`, `width=280px`, `height=91.91px` at the `863px` comparison viewport. The right contact-method box stays at `width=142px`, `height=80px`.
+- Pricing metric: desktop pricing section reports `top=1161.94px`, `height=173.52px`, and the final desktop page height remains `1822px`.
+- Process metric: desktop process section reports `top=1335.45px`, `height=134.98px`; the step titles/body were strengthened while the page height remains `1822px`.
+- Case metric: desktop case section reports `top=1470.44px`, `height=172.88px`; the case cards no longer include the category `span` row.
+- Contact metric: desktop contact band reports `top=1643.31px`, `height=138px`; the center form remains at `width=280px` at the `863px` comparison viewport. The right contact-method box stays at `width=142px`, `height=80px`.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, section desktop rhythm, 5-item card content, and source-extracted circled list marker assets.
@@ -110,7 +112,7 @@
 - Focused route-label tone evidence: `route-labels-final-tone-4x.png` was rebuilt after separating the business and data label colors and lowering the Web-route yellow slightly.
 - Focused planner route evidence: `audit-focus-sections-863.png` was rebuilt after tuning the recommendation card's route-brief number and text density; the page stayed at `scrollHeight=1822`.
 - Focused Before/After card evidence: `before-after-after-tone-2x.png` was rebuilt after softening the After card frame/background; layout metrics stayed unchanged.
-- Focused pricing evidence: `pricing-weight-tune-2x.png` was rebuilt after lightening the pricing table row labels and prices; pricing metrics stayed `top=1161.23px`, `height=173.52px`.
+- Focused pricing evidence: `pricing-weight-tune-2x.png` was rebuilt after lightening the pricing table row labels and prices; the latest full comparison now reports pricing at `top=1161.94px`, `height=173.52px`.
 - Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
 - Focused process evidence: `focus-process-cases-compare.png` was rebuilt after aligning the process heading and step content to the concept.
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
@@ -163,6 +165,7 @@
 - Lowered homepage pricing row label and price weights to `680` so the table reads closer to the source without altering row height.
 - Removed the `1001px+` desktop hero width guard and edge mask so wide displays no longer compress the route map into a separate `1050px` raster box.
 - Softened lower-page UI chrome by reducing pricing-table border/header contrast, thinning only the process connector line to `1px`, and lowering case-card border/shadow/tag weights while preserving the reference-width page height at `1822px`.
+- Increased the process-step title/body size and weight, then added a `process-section` class with a 4px lower-padding correction so the improved readability does not change the final `1822px` desktop page height.
 
 **Validation**
 

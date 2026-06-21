@@ -594,6 +594,10 @@ main {
   padding-bottom: 18.8px;
 }
 
+.home-page .process-section {
+  padding-bottom: 6.8px;
+}
+
 .home-page .case-section {
   padding-bottom: 21.8px;
 }
@@ -1445,11 +1449,16 @@ main {
 }
 
 .home-page .process-line strong {
-  font-weight: 720;
+  font-size: 0.6rem;
+  font-weight: 790;
+  line-height: 1.34;
 }
 
 .home-page .process-line small {
-  color: #6f7e89;
+  color: #435767;
+  font-size: 0.5rem;
+  font-weight: 680;
+  line-height: 1.45;
 }
 
 .case-grid,
