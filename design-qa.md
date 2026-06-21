@@ -6,7 +6,7 @@
 - P3: デスクトップのヒーローは wide 専用の合成画像をやめ、同じ concept-derived 4x ラスタを使っています。今回のパスでは `object-fit: fill` をやめ、画像幅とヒーロー高を `863:405` の比率で連動させました。1240px wide では `1240x581.92`、1026px/DPR2 では `1026x481.48` で等比表示し、ルート線だけが横に詰まって曲線や文字がガタついて見える状態を解消しています。
 - P3: 1026px/DPR2 の中幅デスクトップでは `systems-hero-route-map-concept-4x.png` を `x=0 / width=1026px / height=481.48px / object-fit: contain` で表示し、1240px wide でも `x=0 / width=1240px / height=581.92px / object-fit: contain` で表示することを確認済みです。報告スクショで見えていたガタついたルート線は、最新の `current-1026-dpr2-hero-latest.png` で 4x source 選択と等比表示を確認済みです。
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
-- P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、今回のパスで参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。左説明・中央フォーム・右連絡枠の3カラム比率も参照へ寄せ、さらにフォーム幅を `280px` に絞って参照の入力欄幅に近づけました。今回のパスでは背景ルート線の露出を落とし、desktopフォームを下げて入力欄の上段 `y=1695` / 下段 `y=1732-1733` まで参照座標に合わせ、contact領域の平均差分を `85.84` から `56.34` へ下げています。帯の高さ `138px` と最終ページ高 `1822px` は維持しています。
+- P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。今回のパスでは上端19pxをページ面として残して暗色背景の開始位置を合わせ、フォーム幅を `276px`、列幅を `131px` まで絞りました。右連絡枠は `142x102px` に伸ばしてLINE補足文を参照どおり2行へ戻し、footer内コンテンツも下げています。contact領域の平均差分は `56.34` から `23.43` へ、footerは `21.56` から `19.76` へ下がり、最終ページ高 `1822px` は維持しています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
 - P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
 - P3: 導入事例カードは今回のパスで参照にないカテゴリ行を外し、カード先頭がタイトルになるように戻しました。事例セクションの下余白で参照と同じページ高を維持しています。
@@ -82,7 +82,7 @@
 - Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
 - Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
 - Connector arrows: route-table connectors and the process-line connectors now include small arrowheads in desktop layouts, matching the source's directional line treatment more closely than the previous plain horizontal strokes.
-- Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. The latest pass restored the reference copy, field placeholders, submit label, and desktop column balance, narrowed the center form to `280px`, reduced input/button/method weights, darkened the route-map background exposure, and shifted the desktop form down so the input rows align to the source (`y=1695` and `y=1732-1733`) while keeping the band at `138px`.
+- Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. The latest pass keeps a 19px page-colored strip before the dark band, narrows the center form to `276px`, sets the rendered input columns to `131px`, lowers the submit button to `y=1762.77`, extends the right contact-method box to `142x102px`, and keeps the final page height aligned.
 - Footer brand: the footer now includes the same A mark used by the header, matching the reference footer's brand lockup rather than rendering text alone.
 - Planner options: the checklist now uses the concept's 8 visible options in row-major order, with the same checked items as the reference.
 - Planner route brief: the recommendation list body copy and number colors now follow the concept more closely.
@@ -100,7 +100,7 @@
 - Pricing metric: desktop pricing section reports `top=1161.94px`, `height=173.52px`, and the final desktop page height remains `1822px`.
 - Process metric: desktop process section reports `top=1335.45px`, `height=134.98px`; the step titles/body were strengthened while the page height remains `1822px`.
 - Case metric: desktop case section reports `top=1470.44px`, `height=172.88px`; the case cards no longer include the category `span` row.
-- Contact metric: desktop contact band reports `top=1643.31px`, `height=138px`; the center form remains at `width=280px` at the `863px` comparison viewport. Source-detected form input rows are `y=1695` and `y=1733`; implementation rows now report `y=1695` and `y=1732-1733`. The contact region's mean pixel difference improved from `85.84` to `56.34`.
+- Contact metric: desktop contact band reports `top=1643.31px`, `height=142px`; the center form reports `x=382.16 / width=276 / height=102.91`, right contact methods report `x=683 / width=142 / height=102`, and footer inner reports `height=36`. Rendered input columns are `131px` wide, and the submit button reports `y=1762.77 / width=274 / height=22`. The contact region's mean pixel difference improved from `56.34` to `23.43`; footer improved from `21.56` to `19.76`.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
 - Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, section desktop rhythm, 5-item card content, and source-extracted circled list marker assets.
@@ -118,8 +118,8 @@
 - Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
 - Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt again after lowering route table, planner, pricing, process, and case-card font weights without changing section heights.
 - Focused lower-page tone evidence: `audit-focus-sections-863.png` was rebuilt after the latest pricing/process/case border and shadow pass; final `scrollHeight` returned to `1822px` after preserving the process circle size.
-- Focused contact evidence: `audit-focus-sections-863.png` was rebuilt after matching the contact copy, placeholders, submit label, desktop form column position, final `280px` form width, lower/dimmer form controls, darker background exposure, and source-aligned form row y-positions while preserving the band height at `138px`.
-- Focused footer evidence: `bottom-contact-footer-compare-2x.png` was rebuilt after adding the footer A mark and restoring the final page height.
+- Focused contact evidence: `audit-focus-sections-863.png` and `contact-latest-compare.png` were rebuilt after matching the contact copy, placeholders, submit label, dark-band start, `276px` form width, `131px` input columns, taller right contact-method box, and 2-line LINE helper text while preserving final page height.
+- Focused footer evidence: `audit-focus-sections-863.png` and `contact-latest-compare.png` were rebuilt after lowering the footer inner content and keeping the footer inner height at `36px`.
 - Focused planner evidence: `focus-planner-compare.png` was rebuilt after aligning checklist copy, order, and default checked state.
 - Interaction evidence: `interaction-check.cjs` passed against `http://127.0.0.1:4322/`; console logs were empty, checking a planner option updated the active recommendation route, and the consultation link stayed pointed at `/contact/?scope=...`.
 
@@ -146,9 +146,10 @@
 - Reduced the homepage contact-band form fields, submit button, tags, and contact-method buttons, then set the band's desktop minimum height to preserve the reference vertical rhythm.
 - Adjusted the homepage contact-grid desktop columns from an even form-heavy ratio to a wider left-copy column, narrower center form, and stable right contact-method column.
 - Matched the homepage contact heading, input placeholders, submit button label, and desktop contact-grid columns to the reference contact band.
-- Narrowed the homepage contact quick form to `280px` so the desktop input columns and submit button no longer read wider than the reference.
-- Reduced the homepage contact quick-form row gap, label/input/button sizes, CTA weight, and contact-method text weights so the lower dark band is less heavy while preserving the `138px` band height and `1822px` page height.
-- Reduced the contact-band background image exposure and moved the desktop quick form down with a slightly larger desktop row gap so the detected input rectangles align with the source; contact mean image difference improved from `85.84` to `56.34`.
+- Narrowed the homepage contact quick form to `276px`, changed the desktop column gap to `12px`, and reduced input min-height so the desktop input columns render at `131px`, close to the source-detected `132px`.
+- Added a 19px page-colored strip at the top of the homepage contact band, increased the contact band to `142px`, and reduced footer vertical padding so the dark band begins closer to the source while the final page height remains `1822px`.
+- Lowered the submit button with a small top margin, extended the right contact-method rows to `50px`, shifted the right contact box down `12px`, and changed the LINE helper copy to a deliberate 2-line layout; contact mean image difference improved from `56.34` to `23.43`.
+- Shifted homepage footer inner content down without changing total footer height; footer mean image difference improved from `21.56` to `19.76`.
 - Reworked planner options to match the concept checklist and default checked state.
 - Updated route step body copy and route-brief number colors for the recommendation card.
 - Rebuilt `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `wide-1240-route-map-fix.png`, `route-map-fix-compare.png`, `current-1026-dpr2-hero-latest.png`, and `mobile-390-route-map-fix.png` after unifying desktop hero rendering on the concept 4x source and preserving the latest typography/contact-band pass.
