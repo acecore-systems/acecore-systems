@@ -2309,11 +2309,62 @@ main {
   }
 }
 
-@media (min-width: 1001px) {
+@media (min-width: 1001px) and (max-width: 1199px) {
+  .home-page .hero-route-map,
+  .home-page .route-stations {
+    left: calc(50% + 96px);
+  }
+}
+
+@media (min-width: 1200px) {
   .home-page .hero {
-    --hero-map-width: min(100vw, 1240px);
-    --hero-map-height: calc(var(--hero-map-width) * 500 / 1240);
-    --route-art-offset-y: 36px;
+    --hero-map-width: 100vw;
+    --hero-map-height: calc(var(--hero-map-width) * 796 / 1975);
+    --route-art-offset-y: 0px;
+  }
+
+  .home-page .site-header .container {
+    width: auto;
+    max-width: none;
+    margin-left: clamp(40px, 2.43vw, 48px);
+    margin-right: clamp(64px, 4.05vw, 80px);
+  }
+
+  .home-page .hero > .container {
+    width: calc(100vw - 152px);
+  }
+
+  .home-page .header-inner {
+    min-height: clamp(58px, 4.65vw, 92px);
+  }
+
+  .home-page .brand {
+    gap: clamp(9px, 0.72vw, 14px);
+    font-size: clamp(1rem, 1.56vw, 1.95rem);
+  }
+
+  .home-page .brand-mark {
+    width: clamp(22px, 2.3vw, 46px);
+    height: clamp(24px, 2.45vw, 48px);
+  }
+
+  .home-page .nav {
+    gap: clamp(24px, 3.95vw, 72px);
+    justify-content: flex-end;
+  }
+
+  .home-page .nav a[href="/contact/"] {
+    display: none;
+  }
+
+  .home-page .nav a,
+  .home-page .header-cta {
+    min-height: clamp(34px, 2.9vw, 58px);
+    font-size: clamp(0.78rem, 1.12vw, 1.38rem);
+  }
+
+  .home-page .header-cta {
+    padding-inline: clamp(16px, 1.55vw, 30px);
   }
 
   .home-page .site-header .brand,
@@ -2327,21 +2378,36 @@ main {
   .home-page .hero-grid {
     grid-template-columns: minmax(430px, 0.56fr) minmax(0, 1fr);
     min-height: var(--hero-map-height);
-    padding-block: 92px 40px;
+    align-items: start;
+    padding-block: clamp(94px, 8.9vw, 176px) 40px;
   }
 
   .home-page .hero-copy {
-    transform: translateY(-48px);
+    transform: none;
   }
 
   .home-page .hero h1 {
-    max-width: 560px;
-    font-size: clamp(2.1rem, 3.35vw, 2.55rem);
+    max-width: clamp(560px, 39vw, 780px);
+    font-size: clamp(2.55rem, 3.08vw, 4.05rem);
     line-height: 1.15;
   }
 
   .home-page .hero-lead {
-    max-width: 430px;
+    max-width: clamp(430px, 32vw, 635px);
+    margin-top: clamp(20px, 2.05vw, 42px);
+    font-size: clamp(0.9rem, 1.1vw, 1.36rem);
+    line-height: 1.58;
+  }
+
+  .home-page .hero .actions {
+    gap: clamp(14px, 1.35vw, 26px);
+    margin-top: clamp(24px, 2.85vw, 56px);
+  }
+
+  .home-page .hero .btn {
+    min-height: clamp(46px, 3.85vw, 78px);
+    padding-inline: clamp(26px, 3.25vw, 64px);
+    font-size: clamp(0.88rem, 1.16vw, 1.42rem);
   }
 
   .home-page .hero-route {
@@ -2369,7 +2435,7 @@ main {
   }
 
   .home-page .route-stations {
-    display: block;
+    display: none;
     top: var(--route-art-offset-y);
     left: 50%;
     width: var(--hero-map-width);
