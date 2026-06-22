@@ -9,9 +9,11 @@
 - P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
 - P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。今回のパスでは上端19pxをページ面として残して暗色背景の開始位置を合わせ、フォーム幅を `276px`、列幅を `131px` まで絞りました。右連絡枠は `142x102px` に伸ばしてLINE補足文を参照どおり2行へ戻し、footer内コンテンツも下げています。contact領域の平均差分は `56.34` から `23.43` へ、footerは `21.56` から `19.76` へ下がり、最終ページ高 `1822px` は維持しています。
 - P3: 追加パスで問い合わせ帯の背景ルートを少し沈め、ホームフッターの表示リンクを参照と同じ `サービス / 料金 / 導入ガイド / 実績 / お問い合わせ` の5件に絞りました。footer領域の平均差分は `19.76` から `18.47` へ下がっています。
+- P3: さらに問い合わせ帯の背景ルートを `58% 56% / 108% auto` に調整し、右側の暗幕を少し濃くしました。contact領域の平均差分は `23.41` から `23.28` へ下がり、フォーム裏のルート円も少し沈みました。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
 - P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
 - P3: 導入事例カードは今回のパスで参照にないカテゴリ行を外し、カード先頭がタイトルになるように戻しました。事例セクションの下余白で参照と同じページ高を維持しています。
+- P3: 導入事例カード右下のライン装飾は、参照に合わせて丸付きの斜めラインへ戻しました。カード寸法は変えず、ライン色は参照サンプルに近い `#318f9b` / `#ecbb2a` へ分けています。cases領域の平均差分は `20.20` から `20.17` へ下がりました。
 - P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
 - P3: ルート表と導入ステップの接続線は今回のパスで小さな矢印頭を追加し、参照にある方向性のある細線表現へ寄せました。モバイルでは表が縦積みになるため追加矢印頭を非表示にしています。
 - P3: プランナー右側のおすすめルートカードは今回のパスで番号円を `14px` に上げ、タイトル/補足文も少しだけ大きくしました。CTA は少し軽くして、リストよりボタンだけが強く見えていた状態を抑えています。短くなった分は Before/After 下余白へ戻し、最終ページ高 `1822px` を維持しています。
@@ -180,6 +182,8 @@
 - Changed the planner route-brief active calculation from a union of all selected areas to the current primary route, restoring the default `05`-only emphasis shown in the concept.
 - Slightly darkened the home contact route-map background and hid the home footer's extra first/last links so the visible footer navigation matches the concept's five-link set; footer mean image difference improved from `19.76` to `18.47`.
 - Changed the desktop hero `srcset` to prefer the exact `863w` concept crop at the reference comparison width, keeping `3452w` for high-DPI and wide displays; removed the unused `systems-hero-route-map-wide*.png` assets so the old gapped route composite cannot be selected again. Hero mean image difference improved from `4.66` to `3.53`.
+- Reworked homepage case-card corner accents from an internal L-shape to the concept's small-dot plus diagonal route line, then sampled the source accent colors for teal/gold. Cases mean image difference improved from `20.20` to `20.17`.
+- Tuned the homepage contact-band route-map background position/size and increased the right-side dark overlay from `0.955` to `0.97`. Contact mean image difference improved from `23.41` to `23.28` while keeping the section at `top=1643.31px / height=142px`.
 
 **Validation**
 
@@ -187,6 +191,6 @@
 - In-app Browser check passed for page identity and console health; Playwright-managed Chromium remains the pixel comparison source for exact `863px` captures.
 - Interaction check passed: planner reset plus ops-only selection changed the active route to `01 / 06`, generated the corresponding consultation link, and console health stayed clean.
 - Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `latest-bottom-compare.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `process-cases-latest-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `hero-bp-640.png`, `hero-bp-700.png`, `hero-bp-760.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, reference-width desktop uses the exact 1x concept crop, wide desktop uses the concept 4x raster at full viewport width with ratio-preserving height, visible home footer links match the concept five-link set, and the reference-width desktop page height remains `1822px`.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, reference-width desktop uses the exact 1x concept crop, wide desktop uses the concept 4x raster at full viewport width with ratio-preserving height, visible home footer links match the concept five-link set, latest contact mean difference is `23.28`, latest cases mean difference is `20.17`, and the reference-width desktop page height remains `1822px`.
 
 final result: passed

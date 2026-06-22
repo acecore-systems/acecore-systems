@@ -1540,30 +1540,57 @@ main {
 
 .home-page .case-card {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border-color: rgba(23, 45, 61, 0.1);
   min-height: 76px;
   padding: 13px 7px 12px;
   box-shadow: 0 8px 20px rgba(9, 28, 43, 0.035);
+  --case-accent: #318f9b;
+}
+
+.home-page .case-card::before,
+.home-page .case-card::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.home-page .case-card::before {
+  right: 56px;
+  bottom: -16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--case-accent);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.78);
 }
 
 .home-page .case-card::after {
-  position: absolute;
   right: -8px;
-  bottom: 0;
-  width: 62px;
-  height: 14px;
-  border-top: 4px solid var(--teal);
-  border-left: 4px solid var(--teal);
-  content: "";
+  bottom: -13px;
+  width: 76px;
+  height: 28px;
+  background: var(--case-accent);
+  clip-path: polygon(
+    0 24px,
+    4px 28px,
+    30px 4px,
+    76px 4px,
+    76px 8px,
+    32px 8px,
+    6px 28px,
+    0 28px
+  );
 }
 
+.home-page .case-card.tone-gold,
 .home-page .case-card.tone-gold::after {
-  border-color: var(--gold);
+  --case-accent: #ecbb2a;
 }
 
+.home-page .case-card.tone-olive,
 .home-page .case-card.tone-olive::after {
-  border-color: #b9c97c;
+  --case-accent: #b9c97c;
 }
 
 .card {
@@ -1887,8 +1914,17 @@ main {
   min-height: 142px;
   background:
     linear-gradient(180deg, #fbfcfd 0 19px, rgba(251, 252, 253, 0) 19px),
-    linear-gradient(90deg, rgba(4, 20, 31, 0.985), rgba(4, 20, 31, 0.955)),
+    linear-gradient(90deg, rgba(4, 20, 31, 0.985), rgba(4, 20, 31, 0.97)),
     url("/assets/systems-hero-route-map.png");
+  background-position:
+    0 0,
+    0 0,
+    58% 56%;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size:
+    auto,
+    auto,
+    108% auto;
   padding-block: 14px;
 }
 
