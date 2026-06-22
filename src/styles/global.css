@@ -612,7 +612,7 @@ main {
   }
 
   .home-page .process-section {
-    padding-block: 18.8px 2.1px;
+    padding-block: 18.8px 0.25px;
   }
 
   .home-page .case-section {
@@ -1458,7 +1458,7 @@ main {
 
 .home-page .process-line li::before {
   top: 11px;
-  left: 21px;
+  left: 22px;
   height: 1px;
   background: #91a7b1;
 }
@@ -1471,13 +1471,13 @@ main {
 }
 
 .home-page .process-line span {
-  width: 18px;
-  height: 18px;
-  font-size: 0.44rem;
+  width: 19px;
+  height: 19px;
+  font-size: 0.46rem;
 }
 
 .home-page .process-line strong {
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   font-weight: 740;
   line-height: 1.34;
 }
