@@ -2,7 +2,7 @@
 
 - P0/P1/P2 の未解決事項はありません。
 - P3: 参照幅 `863px` のページ全体高さは、参照 `1822px` に対して実装も `1822px` です。
-- P3: ユーザー指摘のあった `1001px+` のルートマップは、別構図の `systems-hero-route-map.png` とHTMLラベルを合成する方式をやめ、コンセプト由来の完成ラスタ `systems-hero-route-map-wide-concept-*.png` へ切り替えました。ルート線、丸、ラベルが別々にズレる状態を解消しています。
+- P3: ユーザー指摘のあった `1001px+` のルートマップは、別構図の `systems-hero-route-map.png` とHTMLラベルを合成する方式をやめ、Image Gen で描き直した高画質wideラスタ `systems-hero-route-map-ai-wide-*.png` へ切り替えました。元のリサイズ由来の甘さを避け、ルート線、丸、文字の解像感を上げています。
 - P3: wideラスタ内のナビ/CTAは画像として表示されるため、同じ位置に透明クリック面を追加しました。`1240px` で「開発を相談する」は `x=55 / y=320 / 195x45`、「料金を見る」は `x=260 / y=320 / 134x45` で、どちらも正しく遷移します。
 
 **Comparison Target**
@@ -15,8 +15,9 @@
 **Hero Evidence**
 
 - Reference-width desktop: `863px` selects `systems-hero-route-map-concept.png`, renders at `x=0 / y=0 / width=863 / height=405`, `object-fit=contain`, and keeps final page height `1822px`.
-- Wide desktop: `1240px` selects `systems-hero-route-map-wide-concept-1240.png`, renders at `x=0 / y=0 / width=1240 / height=500`, `object-fit=contain`, no horizontal overflow.
-- High-DPI wide: `1026px @ DPR 2` selects `systems-hero-route-map-wide-concept-2480.png`, renders at `x=0 / y=0 / width=1026 / height=413.7`, no horizontal overflow.
+- Image Gen output: the generated source was `1975x796`; project variants were generated at `1240x500` and `2480x1000`.
+- Wide desktop: `1240px` selects `systems-hero-route-map-ai-wide-1240.png`, renders at `x=0 / y=0 / width=1240 / height=500`, `object-fit=contain`, no horizontal overflow.
+- High-DPI wide: `1026px @ DPR 2` selects `systems-hero-route-map-ai-wide-2480.png`, renders at `x=0 / y=0 / width=1026 / height=413.7`, no horizontal overflow.
 - Middle widths: `640/700/760/761/820px @ DPR 2` continue using the concept-derived desktop raster with live hero copy hidden, preventing fallback to the rough mobile station-card treatment.
 - Mobile: `390px` still uses `systems-hero-route-map.png` for the mobile stacked layout.
 
