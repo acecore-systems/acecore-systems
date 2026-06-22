@@ -602,6 +602,24 @@ main {
   padding-bottom: 21.8px;
 }
 
+@media (min-width: 761px) {
+  .home-page main > section:nth-of-type(3) {
+    padding-block: 4.8px 16.8px;
+  }
+
+  .home-page .change-section {
+    padding-block: 6px 20.5px;
+  }
+
+  .home-page .process-section {
+    padding-block: 18.8px 2.1px;
+  }
+
+  .home-page .case-section {
+    padding-block: 20.8px 11.8px;
+  }
+}
+
 .section-head {
   max-width: 760px;
   margin-bottom: 10px;
@@ -791,6 +809,10 @@ main {
 
 .tone-gold .route-cells {
   --route-line: var(--gold);
+}
+
+.tone-gold .route-cells span {
+  font-size: 0.56rem;
 }
 
 .tone-teal .route-cells {

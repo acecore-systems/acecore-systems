@@ -13,7 +13,9 @@
 - P3: さらに問い合わせ帯の背景ルートを `58% 56% / 108% auto` に調整し、右側の暗幕を少し濃くしました。contact領域の平均差分は `23.41` から `23.28` へ下がり、フォーム裏のルート円も少し沈みました。
 - P3: 追加パスで問い合わせ帯の見出しウェイトを落とし、タグ背景をさらに薄くし、右連絡枠を `4px` 下げました。footerリンク列は `padding-left: 64px / gap: 21px / y=-2px` で参照位置へ寄せ、contact領域は `23.28` から `22.13`、footer領域は `18.47` から `16.33` へ下がっています。
 - P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
+- P3: 追加パスでWebルート行のセル文字を `0.56rem` に落とし、長いWeb行ラベルの詰まりを緩和しました。routes領域の平均差分は `13.48` から `13.35` へ下がっています。
 - P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
+- P3: さらにデスクトップの縦リズムをセクション総高を変えずに再配分しました。Planner/BeforeAfter は上へ、Process/Cases は下へ寄せ、planner `19.73 -> 18.31`、beforeAfter `18.21 -> 17.17`、pricing `13.78 -> 13.41`、process `18.96 -> 18.48`、cases `20.16 -> 18.44` へ下がりました。
 - P3: 導入事例カードは今回のパスで参照にないカテゴリ行を外し、カード先頭がタイトルになるように戻しました。事例セクションの下余白で参照と同じページ高を維持しています。
 - P3: 導入事例カード右下のライン装飾は、参照に合わせて丸付きの斜めラインへ戻しました。カード寸法は変えず、ライン色は参照サンプルに近い `#318f9b` / `#ecbb2a` へ分けています。cases領域の平均差分は `20.20` から `20.17` へ下がりました。
 - P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
@@ -110,8 +112,8 @@
 - Wide high-DPI metric: desktop `1026px` at DPR 2 uses `systems-hero-route-map-concept-2480.png`, reports density-corrected `naturalWidth=1026`, `naturalHeight=481`, `objectFit=contain`, and renders at `x=0 / y=0 / 1026x481.48`.
 - Intermediate breakpoint metric: `640px`, `700px`, and `760px` at DPR 2 all use `systems-hero-route-map-concept-2480.png` with `objectFit=contain` and `heroCopyOpacity=0`; `390px` mobile still uses `systems-hero-route-map.png`.
 - Pricing metric: desktop pricing section reports `top=1161.94px`, `height=173.52px`, and the final desktop page height remains `1822px`.
-- Process metric: desktop process section reports `top=1335.45px`, `height=134.95px`; the step titles/body were strengthened, and the latest pass changes process-line step colors to teal for 01-03, gold for 04-05, and gray for 06 while the page height remains `1822px`. Process mean image difference improved from `21.05` to `18.96`.
-- Case metric: desktop case section reports `top=1470.44px`, `height=172.88px`; the case cards no longer include the category `span` row.
+- Process metric: desktop process section reports `top=1335.45px`, `height=134.95px`; the step titles/body were strengthened, and the latest pass changes process-line step colors to teal for 01-03, gold for 04-05, and gray for 06 while the page height remains `1822px`. Process mean image difference improved from `21.05` to `18.48`.
+- Case metric: desktop case section reports `top=1470.41px`, `height=172.88px`; the case cards no longer include the category `span` row, and the latest vertical rhythm pass reduced cases mean image difference to `18.44`.
 - Contact metric: desktop contact band reports `top=1643.28px`, `height=142px`; the center form reports `x=382.16 / width=276 / height=102.91`, right contact methods report `x=683 / width=142 / height=102`, and footer inner reports `height=36`. Rendered input columns are `131px` wide, and the submit button reports `y=1762.77 / width=274 / height=22`. The contact region's mean pixel difference improved from `56.34` to `22.13`; footer improved from `21.56` to `16.33`.
 - Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
 - Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
@@ -169,6 +171,7 @@
 - Slightly scaled the desktop workflow illustration in the Before/After section, then reset that transform for mobile to preserve the stacked layout.
 - Added the footer brand mark and adjusted the homepage footer padding so the bottom brand lockup matches the source while keeping the final desktop page height at `1822px`.
 - Reduced route-table cell text from `0.66rem/730` to `0.6rem/690`, tightened line-height, and shortened connector arrows so dense Web-route labels do not collide with the route direction lines.
+- Reduced the Web route row's route-table cell text again to `0.56rem`, easing the long `CMS・検索・フォーム・AIチャット` and `セキュリティ・パフォーマンス改善` labels while improving routes mean difference to `13.35`.
 - Increased route-label icon size from `18px` to `23px` and changed the Web-route chevron label from dark text back to white text to match the reference route-label treatment.
 - Split the route-table lane tones so business/data labels no longer share the same teal fill, and tuned the Web label yellow closer to the source.
 - Updated the desktop guard to `761px+` so the concept hero renders with `object-fit: contain` at both middle and wide desktop widths, preserving the full route map without horizontal distortion.
@@ -190,6 +193,7 @@
 - Lightened the planner section typography and UI chrome: planner heading `font-weight: 760`, tab labels `760`, checklist labels `660 / #3b4f5d`, options border `0.10`, and route-brief card border/shadow `0.18 / 0.08`. Planner mean image difference improved from `20.38` to `19.73`.
 - Added direct `1240w` and `2480w` hero route PNGs, regenerated the `3452w` fallback with the same `mks2021` + light sharpen pass, and updated `srcset` so wide and high-DPI displays no longer rely on a browser-resized 4x-only candidate.
 - Tuned the lower-page contact/footer and process rhythm: lighter contact heading, subtler contact tags, `16px` right contact-method offset, left-shifted footer nav, `18px` process number dots, and lighter process copy. Contact mean difference improved from `23.28` to `22.13`, footer from `18.47` to `16.33`, and process from `20.13` to `18.96`.
+- Rebalanced desktop vertical rhythm without changing total section heights: planner section padding `4.8px/16.8px`, change section `6px/20.5px`, process `18.8px/2.1px`, and cases `20.8px/11.8px`. This kept final page height `1822px` while improving planner, Before/After, pricing, process, and cases comparisons.
 
 **Validation**
 
@@ -197,6 +201,6 @@
 - In-app Browser check passed for page identity and console health; Playwright-managed Chromium remains the pixel comparison source for exact `863px` captures.
 - Interaction check passed: planner reset plus ops-only selection changed the active route to `01 / 06`, generated the corresponding consultation link, and console health stayed clean.
 - Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `latest-bottom-compare.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `process-cases-latest-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `hero-bp-640.png`, `hero-bp-700.png`, `hero-bp-760.png`, `hero-bp-1240.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, reference-width desktop uses the exact 1x concept crop, `1240px @ DPR 1` uses the direct `1240w` raster, high-DPI desktop/intermediate widths use the direct `2480w` raster with ratio-preserving height, visible home footer links match the concept five-link set, latest planner mean difference is `19.73`, latest process mean difference is `18.96`, latest contact mean difference is `22.13`, latest footer mean difference is `16.33`, latest cases mean difference is `20.16`, and the reference-width desktop page height remains `1822px`.
+- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, reference-width desktop uses the exact 1x concept crop, `1240px @ DPR 1` uses the direct `1240w` raster, high-DPI desktop/intermediate widths use the direct `2480w` raster with ratio-preserving height, visible home footer links match the concept five-link set, latest routes mean difference is `13.35`, planner `18.31`, beforeAfter `17.17`, pricing `13.41`, process `18.48`, contact `22.13`, footer `16.33`, cases `18.44`, and the reference-width desktop page height remains `1822px`.
 
 final result: passed
