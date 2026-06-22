@@ -257,8 +257,24 @@ const cases = [
           <source
             media="(min-width: 1001px)"
             srcset="
-              /assets/systems-hero-route-map-ai-wide-1240.png 1240w,
-              /assets/systems-hero-route-map-ai-wide-2480.png 2480w
+              /assets/systems-hero-route-map-transparent-wide.png 1240w,
+              /assets/systems-hero-route-map-transparent-wide-2x.png 2480w
+            "
+            sizes="100vw"
+          />
+          <source
+            media="(min-width: 761px)"
+            srcset="
+              /assets/systems-hero-route-map-transparent-desktop.png 863w,
+              /assets/systems-hero-route-map-transparent-desktop-2x.png 1726w
+            "
+            sizes="100vw"
+          />
+          <source
+            media="(min-width: 621px)"
+            srcset="
+              /assets/systems-hero-route-map-transparent-desktop.png 863w,
+              /assets/systems-hero-route-map-transparent-desktop-2x.png 1726w
             "
             sizes="100vw"
           />
@@ -276,38 +292,6 @@ const cases = [
             aria-hidden="true"
           />
         </picture>
-        <div class="hero-hitboxes" aria-label="ヒーロー内リンク">
-          <a
-            class="hero-hit hero-hit-brand"
-            href="/"
-            aria-label="Acecore Systems ホーム"></a>
-          <a
-            class="hero-hit hero-hit-services"
-            href="/services/"
-            aria-label="サービス"></a>
-          <a
-            class="hero-hit hero-hit-pricing-nav"
-            href="/pricing/"
-            aria-label="料金"></a>
-          <a
-            class="hero-hit hero-hit-guide"
-            href="/guide/"
-            aria-label="導入ガイド"></a>
-          <a class="hero-hit hero-hit-cases" href="/cases/" aria-label="実績"
-          ></a>
-          <a
-            class="hero-hit hero-hit-contact-nav"
-            href="/contact/"
-            aria-label="お問い合わせ"></a>
-          <a
-            class="hero-hit hero-hit-primary"
-            href="/contact/"
-            aria-label={home.primaryCta}></a>
-          <a
-            class="hero-hit hero-hit-pricing"
-            href="/pricing/"
-            aria-label={home.secondaryCta}></a>
-        </div>
         <ol class="route-stations">
           {
             routeSteps.map((step, index) => (

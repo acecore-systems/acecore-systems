@@ -414,87 +414,6 @@ main {
   pointer-events: none;
 }
 
-.hero-hitboxes {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  z-index: 4;
-  display: none;
-  width: var(--hero-map-width);
-  height: var(--hero-map-height);
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.hero-hit {
-  position: absolute;
-  display: block;
-  border-radius: 4px;
-  pointer-events: auto;
-}
-
-.hero-hit:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-  background: rgba(246, 191, 26, 0.14);
-}
-
-.hero-hit-brand {
-  top: 3%;
-  left: 2.8%;
-  width: 16%;
-  height: 6.5%;
-}
-
-.hero-hit-services {
-  top: 3.4%;
-  left: 55.1%;
-  width: 5.3%;
-  height: 5.4%;
-}
-
-.hero-hit-pricing-nav {
-  top: 3.4%;
-  left: 63.5%;
-  width: 4.8%;
-  height: 5.4%;
-}
-
-.hero-hit-guide {
-  top: 3.4%;
-  left: 70.3%;
-  width: 7.1%;
-  height: 5.4%;
-}
-
-.hero-hit-cases {
-  top: 3.4%;
-  left: 79.5%;
-  width: 4.8%;
-  height: 5.4%;
-}
-
-.hero-hit-contact-nav {
-  top: 2.4%;
-  left: 85%;
-  width: 10.4%;
-  height: 7.6%;
-}
-
-.hero-hit-primary {
-  top: 64%;
-  left: 4.4%;
-  width: 15.7%;
-  height: 9%;
-}
-
-.hero-hit-pricing {
-  top: 64%;
-  left: 21%;
-  width: 10.8%;
-  height: 9%;
-}
-
 .route-stations {
   position: absolute;
   z-index: 2;
@@ -2313,6 +2232,7 @@ main {
   .home-page .hero {
     --hero-map-width: min(100vw, 1240px);
     --hero-map-height: calc(var(--hero-map-width) * 405 / 863);
+    --route-art-offset-y: 36px;
   }
 
   .home-page .site-header {
@@ -2325,26 +2245,62 @@ main {
   .home-page .site-header .nav,
   .home-page .site-header .header-cta,
   .home-page .hero-copy {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .home-page .hero::before,
-  .home-page .hero::after {
-    display: none;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .home-page .hero-grid {
     min-height: var(--hero-map-height);
   }
 
-  .home-page .hero-hitboxes {
+  .home-page .route-stations {
+    top: var(--route-art-offset-y);
+    left: 50%;
     display: block;
+    width: var(--hero-map-width);
+    height: var(--hero-map-height);
+    transform: translateX(-50%);
+  }
+
+  .home-page .station {
+    display: grid;
+    width: 86px;
+  }
+
+  .home-page .station:nth-child(1) {
+    top: 74%;
+    left: 34.5%;
+  }
+
+  .home-page .station:nth-child(2) {
+    top: 65%;
+    left: 56.5%;
+  }
+
+  .home-page .station:nth-child(3) {
+    top: 56%;
+    left: 65.5%;
+  }
+
+  .home-page .station:nth-child(4) {
+    top: 61%;
+    left: 72.5%;
+  }
+
+  .home-page .station:nth-child(5) {
+    top: 54%;
+    left: 83%;
+  }
+
+  .home-page .station:nth-child(6) {
+    top: 51%;
+    left: 92.5%;
   }
 }
 
 @media (min-width: 761px) {
   .home-page .hero-route-map {
+    top: var(--route-art-offset-y);
     left: 50%;
     width: var(--hero-map-width);
     height: var(--hero-map-height);
@@ -2357,19 +2313,15 @@ main {
   .home-page .hero {
     --hero-map-width: min(100vw, 1240px);
     --hero-map-height: calc(var(--hero-map-width) * 500 / 1240);
+    --route-art-offset-y: 36px;
   }
 
   .home-page .site-header .brand,
   .home-page .site-header .nav,
   .home-page .site-header .header-cta,
   .home-page .hero-copy {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .home-page .hero::before,
-  .home-page .hero::after {
-    display: none;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .home-page .hero-grid {
@@ -2379,7 +2331,7 @@ main {
   }
 
   .home-page .hero-copy {
-    transform: translateY(10px);
+    transform: translateY(-48px);
   }
 
   .home-page .hero h1 {
@@ -2406,7 +2358,7 @@ main {
   }
 
   .home-page .hero-route-map {
-    top: 0;
+    top: var(--route-art-offset-y);
     left: 50%;
     width: var(--hero-map-width);
     height: var(--hero-map-height);
@@ -2417,11 +2369,12 @@ main {
   }
 
   .home-page .route-stations {
-    display: none;
-    top: 37.6%;
-    left: 30.5%;
-    width: 68.7%;
-    height: 52%;
+    display: block;
+    top: var(--route-art-offset-y);
+    left: 50%;
+    width: var(--hero-map-width);
+    height: var(--hero-map-height);
+    transform: translateX(-50%);
   }
 
   .home-page .station {
@@ -2430,33 +2383,33 @@ main {
   }
 
   .home-page .station:nth-child(1) {
-    top: 64%;
-    left: 21%;
+    top: 74%;
+    left: 34.5%;
   }
 
   .home-page .station:nth-child(2) {
-    top: 62%;
-    left: 35%;
+    top: 65%;
+    left: 56.5%;
   }
 
   .home-page .station:nth-child(3) {
     top: 56%;
-    left: 49%;
+    left: 65.5%;
   }
 
   .home-page .station:nth-child(4) {
     top: 61%;
-    left: 62%;
+    left: 72.5%;
   }
 
   .home-page .station:nth-child(5) {
     top: 54%;
-    left: 76%;
+    left: 83%;
   }
 
   .home-page .station:nth-child(6) {
     top: 51%;
-    left: 91%;
+    left: 92.5%;
   }
 }
 
@@ -2762,59 +2715,6 @@ main {
 
   .contact-methods a {
     min-height: 58px;
-  }
-}
-
-@media (min-width: 621px) and (max-width: 760px) {
-  .home-page .hero {
-    --hero-map-width: 100vw;
-    --hero-map-height: calc(var(--hero-map-width) * 405 / 863);
-  }
-
-  .home-page .site-header {
-    border-bottom-color: transparent;
-    background: transparent;
-    backdrop-filter: none;
-  }
-
-  .home-page .site-header .brand,
-  .home-page .site-header .nav,
-  .home-page .site-header .header-cta,
-  .home-page .hero-copy {
-    opacity: 0;
-  }
-
-  .home-page .hero::before,
-  .home-page .hero::after {
-    display: none;
-  }
-
-  .home-page .hero-grid {
-    min-height: var(--hero-map-height);
-    padding-block: 0;
-  }
-
-  .home-page .hero-route {
-    position: static;
-    min-height: 0;
-  }
-
-  .home-page .hero-route-map {
-    position: absolute;
-    inset: auto;
-    top: 0;
-    left: 50%;
-    width: var(--hero-map-width);
-    height: var(--hero-map-height);
-    object-fit: contain;
-    object-position: center top;
-    opacity: 1;
-    transform: translateX(-50%);
-  }
-
-  .home-page .route-stations,
-  .home-page .route-lanes {
-    display: none;
   }
 }
 
