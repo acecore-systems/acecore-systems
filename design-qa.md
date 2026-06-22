@@ -1,214 +1,48 @@
 **Findings**
 
 - P0/P1/P2 の未解決事項はありません。
-- P3: ページ全体高さは参照 `1822px` に対して実装も `1822px` です。
-- P3: デスクトップのヒーローは、基準比較の `863px` ではコンセプトヒーローのラスタをそのまま使い、ユーザー指摘の出た `1001px+` wide では高解像度のルート専用画像とHTML文字・ナビへ切り替えています。wideで小さい参照スクショを拡大して曲線や文字が荒れる状態を避けました。
-- P3: デスクトップのヒーローは wide 専用の合成画像をやめ、通常の `863px` 比較幅では参照クロップそのものの `systems-hero-route-map-concept.png` を使うようにしました。旧 wide 画像3点は削除済みです。ヒーロー領域の平均差分は `4.66` から `3.53` へ下がっています。
-- P3: 1026px/DPR2 の中幅デスクトップと 1240px wide では `systems-hero-route-map.png` を使い、文字・ナビ・CTA・ルート説明をHTMLで再表示します。1240px wide は `1870x841` の元画像を `1240x500` へ縮小、1026px/DPR2 は `1166x500` へ拡げて `x=0` から描画し、料金ボタンと左端のルート丸が重ならないようにしています。
-- P3: ルートマップの追加対策として、`1001px+` に smooth route source を追加し、`1001px-1100px` では `100vw + 140px` の画像幅と `+70px` の水平補正で左端の継ぎ目を出さずにルートを右へ逃がしました。基準比較用の `863px` では `systems-hero-route-map-concept.png` を維持しています。
-- P3: 追加で `621px-760px` の中間幅でもコンセプト由来ラスタを等比表示するようにしました。`640px / 700px / 760px @ DPR 2` で `2480w` source、`object-fit: contain`、live hero copy `opacity=0` を確認し、低解像度のモバイル画像とステーションカードへ落ちてルートが荒く見える状態を避けています。`390px` は従来どおり mobile source のままです。
-- P3: Before/Afterの右イラストは `object-fit: contain` で人物と画面を含む全体構図を表示し、今回のパスで線画の薄さも `opacity` と `contrast()` で参照に近づけました。
-- P3: 問い合わせ帯は入力欄・送信ボタン・相談方法ボタンのサイズと文字ウェイトを落とし、参照と同じ見出し・プレースホルダー・送信ボタン文言に揃えました。今回のパスでは上端19pxをページ面として残して暗色背景の開始位置を合わせ、フォーム幅を `276px`、列幅を `131px` まで絞りました。右連絡枠は `142x102px` に伸ばしてLINE補足文を参照どおり2行へ戻し、footer内コンテンツも下げています。contact領域の平均差分は `56.34` から `23.43` へ、footerは `21.56` から `19.76` へ下がり、最終ページ高 `1822px` は維持しています。
-- P3: 追加パスで問い合わせ帯の背景ルートを少し沈め、ホームフッターの表示リンクを参照と同じ `サービス / 料金 / 導入ガイド / 実績 / お問い合わせ` の5件に絞りました。footer領域の平均差分は `19.76` から `18.47` へ下がっています。
-- P3: さらに問い合わせ帯の背景ルートを `58% 56% / 108% auto` に調整し、右側の暗幕を少し濃くしました。contact領域の平均差分は `23.41` から `23.28` へ下がり、フォーム裏のルート円も少し沈みました。
-- P3: 追加パスで問い合わせ帯の見出しウェイトを落とし、タグ背景をさらに薄くし、右連絡枠を `4px` 下げました。footerリンク列は `padding-left: 64px / gap: 21px / y=-2px` で参照位置へ寄せ、contact領域は `23.28` から `22.13`、footer領域は `18.47` から `16.33` へ下がっています。
-- P3: 追加パスで問い合わせ帯の左コピーを `6px` 下げ、補足文とタグの濃度・間隔、背景ルート位置、右連絡枠の縦位置を再調整しました。contact領域の平均差分は `22.13` から `19.24` へ下がり、footerは `16.33` のままです。
-- P3: ルート表はセル文字を落ち着いた濃紺に戻し、今回のパスで本文ウェイトも落として、矢印だけをルート色にする参照の情報密度へさらに近づけました。
-- P3: 追加パスでWebルート行のセル文字を `0.56rem` に落とし、長いWeb行ラベルの詰まりを緩和しました。routes領域の平均差分は `13.48` から `13.35` へ下がっています。
-- P3: プランナー、料金表、開発ステップ、事例カードは今回のパスで文字ウェイトをさらに落とし、参照より黒く重く見えていた中盤下部のトーンを軽くしました。
-- P3: さらにデスクトップの縦リズムをセクション総高を変えずに再配分しました。Planner/BeforeAfter は上へ、Process/Cases は下へ寄せ、planner `19.73 -> 18.31`、beforeAfter `18.21 -> 17.17`、pricing `13.78 -> 13.41`、process `18.96 -> 18.48`、cases `20.16 -> 18.44` へ下がりました。
-- P3: 導入事例カード列は `translate(6px, 2px)` で参照位置へ寄せ、section高を変えずに cases領域の平均差分を `18.44` から `17.99` へ下げました。
-- P3: 導入事例カードは今回のパスで参照にないカテゴリ行を外し、カード先頭がタイトルになるように戻しました。事例セクションの下余白で参照と同じページ高を維持しています。
-- P3: 導入事例カード右下のライン装飾は、参照に合わせて丸付きの斜めラインへ戻しました。カード寸法は変えず、ライン色は参照サンプルに近い `#318f9b` / `#ecbb2a` へ分けています。cases領域の平均差分は `20.20` から `20.17` へ下がりました。
-- P3: セクション見出しは今回のパスで `font-weight: 820` まで落とし、通常セクションと料金セクションの余白で参照と同じページ高を維持しながら、黒く強すぎる見出しトーンを抑えました。
-- P3: ルート表と導入ステップの接続線は今回のパスで小さな矢印頭を追加し、参照にある方向性のある細線表現へ寄せました。モバイルでは表が縦積みになるため追加矢印頭を非表示にしています。
-- P3: プランナー右側のおすすめルートカードは今回のパスで番号円を `14px` に上げ、タイトル/補足文も少しだけ大きくしました。CTA は少し軽くして、リストよりボタンだけが強く見えていた状態を抑えています。短くなった分は Before/After 下余白へ戻し、最終ページ高 `1822px` を維持しています。
-- P3: 追加パスでおすすめルートカードの active 表示を選択領域すべての合算ではなく主ルートだけに戻しました。初期状態は参照どおり `05 Web・サイト機能` のみ強調し、planner領域の平均差分は `20.40` から `20.38` へ下がっています。リセット後に「その他の課題がある」だけを選ぶと `01 / 06` が強調されることを in-app Browser で確認済みです。
-- P3: Planner は追加パスで見出し、タブ、チェック項目のウェイトを落とし、パネル境界とおすすめカード影を薄くしました。HTML構造と操作性は保ったまま、planner領域の平均差分は `20.38` から `19.73` へ下がっています。
-- P3: Before/After の After カードは今回のパスで teal の境界線と背景を少し薄くし、参照の淡いカード処理に近づけました。カード寸法とセクション位置は変えていません。
-- P3: Before/After カードは今回のパスで参照と同じ5項目構成に戻し、Before は灰色の×入り丸、After は青緑のチェック入り丸を参照から切り出したPNGマーカーで寄せました。カード内容を増やした分、desktop の `change-section` 余白を調整して最終ページ高 `1822px` を維持しています。
-- P3: 料金表は今回のパスで行ラベルと価格のウェイトを少し落とし、参照より硬く見えていた表内の太さを抑えました。表の高さとページ高 `1822px` は維持しています。
-- P3: 料金表、導入ステップ、導入事例は今回のパスで罫線・影・補助テキスト色をさらに薄くし、参照より硬いUI部品感を抑えました。プロセスの丸サイズは維持し、接続線だけを細くして最終ページ高 `1822px` に戻しています。
-- P3: 開発の進め方は今回のパスでステップタイトルと本文を少し大きく・濃くし、丸番号と水平線だけが目立って見えていた状態を抑えました。文字増分で伸びた4pxは `process-section` の下余白で吸収し、最終ページ高 `1822px` を維持しています。
-- P3: 開発の進め方は今回の追加パスで丸番号と接続線の色分布を参照へ寄せました。01-03は青緑、04-05は黄、06は灰色に戻し、さらに丸番号を `18px`、タイトル/本文を少し軽くしました。process領域の平均差分は `21.05` から `18.96` へ下がり、`process-section` 下余白で最終ページ高 `1822px` を維持しています。
-- P3: 追加パスで導入ステップの丸番号を `19px`、接続線始点を `22px`、タイトルを `0.62rem` に調整し、`process-section` 下余白を `0.25px` に詰めました。最終ページ高 `1822px` を維持したまま process領域の平均差分は `18.48` から `17.99` へ下がりました。
-- P3: Before/After右側の線画は今回のパスでデスクトップのみ少し拡大し、横に薄く伸びて見えていた状態を参照の人物・画面の存在感へ近づけました。モバイルでは拡大を解除しています。
-- P3: フッター左のブランド表示は今回のパスでAマークを追加し、参照と同じ「マーク + Acecore Systems」の形に戻しました。フッターpaddingを調整して最終ページ高 `1822px` は維持しています。
+- P3: 参照幅 `863px` のページ全体高さは、参照 `1822px` に対して実装も `1822px` です。
+- P3: ユーザー指摘のあった `1001px+` のルートマップは、別構図の `systems-hero-route-map.png` とHTMLラベルを合成する方式をやめ、コンセプト由来の完成ラスタ `systems-hero-route-map-wide-concept-*.png` へ切り替えました。ルート線、丸、ラベルが別々にズレる状態を解消しています。
+- P3: wideラスタ内のナビ/CTAは画像として表示されるため、同じ位置に透明クリック面を追加しました。`1240px` で「開発を相談する」は `x=55 / y=320 / 195x45`、「料金を見る」は `x=260 / y=320 / 134x45` で、どちらも正しく遷移します。
 
 **Comparison Target**
 
 - Source visual truth: `C:\Users\gnish\.codex\attachments\ad5a08f7-6501-4cff-855a-e212532d099c\image-1.png`
-- Latest user report: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-dbd79a35-3b1c-4ad6-bd57-34256032a652.png`
+- Latest user report: route map was visibly unstable in `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-dbd79a35-3b1c-4ad6-bd57-34256032a652.png` (Temp file is no longer available, but the screenshot evidence in the prompt was used as the reported condition).
 - Implementation URL: `http://127.0.0.1:4322/`
-- Implementation screenshots:
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\hero-compare-concept-route.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\full-compare-concept-route-current.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\desktop-863-concept-route.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\focus-planner-compare.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1240-route-map-fix.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\wide-1026-dpr2-hero.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-vs-current-1026-dpr2-hero.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\current-1026-dpr2-hero-latest.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-vs-fixed-1026-dpr2-hero.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\user-normalized-wide-compare.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-table-final-compare-2x.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-labels-after-icon-tune-4x.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-labels-final-tone-4x.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\arrows-route-process-compare-2x.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mid-before-pricing-compare-2x.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\bottom-contact-footer-compare-2x.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\route-map-fix-compare.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mobile-390-route-map-fix.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\audit-full-compare-863.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\audit-focus-sections-863.png`
-  - `C:\Users\gnish\.codex\worktrees\d241\acecore-systems\.playwright-cli\mobile-390-concept-route.png`
-- Viewports: reference-width desktop `863x900`, wide desktop `1240x900`, mobile `390x844`.
-- State: top page initial state, planner default selections.
-- Browser availability: in-app Browser setup succeeded in this pass and was used for page identity / console health checks. Strict pixel-aligned comparison still uses Playwright-managed Chromium because the in-app viewport reserves scrollbar width and reports an `848px` content width under the `863px` viewport override.
+- Viewports checked: reference desktop `863x900`, wide desktop `1240x900`, high-DPI `1026px @ DPR 2`, breakpoint checks `640/700/760/761/820/1026/1240px @ DPR 2`, mobile `390x844`.
 
-**Focused Region Evidence**
+**Hero Evidence**
 
-- Hero route map: reference-width desktop still uses the concept hero crop as the source of truth. `863px` selects `systems-hero-route-map-concept.png` exactly; `1001px+` wide switches to the high-resolution route-only `systems-hero-route-map.png` and renders hero text/navigation as HTML so the route line is not enlarged from the small source crop.
-- Hero route placement: at the `863px` comparison width, the hero image renders at `x=0 / y=0 / width=863 / height=405`, matching the concept canvas.
-- Wide route guard: at `1240px`, the image renders at `x=0 / y=0 / width=1240 / height=500`, selects `systems-hero-route-map.png`, and uses `object-fit: cover`. The source is `1870x841`, so this path is a downscale rather than an upscaled concept screenshot.
-- Wide high-DPI guard: at `1026px` with `deviceScaleFactor=2`, the desktop source uses `systems-hero-route-map.png` and renders at `x=0 / y=0 / width=1166 / height=500`; the added width keeps the route clear of the CTA without exposing a left-edge seam.
-- Intermediate breakpoint guard: at `640px`, `700px`, and `760px` with `deviceScaleFactor=2`, the hero now selects `systems-hero-route-map-concept-2480.png`, renders at the same `863:405` ratio, hides the live copy layer, and does not show the mobile station-card overlay. This prevents zoom/tablet widths from falling back to the rough mobile route treatment.
-- Latest user screenshot comparison: `current-1026-dpr2-hero-latest.png` captures the reported high-DPI condition after switching wide to the route-only source. The fixed capture keeps the title as live two-line HTML and uses the smoother generated route image instead of a scaled concept screenshot.
-- Route stability: no generated SVG/CSS route overlay is used. Wide desktop uses a real raster route image; reference-width desktop keeps the concept-derived PNG.
-- Route table tone: route table body text now stays on the dark text token while the connector lines carry the route accent color, matching the concept more closely than the previous all-colored cell text.
-- Route table density: `route-table-final-compare-2x.png` was rebuilt after reducing route-cell font size/weight and shortening connector arrows so the Web row no longer feels as heavy or crowded against the directional lines.
-- Route label fidelity: `route-labels-after-icon-tune-4x.png` was rebuilt after enlarging the left route-label icons and returning the Web route label to white text, matching the reference's stronger icon/title treatment on the colored chevrons.
-- Route label tone: `route-labels-final-tone-4x.png` was rebuilt after splitting the business/data label tones. The sampled label averages moved close to the source (`business` source `#398E9D` / implementation `#398C99`, `data` source `#44A09E` / implementation `#4AA09E`).
-- Mid/lower typography tone: route table cells, planner tabs/options, route-brief numbers, pricing values, process labels, and case-card headings now use lighter weights without changing their grid dimensions.
-- Desktop live controls: at `863px` the live controls remain transparent above the concept raster; at `1001px+` the header, hero copy, CTA, and route labels are visible HTML over the high-resolution route source.
-- Mobile guard: the mobile `picture` source still switches to `systems-hero-route-map.png`; mobile does not inherit the desktop raster hero overlay.
-- Planner ratio: the planner grid remains close to the concept, with the wider right recommendation card preserved from the previous pass.
-- Planner route brief density: `audit-focus-sections-863.png` was rebuilt after increasing the route-brief number dots to `14px`, slightly increasing route-step title/body text, and softening the CTA weight. The route items still keep `30px` rows, and the final page height remains `1822px`.
-- Planner route active state: the route brief now highlights only the primary recommendation path instead of every selected-area path. Default state highlights only `05 Web・サイト機能`, matching the concept, and interaction still changes the primary route after reset.
-- Before/After flow: the section now has a dedicated `change-section` desktop rhythm; Before/After cards are narrower, the right illustration uses `object-fit: contain` so both people and the dashboard remain visible, and the section is taller so the pricing block no longer rides up as aggressively.
-- Before/After card tone: `before-after-after-tone-2x.png` was rebuilt after reducing the After card border alpha from `0.35` to `0.24` and lightening the card background to reduce the overly strong teal frame.
-- Before/After list fidelity: `audit-focus-sections-863.png` was rebuilt after returning both cards to the concept's 5-item structure and replacing simple red/teal bullets with source-extracted gray circled-x and teal circled-check PNG markers.
-- Before/After illustration tone: the workflow illustration now uses higher opacity and slight contrast to avoid the washed-out look from the previous pass while preserving the full-image framing.
-- Before/After illustration scale: the desktop workflow illustration is slightly enlarged with a transform-only adjustment so it reads closer to the source without changing the section geometry.
-- Mid/lower density: pricing table labels, prices, process line, and case cards use lighter weights and smaller supporting text, reducing the heavier implementation tone visible in the previous comparison.
-- Pricing table weight: `pricing-weight-tune-2x.png` was rebuilt after lowering homepage pricing row labels and price values from `720` to `680`, keeping the same table geometry.
-- Lower-page surface tone: `audit-focus-sections-863.png` was rebuilt after lightening homepage pricing-table borders/header tone, reducing process connector line thickness to `1px`, and softening case-card borders/shadows/tag weights. The process number circles remain at the previous size so the page stays aligned to the reference height.
-- Case card structure: homepage case cards now start with the case title, matching the concept. The extra green category line that only existed in the implementation was removed.
-- Section heading tone: top-level section headings now use a smaller size and lighter `820` weight; the homepage and pricing section padding were adjusted to keep the final `1822px` page height aligned with the reference.
-- Surface tone: route/white sections now use `#fbfcfd` instead of pure white, reducing the hard white contrast against the concept's slightly gray section surfaces.
-- Process line: the process section now uses the concept's heading, lead copy, step titles, and visible number sequence instead of reusing the hero route steps.
-- Connector arrows: route-table connectors and the process-line connectors now include small arrowheads in desktop layouts, matching the source's directional line treatment more closely than the previous plain horizontal strokes.
-- Contact band: the home quick form no longer renders as a translucent card; inputs sit directly on the dark route-map band like the concept. The latest pass keeps a 19px page-colored strip before the dark band, narrows the center form to `276px`, sets the rendered input columns to `131px`, lowers the submit button to `y=1762.77`, extends the right contact-method box to `142x102px`, and keeps the final page height aligned.
-- Footer brand: the footer now includes the same A mark used by the header, matching the reference footer's brand lockup rather than rendering text alone.
-- Planner options: the checklist now uses the concept's 8 visible options in row-major order, with the same checked items as the reference.
-- Planner route brief: the recommendation list body copy and number colors now follow the concept more closely.
+- Reference-width desktop: `863px` selects `systems-hero-route-map-concept.png`, renders at `x=0 / y=0 / width=863 / height=405`, `object-fit=contain`, and keeps final page height `1822px`.
+- Wide desktop: `1240px` selects `systems-hero-route-map-wide-concept-1240.png`, renders at `x=0 / y=0 / width=1240 / height=500`, `object-fit=contain`, no horizontal overflow.
+- High-DPI wide: `1026px @ DPR 2` selects `systems-hero-route-map-wide-concept-2480.png`, renders at `x=0 / y=0 / width=1026 / height=413.7`, no horizontal overflow.
+- Middle widths: `640/700/760/761/820px @ DPR 2` continue using the concept-derived desktop raster with live hero copy hidden, preventing fallback to the rough mobile station-card treatment.
+- Mobile: `390px` still uses `systems-hero-route-map.png` for the mobile stacked layout.
 
-**Rendered QA**
+**Section Metrics**
 
-- Page identity: `http://127.0.0.1:4322/`, title `業務システム・アプリ開発 | Acecore Systems`.
-- Blank-page check: desktop and mobile render first meaningful content.
-- Overflow: desktop `scrollWidth=863` at `863px`; mobile `scrollWidth=390` at `390px`; no horizontal overflow.
-- Final desktop page height: implementation `1822px` versus source `1822px`.
-- Hero map source: desktop `863px` uses `systems-hero-route-map-concept.png`; `1001px+` wide uses `systems-hero-route-map.png`; `621px-1000px` continues to use concept-derived desktop rasters; mobile uses `systems-hero-route-map.png`.
-- Hero route metrics: desktop `863px` image reports `naturalWidth=863`, `naturalHeight=405`; rendered size is `863x405`.
-- Wide route metrics: desktop `1240px` uses `systems-hero-route-map.png`, `objectFit=cover`; rendered size is `x=0 / y=0 / 1240x500`.
-- Wide high-DPI metric: desktop `1026px` at DPR 2 uses `systems-hero-route-map.png`, reports `naturalWidth=1870`, `naturalHeight=841`, and renders at `x=0 / y=0 / 1166x500` with no horizontal overflow.
-- Intermediate breakpoint metric: `640px`, `700px`, and `760px` at DPR 2 all use `systems-hero-route-map-concept-2480.png` with `objectFit=contain` and `heroCopyOpacity=0`; `390px` mobile still uses `systems-hero-route-map.png`.
-- Pricing metric: desktop pricing section reports `top=1161.94px`, `height=173.52px`, and the final desktop page height remains `1822px`.
-- Process metric: desktop process section reports `top=1335.45px`, `height=134.97px`; the latest pass uses `19px` number dots, `22px` connector starts, and `0.62rem` step titles while the page height remains `1822px`. Process mean image difference improved from `21.05` to `17.99`.
-- Case metric: desktop case section reports `top=1470.41px`, `height=172.88px`; the case cards no longer include the category `span` row, and the latest card-grid offset reduced cases mean image difference to `17.99`.
-- Contact metric: desktop contact band reports `top=1643.28px`, `height=142px`; the center form reports `x=382.16 / width=276 / height=102.91`, right contact methods report `x=683 / width=142 / height=102`, and footer inner reports `height=36`. Rendered input columns are `131px` wide, and the submit button reports `y=1762.77 / width=274 / height=22`. The contact region's mean pixel difference improved from `56.34` to `19.24`; footer improved from `21.56` to `16.33`.
-- Header metric: brand hitbox remains at `x=26`, `y=15`, `width=162.52`, `height=24`.
-- Mobile guard: final `390px` capture uses the mobile route source, with `transform: none`, `mask: none`, and `scrollWidth=390`.
-- Focused Before/After evidence: `audit-focus-sections-863.png` was rebuilt after rebalancing card widths, right illustration size/position, section desktop rhythm, 5-item card content, and source-extracted circled list marker assets.
-- Focused workflow illustration evidence: `audit-focus-sections-863.png` was rebuilt after increasing illustration opacity/contrast.
-- Focused mid-page evidence: `mid-before-pricing-compare-2x.png` was rebuilt after the workflow illustration scale pass to confirm it does not collide with the Before/After cards or pricing section.
-- Focused route-table evidence: `audit-focus-sections-863.png` was rebuilt after separating route-cell text color from route connector accent color.
-- Focused route-table final evidence: `route-table-final-compare-2x.png` was rebuilt after tuning route-cell text size/weight and connector length.
-- Focused route-label evidence: `route-labels-after-icon-tune-4x.png` was rebuilt after increasing route-label icon size and changing the gold Web label text back to white.
-- Focused route-label tone evidence: `route-labels-final-tone-4x.png` was rebuilt after separating the business and data label colors and lowering the Web-route yellow slightly.
-- Focused planner route evidence: `audit-focus-sections-863.png` was rebuilt after tuning the recommendation card's route-brief number and text density; the page stayed at `scrollHeight=1822`.
-- Focused Before/After card evidence: `before-after-after-tone-2x.png` was rebuilt after softening the After card frame/background; layout metrics stayed unchanged.
-- Focused pricing evidence: `pricing-weight-tune-2x.png` was rebuilt after lightening the pricing table row labels and prices; the latest full comparison now reports pricing at `top=1161.94px`, `height=173.52px`.
-- Focused heading evidence: `audit-full-compare-863.png` and `audit-focus-sections-863.png` were rebuilt after reducing section heading weight.
-- Focused process evidence: `process-cases-latest-compare.png` was rebuilt after aligning the process heading, step content, and latest step color distribution to the concept.
-- Focused connector evidence: `arrows-route-process-compare-2x.png` was rebuilt after adding desktop arrowheads to the route-table and process-line connectors.
-- Focused lower-page evidence: `audit-focus-sections-863.png` was rebuilt again after lowering route table, planner, pricing, process, and case-card font weights without changing section heights.
-- Focused lower-page tone evidence: `audit-focus-sections-863.png` was rebuilt after the latest pricing/process/case border and shadow pass; final `scrollHeight` returned to `1822px` after preserving the process circle size.
-- Focused contact evidence: `audit-focus-sections-863.png` and `contact-latest-compare.png` were rebuilt after matching the contact copy, placeholders, submit label, dark-band start, `276px` form width, `131px` input columns, taller right contact-method box, and 2-line LINE helper text while preserving final page height.
-- Focused footer evidence: `audit-focus-sections-863.png` was rebuilt after lowering the footer inner content, keeping the footer inner height at `36px`, and hiding the home-only extra `Acecore` / `プライバシー` links to match the concept footer.
-- Focused planner evidence: `focus-planner-compare.png` was rebuilt after aligning checklist copy, order, and default checked state.
-- Interaction evidence: `interaction-check.cjs` passed against `http://127.0.0.1:4322/`; console logs were empty, the default recommendation stays on `05`, and the consultation link stays pointed at `/contact/?scope=...`. In-app Browser also verified reset + ops-only selection updates the active recommendation to `01 / 06`.
-
-**Patches Made Since Previous QA**
-
-- Regenerated the desktop hero route asset from the concept hero crop instead of trying to mask out individual route/text regions.
-- Removed the desktop wide `<source>` so `1240px` no longer switches to `systems-hero-route-map-wide-2x.png`.
-- Regenerated the desktop hero from the reference crop as direct `1240w`, `2480w`, and `3452w` PNG assets, then switched the desktop `<img>` `srcset` to select the closest asset for each display density.
-- Replaced the breakpoint-limited desktop fill guard with a `761px+` ratio guard so all desktop hero captures use the concept-derived hero at `object-fit: contain`.
-- Hid desktop header/copy visual layers over the hero while keeping their links in place, preventing duplicate text and restoring the concept route map appearance.
-- Updated hero lead copy to match the concept wording; mobile still renders it as live text.
-- Changed route table body cells to dark text with colored connector lines only, reducing the overly saturated route-table body from the previous pass.
-- Reduced section heading weight/size further to `font-weight: 820`, then adjusted normal homepage section padding and pricing-section bottom padding so the final desktop page height matches the reference `1822px`.
-- Tuned the Before/After section with a dedicated `change-section` class, narrower card columns, a smaller right illustration, and desktop-only extra vertical rhythm.
-- Changed the Before/After right illustration from a cropped cover frame to `object-fit: contain`, restoring the concept's full people-plus-dashboard line-art composition.
-- Increased Before/After workflow illustration opacity and contrast so the line-art density sits closer to the concept.
-- Reduced pricing table, process line, and case-card typography weight/size to better match the concept's lighter lower-page density.
-- Reduced the pricing table's row labels, price values, and section-heading weight again after a 2x focused comparison showed the implementation still reading heavier than the reference.
-- Removed the homepage case-card category line and added case-section bottom padding so the cards match the concept structure without shortening the final desktop page height.
-- Further reduced route-table, planner, pricing, process, and case-card font weights so the mid/lower page reads less heavy without changing layout dimensions.
-- Changed route/white section surfaces from pure white to `#fbfcfd` to better match the concept's softer page tone.
-- Replaced the process section copy/data with `developmentSteps` so it matches the concept's "開発の進め方" section.
-- Removed the homepage contact quick-form panel background and tightened desktop contact-band padding to keep the final page height aligned after the Before/After section was expanded.
-- Reduced the homepage contact-band form fields, submit button, tags, and contact-method buttons, then set the band's desktop minimum height to preserve the reference vertical rhythm.
-- Adjusted the homepage contact-grid desktop columns from an even form-heavy ratio to a wider left-copy column, narrower center form, and stable right contact-method column.
-- Matched the homepage contact heading, input placeholders, submit button label, and desktop contact-grid columns to the reference contact band.
-- Narrowed the homepage contact quick form to `276px`, changed the desktop column gap to `12px`, and reduced input min-height so the desktop input columns render at `131px`, close to the source-detected `132px`.
-- Added a 19px page-colored strip at the top of the homepage contact band, increased the contact band to `142px`, and reduced footer vertical padding so the dark band begins closer to the source while the final page height remains `1822px`.
-- Lowered the submit button with a small top margin, extended the right contact-method rows to `50px`, shifted the right contact box down `12px`, and changed the LINE helper copy to a deliberate 2-line layout; contact mean image difference improved from `56.34` to `23.43`.
-- Shifted homepage footer inner content down without changing total footer height; footer mean image difference improved from `21.56` to `19.76`.
-- Reworked planner options to match the concept checklist and default checked state.
-- Updated route step body copy and route-brief number colors for the recommendation card.
-- Rebuilt `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `wide-1240-route-map-fix.png`, `route-map-fix-compare.png`, `current-1026-dpr2-hero-latest.png`, and `mobile-390-route-map-fix.png` after unifying desktop hero rendering on concept-derived width-specific PNG assets and preserving the latest typography/contact-band pass.
-- Added desktop arrowheads to route-table and process-line connectors, with a responsive guard that hides the added arrowheads once the route table or process line stacks on narrower viewports.
-- Slightly scaled the desktop workflow illustration in the Before/After section, then reset that transform for mobile to preserve the stacked layout.
-- Added the footer brand mark and adjusted the homepage footer padding so the bottom brand lockup matches the source while keeping the final desktop page height at `1822px`.
-- Reduced route-table cell text from `0.66rem/730` to `0.6rem/690`, tightened line-height, and shortened connector arrows so dense Web-route labels do not collide with the route direction lines.
-- Reduced the Web route row's route-table cell text again to `0.56rem`, easing the long `CMS・検索・フォーム・AIチャット` and `セキュリティ・パフォーマンス改善` labels while improving routes mean difference to `13.35`.
-- Increased route-label icon size from `18px` to `23px` and changed the Web-route chevron label from dark text back to white text to match the reference route-label treatment.
-- Split the route-table lane tones so business/data labels no longer share the same teal fill, and tuned the Web label yellow closer to the source.
-- Updated the desktop guard to `761px+` so the concept hero renders with `object-fit: contain` at both middle and wide desktop widths, preserving the full route map without horizontal distortion.
-- Used local `capture-hero-1026.cjs` and rebuilt `current-1026-dpr2-hero-latest.png` plus `user-vs-fixed-1026-dpr2-hero.png` to lock the reported screenshot condition into QA evidence.
-- Increased planner recommendation route dots to `14px`, with route-brief titles at `0.52rem` and body text at `0.405rem`; kept each route item at `30px`, softened the CTA, and returned the 4px height difference to the Before/After bottom rhythm so the page stays aligned to the concept.
-- Softened the Before/After `After` card by lowering the teal border alpha and lightening the gradient background while keeping dimensions fixed.
-- Matched Before/After card copy to the concept's 5-item Before and 5-item After lists, replaced simple dot bullets with source-extracted `flow-marker-before.png` and `flow-marker-after.png`, and reduced desktop `change-section` bottom padding so the final desktop page height stayed `1822px`.
-- Lowered homepage pricing row label and price weights to `680` so the table reads closer to the source without altering row height.
-- Removed the `1001px+` desktop hero width guard and edge mask, then tied desktop hero width/height to the source image ratio so wide displays no longer compress the route map into a separate `1050px` raster box or stretch it to `405px` height.
-- Softened lower-page UI chrome by reducing pricing-table border/header contrast, thinning only the process connector line to `1px`, and lowering case-card border/shadow/tag weights while preserving the reference-width page height at `1822px`.
-- Increased the process-step title/body size and weight, then added a `process-section` class with a 4px lower-padding correction so the improved readability does not change the final `1822px` desktop page height.
-- Updated homepage process-line step colors so 01-03 use teal circles/connectors, 04-05 use gold circles with the 04->05 connector, and 06 uses a gray circle; then reduced the process number circles to `18px`, shifted the connector line up to `11px`, lightened the title/body text, and compensated with `process-section` lower padding. Process mean image difference improved from `21.05` to `18.96`.
-- Moved the home hero mobile `<source>` cutoff to `620px` and added a `621px-760px` hero override so tablet/zoom widths also use the concept-derived high-DPI raster, hide the live text/station-card layers, and keep the route-map image ratio stable.
-- Changed the planner route-brief active calculation from a union of all selected areas to the current primary route, restoring the default `05`-only emphasis shown in the concept.
-- Slightly darkened the home contact route-map background and hid the home footer's extra first/last links so the visible footer navigation matches the concept's five-link set; footer mean image difference improved from `19.76` to `18.47`.
-- Changed the desktop hero `srcset` to prefer the exact `863w` concept crop at the reference comparison width and added direct `1240w` / `2480w` candidates for wide and high-DPI displays; removed the unused `systems-hero-route-map-wide*.png` assets so the old gapped route composite cannot be selected again. Hero mean image difference improved from `4.66` to `3.53`.
-- Reworked homepage case-card corner accents from an internal L-shape to the concept's small-dot plus diagonal route line, then sampled the source accent colors for teal/gold. Cases mean image difference improved from `20.20` to `20.17`.
-- Tuned the homepage contact-band route-map background position/size and increased the right-side dark overlay from `0.955` to `0.97`. Contact mean image difference improved from `23.41` to `23.28` while keeping the section at `top=1643.31px / height=142px`.
-- Lightened the planner section typography and UI chrome: planner heading `font-weight: 760`, tab labels `760`, checklist labels `660 / #3b4f5d`, options border `0.10`, and route-brief card border/shadow `0.18 / 0.08`. Planner mean image difference improved from `20.38` to `19.73`.
-- Added direct `1240w` and `2480w` hero route PNGs, regenerated the `3452w` fallback with the same `mks2021` + light sharpen pass, and updated `srcset` so wide and high-DPI displays no longer rely on a browser-resized 4x-only candidate.
-- Tuned the lower-page contact/footer and process rhythm: lighter contact heading, subtler contact tags, `16px` right contact-method offset, left-shifted footer nav, `18px` process number dots, and lighter process copy. Contact mean difference improved from `23.28` to `22.13`, footer from `18.47` to `16.33`, and process from `20.13` to `18.96`.
-- Rebalanced desktop vertical rhythm without changing total section heights: planner section padding `4.8px/16.8px`, change section `6px/20.5px`, process `18.8px/2.1px`, and cases `20.8px/11.8px`. This kept final page height `1822px` while improving planner, Before/After, pricing, process, and cases comparisons.
-- Split desktop hero rendering by width: `863px` reference comparison keeps the concept crop, while `1001px+` wide selects `systems-hero-route-map.png` and shows the header/copy/CTA/route labels as HTML to avoid upscaled route-map jaggies.
-- Added a `1001px-1100px` hero guard that renders the route image at `100vw + 140px` and shifts it `70px` right, preventing the left route circle from colliding with the料金 button while keeping the image flush to the viewport edge.
-- Tuned the contact-band copy/background/right-method offsets again; contact mean difference improved from `22.13` to `19.24` with footer unchanged at `16.33`.
-- Shifted the homepage case grid by `translate(6px, 2px)`; cases mean difference improved from `18.44` to `17.99` without changing section height.
-- Enlarged the process-line number dots from `18px` to `19px`, moved connector starts from `21px` to `22px`, increased step titles to `0.62rem`, and reduced process-section desktop bottom padding to `0.25px`; process mean difference improved from `18.48` to `17.99` while keeping the final page height at `1822px`.
+- Latest `863px` mean differences are unchanged by the wide fix: hero `3.53`, routes `13.35`, planner `18.31`, beforeAfter `17.17`, pricing `13.41`, process `17.99`, cases `18.02`, contact `19.31`, footer `16.33`.
+- Latest layout metrics: pricing `top=1161.94 / height=173.52`, process `top=1335.45 / height=134.97`, cases `top=1470.42 / height=172.88`, contact `top=1643.30 / height=142`.
 
 **Validation**
 
-- Browser visual checks passed at desktop `863x900`, wide desktop `1240x900`, intermediate `640/700/760/761/820px @ DPR 2`, high-DPI wide `1026px @ DPR 2`, wide high-DPI `1240px @ DPR 2`, and mobile `390x844`.
-- In-app Browser check passed for page identity and console health; Playwright-managed Chromium remains the pixel comparison source for exact `863px` captures.
-- Interaction check passed: planner reset plus ops-only selection changed the active route to `01 / 06`, generated the corresponding consultation link, and console health stayed clean.
-- Saved comparison evidence: `audit-full-compare-863.png`, `audit-focus-sections-863.png`, `latest-bottom-compare.png`, `focus-planner-compare.png`, `focus-before-after-compare.png`, `focus-process-cases-compare.png`, `process-cases-latest-compare.png`, `focus-bottom-compare.png`, `arrows-route-process-compare-2x.png`, `route-table-final-compare-2x.png`, `route-labels-after-icon-tune-4x.png`, `route-labels-final-tone-4x.png`, `mid-before-pricing-compare-2x.png`, `bottom-contact-footer-compare-2x.png`, `wide-1240-route-map-fix.png`, `current-1026-dpr2-hero-latest.png`, `hero-bp-640.png`, `hero-bp-700.png`, `hero-bp-760.png`, `hero-bp-1240.png`, `user-vs-fixed-1026-dpr2-hero.png`, `mobile-390-route-map-fix.png`, and `route-map-fix-compare.png`.
-- Browser metrics: no horizontal overflow, correct desktop/wide/mobile hero image source, reference-width desktop uses the exact 1x concept crop, `1240px @ DPR 1` uses `systems-hero-route-map.png` at `1240x500`, `1026px @ DPR 2` uses the same high-resolution route source at `1166x500`, visible home footer links match the concept five-link set, latest routes mean difference is `13.35`, planner `18.31`, beforeAfter `17.17`, pricing `13.41`, process `17.99`, contact `19.31`, footer `16.33`, cases `18.02`, and the reference-width desktop page height remains `1822px`.
+- `node .playwright-cli\capture-route-map-fix.cjs`
+- `node .playwright-cli\capture-hero-breakpoints.cjs`
+- `node .playwright-cli\capture-fidelity-audit.cjs`
+- `node .playwright-cli\measure-section-diffs.cjs`
+- `node .playwright-cli\interaction-check.cjs`
+- Additional hitbox check: wide CTA hitboxes navigated to `/contact/` and `/pricing/`.
+
+**Evidence Files**
+
+- `.playwright-cli/wide-1240-full-route-map-fix.png`
+- `.playwright-cli/wide-1240-route-map-fix.png`
+- `.playwright-cli/hero-bp-1026.png`
+- `.playwright-cli/hero-bp-1240.png`
+- `.playwright-cli/audit-full-compare-863.png`
+- `.playwright-cli/audit-focus-sections-863.png`
+- `.playwright-cli/mobile-390-route-map-fix.png`
+- `.playwright-cli/route-map-fix-compare.png`
 
 final result: passed
