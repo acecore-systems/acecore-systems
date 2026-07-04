@@ -11,9 +11,9 @@ export default defineConfig({
   site: "https://systems.acecore.net",
   integrations: [
     sitemap({
-      lastmod: new Date(),
       filter(page) {
-        return !new URL(page).pathname.startsWith("/contact/thanks");
+        const pathname = new URL(page).pathname;
+        return pathname !== "/404" && !pathname.startsWith("/contact/thanks");
       },
       serialize(item) {
         if (item.url === "https://systems.acecore.net/") {
