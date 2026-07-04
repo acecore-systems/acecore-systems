@@ -9,6 +9,8 @@ interface Props {
   description?: string;
   image?: string;
   robots?: string;
+  canonical?: string | null;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -16,10 +18,56 @@ const {
   description = site.description,
   image,
   robots = "index, follow",
+  canonical: canonicalInput = Astro.url.pathname,
+  jsonLd: pageJsonLd,
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, site.siteUrl);
+const canonical =
+  canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl);
+const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl);
 const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`;
 const ogImage = image || new URL("/favicon.svg", site.siteUrl).href;
+const homeUrl = new URL("/", site.siteUrl).href;
+const organizationId = `${homeUrl}#organization`;
+const websiteId = `${homeUrl}#website`;
+const webPageId = `${pageUrl.href}#webpage`;
+const baseJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": organizationId,
+    name: site.name,
+    url: homeUrl,
+    description: site.description,
+    logo: new URL("/favicon.svg", site.siteUrl).href,
+    email: site.email,
+    telephone: site.phone,
+    sameAs: [site.acecoreUrl],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": websiteId,
+    name: site.name,
+    url: homeUrl,
+    description: site.description,
+    inLanguage: "ja",
+    publisher: { "@id": organizationId },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": webPageId,
+    url: pageUrl.href,
+    name: pageTitle,
+    description,
+    inLanguage: "ja",
+    isPartOf: { "@id": websiteId },
+    about: { "@id": organizationId },
+  },
+];
+const jsonLd = pageJsonLd
+  ? [...baseJsonLd, ...(Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd])]
+  : baseJsonLd;
 ---
 
 <!doctype html>
@@ -30,17 +78,19 @@ const ogImage = image || new URL("/favicon.svg", site.siteUrl).href;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-    <link rel="canonical" href={canonical} />
+    {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <Header />
