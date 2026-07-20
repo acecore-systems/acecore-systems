@@ -175,6 +175,13 @@ collections:
               - { name: result, label: 成果, widget: text }
               - { name: image, label: 画像, widget: image, required: false }
               - {
+                  name: imageAlt,
+                  label: 画像の代替テキスト,
+                  widget: string,
+                  required: false,
+                  hint: 画像の内容を具体的に説明してください。未入力時は実績タイトルが使用されます。,
+                }
+              - {
                   name: externalUrl,
                   label: 外部URL,
                   widget: string,

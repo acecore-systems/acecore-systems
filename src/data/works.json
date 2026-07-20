@@ -12,6 +12,7 @@
       "proposal": "サービス別の導線、問い合わせ種別、FAQ、AIによる事前案内を組み合わせ、必要な情報をフォームに集約しました。",
       "result": "相談前の確認と正式な問い合わせを分け、見積りやサービス相談に進みやすい流れになりました。",
       "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "imageAlt": "オフィスでノートパソコンを操作する開発チーム",
       "externalUrl": "https://acecore.net/contact/"
     },
     {
@@ -22,6 +23,7 @@
       "proposal": "Astro、Cloudflare Pages、Sveltia CMS、Pagefind、構造化データ、セキュリティヘッダーを組み合わせ、必要な機能を小さく追加できる形に整理しました。",
       "result": "ブログ、固定ページ、検索、問い合わせ導線を運用しながら改善できる基盤になり、同種のサイト機能追加案件へ転用しやすい知見がまとまりました。",
       "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "imageAlt": "Webサイトのコードを表示したノートパソコンと外部モニター",
       "externalUrl": "https://acecore.net/blog/"
     },
     {
@@ -32,6 +34,7 @@
       "proposal": "技術運用とコミュニティ運営を分けず、サーバー構成、監視、バックアップ、Web導線をまとめて改善しました。",
       "result": "長期運用で得た知見を、業務システムの監視・運用設計にも活かせるようになりました。",
       "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "imageAlt": "ネットワーク機器と配線が並ぶサーバーラック",
       "externalUrl": "https://asv.acecore.net/"
     }
   ]
