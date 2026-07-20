@@ -2,7 +2,7 @@
 
 GitHubのリポジトリ設定では、次の情報を使用します。
 
-- Description: `Acecore Systems公式ホームページ（systems.acecore.net）`
+- Description: `Acecore Systems公式ホームページ`
 - Website: `https://systems.acecore.net`
 - Topics: `acecore-systems`, `astro`, `cloudflare-pages`, `corporate-website`
 

@@ -7,7 +7,7 @@ labels: documentation
 
 ## 更新内容
 
-- Description: `Acecore Systems公式ホームページ（https://systems.acecore.net）`
+- Description: `Acecore Systems公式ホームページ`
 - Website: `https://systems.acecore.net`
 - Topics候補: `acecore-systems`, `astro`, `cloudflare-pages`, `corporate-website`
 
