@@ -15,7 +15,17 @@ import data from '../data/works.json'
     <div class="container grid-2">
       {data.cases.map((work) => (
         <article class="work-card">
-          {work.image && <img src={work.image} alt="" width="1000" height="680" loading="lazy" />}
+          {
+            work.image && (
+              <img
+                src={work.image}
+                alt={work.imageAlt || work.title}
+                width="1000"
+                height="680"
+                loading="lazy"
+              />
+            )
+          }
           <div class="work-body">
             <p class="category">{work.category}</p>
             <h2>{work.title}</h2>
