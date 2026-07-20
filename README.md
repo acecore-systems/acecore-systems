@@ -1,6 +1,10 @@
-# acecore-systems
+# Acecore Systems 公式ホームページ
 
-Acecore Systems の日本語専用サイトです。
+このリポジトリは、Acecore Systems 公式ホームページのソースコードです。
+
+- 本番サイト: https://systems.acecore.net
+- 公開方式: Cloudflare Pages
+- 対象言語: 日本語
 
 ## 技術スタック
 
