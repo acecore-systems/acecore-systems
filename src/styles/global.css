@@ -209,6 +209,32 @@ a {
 }
 
 @media (min-width: 1041px) {
+  body.home-page {
+    position: relative;
+  }
+
+  body.home-page::before {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 550px;
+    background: center bottom / cover no-repeat
+      url("/images/quiet-home-surface-v3-exact.webp");
+    content: "";
+    pointer-events: none;
+  }
+
+  body.home-page .site-header,
+  body.home-page .home-hero {
+    background: transparent;
+  }
+
+  body.home-page .home-hero__surface {
+    display: none;
+  }
+
   .brand {
     translate: -10px -2px;
   }
@@ -220,7 +246,15 @@ a {
   }
 
   .desktop-nav {
-    translate: -10px 3px;
+    translate: -11px 5px;
+  }
+
+  .nav {
+    gap: 60px;
+  }
+
+  .nav a {
+    font-size: 1.1rem;
   }
 }
 
@@ -297,6 +331,10 @@ a {
   background: var(--paper-soft);
 }
 
+.home-hero .home-eyebrow {
+  color: var(--ink);
+}
+
 .home-hero__surface {
   position: absolute;
   z-index: -1;
@@ -365,8 +403,10 @@ a {
 
 .home-actions .editorial-link--primary {
   justify-content: flex-start;
+  border-color: #022f5d;
   padding-right: 54px;
   padding-left: 48px;
+  background-color: #022f5d;
 }
 
 .home-actions .editorial-link:not(.editorial-link--primary) {
@@ -431,7 +471,7 @@ a {
 .layer-model__summary {
   min-height: 136px;
   border-bottom: 1px solid var(--line);
-  background: var(--paper-soft);
+  background: #f3f3f4;
 }
 
 .layer-model__summary-inner {
@@ -459,9 +499,55 @@ a {
   top: 38%;
   bottom: 38%;
   left: 0;
-  width: 1px;
+  width: 2px;
   background: var(--line);
   content: "";
+}
+
+@media (min-width: 1041px) {
+  .home-hero .home-eyebrow {
+    translate: 3px -1px;
+    letter-spacing: 0.172em;
+  }
+
+  .home-hero h1 {
+    font-size: 3.42rem;
+    font-weight: 400;
+  }
+
+  .home-hero__lead {
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 0.135em;
+  }
+
+  .home-actions {
+    margin-top: 34px;
+  }
+
+  .home-actions .editorial-link {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .layer-model__body {
+    translate: 0 3px;
+    font-weight: 400;
+    letter-spacing: 0.035em;
+  }
+
+  .layer-model__summary p {
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .layer-model__summary p:first-child {
+    translate: 5px 0;
+  }
+
+  .layer-model__summary p:nth-child(2) {
+    translate: 1px 0;
+  }
 }
 
 /* Home: site-wide theme */

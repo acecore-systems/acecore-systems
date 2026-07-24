@@ -10,6 +10,7 @@ interface Props {
   image?: string;
   robots?: string;
   canonical?: string | null;
+  bodyClass?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -19,13 +20,17 @@ const {
   image,
   robots = "index, follow",
   canonical: canonicalInput = Astro.url.pathname,
+  bodyClass,
   jsonLd: pageJsonLd,
 } = Astro.props;
 const canonical =
   canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl);
 const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl);
 const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`;
-const ogImage = new URL(image || "/images/acecore-systems-og.webp", site.siteUrl).href;
+const ogImage = new URL(
+  image || "/images/acecore-systems-og.webp",
+  site.siteUrl,
+).href;
 const homeUrl = new URL("/", site.siteUrl).href;
 const organizationId = `${homeUrl}#organization`;
 const websiteId = `${homeUrl}#website`;
@@ -75,10 +80,7 @@ const jsonLd = pageJsonLd
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="msvalidate.01"
-      content="B670753BF4A50FA5437E5694CB04BAFD"
-    />
+    <meta name="msvalidate.01" content="B670753BF4A50FA5437E5694CB04BAFD" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
@@ -97,7 +99,7 @@ const jsonLd = pageJsonLd
     <meta name="theme-color" content="#f2f0ea" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body>
+  <body class={bodyClass}>
     <a class="skip-link" href="#main">本文へ移動</a>
     <Header />
     <main id="main">
