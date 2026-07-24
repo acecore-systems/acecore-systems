@@ -14,12 +14,12 @@
   --layer: #242827;
   --layer-blue: #071d31;
   --white: #ffffff;
-  --container: 1360px;
+  --container: 1348px;
   --font-display:
     "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro",
     "Noto Serif JP", serif;
   --font-sans:
-    "Yu Gothic UI", "Yu Gothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Yu Gothic UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
     "Noto Sans JP", Meiryo, system-ui, sans-serif;
   font-family: var(--font-sans);
   background: var(--paper);
@@ -143,7 +143,6 @@ a {
 .site-header {
   position: relative;
   z-index: 100;
-  border-bottom: 1px solid rgba(20, 34, 53, 0.08);
   background: var(--paper-soft);
 }
 
@@ -163,7 +162,7 @@ a {
 
 .brand-name {
   font-family: var(--font-display);
-  font-size: clamp(1.45rem, 2vw, 1.9rem);
+  font-size: 1.9rem;
   font-weight: 500;
   letter-spacing: -0.025em;
 }
@@ -171,15 +170,15 @@ a {
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(28px, 5.25vw, 76px);
+  gap: clamp(28px, 4.6vw, 67px);
 }
 
 .nav a {
   position: relative;
   padding-block: 10px;
   color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   letter-spacing: 0.06em;
   text-decoration: none;
 }
@@ -200,13 +199,29 @@ a {
 }
 
 .nav a:hover::after,
-.nav a[aria-current="page"]::after {
+.nav a:focus-visible::after {
   scale: 1 1;
   transform-origin: left;
 }
 
 .mobile-menu {
   display: none;
+}
+
+@media (min-width: 1041px) {
+  .brand {
+    translate: -10px -2px;
+  }
+
+  .brand-name {
+    display: inline-block;
+    scale: 0.94 1;
+    transform-origin: left center;
+  }
+
+  .desktop-nav {
+    translate: -10px 3px;
+  }
 }
 
 /* Shared editorial primitives */
@@ -287,42 +302,78 @@ a {
   z-index: -1;
   inset: 0;
   background-color: var(--paper-soft);
-  background-image: url("/images/quiet-hero-surface.webp");
+  background-image: url("/images/quiet-home-hero-v2-exact.webp");
   background-position: center right;
   background-size: cover;
 }
 
 .home-hero__inner {
-  padding-block: 58px 24px;
+  padding-block: 55px 24px;
 }
 
 .home-hero h1 {
   max-width: 700px;
   margin-top: 27px;
   font-family: var(--font-display);
-  font-size: clamp(2.65rem, 3.7vw, 3.45rem);
+  font-size: 3.45rem;
   font-weight: 500;
-  letter-spacing: 0.035em;
+  letter-spacing: 0.075em;
   line-height: 1.32;
   white-space: pre-line;
 }
 
 .home-hero__lead {
-  max-width: 585px;
-  margin-top: 13px;
+  max-width: 600px;
+  margin-top: 7px;
   color: var(--ink);
-  font-size: clamp(1rem, 1.25vw, 1.12rem);
+  font-size: 1.18rem;
   font-weight: 400;
-  letter-spacing: 0.045em;
-  line-height: 1.9;
+  letter-spacing: 0.125em;
+  line-height: 1.8;
+  white-space: pre-line;
 }
 
 .home-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 56px;
+  gap: 59px;
   align-items: center;
-  margin-top: 31px;
+  margin-top: 35px;
+  margin-left: 2px;
+}
+
+.home-actions .editorial-link {
+  position: relative;
+  font-size: 1rem;
+}
+
+.home-actions .editorial-link::after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 28px;
+  height: 18px;
+  translate: 0 -50%;
+  background: center / contain no-repeat url("/images/arrow-blue.png");
+  content: "";
+}
+
+.home-actions .editorial-link--primary::after {
+  right: 26px;
+  background-image: url("/images/arrow-white.png");
+}
+
+.home-actions .editorial-link--primary {
+  justify-content: flex-start;
+  padding-right: 54px;
+  padding-left: 48px;
+}
+
+.home-actions .editorial-link:not(.editorial-link--primary) {
+  min-width: 178px;
+  justify-content: flex-start;
+  padding-right: 34px;
+  padding-left: 0;
 }
 
 .layer-model {
@@ -331,7 +382,7 @@ a {
 
 .layer-model__visual {
   position: relative;
-  height: 376px;
+  height: 372px;
   overflow: hidden;
   background: var(--layer-blue);
 }
@@ -348,48 +399,49 @@ a {
   inset: 0;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
-  padding-top: 76px;
+  padding-top: 66px;
 }
 
 .layer-model__row {
   display: grid;
-  grid-template-columns: 112px minmax(0, 300px);
-  gap: 39px;
+  grid-template-columns: 100px minmax(0, 300px);
+  gap: 35px;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.42);
   color: var(--white);
-}
-
-.layer-model__row:last-child {
-  border-bottom: 0;
 }
 
 .layer-model__label {
   border-right: 1px solid rgba(255, 255, 255, 0.8);
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  font-size: 1.65rem;
   letter-spacing: 0.08em;
-  line-height: 1.8;
+  line-height: 1.6;
   white-space: nowrap;
 }
 
 .layer-model__body {
-  font-size: 0.86rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0;
   line-height: 1.75;
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.48);
+  white-space: pre-line;
 }
 
 .layer-model__summary {
-  min-height: 118px;
+  min-height: 136px;
   border-bottom: 1px solid var(--line);
   background: var(--paper-soft);
 }
 
 .layer-model__summary-inner {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  min-height: 118px;
+  grid-template-columns: 34.85% 32.58% 32.57%;
+  width: calc(100% - 35px);
+  max-width: none;
+  min-height: 136px;
+  margin-right: 35px;
+  margin-left: 0;
 }
 
 .layer-model__summary p {
@@ -398,7 +450,7 @@ a {
   position: relative;
   color: var(--blue);
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  font-size: 1.45rem;
   letter-spacing: 0.08em;
 }
 
@@ -1335,18 +1387,26 @@ a {
   }
 
   .home-hero__lead {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
     line-height: 1.85;
+    white-space: normal;
   }
 
   .home-actions {
     display: grid;
     grid-template-columns: 1fr;
     gap: 14px;
+    margin-left: 0;
   }
 
   .home-actions .editorial-link {
     width: 100%;
+  }
+
+  .home-actions .editorial-link--primary {
+    justify-content: center;
+    padding-inline: 54px;
   }
 
   .layer-model__visual {
@@ -1360,7 +1420,7 @@ a {
   }
 
   .layer-model__overlay {
-    padding-top: 120px;
+    padding-top: 90px;
   }
 
   .layer-model__row {
@@ -1378,6 +1438,8 @@ a {
 
   .layer-model__summary-inner {
     grid-template-columns: 1fr;
+    width: calc(100% - 36px);
+    margin-inline: auto;
     padding-block: 14px;
   }
 
