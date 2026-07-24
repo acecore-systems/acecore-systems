@@ -8,9 +8,14 @@
 
 ## 技術スタック
 
-- Astro
+- Astro v7
 - Cloudflare Pages
 - Sveltia CMS
+
+## 必要環境
+
+- Node.js 24.18.0 以上（`.node-version` を参照）
+- npm
 
 ## 開発
 
