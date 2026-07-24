@@ -8,18 +8,19 @@
   "email": "info@acecore.net",
   "phone": "050-8890-2788",
   "nav": [
-    { "label": "サービス", "href": "/services/" },
-    { "label": "料金", "href": "/pricing/" },
-    { "label": "導入ガイド", "href": "/guide/" },
-    { "label": "実績", "href": "/works/" },
+    { "label": "考え方", "href": "/#philosophy" },
+    { "label": "設計領域", "href": "/services/" },
+    { "label": "事例", "href": "/works/" },
+    { "label": "導入", "href": "/guide/" },
     { "label": "お問い合わせ", "href": "/contact/" }
   ],
   "footerLinks": [
     { "label": "Acecore", "href": "https://acecore.net" },
-    { "label": "サービス", "href": "/services/" },
+    { "label": "考え方", "href": "/#philosophy" },
+    { "label": "設計領域", "href": "/services/" },
     { "label": "料金", "href": "/pricing/" },
-    { "label": "導入ガイド", "href": "/guide/" },
-    { "label": "実績", "href": "/works/" },
+    { "label": "事例", "href": "/works/" },
+    { "label": "導入", "href": "/guide/" },
     { "label": "お問い合わせ", "href": "/contact/" },
     { "label": "プライバシー", "href": "/privacy/" }
   ]

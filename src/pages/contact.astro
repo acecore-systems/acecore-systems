@@ -5,33 +5,42 @@ import data from '../data/contact.json'
 ---
 
 <BaseLayout title={data.title} description={data.description}>
-  <section class="page-hero">
-    <div class="container">
-      <h1>{data.heroTitle}</h1>
+  <section class="page-hero page-hero--contact">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">Start a conversation / ご相談</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
 
-  <section class="section white">
-    <div class="container form-shell">
-      <aside>
-        <div class="section-head">
-          <h2>相談内容を送る</h2>
+  <section class="page-section page-section--contact" aria-labelledby="contact-form-title">
+    <div class="container contact-layout">
+      <aside class="contact-intro">
+        <header class="editorial-header">
+          <p class="editorial-eyebrow">Contact form / 01</p>
+          <h2 id="contact-form-title">相談内容を送る</h2>
           <p>{data.formLead}</p>
-        </div>
-        <div class="faq-list">
-          {data.faqs.map((faq) => (
-            <details>
-              <summary>{faq.question}</summary>
-              <p>{faq.answer}</p>
-            </details>
-          ))}
+        </header>
+        <div class="contact-faq" aria-label="お問い合わせ前のよくある質問">
+          {
+            data.faqs.map((faq, index) => (
+              <details class="contact-faq__item">
+                <summary>
+                  <span class="editorial-index">
+                    Q{String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>{faq.question}</span>
+                </summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))
+          }
         </div>
       </aside>
-      <form class="form-panel form-grid" action={site.contactFormAction} method="post">
+      <form class="contact-form" action={site.contactFormAction} method="post">
         <input type="hidden" name="_subject" value="Acecore Systems へのお問い合わせ" />
         <input type="hidden" name="source" value="systems.acecore.net" />
-        <div class="field">
+        <div class="contact-field">
           <label for="category">お問い合わせ種別</label>
           <select id="category" name="category" required>
             <option value="">選択してください</option>
@@ -42,23 +51,25 @@ import data from '../data/contact.json'
             <option>その他</option>
           </select>
         </div>
-        <div class="field">
+        <div class="contact-field">
           <label for="name">お名前</label>
           <input id="name" name="name" autocomplete="name" required />
         </div>
-        <div class="field">
+        <div class="contact-field">
           <label for="email">メールアドレス</label>
           <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
-        <div class="field">
+        <div class="contact-field">
           <label for="subject">件名</label>
           <input id="subject" name="subject" required />
         </div>
-        <div class="field">
+        <div class="contact-field">
           <label for="message">お問い合わせ内容</label>
           <textarea id="message" name="message" required></textarea>
         </div>
-        <button class="btn primary" type="submit">送信する</button>
+        <button class="editorial-link editorial-link--primary contact-submit" type="submit">
+          送信する
+        </button>
       </form>
     </div>
   </section>

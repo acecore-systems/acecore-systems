@@ -49,30 +49,61 @@ collections:
         fields:
           - { name: title, label: タイトル, widget: string }
           - { name: description, label: 説明, widget: text }
+          - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
           - { name: heroTitle, label: ヒーロータイトル, widget: string }
           - { name: heroLead, label: ヒーローリード, widget: text }
-          - { name: heroBody, label: ヒーロー本文, widget: text }
           - { name: primaryCta, label: 主要CTA, widget: string }
+          - { name: primaryCtaHref, label: 主要CTAリンク, widget: string }
           - { name: secondaryCta, label: 補助CTA, widget: string }
-          - {
-              name: heroImage,
-              label: ヒーロー画像,
-              widget: image,
-              required: false,
-            }
-          - label: 強み
-            name: strengths
+          - { name: secondaryCtaHref, label: 補助CTAリンク, widget: string }
+          - { name: layersTitle, label: 3層セクション見出し, widget: string }
+          - { name: layersLead, label: 3層セクション説明, widget: text }
+          - label: 現場・仕組み・運用
+            name: layers
             widget: list
+            min: 3
+            max: 3
             fields:
+              - { name: label, label: 層の名称, widget: string }
               - { name: title, label: 見出し, widget: string }
               - { name: body, label: 本文, widget: text }
-          - label: 支援領域
-            name: serviceHighlights
+          - {
+              name: philosophyEyebrow,
+              label: 設計思想英字見出し,
+              widget: string,
+            }
+          - { name: philosophyTitle, label: 設計思想見出し, widget: string }
+          - { name: philosophyLead, label: 設計思想説明, widget: text }
+          - label: 設計原則
+            name: designPrinciples
+            widget: list
+            fields:
+              - { name: number, label: 番号, widget: string }
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+          - {
+              name: consultationEyebrow,
+              label: 相談場面英字見出し,
+              widget: string,
+            }
+          - {
+              name: consultationTitle,
+              label: 相談場面セクション見出し,
+              widget: string,
+            }
+          - { name: consultationLead, label: 相談場面説明, widget: text }
+          - label: 相談される場面
+            name: consultationSituations
             widget: list
             fields:
               - { name: title, label: 見出し, widget: string }
               - { name: body, label: 本文, widget: text }
               - { name: href, label: リンク, widget: string }
+          - { name: ctaEyebrow, label: CTA英字見出し, widget: string }
+          - { name: ctaTitle, label: CTA見出し, widget: string }
+          - { name: ctaBody, label: CTA本文, widget: text }
+          - { name: ctaLabel, label: CTAボタン, widget: string }
+          - { name: ctaHref, label: CTAリンク, widget: string }
       - name: services
         label: サービス
         file: src/data/services.json

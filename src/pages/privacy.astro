@@ -4,21 +4,42 @@ import data from '../data/privacy.json'
 ---
 
 <BaseLayout title={data.title} description={data.description}>
-  <section class="page-hero">
-    <div class="container">
-      <h1>{data.title}</h1>
+  <section class="page-hero page-hero--privacy">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">Policy / 個人情報の取り扱い</p>
+      <h1 class="page-title">{data.title}</h1>
       <p class="page-lead">{data.description}</p>
     </div>
   </section>
 
-  <section class="section white">
-    <div class="container" style="max-width: 840px;">
-      {data.sections.map((section) => (
-        <article class="policy-section">
-          <h2>{section.title}</h2>
-          <p>{section.body}</p>
-        </article>
-      ))}
+  <section class="page-section page-section--privacy" aria-labelledby="privacy-sections-title">
+    <div class="container page-narrow">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Principles / 01</p>
+        <h2 id="privacy-sections-title">取り扱いについて</h2>
+      </header>
+      <div class="editorial-list">
+        {
+          data.sections.map((section, index) => (
+            <article class="editorial-row">
+              <header class="editorial-row__header">
+                <p class="editorial-index">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{section.title}</h3>
+              </header>
+              <div class="editorial-row__body">
+                <p>{section.body}</p>
+                {section.title === "お問い合わせ" && (
+                  <a class="editorial-link" href="/contact/">
+                    お問い合わせフォームへ
+                  </a>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 </BaseLayout>

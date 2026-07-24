@@ -4,67 +4,87 @@ import data from '../data/guide.json'
 ---
 
 <BaseLayout title={data.title} description={data.description}>
-  <section class="page-hero">
-    <div class="container">
-      <h1>{data.heroTitle}</h1>
+  <section class="page-hero page-hero--guide">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">Field notes / 導入ガイド</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
 
-  <section class="section white">
+  <section class="page-section page-section--guide" aria-labelledby="guide-intro-title">
     <div class="container">
-      <div class="section-head">
-        <h2>{data.introTitle}</h2>
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Perspective / 01</p>
+        <h2 id="guide-intro-title">{data.introTitle}</h2>
         <p>{data.introBody}</p>
-      </div>
-      <div class="grid-3">
+      </header>
+      <ol class="guide-perspectives">
         {
-          data.insights.map((item) => (
-            <article class="card">
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
+          data.insights.map((item, index) => (
+            <li class="guide-perspective">
+              <p class="editorial-index">
+                View {String(index + 1).padStart(2, "0")}
+              </p>
+              <div class="guide-perspective__content">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </section>
 
-  <section class="section">
+  <section class="page-section page-section--muted" aria-labelledby="guide-tips-title">
     <div class="container">
-      <div class="section-head">
-        <h2>{data.tipsTitle}</h2>
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Checklist / 02</p>
+        <h2 id="guide-tips-title">{data.tipsTitle}</h2>
         <p>{data.tipsLead}</p>
-      </div>
-      <div class="grid-2">
+      </header>
+      <ol class="guide-checklist">
         {
           data.tips.map((tip, index) => (
-            <article class="card">
-              <span class="step-index">Point {String(index + 1).padStart(2, '0')}</span>
-              <h2>{tip.title}</h2>
-              <p>{tip.body}</p>
-              <ul>
-                {tip.points.map((point) => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-            </article>
+            <li class="guide-checkpoint">
+              <header class="guide-checkpoint__header">
+                <p class="editorial-index">
+                  Point {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{tip.title}</h3>
+              </header>
+              <div class="guide-checkpoint__body">
+                <p>{tip.body}</p>
+                <ul class="guide-checkpoint__points">
+                  {tip.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </section>
 
-  <section class="section white">
+  <section class="page-section page-section--guide-faq" aria-labelledby="guide-faq-title">
     <div class="container">
-      <div class="section-head">
-        <h2>{data.faqTitle}</h2>
-      </div>
-      <div class="faq-list">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Questions / 03</p>
+        <h2 id="guide-faq-title">{data.faqTitle}</h2>
+      </header>
+      <div class="guide-faq">
         {
-          data.faqs.map((item) => (
-            <details>
-              <summary>{item.question}</summary>
+          data.faqs.map((item, index) => (
+            <details class="guide-faq__item">
+              <summary>
+                <span class="editorial-index">
+                  Q{String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{item.question}</span>
+              </summary>
               <p>{item.answer}</p>
             </details>
           ))
@@ -73,13 +93,16 @@ import data from '../data/guide.json'
     </div>
   </section>
 
-  <section class="section">
-    <div class="container cta-panel">
-      <div>
-        <h2>{data.ctaTitle}</h2>
-        <p>{data.ctaBody}</p>
-      </div>
-      <a class="btn primary" href="/contact/">{data.ctaLabel}</a>
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside class="editorial-cta guide-cta" aria-labelledby="guide-cta-title">
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="guide-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href="/contact/">{data.ctaLabel}</a>
+      </aside>
     </div>
   </section>
 </BaseLayout>

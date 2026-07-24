@@ -4,12 +4,17 @@ import site from '../data/site.json'
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <div>
+    <div class="footer-brand">
       <strong>{site.name}</strong>
-      <p>{site.description}</p>
+      <span>Systems for Operations</span>
+      <p>業務の表面だけでなく、データ、権限、例外、運用まで。現場に無理のない仕組みを設計します。</p>
     </div>
     <nav class="footer-links" aria-label="フッターナビゲーション">
       {site.footerLinks.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
+    <div class="footer-meta">
+      <a href={site.acecoreUrl}>Acecore</a>
+      <span>© {new Date().getFullYear()} Acecore Systems</span>
+    </div>
   </div>
 </footer>

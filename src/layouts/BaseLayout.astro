@@ -25,7 +25,7 @@ const canonical =
   canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl);
 const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl);
 const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`;
-const ogImage = image || new URL("/favicon.svg", site.siteUrl).href;
+const ogImage = new URL(image || "/images/acecore-systems-og.webp", site.siteUrl).href;
 const homeUrl = new URL("/", site.siteUrl).href;
 const organizationId = `${homeUrl}#organization`;
 const websiteId = `${homeUrl}#website`;
@@ -94,9 +94,11 @@ const jsonLd = pageJsonLd
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="theme-color" content="#f2f0ea" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
     <Header />
     <main id="main">
       <slot />
