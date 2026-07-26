@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import site from '../data/site.json'
-import data from '../data/contact.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+import data from "../data/contact.json";
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -13,7 +13,10 @@ import data from '../data/contact.json'
     </div>
   </section>
 
-  <section class="page-section page-section--contact" aria-labelledby="contact-form-title">
+  <section
+    class="page-section page-section--contact"
+    aria-labelledby="contact-form-title"
+  >
     <div class="container contact-layout">
       <aside class="contact-intro">
         <header class="editorial-header">
@@ -37,13 +40,28 @@ import data from '../data/contact.json'
           }
         </div>
       </aside>
-      <form class="contact-form" action={site.contactFormAction} method="post">
-        <input type="hidden" name="_subject" value="Acecore Systems へのお問い合わせ" />
+      <form
+        id="contact-form"
+        class="contact-form"
+        action={site.contactFormAction}
+        method="post"
+      >
+        <input
+          type="hidden"
+          name="_subject"
+          value="Acecore Systems へのお問い合わせ"
+        />
         <input type="hidden" name="source" value="systems.acecore.net" />
+        <input id="contact-service" type="hidden" name="service" value="" />
+        <input id="contact-from" type="hidden" name="from" value="" />
+        <input id="contact-entry" type="hidden" name="entry" value="" />
         <div class="contact-field">
-          <label for="category">お問い合わせ種別</label>
+          <label for="category"
+            >お問い合わせ種別 <span class="field-required">必須</span></label
+          >
           <select id="category" name="category" required>
             <option value="">選択してください</option>
+            <option>サービス全般について</option>
             <option>業務システム開発について</option>
             <option>Webアプリ・管理画面について</option>
             <option>データ連携・自動化について</option>
@@ -52,25 +70,172 @@ import data from '../data/contact.json'
           </select>
         </div>
         <div class="contact-field">
-          <label for="name">お名前</label>
+          <label for="name"
+            >お名前 <span class="field-required">必須</span></label
+          >
           <input id="name" name="name" autocomplete="name" required />
         </div>
         <div class="contact-field">
-          <label for="email">メールアドレス</label>
-          <input id="email" name="email" type="email" autocomplete="email" required />
+          <label for="email"
+            >メールアドレス <span class="field-required">必須</span></label
+          >
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          />
         </div>
         <div class="contact-field">
-          <label for="subject">件名</label>
+          <label for="subject"
+            >件名 <span class="field-required">必須</span></label
+          >
           <input id="subject" name="subject" required />
         </div>
         <div class="contact-field">
-          <label for="message">お問い合わせ内容</label>
+          <label for="message"
+            >お問い合わせ内容 <span class="field-required">必須</span></label
+          >
           <textarea id="message" name="message" required></textarea>
         </div>
-        <button class="editorial-link editorial-link--primary contact-submit" type="submit">
+        <button
+          class="editorial-link editorial-link--primary contact-submit"
+          type="submit"
+        >
           送信する
         </button>
       </form>
     </div>
   </section>
+
+  <script>
+    const form = document.querySelector<HTMLFormElement>("#contact-form");
+
+    if (form) {
+      const params = new URLSearchParams(window.location.search);
+      const readParam = (name: string) =>
+        (params.get(name) || "").trim().slice(0, 200);
+      const serviceKey = readParam("service").toLowerCase();
+      const categoryParam = readParam("category");
+      const fromValue = readParam("from");
+      const entryValue = readParam("entry");
+      const serviceDetails: Record<
+        string,
+        { category: string; subject: string }
+      > = {
+        "business-system": {
+          category: "業務システム開発について",
+          subject: "業務システム開発",
+        },
+        system: {
+          category: "業務システム開発について",
+          subject: "業務システム開発",
+        },
+        systems: {
+          category: "業務システム開発について",
+          subject: "業務システム開発",
+        },
+        modernization: {
+          category: "業務システム開発について",
+          subject: "既存システムの改善",
+        },
+        "web-app": {
+          category: "Webアプリ・管理画面について",
+          subject: "Webアプリ・管理画面",
+        },
+        "site-functions": {
+          category: "Webアプリ・管理画面について",
+          subject: "CMS・検索・フォーム機能",
+        },
+        web: {
+          category: "Webアプリ・管理画面について",
+          subject: "Webサイト・Webアプリ",
+        },
+        website: {
+          category: "Webアプリ・管理画面について",
+          subject: "Webサイト・Webアプリ",
+        },
+        integration: {
+          category: "データ連携・自動化について",
+          subject: "データ連携・自動化",
+        },
+        automation: {
+          category: "データ連携・自動化について",
+          subject: "データ連携・自動化",
+        },
+        data: {
+          category: "データ連携・自動化について",
+          subject: "データ活用・外部連携",
+        },
+        server: {
+          category: "その他",
+          subject: "サーバー構築・運用",
+        },
+        aceserver: {
+          category: "その他",
+          subject: "Aceserver",
+        },
+        design: {
+          category: "その他",
+          subject: "デザイン・クリエイティブ",
+        },
+        education: {
+          category: "その他",
+          subject: "ITスクール・学習支援",
+        },
+        acestudio: {
+          category: "その他",
+          subject: "AceStudio",
+        },
+      };
+      const categoryAliases: Record<string, string> = {
+        service: "サービス全般について",
+        "business-system": "業務システム開発について",
+        system: "業務システム開発について",
+        "web-app": "Webアプリ・管理画面について",
+        web: "Webアプリ・管理画面について",
+        integration: "データ連携・自動化について",
+        automation: "データ連携・自動化について",
+        estimate: "見積り相談",
+        pricing: "見積り相談",
+        quote: "見積り相談",
+        other: "その他",
+      };
+      const service = serviceDetails[serviceKey];
+      const category = form.querySelector<HTMLSelectElement>("#category");
+      const subject = form.querySelector<HTMLInputElement>("#subject");
+      const availableCategories = category
+        ? Array.from(category.options, (option) => option.value)
+        : [];
+      const requestedCategory =
+        (categoryParam === "service" && service?.category) ||
+        categoryAliases[categoryParam.toLowerCase()] ||
+        (availableCategories.includes(categoryParam) ? categoryParam : "") ||
+        service?.category ||
+        "";
+
+      if (category && requestedCategory) {
+        category.value = requestedCategory;
+        category.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+
+      if (subject && !subject.value.trim()) {
+        if (service?.subject) {
+          subject.value = `${service.subject}についての相談`;
+        } else if (requestedCategory === "見積り相談") {
+          subject.value = "見積り相談";
+        }
+      }
+
+      const serviceInput =
+        form.querySelector<HTMLInputElement>("#contact-service");
+      const fromInput = form.querySelector<HTMLInputElement>("#contact-from");
+      const entryInput = form.querySelector<HTMLInputElement>("#contact-entry");
+
+      if (serviceInput) serviceInput.value = serviceKey;
+      if (fromInput) fromInput.value = fromValue;
+      if (entryInput) entryInput.value = entryValue;
+    }
+  </script>
 </BaseLayout>

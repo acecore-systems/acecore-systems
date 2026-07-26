@@ -11,11 +11,10 @@
     { "label": "考え方", "href": "/#philosophy" },
     { "label": "設計領域", "href": "/services/" },
     { "label": "事例", "href": "/works/" },
-    { "label": "導入", "href": "/guide/" },
-    { "label": "お問い合わせ", "href": "/contact/" }
+    { "label": "料金", "href": "/pricing/" },
+    { "label": "導入", "href": "/guide/" }
   ],
   "footerLinks": [
-    { "label": "Acecore", "href": "https://acecore.net" },
     { "label": "考え方", "href": "/#philosophy" },
     { "label": "設計領域", "href": "/services/" },
     { "label": "料金", "href": "/pricing/" },

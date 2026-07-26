@@ -148,6 +148,12 @@ collections:
               - { name: label, label: ラベル, widget: string }
               - { name: price, label: 料金, widget: string }
               - { name: note, label: 補足, widget: text }
+              - {
+                  name: detailUrl,
+                  label: 技術背景・実装例のURL,
+                  widget: string,
+                  required: false,
+                }
       - name: guide
         label: 導入ガイド
         file: src/data/guide.json
@@ -200,6 +206,12 @@ collections:
             name: cases
             widget: list
             fields:
+              - {
+                  name: id,
+                  label: アンカーID,
+                  widget: string,
+                  hint: case- から始まる変更しない識別子です。外部リンクから参照されます。,
+                }
               - { name: title, label: タイトル, widget: string }
               - { name: category, label: カテゴリ, widget: string }
               - { name: summary, label: 概要, widget: text }

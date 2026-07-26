@@ -1,47 +1,80 @@
 ---
-import site from '../data/site.json'
+import site from "../data/site.json";
 
-const currentPath = Astro.url.pathname
+const currentPath = Astro.url.pathname;
 const isCurrent = (href: string) =>
-  href.startsWith('/#') ? currentPath === '/' : href !== '/' && currentPath.startsWith(href)
+  !href.includes("#") &&
+  (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="Acecore Systems">
-      <span class="brand-name">{site.name}</span>
-    </a>
+    <div class="brand-cluster">
+      <a class="brand" href="/" aria-label="Acecore Systems">
+        <img
+          class="brand-logo"
+          src="/favicon.svg"
+          alt=""
+          width="32"
+          height="32"
+          aria-hidden="true"
+        />
+        <span class="brand-name">{site.name}</span>
+      </a>
+      <a class="parent-brand-link" href={site.acecoreUrl}>Acecore公式サイト</a>
+    </div>
     <nav class="nav desktop-nav" aria-label="メインナビゲーション">
       {
         site.nav.map((item) => (
           <a
             href={item.href}
-            aria-current={isCurrent(item.href) ? 'page' : undefined}
+            aria-current={isCurrent(item.href) ? "page" : undefined}
           >
             {item.label}
           </a>
         ))
       }
     </nav>
+    <a
+      class="header-cta"
+      href="/contact/"
+      aria-current={currentPath.startsWith("/contact/") ? "page" : undefined}
+    >
+      お問い合わせ
+    </a>
     <details class="mobile-menu">
       <summary>メニュー</summary>
       <nav aria-label="モバイルナビゲーション">
         {
           site.nav.map((item) => (
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? "page" : undefined}
+            >
               {item.label}
             </a>
           ))
         }
+        <a
+          class="mobile-menu__cta"
+          href="/contact/"
+          aria-current={currentPath.startsWith("/contact/")
+            ? "page"
+            : undefined}
+        >
+          お問い合わせ
+        </a>
       </nav>
     </details>
   </div>
 </header>
 
 <script>
-  for (const menu of document.querySelectorAll<HTMLDetailsElement>('.mobile-menu')) {
-    for (const link of menu.querySelectorAll('a')) {
-      link.addEventListener('click', () => menu.removeAttribute('open'))
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>(
+    ".mobile-menu",
+  )) {
+    for (const link of menu.querySelectorAll("a")) {
+      link.addEventListener("click", () => menu.removeAttribute("open"));
     }
   }
 </script>

@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import data from '../data/works.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import data from "../data/works.json";
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -12,7 +12,10 @@ import data from '../data/works.json'
     </div>
   </section>
 
-  <section class="page-section page-section--works" aria-labelledby="work-list-title">
+  <section
+    class="page-section page-section--works"
+    aria-labelledby="work-list-title"
+  >
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Cases / 01</p>
@@ -21,7 +24,7 @@ import data from '../data/works.json'
       <div class="work-list">
         {
           data.cases.map((work, index) => (
-            <article class="work-case">
+            <article class="work-case" id={work.id}>
               <header class="work-case__header">
                 <p class="editorial-index">
                   Case {String(index + 1).padStart(2, "0")}
@@ -57,7 +60,10 @@ import data from '../data/works.json'
                   </div>
                 </dl>
                 {work.externalUrl && (
-                  <a class="editorial-link work-case__link" href={work.externalUrl}>
+                  <a
+                    class="editorial-link work-case__link"
+                    href={work.externalUrl}
+                  >
                     関連サイトを見る
                   </a>
                 )}

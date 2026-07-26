@@ -1,53 +1,81 @@
-# Quiet Infrastructure redesign — Design QA
+# Quiet Infrastructure polish — Design QA
 
 ## 対象
 
-- 参照画像: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-6112ff5b-e987-46ca-98c9-8cfcde12a8a1.png`
-- 参照画像の実寸: 1487 × 1058 px
-- 実装画面: `/` の未スクロール状態
-- 比較viewport: 1487 × 1058 CSS px、device scale 1
-- 通常ウィンドウ検証: ユーザー提供の1920 × 1140 pxスクリーンショットを再現した、実表示1526 × 829 CSS px
-- 実装確認: Codex in-app Browser と、同寸法比較用のPlaywright管理Chromium
-- 撮影前状態: `document.activeElement.blur()`、`scrollTo(0, 0)`
+- テーマの視覚基準: `docs/design-qa/quiet-infrastructure/implementation-desktop.jpg`
+  - 1487 × 1058 px
+  - 「静かな基盤」の色、書体、三層断面、コピーを維持するための基準
+- 余白設計の視覚基準: `C:\Users\gnish\repos\acecore-net\docs\ui-concepts\selected-technical-workshop\01-home-hero-detail.png`
+  - 1536 × 1024 px
+  - 実装値は acecore-net の `max-width: 70rem` と `20 / 24 / 32px` のガターを採用
+- 実装スクリーンショット: `C:\Users\gnish\AppData\Local\Temp\codex-clipboard-faf5b13b-02ab-47c7-8638-ac8248608297.png`
+  - 1763 × 6776 px
+  - ユーザーの通常デスクトップブラウザによるホーム全体、未操作状態
+  - CSS viewportとdevice scaleは画像に埋め込まれていないため不明。画素寸法を変えずに重点領域を切り出し、全体比較だけ1024px幅へ等比縮小した。
+- 実装URL: `http://127.0.0.1:4390/`
+- ブランド資産: `C:\Users\gnish\repos\acecore-net\public\favicon.svg`
+  - Acecore公式サイトがヘッダー、favicon、Organization JSON-LDで使用している単独マーク
+  - SHA-256: `AE99B43D842245D8F799A07F4A7186F46437029BBD87478D71E7B3DE8C8CCECE`
 
 ## 比較証跡
 
-- 全体比較（左: 参照、右: 実装）: `docs/design-qa/quiet-infrastructure/reference-vs-implementation.jpg`
-- ヒーロー重点比較: `docs/design-qa/quiet-infrastructure/hero-reference-vs-implementation.jpg`
-- 三層断面重点比較: `docs/design-qa/quiet-infrastructure/layers-reference-vs-implementation.jpg`
-- 実装デスクトップ: `docs/design-qa/quiet-infrastructure/implementation-desktop.jpg`
-- 実装タブレット（834 × 1194）: `docs/design-qa/quiet-infrastructure/implementation-tablet.jpg`
-- 実装モバイル（390 × 844）: `docs/design-qa/quiet-infrastructure/implementation-mobile.jpg`
+- acecore-netとホーム上部の同一入力比較:
+  `C:\Users\gnish\.codex\visualizations\2026\07\24\019f938f-262e-72c0-872a-becd6a9ac783\acecore-spacing-qa\acecore-net-vs-systems-top-1024.png`
+- ヒーロー・三層断面:
+  `C:\Users\gnish\.codex\visualizations\2026\07\24\019f938f-262e-72c0-872a-becd6a9ac783\acecore-spacing-qa\top.png`
+- 考え方:
+  `C:\Users\gnish\.codex\visualizations\2026\07\24\019f938f-262e-72c0-872a-becd6a9ac783\acecore-spacing-qa\philosophy.png`
+- 設計領域:
+  `C:\Users\gnish\.codex\visualizations\2026\07\24\019f938f-262e-72c0-872a-becd6a9ac783\acecore-spacing-qa\domains.png`
+- 相談・事例:
+  `C:\Users\gnish\.codex\visualizations\2026\07\24\019f938f-262e-72c0-872a-becd6a9ac783\acecore-spacing-qa\consultation-work.png`
+- CTA・フッター:
+  `C:\Users\gnish\.codex\visualizations\2026\07\24\019f938f-262e-72c0-872a-becd6a9ac783\acecore-spacing-qa\closing.png`
 
-## 判定
+## Findings（解消済み）
 
-| 観点             | 判定 | 確認内容                                                                                                                                                                                                  |
-| ---------------- | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| タイポグラフィ   | pass | 参照と同じ明朝の見出し寸法・2行位置、横幅、行送りを再現。本文は非UI版のYu Gothicを優先し、25字ずつの2行を明示した。                                                                                       |
-| 余白・寸法       | pass | Header 96px、Hero 454px、棚66px、三層各102px前後、要約帯136pxで、主要境界が参照のy=96 / 550 / 616 / 718 / 821 / 922と一致する。                                                                           |
-| 色・質感         | pass | ヘッダー上端からHero棚まで連続するアイボリー面と右側の淡い枝影、石材グレー、濃紺の配線層、深紺の運用層を維持した。                                                                                        |
-| 画像品質         | pass | 文字を持たない実画像を使用。上端面は1487 × 550、断面は1487 × 372のWebP。参照の紙面・枝影・棚上オブジェクトと断面の主要領域を保持し、HTML文字と重複しない。                                                |
-| 画像構図         | pass | 右の石板・金属円柱・黒円柱・白い石、棚、現場の石ブロック、仕組みの配線、運用の円柱・歯車が参照位置にある。                                                                                                |
-| コピー           | pass | Hero本文と各層の説明を参照文面・改行に合わせ、HTMLとして選択・読み上げ可能な状態を保った。                                                                                                                |
-| CTA・アイコン    | pass | Primary 254 × 60px、Secondary 178px、間隔59px。参照から抽出した透過矢印画像を使用し、CSS記号や手描きSVGで代用していない。                                                                                 |
-| レスポンシブ     | pass | 1526 × 829では現場・仕組み・運用の全行を初期表示内に収め、次の要約帯を12.52px見せた。短いデスクトップ用調整は1200–1600px幅かつ800–933px高だけに限定。390 / 834 / 1040 / 1487pxでもdocument overflowなし。 |
-| 操作             | pass | デスクトップ／モバイルナビ、ページ内リンク、主要CTAを確認。モバイルメニューは5リンクを表示し、ページ内リンク選択後に閉じる。フォーム送信は行っていない。                                                  |
-| アクセシビリティ | pass | Skip link、見出し階層、aria-current、ラベル、focus-visibleを維持。QA撮影時だけフォーカスを解除し、skip link自体は隠していない。                                                                           |
-| ブラウザログ     | pass | 本番プレビューでconsole message 0。error 0、warning 0。                                                                                                                                                   |
+- [P2] 三層断面の注釈だけ本文より左へ出ている
+  - Location: ヒーロー直下の「現場・仕組み・運用」
+  - Evidence: 全幅画像上の注釈に1348pxのwide例外が適用され、ヘッダー・ヒーロー・本文の1120px基準線より左へ配置されている。
+  - Impact: サイト全体で整えた左端のリズムが、最も目立つ三層断面だけ途切れる。
+  - Fix: 画像と下部の三分割要約はwideのまま維持し、注釈overlayだけ共通1120pxコンテナへ戻す。
+- [P2] 日本語の語中で見出しが改行される
+  - Location: 設計領域H2、設計領域03、Selected WorkのH2と事例タイトル
+  - Evidence: 「ひ／とつ」「フ／ォーム」「運／用」「問い合／わせ」「追／加」が別行に分かれている。
+  - Impact: 余白とグリッドが整った一方で、見出しの読み始めに引っ掛かりが生まれ、仕上げの精度を下げる。
+  - Fix: 見出しに通常の改行規則をフォールバックとして残した上で `word-break: auto-phrase` を追加し、行見出しの最大サイズを2remから1.85remへ抑える。
 
-## 反復履歴
+## 必須5面の評価
 
-1. 初回実装は表層の影と棚上オブジェクト、三層の素材差が参照から大きく離れていたため、判定をいったんblockedとして再作業した。
-2. Built-in ImageGenのprecise-object-editで参照から文字・ナビ・ボタンだけを除去し、背景素材を生成した。
-3. Hero右側は参照画素をフェザーブレンドし、断面は参照の棚・石材・配線・機械構造を保持した文字なし素材へ置き換えた。
-4. H1、本文、CTA、各層ラベル、要約帯を1487 × 1058の同寸法比較で調整した。Heroの文字幅、CTA位置、棚・各帯・要約帯の境界が一致した。
-5. モバイルでは本文の不自然な分断、CTA内の文字位置、層ラベルの縦位置を修正した。
-6. 参照と実装を同じ比較画像へ結合し、fonts / spacing / colors / image quality / layout / behavior / accessibility / content / icons / responsivenessを再確認した。
-7. 再比較で、ヘッダーだけがフラットな別面になっていた点、CTAの青、見出し・本文・ナビの文字メトリクスを残差として特定した。
-8. Built-in ImageGenのprecise-object-editで上端550pxの文字・UIだけを除去し、紙面・枝影・棚・右側オブジェクトを保持した`quiet-home-surface-v3-exact.webp`へ置き換えた。
-9. HeaderとHeroに同じ背景面を通し、CTAを`#022f5d`へ合わせ、見出し・本文・ナビ・三層説明・要約帯を1487 × 1058の同寸法比較で再調整した。
-10. 本番ビルドを1040 / 1041 / 834 / 390pxで確認し、390pxでdocument overflowなし、開発ツール表示なしを確認した。
-11. 最終比較でP0 / P1 / P2の未解決項目がないことを確認した。
-12. ユーザー提供の通常ウィンドウを1526 × 829 CSS pxで再現し、初期表示で運用行が見切れる状態を確認した。短いデスクトップだけHeroと三層断面を高さ連動で圧縮し、運用行の下端を816.48px、要約帯の見え幅を12.52pxに調整した。1199 / 1200 / 1600 / 1601pxの適用境界と1487 × 1058の既存レイアウト不変も本番プレビューで確認した。
+| 観点             | 状態 | 根拠                                                                                             |
+| ---------------- | ---- | ------------------------------------------------------------------------------------------------ |
+| タイポグラフィ   | pass | 書体・階層・本文サイズは良好。1528 × 828pxと390 × 844pxで語中改行と横溢れがないことを確認。      |
+| 余白・レイアウト | pass | 本文と三層断面の注釈を共通1120px基準線へ統一。通常デスクトップで三層すべてが初期画面内に収まる。 |
+| 色・トークン     | pass | 紙色、石材色、濃紺、青のアクセントを維持。セクションの切替とコントラストに崩れなし。             |
+| 画像品質         | pass | ヒーローと三層画像は自然な比率・クロップで、引き伸ばしやぼけは見られない。                       |
+| コピー           | pass | ヒーロー、考え方、設計領域、相談、事例、CTAの文面に欠落・重複なし。                              |
+| ブランド・ロゴ   | pass | Acecore公式SVGを無改変で使用。デスクトップとモバイルでヘッダー・フッターの識別性を確認。         |
 
-Final result: passed
+## 比較履歴
+
+1. 既存実装では最大1348pxの本文コンテナを使い、通常デスクトップで左右が詰まって見えた。
+2. acecore-net の実装を確認し、本文を最大1120px、ガターを20/24/32pxへ統一した。
+3. 断面図の画像と注釈へ、デスクトップのみ最大1348px・左右56px以上のwide例外を追加した。
+4. ユーザー提供の1763 × 6776px全体画像を原寸の重点領域へ分割して確認。左右余白、本文サイズ、三層断面、セクション間隔にはP1/P2なし。
+5. 設計領域とSelected Workで語中改行をP2として特定した。
+6. `word-break: auto-phrase` と行見出しの上限1.85remを反映し、ビルドを再実行した。
+7. ユーザー指摘により、三層注釈の左端だけが本文基準線より外へ出ていることを追加のP2として確認した。
+8. 注釈overlayをwide例外から外し、画像と三分割要約は全幅の演出を維持したまま、ラベルと説明だけを1120px基準線へ揃えた。
+9. 1528 × 828pxと390 × 844pxで修正後の描画を確認し、2件のP2を解消済みとした。
+10. Systems独自のAマークをAcecore公式SVGへ置き換え、ヘッダーとフッターの社名表示へ追加した。faviconとOrganization JSON-LDも同じ公式資産に統一した。
+
+## 機能・検証
+
+- `npm run build`: pass（9ページ生成、公式SVGを含む）
+- ローカルHTTP確認: 9ルートすべて200
+- 差分レビュー: P1 / P2なし
+- 主要操作: ナビ、ページ内リンク、CTA、料金から問い合わせへの事前選択、モバイルメニューを確認。ロゴは既存のホームリンク内へ追加し、重複した読み上げを避けるため画像を装飾扱いにした。
+- レスポンシブ: 1528 × 828pxと390 × 844pxで横溢れなし。デスクトップ初期画面で「現場・仕組み・運用」の三層を確認できる。
+- console error: 関連するアプリケーションエラーなし
+
+final result: passed
