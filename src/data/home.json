@@ -1,41 +1,80 @@
 {
   "title": "業務システム・アプリ開発",
   "description": "Acecore Systemsは、業務整理、Webアプリ開発、データ活用、運用改善まで一貫して支援する開発サービスです。",
-  "heroTitle": "業務を動かす\n仕組みを、\n現場に合わせて\n設計する。",
-  "heroLead": "小さな自動化から、\n社内ツール、Webアプリ、\n外部サービス連携まで。\nAcecore Systemsは、\n使われ続ける業務システムを\n一緒に作ります。",
-  "heroBody": "要件が固まりきっていない段階でも相談できます。\n現場の流れ、制約、優先順位を整理し、\n必要な機能から段階的に形にします。",
-  "primaryCta": "開発を相談する",
+  "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
+  "heroTitle": "動き続ける業務には、\n静かな設計がある。",
+  "heroLead": "業務システム、Webアプリ、管理画面、外部サービス連携まで。\n要件整理から設計・開発、公開後の運用改善まで一貫して支援します。",
+  "primaryCta": "設計・開発を相談する",
+  "primaryCtaHref": "/contact/",
   "secondaryCta": "料金の目安を見る",
-  "heroImage": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1600&h=1100&fit=crop&q=84&fm=webp",
-  "strengths": [
+  "secondaryCtaHref": "/pricing/",
+  "layersTitle": "業務を、三つの層で捉える。",
+  "layersLead": "使う人が触れる現場、その下で処理を支える仕組み、長く使い続けるための運用。三つを切り離さずに設計します。",
+  "layers": [
     {
-      "title": "要件整理から入れる",
-      "body": "画面や機能を作る前に、業務の目的、例外処理、権限、データの流れを整理します。"
+      "label": "現場",
+      "title": "現場で使える",
+      "body": "使いやすく、迷わず進める。\n毎日の仕事が自然に回る設計。"
     },
     {
-      "title": "小さく始めて改善する",
-      "body": "最初から作り込みすぎず、効果が出る範囲から公開し、運用しながら育てます。"
+      "label": "仕組み",
+      "title": "仕組みで支える",
+      "body": "データ、権限、例外を整え、\n安全で一貫した処理を支える。"
     },
     {
-      "title": "運用まで見て設計する",
-      "body": "更新、保守、権限、バックアップ、問い合わせ対応まで含めて現実的な形にします。"
+      "label": "運用",
+      "title": "運用で育てる",
+      "body": "監視、保守、改善のサイクルで、\n長く、静かに機能し続ける。"
     }
   ],
-  "serviceHighlights": [
+  "philosophyEyebrow": "DESIGN PHILOSOPHY",
+  "philosophyTitle": "見える部分と、見えない部分を、同じ精度で。",
+  "philosophyLead": "画面の使いやすさだけでなく、情報の流れ、判断の条件、例外への対応、公開後の運用まで。業務が滞りなく続くために必要なことを、ひとつずつ設計します。",
+  "designPrinciples": [
     {
-      "title": "業務システム開発",
-      "body": "受発注、在庫、顧客管理、申請、予約など、現場の流れに合わせたシステムを設計します。",
+      "number": "01",
+      "title": "現場から始める",
+      "body": "機能を決める前に、誰が、いつ、何を判断し、どこで困っているのかを整理します。"
+    },
+    {
+      "number": "02",
+      "title": "見えない部分まで整える",
+      "body": "データ、権限、連携、例外処理までを一続きの仕組みとして考えます。"
+    },
+    {
+      "number": "03",
+      "title": "変化を前提にする",
+      "body": "最初から作り込みすぎず、必要な範囲から始め、運用しながら改善できる形にします。"
+    }
+  ],
+  "consultationEyebrow": "WHEN TO TALK",
+  "consultationTitle": "こんな段階から相談できます。",
+  "consultationLead": "作るものが決まっていなくても構いません。今の業務と困っていることから、必要な仕組みを一緒に整理します。",
+  "consultationSituations": [
+    {
+      "title": "転記や手作業が増えている",
+      "body": "表計算、紙、メールに分かれた作業を整理し、どこから仕組みにするか考えたい。",
       "href": "/services/#business-system"
     },
     {
-      "title": "Webアプリ・管理画面",
-      "body": "社内向けツール、会員機能、CMS、承認フロー、検索、ダッシュボードなどを構築します。",
-      "href": "/services/#web-app"
+      "title": "今のシステムが現場に合わない",
+      "body": "使いづらさや属人化を見直し、業務の流れに合う形へ段階的に整えたい。",
+      "href": "/services/#modernization"
     },
     {
-      "title": "データ・外部連携",
-      "body": "既存システム、API、フォーム、スプレッドシート、通知基盤をつなぎ、重複作業を減らします。",
+      "title": "データやツールが分かれている",
+      "body": "複数のサービスやデータをつなぎ、重複入力や確認漏れを減らしたい。",
       "href": "/services/#integration"
+    },
+    {
+      "title": "要件になる前の課題を整理したい",
+      "body": "目的、利用者、制約、優先順位を整理し、現実的な進め方を決めたい。",
+      "href": "/guide/"
     }
-  ]
+  ],
+  "ctaEyebrow": "START WITH A CONVERSATION",
+  "ctaTitle": "作るものより先に、今の業務を聞かせてください。",
+  "ctaBody": "要件が固まりきっていない段階でも相談できます。現状の流れ、制約、優先順位から一緒に整理します。",
+  "ctaLabel": "設計を相談する",
+  "ctaHref": "/contact/"
 }

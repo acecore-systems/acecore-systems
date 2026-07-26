@@ -4,52 +4,80 @@ import data from '../data/services.json'
 ---
 
 <BaseLayout title={data.title} description={data.description}>
-  <section class="page-hero">
-    <div class="container">
-      <h1>{data.heroTitle}</h1>
+  <section class="page-hero page-hero--services">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">Design domains / 設計領域</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
 
-  <section class="section white">
-    <div class="container grid-2">
-      {data.services.map((service) => (
-        <article class="card" id={service.id}>
-          <h2>{service.title}</h2>
-          <p>{service.body}</p>
-          <ul>
-            {service.examples.map((example) => <li>{example}</li>)}
-          </ul>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section">
+  <section class="page-section page-section--services" aria-labelledby="service-domains-title">
     <div class="container">
-      <div class="section-head">
-        <h2>進め方</h2>
-        <p>最初から大きく作り込まず、確認できる単位で段階的に進めます。</p>
-      </div>
-      <div class="process-grid">
-        {data.process.map((step, index) => (
-          <article class="process-step">
-            <span class="step-index">Step {index + 1}</span>
-            <h3>{step.title}</h3>
-            <p>{step.body}</p>
-          </article>
-        ))}
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Scope / 01</p>
+        <h2 id="service-domains-title">設計領域</h2>
+      </header>
+      <div class="service-list">
+        {
+          data.services.map((service, index) => (
+            <article class="service-row" id={service.id}>
+              <header class="service-row__header">
+                <p class="editorial-index">
+                  Area {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{service.title}</h3>
+              </header>
+              <div class="service-row__body">
+                <p class="service-row__description">{service.body}</p>
+                <ul class="service-points">
+                  {service.examples.map((example) => (
+                    <li>{example}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <section class="section white">
-    <div class="container cta-panel">
-      <div>
-        <h2>具体的な進め方を相談する</h2>
-        <p>業務の流れ、現在のツール、困っている点を書ける範囲で送ってください。</p>
-      </div>
-      <a class="btn primary" href="/contact/">問い合わせる</a>
+  <section class="page-section page-section--muted" aria-labelledby="service-process-title">
+    <div class="container">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Process / 02</p>
+        <h2 id="service-process-title">進め方</h2>
+        <p>最初から大きく作り込まず、確認できる単位で段階的に進めます。</p>
+      </header>
+      <ol class="service-process">
+        {
+          data.process.map((step, index) => (
+            <li class="service-process__step">
+              <p class="editorial-index">
+                Step {String(index + 1).padStart(2, "0")}
+              </p>
+              <div class="service-process__content">
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside class="editorial-cta service-cta" aria-labelledby="service-cta-title">
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="service-cta-title">具体的な進め方を相談する</h2>
+          <p>業務の流れ、現在のツール、困っている点を書ける範囲で送ってください。</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href="/contact/">問い合わせる</a>
+      </aside>
     </div>
   </section>
 </BaseLayout>

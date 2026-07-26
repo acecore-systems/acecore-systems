@@ -8,12 +8,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   robots="noindex, nofollow"
   canonical={null}
 >
-  <section class="page-hero">
-    <div class="container">
-      <h1>送信ありがとうございました。</h1>
+  <section class="page-hero page-hero--thanks">
+    <div class="container page-hero__inner page-hero__inner--compact">
+      <p class="page-eyebrow">Message received / 送信完了</p>
+      <h1 class="page-title">送信ありがとうございました。</h1>
       <p class="page-lead">内容を確認し、通常1〜2営業日以内に返信します。</p>
-      <div class="actions">
-        <a class="btn primary" href="/">トップへ戻る</a>
+      <div class="page-actions">
+        <a class="editorial-link editorial-link--primary" href="/">トップへ戻る</a>
       </div>
     </div>
   </section>

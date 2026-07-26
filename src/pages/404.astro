@@ -1,72 +1,25 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
 const homeUrl = "/";
+const description =
+  "お探しのページは移動または削除された可能性があります。トップページから目的の内容をご確認ください。";
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="msvalidate.01"
-      content="B670753BF4A50FA5437E5694CB04BAFD"
-    />
-    <title>ページが見つかりません | Acecore Systems</title>
-    <meta name="robots" content="noindex, follow" />
-    <style>
-      :root {
-        color-scheme: light;
-        font-family:
-          Inter,
-          "Noto Sans JP",
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          sans-serif;
-        color: #172033;
-        background: #f6f8fb;
-      }
-
-      body {
-        min-height: 100vh;
-        margin: 0;
-        display: grid;
-        place-items: center;
-        padding: 24px;
-      }
-
-      main {
-        width: min(100%, 560px);
-      }
-
-      p {
-        line-height: 1.8;
-        color: #4b5565;
-      }
-
-      a {
-        display: inline-flex;
-        min-height: 44px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 999px;
-        padding: 0 18px;
-        background: #1957c2;
-        color: #fff;
-        font-weight: 700;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <p>404</p>
-      <h1>ページが見つかりません</h1>
-      <p>
-        お探しのページは移動または削除された可能性があります。トップページから目的の内容をご確認ください。
-      </p>
-      <a href={homeUrl}>トップページへ</a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="ページが見つかりません"
+  description={description}
+  robots="noindex, follow"
+  canonical={null}
+>
+  <section class="page-hero page-hero--not-found">
+    <div class="container page-hero__inner page-hero__inner--compact">
+      <p class="page-eyebrow">Not found / 404</p>
+      <h1 class="page-title">ページが見つかりません</h1>
+      <p class="page-lead">{description}</p>
+      <div class="page-actions">
+        <a class="editorial-link editorial-link--primary" href={homeUrl}>トップページへ</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

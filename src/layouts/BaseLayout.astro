@@ -10,6 +10,7 @@ interface Props {
   image?: string;
   robots?: string;
   canonical?: string | null;
+  bodyClass?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -19,15 +20,22 @@ const {
   image,
   robots = "index, follow",
   canonical: canonicalInput = Astro.url.pathname,
+  bodyClass,
   jsonLd: pageJsonLd,
 } = Astro.props;
 const canonical =
   canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl);
 const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl);
 const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`;
-const ogImage = image || new URL("/favicon.svg", site.siteUrl).href;
+const ogImage = new URL(
+  image || "/images/acecore-systems-og.webp",
+  site.siteUrl,
+).href;
 const homeUrl = new URL("/", site.siteUrl).href;
-const organizationId = `${homeUrl}#organization`;
+const acecoreHomeUrl = new URL("/", site.acecoreUrl).href;
+const organizationId = `${acecoreHomeUrl}#organization`;
+const serviceId = `${homeUrl}#service`;
+const serviceUrl = new URL("/services/#business-system", site.siteUrl).href;
 const websiteId = `${homeUrl}#website`;
 const webPageId = `${pageUrl.href}#webpage`;
 const baseJsonLd = [
@@ -35,13 +43,26 @@ const baseJsonLd = [
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": organizationId,
-    name: site.name,
-    url: homeUrl,
-    description: site.description,
-    logo: new URL("/favicon.svg", site.siteUrl).href,
+    name: "Acecore",
+    url: acecoreHomeUrl,
+    logo: new URL("/favicon.svg", site.acecoreUrl).href,
     email: site.email,
     telephone: site.phone,
-    sameAs: [site.acecoreUrl],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": serviceId,
+    name: site.name,
+    url: serviceUrl,
+    description: site.description,
+    serviceType: [
+      "業務システム開発",
+      "Webアプリ・管理画面開発",
+      "データ活用・外部サービス連携",
+      "運用改善",
+    ],
+    provider: { "@id": organizationId },
   },
   {
     "@context": "https://schema.org",
@@ -52,6 +73,7 @@ const baseJsonLd = [
     description: site.description,
     inLanguage: "ja",
     publisher: { "@id": organizationId },
+    about: { "@id": serviceId },
   },
   {
     "@context": "https://schema.org",
@@ -62,7 +84,8 @@ const baseJsonLd = [
     description,
     inLanguage: "ja",
     isPartOf: { "@id": websiteId },
-    about: { "@id": organizationId },
+    about: { "@id": serviceId },
+    publisher: { "@id": organizationId },
   },
 ];
 const jsonLd = pageJsonLd
@@ -75,10 +98,7 @@ const jsonLd = pageJsonLd
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="msvalidate.01"
-      content="B670753BF4A50FA5437E5694CB04BAFD"
-    />
+    <meta name="msvalidate.01" content="B670753BF4A50FA5437E5694CB04BAFD" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
@@ -94,9 +114,31 @@ const jsonLd = pageJsonLd
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    {
+      bodyClass === "home-page" && (
+        <>
+          <link
+            rel="preload"
+            as="image"
+            href="/images/quiet-home-surface-v3-exact.webp"
+            media="(min-width: 1041px)"
+            fetchpriority="high"
+          />
+          <link
+            rel="preload"
+            as="image"
+            href="/images/quiet-home-hero-v2-exact.webp"
+            media="(max-width: 1040px)"
+            fetchpriority="high"
+          />
+        </>
+      )
+    }
+    <meta name="theme-color" content="#f2f0ea" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">本文へ移動</a>
     <Header />
     <main id="main">
       <slot />

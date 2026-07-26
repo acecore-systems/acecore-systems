@@ -1,15 +1,32 @@
 ---
-import site from '../data/site.json'
+import site from "../data/site.json";
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <div>
-      <strong>{site.name}</strong>
-      <p>{site.description}</p>
+    <div class="footer-brand">
+      <a class="footer-brand__identity" href="/" aria-label="Acecore Systems">
+        <img
+          class="footer-brand__logo"
+          src="/favicon.svg"
+          alt=""
+          width="38"
+          height="38"
+          aria-hidden="true"
+        />
+        <strong>{site.name}</strong>
+      </a>
+      <span>Systems for Operations</span>
+      <p>
+        Acecoreが提供する、業務システム・Webアプリ・データ連携の設計・開発サービスです。要件整理から公開後の運用改善まで一貫して支援します。
+      </p>
     </div>
     <nav class="footer-links" aria-label="フッターナビゲーション">
       {site.footerLinks.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
+    <div class="footer-meta">
+      <a href={site.acecoreUrl}>運営：Acecore公式サイト</a>
+      <span>© {new Date().getFullYear()} Acecore</span>
+    </div>
   </div>
 </footer>

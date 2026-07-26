@@ -1,67 +1,198 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import home from '../data/home.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import home from "../data/home.json";
+import services from "../data/services.json";
+import works from "../data/works.json";
 ---
 
-<BaseLayout title={home.title} description={home.description} image={home.heroImage}>
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <h1>{home.heroTitle}</h1>
-        <p class="hero-lead">{home.heroLead}</p>
-        <p class="hero-body">{home.heroBody}</p>
-        <div class="actions">
-          <a class="btn primary" href="/contact/">{home.primaryCta}</a>
-          <a class="btn outline" href="/pricing/">{home.secondaryCta}</a>
+<BaseLayout
+  title={home.title}
+  description={home.description}
+  image="/images/acecore-systems-og.webp"
+  bodyClass="home-page"
+>
+  <section class="home-hero">
+    <div class="home-hero__surface" aria-hidden="true"></div>
+    <div class="container home-hero__inner">
+      <p class="home-eyebrow">{home.heroEyebrow}</p>
+      <h1>{home.heroTitle}</h1>
+      <p class="home-hero__lead">{home.heroLead}</p>
+      <div class="home-actions">
+        <a
+          class="editorial-link editorial-link--primary"
+          href={home.primaryCtaHref}
+        >
+          {home.primaryCta}
+        </a>
+        <a class="editorial-link" href={home.secondaryCtaHref}
+          >{home.secondaryCta}</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="layer-model" aria-labelledby="layer-model-title">
+    <h2 class="visually-hidden" id="layer-model-title">{home.layersTitle}</h2>
+    <p class="visually-hidden">{home.layersLead}</p>
+    <figure class="layer-model__visual">
+      <img
+        src="/images/quiet-infrastructure-section-v2-exact.webp"
+        alt=""
+        width="1487"
+        height="372"
+        loading="eager"
+        decoding="async"
+      />
+      <figcaption class="container layer-model__overlay">
+        {
+          home.layers.map((layer) => (
+            <div class="layer-model__row">
+              <p class="layer-model__label">{layer.label}</p>
+              <p class="layer-model__body">{layer.body}</p>
+            </div>
+          ))
+        }
+      </figcaption>
+    </figure>
+    <div class="layer-model__summary" aria-label="三つの設計層">
+      <div class="container layer-model__summary-inner">
+        {home.layers.map((layer) => <p>{layer.title}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="home-section home-philosophy"
+    id="philosophy"
+    aria-labelledby="philosophy-title"
+  >
+    <div class="container">
+      <header class="home-section__header home-section__header--split">
+        <div>
+          <p class="home-eyebrow">{home.philosophyEyebrow}</p>
+          <h2 id="philosophy-title">{home.philosophyTitle}</h2>
         </div>
-      </div>
-      <figure class="hero-media">
-        <img src={home.heroImage} alt="システム開発の作業風景" width="1600" height="1100" loading="eager" />
-      </figure>
+        <p>{home.philosophyLead}</p>
+      </header>
+      <ol class="principle-list">
+        {
+          home.designPrinciples.map((principle) => (
+            <li class="principle-row">
+              <p class="editorial-index">{principle.number}</p>
+              <h3>{principle.title}</h3>
+              <p>{principle.body}</p>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
-  <section class="section white">
+  <section class="home-section home-domains" aria-labelledby="domain-title">
     <div class="container">
-      <div class="section-head">
-        <h2>現場で使われる形まで一緒に考えます。</h2>
-        <p>機能を増やすだけでなく、運用、例外処理、保守性まで含めて設計します。</p>
+      <header class="home-section__header">
+        <p class="home-eyebrow">DESIGN DOMAINS</p>
+        <h2 id="domain-title">画面から運用まで、ひとつの仕組みとして。</h2>
+        <p>
+          Webは目的ではなく、業務を支える接点のひとつです。現場の流れに必要な範囲を組み合わせます。
+        </p>
+      </header>
+      <div class="domain-list">
+        {
+          services.services.map((service, index) => (
+            <a class="domain-row" href={`/services/#${service.id}`}>
+              <p class="editorial-index">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{service.title}</h3>
+              <p>{service.body}</p>
+              <span>詳しく見る</span>
+            </a>
+          ))
+        }
       </div>
-      <div class="grid-3">
-        {home.strengths.map((item) => (
-          <article class="card">
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-          </article>
-        ))}
+      <div class="home-section__foot">
+        <a class="editorial-link" href="/services/">設計領域をすべて見る</a>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section
+    class="home-section home-consultation"
+    aria-labelledby="consultation-title"
+  >
     <div class="container">
-      <div class="section-head">
-        <h2>相談できること</h2>
-        <p>業務システム、Webアプリ、データ連携を中心に、必要な範囲から段階的に進めます。</p>
-      </div>
-      <div class="grid-3">
-        {home.serviceHighlights.map((item) => (
-          <a class="card" href={item.href}>
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-          </a>
-        ))}
+      <header class="home-section__header home-section__header--split">
+        <div>
+          <p class="home-eyebrow">{home.consultationEyebrow}</p>
+          <h2 id="consultation-title">{home.consultationTitle}</h2>
+        </div>
+        <p>{home.consultationLead}</p>
+      </header>
+      <div class="consultation-list">
+        {
+          home.consultationSituations.map((situation, index) => (
+            <a class="consultation-row" href={situation.href}>
+              <p class="editorial-index">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <div>
+                <h3>{situation.title}</h3>
+                <p>{situation.body}</p>
+              </div>
+              <span>相談の入口を見る</span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <section class="section white">
-    <div class="container cta-panel">
-      <div>
-        <h2>業務の整理から相談できます。</h2>
-        <p>作りたいものが決まっていなくても、現状と困っていることから一緒に整理します。</p>
+  <section class="home-section home-work" aria-labelledby="home-work-title">
+    <div class="container">
+      <header class="home-section__header home-section__header--split">
+        <div>
+          <p class="home-eyebrow">SELECTED WORK</p>
+          <h2 id="home-work-title">課題から、運用できる形へ。</h2>
+        </div>
+        <p>
+          公開できる範囲で、課題をどう整理し、どのような仕組みにしたかを紹介します。
+        </p>
+      </header>
+      <div class="home-work__list">
+        {
+          works.cases.slice(0, 2).map((work, index) => (
+            <article class="home-work__row">
+              <p class="editorial-index">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <div>
+                <p class="home-work__category">{work.category}</p>
+                <h3>{work.title}</h3>
+              </div>
+              <p>{work.summary}</p>
+            </article>
+          ))
+        }
       </div>
-      <a class="btn primary" href="/contact/">無料で相談する</a>
+      <div class="home-section__foot">
+        <a class="editorial-link" href="/works/">取り組みを見る</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-final-cta">
+    <div class="container">
+      <aside class="editorial-cta" aria-labelledby="home-cta-title">
+        <div class="editorial-cta__copy">
+          <p class="home-eyebrow">{home.ctaEyebrow}</p>
+          <h2 id="home-cta-title">{home.ctaTitle}</h2>
+          <p>{home.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href={home.ctaHref}>
+          {home.ctaLabel}
+        </a>
+      </aside>
     </div>
   </section>
 </BaseLayout>

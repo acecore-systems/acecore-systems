@@ -1,10 +1,11 @@
 {
   "title": "実績",
   "description": "Acecore Systemsが公開できる範囲で紹介する、問い合わせ導線改善、CMS・検索・構造化データ、サーバー運用改善などの取り組みです。",
-  "heroTitle": "公開できる範囲で、取り組みを紹介します。",
+  "heroTitle": "公開できる範囲で、\n取り組みを紹介します。",
   "heroLead": "業務システムは非公開案件が多いため、公開可能な自社・関連プロジェクトを中心に掲載しています。",
   "cases": [
     {
+      "id": "case-acecore-contact",
       "title": "Acecore公式サイトの問い合わせ導線改善",
       "category": "フォーム・AI導線・CMS",
       "summary": "サービス選定、見積り相談、問い合わせ前の不安を減らすため、固定ページ、FAQ、AIチャット、CMS管理項目を整理しました。",
@@ -16,6 +17,7 @@
       "externalUrl": "https://acecore.net/contact/"
     },
     {
+      "id": "case-acecore-site-platform",
       "title": "Acecore公式サイトの機能追加・運用基盤",
       "category": "CMS・検索・セキュリティ・パフォーマンス",
       "summary": "静的サイトにCMS、記事基盤、サイト内検索、構造化データ、CSP、アクセシビリティ改善、表示速度改善を段階的に追加しました。",
@@ -27,6 +29,7 @@
       "externalUrl": "https://acecore.net/blog/"
     },
     {
+      "id": "case-aceserver",
       "title": "Aceserver運用で得た安定化・監視の知見",
       "category": "サーバー運用・コミュニティ基盤",
       "summary": "Minecraft公開サーバーの運用を通じて、接続安定性、監視、バックアップ、案内導線を継続的に改善しています。",
@@ -36,6 +39,30 @@
       "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&h=680&fit=crop&q=84&fm=webp",
       "imageAlt": "ネットワーク機器と配線が並ぶサーバーラック",
       "externalUrl": "https://asv.acecore.net/"
+    },
+    {
+      "id": "case-aceserver-portal",
+      "title": "エースサーバーポータル制作",
+      "category": "Web制作・コミュニティポータル・CMS",
+      "summary": "Minecraft無料公開サーバー「エースサーバー」の参加案内、動画、ワールドマップ、Wiki、Discordへの導線を一つの入口に整理しました。",
+      "challenge": "サーバーの概要や参加方法、ルール、動画、ワールドマップなどの情報が複数の場所に分かれ、初めて訪れた人が最初の一歩を選びにくい状態でした。",
+      "proposal": "既存の情報源を置き換えず、サーバー紹介からDiscord、動画、各ワールドマップ、Wikiへ迷わず移動できるポータルとして構成しました。",
+      "result": "Astro、UnoCSS、Sveltia CMSを使った静的サイトとして公開しています。ページ本文やサイト設定をCMSから更新できる構成です。",
+      "image": "https://acecore.net/uploads/aceserver-portal-screenshot-1600.webp",
+      "imageAlt": "エースサーバーポータルのトップページ",
+      "externalUrl": "https://asv.acecore.net/"
+    },
+    {
+      "id": "case-hatt-homepage",
+      "title": "Hattのホームページ制作",
+      "category": "Web制作・CMS・サイト内検索",
+      "summary": "絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめ、創作活動を継続して発信できる個人サイトとして設計しました。",
+      "challenge": "活動の入口がブログ、外部投稿サイト、BOOTH、YouTube、Xなどに分かれ、初めて訪れた人が活動の全体像や見る順序を把握しにくい状態でした。",
+      "proposal": "活動を絵・小説・モデリングの3つに整理し、ブログ、作品、プロフィール、外部サービスへつなぐハブとして構成しました。",
+      "result": "Astro、TypeScript、UnoCSS、Sveltia CMS、Pagefindを使った静的サイトとして公開しています。ブログや作品情報をCMSで更新でき、記事や作品を検索できる構成です。",
+      "image": "https://acecore.net/uploads/hatt-homepage-screenshot-1600.webp",
+      "imageAlt": "Hattのホームページのトップページ",
+      "externalUrl": "https://hatt.acecore.net/"
     }
   ]
 }

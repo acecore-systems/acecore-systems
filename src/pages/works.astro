@@ -1,44 +1,77 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import data from '../data/works.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import data from "../data/works.json";
 ---
 
 <BaseLayout title={data.title} description={data.description}>
-  <section class="page-hero">
-    <div class="container">
-      <h1>{data.heroTitle}</h1>
+  <section class="page-hero page-hero--works">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">Selected work / 取り組み</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
 
-  <section class="section white">
-    <div class="container grid-2">
-      {data.cases.map((work) => (
-        <article class="work-card">
-          {
-            work.image && (
-              <img
-                src={work.image}
-                alt={work.imageAlt || work.title}
-                width="1000"
-                height="680"
-                loading="lazy"
-              />
-            )
-          }
-          <div class="work-body">
-            <p class="category">{work.category}</p>
-            <h2>{work.title}</h2>
-            <p>{work.summary}</p>
-            <div class="detail-grid">
-              <p><strong>課題</strong>{work.challenge}</p>
-              <p><strong>提案</strong>{work.proposal}</p>
-              <p><strong>成果</strong>{work.result}</p>
-            </div>
-            {work.externalUrl && <a class="btn outline" href={work.externalUrl}>関連サイトを見る</a>}
-          </div>
-        </article>
-      ))}
+  <section
+    class="page-section page-section--works"
+    aria-labelledby="work-list-title"
+  >
+    <div class="container">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Cases / 01</p>
+        <h2 id="work-list-title">公開事例</h2>
+      </header>
+      <div class="work-list">
+        {
+          data.cases.map((work, index) => (
+            <article class="work-case" id={work.id}>
+              <header class="work-case__header">
+                <p class="editorial-index">
+                  Case {String(index + 1).padStart(2, "0")}
+                </p>
+                <p class="work-case__category">{work.category}</p>
+                <h3>{work.title}</h3>
+                <p class="work-case__summary">{work.summary}</p>
+              </header>
+              {work.image && (
+                <figure class="work-case__media">
+                  <img
+                    src={work.image}
+                    alt={work.imageAlt || work.title}
+                    width="1000"
+                    height="680"
+                    loading="lazy"
+                  />
+                </figure>
+              )}
+              <div class="work-case__body">
+                <dl class="work-details">
+                  <div class="work-details__row">
+                    <dt>課題</dt>
+                    <dd>{work.challenge}</dd>
+                  </div>
+                  <div class="work-details__row">
+                    <dt>提案</dt>
+                    <dd>{work.proposal}</dd>
+                  </div>
+                  <div class="work-details__row">
+                    <dt>成果</dt>
+                    <dd>{work.result}</dd>
+                  </div>
+                </dl>
+                {work.externalUrl && (
+                  <a
+                    class="editorial-link work-case__link"
+                    href={work.externalUrl}
+                  >
+                    関連サイトを見る
+                  </a>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 </BaseLayout>
