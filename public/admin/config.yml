@@ -246,9 +246,16 @@ collections:
                 }
               - {
                   name: externalUrl,
-                  label: 外部URL,
+                  label: リンク先URL,
                   widget: string,
                   required: false,
+                }
+              - {
+                  name: externalLabel,
+                  label: リンク文言,
+                  widget: string,
+                  required: false,
+                  hint: URLを設定した場合は「Cherry英語教室のホームページを見る」のように、移動先が分かる文言を入力してください。,
                 }
               - {
                   name: detailUrl,
