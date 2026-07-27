@@ -135,8 +135,12 @@ for (const source of workSources) {
   requireText(data.title, `${source.data}: title`);
   requireText(data.description, `${source.data}: description`);
   assert.equal(data.story.length > 0, true, `${source.data}: story`);
+  assert.equal(data.outcomes.length > 0, true, `${source.data}: outcomes`);
+  for (const [index, outcome] of data.outcomes.entries()) {
+    requireText(outcome.label, `${source.data}: outcomes[${index}].label`);
+    requireText(outcome.body, `${source.data}: outcomes[${index}].body`);
+  }
   assert.equal(data.scope.length > 0, true, `${source.data}: scope`);
-  assert.equal(data.stages.length > 0, true, `${source.data}: stages`);
   assert.equal(data.resources.length > 0, true, `${source.data}: resources`);
 }
 

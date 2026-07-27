@@ -385,7 +385,14 @@ collections:
         fields:
           - { name: label, label: 項目名, widget: string }
           - { name: value, label: 内容, widget: string }
-      - label: 課題・方針・成果
+      - { name: outcomesTitle, label: 実現した状態見出し, widget: string }
+      - label: 実現した状態
+        name: outcomes
+        widget: list
+        fields:
+          - { name: label, label: 区分, widget: string }
+          - { name: body, label: 内容, widget: text }
+      - label: 課題・方針
         name: story
         widget: list
         fields:
@@ -404,14 +411,6 @@ collections:
             name: items
             widget: list
             field: { name: item, label: 項目, widget: string }
-      - { name: stagesTitle, label: 進行見出し, widget: string }
-      - { name: stagesLead, label: 進行説明, widget: text }
-      - label: 進行
-        name: stages
-        widget: list
-        fields:
-          - { name: title, label: 見出し, widget: string }
-          - { name: body, label: 本文, widget: text }
       - { name: resourcesTitle, label: 技術資料見出し, widget: string }
       - { name: resourcesLead, label: 技術資料説明, widget: text }
       - label: 技術資料

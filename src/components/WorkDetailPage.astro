@@ -21,17 +21,14 @@ const relatedServices = [
   {
     href: "/services/site-functions/",
     title: siteFunctions.title,
-    summary: siteFunctions.indexSummary,
   },
   {
     href: "/services/site-quality/",
     title: siteQuality.title,
-    summary: siteQuality.indexSummary,
   },
   {
     href: "/services/operations/",
     title: operations.title,
-    summary: operations.indexSummary,
   },
 ];
 const contactHref = `/contact/?${new URLSearchParams({
@@ -87,9 +84,10 @@ const jsonLd = [
   canonical={canonicalPath}
   jsonLd={jsonLd}
   mainEntityId={workEntityId}
+  bodyClass="work-detail-page"
 >
   <section class="page-hero page-hero--detail">
-    <div class="container page-hero__inner">
+    <div class="container page-hero__inner work-detail-hero__inner">
       <nav class="breadcrumb" aria-label="パンくず">
         <ol>
           <li><a href="/">ホーム</a></li>
@@ -104,44 +102,62 @@ const jsonLd = [
   </section>
 
   <section
+    id="work-overview"
     class="page-section work-detail-overview"
     aria-labelledby="work-overview-title"
   >
-    <div class="container work-detail-overview__layout">
-      <header class="editorial-header">
-        <p class="editorial-eyebrow">Overview / 01</p>
-        <h2 id="work-overview-title">{data.overviewTitle}</h2>
-        <p>{data.overviewBody}</p>
-      </header>
-      <dl class="work-detail-facts">
-        {
-          data.facts.map((fact) => (
-            <div>
-              <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
+    <div class="container">
+      <div class="work-detail-overview__layout">
+        <header class="editorial-header">
+          <p class="editorial-eyebrow">概要 / 01</p>
+          <h2 id="work-overview-title">{data.overviewTitle}</h2>
+          <p>{data.overviewBody}</p>
+        </header>
+        <dl class="work-detail-facts">
+          {
+            data.facts.map((fact) => (
+              <div>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div class="work-detail-outcomes">
+        <header class="work-detail-outcomes__header">
+          <p class="editorial-eyebrow">現在</p>
+          <h3>{data.outcomesTitle}</h3>
+        </header>
+        <ul>
+          {
+            data.outcomes.map((outcome) => (
+              <li>
+                <p>{outcome.label}</p>
+                <p>{outcome.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
   <section
+    id="work-story"
     class="page-section page-section--muted"
     aria-labelledby="work-story-title"
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Story / 02</p>
-        <h2 id="work-story-title">課題から、運用できる形へ。</h2>
+        <p class="editorial-eyebrow">課題と方針 / 02</p>
+        <h2 id="work-story-title">複雑にせず、育てられる形へ。</h2>
       </header>
       <div class="work-story">
         {
-          data.story.map((item, index) => (
+          data.story.map((item) => (
             <article class="work-story__item">
-              <p class="editorial-index">
-                {item.label} / {String(index + 1).padStart(2, "0")}
-              </p>
+              <p class="editorial-index">{item.label}</p>
               <h3>{item.title}</h3>
               <p>{item.body}</p>
             </article>
@@ -152,13 +168,14 @@ const jsonLd = [
   </section>
 
   <section
+    id="work-scope"
     class="page-section"
     aria-labelledby="work-scope-title"
   >
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Scope / 03</p>
+          <p class="editorial-eyebrow">実施内容 / 03</p>
           <h2 id="work-scope-title">{data.scopeTitle}</h2>
         </div>
         <p>{data.scopeLead}</p>
@@ -189,43 +206,51 @@ const jsonLd = [
   </section>
 
   <section
-    class="page-section page-section--muted"
-    aria-labelledby="work-stages-title"
+    class="page-section page-section--muted work-detail-next"
+    aria-labelledby="work-related-title"
   >
     <div class="container">
-      <header class="editorial-header editorial-header--split">
-        <div>
-          <p class="editorial-eyebrow">Sequence / 04</p>
-          <h2 id="work-stages-title">{data.stagesTitle}</h2>
-        </div>
-        <p>{data.stagesLead}</p>
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">関連する支援 / 04</p>
+        <h2 id="work-related-title">この事例で扱った支援</h2>
       </header>
-      <ol class="service-process">
+      <ul class="work-related-links">
         {
-          data.stages.map((stage, index) => (
-            <li class="service-process__step">
-              <p class="editorial-index">
-                Phase {String(index + 1).padStart(2, "0")}
-              </p>
-              <div class="service-process__content">
-                <h3>{stage.title}</h3>
-                <p>{stage.body}</p>
-              </div>
+          relatedServices.map((service) => (
+            <li>
+              <a href={service.href}>
+                <span>{service.title}</span>
+                <span>支援内容を見る →</span>
+              </a>
             </li>
           ))
         }
-      </ol>
+      </ul>
+      <aside
+        class="editorial-cta service-cta work-detail-next__cta"
+        aria-labelledby="work-detail-cta-title"
+      >
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="work-detail-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href={contactHref}>
+          同じような基盤を相談する
+        </a>
+      </aside>
     </div>
   </section>
 
   <section
-    class="page-section"
+    id="work-resources"
+    class="page-section work-detail-resources"
     aria-labelledby="work-resources-title"
   >
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Technical notes / 05</p>
+          <p class="editorial-eyebrow">技術資料 / 05</p>
           <h2 id="work-resources-title">{data.resourcesTitle}</h2>
         </div>
         <p>{data.resourcesLead}</p>
@@ -251,48 +276,6 @@ const jsonLd = [
           Acecore公式サイトを見る
         </a>
       </div>
-    </div>
-  </section>
-
-  <section
-    class="page-section page-section--muted detail-related-section"
-    aria-labelledby="work-related-title"
-  >
-    <div class="container">
-      <header class="editorial-header">
-        <p class="editorial-eyebrow">Related services / 06</p>
-        <h2 id="work-related-title">この実績に関連する支援</h2>
-      </header>
-      <div class="detail-related-list detail-related-list--three">
-        {
-          relatedServices.map((service) => (
-            <a class="detail-related" href={service.href}>
-              <p class="editorial-eyebrow">Service detail</p>
-              <h3>{service.title}</h3>
-              <p>{service.summary}</p>
-              <span>支援内容を見る</span>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="page-section page-section--cta">
-    <div class="container">
-      <aside
-        class="editorial-cta service-cta"
-        aria-labelledby="work-detail-cta-title"
-      >
-        <div class="editorial-cta__copy">
-          <p class="editorial-eyebrow">Consultation</p>
-          <h2 id="work-detail-cta-title">{data.ctaTitle}</h2>
-          <p>{data.ctaBody}</p>
-        </div>
-        <a class="editorial-link editorial-link--primary" href={contactHref}>
-          同じような基盤を相談する
-        </a>
-      </aside>
     </div>
   </section>
 </BaseLayout>
