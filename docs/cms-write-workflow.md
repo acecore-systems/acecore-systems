@@ -42,14 +42,14 @@ refresh tokenはブラウザへ返さず、保存もしません。access token�
 
 Pages Functionsでは次の環境変数を使います。
 
-| 名前                             | 種別                | 用途                                  |
-| -------------------------------- | ------------------- | ------------------------------------- |
-| `CMS_GITHUB_APP_CLIENT_ID`       | Production variable | 専用GitHub Appのclient ID             |
-| `CMS_GITHUB_APP_CLIENT_SECRET`   | Production secret   | 専用GitHub Appのclient secret         |
-| `CMS_GITHUB_APP_INSTALLATION_ID` | Production variable | Systems repository限定installation ID |
-| `CMS_OAUTH_STATE_SECRET`         | Production secret   | state署名用の十分に長い乱数           |
+| 名前                             | 種別              | 用途                                  |
+| -------------------------------- | ----------------- | ------------------------------------- |
+| `CMS_GITHUB_APP_CLIENT_ID`       | Production secret | 専用GitHub Appのclient ID             |
+| `CMS_GITHUB_APP_CLIENT_SECRET`   | Production secret | 専用GitHub Appのclient secret         |
+| `CMS_GITHUB_APP_INSTALLATION_ID` | Production secret | Systems repository限定installation ID |
+| `CMS_OAUTH_STATE_SECRET`         | Production secret | state署名用の十分に長い乱数           |
 
-これらはCloudflare PagesのProduction環境だけに設定します。Preview環境には設定せず、preview URLからproductionの認証endpointを呼ばれてもログインを拒否します。
+識別子を含む4項目すべてをCloudflare PagesのProduction secretとして設定します。Preview環境には設定せず、preview URLからproductionの認証endpointを呼ばれてもログインを拒否します。
 
 ## CMS管理対象
 
@@ -101,7 +101,7 @@ git diff --check
 - Appを`acecore-systems/acecore-systems`の1件だけにinstall
 - Contents / Pull requestsをRead and write、MetadataをRead-onlyに限定
 - expiring user tokenを有効化し、Webhookとイベント購読を無効化
-- Cloudflare PagesのProduction環境へ上記4項目を設定し、Preview環境は未設定のまま維持
+- Cloudflare PagesのProduction環境へ上記4項目をsecretとして設定し、Preview環境は未設定のまま維持
 - `Build and Format`とCloudflare Pagesを`main`のrequired checkとして設定
 
 コードのmerge後に、次の本番確認と後片付けを行います。
