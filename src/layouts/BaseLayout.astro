@@ -136,6 +136,51 @@ const jsonLd = pageJsonLd
     }
     <meta name="theme-color" content="#f2f0ea" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {
+      site.ga4Id && (
+        <script is:inline define:vars={{ ga4Id: site.ga4Id }}>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function () {
+              window.dataLayer.push(arguments);
+            };
+            window.gtag("js", new Date());
+            window.gtag("config", ga4Id);
+
+            let gaLoaded = false;
+            const loadGoogleAnalytics = () => {
+              if (
+                gaLoaded ||
+                document.querySelector('script[src*="googletagmanager.com/gtag/js"]')
+              ) {
+                return;
+              }
+
+              gaLoaded = true;
+              const script = document.createElement("script");
+              script.async = true;
+              script.src =
+                "https://www.googletagmanager.com/gtag/js?id=" +
+                encodeURIComponent(ga4Id);
+              document.head.appendChild(script);
+            };
+
+            if ("requestIdleCallback" in window) {
+              window.requestIdleCallback(loadGoogleAnalytics, { timeout: 4000 });
+            } else {
+              window.setTimeout(loadGoogleAnalytics, 2000);
+            }
+
+            ["pointerdown", "keydown", "scroll"].forEach((eventName) => {
+              window.addEventListener(eventName, loadGoogleAnalytics, {
+                once: true,
+                passive: true,
+              });
+            });
+          `}
+        </script>
+      )
+    }
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main">本文へ移動</a>

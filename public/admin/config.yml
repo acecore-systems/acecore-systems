@@ -24,6 +24,12 @@ collections:
           - { name: siteUrl, label: サイトURL, widget: string }
           - { name: acecoreUrl, label: Acecore URL, widget: string }
           - { name: contactFormAction, label: フォーム送信先, widget: string }
+          - {
+              name: turnstileSiteKey,
+              label: Turnstileサイトキー,
+              widget: string,
+            }
+          - { name: ga4Id, label: GA4測定ID, widget: string }
           - { name: lineUrl, label: LINE URL, widget: string }
           - { name: email, label: メール, widget: string }
           - { name: phone, label: 電話番号, widget: string }
