@@ -105,6 +105,7 @@ import data from "../data/contact.json";
           <textarea id="message" name="お問い合わせ内容" required></textarea>
         </div>
         <div
+          id="turnstile-widget"
           class="cf-turnstile"
           data-sitekey={site.turnstileSiteKey}
           data-theme="light"
@@ -285,9 +286,71 @@ import data from "../data/contact.json";
       });
     }
   </script>
-  <script
-    is:inline
-    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-    async
-    defer></script>
+  <script is:inline>
+    function initSystemsContactTurnstile() {
+      const turnstileEl = document.getElementById("turnstile-widget");
+      if (!turnstileEl || turnstileEl.dataset.widgetId) return;
+
+      const sitekey = turnstileEl.dataset.sitekey;
+      const language = turnstileEl.dataset.language;
+      const theme = turnstileEl.dataset.theme || "light";
+      const action = turnstileEl.dataset.action;
+      const cData = turnstileEl.dataset.cdata;
+
+      if (!sitekey) return;
+
+      function renderTurnstile() {
+        if (
+          typeof window.turnstile === "undefined" ||
+          turnstileEl.dataset.widgetId
+        ) {
+          return;
+        }
+
+        const widgetId = window.turnstile.render(turnstileEl, {
+          sitekey,
+          language,
+          theme,
+          action,
+          cData,
+        });
+        turnstileEl.dataset.widgetId = String(widgetId);
+      }
+
+      if (typeof window.turnstile !== "undefined") {
+        renderTurnstile();
+        return;
+      }
+
+      const existingScript = document.querySelector(
+        "script[data-systems-turnstile-script]",
+      );
+
+      if (existingScript) {
+        let attempts = 0;
+        const waitForTurnstile = function () {
+          if (typeof window.turnstile !== "undefined") {
+            renderTurnstile();
+            return;
+          }
+          if (attempts >= 50) return;
+          attempts += 1;
+          window.setTimeout(waitForTurnstile, 100);
+        };
+        waitForTurnstile();
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.dataset.systemsTurnstileScript = "true";
+      script.src =
+        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.addEventListener("load", renderTurnstile, { once: true });
+      document.head.appendChild(script);
+    }
+
+    document.addEventListener("astro:page-load", initSystemsContactTurnstile);
+    initSystemsContactTurnstile();
+  </script>
 </BaseLayout>
