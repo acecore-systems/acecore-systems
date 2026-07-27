@@ -3,7 +3,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import data from "../data/works.json";
 ---
 
-<BaseLayout title={data.title} description={data.description}>
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  bodyClass="works-page"
+>
   <section class="page-hero page-hero--works">
     <div class="container page-hero__inner">
       <p class="page-eyebrow">Selected work / 取り組み</p>
@@ -24,13 +28,17 @@ import data from "../data/works.json";
       <div class="work-list">
         {
           data.cases.map((work, index) => (
-            <article class="work-case" id={work.id}>
+            <article
+              class="work-case"
+              id={work.id}
+              aria-labelledby={`${work.id}-title`}
+            >
               <header class="work-case__header">
                 <p class="editorial-index">
                   Case {String(index + 1).padStart(2, "0")}
                 </p>
                 <p class="work-case__category">{work.category}</p>
-                <h3>{work.title}</h3>
+                <h3 id={`${work.id}-title`}>{work.title}</h3>
                 <p class="work-case__summary">{work.summary}</p>
               </header>
               {work.image && (
@@ -64,12 +72,17 @@ import data from "../data/works.json";
                     <a
                       class="editorial-link editorial-link--primary"
                       href={work.detailUrl}
+                      aria-label={`${work.title}の事例詳細を見る`}
                     >
                       事例の詳細を見る
                     </a>
                   )}
                   {work.externalUrl && (
-                    <a class="editorial-link" href={work.externalUrl}>
+                    <a
+                      class="editorial-link"
+                      href={work.externalUrl}
+                      aria-label={`${work.title}の関連サイトを見る`}
+                    >
                       関連サイトを見る
                     </a>
                   )}
