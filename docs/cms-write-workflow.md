@@ -96,12 +96,12 @@ git diff --check
 ## merge後に必要な外部設定
 
 この文書の更新時点では、次の外部設定と本番確認は完了扱いにしません。
+`Build and Format`はCloudflare Pagesとともに`main`のrequired checkへ追加済みです。
 
 1. Systems専用GitHub Appを作成し、callback URLを`https://systems.acecore.net/admin/api/callback`にする。
 2. Appを`acecore-systems/acecore-systems`の1件だけにinstallし、上記3権限と8時間以下のuser token有効期限を確認する。
 3. Cloudflare PagesのProduction環境へ4つの環境変数・secretを設定する。
-4. Actionsを一度実行した後、`Build and Format`を`main`のrequired checkに追加する。
-5. 本番CMSでJSONと画像を同時に保存し、CMS作業branch、1 commit、1 Pull Request、preview成功を確認する。
-6. Pull Requestをmergeし、GitHub連携による`main`のproduction deployと表示反映を確認する。
-7. repositoryのbranch自動削除を有効化するか運用判断し、有効化しない場合はmerge後にCMS作業branchを削除する。
-8. 確認用データと不要になったCMS作業branchを整理する。
+4. 本番CMSでJSONと画像を同時に保存し、CMS作業branch、1 commit、1 Pull Request、preview成功を確認する。
+5. Pull Requestをmergeし、GitHub連携による`main`のproduction deployと表示反映を確認する。
+6. repositoryのbranch自動削除を有効化するか運用判断し、有効化しない場合はmerge後にCMS作業branchを削除する。
+7. 確認用データと不要になったCMS作業branchを整理する。
