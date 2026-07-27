@@ -3168,8 +3168,8 @@ a {
     border-left: 0;
   }
 
-  .advisor-use-case:not(:nth-child(2n + 1)),
-  .advisor-process__step:not(:nth-child(2n + 1)) {
+  .advisor-use-cases .advisor-use-case,
+  .advisor-process .advisor-process__step {
     border-left: 0;
   }
 
