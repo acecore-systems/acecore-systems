@@ -6,6 +6,7 @@
   "cases": [
     {
       "id": "case-acecore-contact",
+      "detailUrl": "",
       "title": "Acecore公式サイトの問い合わせ導線改善",
       "category": "フォーム・AI導線・CMS",
       "summary": "サービス選定、見積り相談、問い合わせ前の不安を減らすため、固定ページ、FAQ、AIチャット、CMS管理項目を整理しました。",
@@ -18,6 +19,7 @@
     },
     {
       "id": "case-acecore-site-platform",
+      "detailUrl": "/works/acecore-site-platform/",
       "title": "Acecore公式サイトの機能追加・運用基盤",
       "category": "CMS・検索・セキュリティ・パフォーマンス",
       "summary": "静的サイトにCMS、記事基盤、サイト内検索、構造化データ、CSP、アクセシビリティ改善、表示速度改善を段階的に追加しました。",
@@ -30,6 +32,7 @@
     },
     {
       "id": "case-aceserver",
+      "detailUrl": "",
       "title": "Aceserver運用で得た安定化・監視の知見",
       "category": "サーバー運用・コミュニティ基盤",
       "summary": "Minecraft公開サーバーの運用を通じて、接続安定性、監視、バックアップ、案内導線を継続的に改善しています。",
@@ -42,6 +45,7 @@
     },
     {
       "id": "case-aceserver-portal",
+      "detailUrl": "",
       "title": "エースサーバーポータル制作",
       "category": "Web制作・コミュニティポータル・CMS",
       "summary": "Minecraft無料公開サーバー「エースサーバー」の参加案内、動画、ワールドマップ、Wiki、Discordへの導線を一つの入口に整理しました。",
@@ -54,6 +58,7 @@
     },
     {
       "id": "case-hatt-homepage",
+      "detailUrl": "",
       "title": "Hattのホームページ制作",
       "category": "Web制作・CMS・サイト内検索",
       "summary": "絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめ、創作活動を継続して発信できる個人サイトとして設計しました。",

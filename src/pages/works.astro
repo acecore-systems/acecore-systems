@@ -59,14 +59,21 @@ import data from "../data/works.json";
                     <dd>{work.result}</dd>
                   </div>
                 </dl>
-                {work.externalUrl && (
-                  <a
-                    class="editorial-link work-case__link"
-                    href={work.externalUrl}
-                  >
-                    関連サイトを見る
-                  </a>
-                )}
+                <div class="work-case__links">
+                  {work.detailUrl && (
+                    <a
+                      class="editorial-link editorial-link--primary"
+                      href={work.detailUrl}
+                    >
+                      事例の詳細を見る
+                    </a>
+                  )}
+                  {work.externalUrl && (
+                    <a class="editorial-link" href={work.externalUrl}>
+                      関連サイトを見る
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           ))

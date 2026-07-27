@@ -100,7 +100,10 @@ import works from "../data/works.json";
       <div class="domain-list">
         {
           services.services.map((service, index) => (
-            <a class="domain-row" href={`/services/#${service.id}`}>
+            <a
+              class="domain-row"
+              href={service.detailUrl || `/services/#${service.id}`}
+            >
               <p class="editorial-index">
                 {String(index + 1).padStart(2, "0")}
               </p>
@@ -168,7 +171,17 @@ import works from "../data/works.json";
               </p>
               <div>
                 <p class="home-work__category">{work.category}</p>
-                <h3>{work.title}</h3>
+                <h3>
+                  {
+                    work.detailUrl ? (
+                      <a class="home-work__title-link" href={work.detailUrl}>
+                        {work.title}
+                      </a>
+                    ) : (
+                      work.title
+                    )
+                  }
+                </h3>
               </div>
               <p>{work.summary}</p>
             </article>
