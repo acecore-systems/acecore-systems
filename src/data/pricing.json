@@ -1,9 +1,44 @@
 {
   "title": "料金の目安",
-  "description": "業務システム、Webアプリ、AIチャット、CMS、SEO、検索、セキュリティ改善など、Acecore Systemsの開発費用の目安と相談前に確認したい前提をまとめています。",
+  "description": "IT顧問、AI導入、デプロイ支援、業務システム、Webアプリ、AIチャット、CMS、SEO、セキュリティ改善など、Acecore Systemsの費用の目安と前提をまとめています。",
   "heroTitle": "必要な範囲から、無理なく始める。",
   "heroLead": "金額は税込の目安です。外部サービス利用料、ライセンス費、サーバー費、正式な要件確定後の変動は別途確認します。",
   "items": [
+    {
+      "key": "it-advisor-light",
+      "label": "IT顧問エンジニア・ライト",
+      "price": "月額3万円〜",
+      "note": "月1〜2回の相談、AI・ITツール選定、初期設定、同時進行1件までの小規模な公開支援など。作業時間上限と追加費用は契約前に明示します。",
+      "detailUrl": "/services/it-advisor/#light"
+    },
+    {
+      "key": "it-advisor-standard",
+      "label": "IT顧問エンジニア・スタンダード",
+      "price": "月額10万円〜",
+      "note": "契約時に定める相談回数・作業時間上限内のデプロイ、デバッグ・テスト、状況報告、利用状況と改善候補の確認など。24時間監視と即時障害対応は含みません。",
+      "detailUrl": "/services/it-advisor/#standard"
+    },
+    {
+      "key": "deployment-spot",
+      "label": "スポット・デプロイ支援",
+      "price": "5万円〜",
+      "note": "既存Webアプリ1件・1環境を基本に、推奨環境の選定、ドメイン・SSL・VPSやクラウドの初期構築、公開、動作確認、引き継ぎ。コード修正、移行、CI/CD、監視・バックアップ設計、継続運用は別途見積ります。",
+      "detailUrl": "/services/it-advisor/#spot"
+    },
+    {
+      "key": "ai-improvement-starter",
+      "label": "AI業務改善スターターパック",
+      "price": "15万円目安",
+      "note": "90分ヒアリング、業務フロー整理、AI化候補3件、候補1件の簡易試作、費用対効果試算、AI利用ルール簡易版。期間目安は2〜3週間です。",
+      "detailUrl": "/services/it-advisor/#ai-starter"
+    },
+    {
+      "key": "ai-system-implementation",
+      "label": "AI・業務システム本導入",
+      "price": "50万円〜",
+      "note": "PoC後の本番構築、既存システム連携、権限・承認・監査ログ、テスト、公開、運用引き継ぎ。要件に応じて見積ります。",
+      "detailUrl": "/services/it-advisor/#full-implementation"
+    },
     {
       "key": "small-automation",
       "label": "小規模自動化・業務補助",

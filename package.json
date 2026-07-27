@@ -10,8 +10,10 @@
     "dev": "astro dev",
     "prebuild": "npm run validate:content",
     "build": "astro build",
+    "postbuild": "npm run validate:seo",
     "preview": "astro preview",
     "validate:content": "node scripts/validate-content.mjs",
+    "validate:seo": "node scripts/validate-seo.mjs",
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name acecore-systems",
     "format:check": "prettier . --check"
   },

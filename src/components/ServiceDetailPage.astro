@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import site from "../data/site.json";
 import pricing from "../data/pricing.json";
+import itAdvisor from "../data/it-advisor.json";
 import siteFunctions from "../data/service-details/site-functions.json";
 import siteQuality from "../data/service-details/site-quality.json";
 import operations from "../data/service-details/operations.json";
@@ -16,6 +17,10 @@ interface Props {
 
 const { data, canonicalPath, serviceKey } = Astro.props;
 const serviceIndex = [
+  {
+    href: "/services/it-advisor/",
+    data: itAdvisor,
+  },
   {
     href: "/services/site-functions/",
     data: siteFunctions,
@@ -176,20 +181,16 @@ const jsonLd = [
               </div>
               <div class="detail-offering__price">
                 <div class="detail-offering__price-copy">
-                  {
-                    offering.pricing.map((item) => (
-                      <p>
-                        {item.label} {item.price}
-                      </p>
-                    ))
-                  }
-                  {
-                    offering.priceNote && (
-                      <p class="detail-offering__price-note">
-                        {offering.priceNote}
-                      </p>
-                    )
-                  }
+                  {offering.pricing.map((item) => (
+                    <p>
+                      {item.label} {item.price}
+                    </p>
+                  ))}
+                  {offering.priceNote && (
+                    <p class="detail-offering__price-note">
+                      {offering.priceNote}
+                    </p>
+                  )}
                 </div>
                 <a href="/pricing/">料金一覧を見る</a>
               </div>
@@ -200,10 +201,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section
-    class="page-section"
-    aria-labelledby="detail-process-title"
-  >
+  <section class="page-section" aria-labelledby="detail-process-title">
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
@@ -270,7 +268,12 @@ const jsonLd = [
         <p class="editorial-eyebrow">Related / 05</p>
         <h2 id="detail-related-title">隣接する支援内容</h2>
       </header>
-      <div class="detail-related-list">
+      <div
+        class:list={[
+          "detail-related-list",
+          { "detail-related-list--three": relatedServices.length === 3 },
+        ]}
+      >
         {
           relatedServices.map((service) => (
             <a class="detail-related" href={service.href}>
