@@ -1,9 +1,20 @@
 {
   "title": "サービス",
-  "description": "Acecore Systemsが提供する業務システム開発、Webアプリ・管理画面、CMS、AIチャット、検索、フォーム連携、データ活用、既存システム改善の内容です。",
+  "description": "Acecore Systemsが提供するIT顧問、AI導入・業務改善、デプロイ支援、業務システム開発、Webアプリ・管理画面、CMS、検索、データ活用、既存システム改善の内容です。",
   "heroTitle": "課題の整理から、\n開発、運用改善まで。",
   "heroLead": "単発の開発だけでなく、業務に定着するまでの設計と改善を重視しています。",
   "services": [
+    {
+      "id": "it-advisor",
+      "detailUrl": "/services/it-advisor/",
+      "title": "IT顧問・AI導入・デプロイ伴走",
+      "body": "専任IT担当者がいない中小企業に、AI導入、Webアプリの公開、クラウド・IT基盤の判断を相談できるエンジニアが伴走します。",
+      "examples": [
+        "AIで作ったアプリの構成確認・デプロイ・引き継ぎ",
+        "業務診断、AI化候補の抽出、PoC、本導入",
+        "技術選定、セキュリティ、外部ベンダーのセカンドオピニオン"
+      ]
+    },
     {
       "id": "business-system",
       "detailUrl": "",

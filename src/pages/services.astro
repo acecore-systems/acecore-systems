@@ -1,24 +1,29 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import data from '../data/services.json'
-import siteFunctions from '../data/service-details/site-functions.json'
-import siteQuality from '../data/service-details/site-quality.json'
-import operations from '../data/service-details/operations.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import data from "../data/services.json";
+import itAdvisor from "../data/it-advisor.json";
+import siteFunctions from "../data/service-details/site-functions.json";
+import siteQuality from "../data/service-details/site-quality.json";
+import operations from "../data/service-details/operations.json";
 
 const serviceDetails = [
   {
-    href: '/services/site-functions/',
+    href: "/services/it-advisor/",
+    data: itAdvisor,
+  },
+  {
+    href: "/services/site-functions/",
     data: siteFunctions,
   },
   {
-    href: '/services/site-quality/',
+    href: "/services/site-quality/",
     data: siteQuality,
   },
   {
-    href: '/services/operations/',
+    href: "/services/operations/",
     data: operations,
   },
-]
+];
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -30,7 +35,10 @@ const serviceDetails = [
     </div>
   </section>
 
-  <section class="page-section page-section--services" aria-labelledby="service-domains-title">
+  <section
+    class="page-section page-section--services"
+    aria-labelledby="service-domains-title"
+  >
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Scope / 01</p>
@@ -53,13 +61,11 @@ const serviceDetails = [
                     <li>{example}</li>
                   ))}
                 </ul>
-                {
-                  service.detailUrl && (
-                    <a class="service-row__detail" href={service.detailUrl}>
-                      この支援の詳細を見る
-                    </a>
-                  )
-                }
+                {service.detailUrl && (
+                  <a class="service-row__detail" href={service.detailUrl}>
+                    この支援の詳細を見る
+                  </a>
+                )}
               </div>
             </article>
           ))
@@ -79,10 +85,10 @@ const serviceDetails = [
           <h2 id="service-detail-index-title">目的別の支援メニュー</h2>
         </div>
         <p>
-          サイトの機能、品質、公開後の運用を分けて、対象範囲と進め方を詳しく紹介します。
+          IT顧問、サイトの機能、品質、公開後の運用を分けて、対象範囲と進め方を詳しく紹介します。
         </p>
       </header>
-      <div class="service-detail-index">
+      <div class="service-detail-index service-detail-index--four">
         {
           serviceDetails.map((detail, index) => (
             <a class="service-detail-index__item" href={detail.href}>
@@ -131,13 +137,18 @@ const serviceDetails = [
 
   <section class="page-section page-section--cta">
     <div class="container">
-      <aside class="editorial-cta service-cta" aria-labelledby="service-cta-title">
+      <aside
+        class="editorial-cta service-cta"
+        aria-labelledby="service-cta-title"
+      >
         <div class="editorial-cta__copy">
           <p class="editorial-eyebrow">Consultation</p>
           <h2 id="service-cta-title">具体的な進め方を相談する</h2>
           <p>業務の流れ、現在のツール、困っている点をお知らせください。</p>
         </div>
-        <a class="editorial-link editorial-link--primary" href="/contact/">問い合わせる</a>
+        <a class="editorial-link editorial-link--primary" href="/contact/"
+          >問い合わせる</a
+        >
       </aside>
     </div>
   </section>

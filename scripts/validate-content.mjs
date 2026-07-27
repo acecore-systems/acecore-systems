@@ -18,6 +18,7 @@ const expectedCmsFiles = [
   "src/data/site.json",
   "src/data/home.json",
   "src/data/services.json",
+  "src/data/it-advisor.json",
   "src/data/pricing.json",
   "src/data/guide.json",
   "src/data/works.json",
@@ -162,6 +163,11 @@ const serviceSources = [
     data: "src/data/service-details/operations.json",
   },
 ];
+const advisorSource = {
+  route: "/services/it-advisor/",
+  page: "src/pages/services/it-advisor.astro",
+  data: "src/data/it-advisor.json",
+};
 const workSources = [
   {
     route: "/works/acecore-site-platform/",
@@ -249,6 +255,116 @@ for (const source of serviceSources) {
   }
 }
 
+assert.equal(
+  existsSync(join(root, advisorSource.page)),
+  true,
+  `${advisorSource.page} missing`,
+);
+const advisor = readJson(advisorSource.data);
+requireText(advisor.title, `${advisorSource.data}: title`);
+requireText(advisor.description, `${advisorSource.data}: description`);
+requireText(advisor.indexSummary, `${advisorSource.data}: indexSummary`);
+assert.equal(
+  advisor.indexTopics.length > 0,
+  true,
+  `${advisorSource.data}: indexTopics`,
+);
+assert.equal(
+  advisor.challenges.length > 0,
+  true,
+  `${advisorSource.data}: challenges`,
+);
+assert.equal(
+  advisor.supportAreas.length > 0,
+  true,
+  `${advisorSource.data}: supportAreas`,
+);
+assert.equal(
+  advisor.useCases.length > 0,
+  true,
+  `${advisorSource.data}: useCases`,
+);
+assert.equal(
+  advisor.packages.length > 0,
+  true,
+  `${advisorSource.data}: packages`,
+);
+assert.equal(advisor.plans.length > 0, true, `${advisorSource.data}: plans`);
+assert.equal(
+  advisor.process.length > 0,
+  true,
+  `${advisorSource.data}: process`,
+);
+assert.equal(
+  advisor.governance.length > 0,
+  true,
+  `${advisorSource.data}: governance`,
+);
+assert.equal(
+  advisor.excluded.length > 0,
+  true,
+  `${advisorSource.data}: excluded`,
+);
+assert.equal(advisor.faqs.length > 0, true, `${advisorSource.data}: faqs`);
+
+const advisorAnchors = [
+  ...advisor.supportAreas.map((item) => item.id),
+  ...advisor.packages.map((item) => item.id),
+  ...advisor.plans.map((item) => item.id),
+];
+assert.equal(
+  new Set(advisorAnchors).size,
+  advisorAnchors.length,
+  `${advisorSource.data}: duplicate anchor id`,
+);
+serviceAnchors.set(advisorSource.route, new Set(advisorAnchors));
+
+for (const [index, item] of advisor.supportAreas.entries()) {
+  requireText(item.id, `${advisorSource.data}: supportAreas[${index}].id`);
+  requireText(
+    item.title,
+    `${advisorSource.data}: supportAreas[${index}].title`,
+  );
+  requireText(item.body, `${advisorSource.data}: supportAreas[${index}].body`);
+  assert.equal(
+    item.includes.length > 0,
+    true,
+    `${advisorSource.data}: supportAreas[${index}].includes`,
+  );
+}
+for (const [index, item] of advisor.plans.entries()) {
+  requireText(item.title, `${advisorSource.data}: plans[${index}].title`);
+  requireText(item.boundary, `${advisorSource.data}: plans[${index}].boundary`);
+  assert.equal(
+    item.includes.length > 0,
+    true,
+    `${advisorSource.data}: plans[${index}].includes`,
+  );
+}
+for (const [index, faq] of advisor.faqs.entries()) {
+  requireText(faq.question, `${advisorSource.data}: faqs[${index}].question`);
+  requireText(faq.answer, `${advisorSource.data}: faqs[${index}].answer`);
+}
+
+const advisorPricingKeys = [
+  advisor.startingPriceKey,
+  ...advisor.packages.map((item) => item.pricingKey),
+  ...advisor.plans.map((item) => item.pricingKey),
+];
+for (const key of advisorPricingKeys) {
+  assert.equal(
+    pricingKeys.has(key),
+    true,
+    `${advisorSource.data}: unknown pricing key ${key}`,
+  );
+}
+const cmsConfig = readFileSync(join(root, "public/admin/config.yml"), "utf8");
+assert.equal(
+  cmsConfig.includes("file: src/data/it-advisor.json"),
+  true,
+  "public/admin/config.yml: IT advisor data file missing",
+);
+
 for (const article of migratedTechnicalArticles) {
   assert.equal(
     technicalResources.has(article),
@@ -277,6 +393,7 @@ for (const source of workSources) {
 }
 
 const knownRoutes = new Set([
+  advisorSource.route,
   ...serviceSources.map((source) => source.route),
   ...workSources.map((source) => source.route),
 ]);
@@ -320,5 +437,5 @@ for (const item of pricing.items) {
 }
 
 console.log(
-  `content validation passed: ${serviceSources.length} services, ${workSources.length} work`,
+  `content validation passed: ${serviceSources.length + 1} services, ${workSources.length} work`,
 );

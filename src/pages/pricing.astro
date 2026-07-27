@@ -27,7 +27,7 @@ import data from "../data/pricing.json";
       <ol class="price-list">
         {
           data.items.map((item, index) => (
-            <li class="price-row">
+            <li class="price-row" id={item.key}>
               <div class="price-row__heading">
                 <p class="editorial-index">
                   {String(index + 1).padStart(2, "0")}

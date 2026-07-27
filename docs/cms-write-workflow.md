@@ -53,11 +53,12 @@ Pages Functionsでは次の環境変数を使います。
 
 ## CMS管理対象
 
-更新可能なJSONは次の12ファイルに完全列挙します。
+更新可能なJSONは次の13ファイルに完全列挙します。
 
 - `src/data/site.json`
 - `src/data/home.json`
 - `src/data/services.json`
+- `src/data/it-advisor.json`
 - `src/data/pricing.json`
 - `src/data/guide.json`
 - `src/data/works.json`

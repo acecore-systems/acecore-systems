@@ -1,0 +1,466 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import data from "../../data/it-advisor.json";
+import pricing from "../../data/pricing.json";
+import site from "../../data/site.json";
+import operations from "../../data/service-details/operations.json";
+import siteFunctions from "../../data/service-details/site-functions.json";
+import siteQuality from "../../data/service-details/site-quality.json";
+
+const pagePath = "/services/it-advisor/";
+const pageUrl = new URL(pagePath, site.siteUrl).href;
+const serviceEntityId = `${pageUrl}#service`;
+const organizationId = `${new URL("/", site.acecoreUrl).href}#organization`;
+const pricingByKey = new Map(pricing.items.map((item) => [item.key, item]));
+const resolvePricing = (key: string) => {
+  const item = pricingByKey.get(key);
+  if (!item) {
+    throw new Error(`Unknown pricing key: ${key}`);
+  }
+  return item;
+};
+const startingPrice = resolvePricing(data.startingPriceKey);
+const plans = data.plans.map((plan) => ({
+  ...plan,
+  pricing: resolvePricing(plan.pricingKey),
+}));
+const packages = data.packages.map((item) => ({
+  ...item,
+  pricing: resolvePricing(item.pricingKey),
+}));
+const relatedServices = [
+  {
+    href: "/services/site-functions/",
+    data: siteFunctions,
+  },
+  {
+    href: "/services/site-quality/",
+    data: siteQuality,
+  },
+  {
+    href: "/services/operations/",
+    data: operations,
+  },
+];
+const contactHref = `/contact/?${new URLSearchParams({
+  category: "service",
+  service: "it-advisor",
+  from: "systems-it-advisor",
+  entry: "service-detail-cta",
+}).toString()}`;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": serviceEntityId,
+    name: data.title,
+    url: pageUrl,
+    description: data.description,
+    serviceType: [
+      "IT顧問",
+      "AI導入・業務改善支援",
+      "Webアプリのデプロイ支援",
+      "IT基盤・技術相談",
+    ],
+    areaServed: "JP",
+    audience: {
+      "@type": "Audience",
+      audienceType: "専任IT担当者がいない従業員5〜50名程度の中小企業",
+    },
+    provider: { "@id": organizationId },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${pageUrl}#faq`,
+    mainEntity: data.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "ホーム",
+        item: new URL("/", site.siteUrl).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "サービス",
+        item: new URL("/services/", site.siteUrl).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.title,
+        item: pageUrl,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  canonical={pagePath}
+  jsonLd={jsonLd}
+  mainEntityId={serviceEntityId}
+  bodyClass="it-advisor-page"
+>
+  <section class="page-hero page-hero--detail advisor-hero">
+    <div class="container page-hero__inner">
+      <nav class="breadcrumb" aria-label="パンくず">
+        <ol>
+          <li><a href="/">ホーム</a></li>
+          <li><a href="/services/">サービス</a></li>
+          <li aria-current="page">{data.title}</li>
+        </ol>
+      </nav>
+      <p class="page-eyebrow">{data.heroEyebrow}</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+      <div class="advisor-hero__actions">
+        <a class="editorial-link editorial-link--primary" href={contactHref}>
+          {data.heroPrimaryCta}
+        </a>
+        <a class="editorial-link" href="#plans">{data.heroSecondaryCta}</a>
+      </div>
+      <dl class="advisor-hero__facts">
+        <div>
+          <dt>{data.audienceLabel}</dt>
+          <dd>{data.audienceValue}</dd>
+        </div>
+        <div>
+          <dt>{data.engagementLabel}</dt>
+          <dd>{data.engagementValue}</dd>
+        </div>
+        <div>
+          <dt>{data.startingPriceLabel}</dt>
+          <dd>{startingPrice.price}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section
+    class="page-section detail-introduction"
+    aria-labelledby="advisor-introduction-title"
+  >
+    <div class="container detail-introduction__layout">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Starting point / 01</p>
+        <h2 id="advisor-introduction-title">{data.introTitle}</h2>
+        <p>{data.introBody}</p>
+      </header>
+      <div class="detail-challenges" aria-label="よくある停滞">
+        {
+          data.challenges.map((challenge, index) => (
+            <article class="detail-challenge">
+              <p class="editorial-index">
+                Issue {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{challenge.title}</h3>
+              <p>{challenge.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="advisor-support-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Scope / 02</p>
+          <h2 id="advisor-support-title">{data.supportTitle}</h2>
+        </div>
+        <p>{data.supportLead}</p>
+      </header>
+      <div class="advisor-support-list">
+        {
+          data.supportAreas.map((area, index) => (
+            <article class="advisor-support" id={area.id}>
+              <header class="advisor-support__header">
+                <p class="editorial-index">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{area.title}</h3>
+              </header>
+              <div class="advisor-support__body">
+                <p>{area.body}</p>
+                <ul class="service-points">
+                  {area.includes.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="advisor-use-cases-title">
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Use cases / 03</p>
+          <h2 id="advisor-use-cases-title">{data.useCasesTitle}</h2>
+        </div>
+        <p>{data.useCasesLead}</p>
+      </header>
+      <div class="advisor-use-cases">
+        {
+          data.useCases.map((item, index) => (
+            <article class="advisor-use-case">
+              <p class="editorial-index">
+                Case {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="advisor-starter-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Small start / 04</p>
+          <h2 id="advisor-starter-title">{data.starterTitle}</h2>
+        </div>
+        <p>{data.starterLead}</p>
+      </header>
+      <div class="advisor-packages">
+        {
+          packages.map((item, index) => (
+            <article class="advisor-package" id={item.id}>
+              <div class="advisor-package__heading">
+                <p class="editorial-index">
+                  Package {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+              <div class="advisor-package__meta">
+                <p class="advisor-price">{item.pricing.price}</p>
+                <p>{item.duration}</p>
+              </div>
+              <ul class="service-points">
+                {item.includes.map((included) => (
+                  <li>{included}</li>
+                ))}
+              </ul>
+              <a
+                class="advisor-text-link"
+                href={`/pricing/#${item.pricingKey}`}
+              >
+                料金一覧で確認する
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section advisor-plan-section"
+    id="plans"
+    aria-labelledby="advisor-plans-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Plans / 05</p>
+          <h2 id="advisor-plans-title">{data.plansTitle}</h2>
+        </div>
+        <p>{data.plansLead}</p>
+      </header>
+      <div class="advisor-plans">
+        {
+          plans.map((plan, index) => (
+            <article
+              class:list={[
+                "advisor-plan",
+                { "advisor-plan--primary": plan.id === "standard" },
+              ]}
+              id={plan.id}
+            >
+              <p class="editorial-index">
+                Plan {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{plan.title}</h3>
+              <p class="advisor-price">{plan.pricing.price}</p>
+              <p class="advisor-plan__summary">{plan.summary}</p>
+              <ul class="service-points">
+                {plan.includes.map((included) => (
+                  <li>{included}</li>
+                ))}
+              </ul>
+              <p class="advisor-plan__boundary">{plan.boundary}</p>
+              <a
+                class="advisor-text-link"
+                href={`/pricing/#${plan.pricingKey}`}
+              >
+                料金一覧で確認する
+              </a>
+            </article>
+          ))
+        }
+      </div>
+      <p class="detail-price-note advisor-price-note">{data.priceNote}</p>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="advisor-process-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Process / 06</p>
+          <h2 id="advisor-process-title">{data.processTitle}</h2>
+        </div>
+        <p>{data.processLead}</p>
+      </header>
+      <ol class="advisor-process">
+        {
+          data.process.map((step, index) => (
+            <li class="advisor-process__step">
+              <p class="editorial-index">
+                Step {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="advisor-boundaries-title">
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Governance / 07</p>
+          <h2 id="advisor-boundaries-title">{data.governanceTitle}</h2>
+        </div>
+        <p>{data.governanceLead}</p>
+      </header>
+      <div class="advisor-boundaries">
+        <article class="advisor-boundary">
+          <p class="editorial-index">Responsibility</p>
+          <h3>セキュリティと責任境界</h3>
+          <ul>
+            {data.governance.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+        <article class="advisor-boundary advisor-boundary--excluded">
+          <p class="editorial-index">Out of scope</p>
+          <h3>{data.excludedTitle}</h3>
+          <p>{data.excludedLead}</p>
+          <ul>
+            {data.excluded.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="advisor-faq-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">FAQ / 08</p>
+          <h2 id="advisor-faq-title">{data.faqTitle}</h2>
+        </div>
+        <p>{data.faqLead}</p>
+      </header>
+      <div class="advisor-faq">
+        {
+          data.faqs.map((faq, index) => (
+            <details class="advisor-faq__item">
+              <summary>
+                <span class="editorial-index">
+                  Q{String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{faq.question}</span>
+              </summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section detail-related-section"
+    aria-labelledby="advisor-related-title"
+  >
+    <div class="container">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Related / 09</p>
+        <h2 id="advisor-related-title">隣接する支援内容</h2>
+      </header>
+      <div class="detail-related-list detail-related-list--three">
+        {
+          relatedServices.map((service) => (
+            <a class="detail-related" href={service.href}>
+              <p class="editorial-eyebrow">{service.data.heroEyebrow}</p>
+              <h3>{service.data.title}</h3>
+              <p>{service.data.indexSummary}</p>
+              <span>支援内容を見る</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside
+        class="editorial-cta service-cta"
+        aria-labelledby="advisor-cta-title"
+      >
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="advisor-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href={contactHref}>
+          {data.ctaLabel}
+        </a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

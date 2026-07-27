@@ -67,6 +67,7 @@ import data from "../data/contact.json";
           <select id="category" name="お問い合わせ種別" required>
             <option value="">選択してください</option>
             <option>サービス全般について</option>
+            <option>IT顧問・AI導入・デプロイについて</option>
             <option>業務システム開発について</option>
             <option>Webアプリ・管理画面について</option>
             <option>Webサイト機能・品質改善について</option>
@@ -156,6 +157,10 @@ import data from "../data/contact.json";
         string,
         { category: string; subject: string }
       > = {
+        "it-advisor": {
+          category: "IT顧問・AI導入・デプロイについて",
+          subject: "IT顧問・AI導入・デプロイ",
+        },
         "business-system": {
           category: "業務システム開発について",
           subject: "業務システム開発",
@@ -231,6 +236,7 @@ import data from "../data/contact.json";
       };
       const categoryAliases: Record<string, string> = {
         service: "サービス全般について",
+        "it-advisor": "IT顧問・AI導入・デプロイについて",
         "business-system": "業務システム開発について",
         system: "業務システム開発について",
         "web-app": "Webアプリ・管理画面について",

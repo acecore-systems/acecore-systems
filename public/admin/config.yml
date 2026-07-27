@@ -153,6 +153,150 @@ collections:
             fields:
               - { name: title, label: 見出し, widget: string }
               - { name: body, label: 本文, widget: text }
+      - name: it_advisor
+        label: IT顧問エンジニア
+        file: src/data/it-advisor.json
+        format: json
+        fields:
+          - { name: title, label: ページ名, widget: string }
+          - { name: description, label: SEO説明, widget: text }
+          - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
+          - { name: heroTitle, label: ヒーロータイトル, widget: string }
+          - { name: heroLead, label: ヒーローリード, widget: text }
+          - { name: indexSummary, label: 一覧用説明, widget: text }
+          - label: 一覧用トピック
+            name: indexTopics
+            widget: list
+            field: { name: item, label: 項目, widget: string }
+          - { name: heroPrimaryCta, label: 主要CTA, widget: string }
+          - { name: heroSecondaryCta, label: 補助CTA, widget: string }
+          - { name: audienceLabel, label: 対象ラベル, widget: string }
+          - { name: audienceValue, label: 対象, widget: string }
+          - { name: engagementLabel, label: 契約方法ラベル, widget: string }
+          - { name: engagementValue, label: 契約方法, widget: string }
+          - { name: startingPriceLabel, label: 開始料金ラベル, widget: string }
+          - {
+              name: startingPriceKey,
+              label: 開始料金キー,
+              widget: string,
+              hint: 料金ページの料金キーを指定します。,
+            }
+          - { name: introTitle, label: 導入見出し, widget: string }
+          - { name: introBody, label: 導入本文, widget: text }
+          - label: よくある停滞
+            name: challenges
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+          - { name: supportTitle, label: 支援範囲見出し, widget: string }
+          - { name: supportLead, label: 支援範囲説明, widget: text }
+          - label: 支援領域
+            name: supportAreas
+            widget: list
+            fields:
+              - {
+                  name: id,
+                  label: アンカーID,
+                  widget: string,
+                  hint: 公開後は変更しないでください。,
+                }
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - label: 含まれる内容
+                name: includes
+                widget: list
+                field: { name: item, label: 項目, widget: string }
+          - { name: useCasesTitle, label: 活用例見出し, widget: string }
+          - { name: useCasesLead, label: 活用例説明, widget: text }
+          - label: 活用例
+            name: useCases
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+          - { name: starterTitle, label: スターター見出し, widget: string }
+          - { name: starterLead, label: スターター説明, widget: text }
+          - label: 導入パッケージ
+            name: packages
+            widget: list
+            fields:
+              - {
+                  name: id,
+                  label: アンカーID,
+                  widget: string,
+                  hint: 公開後は変更しないでください。,
+                }
+              - { name: title, label: 見出し, widget: string }
+              - {
+                  name: pricingKey,
+                  label: 料金キー,
+                  widget: string,
+                  hint: 料金ページの料金キーを指定します。,
+                }
+              - { name: duration, label: 期間, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - label: 含まれる内容
+                name: includes
+                widget: list
+                field: { name: item, label: 項目, widget: string }
+          - { name: plansTitle, label: プラン見出し, widget: string }
+          - { name: plansLead, label: プラン説明, widget: text }
+          - label: 顧問・スポットプラン
+            name: plans
+            widget: list
+            fields:
+              - {
+                  name: id,
+                  label: アンカーID,
+                  widget: string,
+                  hint: 公開後は変更しないでください。,
+                }
+              - { name: title, label: 見出し, widget: string }
+              - {
+                  name: pricingKey,
+                  label: 料金キー,
+                  widget: string,
+                  hint: 料金ページの料金キーを指定します。,
+                }
+              - { name: summary, label: 説明, widget: text }
+              - label: 含まれる内容
+                name: includes
+                widget: list
+                field: { name: item, label: 項目, widget: string }
+              - { name: boundary, label: 対象外・追加条件, widget: text }
+          - { name: priceNote, label: 料金補足, widget: text }
+          - { name: processTitle, label: 進め方見出し, widget: string }
+          - { name: processLead, label: 進め方説明, widget: text }
+          - label: 進め方
+            name: process
+            widget: list
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+          - { name: governanceTitle, label: セキュリティ見出し, widget: string }
+          - { name: governanceLead, label: セキュリティ説明, widget: text }
+          - label: セキュリティと責任境界
+            name: governance
+            widget: list
+            field: { name: item, label: 項目, widget: string }
+          - { name: excludedTitle, label: 対象外見出し, widget: string }
+          - { name: excludedLead, label: 対象外説明, widget: text }
+          - label: 対象外
+            name: excluded
+            widget: list
+            field: { name: item, label: 項目, widget: string }
+          - { name: faqTitle, label: FAQ見出し, widget: string }
+          - { name: faqLead, label: FAQ説明, widget: text }
+          - label: よくある質問
+            name: faqs
+            widget: list
+            fields:
+              - { name: question, label: 質問, widget: string }
+              - { name: answer, label: 回答, widget: text }
+          - { name: ctaTitle, label: CTA見出し, widget: string }
+          - { name: ctaBody, label: CTA本文, widget: text }
+          - { name: ctaLabel, label: CTAボタン, widget: string }
       - name: pricing
         label: 料金
         file: src/data/pricing.json

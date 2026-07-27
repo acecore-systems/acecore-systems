@@ -24,6 +24,7 @@ const rejectedPath = "src/pages/index.astro";
 const collectionWritePaths = [
   "src/data/site.json",
   "src/data/services.json",
+  "src/data/it-advisor.json",
   "src/data/pricing.json",
   "src/data/guide.json",
   "src/data/works.json",
