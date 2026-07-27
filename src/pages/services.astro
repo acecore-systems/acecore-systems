@@ -1,6 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import data from '../data/services.json'
+import siteFunctions from '../data/service-details/site-functions.json'
+import siteQuality from '../data/service-details/site-quality.json'
+import operations from '../data/service-details/operations.json'
+
+const serviceDetails = [
+  {
+    href: '/services/site-functions/',
+    data: siteFunctions,
+  },
+  {
+    href: '/services/site-quality/',
+    data: siteQuality,
+  },
+  {
+    href: '/services/operations/',
+    data: operations,
+  },
+]
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -35,6 +53,13 @@ import data from '../data/services.json'
                     <li>{example}</li>
                   ))}
                 </ul>
+                {
+                  service.detailUrl && (
+                    <a class="service-row__detail" href={service.detailUrl}>
+                      この支援の詳細を見る
+                    </a>
+                  )
+                }
               </div>
             </article>
           ))
@@ -43,10 +68,46 @@ import data from '../data/services.json'
     </div>
   </section>
 
-  <section class="page-section page-section--muted" aria-labelledby="service-process-title">
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="service-detail-index-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Detailed support / 02</p>
+          <h2 id="service-detail-index-title">目的別の支援メニュー</h2>
+        </div>
+        <p>
+          サイトの機能、品質、公開後の運用を分けて、対象範囲と進め方を詳しく紹介します。
+        </p>
+      </header>
+      <div class="service-detail-index">
+        {
+          serviceDetails.map((detail, index) => (
+            <a class="service-detail-index__item" href={detail.href}>
+              <p class="editorial-index">
+                Menu {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{detail.data.title}</h3>
+              <p>{detail.data.indexSummary}</p>
+              <ul aria-label={`${detail.data.title}の主な項目`}>
+                {detail.data.indexTopics.map((topic) => (
+                  <li>{topic}</li>
+                ))}
+              </ul>
+              <span>詳しい支援内容を見る</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="service-process-title">
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Process / 02</p>
+        <p class="editorial-eyebrow">Process / 03</p>
         <h2 id="service-process-title">進め方</h2>
         <p>最初から大きく作り込まず、確認できる単位で段階的に進めます。</p>
       </header>
@@ -74,7 +135,7 @@ import data from '../data/services.json'
         <div class="editorial-cta__copy">
           <p class="editorial-eyebrow">Consultation</p>
           <h2 id="service-cta-title">具体的な進め方を相談する</h2>
-          <p>業務の流れ、現在のツール、困っている点を書ける範囲で送ってください。</p>
+          <p>業務の流れ、現在のツール、困っている点をお知らせください。</p>
         </div>
         <a class="editorial-link editorial-link--primary" href="/contact/">問い合わせる</a>
       </aside>

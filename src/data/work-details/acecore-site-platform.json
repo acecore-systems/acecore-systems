@@ -1,0 +1,117 @@
+{
+  "title": "Acecore公式サイトの機能追加・運用基盤",
+  "description": "AstroとCloudflare Pagesを基点に、CMS、記事基盤、サイト内検索、構造化データ、CSP、アクセシビリティ、表示速度改善を段階的に追加したAcecore公式サイトの取り組みです。",
+  "category": "CMS・検索・セキュリティ・パフォーマンス",
+  "heroEyebrow": "事例 / サイト基盤",
+  "heroTitle": "静的サイトを、運用できる基盤へ。",
+  "heroLead": "CMS、検索、SEO、配信品質を、静的サイトの軽さを保ったまま段階的に追加した自社プロジェクトです。",
+  "overviewTitle": "更新し続けられるサイト基盤へ。",
+  "overviewBody": "AstroとCloudflare Pagesを土台に、CMSや検索などを確認可能な単位で追加しました。編集・確認・公開までを一つの運用として整えています。",
+  "facts": [
+    {
+      "label": "対象",
+      "value": "Acecore公式サイト"
+    },
+    {
+      "label": "公開基盤",
+      "value": "Astro / Cloudflare Pages"
+    },
+    {
+      "label": "更新フロー",
+      "value": "Sveltia CMS / GitHub"
+    },
+    {
+      "label": "位置づけ",
+      "value": "自社プロジェクト"
+    }
+  ],
+  "outcomesTitle": "実現した状態",
+  "outcomes": [
+    {
+      "label": "更新",
+      "body": "CMSから固定ページ・記事・設定項目を更新できる"
+    },
+    {
+      "label": "情報発見",
+      "body": "検索と内部導線から必要な情報へ移動できる"
+    },
+    {
+      "label": "公開品質",
+      "body": "SEO・CSP・アクセシビリティ・表示品質を同じ公開フローで確認できる"
+    }
+  ],
+  "story": [
+    {
+      "label": "課題",
+      "title": "公開基盤を複雑にしない。",
+      "body": "情報量と機能が増えても必要な内容へ移動でき、更新や障害の影響を切り分けられる構成が必要でした。"
+    },
+    {
+      "label": "方針",
+      "title": "機能と公開フローを一緒に設計。",
+      "body": "CMS、記事、検索などを役割ごとに分け、誰が編集し、どこで確認し、どう公開するかまでを機能の一部として整えました。"
+    }
+  ],
+  "scopeTitle": "段階的に整えた範囲",
+  "scopeLead": "各項目を単独で追加するのではなく、公開・確認・運用とのつながりを見ながら進めました。",
+  "scope": [
+    {
+      "title": "更新・記事運用",
+      "body": "ブラウザから更新できる入口と、GitHubを介して変更を確認する流れを整えました。",
+      "items": [
+        "Sveltia CMSによる固定ページ・記事・設定項目の編集",
+        "画像アップロード先と入力項目の整理",
+        "記事一覧・タグ・関連記事・RSS"
+      ]
+    },
+    {
+      "title": "情報発見・内部導線",
+      "body": "ページが増えても、検索と関連リンクから必要な情報へ移動できる構造を追加しました。",
+      "items": [
+        "Pagefindによるサイト内検索",
+        "検索対象と除外範囲の整理",
+        "サービス・料金・記事間の内部リンク"
+      ]
+    },
+    {
+      "title": "検索エンジンへ伝える情報",
+      "body": "ページの役割とURLを揃え、検索結果や共有時に必要な情報を一貫させました。",
+      "items": [
+        "title・description・OGP・canonical",
+        "Organization・WebSite・WebPageなどのJSON-LD",
+        "サイトマップと多言語URLの整合"
+      ]
+    },
+    {
+      "title": "公開品質",
+      "body": "安全性、使いやすさ、表示速度を別々の後付けにせず、配信構成と一緒に確認しました。",
+      "items": [
+        "CSP・セキュリティヘッダー・キャッシュ",
+        "キーボード操作・フォーカス・フォーム",
+        "画像・CSS・フォント・外部スクリプト"
+      ]
+    }
+  ],
+  "resourcesTitle": "詳しい判断は、技術資料で確認できます。",
+  "resourcesLead": "構成や実装上の判断を、Acecore公式サイトの記事にまとめています。",
+  "resources": [
+    {
+      "title": "CMSと公開フロー",
+      "description": "編集対象、画像、GitHub backend、確認・公開フローの設計記録です。",
+      "href": "https://acecore.net/blog/cms-selection-and-turnstile/"
+    },
+    {
+      "title": "検索と内部導線",
+      "description": "Pagefind検索を含む、UXとコード品質の改善例です。",
+      "href": "https://acecore.net/blog/astro-ux-and-code-quality/"
+    },
+    {
+      "title": "配信品質とセキュリティ",
+      "description": "CSP、セキュリティヘッダー、キャッシュ、Pagesの配信設定を整理しています。",
+      "href": "https://acecore.net/blog/cloudflare-pages-security/"
+    }
+  ],
+  "externalUrl": "https://acecore.net/",
+  "ctaTitle": "今のサイトを活かし、更新と機能追加の基盤を整える。",
+  "ctaBody": "現在のURL、更新方法、追加したい機能、運用上の制約をお知らせください。"
+}

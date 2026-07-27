@@ -1,0 +1,281 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+import siteFunctions from "../data/service-details/site-functions.json";
+import siteQuality from "../data/service-details/site-quality.json";
+import operations from "../data/service-details/operations.json";
+import workData from "../data/work-details/acecore-site-platform.json";
+
+type WorkDetail = typeof workData;
+
+interface Props {
+  data: WorkDetail;
+  canonicalPath: string;
+}
+
+const { data, canonicalPath } = Astro.props;
+const pageUrl = new URL(canonicalPath, site.siteUrl).href;
+const workEntityId = `${pageUrl}#case-study`;
+const organizationId = `${new URL("/", site.acecoreUrl).href}#organization`;
+const relatedServices = [
+  {
+    href: "/services/site-functions/",
+    title: siteFunctions.title,
+  },
+  {
+    href: "/services/site-quality/",
+    title: siteQuality.title,
+  },
+  {
+    href: "/services/operations/",
+    title: operations.title,
+  },
+];
+const contactHref = `/contact/?${new URLSearchParams({
+  category: "service",
+  service: "site-functions",
+  from: "systems-work-acecore-site-platform",
+  entry: "work-detail-cta",
+}).toString()}`;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": workEntityId,
+    name: data.title,
+    url: pageUrl,
+    description: data.description,
+    inLanguage: "ja",
+    genre: data.category,
+    creator: { "@id": organizationId },
+    about: data.scope.map((item) => item.title),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "ホーム",
+        item: new URL("/", site.siteUrl).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "実績",
+        item: new URL("/works/", site.siteUrl).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.title,
+        item: pageUrl,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonicalPath}
+  jsonLd={jsonLd}
+  mainEntityId={workEntityId}
+  bodyClass="work-detail-page"
+>
+  <section class="page-hero page-hero--detail">
+    <div class="container page-hero__inner work-detail-hero__inner">
+      <nav class="breadcrumb" aria-label="パンくず">
+        <ol>
+          <li><a href="/">ホーム</a></li>
+          <li><a href="/works/">実績</a></li>
+          <li aria-current="page">{data.title}</li>
+        </ol>
+      </nav>
+      <p class="page-eyebrow">{data.heroEyebrow}</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section
+    id="work-overview"
+    class="page-section work-detail-overview"
+    aria-labelledby="work-overview-title"
+  >
+    <div class="container">
+      <div class="work-detail-overview__layout">
+        <header class="editorial-header">
+          <p class="editorial-eyebrow">概要 / 01</p>
+          <h2 id="work-overview-title">{data.overviewTitle}</h2>
+          <p>{data.overviewBody}</p>
+        </header>
+        <dl class="work-detail-facts">
+          {
+            data.facts.map((fact) => (
+              <div>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div class="work-detail-outcomes">
+        <header class="work-detail-outcomes__header">
+          <p class="editorial-eyebrow">現在</p>
+          <h3>{data.outcomesTitle}</h3>
+        </header>
+        <ul>
+          {
+            data.outcomes.map((outcome) => (
+              <li>
+                <p>{outcome.label}</p>
+                <p>{outcome.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="work-story"
+    class="page-section page-section--muted"
+    aria-labelledby="work-story-title"
+  >
+    <div class="container">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">課題と方針 / 02</p>
+        <h2 id="work-story-title">複雑にせず、育てられる形へ。</h2>
+      </header>
+      <div class="work-story">
+        {
+          data.story.map((item) => (
+            <article class="work-story__item">
+              <p class="editorial-index">{item.label}</p>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="work-scope"
+    class="page-section"
+    aria-labelledby="work-scope-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">実施内容 / 03</p>
+          <h2 id="work-scope-title">{data.scopeTitle}</h2>
+        </div>
+        <p>{data.scopeLead}</p>
+      </header>
+      <div class="detail-offering-list">
+        {
+          data.scope.map((item, index) => (
+            <article class="detail-offering">
+              <header class="detail-offering__header">
+                <p class="editorial-index">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{item.title}</h3>
+              </header>
+              <div class="detail-offering__body">
+                <p>{item.body}</p>
+                <ul class="service-points">
+                  {item.items.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted work-detail-next"
+    aria-labelledby="work-related-title"
+  >
+    <div class="container">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">関連する支援 / 04</p>
+        <h2 id="work-related-title">この事例で扱った支援</h2>
+      </header>
+      <ul class="work-related-links">
+        {
+          relatedServices.map((service) => (
+            <li>
+              <a href={service.href}>
+                <span>{service.title}</span>
+                <span>支援内容を見る →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <aside
+        class="editorial-cta service-cta work-detail-next__cta"
+        aria-labelledby="work-detail-cta-title"
+      >
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="work-detail-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href={contactHref}>
+          同じような基盤を相談する
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <section
+    id="work-resources"
+    class="page-section work-detail-resources"
+    aria-labelledby="work-resources-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">技術資料 / 05</p>
+          <h2 id="work-resources-title">{data.resourcesTitle}</h2>
+        </div>
+        <p>{data.resourcesLead}</p>
+      </header>
+      <div class="detail-resource-list">
+        {
+          data.resources.map((resource, index) => (
+            <a class="detail-resource" href={resource.href}>
+              <p class="editorial-index">
+                Note {String(index + 1).padStart(2, "0")}
+              </p>
+              <div>
+                <h3>{resource.title}</h3>
+                <p>{resource.description}</p>
+              </div>
+              <span>技術資料を読む ↗</span>
+            </a>
+          ))
+        }
+      </div>
+      <div class="work-detail-external">
+        <a class="editorial-link" href={data.externalUrl}>
+          Acecore公式サイトを見る
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

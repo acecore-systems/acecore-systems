@@ -124,6 +124,12 @@ collections:
             widget: list
             fields:
               - { name: id, label: ID, widget: string }
+              - {
+                  name: detailUrl,
+                  label: 詳細ページURL,
+                  widget: string,
+                  required: false,
+                }
               - { name: title, label: 見出し, widget: string }
               - { name: body, label: 本文, widget: text }
               - {
@@ -151,12 +157,18 @@ collections:
             name: items
             widget: list
             fields:
+              - {
+                  name: key,
+                  label: 料金キー,
+                  widget: string,
+                  hint: サービス詳細から参照されるため、公開後は変更しないでください。,
+                }
               - { name: label, label: ラベル, widget: string }
               - { name: price, label: 料金, widget: string }
               - { name: note, label: 補足, widget: text }
               - {
                   name: detailUrl,
-                  label: 技術背景・実装例のURL,
+                  label: 支援内容の詳細URL,
                   widget: string,
                   required: false,
                 }
@@ -238,6 +250,12 @@ collections:
                   widget: string,
                   required: false,
                 }
+              - {
+                  name: detailUrl,
+                  label: 詳細ページURL,
+                  widget: string,
+                  required: false,
+                }
       - name: contact
         label: お問い合わせ
         file: src/data/contact.json
@@ -267,3 +285,141 @@ collections:
             fields:
               - { name: title, label: 見出し, widget: string }
               - { name: body, label: 本文, widget: text }
+  - name: service_details
+    label: サービス詳細
+    label_singular: サービス詳細
+    folder: src/data/service-details
+    create: false
+    extension: json
+    format: json
+    identifier_field: title
+    summary: "{{title}}"
+    fields:
+      - { name: title, label: ページ名, widget: string }
+      - { name: description, label: SEO説明, widget: text }
+      - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
+      - { name: heroTitle, label: ヒーロータイトル, widget: string }
+      - { name: heroLead, label: ヒーローリード, widget: text }
+      - { name: indexSummary, label: 一覧用説明, widget: text }
+      - label: 一覧用トピック
+        name: indexTopics
+        widget: list
+        field: { name: item, label: 項目, widget: string }
+      - { name: introTitle, label: 導入見出し, widget: string }
+      - { name: introBody, label: 導入本文, widget: text }
+      - label: よくある課題
+        name: challenges
+        widget: list
+        fields:
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+      - { name: offeringsTitle, label: 提供範囲見出し, widget: string }
+      - { name: offeringsLead, label: 提供範囲説明, widget: text }
+      - label: 提供項目
+        name: offerings
+        widget: list
+        fields:
+          - {
+              name: id,
+              label: アンカーID,
+              widget: string,
+              hint: 料金ページから参照されるため、公開後は変更しないでください。,
+            }
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+          - label: 含まれる内容
+            name: includes
+            widget: list
+            field: { name: item, label: 項目, widget: string }
+          - label: 料金キー
+            name: pricingKeys
+            widget: list
+            hint: 料金ページの料金キーを指定します。
+            field: { name: key, label: キー, widget: string }
+          - {
+              name: priceNote,
+              label: 料金補足,
+              widget: string,
+              required: false,
+            }
+      - { name: processTitle, label: 進め方見出し, widget: string }
+      - { name: processLead, label: 進め方説明, widget: text }
+      - label: 進め方
+        name: process
+        widget: list
+        fields:
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+      - { name: resourcesTitle, label: 技術資料見出し, widget: string }
+      - { name: resourcesLead, label: 技術資料説明, widget: text }
+      - label: 技術資料
+        name: resources
+        widget: list
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: href, label: URL, widget: string }
+      - { name: ctaTitle, label: CTA見出し, widget: string }
+      - { name: ctaBody, label: CTA本文, widget: text }
+  - name: work_details
+    label: 実績詳細
+    label_singular: 実績詳細
+    folder: src/data/work-details
+    create: false
+    extension: json
+    format: json
+    identifier_field: title
+    summary: "{{title}}"
+    fields:
+      - { name: title, label: ページ名, widget: string }
+      - { name: description, label: SEO説明, widget: text }
+      - { name: category, label: カテゴリ, widget: string }
+      - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
+      - { name: heroTitle, label: ヒーロータイトル, widget: string }
+      - { name: heroLead, label: ヒーローリード, widget: text }
+      - { name: overviewTitle, label: 概要見出し, widget: string }
+      - { name: overviewBody, label: 概要本文, widget: text }
+      - label: 基本情報
+        name: facts
+        widget: list
+        fields:
+          - { name: label, label: 項目名, widget: string }
+          - { name: value, label: 内容, widget: string }
+      - { name: outcomesTitle, label: 実現した状態見出し, widget: string }
+      - label: 実現した状態
+        name: outcomes
+        widget: list
+        fields:
+          - { name: label, label: 区分, widget: string }
+          - { name: body, label: 内容, widget: text }
+      - label: 課題・方針
+        name: story
+        widget: list
+        fields:
+          - { name: label, label: 区分, widget: string }
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+      - { name: scopeTitle, label: 対応範囲見出し, widget: string }
+      - { name: scopeLead, label: 対応範囲説明, widget: text }
+      - label: 対応範囲
+        name: scope
+        widget: list
+        fields:
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+          - label: 対応項目
+            name: items
+            widget: list
+            field: { name: item, label: 項目, widget: string }
+      - { name: resourcesTitle, label: 技術資料見出し, widget: string }
+      - { name: resourcesLead, label: 技術資料説明, widget: text }
+      - label: 技術資料
+        name: resources
+        widget: list
+        fields:
+          - { name: title, label: タイトル, widget: string }
+          - { name: description, label: 説明, widget: text }
+          - { name: href, label: URL, widget: string }
+      - { name: externalUrl, label: 関連サイトURL, widget: string }
+      - { name: ctaTitle, label: CTA見出し, widget: string }
+      - { name: ctaBody, label: CTA本文, widget: text }

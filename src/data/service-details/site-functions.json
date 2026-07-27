@@ -1,0 +1,162 @@
+{
+  "title": "サイト機能追加",
+  "description": "既存のWebサイトを活かしながら、CMS、問い合わせAI、コメント、サイト内検索、フォーム連携、多言語運用など、必要な機能を段階的に追加するAcecore Systemsの支援内容です。",
+  "heroEyebrow": "Site functions / 機能追加",
+  "heroTitle": "いまのサイトを活かしながら、\n必要な機能だけを足す。",
+  "heroLead": "全面リニューアルを前提にせず、更新、検索、問い合わせ、発信の詰まりを見つけ、既存構成に合う方法で機能を追加します。",
+  "indexSummary": "CMS、AI、検索、コメント、フォーム連携などを、既存サイトの構成に合わせて追加します。",
+  "indexTopics": ["CMS・更新", "AI・コメント", "検索・発信", "フォーム連携"],
+  "introTitle": "機能を増やすことより、運用が続くことを優先します。",
+  "introBody": "便利な機能でも、更新担当者が扱えない、公開後に直せない、外部サービスが増えすぎる状態では定着しません。現在のサイト、更新方法、問い合わせ対応、公開フローを確認し、必要な機能と運用ルールを一緒に設計します。",
+  "challenges": [
+    {
+      "title": "更新のたびに開発作業が必要",
+      "body": "固定ページや告知を自分たちで直せず、小さな変更にも時間がかかっている。"
+    },
+    {
+      "title": "必要な情報へたどり着きにくい",
+      "body": "記事やページが増えた一方で、検索、分類、関連記事などの導線が不足している。"
+    },
+    {
+      "title": "問い合わせ前の文脈が途切れる",
+      "body": "サービス説明からフォームへ移ると、何について相談したかったのかが引き継がれない。"
+    }
+  ],
+  "offeringsTitle": "追加できる機能",
+  "offeringsLead": "必要な項目だけを選び、既存サイトの構成と運用体制に合わせて組み合わせます。",
+  "offerings": [
+    {
+      "id": "cms",
+      "title": "CMS・更新基盤",
+      "body": "固定ページ、記事、告知、料金、設定項目など、更新したい範囲を整理して編集画面を用意します。",
+      "includes": [
+        "編集対象と権限の整理",
+        "画像アップロードと入力項目の設計",
+        "GitHubを使った確認・公開フロー"
+      ],
+      "pricingKeys": ["cms"],
+      "priceNote": ""
+    },
+    {
+      "id": "ai-chat",
+      "title": "問い合わせAIチャット",
+      "body": "サイト内情報をもとに案内し、回答できない内容は正式な問い合わせへつなぐ補助導線を構築します。",
+      "includes": [
+        "回答範囲と案内ルールの設計",
+        "Origin確認とレート制限",
+        "安全なリンク表示と問い合わせ導線"
+      ],
+      "pricingKeys": ["inquiry-ai"],
+      "priceNote": ""
+    },
+    {
+      "id": "comments",
+      "title": "コメント・投稿機能",
+      "body": "Cloudflare Pages Functions、D1、Turnstileなどを使い、投稿、保存、スパム対策、削除運用を整えます。",
+      "includes": [
+        "投稿APIと保存先の設計",
+        "スパム・連続投稿への対策",
+        "承認や削除を含む運用方針"
+      ],
+      "pricingKeys": ["blog-comments"],
+      "priceNote": ""
+    },
+    {
+      "id": "content-platform",
+      "title": "記事・多言語発信基盤",
+      "body": "記事一覧、詳細、タグ、関連記事、RSS、多言語ページなど、継続発信に必要な構造を整えます。",
+      "includes": [
+        "記事モデルと公開フロー",
+        "関連記事・RSS・サイトマップの生成",
+        "翻訳PRと多言語URLの設計"
+      ],
+      "pricingKeys": ["content-platform", "multilingual-content"],
+      "priceNote": ""
+    },
+    {
+      "id": "search",
+      "title": "サイト内検索",
+      "body": "静的サイトにも導入しやすいPagefindなどを使い、増えた情報を見つけられる検索導線を追加します。",
+      "includes": [
+        "検索対象と除外範囲の整理",
+        "検索画面とURLパラメータ",
+        "ビルド・キャッシュ設定"
+      ],
+      "pricingKeys": ["site-search"],
+      "priceNote": ""
+    },
+    {
+      "id": "forms",
+      "title": "CTA・フォーム連携",
+      "body": "閲覧していたサービスや相談種別、必要な情報を問い合わせフォームへ引き継ぎます。",
+      "includes": [
+        "URLパラメータの契約",
+        "相談種別と件名の初期入力",
+        "流入元を確認できる計測項目"
+      ],
+      "pricingKeys": ["form-prefill"],
+      "priceNote": ""
+    }
+  ],
+  "processTitle": "既存構成を確認してから、小さく追加します。",
+  "processLead": "技術だけで決めず、更新する人、確認する人、公開後に対応する人まで含めて進めます。",
+  "process": [
+    {
+      "title": "現状確認",
+      "body": "サイト構成、ホスティング、更新方法、利用中の外部サービスを確認します。"
+    },
+    {
+      "title": "範囲設計",
+      "body": "必要な機能、扱うデータ、権限、公開前後の確認方法を決めます。"
+    },
+    {
+      "title": "実装・確認",
+      "body": "確認できる単位で実装し、画面表示、入力内容、エラー時の動作を一緒に確認します。"
+    },
+    {
+      "title": "公開・引き継ぎ",
+      "body": "運用手順を共有し、必要に応じて公開後の修正や追加改善を続けます。"
+    }
+  ],
+  "resourcesTitle": "設計の背景を、技術資料で確認できます。",
+  "resourcesLead": "詳細な実装判断はAcecore公式サイトの技術記事に残し、このページでは相談できる範囲を整理しています。",
+  "resources": [
+    {
+      "title": "Astroサイトに問い合わせAIチャットを組み込む技術設計",
+      "description": "API境界、回答範囲、Origin確認、レート制限、安全なリンク表示を整理しています。",
+      "href": "https://acecore.net/blog/astro-ai-contact-chat/"
+    },
+    {
+      "title": "CloudflareだけでAstroブログにコメント機能を作る方法",
+      "description": "Pages Functions、D1、Turnstileを使った投稿・保存・運用の設計記録です。",
+      "href": "https://acecore.net/blog/cloudflare-only-blog-comments/"
+    },
+    {
+      "title": "Sveltia CMS導入ガイド",
+      "description": "編集対象、画像、GitHub backend、確認・公開フローの考え方をまとめています。",
+      "href": "https://acecore.net/blog/cms-selection-and-turnstile/"
+    },
+    {
+      "title": "Sveltia CMSで多言語ブログを運用する方法",
+      "description": "日本語の原稿から翻訳PR、hreflang、RSS、サイトマップまでを扱います。",
+      "href": "https://acecore.net/blog/copilot-translation-pipeline/"
+    },
+    {
+      "title": "Astroサイトの多言語アーキテクチャ",
+      "description": "UI翻訳、記事翻訳、言語別URL、検索向け情報を一つの構成として整理した記録です。",
+      "href": "https://acecore.net/blog/astro-i18n-blog-translation/"
+    },
+    {
+      "title": "Astro View Transitionsの落とし穴と解決策",
+      "description": "Pagefind検索を含む、静的サイトのUXとコード品質の改善例です。",
+      "href": "https://acecore.net/blog/astro-ux-and-code-quality/"
+    },
+    {
+      "title": "サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計",
+      "description": "相談種別、件名、流入元をフォームへ渡すための実装契約を整理しています。",
+      "href": "https://acecore.net/blog/service-cta-contact-prefill/"
+    }
+  ],
+  "ctaTitle": "いまのサイトに足したい機能を相談する",
+  "ctaBody": "サイトURLと、更新・検索・問い合わせで困っていることをお知らせください。"
+}

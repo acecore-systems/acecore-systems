@@ -1,11 +1,12 @@
 {
   "title": "実績",
-  "description": "Acecore Systemsが公開できる範囲で紹介する、問い合わせ導線改善、CMS・検索・構造化データ、サーバー運用改善などの取り組みです。",
-  "heroTitle": "公開できる範囲で、\n取り組みを紹介します。",
-  "heroLead": "業務システムは非公開案件が多いため、公開可能な自社・関連プロジェクトを中心に掲載しています。",
+  "description": "Acecore Systemsによる、Webサイト制作・改善、CMS、検索、サーバー運用などの事例を紹介します。",
+  "heroTitle": "取り組みと成果を\n紹介します。",
+  "heroLead": "Webサイトの制作・改善、CMS、検索、サーバー運用など、取り組みの背景と実装内容を紹介します。",
   "cases": [
     {
       "id": "case-acecore-contact",
+      "detailUrl": "",
       "title": "Acecore公式サイトの問い合わせ導線改善",
       "category": "フォーム・AI導線・CMS",
       "summary": "サービス選定、見積り相談、問い合わせ前の不安を減らすため、固定ページ、FAQ、AIチャット、CMS管理項目を整理しました。",
@@ -18,6 +19,7 @@
     },
     {
       "id": "case-acecore-site-platform",
+      "detailUrl": "/works/acecore-site-platform/",
       "title": "Acecore公式サイトの機能追加・運用基盤",
       "category": "CMS・検索・セキュリティ・パフォーマンス",
       "summary": "静的サイトにCMS、記事基盤、サイト内検索、構造化データ、CSP、アクセシビリティ改善、表示速度改善を段階的に追加しました。",
@@ -30,6 +32,7 @@
     },
     {
       "id": "case-aceserver",
+      "detailUrl": "",
       "title": "Aceserver運用で得た安定化・監視の知見",
       "category": "サーバー運用・コミュニティ基盤",
       "summary": "Minecraft公開サーバーの運用を通じて、接続安定性、監視、バックアップ、案内導線を継続的に改善しています。",
@@ -42,6 +45,7 @@
     },
     {
       "id": "case-aceserver-portal",
+      "detailUrl": "",
       "title": "エースサーバーポータル制作",
       "category": "Web制作・コミュニティポータル・CMS",
       "summary": "Minecraft無料公開サーバー「エースサーバー」の参加案内、動画、ワールドマップ、Wiki、Discordへの導線を一つの入口に整理しました。",
@@ -53,7 +57,21 @@
       "externalUrl": "https://asv.acecore.net/"
     },
     {
+      "id": "case-cherry-homepage",
+      "detailUrl": "",
+      "title": "Cherry英語教室サイトのリニューアル",
+      "category": "Web制作・CMS・サイト内検索",
+      "summary": "教室案内、コース、お知らせ、ブログ、イベント、FAQを一つのサイトへ整理し、既存サイトをAstro構成へリニューアルしました。",
+      "challenge": "既存サイトとブログの情報を引き継ぎながら、訪問者がコースや体験レッスンへ進みやすく、更新も継続できる構成が必要でした。",
+      "proposal": "Astro、UnoCSS、Sveltia CMS、Pagefindを組み合わせ、既存記事の移行、旧URLのリダイレクト、サイト内検索、CMS更新を一つの運用基盤にまとめました。",
+      "result": "教室案内から体験レッスン、日々のお知らせや過去記事まで探しやすくなり、CMSの変更をPRで確認して公開できる運用へ移行しました。",
+      "image": "/images/works/cherry-homepage.webp",
+      "imageAlt": "Cherry英語教室ホームページのトップページ",
+      "externalUrl": "https://cherry.acecore.net/"
+    },
+    {
       "id": "case-hatt-homepage",
+      "detailUrl": "",
       "title": "Hattのホームページ制作",
       "category": "Web制作・CMS・サイト内検索",
       "summary": "絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめ、創作活動を継続して発信できる個人サイトとして設計しました。",

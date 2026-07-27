@@ -1,0 +1,135 @@
+{
+  "title": "サイト品質改善",
+  "description": "SEO・構造化データ、表示速度、アクセシビリティ、セキュリティヘッダーを横断して点検し、Webサイトを公開後も改善できる状態へ整えるAcecore Systemsの支援内容です。",
+  "heroEyebrow": "Site quality / 品質改善",
+  "heroTitle": "速さ、伝わりやすさ、安全性を、\n別々にしない。",
+  "heroLead": "検索エンジン、利用者、運用担当者のどれか一つだけに偏らず、現在の構成と計測結果を確認して改善の優先順位を決めます。",
+  "indexSummary": "SEO、速度、アクセシビリティ、セキュリティを横断し、直す順序まで整理します。",
+  "indexTopics": ["SEO", "表示速度", "アクセシビリティ", "CSP・配信設定"],
+  "introTitle": "点数を上げるだけでなく、直し続けられる状態へ。",
+  "introBody": "品質改善は、一度の診断や設定追加で終わりません。ページの役割、利用している計測や外部スクリプト、更新頻度、公開フローを確認し、影響範囲と確認方法を残しながら段階的に修正します。",
+  "challenges": [
+    {
+      "title": "検索結果で内容が正しく伝わらない",
+      "body": "タイトル、description、canonical、構造化データ、サイトマップの役割が整理されていない。"
+    },
+    {
+      "title": "表示が遅いが、原因を切り分けられない",
+      "body": "画像、CSS、フォント、解析タグ、キャッシュなど、複数の要因が重なっている。"
+    },
+    {
+      "title": "修正が別の使いにくさを生んでいる",
+      "body": "見た目の調整でフォーカスやコントラストが崩れるなど、品質項目を個別に扱っている。"
+    }
+  ],
+  "offeringsTitle": "横断して確認する品質領域",
+  "offeringsLead": "診断だけ、特定項目の修正、公開前の総合確認など、必要な範囲に合わせて実施します。",
+  "offerings": [
+    {
+      "id": "seo",
+      "title": "SEO・構造化データ",
+      "body": "ページごとの役割を整理し、検索結果やSNS等で共有された際に必要な情報が一貫するように整えます。",
+      "includes": [
+        "title・description・canonical・OGP",
+        "Organization・ServiceなどのJSON-LD",
+        "サイトマップ・RSS・canonicalの整合確認"
+      ],
+      "pricingKeys": ["seo"],
+      "priceNote": ""
+    },
+    {
+      "id": "performance",
+      "title": "表示速度・配信最適化",
+      "body": "実際のページと計測結果から、初期表示を妨げている要素を切り分け、影響の大きい箇所から修正します。",
+      "includes": [
+        "画像形式・サイズ・遅延読み込み",
+        "CSS・フォント・外部スクリプト",
+        "キャッシュと配信設定"
+      ],
+      "pricingKeys": ["performance"],
+      "priceNote": ""
+    },
+    {
+      "id": "accessibility",
+      "title": "アクセシビリティ",
+      "body": "キーボード操作、読み上げ、コントラスト、フォームの案内などを点検し、利用を妨げる問題を修正します。",
+      "includes": [
+        "見出し構造・ランドマーク・aria属性",
+        "フォーカス表示とキーボード操作",
+        "フォーム検証とエラー案内"
+      ],
+      "pricingKeys": ["accessibility"],
+      "priceNote": ""
+    },
+    {
+      "id": "security",
+      "title": "セキュリティヘッダー・CSP",
+      "body": "公開に必要な外部接続を洗い出し、管理画面を含むページ単位の配信設定とCSPを整理します。",
+      "includes": [
+        "CSPとセキュリティヘッダー",
+        "管理画面のnoindex・キャッシュ設定",
+        "外部スクリプトと接続先の棚卸し"
+      ],
+      "pricingKeys": ["security-headers"],
+      "priceNote": ""
+    },
+    {
+      "id": "verification",
+      "title": "公開前後の確認設計",
+      "body": "ビルド成功だけで終わらせず、主要画面、モバイル、リンク、フォーム、公開環境の差を確認できる手順を整えます。",
+      "includes": [
+        "代表ルートと画面幅の確認",
+        "リンク・フォーム・コンソールの点検",
+        "Previewと本番の差分確認"
+      ],
+      "pricingKeys": ["discovery"],
+      "priceNote": "確認対象と必要な検証範囲を伺って見積ります。"
+    }
+  ],
+  "processTitle": "計測し、影響を読み、優先順位を決めます。",
+  "processLead": "複数の品質項目が競合する場合もあるため、変更理由と確認結果を残しながら進めます。",
+  "process": [
+    {
+      "title": "基準整理",
+      "body": "重要なページ、利用者、事業上の目的、現在気になっている指標を確認します。"
+    },
+    {
+      "title": "横断点検",
+      "body": "コード、生成HTML、計測結果、実際の操作から問題と影響範囲を整理します。"
+    },
+    {
+      "title": "優先修正",
+      "body": "効果とリスクを見ながら、影響の大きい項目から段階的に修正します。"
+    },
+    {
+      "title": "再確認",
+      "body": "デスクトップとモバイル、Previewと本番で確認し、今後の点検方法を共有します。"
+    }
+  ],
+  "resourcesTitle": "改善項目ごとの技術判断を公開しています。",
+  "resourcesLead": "個別施策の背景や確認点は、Acecore公式サイトの技術記事で詳しく確認できます。",
+  "resources": [
+    {
+      "title": "Astroサイトに構造化データとOGPを実装するSEO改善ガイド",
+      "description": "JSON-LD、OGP、サイトマップ、RSSの役割と実装例をまとめています。",
+      "href": "https://acecore.net/blog/astro-seo-and-structured-data/"
+    },
+    {
+      "title": "Astroサイトの表示速度を改善する実践テクニック",
+      "description": "CSS、フォント、画像、外部スクリプト、キャッシュの改善例を扱います。",
+      "href": "https://acecore.net/blog/astro-performance-tuning/"
+    },
+    {
+      "title": "Astroサイトのアクセシビリティ改善ガイド",
+      "description": "aria属性、コントラスト、フォーカス、フォームなどの確認点を整理しています。",
+      "href": "https://acecore.net/blog/astro-accessibility-guide/"
+    },
+    {
+      "title": "Cloudflare Pagesで実現するセキュアな静的サイト配信",
+      "description": "セキュリティヘッダー、CSP、キャッシュ、Pagesの配信設定を扱います。",
+      "href": "https://acecore.net/blog/cloudflare-pages-security/"
+    }
+  ],
+  "ctaTitle": "サイト品質の優先順位を相談する",
+  "ctaBody": "対象URLと、検索・速度・操作・安全性で気になっていることをお知らせください。"
+}

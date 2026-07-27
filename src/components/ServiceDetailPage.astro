@@ -1,0 +1,305 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+import pricing from "../data/pricing.json";
+import siteFunctions from "../data/service-details/site-functions.json";
+import siteQuality from "../data/service-details/site-quality.json";
+import operations from "../data/service-details/operations.json";
+
+type ServiceDetail = typeof siteFunctions;
+
+interface Props {
+  data: ServiceDetail;
+  canonicalPath: string;
+  serviceKey: string;
+}
+
+const { data, canonicalPath, serviceKey } = Astro.props;
+const serviceIndex = [
+  {
+    href: "/services/site-functions/",
+    data: siteFunctions,
+  },
+  {
+    href: "/services/site-quality/",
+    data: siteQuality,
+  },
+  {
+    href: "/services/operations/",
+    data: operations,
+  },
+];
+const relatedServices = serviceIndex.filter(
+  (service) => service.href !== canonicalPath,
+);
+const pageUrl = new URL(canonicalPath, site.siteUrl).href;
+const serviceEntityId = `${pageUrl}#detail-service`;
+const organizationId = `${new URL("/", site.acecoreUrl).href}#organization`;
+const pricingByKey = new Map(pricing.items.map((item) => [item.key, item]));
+const resolvePricing = (key: string) => {
+  const item = pricingByKey.get(key);
+  if (!item) {
+    throw new Error(`Unknown pricing key: ${key}`);
+  }
+  return item;
+};
+const offerings = data.offerings.map((offering) => ({
+  ...offering,
+  pricing: offering.pricingKeys.map(resolvePricing),
+}));
+const contactHref = `/contact/?${new URLSearchParams({
+  category: "service",
+  service: serviceKey,
+  from: `systems-${serviceKey}`,
+  entry: "service-detail-cta",
+}).toString()}`;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": serviceEntityId,
+    name: data.title,
+    url: pageUrl,
+    description: data.description,
+    serviceType: data.offerings.map((offering) => offering.title),
+    areaServed: "JP",
+    provider: { "@id": organizationId },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "ホーム",
+        item: new URL("/", site.siteUrl).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "サービス",
+        item: new URL("/services/", site.siteUrl).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.title,
+        item: pageUrl,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonicalPath}
+  jsonLd={jsonLd}
+  mainEntityId={serviceEntityId}
+>
+  <section class="page-hero page-hero--detail">
+    <div class="container page-hero__inner">
+      <nav class="breadcrumb" aria-label="パンくず">
+        <ol>
+          <li><a href="/">ホーム</a></li>
+          <li><a href="/services/">サービス</a></li>
+          <li aria-current="page">{data.title}</li>
+        </ol>
+      </nav>
+      <p class="page-eyebrow">{data.heroEyebrow}</p>
+      <h1 class="page-title">{data.heroTitle}</h1>
+      <p class="page-lead">{data.heroLead}</p>
+    </div>
+  </section>
+
+  <section
+    class="page-section detail-introduction"
+    aria-labelledby="detail-introduction-title"
+  >
+    <div class="container detail-introduction__layout">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Starting point / 01</p>
+        <h2 id="detail-introduction-title">{data.introTitle}</h2>
+        <p>{data.introBody}</p>
+      </header>
+      <div class="detail-challenges" aria-label="よくある課題">
+        {
+          data.challenges.map((challenge, index) => (
+            <article class="detail-challenge">
+              <p class="editorial-index">
+                Issue {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{challenge.title}</h3>
+              <p>{challenge.body}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="detail-price-note">
+        表示金額は税込の目安です。外部サービス利用料、ライセンス費、サーバー費、正式な要件確定後の変動は別途確認します。
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="detail-offerings-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Scope / 02</p>
+          <h2 id="detail-offerings-title">{data.offeringsTitle}</h2>
+        </div>
+        <p>{data.offeringsLead}</p>
+      </header>
+      <div class="detail-offering-list">
+        {
+          offerings.map((offering, index) => (
+            <article class="detail-offering" id={offering.id}>
+              <header class="detail-offering__header">
+                <p class="editorial-index">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3>{offering.title}</h3>
+              </header>
+              <div class="detail-offering__body">
+                <p>{offering.body}</p>
+                <ul class="service-points">
+                  {offering.includes.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div class="detail-offering__price">
+                <div class="detail-offering__price-copy">
+                  {
+                    offering.pricing.map((item) => (
+                      <p>
+                        {item.label} {item.price}
+                      </p>
+                    ))
+                  }
+                  {
+                    offering.priceNote && (
+                      <p class="detail-offering__price-note">
+                        {offering.priceNote}
+                      </p>
+                    )
+                  }
+                </div>
+                <a href="/pricing/">料金一覧を見る</a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section"
+    aria-labelledby="detail-process-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Process / 03</p>
+          <h2 id="detail-process-title">{data.processTitle}</h2>
+        </div>
+        <p>{data.processLead}</p>
+      </header>
+      <ol class="service-process">
+        {
+          data.process.map((step, index) => (
+            <li class="service-process__step">
+              <p class="editorial-index">
+                Step {String(index + 1).padStart(2, "0")}
+              </p>
+              <div class="service-process__content">
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="detail-resources-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Technical notes / 04</p>
+          <h2 id="detail-resources-title">{data.resourcesTitle}</h2>
+        </div>
+        <p>{data.resourcesLead}</p>
+      </header>
+      <div class="detail-resource-list">
+        {
+          data.resources.map((resource, index) => (
+            <a class="detail-resource" href={resource.href}>
+              <p class="editorial-index">
+                Note {String(index + 1).padStart(2, "0")}
+              </p>
+              <div>
+                <h3>{resource.title}</h3>
+                <p>{resource.description}</p>
+              </div>
+              <span>技術資料を読む ↗</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section detail-related-section"
+    aria-labelledby="detail-related-title"
+  >
+    <div class="container">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Related / 05</p>
+        <h2 id="detail-related-title">隣接する支援内容</h2>
+      </header>
+      <div class="detail-related-list">
+        {
+          relatedServices.map((service) => (
+            <a class="detail-related" href={service.href}>
+              <p class="editorial-eyebrow">{service.data.heroEyebrow}</p>
+              <h3>{service.data.title}</h3>
+              <p>{service.data.indexSummary}</p>
+              <span>支援内容を見る</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside
+        class="editorial-cta service-cta"
+        aria-labelledby="detail-cta-title"
+      >
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="detail-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href={contactHref}>
+          この内容を相談する
+        </a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

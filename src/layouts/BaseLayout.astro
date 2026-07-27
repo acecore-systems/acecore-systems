@@ -12,6 +12,7 @@ interface Props {
   canonical?: string | null;
   bodyClass?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  mainEntityId?: string;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   canonical: canonicalInput = Astro.url.pathname,
   bodyClass,
   jsonLd: pageJsonLd,
+  mainEntityId,
 } = Astro.props;
 const canonical =
   canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl);
@@ -85,6 +87,7 @@ const baseJsonLd = [
     inLanguage: "ja",
     isPartOf: { "@id": websiteId },
     about: { "@id": serviceId },
+    ...(mainEntityId ? { mainEntity: { "@id": mainEntityId } } : {}),
     publisher: { "@id": organizationId },
   },
 ];
