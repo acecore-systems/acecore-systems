@@ -7,25 +7,30 @@
     "node": ">=24.18.0"
   },
   "scripts": {
+    "predev": "node scripts/write-cms-runtime-config.mjs",
     "dev": "astro dev",
-    "prebuild": "npm run validate:content",
+    "prebuild": "node scripts/write-cms-runtime-config.mjs && npm run validate:content && npm run test:cms && npm run typecheck:functions",
     "build": "astro build",
     "postbuild": "npm run validate:seo",
     "preview": "astro preview",
     "validate:content": "node scripts/validate-content.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
+    "test:cms": "node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs",
+    "typecheck:functions": "tsc --project tsconfig.functions.json",
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name acecore-systems",
     "format:check": "prettier . --check"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.1.3",
+    "graphql": "^17.0.2",
     "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260726.1",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^7.0.2",
     "wrangler": "^4.114.0"
   },
   "overrides": {

@@ -3168,6 +3168,11 @@ a {
     border-left: 0;
   }
 
+  .advisor-use-case:not(:nth-child(2n + 1)),
+  .advisor-process__step:not(:nth-child(2n + 1)) {
+    border-left: 0;
+  }
+
   .advisor-use-case:nth-child(n + 2),
   .advisor-process__step:nth-child(n + 2) {
     border-top: 1px solid var(--line);
