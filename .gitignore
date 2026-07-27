@@ -3,3 +3,8 @@ dist/
 .astro/
 .wrangler/
 .DS_Store
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+/public/admin/runtime-config.js

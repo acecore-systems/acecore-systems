@@ -55,3 +55,5 @@ npm run preview
 ## CMS
 
 Sveltia CMS は `/admin/` から利用します。CMS では固定ページ文言、実績、サイト設定、画像アップロードを管理します。
+
+保存時に `main` へ直接commitせず、Pages Functionsが `cms/systems/*` の作業branchとPull Requestを作成します。変更はCIとCloudflare Pages previewを確認してからmergeし、作業branchを削除します。認証境界、管理対象path、検証手順は [CMS の安全な書き込み運用](docs/cms-write-workflow.md) を参照してください。
