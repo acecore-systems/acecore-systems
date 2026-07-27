@@ -161,6 +161,20 @@ for (const item of [...services.services, ...works.cases]) {
   }
 }
 
+for (const [index, work] of works.cases.entries()) {
+  if (!work.externalUrl) continue;
+  requireText(
+    work.externalLabel,
+    `src/data/works.json: cases[${index}].externalLabel`,
+  );
+  const externalUrl = new URL(work.externalUrl);
+  assert.equal(
+    externalUrl.protocol,
+    "https:",
+    `${work.externalUrl}: HTTPS required`,
+  );
+}
+
 for (const item of pricing.items) {
   if (!item.detailUrl?.startsWith("/services/")) continue;
   const url = new URL(item.detailUrl, "https://systems.acecore.net");
