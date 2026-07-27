@@ -29,7 +29,10 @@ import data from "../data/works.json";
         {
           data.cases.map((work, index) => (
             <article
-              class="work-case"
+              class:list={[
+                "work-case",
+                !work.image && "work-case--without-media",
+              ]}
               id={work.id}
               aria-labelledby={`${work.id}-title`}
             >
