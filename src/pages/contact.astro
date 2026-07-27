@@ -46,20 +46,25 @@ import data from "../data/contact.json";
         action={site.contactFormAction}
         method="post"
       >
-        <input
-          type="hidden"
-          name="_subject"
-          value="Acecore Systems へのお問い合わせ"
-        />
+        <input type="hidden" name="locale" value="ja" />
         <input type="hidden" name="source" value="systems.acecore.net" />
         <input id="contact-service" type="hidden" name="service" value="" />
         <input id="contact-from" type="hidden" name="from" value="" />
         <input id="contact-entry" type="hidden" name="entry" value="" />
+        <div class="contact-honeypot" aria-hidden="true">
+          <label for="company-website">会社Webサイト</label>
+          <input
+            id="company-website"
+            name="company_website"
+            autocomplete="off"
+            tabindex="-1"
+          />
+        </div>
         <div class="contact-field">
           <label for="category"
             >お問い合わせ種別 <span class="field-required">必須</span></label
           >
-          <select id="category" name="category" required>
+          <select id="category" name="お問い合わせ種別" required>
             <option value="">選択してください</option>
             <option>サービス全般について</option>
             <option>業務システム開発について</option>
@@ -73,7 +78,7 @@ import data from "../data/contact.json";
           <label for="name"
             >お名前 <span class="field-required">必須</span></label
           >
-          <input id="name" name="name" autocomplete="name" required />
+          <input id="name" name="お名前" autocomplete="name" required />
         </div>
         <div class="contact-field">
           <label for="email"
@@ -81,7 +86,7 @@ import data from "../data/contact.json";
           >
           <input
             id="email"
-            name="email"
+            name="メールアドレス"
             type="email"
             autocomplete="email"
             required
@@ -91,14 +96,34 @@ import data from "../data/contact.json";
           <label for="subject"
             >件名 <span class="field-required">必須</span></label
           >
-          <input id="subject" name="subject" required />
+          <input id="subject" name="件名" required />
         </div>
         <div class="contact-field">
           <label for="message"
             >お問い合わせ内容 <span class="field-required">必須</span></label
           >
-          <textarea id="message" name="message" required></textarea>
+          <textarea id="message" name="お問い合わせ内容" required></textarea>
         </div>
+        <div
+          class="cf-turnstile"
+          data-sitekey={site.turnstileSiteKey}
+          data-theme="light"
+          data-language="ja"
+          data-action="systems-contact"
+          data-cdata="acecore-systems"
+        >
+        </div>
+        <p class="contact-form__note">
+          送信はAcecore共通窓口で受け付けます。送信後はAcecore公式サイトの完了画面へ移動します。
+        </p>
+        <p
+          id="contact-form-status"
+          class="contact-form__status"
+          role="alert"
+          hidden
+        >
+          送信前の確認が完了していません。少し待ってからもう一度お試しください。
+        </p>
         <button
           class="editorial-link editorial-link--primary contact-submit"
           type="submit"
@@ -113,6 +138,10 @@ import data from "../data/contact.json";
     const form = document.querySelector<HTMLFormElement>("#contact-form");
 
     if (form) {
+      const status = form.querySelector<HTMLParagraphElement>(
+        "#contact-form-status",
+      );
+      const submit = form.querySelector<HTMLButtonElement>(".contact-submit");
       const params = new URLSearchParams(window.location.search);
       const readParam = (name: string) =>
         (params.get(name) || "").trim().slice(0, 200);
@@ -236,6 +265,29 @@ import data from "../data/contact.json";
       if (serviceInput) serviceInput.value = serviceKey;
       if (fromInput) fromInput.value = fromValue;
       if (entryInput) entryInput.value = entryValue;
+
+      form.addEventListener("submit", (event) => {
+        const turnstileToken = form.querySelector<HTMLInputElement>(
+          'input[name="cf-turnstile-response"]',
+        )?.value;
+
+        if (!turnstileToken) {
+          event.preventDefault();
+          if (status) status.hidden = false;
+          return;
+        }
+
+        if (status) status.hidden = true;
+        if (submit) {
+          submit.disabled = true;
+          submit.textContent = "送信中…";
+        }
+      });
     }
   </script>
+  <script
+    is:inline
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer></script>
 </BaseLayout>
