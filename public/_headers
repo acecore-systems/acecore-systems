@@ -1,6 +1,14 @@
 /admin/*
   Cache-Control: no-store
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' blob: data: https:; media-src blob:; connect-src 'self' blob: data: https://unpkg.com; frame-src blob:; worker-src blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://github.com; frame-ancestors 'none'
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Permissions-Policy: camera=(), geolocation=(), microphone=(), payment=(), usb=()
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
   X-Robots-Tag: noindex, nofollow
+
+/admin/config.yml
+  Content-Type: application/yaml; charset=utf-8
 
 /404.html
   Cache-Control: no-store
