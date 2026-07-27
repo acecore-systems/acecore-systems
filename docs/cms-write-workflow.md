@@ -1,6 +1,6 @@
 # CMS の安全な書き込み運用
 
-最終確認日: 2026-07-27
+最終確認日: 2026-07-28
 
 ## 構成
 
@@ -93,15 +93,21 @@ npm run build
 git diff --check
 ```
 
-## merge後に必要な外部設定
+## 本番有効化と確認状況
 
-この文書の更新時点では、次の外部設定と本番確認は完了扱いにしません。
-`Build and Format`はCloudflare Pagesとともに`main`のrequired checkへ追加済みです。
+2026-07-28に次の外部設定を完了しました。
 
-1. Systems専用GitHub Appを作成し、callback URLを`https://systems.acecore.net/admin/api/callback`にする。
-2. Appを`acecore-systems/acecore-systems`の1件だけにinstallし、上記3権限と8時間以下のuser token有効期限を確認する。
-3. Cloudflare PagesのProduction環境へ4つの環境変数・secretを設定する。
-4. 本番CMSでJSONと画像を同時に保存し、CMS作業branch、1 commit、1 Pull Request、preview成功を確認する。
-5. Pull Requestをmergeし、GitHub連携による`main`のproduction deployと表示反映を確認する。
-6. repositoryのbranch自動削除を有効化するか運用判断し、有効化しない場合はmerge後にCMS作業branchを削除する。
-7. 確認用データと不要になったCMS作業branchを整理する。
+- 組織所有のSystems専用GitHub Appを作成し、callback URLを`https://systems.acecore.net/admin/api/callback`に設定
+- Appを`acecore-systems/acecore-systems`の1件だけにinstall
+- Contents / Pull requestsをRead and write、MetadataをRead-onlyに限定
+- expiring user tokenを有効化し、Webhookとイベント購読を無効化
+- Cloudflare PagesのProduction環境へ上記4項目を設定し、Preview環境は未設定のまま維持
+- `Build and Format`とCloudflare Pagesを`main`のrequired checkとして設定
+
+コードのmerge後に、次の本番確認と後片付けを行います。
+
+1. 本番の`/admin/`からGitHub App認証を開始できることを確認する。
+2. 本番CMSでJSONと画像を同時に保存し、CMS作業branch、1 commit、1 Pull Request、preview成功を確認する。
+3. 確認用Pull Requestをmergeし、GitHub連携による`main`のproduction deployと表示反映を確認する。
+4. repositoryのbranch自動削除を有効化するか運用判断し、有効化しない場合はmerge後にCMS作業branchを削除する。
+5. 確認用データと不要になったCMS作業branchを整理する。
