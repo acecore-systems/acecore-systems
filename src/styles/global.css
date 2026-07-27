@@ -294,20 +294,7 @@ a {
 
 @media (min-width: 1041px) {
   body.home-page {
-    position: relative;
-  }
-
-  body.home-page::before {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 550px;
-    background: center bottom / cover no-repeat
-      url("/images/quiet-home-surface-v3-exact.webp");
-    content: "";
-    pointer-events: none;
+    --home-header-surface-offset: 96px;
   }
 
   body.home-page .site-header,
@@ -315,8 +302,14 @@ a {
     background: transparent;
   }
 
+  body.home-page .home-hero {
+    overflow: visible;
+  }
+
   body.home-page .home-hero__surface {
-    display: none;
+    inset: calc(0px - var(--home-header-surface-offset)) 0 0;
+    background-image: url("/images/quiet-home-surface-v3-exact.webp");
+    background-position: center bottom;
   }
 
   .nav a {
@@ -488,6 +481,8 @@ a {
 
 .layer-model__visual {
   position: relative;
+  width: 100%;
+  min-width: 0;
   min-height: 372px;
   overflow: hidden;
   aspect-ratio: 1487 / 372;
@@ -634,10 +629,7 @@ a {
       calc(100svh - var(--compact-header-height) - var(--compact-layer-height)),
       454px
     );
-  }
-
-  body.home-page::before {
-    height: calc(var(--compact-header-height) + var(--compact-hero-height));
+    --home-header-surface-offset: var(--compact-header-height);
   }
 
   body.home-page .header-inner {
