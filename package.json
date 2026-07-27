@@ -19,7 +19,7 @@
     "sharp": "^0.35.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260723.1",
+    "@cloudflare/workers-types": "^5.20260726.1",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "wrangler": "^4.114.0"
