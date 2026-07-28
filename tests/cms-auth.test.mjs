@@ -13,8 +13,9 @@ const env = {
   CMS_GITHUB_APP_INSTALLATION_ID: "987654321",
   CMS_OAUTH_STATE_SECRET: "s".repeat(32),
 };
-const installationUrl = `https://api.github.com/user/installations/${env.CMS_GITHUB_APP_INSTALLATION_ID}`;
-const installationRepositoriesUrl = `${installationUrl}/repositories?per_page=100`;
+const installationsUrl =
+  "https://api.github.com/user/installations?per_page=100";
+const installationRepositoriesUrl = `https://api.github.com/user/installations/${env.CMS_GITHUB_APP_INSTALLATION_ID}/repositories?per_page=100`;
 
 afterEach(() => {
   globalThis.fetch = originalFetch;
@@ -114,9 +115,15 @@ test("callbackはstate・PKCE・installation・repositoryを照合してtokenを
       });
     }
 
-    if (url === installationUrl) {
+    if (url === installationsUrl) {
       return jsonResponse({
-        permissions: { contents: "write", metadata: "read" },
+        installations: [
+          {
+            id: Number(env.CMS_GITHUB_APP_INSTALLATION_ID),
+            permissions: { contents: "write", metadata: "read" },
+          },
+        ],
+        total_count: 1,
       });
     }
 
@@ -226,9 +233,15 @@ test("OAuth App tokenや対象外repositoryをcallbackから返さない", async
       });
     }
 
-    if (url === installationUrl) {
+    if (url === installationsUrl) {
       return jsonResponse({
-        permissions: { contents: "write", metadata: "read" },
+        installations: [
+          {
+            id: Number(env.CMS_GITHUB_APP_INSTALLATION_ID),
+            permissions: { contents: "write", metadata: "read" },
+          },
+        ],
+        total_count: 1,
       });
     }
 
@@ -267,20 +280,99 @@ test("Pull requests writeを含むGitHub App権限をcallbackで拒否する", a
       });
     }
 
-    assert.equal(url, installationUrl);
+    assert.equal(url, installationsUrl);
 
     return jsonResponse({
-      permissions: {
-        contents: "write",
-        metadata: "read",
-        pull_requests: "write",
-      },
+      installations: [
+        {
+          id: Number(env.CMS_GITHUB_APP_INSTALLATION_ID),
+          permissions: {
+            contents: "write",
+            metadata: "read",
+            pull_requests: "write",
+          },
+        },
+      ],
+      total_count: 1,
     });
   });
 
   assert.equal(attempt.response.status, 400);
   assert.doesNotMatch(attempt.html, /ghu_overprivileged-token/);
   assert.match(attempt.html, /Contents write以外のwrite権限/);
+});
+
+test("対象外または複数のGitHub App installationをcallbackで拒否する", async () => {
+  for (const installations of [
+    [
+      {
+        id: Number(env.CMS_GITHUB_APP_INSTALLATION_ID) + 1,
+        permissions: { contents: "write", metadata: "read" },
+      },
+    ],
+    [
+      {
+        id: Number(env.CMS_GITHUB_APP_INSTALLATION_ID),
+        permissions: { contents: "write", metadata: "read" },
+      },
+      {
+        id: Number(env.CMS_GITHUB_APP_INSTALLATION_ID) + 1,
+        permissions: { contents: "write", metadata: "read" },
+      },
+    ],
+  ]) {
+    const attempt = await callbackAttempt(async (url) => {
+      if (url === "https://github.com/login/oauth/access_token") {
+        return jsonResponse({
+          access_token: "ghu_wrong-installation-token",
+          expires_in: 3600,
+          refresh_token: "ghr_refresh-token",
+          refresh_token_expires_in: 3600 * 24,
+          scope: "",
+          token_type: "bearer",
+        });
+      }
+
+      assert.equal(url, installationsUrl);
+
+      return jsonResponse({
+        installations,
+        total_count: installations.length,
+      });
+    });
+
+    assert.equal(attempt.response.status, 400);
+    assert.doesNotMatch(attempt.html, /ghu_wrong-installation-token/);
+    assert.match(attempt.html, /installationを利用する権限がありません/);
+  }
+});
+
+test("GitHub App installation一覧の失敗や不正応答をcallbackで拒否する", async () => {
+  for (const response of [
+    jsonResponse({ message: "service unavailable" }, 503),
+    jsonResponse({ installations: [] }),
+  ]) {
+    const attempt = await callbackAttempt(async (url) => {
+      if (url === "https://github.com/login/oauth/access_token") {
+        return jsonResponse({
+          access_token: "ghu_installation-api-failure-token",
+          expires_in: 3600,
+          refresh_token: "ghr_refresh-token",
+          refresh_token_expires_in: 3600 * 24,
+          scope: "",
+          token_type: "bearer",
+        });
+      }
+
+      assert.equal(url, installationsUrl);
+
+      return response;
+    });
+
+    assert.equal(attempt.response.status, 400);
+    assert.doesNotMatch(attempt.html, /ghu_installation-api-failure-token/);
+    assert.match(attempt.html, /installationを確認できませんでした/);
+  }
 });
 
 async function callbackAttempt(fetchHandler) {

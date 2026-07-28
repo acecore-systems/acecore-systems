@@ -1129,9 +1129,15 @@ function mockGitHub(
       });
     }
 
-    if (url === `https://api.github.com/user/installations/${installationId}`) {
+    if (url === "https://api.github.com/user/installations?per_page=100") {
       return jsonResponse({
-        permissions: installationPermissions,
+        installations: [
+          {
+            id: installationId,
+            permissions: installationPermissions,
+          },
+        ],
+        total_count: 1,
       });
     }
 
