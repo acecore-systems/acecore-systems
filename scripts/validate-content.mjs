@@ -38,6 +38,8 @@ function validateCmsConfig() {
   const configFunction = readText("functions/admin/config.yml.ts");
   const adminIndex = readText("public/admin/index.html");
   const adminInit = readText("public/admin/init.js");
+  const publishGuard = readText("scripts/cms-publish-guard.mjs");
+  const publishWorkflow = readText(".github/workflows/cms-publish-guard.yml");
   const cmsFiles = Array.from(
     config.matchAll(/^\s*file:\s*([^,\s]+),?\s*$/gm),
     (match) => match[1],
@@ -84,10 +86,34 @@ function validateCmsConfig() {
   );
   assert.equal(
     graphql.includes("createCmsBranch") &&
-      graphql.includes("cms/systems/") &&
-      graphql.includes("/pulls"),
+      graphql.includes('CMS_PUBLISH_BRANCH = "cms/systems/publish"') &&
+      graphql.includes("/pulls") &&
+      graphql.includes("expectedHeadOid"),
     true,
-    "CMS writes must create a scoped cms/systems work branch and PR",
+    "CMS writes must create one atomically locked publication PR",
+  );
+  assert.equal(
+    publishGuard.includes('CMS_PUBLISH_BRANCH = "cms/systems/publish"') &&
+      publishGuard.includes('{ appId: 15368, name: "Build and Format" }') &&
+      publishGuard.includes('{ appId: 85455, name: "Cloudflare Pages" }') &&
+      publishGuard.includes("/pulls/${pullRequest.number}/merge") &&
+      publishGuard.includes('merge_method: "squash"') &&
+      publishGuard.includes("sha: pullRequest.head.sha") &&
+      publishGuard.includes("closeAndDeleteCmsPullRequest"),
+    true,
+    "CMS publish guard must verify both checks and perform a head-pinned squash merge",
+  );
+  assert.equal(
+    publishWorkflow.includes("pull_request_target:") &&
+      publishWorkflow.includes("name: CMS Publish Guard") &&
+      publishWorkflow.includes("checks: read") &&
+      publishWorkflow.includes("contents: write") &&
+      publishWorkflow.includes("pull-requests: write") &&
+      publishWorkflow.includes("ref: refs/heads/main") &&
+      publishWorkflow.includes("persist-credentials: false") &&
+      publishWorkflow.includes("node scripts/cms-publish-guard.mjs"),
+    true,
+    "CMS publish guard workflow must run trusted main with scoped permissions",
   );
   assert.equal(
     oauth.includes("repository.permissions.push !== true") &&
@@ -119,7 +145,8 @@ function validateCmsConfig() {
     adminIndex.includes('src="/admin/runtime-config.js"') &&
       adminIndex.includes('src="/admin/init.js"') &&
       adminIndex.includes('href="/admin/cms-notice.css"') &&
-      adminInit.includes("保存は公開ではありません") &&
+      adminInit.includes("保存すると自動で公開されます") &&
+      adminInit.includes("問題がなければ数分で反映されます") &&
       adminInit.includes("公開方法の案内を閉じる"),
     true,
     "CMS manual initialization and publish notice are required",

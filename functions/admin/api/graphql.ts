@@ -13,7 +13,6 @@ import {
   isAllowedCmsDeletePath,
   isAllowedCmsWritePath,
   normalizeCmsPath,
-  sanitizeCmsBranchPart,
 } from "./_cms-policy.ts";
 import { getGitHubEditor, type GitHubEditor } from "./_github-oauth.ts";
 import {
@@ -48,6 +47,9 @@ type CmsCommitInput = {
 };
 
 type PullRequestSummary = {
+  branch: string;
+  head_sha: string;
+  node_id: string;
   number: number;
   html_url: string;
 };
@@ -60,6 +62,7 @@ const MAX_REQUEST_BYTES = 36 * 1024 * 1024;
 const MAX_CHANGE_COUNT = 100;
 const MAX_TOTAL_CONTENT_BYTES = 25 * 1024 * 1024;
 const MAX_GRAPHQL_BLOB_SIZE = 10 * 1024 * 1024;
+const CMS_PUBLISH_BRANCH = "cms/systems/publish";
 
 export const onRequestPost: PagesFunction = async ({ request }) => {
   try {
@@ -166,6 +169,28 @@ async function handleCommitMutation({
     );
   }
 
+  const changedPaths = [
+    ...commitInput.additions.map(({ path }) => path),
+    ...commitInput.deletions.map(({ path }) => path),
+  ];
+  await verifyPublishSettings(token);
+
+  const pendingPullRequest = await findPendingCmsPullRequest(token);
+
+  if (pendingPullRequest) {
+    return json(
+      {
+        message:
+          "前のCMS保存を公開中です。公開完了後にCMSを再読み込みしてから保存してください。",
+        pull_request: {
+          number: pendingPullRequest.number,
+          html_url: pendingPullRequest.html_url,
+        },
+      },
+      409,
+    );
+  }
+
   const mainRef = await githubJson<unknown>({
     path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/ref/heads/${CMS_REPOSITORY.branch}`,
     token,
@@ -186,17 +211,13 @@ async function handleCommitMutation({
     );
   }
 
-  const changedPaths = [
-    ...commitInput.additions.map(({ path }) => path),
-    ...commitInput.deletions.map(({ path }) => path),
-  ];
   const branch = await createCmsBranch({
     baseSha: mainSha,
-    primaryPath: changedPaths[0],
     token,
   });
   const mutation = buildCmsCommitMutation(commitInput.additions);
   let githubResult: Record<string, unknown>;
+  let commitOid: string;
 
   try {
     githubResult = await githubJson<Record<string, unknown>>({
@@ -227,7 +248,7 @@ async function handleCommitMutation({
       token,
     });
 
-    ensureCommitSucceeded(githubResult);
+    commitOid = ensureCommitSucceeded(githubResult);
   } catch (error) {
     await deleteCmsBranch(branch, token);
     throw error;
@@ -239,6 +260,7 @@ async function handleCommitMutation({
     pullRequest = await openPullRequest({
       branch,
       changedPaths,
+      headSha: commitOid,
       login: auth.user.login,
       token,
     });
@@ -246,7 +268,7 @@ async function handleCommitMutation({
     let existingPullRequest: PullRequestSummary | null;
 
     try {
-      existingPullRequest = await findOpenPullRequest(branch, token);
+      existingPullRequest = await findOpenPullRequest(branch, commitOid, token);
     } catch (recoveryError) {
       console.error(
         JSON.stringify({
@@ -269,6 +291,7 @@ async function handleCommitMutation({
 
     pullRequest = existingPullRequest;
   }
+
   const extensions = isRecord(githubResult.extensions)
     ? githubResult.extensions
     : {};
@@ -278,6 +301,11 @@ async function handleCommitMutation({
     extensions: {
       ...extensions,
       cms: {
+        publication: {
+          queued: true,
+          merge_method: "SQUASH",
+          publisher: "CMS Publish Guard",
+        },
         branch,
         pull_request: {
           number: pullRequest.number,
@@ -711,39 +739,33 @@ function parseCmsCommitInput(value: unknown): CmsCommitInput | null {
 
 async function createCmsBranch({
   baseSha,
-  primaryPath,
   token,
 }: {
   baseSha: string;
-  primaryPath: string;
   token: string;
 }) {
-  const base = sanitizeCmsBranchPart(primaryPath);
-
-  for (let index = 0; index < 3; index += 1) {
-    const id = crypto.randomUUID().slice(0, 8);
-    const branch = `cms/systems/${timestamp()}-${base}-${id}`;
-
-    try {
-      await githubJson({
-        body: {
-          ref: `refs/heads/${branch}`,
-          sha: baseSha,
-        },
-        method: "POST",
-        path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/refs`,
-        token,
-      });
-
-      return branch;
-    } catch (error) {
-      if (!(error instanceof GitHubApiError) || error.status !== 422) {
-        throw error;
-      }
+  try {
+    await githubJson({
+      body: {
+        ref: `refs/heads/${CMS_PUBLISH_BRANCH}`,
+        sha: baseSha,
+      },
+      method: "POST",
+      path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/refs`,
+      token,
+    });
+  } catch (error) {
+    if (error instanceof GitHubApiError && error.status === 422) {
+      throw new GitHubApiError(
+        "前のCMS保存を公開中です。公開完了後にCMSを再読み込みしてから保存してください。",
+        409,
+      );
     }
+
+    throw error;
   }
 
-  throw new GitHubApiError("CMS保存用branchを作成できませんでした。", 409);
+  return CMS_PUBLISH_BRANCH;
 }
 
 async function deleteCmsBranch(branch: string, token: string) {
@@ -778,11 +800,13 @@ async function deleteCmsBranch(branch: string, token: string) {
 async function openPullRequest({
   branch,
   changedPaths,
+  headSha,
   login,
   token,
 }: {
   branch: string;
   changedPaths: string[];
+  headSha: string;
   login: string;
   token: string;
 }) {
@@ -794,15 +818,15 @@ async function openPullRequest({
     body: {
       base: CMS_REPOSITORY.branch,
       body: [
-        "Sveltia CMS の保存をGitHub認証済みユーザーから受け付けました。",
+        "Sveltia CMS の公開処理をGitHub認証済みユーザーから受け付けました。",
         "",
         `- GitHub user: @${login}`,
         "- Files:",
         ...changedPaths.map((path) => `  - \`${path}\``),
         "",
         "画像とコンテンツは同じ commit に含まれています。",
-        "CIで content/schema/build を確認してから main に取り込んでください。",
-        "merge後はこのCMS作業branchを削除してください。",
+        "required checksに成功すると自動でsquash mergeされ、mainから本番公開されます。",
+        "検証に失敗した場合は公開されません。",
       ].join("\n"),
       head: branch,
       title,
@@ -814,17 +838,36 @@ async function openPullRequest({
 
   if (
     !isRecord(result) ||
+    typeof result.node_id !== "string" ||
     typeof result.number !== "number" ||
-    typeof result.html_url !== "string"
+    typeof result.html_url !== "string" ||
+    !isRecord(result.head) ||
+    result.head.ref !== branch ||
+    result.head.sha !== headSha ||
+    !isRecord(result.head.repo) ||
+    result.head.repo.full_name !==
+      `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}` ||
+    !isRecord(result.base) ||
+    result.base.ref !== CMS_REPOSITORY.branch ||
+    !isRecord(result.base.repo) ||
+    result.base.repo.full_name !==
+      `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`
   ) {
     throw new GitHubApiError("GitHub pull request response が不正です。", 502);
   }
 
-  return { number: result.number, html_url: result.html_url };
+  return {
+    branch,
+    head_sha: headSha,
+    node_id: result.node_id,
+    number: result.number,
+    html_url: result.html_url,
+  };
 }
 
 async function findOpenPullRequest(
   branch: string,
+  headSha: string,
   token: string,
 ): Promise<PullRequestSummary | null> {
   const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
@@ -851,10 +894,12 @@ async function findOpenPullRequest(
     if (
       !isRecord(candidate) ||
       candidate.state !== "open" ||
+      typeof candidate.node_id !== "string" ||
       typeof candidate.number !== "number" ||
       typeof candidate.html_url !== "string" ||
       !isRecord(candidate.head) ||
       candidate.head.ref !== branch ||
+      candidate.head.sha !== headSha ||
       !isRecord(candidate.head.repo) ||
       candidate.head.repo.full_name !== repository ||
       !isRecord(candidate.base) ||
@@ -876,8 +921,85 @@ async function findOpenPullRequest(
   }
 
   return {
+    branch,
+    head_sha: headSha,
+    node_id: pullRequest.node_id as string,
     number: pullRequest.number as number,
     html_url: pullRequest.html_url as string,
+  };
+}
+
+async function verifyPublishSettings(token: string) {
+  const result = await githubJson<unknown>({
+    path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+    token,
+  });
+
+  if (!isRecord(result) || result.allow_squash_merge !== true) {
+    throw new GitHubApiError(
+      "CMS自動公開のsquash merge設定が有効ではありません。",
+      503,
+    );
+  }
+}
+
+async function findPendingCmsPullRequest(
+  token: string,
+): Promise<PullRequestSummary | null> {
+  const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
+  const query = new URLSearchParams({
+    state: "open",
+    base: CMS_REPOSITORY.branch,
+    per_page: "100",
+  });
+  const result = await githubJson<unknown>({
+    path: `/repos/${repository}/pulls?${query.toString()}`,
+    token,
+  });
+
+  if (!Array.isArray(result)) {
+    throw new GitHubApiError("GitHub pull request一覧の応答が不正です。", 502);
+  }
+
+  const candidate = result.find((value) => {
+    return (
+      isRecord(value) &&
+      value.state === "open" &&
+      isRecord(value.head) &&
+      typeof value.head.ref === "string" &&
+      value.head.ref.startsWith("cms/systems/") &&
+      isRecord(value.head.repo) &&
+      value.head.repo.full_name === repository &&
+      isRecord(value.base) &&
+      value.base.ref === CMS_REPOSITORY.branch &&
+      isRecord(value.base.repo) &&
+      value.base.repo.full_name === repository
+    );
+  });
+
+  if (!candidate || !isRecord(candidate)) return null;
+
+  if (
+    typeof candidate.node_id !== "string" ||
+    typeof candidate.number !== "number" ||
+    typeof candidate.html_url !== "string" ||
+    !isRecord(candidate.head) ||
+    typeof candidate.head.ref !== "string" ||
+    typeof candidate.head.sha !== "string" ||
+    !SHA_PATTERN.test(candidate.head.sha)
+  ) {
+    throw new GitHubApiError(
+      "GitHub CMS pull request一覧の応答が不正です。",
+      502,
+    );
+  }
+
+  return {
+    branch: candidate.head.ref,
+    head_sha: candidate.head.sha,
+    node_id: candidate.node_id,
+    number: candidate.number,
+    html_url: candidate.html_url,
   };
 }
 
@@ -926,6 +1048,8 @@ function ensureCommitSucceeded(result: Record<string, unknown>) {
       502,
     );
   }
+
+  return result.data.createCommitOnBranch.commit.oid;
 }
 
 function parseGraphqlPayload(text: string): GraphqlPayload | null {
@@ -1056,10 +1180,6 @@ function getGitRefSha(value: unknown) {
     SHA_PATTERN.test(value.object.sha)
     ? value.object.sha
     : null;
-}
-
-function timestamp() {
-  return new Date().toISOString().replace(/\D/g, "").slice(0, 14);
 }
 
 async function readRequestText(request: Request) {
