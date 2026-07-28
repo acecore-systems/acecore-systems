@@ -154,6 +154,10 @@ test("callbackはstate・PKCE・installation・repositoryを照合してtokenを
     response.headers.get("Content-Security-Policy"),
     /frame-ancestors 'none'/,
   );
+  assert.equal(
+    response.headers.get("Cross-Origin-Opener-Policy"),
+    "unsafe-none",
+  );
   assert.match(
     response.headers.get("Set-Cookie"),
     /acecore_systems_cms_oauth_state=;/,
