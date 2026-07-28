@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { afterEach, test } from "node:test";
 
@@ -19,10 +20,7 @@ const topicSha = "b".repeat(40);
 const oauthToken = "ghu_test-oauth-token";
 const cmsOrigin = "https://systems.acecore.net";
 const repositoryApi = `https://api.github.com/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
-const branchPrefix = "cms/systems/";
-const publishBranch = `${branchPrefix}publish`;
 const contentPath = "src/data/home.json";
-const pullRequestNodeId = "PR_kwDOExample";
 const rejectedPath = "src/pages/index.astro";
 const collectionWritePaths = [
   "src/data/site.json",
@@ -270,9 +268,8 @@ test("Sveltia CMS 0.172のcontent queryをCMS対象blobだけ許可する", asyn
   assert.equal(response.status, 200);
 });
 
-test("画像と本文を固定branchの1 commit・1 PRへ保存して自動公開を待機する", async () => {
+test("画像と本文をmainの1 commitへ保存して直接公開する", async () => {
   const calls = [];
-  let cmsBranch = "";
 
   mockGitHub(async (url, init, body) => {
     calls.push({ url, init, body });
@@ -281,22 +278,23 @@ test("画像と本文を固定branchの1 commit・1 PRへ保存して自動公�
       return jsonResponse({ object: { sha: mainSha } });
     }
 
-    if (url.endsWith("/git/refs")) {
-      cmsBranch = body.ref.replace("refs/heads/", "");
-      assert.equal(cmsBranch, publishBranch);
-      assert.equal(body.sha, mainSha);
-
-      return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
-    }
-
     if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
       assert.match(body.query, /mutation CmsCommit/);
       assert.equal(
         body.variables.input.branch.repositoryNameWithOwner,
         `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
       );
-      assert.equal(body.variables.input.branch.branchName, cmsBranch);
+      assert.equal(body.variables.input.branch.branchName, "main");
       assert.equal(body.variables.input.expectedHeadOid, mainSha);
+      assert.match(
+        body.variables.input.message.body,
+        /Acecore Systems CMSから検証済みコンテンツを直接公開しました。/,
+      );
+      assert.match(body.variables.input.message.body, /Editor: @editor/);
+      assert.match(
+        body.variables.input.message.body,
+        /^CMS-Operation: [0-9a-f-]{36}$/m,
+      );
       assert.deepEqual(
         body.variables.input.fileChanges.additions.map(({ path }) => path),
         ["public/uploads/example.png", contentPath],
@@ -314,23 +312,6 @@ test("画像と本文を固定branchの1 commit・1 PRへ保存して自動公�
           },
         },
       });
-    }
-
-    if (url.endsWith("/pulls")) {
-      assert.equal(body.head, cmsBranch);
-      assert.equal(body.base, "main");
-      assert.match(body.body, /GitHub user: @editor/);
-      assert.match(body.body, new RegExp(contentPath.replaceAll("/", "\\/")));
-
-      return jsonResponse(
-        pullRequestResponse({
-          branch: cmsBranch,
-          headSha: topicSha,
-          nodeId: pullRequestNodeId,
-          number: 91,
-        }),
-        201,
-      );
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
@@ -366,68 +347,68 @@ test("画像と本文を固定branchの1 commit・1 PRへ保存して自動公�
   const result = await response.json();
 
   assert.equal(response.status, 200);
-  assert.equal(result.extensions.cms.branch, cmsBranch);
-  assert.equal(result.extensions.cms.pull_request.number, 91);
-  assert.deepEqual(result.extensions.cms.publication, {
-    queued: true,
-    merge_method: "SQUASH",
-    publisher: "CMS Publish Guard",
+  assert.deepEqual(result.extensions.cms, {
+    branch: "main",
+    commit_oid: topicSha,
+    mode: "direct",
   });
-  assert.equal(calls.length, 4);
+  assert.equal(calls.length, 2);
+  assert.equal(
+    calls.some(({ url }) => url.endsWith("/git/refs")),
+    false,
+  );
+  assert.equal(
+    calls.some(({ url }) => url.endsWith("/pulls")),
+    false,
+  );
 });
 
-test("PR作成応答が不明でも同じheadのopen PRから成功応答へ復旧する", async () => {
-  let cmsBranch = "";
-  let deleted = false;
+test("direct保存の応答喪失後にmarker・親SHA・path・blob SHAを照合して復旧する", async () => {
+  const expectedContents = Buffer.from("content").toString("base64");
+  const expectedBlobSha = gitBlobOid(expectedContents);
+  let mainRefReads = 0;
+  let operationMarker = "";
 
-  mockGitHub(async (url, init, body) => {
+  mockGitHub(async (url, _init, body) => {
     if (url.endsWith("/git/ref/heads/main")) {
-      return jsonResponse({ object: { sha: mainSha } });
-    }
-
-    if (url.endsWith("/git/refs")) {
-      cmsBranch = body.ref.replace("refs/heads/", "");
-      return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
+      mainRefReads += 1;
+      return jsonResponse({
+        object: { sha: mainRefReads === 1 ? mainSha : topicSha },
+      });
     }
 
     if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
-      return commitResponse();
+      operationMarker = getOperationMarker(body.variables.input.message.body);
+      throw new TypeError("upstream response was lost");
     }
 
-    if (url.endsWith("/pulls") && init.method === "POST") {
-      return jsonResponse({}, 201);
-    }
-
-    if (url.includes("/pulls?") && init.method === "GET") {
-      assertPullRequestLookup(url, cmsBranch);
-
+    if (url.includes("/commits?sha=main&per_page=100")) {
       return jsonResponse([
-        {
-          number: 92,
-          node_id: pullRequestNodeId,
-          html_url:
-            "https://github.com/acecore-systems/acecore-systems/pull/92",
-          state: "open",
-          head: {
-            ref: cmsBranch,
-            sha: topicSha,
-            repo: {
-              full_name: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
-            },
-          },
-          base: {
-            ref: CMS_REPOSITORY.branch,
-            repo: {
-              full_name: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
-            },
-          },
-        },
+        operationCommit({ marker: operationMarker, sha: topicSha }),
       ]);
     }
 
-    if (init.method === "DELETE") {
-      deleted = true;
-      return new Response(null, { status: 204 });
+    if (url.endsWith(`/commits/${topicSha}?per_page=100`)) {
+      return jsonResponse({
+        sha: topicSha,
+        files: [{ filename: contentPath, status: "modified" }],
+      });
+    }
+
+    if (url.includes(`/git/trees/${topicSha}?recursive=1`)) {
+      return jsonResponse({
+        sha: "c".repeat(40),
+        truncated: false,
+        tree: [
+          {
+            mode: "100644",
+            path: contentPath,
+            sha: expectedBlobSha,
+            size: 7,
+            type: "blob",
+          },
+        ],
+      });
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
@@ -437,119 +418,91 @@ test("PR作成応答が不明でも同じheadのopen PRから成功応答へ復�
   const result = await response.json();
 
   assert.equal(response.status, 200);
-  assert.equal(result.extensions.cms.branch, cmsBranch);
-  assert.equal(result.extensions.cms.pull_request.number, 92);
-  assert.equal(deleted, false);
+  assert.equal(result.data.createCommitOnBranch.commit.oid, topicSha);
+  assert.deepEqual(result.extensions.cms, {
+    branch: "main",
+    commit_oid: topicSha,
+    mode: "direct",
+  });
+  assert.equal(mainRefReads, 2);
 });
 
-test("先行するCMS公開用PRがある間は新しい保存を開始しない", async () => {
-  const pendingBranch = `${branchPrefix}pending`;
-  let branchCreated = false;
-  let mainRequested = false;
+test("direct削除の応答喪失後に変更pathと削除済みtreeを照合して復旧する", async () => {
+  const deletedPath = "public/uploads/unused.png";
+  let mainRefReads = 0;
+  let operationMarker = "";
 
-  mockGitHub(
-    async (url) => {
-      if (url.endsWith("/git/ref/heads/main")) {
-        mainRequested = true;
-        return jsonResponse({ object: { sha: mainSha } });
-      }
-
-      if (url.endsWith("/git/refs")) {
-        branchCreated = true;
-      }
-
-      throw new Error(`Unexpected GitHub request: ${url}`);
-    },
-    {
-      pendingPullRequests: [
-        pullRequestResponse({
-          branch: pendingBranch,
-          headSha: topicSha,
-          nodeId: pullRequestNodeId,
-          number: 93,
-        }),
-      ],
-    },
-  );
-
-  const response = await handleGraphql({ request: graphqlRequest() });
-  const result = await response.json();
-
-  assert.equal(response.status, 409);
-  assert.match(result.message, /前のCMS保存を公開中/);
-  assert.equal(result.pull_request.number, 93);
-  assert.equal(branchCreated, false);
-  assert.equal(mainRequested, false);
-});
-
-test("repositoryのsquash merge設定が不足していればbranch作成前に拒否する", async () => {
-  let branchCreated = false;
-
-  mockGitHub(
-    async (url) => {
-      if (url.endsWith("/git/ref/heads/main")) {
-        return jsonResponse({ object: { sha: mainSha } });
-      }
-
-      if (url.endsWith("/git/refs")) {
-        branchCreated = true;
-      }
-
-      throw new Error(`Unexpected GitHub request: ${url}`);
-    },
-    {
-      repositorySettings: {
-        allow_squash_merge: false,
-      },
-    },
-  );
-
-  const response = await handleGraphql({ request: graphqlRequest() });
-  const result = await response.json();
-
-  assert.equal(response.status, 503);
-  assert.match(result.message, /自動公開のsquash merge設定/);
-  assert.equal(branchCreated, false);
-});
-
-test("固定CMS branchを原子的lockとして同時保存を拒否する", async () => {
-  let commitCalled = false;
-
-  mockGitHub(async (url, init, body) => {
+  mockGitHub(async (url, _init, body) => {
     if (url.endsWith("/git/ref/heads/main")) {
-      return jsonResponse({ object: { sha: mainSha } });
+      mainRefReads += 1;
+      return jsonResponse({
+        object: { sha: mainRefReads === 1 ? mainSha : topicSha },
+      });
     }
 
-    if (url.endsWith("/git/refs")) {
-      assert.equal(body.ref, `refs/heads/${publishBranch}`);
-      return jsonResponse({ message: "Reference already exists" }, 422);
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      operationMarker = getOperationMarker(body.variables.input.message.body);
+      throw new TypeError("upstream response was lost");
     }
 
-    if (url.endsWith("/graphql")) {
-      commitCalled = true;
+    if (url.includes("/commits?sha=main&per_page=100")) {
+      return jsonResponse([
+        operationCommit({ marker: operationMarker, sha: topicSha }),
+      ]);
+    }
+
+    if (url.endsWith(`/commits/${topicSha}?per_page=100`)) {
+      return jsonResponse({
+        sha: topicSha,
+        files: [{ filename: deletedPath, status: "removed" }],
+      });
+    }
+
+    if (url.includes(`/git/trees/${topicSha}?recursive=1`)) {
+      return jsonResponse({
+        sha: "c".repeat(40),
+        truncated: false,
+        tree: [],
+      });
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
   });
 
-  const response = await handleGraphql({ request: graphqlRequest() });
+  const response = await handleGraphql({
+    request: graphqlRequest({
+      variables: {
+        input: {
+          branch: {
+            repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            branchName: "main",
+          },
+          expectedHeadOid: mainSha,
+          fileChanges: {
+            additions: [],
+            deletions: [{ path: deletedPath }],
+          },
+          message: { headline: "cms: delete unused image" },
+        },
+      },
+    }),
+  });
   const result = await response.json();
 
-  assert.equal(response.status, 409);
-  assert.match(result.message, /前のCMS保存を公開中/);
-  assert.equal(commitCalled, false);
+  assert.equal(response.status, 200);
+  assert.equal(result.extensions.cms.commit_oid, topicSha);
 });
 
-test("公開lock取得直前のmain HEADが変わっていれば保存を拒否する", async () => {
-  let branchCreated = false;
+test("編集開始後にmain HEADが変わっていればmutation前に保存を拒否する", async () => {
+  let mutationCalled = false;
 
   mockGitHub(async (url) => {
     if (url.endsWith("/git/ref/heads/main")) {
       return jsonResponse({ object: { sha: "f".repeat(40) } });
     }
 
-    if (url.endsWith("/git/refs")) {
-      branchCreated = true;
+    if (url.endsWith("/graphql")) {
+      mutationCalled = true;
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
@@ -560,39 +513,34 @@ test("公開lock取得直前のmain HEADが変わっていれば保存を拒否�
 
   assert.equal(response.status, 409);
   assert.match(result.message, /mainが更新されています/);
-  assert.equal(branchCreated, false);
+  assert.equal(mutationCalled, false);
 });
 
-test("PR作成失敗後の照会が成功してopen PRがなければbranchを削除する", async () => {
-  let cmsBranch = "";
-  let deletedBranch = "";
+test("mutation中に別commitがmainへ入った場合は上書きせず409にする", async () => {
+  const advancedSha = "f".repeat(40);
+  let mainRefReads = 0;
 
-  mockGitHub(async (url, init, body) => {
+  mockGitHub(async (url, _init, body) => {
     if (url.endsWith("/git/ref/heads/main")) {
-      return jsonResponse({ object: { sha: mainSha } });
+      mainRefReads += 1;
+      return jsonResponse({
+        object: { sha: mainRefReads === 1 ? mainSha : advancedSha },
+      });
     }
 
-    if (url.endsWith("/git/refs")) {
-      cmsBranch = body.ref.replace("refs/heads/", "");
-      return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      return jsonResponse({
+        errors: [{ message: "Expected branch head did not match" }],
+      });
     }
 
-    if (url.endsWith("/graphql")) {
-      return commitResponse();
-    }
-
-    if (url.endsWith("/pulls") && init.method === "POST") {
-      return jsonResponse({ message: "PR creation failed" }, 502);
-    }
-
-    if (url.includes("/pulls?") && init.method === "GET") {
-      assertPullRequestLookup(url, cmsBranch);
-      return jsonResponse([]);
-    }
-
-    if (init.method === "DELETE") {
-      deletedBranch = url;
-      return new Response(null, { status: 204 });
+    if (url.includes("/commits?sha=main&per_page=100")) {
+      return jsonResponse([
+        operationCommit({
+          marker: "CMS-Operation: another-operation",
+          sha: advancedSha,
+        }),
+      ]);
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
@@ -601,43 +549,47 @@ test("PR作成失敗後の照会が成功してopen PRがなければbranchを�
   const response = await handleGraphql({ request: graphqlRequest() });
   const result = await response.json();
 
-  assert.equal(response.status, 502);
-  assert.equal(result.message, "PR creation failed");
-  assert.match(deletedBranch, /\/git\/refs\/heads\/cms\/systems\//);
+  assert.equal(response.status, 409);
+  assert.match(result.message, /mainが更新されています/);
+  assert.equal(mainRefReads, 2);
 });
 
-test("PR作成失敗後の照会にも失敗した場合はbranchを残して元のエラーを返す", async () => {
-  let cmsBranch = "";
-  let deleted = false;
-  const errors = [];
-  console.error = (...args) => errors.push(args.join(" "));
+test("markerと親SHAが一致しても変更pathが異なるcommitを成功扱いにしない", async () => {
+  let mainRefReads = 0;
+  let operationMarker = "";
+  let treeRequested = false;
 
-  mockGitHub(async (url, init, body) => {
+  mockGitHub(async (url, _init, body) => {
     if (url.endsWith("/git/ref/heads/main")) {
-      return jsonResponse({ object: { sha: mainSha } });
+      mainRefReads += 1;
+      return jsonResponse({
+        object: { sha: mainRefReads === 1 ? mainSha : topicSha },
+      });
     }
 
-    if (url.endsWith("/git/refs")) {
-      cmsBranch = body.ref.replace("refs/heads/", "");
-      return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      operationMarker = getOperationMarker(body.variables.input.message.body);
+      throw new TypeError("upstream response was lost");
     }
 
-    if (url.endsWith("/graphql")) {
-      return commitResponse();
+    if (url.includes("/commits?sha=main&per_page=100")) {
+      return jsonResponse([
+        operationCommit({ marker: operationMarker, sha: topicSha }),
+      ]);
     }
 
-    if (url.endsWith("/pulls") && init.method === "POST") {
-      return jsonResponse({ message: "Original PR error" }, 422);
+    if (url.endsWith(`/commits/${topicSha}?per_page=100`)) {
+      return jsonResponse({
+        sha: topicSha,
+        files: [
+          { filename: contentPath, status: "modified" },
+          { filename: "README.md", status: "modified" },
+        ],
+      });
     }
 
-    if (url.includes("/pulls?") && init.method === "GET") {
-      assertPullRequestLookup(url, cmsBranch);
-      return jsonResponse({ message: "Lookup unavailable" }, 503);
-    }
-
-    if (init.method === "DELETE") {
-      deleted = true;
-      return new Response(null, { status: 204 });
+    if (url.includes("/git/trees/")) {
+      treeRequested = true;
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
@@ -646,46 +598,65 @@ test("PR作成失敗後の照会にも失敗した場合はbranchを残して元
   const response = await handleGraphql({ request: graphqlRequest() });
   const result = await response.json();
 
-  assert.equal(response.status, 422);
-  assert.equal(result.message, "Original PR error");
-  assert.equal(deleted, false);
-  assert.match(errors.join("\n"), /Failed to recover CMS pull request/);
+  assert.equal(response.status, 409);
+  assert.match(result.message, /mainが更新されています/);
+  assert.equal(treeRequested, false);
 });
 
-test("commit処理のunknown errorでも作成済みbranchの削除を試行する", async () => {
-  let cmsBranch = "";
-  let deletedBranch = "";
-  const errors = [];
-  console.error = (...args) => errors.push(args.join(" "));
+test("marker・親SHA・pathが一致してもblob SHAが異なるcommitを成功扱いにしない", async () => {
+  let mainRefReads = 0;
+  let operationMarker = "";
 
-  mockGitHub(async (url, init, body) => {
+  mockGitHub(async (url, _init, body) => {
     if (url.endsWith("/git/ref/heads/main")) {
-      return jsonResponse({ object: { sha: mainSha } });
+      mainRefReads += 1;
+      return jsonResponse({
+        object: { sha: mainRefReads === 1 ? mainSha : topicSha },
+      });
     }
 
-    if (url.endsWith("/git/refs")) {
-      cmsBranch = body.ref.replace("refs/heads/", "");
-      return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      operationMarker = getOperationMarker(body.variables.input.message.body);
+      throw new TypeError("upstream response was lost");
     }
 
-    if (url.endsWith("/graphql")) {
-      throw new Error("Commit transport failed");
+    if (url.includes("/commits?sha=main&per_page=100")) {
+      return jsonResponse([
+        operationCommit({ marker: operationMarker, sha: topicSha }),
+      ]);
     }
 
-    if (init.method === "DELETE") {
-      deletedBranch = url;
-      return new Response(null, { status: 204 });
+    if (url.endsWith(`/commits/${topicSha}?per_page=100`)) {
+      return jsonResponse({
+        sha: topicSha,
+        files: [{ filename: contentPath, status: "modified" }],
+      });
+    }
+
+    if (url.includes(`/git/trees/${topicSha}?recursive=1`)) {
+      return jsonResponse({
+        sha: "c".repeat(40),
+        truncated: false,
+        tree: [
+          {
+            mode: "100644",
+            path: contentPath,
+            sha: "f".repeat(40),
+            size: 7,
+            type: "blob",
+          },
+        ],
+      });
     }
 
     throw new Error(`Unexpected GitHub request: ${url}`);
   });
 
   const response = await handleGraphql({ request: graphqlRequest() });
+  const result = await response.json();
 
-  assert.equal(response.status, 500);
-  assert.match(deletedBranch, /\/git\/refs\/heads\/cms\/systems\//);
-  assert.ok(deletedBranch.endsWith(cmsBranch));
-  assert.match(errors.join("\n"), /CMS GraphQL proxy failed/);
+  assert.equal(response.status, 409);
+  assert.match(result.message, /mainが更新されています/);
 });
 
 test("CMS管理対象外の保存をGitHubへ送らない", async () => {
@@ -851,13 +822,7 @@ test("REST writeを認証前に拒否する", async () => {
   assert.equal(called, false);
 });
 
-function mockGitHub(handler, options = {}) {
-  const {
-    pendingPullRequests = [],
-    push = true,
-    repositorySettings = {},
-  } = typeof options === "boolean" ? { push: options } : options;
-
+function mockGitHub(handler, push = true) {
   globalThis.fetch = async (input, init = {}) => {
     const url = String(input);
     const body = typeof init.body === "string" ? JSON.parse(init.body) : null;
@@ -872,17 +837,8 @@ function mockGitHub(handler, options = {}) {
 
     if (url === repositoryApi) {
       return jsonResponse({
-        allow_squash_merge: true,
         permissions: { push },
-        ...repositorySettings,
       });
-    }
-
-    if (
-      url ===
-      `${repositoryApi}/pulls?state=open&base=${CMS_REPOSITORY.branch}&per_page=100`
-    ) {
-      return jsonResponse(pendingPullRequests);
     }
 
     return handler(url, init, body);
@@ -954,59 +910,31 @@ function jsonResponse(value, status = 200) {
   });
 }
 
-function commitResponse() {
-  return jsonResponse({
-    data: {
-      createCommitOnBranch: {
-        commit: {
-          oid: topicSha,
-          committedDate: "2026-07-20T00:00:00Z",
-        },
-      },
-    },
-  });
-}
-
-function pullRequestResponse({
-  branch,
-  headSha,
-  nodeId,
-  number,
-  state = "open",
-}) {
-  const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
-
+function operationCommit({ marker, sha }) {
   return {
-    number,
-    node_id: nodeId,
-    html_url: `https://github.com/${repository}/pull/${number}`,
-    state,
-    head: {
-      ref: branch,
-      sha: headSha,
-      repo: { full_name: repository },
-    },
-    base: {
-      ref: CMS_REPOSITORY.branch,
-      repo: { full_name: repository },
+    sha,
+    parents: [{ sha: mainSha }],
+    commit: {
+      message: `cms: update ${contentPath}\n\n${marker}`,
+      committer: { date: "2026-07-28T00:00:00Z" },
     },
   };
 }
 
-function assertPullRequestLookup(url, branch) {
-  const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
-  const parsed = new URL(url);
+function getOperationMarker(message) {
+  const marker = message
+    .split(/\r?\n/)
+    .find((line) => line.startsWith("CMS-Operation: "));
 
-  assert.equal(parsed.pathname, `/repos/${repository}/pulls`);
-  assert.equal(parsed.searchParams.get("state"), "open");
-  assert.equal(
-    parsed.searchParams.get("head"),
-    `${CMS_REPOSITORY.owner}:${branch}`,
-  );
-  assert.equal(parsed.searchParams.get("base"), CMS_REPOSITORY.branch);
-  assert.ok(
-    url.includes(
-      `head=${encodeURIComponent(`${CMS_REPOSITORY.owner}:${branch}`)}`,
-    ),
-  );
+  assert.match(marker ?? "", /^CMS-Operation: [0-9a-f-]{36}$/);
+  return marker;
+}
+
+function gitBlobOid(contents) {
+  const bytes = Buffer.from(contents, "base64");
+
+  return createHash("sha1")
+    .update(`blob ${bytes.byteLength}\0`)
+    .update(bytes)
+    .digest("hex");
 }
