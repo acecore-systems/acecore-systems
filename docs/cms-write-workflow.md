@@ -9,7 +9,7 @@
 - 本番origin: `https://systems.acecore.net`
 - 保存API: 同一originのPages Functions（`/admin/api/github/*`、`/admin/api/graphql`）
 - 認証: Acecore Systems専用GitHub App
-- 保存branch: `cms/systems/*` の作業branch（merge後に削除）
+- 保存branch: 固定の`cms/systems/publish`（公開処理の原子的lockを兼ね、終了時に専用workflowが削除）
 - 公開branch: `main`
 - 本番deploy: Cloudflare PagesのGitHub連携による`main` push deploy
 
@@ -74,14 +74,19 @@ Pages Functionsでは次の環境変数を使います。
 ## 保存から公開まで
 
 1. 編集者が本番の`/admin/`から専用GitHub Appでログインする。
-2. Pages Functionsがrepository、`main`の最新HEAD、変更path、ファイル数、合計サイズを検証する。
-3. `cms/systems/*` branchを`main`から作成する。
-4. JSONと画像を1つのcommitへ保存し、`main`向けPull Requestを作成する。
-5. `Build and Format`とCloudflare Pages previewを通過したPull Requestをレビューしてmergeする。
-6. merge後に`cms/systems/*` branchを削除する。repositoryのbranch自動削除は現在無効なので、merge操作時または直後に手動で削除する。
-7. `main` pushを受けたCloudflare PagesのGitHub連携deployが本番へ公開する。
+2. Pages Functionsがrepositoryのsquash merge設定、変更path、ファイル数、合計サイズを検証する。
+3. 先行するCMS公開用Pull Requestがないことを確認する。
+4. `main`の最新HEADがCMSの取得時点と一致することを確認してから、固定の`cms/systems/publish` branchを原子的に作成する。同時保存はbranch作成の競合として409で拒否する。
+5. JSONと画像を1つのcommitへ保存し、`main`向けPull Requestを作成する。
+6. `CMS Publish Guard` workflowが、topic commit上の`Build and Format`とCloudflare Pages previewをGitHub App IDまで含めて確認する。
+7. 両方が成功し、branchが最新の`main`を含む場合だけ、Guardがtopic commitのOIDを固定してPull Requestを`squash` mergeする。
+8. 検証失敗、timeout、検証中の`main`更新、merge conflictではGuardがPull Requestを閉じ、`cms/systems/publish`だけを削除する。repository全体のbranch自動削除には依存しない。
+9. merge成功を確認した同じGuard実行内でCMS branchを削除する。外部から閉じられた場合は`closed` eventでも同じSHAのCMS branchだけを補助的に削除する。
+10. `main` pushを受けたCloudflare PagesのGitHub連携deployが本番へ公開する。
 
-CMSの「保存」はPull Requestの作成までであり、その時点では公開されません。恒久的な`cms-content` branchは使いません。
+CMSの「保存」は公開処理の開始を意味し、人によるPull Requestのmerge操作は不要です。通常は数分で公開されます。先行する公開処理が完了するまでは次の保存を受け付けません。検証失敗時は自動終了するため、修正後に再保存できます。恒久的な`cms-content` branchは使いません。
+
+Guardは`pull_request_target`で信頼済みの`main`だけをcheckoutし、Pull Request側のcodeを実行しません。同一repositoryの固定CMS branchだけを対象に、`checks: read`、`contents: write`、`pull-requests: write`へ限定した`GITHUB_TOKEN`を使います。
 
 ## コード変更の検証
 
@@ -96,7 +101,7 @@ git diff --check
 
 ## 本番有効化と確認状況
 
-2026-07-28に次の外部設定を完了しました。
+2026-07-28に次の外部設定を確認しました。
 
 - 組織所有のSystems専用GitHub Appを作成し、callback URLを`https://systems.acecore.net/admin/api/callback`に設定
 - Appを`acecore-systems/acecore-systems`の1件だけにinstall
@@ -105,10 +110,12 @@ git diff --check
 - Cloudflare PagesのProduction環境へ上記4項目をsecretとして設定し、Preview環境は未設定のまま維持
 - `Build and Format`とCloudflare Pagesを`main`のrequired checkとして設定
 
-コードのmerge後に、次の本番確認と後片付けを行います。
+コードのmerge後、CMSを有効化する前に`Build and Format`とCloudflare Pagesの2件が`main`のstrict required checkであり、既存のPull Request保護が維持されていることを再取得して確認します。`CMS Publish Guard`は両checkのGitHub App IDと結果を独立に検証してから通常のPull Request merge APIを呼ぶため、repositoryのAllow auto-merge設定には依存しません。
+
+設定後に次の本番確認と後片付けを行います。
 
 1. 本番の`/admin/`からGitHub App認証を開始できることを確認する。
-2. 本番CMSでJSONと画像を同時に保存し、CMS作業branch、1 commit、1 Pull Request、preview成功を確認する。
-3. 確認用Pull Requestをmergeし、GitHub連携による`main`のproduction deployと表示反映を確認する。
-4. repositoryのbranch自動削除を有効化するか運用判断し、有効化しない場合はmerge後にCMS作業branchを削除する。
-5. 確認用データと不要になったCMS作業branchを整理する。
+2. 本番CMSで表示に影響しない確認用変更を保存し、固定CMS branch、1 commit、1 Pull Requestを確認する。
+3. required checksの成功後に自動でsquash mergeされ、CMS branchだけが削除されることを確認する。
+4. GitHub連携による`main`のproduction deployと表示反映を確認する。
+5. 検証失敗または競合ではPull Requestが自動終了し、既存の本番表示と次回保存が維持されることを確認する。

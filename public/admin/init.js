@@ -13,9 +13,8 @@ const noticeClose = document.createElement("button");
 
 notice.className = "cms-publish-notice";
 notice.setAttribute("aria-label", "CMSの公開方法");
-noticeTitle.textContent = "保存は公開ではありません";
-noticeBody.textContent =
-  "確認用Pull Requestが作成され、CIとプレビューの確認後に公開されます。";
+noticeTitle.textContent = "保存すると自動で公開されます";
+noticeBody.textContent = "自動チェック後、問題がなければ数分で反映されます。";
 noticeClose.className = "cms-publish-notice__close";
 noticeClose.type = "button";
 noticeClose.setAttribute("aria-label", "公開方法の案内を閉じる");

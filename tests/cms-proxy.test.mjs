@@ -15,11 +15,14 @@ import { onRequest as handleGithubRest } from "../functions/admin/api/github/[[p
 const originalFetch = globalThis.fetch;
 const originalConsoleError = console.error;
 const mainSha = "a".repeat(40);
+const topicSha = "b".repeat(40);
 const oauthToken = "ghu_test-oauth-token";
 const cmsOrigin = "https://systems.acecore.net";
 const repositoryApi = `https://api.github.com/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
 const branchPrefix = "cms/systems/";
+const publishBranch = `${branchPrefix}publish`;
 const contentPath = "src/data/home.json";
+const pullRequestNodeId = "PR_kwDOExample";
 const rejectedPath = "src/pages/index.astro";
 const collectionWritePaths = [
   "src/data/site.json",
@@ -267,7 +270,7 @@ test("Sveltia CMS 0.172のcontent queryをCMS対象blobだけ許可する", asyn
   assert.equal(response.status, 200);
 });
 
-test("画像と本文を同じ短期branchの1 commit・1 PRに保存する", async () => {
+test("画像と本文を固定branchの1 commit・1 PRへ保存して自動公開を待機する", async () => {
   const calls = [];
   let cmsBranch = "";
 
@@ -280,13 +283,13 @@ test("画像と本文を同じ短期branchの1 commit・1 PRに保存する", as
 
     if (url.endsWith("/git/refs")) {
       cmsBranch = body.ref.replace("refs/heads/", "");
-      assert.match(cmsBranch, new RegExp(`^${branchPrefix}`));
+      assert.equal(cmsBranch, publishBranch);
       assert.equal(body.sha, mainSha);
 
       return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
     }
 
-    if (url.endsWith("/graphql")) {
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
       assert.match(body.query, /mutation CmsCommit/);
       assert.equal(
         body.variables.input.branch.repositoryNameWithOwner,
@@ -303,7 +306,7 @@ test("画像と本文を同じ短期branchの1 commit・1 PRに保存する", as
         data: {
           createCommitOnBranch: {
             commit: {
-              oid: "b".repeat(40),
+              oid: topicSha,
               committedDate: "2026-07-20T00:00:00Z",
               file_0: { oid: "c".repeat(40) },
               file_1: { oid: "d".repeat(40) },
@@ -320,7 +323,12 @@ test("画像と本文を同じ短期branchの1 commit・1 PRに保存する", as
       assert.match(body.body, new RegExp(contentPath.replaceAll("/", "\\/")));
 
       return jsonResponse(
-        { number: 91, html_url: "https://github.com/example/pull/91" },
+        pullRequestResponse({
+          branch: cmsBranch,
+          headSha: topicSha,
+          nodeId: pullRequestNodeId,
+          number: 91,
+        }),
         201,
       );
     }
@@ -360,6 +368,11 @@ test("画像と本文を同じ短期branchの1 commit・1 PRに保存する", as
   assert.equal(response.status, 200);
   assert.equal(result.extensions.cms.branch, cmsBranch);
   assert.equal(result.extensions.cms.pull_request.number, 91);
+  assert.deepEqual(result.extensions.cms.publication, {
+    queued: true,
+    merge_method: "SQUASH",
+    publisher: "CMS Publish Guard",
+  });
   assert.equal(calls.length, 4);
 });
 
@@ -377,7 +390,7 @@ test("PR作成応答が不明でも同じheadのopen PRから成功応答へ復�
       return jsonResponse({ ref: body.ref, object: { sha: mainSha } }, 201);
     }
 
-    if (url.endsWith("/graphql")) {
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
       return commitResponse();
     }
 
@@ -391,11 +404,13 @@ test("PR作成応答が不明でも同じheadのopen PRから成功応答へ復�
       return jsonResponse([
         {
           number: 92,
+          node_id: pullRequestNodeId,
           html_url:
             "https://github.com/acecore-systems/acecore-systems/pull/92",
           state: "open",
           head: {
             ref: cmsBranch,
+            sha: topicSha,
             repo: {
               full_name: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
             },
@@ -425,6 +440,127 @@ test("PR作成応答が不明でも同じheadのopen PRから成功応答へ復�
   assert.equal(result.extensions.cms.branch, cmsBranch);
   assert.equal(result.extensions.cms.pull_request.number, 92);
   assert.equal(deleted, false);
+});
+
+test("先行するCMS公開用PRがある間は新しい保存を開始しない", async () => {
+  const pendingBranch = `${branchPrefix}pending`;
+  let branchCreated = false;
+  let mainRequested = false;
+
+  mockGitHub(
+    async (url) => {
+      if (url.endsWith("/git/ref/heads/main")) {
+        mainRequested = true;
+        return jsonResponse({ object: { sha: mainSha } });
+      }
+
+      if (url.endsWith("/git/refs")) {
+        branchCreated = true;
+      }
+
+      throw new Error(`Unexpected GitHub request: ${url}`);
+    },
+    {
+      pendingPullRequests: [
+        pullRequestResponse({
+          branch: pendingBranch,
+          headSha: topicSha,
+          nodeId: pullRequestNodeId,
+          number: 93,
+        }),
+      ],
+    },
+  );
+
+  const response = await handleGraphql({ request: graphqlRequest() });
+  const result = await response.json();
+
+  assert.equal(response.status, 409);
+  assert.match(result.message, /前のCMS保存を公開中/);
+  assert.equal(result.pull_request.number, 93);
+  assert.equal(branchCreated, false);
+  assert.equal(mainRequested, false);
+});
+
+test("repositoryのsquash merge設定が不足していればbranch作成前に拒否する", async () => {
+  let branchCreated = false;
+
+  mockGitHub(
+    async (url) => {
+      if (url.endsWith("/git/ref/heads/main")) {
+        return jsonResponse({ object: { sha: mainSha } });
+      }
+
+      if (url.endsWith("/git/refs")) {
+        branchCreated = true;
+      }
+
+      throw new Error(`Unexpected GitHub request: ${url}`);
+    },
+    {
+      repositorySettings: {
+        allow_squash_merge: false,
+      },
+    },
+  );
+
+  const response = await handleGraphql({ request: graphqlRequest() });
+  const result = await response.json();
+
+  assert.equal(response.status, 503);
+  assert.match(result.message, /自動公開のsquash merge設定/);
+  assert.equal(branchCreated, false);
+});
+
+test("固定CMS branchを原子的lockとして同時保存を拒否する", async () => {
+  let commitCalled = false;
+
+  mockGitHub(async (url, init, body) => {
+    if (url.endsWith("/git/ref/heads/main")) {
+      return jsonResponse({ object: { sha: mainSha } });
+    }
+
+    if (url.endsWith("/git/refs")) {
+      assert.equal(body.ref, `refs/heads/${publishBranch}`);
+      return jsonResponse({ message: "Reference already exists" }, 422);
+    }
+
+    if (url.endsWith("/graphql")) {
+      commitCalled = true;
+    }
+
+    throw new Error(`Unexpected GitHub request: ${url}`);
+  });
+
+  const response = await handleGraphql({ request: graphqlRequest() });
+  const result = await response.json();
+
+  assert.equal(response.status, 409);
+  assert.match(result.message, /前のCMS保存を公開中/);
+  assert.equal(commitCalled, false);
+});
+
+test("公開lock取得直前のmain HEADが変わっていれば保存を拒否する", async () => {
+  let branchCreated = false;
+
+  mockGitHub(async (url) => {
+    if (url.endsWith("/git/ref/heads/main")) {
+      return jsonResponse({ object: { sha: "f".repeat(40) } });
+    }
+
+    if (url.endsWith("/git/refs")) {
+      branchCreated = true;
+    }
+
+    throw new Error(`Unexpected GitHub request: ${url}`);
+  });
+
+  const response = await handleGraphql({ request: graphqlRequest() });
+  const result = await response.json();
+
+  assert.equal(response.status, 409);
+  assert.match(result.message, /mainが更新されています/);
+  assert.equal(branchCreated, false);
 });
 
 test("PR作成失敗後の照会が成功してopen PRがなければbranchを削除する", async () => {
@@ -715,7 +851,13 @@ test("REST writeを認証前に拒否する", async () => {
   assert.equal(called, false);
 });
 
-function mockGitHub(handler, push = true) {
+function mockGitHub(handler, options = {}) {
+  const {
+    pendingPullRequests = [],
+    push = true,
+    repositorySettings = {},
+  } = typeof options === "boolean" ? { push: options } : options;
+
   globalThis.fetch = async (input, init = {}) => {
     const url = String(input);
     const body = typeof init.body === "string" ? JSON.parse(init.body) : null;
@@ -729,7 +871,18 @@ function mockGitHub(handler, push = true) {
     }
 
     if (url === repositoryApi) {
-      return jsonResponse({ permissions: { push } });
+      return jsonResponse({
+        allow_squash_merge: true,
+        permissions: { push },
+        ...repositorySettings,
+      });
+    }
+
+    if (
+      url ===
+      `${repositoryApi}/pulls?state=open&base=${CMS_REPOSITORY.branch}&per_page=100`
+    ) {
+      return jsonResponse(pendingPullRequests);
     }
 
     return handler(url, init, body);
@@ -806,12 +959,38 @@ function commitResponse() {
     data: {
       createCommitOnBranch: {
         commit: {
-          oid: "b".repeat(40),
+          oid: topicSha,
           committedDate: "2026-07-20T00:00:00Z",
         },
       },
     },
   });
+}
+
+function pullRequestResponse({
+  branch,
+  headSha,
+  nodeId,
+  number,
+  state = "open",
+}) {
+  const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
+
+  return {
+    number,
+    node_id: nodeId,
+    html_url: `https://github.com/${repository}/pull/${number}`,
+    state,
+    head: {
+      ref: branch,
+      sha: headSha,
+      repo: { full_name: repository },
+    },
+    base: {
+      ref: CMS_REPOSITORY.branch,
+      repo: { full_name: repository },
+    },
+  };
 }
 
 function assertPullRequestLookup(url, branch) {
