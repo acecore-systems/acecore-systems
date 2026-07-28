@@ -23,6 +23,7 @@
   --measure-copy: 42rem;
   --measure-reading: 43ch;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Reserve serif for brand and large editorial moments; use sans for scannable UI. */
   --font-display:
     "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro",
     "Noto Serif JP", serif;
@@ -792,7 +793,7 @@ a {
 .work-story__item h3,
 .editorial-row h3 {
   color: var(--ink);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: clamp(1.35rem, 2vw, 1.85rem);
   font-weight: 500;
   line-break: strict;
@@ -1374,7 +1375,7 @@ a {
 
 .detail-offering__price p {
   color: var(--blue);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: 1.05rem;
 }
 
@@ -1385,7 +1386,7 @@ a {
 
 .detail-offering__price .detail-offering__price-note {
   color: var(--muted);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   line-height: 1.7;
 }
@@ -1543,7 +1544,7 @@ a {
 .advisor-hero__facts dd {
   margin-top: 8px;
   color: var(--ink);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: clamp(1.05rem, 1.5vw, 1.35rem);
   line-height: 1.5;
 }
@@ -1598,7 +1599,7 @@ a {
 .advisor-plan h3,
 .advisor-process__step h3,
 .advisor-boundary h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 500;
   line-height: 1.55;
 }
@@ -1660,7 +1661,7 @@ a {
 
 .advisor-price {
   color: var(--blue);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: clamp(1.25rem, 2vw, 1.65rem);
   line-height: 1.5;
 }
@@ -1968,7 +1969,7 @@ a {
 
 .work-detail-outcomes__header h3 {
   margin-top: 12px;
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: 1.65rem;
   font-weight: 500;
   line-height: 1.45;
@@ -2060,7 +2061,7 @@ a {
 }
 
 .work-related-links a > span:first-child {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: clamp(1.2rem, 1.7vw, 1.45rem);
   font-weight: 500;
   line-height: 1.5;
@@ -2137,7 +2138,7 @@ a {
 }
 
 .price-row__heading h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: 1.35rem;
   font-weight: 500;
   line-height: 1.5;
@@ -2168,7 +2169,7 @@ a {
 
 .price-row__amount {
   color: var(--blue);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
   text-align: right;
   white-space: nowrap;
@@ -2269,7 +2270,7 @@ a {
   align-items: center;
   padding-block: 22px;
   color: var(--ink);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: 1.2rem;
   cursor: pointer;
   list-style: none;
