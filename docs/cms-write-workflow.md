@@ -50,6 +50,8 @@ Pages Functionsでは次の環境変数を使います。
 
 識別子を含む4項目すべてをCloudflare PagesのProduction secretとして設定します。Preview環境には設定せず、preview URLからproductionの認証endpointを呼ばれてもログインを拒否します。
 
+この構成は編集者本人のGitHub App user access tokenを使い、GitHub App private keyをPagesへ配布しません。CMS設定とAPIも `systems.acecore.net` 以外では配信・通信前に拒否します。将来App installation token方式を導入する場合も、private keyはProduction encrypted secretだけへ登録し、Preview環境には登録しません。
+
 ## CMS管理対象
 
 更新可能なJSONは次の13ファイルに完全列挙します。

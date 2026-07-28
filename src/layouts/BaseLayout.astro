@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import site from "../data/site.json";
+import { serializeJsonForHtmlScript } from "../lib/safe-json.ts";
 import "../styles/global.css";
 
 interface Props {
@@ -97,6 +98,7 @@ const baseJsonLd = [
 const jsonLd = pageJsonLd
   ? [...baseJsonLd, ...(Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd])]
   : baseJsonLd;
+const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
 ---
 
 <!doctype html>
@@ -141,7 +143,7 @@ const jsonLd = pageJsonLd
       )
     }
     <meta name="theme-color" content="#f2f0ea" />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={serializedJsonLd} />
     {
       site.ga4Id && (
         <script is:inline define:vars={{ ga4Id: site.ga4Id }}>

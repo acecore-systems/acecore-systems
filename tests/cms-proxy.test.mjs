@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, test } from "node:test";
 
 import {
@@ -9,8 +11,10 @@ import {
   isAllowedCmsDirectoryPath,
   isAllowedCmsWritePath,
 } from "../functions/admin/api/_cms-policy.ts";
+import { validateCmsAddition } from "../functions/admin/api/_content-validation.ts";
 import { clearGitHubEditorCacheForTests } from "../functions/admin/api/_github-oauth.ts";
-import { onRequestPost as handleGraphql } from "../functions/admin/api/graphql.ts";
+import { onRequestGet as handleCmsConfig } from "../functions/admin/config.yml.ts";
+import { onRequestPost as handleGraphqlRequest } from "../functions/admin/api/graphql.ts";
 import { onRequest as handleGithubRest } from "../functions/admin/api/github/[[path]].ts";
 
 const originalFetch = globalThis.fetch;
@@ -19,8 +23,21 @@ const mainSha = "a".repeat(40);
 const topicSha = "b".repeat(40);
 const oauthToken = "ghu_test-oauth-token";
 const cmsOrigin = "https://systems.acecore.net";
+const installationId = 987654321;
+const cmsEnv = {
+  CMS_GITHUB_APP_INSTALLATION_ID: String(installationId),
+};
 const repositoryApi = `https://api.github.com/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
 const contentPath = "src/data/home.json";
+const validContentBase64 = (
+  await readFile(new URL(`../${contentPath}`, import.meta.url))
+).toString("base64");
+const validPngBase64 = Buffer.from([
+  0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49,
+  0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x02,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45,
+  0x4e, 0x44, 0x00, 0x00, 0x00, 0x00,
+]).toString("base64");
 const rejectedPath = "src/pages/index.astro";
 const collectionWritePaths = [
   "src/data/site.json",
@@ -48,6 +65,9 @@ const editor = {
   type: "User",
 };
 
+const handleGraphql = (context) =>
+  handleGraphqlRequest({ env: cmsEnv, ...context });
+
 afterEach(() => {
   globalThis.fetch = originalFetch;
   console.error = originalConsoleError;
@@ -69,6 +89,96 @@ test("CMS対象pathだけを許可する", () => {
   assert.equal(isAllowedCmsWritePath("README.md"), false);
   assert.equal(isAllowedCmsWritePath("../README.md"), false);
   assert.equal(isAllowedCmsWritePath(`${contentPath}\nREADME.md`), false);
+});
+
+test("現行mainの全CMS対象ファイルを同期validatorが受理する", async () => {
+  const contentPaths = [contentPath, ...collectionWritePaths];
+  const uploadRoot = new URL("../public/uploads/", import.meta.url);
+  const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
+  const uploads = await readdir(uploadRoot, {
+    recursive: true,
+    withFileTypes: true,
+  }).catch((error) => {
+    if (error?.code === "ENOENT") return [];
+    throw error;
+  });
+
+  for (const path of contentPaths) {
+    const bytes = await readFile(new URL(`../${path}`, import.meta.url));
+    const validation = validateCmsAddition(path, bytes.toString("base64"));
+
+    assert.equal(validation.ok, true, path);
+  }
+
+  for (const entry of uploads) {
+    if (!entry.isFile()) continue;
+    const absolutePath = `${entry.parentPath}/${entry.name}`;
+    const relativePath = path
+      .relative(repositoryRoot, absolutePath)
+      .replaceAll("\\", "/");
+
+    if (!isAllowedCmsWritePath(relativePath)) continue;
+
+    const bytes = await readFile(absolutePath);
+    const validation = validateCmsAddition(
+      relativePath,
+      bytes.toString("base64"),
+    );
+
+    assert.equal(validation.ok, true, relativePath);
+  }
+});
+
+test("壊れたJSONと拡張子を偽装した画像を同期validatorが拒否する", () => {
+  assert.equal(
+    validateCmsAddition(contentPath, Buffer.from('{"hero":').toString("base64"))
+      .ok,
+    false,
+  );
+  assert.equal(
+    validateCmsAddition(
+      "public/uploads/spoofed.png",
+      Buffer.from('<svg onload="alert(1)"/>').toString("base64"),
+    ).ok,
+    false,
+  );
+});
+
+test("CMS由来のlink・form action・画像URLを安全なpathまたはHTTPSに限定する", async () => {
+  for (const dangerousUrl of [
+    "javascript:alert(1)",
+    "java&#x09;script:alert(1)",
+    "java&#13;script:alert(1)",
+    "java&Tab;script:alert(1)",
+    "java&NewLine;script:alert(1)",
+  ]) {
+    const homeValue = JSON.parse(
+      Buffer.from(validContentBase64, "base64").toString("utf8"),
+    );
+    homeValue.primaryCtaHref = dangerousUrl;
+
+    assert.equal(
+      validateCmsAddition(
+        contentPath,
+        Buffer.from(JSON.stringify(homeValue)).toString("base64"),
+      ).ok,
+      false,
+      dangerousUrl,
+    );
+  }
+
+  const siteValue = JSON.parse(
+    await readFile(new URL("../src/data/site.json", import.meta.url), "utf8"),
+  );
+  siteValue.contactFormAction = "http://example.com/contact";
+
+  assert.equal(
+    validateCmsAddition(
+      "src/data/site.json",
+      Buffer.from(JSON.stringify(siteValue)).toString("base64"),
+    ).ok,
+    false,
+  );
 });
 
 test("CMS設定で公開したfolderとfileがproxyの許可範囲に収まる", async () => {
@@ -146,6 +256,20 @@ test("previewのCMS APIをGitHubへの通信前に拒否する", async () => {
   assert.equal(called, false);
 });
 
+test("previewではCMS設定を配信しない", async () => {
+  let nextCalled = false;
+  const response = await handleCmsConfig({
+    request: new Request("https://cms-preview.pages.dev/admin/config.yml"),
+    next: async () => {
+      nextCalled = true;
+      return new Response("backend:\n  name: github\n");
+    },
+  });
+
+  assert.equal(response.status, 404);
+  assert.equal(nextCalled, false);
+});
+
 test("repositoryへのpush権限がないGitHub userを拒否する", async () => {
   mockGitHub(async () => {
     throw new Error("CMS operation must not continue");
@@ -157,6 +281,30 @@ test("repositoryへのpush権限がないGitHub userを拒否する", async () =
 
   assert.equal(response.status, 403);
   assert.match((await response.json()).message, /write権限/);
+});
+
+test("保存直前にPull requests writeを持つGitHub Appを拒否する", async () => {
+  mockGitHub(
+    async () => {
+      throw new Error("CMS mutation must not continue");
+    },
+    true,
+    {
+      contents: "write",
+      metadata: "read",
+      pull_requests: "write",
+    },
+  );
+
+  const response = await handleGraphql({
+    request: graphqlRequest(),
+  });
+
+  assert.equal(response.status, 503);
+  assert.match(
+    (await response.json()).message,
+    /Contents write以外のwrite権限/,
+  );
 });
 
 test("Sveltia CMS 0.172のlast-commit queryを許可する", async () => {
@@ -330,11 +478,11 @@ test("画像と本文をmainの1 commitへ保存して直接公開する", async
             additions: [
               {
                 path: "public/uploads/example.png",
-                contents: Buffer.from("image").toString("base64"),
+                contents: validPngBase64,
               },
               {
                 path: contentPath,
-                contents: Buffer.from("content").toString("base64"),
+                contents: validContentBase64,
               },
             ],
             deletions: [],
@@ -364,7 +512,7 @@ test("画像と本文をmainの1 commitへ保存して直接公開する", async
 });
 
 test("direct保存の応答喪失後にmarker・親SHA・path・blob SHAを照合して復旧する", async () => {
-  const expectedContents = Buffer.from("content").toString("base64");
+  const expectedContents = validContentBase64;
   const expectedBlobSha = gitBlobOid(expectedContents);
   let mainRefReads = 0;
   let operationMarker = "";
@@ -822,7 +970,11 @@ test("REST writeを認証前に拒否する", async () => {
   assert.equal(called, false);
 });
 
-function mockGitHub(handler, push = true) {
+function mockGitHub(
+  handler,
+  push = true,
+  installationPermissions = { contents: "write", metadata: "read" },
+) {
   globalThis.fetch = async (input, init = {}) => {
     const url = String(input);
     const body = typeof init.body === "string" ? JSON.parse(init.body) : null;
@@ -838,6 +990,28 @@ function mockGitHub(handler, push = true) {
     if (url === repositoryApi) {
       return jsonResponse({
         permissions: { push },
+      });
+    }
+
+    if (url === `https://api.github.com/user/installations/${installationId}`) {
+      return jsonResponse({
+        permissions: installationPermissions,
+      });
+    }
+
+    if (
+      url ===
+      `https://api.github.com/user/installations/${installationId}/repositories?per_page=100`
+    ) {
+      return jsonResponse({
+        repositories: [
+          {
+            full_name: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            id: 1268097850,
+            permissions: { push: true },
+          },
+        ],
+        total_count: 1,
       });
     }
 
@@ -859,7 +1033,7 @@ function graphqlRequest({
         additions: [
           {
             path: contentPath,
-            contents: Buffer.from("content").toString("base64"),
+            contents: validContentBase64,
           },
         ],
         deletions: [],

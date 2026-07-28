@@ -13,6 +13,8 @@ const env = {
   CMS_GITHUB_APP_INSTALLATION_ID: "987654321",
   CMS_OAUTH_STATE_SECRET: "s".repeat(32),
 };
+const installationUrl = `https://api.github.com/user/installations/${env.CMS_GITHUB_APP_INSTALLATION_ID}`;
+const installationRepositoriesUrl = `${installationUrl}/repositories?per_page=100`;
 
 afterEach(() => {
   globalThis.fetch = originalFetch;
@@ -112,10 +114,13 @@ test("callbackはstate・PKCE・installation・repositoryを照合してtokenを
       });
     }
 
-    if (
-      url ===
-      `https://api.github.com/user/installations/${env.CMS_GITHUB_APP_INSTALLATION_ID}/repositories?per_page=100`
-    ) {
+    if (url === installationUrl) {
+      return jsonResponse({
+        permissions: { contents: "write", metadata: "read" },
+      });
+    }
+
+    if (url === installationRepositoriesUrl) {
       assert.equal(
         new Headers(init.headers).get("Authorization"),
         `Bearer ${accessToken}`,
@@ -143,7 +148,7 @@ test("callbackはstate・PKCE・installation・repositoryを照合してtokenを
   const html = await response.text();
 
   assert.equal(response.status, 200);
-  assert.equal(requests.length, 2);
+  assert.equal(requests.length, 3);
   assert.match(html, /authorization:github:success/);
   assert.match(html, new RegExp(accessToken));
   assert.match(html, /event\.origin !== openerOrigin/);
@@ -221,6 +226,12 @@ test("OAuth App tokenや対象外repositoryをcallbackから返さない", async
       });
     }
 
+    if (url === installationUrl) {
+      return jsonResponse({
+        permissions: { contents: "write", metadata: "read" },
+      });
+    }
+
     return jsonResponse({
       repositories: [
         {
@@ -241,6 +252,35 @@ test("OAuth App tokenや対象外repositoryをcallbackから返さない", async
   assert.equal(broadInstallationAttempt.response.status, 400);
   assert.doesNotMatch(broadInstallationAttempt.html, /ghu_scoped-token/);
   assert.match(broadInstallationAttempt.html, /編集する権限がありません/);
+});
+
+test("Pull requests writeを含むGitHub App権限をcallbackで拒否する", async () => {
+  const attempt = await callbackAttempt(async (url) => {
+    if (url === "https://github.com/login/oauth/access_token") {
+      return jsonResponse({
+        access_token: "ghu_overprivileged-token",
+        expires_in: 3600,
+        refresh_token: "ghr_refresh-token",
+        refresh_token_expires_in: 3600 * 24,
+        scope: "",
+        token_type: "bearer",
+      });
+    }
+
+    assert.equal(url, installationUrl);
+
+    return jsonResponse({
+      permissions: {
+        contents: "write",
+        metadata: "read",
+        pull_requests: "write",
+      },
+    });
+  });
+
+  assert.equal(attempt.response.status, 400);
+  assert.doesNotMatch(attempt.html, /ghu_overprivileged-token/);
+  assert.match(attempt.html, /Contents write以外のwrite権限/);
 });
 
 async function callbackAttempt(fetchHandler) {

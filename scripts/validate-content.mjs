@@ -33,6 +33,7 @@ const expectedCmsFolders = [
 function validateCmsConfig() {
   const config = readText("public/admin/config.yml");
   const graphql = readText("functions/admin/api/graphql.ts");
+  const policy = readText("functions/admin/api/_cms-policy.ts");
   const oauth = readText("functions/admin/api/_github-oauth.ts");
   const appOAuth = readText("functions/admin/api/_github-app-oauth.ts");
   const configFunction = readText("functions/admin/config.yml.ts");
@@ -98,7 +99,11 @@ function validateCmsConfig() {
     oauth.includes("repository.permissions.push !== true") &&
       oauth.includes('path: "/user"') &&
       oauth.includes('token.startsWith("ghu_")') &&
-      oauth.includes('CMS_PRODUCTION_HOSTNAME = "systems.acecore.net"'),
+      oauth.includes("CMS_PRODUCTION_HOSTNAME") &&
+      policy.includes('CMS_PRODUCTION_HOSTNAME = "systems.acecore.net"') &&
+      configFunction.includes(
+        "new URL(request.url).hostname !== CMS_PRODUCTION_HOSTNAME",
+      ),
     true,
     "CMS proxy must be production-only and validate repository write access",
   );
