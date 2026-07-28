@@ -297,6 +297,9 @@ export function callbackHtmlResponse({
     }
   `;
 
+  // `/admin/` 側の `same-origin-allow-popups` が OAuth popup を保持する。
+  // callback も同じ値にすると GitHub から戻る navigation で opener が切れ、
+  // Sveltia CMS が popup.closed と判定するため、callback は明示的に分離しない。
   return new Response(
     `<!doctype html>
 <html lang="ja">
@@ -322,7 +325,7 @@ export function callbackHtmlResponse({
           "form-action 'none'",
         ].join("; "),
         "Content-Type": "text/html; charset=utf-8",
-        "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+        "Cross-Origin-Opener-Policy": "unsafe-none",
         "Referrer-Policy": "no-referrer",
         "Set-Cookie": clearStateCookie(),
         "X-Content-Type-Options": "nosniff",
