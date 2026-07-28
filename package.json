@@ -15,7 +15,7 @@
     "preview": "astro preview",
     "validate:content": "node scripts/validate-content.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
-    "test:cms": "node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs",
+    "test:cms": "node --import=./scripts/json-module-loader.mjs --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs",
     "typecheck:functions": "tsc --project tsconfig.functions.json",
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name acecore-systems",
     "format:check": "prettier . --check"
