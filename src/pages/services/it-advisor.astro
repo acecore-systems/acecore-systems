@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import AdvisorPriceSummary from "../../components/AdvisorPriceSummary.astro";
 import ServiceHandoff from "../../components/ServiceHandoff.astro";
+import ServiceVisual from "../../components/ServiceVisual.astro";
 import data from "../../data/it-advisor.json";
 import pricing from "../../data/pricing.json";
 import site from "../../data/site.json";
@@ -148,6 +149,15 @@ const jsonLd = [
         priceNote={data.priceNote}
         placement="hero"
       />
+    </div>
+  </section>
+
+  <section
+    class="service-story-visual-section"
+    aria-label={`${data.title}の支援イメージ`}
+  >
+    <div class="container">
+      <ServiceVisual {...data.visual} />
     </div>
   </section>
 

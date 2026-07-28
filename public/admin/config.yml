@@ -175,6 +175,13 @@ collections:
           - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
           - { name: heroTitle, label: ヒーロータイトル, widget: string }
           - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: 支援イメージ
+            name: visual
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
           - { name: indexSummary, label: 一覧用説明, widget: text }
           - label: 一覧用トピック
             name: indexTopics
@@ -464,6 +471,14 @@ collections:
       - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
       - { name: heroTitle, label: ヒーロータイトル, widget: string }
       - { name: heroLead, label: ヒーローリード, widget: text }
+      - label: 支援イメージ
+        name: visual
+        widget: object
+        required: false
+        fields:
+          - { name: src, label: 画像, widget: image }
+          - { name: alt, label: 画像の代替テキスト, widget: string }
+          - { name: caption, label: 画像の説明, widget: text }
       - { name: indexSummary, label: 一覧用説明, widget: text }
       - label: 一覧用トピック
         name: indexTopics

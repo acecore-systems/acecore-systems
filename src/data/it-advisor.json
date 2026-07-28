@@ -4,6 +4,11 @@
   "heroEyebrow": "IT ADVISOR ENGINEER — AI / DEPLOY / OPERATIONS",
   "heroTitle": "AIで作って、\n止まっていませんか。",
   "heroLead": "自社やAIで作ったコード・試作の確認から、本番公開、社内定着、運用改善まで。専任のIT担当者を置くほどではない企業に、必要なときに相談できるエンジニアが伴走します。",
+  "visual": {
+    "src": "/images/service-it-advisor-bridge.webp",
+    "alt": "完成済みの濃紺の仕組みと公開・運用基盤が配線で安全につながる様子",
+    "caption": "すでにある開発物と公開基盤のあいだをつなぎ、安全に運用できる状態へ整えます。"
+  },
   "indexSummary": "AI導入、Webアプリのデプロイ、IT基盤の判断を、業務整理から公開・運用改善まで伴走します。",
   "indexTopics": ["AI導入", "デプロイ", "IT基盤", "技術相談"],
   "heroPrimaryCta": "いま止まっているところを相談する",

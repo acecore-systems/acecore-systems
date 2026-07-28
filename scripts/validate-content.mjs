@@ -26,6 +26,22 @@ const validateHandoff = (handoff, label) => {
     `${label}: href must target a service route`,
   );
 };
+const validateVisual = (visual, label) => {
+  assert.ok(visual && typeof visual === "object", `${label} is required`);
+  for (const field of ["src", "alt", "caption"]) {
+    requireText(visual[field], `${label}: ${field}`);
+  }
+  assert.match(
+    visual.src,
+    /^\/(?:images|uploads)\/.+\.(?:avif|jpe?g|png|webp)$/i,
+    `${label}: src must reference a public image asset`,
+  );
+  assert.equal(
+    existsSync(join(root, "public", visual.src.slice(1))),
+    true,
+    `${label}: ${visual.src} missing`,
+  );
+};
 
 const expectedCmsFiles = [
   "src/data/site.json",
@@ -268,6 +284,11 @@ for (const source of serviceSources) {
   assert.equal(data.offerings.length > 0, true, `${source.data}: offerings`);
   assert.equal(data.process.length > 0, true, `${source.data}: process`);
   assert.equal(data.resources.length > 0, true, `${source.data}: resources`);
+  if (source.route === "/services/development/") {
+    validateVisual(data.visual, `${source.data}: visual`);
+  } else if (data.visual) {
+    validateVisual(data.visual, `${source.data}: visual`);
+  }
   if (data.handoff) {
     validateHandoff(data.handoff, `${source.data}: handoff`);
   }
@@ -322,6 +343,7 @@ assert.equal(
 const advisor = readJson(advisorSource.data);
 requireText(advisor.title, `${advisorSource.data}: title`);
 requireText(advisor.description, `${advisorSource.data}: description`);
+validateVisual(advisor.visual, `${advisorSource.data}: visual`);
 requireText(advisor.indexSummary, `${advisorSource.data}: indexSummary`);
 assert.equal(
   advisor.indexTopics.length > 0,

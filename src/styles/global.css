@@ -1500,6 +1500,13 @@ a {
 
 /* Service handoff */
 
+.service-story-visual-section {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-block: clamp(30px, 4vw, 54px);
+  background: var(--paper);
+}
+
 .service-handoff {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ServiceHandoff from "./ServiceHandoff.astro";
+import ServiceVisual from "./ServiceVisual.astro";
 import site from "../data/site.json";
 import pricing from "../data/pricing.json";
 import itAdvisor from "../data/it-advisor.json";
@@ -11,6 +12,7 @@ import operations from "../data/service-details/operations.json";
 
 type ServiceDetail = typeof siteFunctions & {
   handoff?: typeof development.handoff;
+  visual?: typeof development.visual;
 };
 
 interface Props {
@@ -127,6 +129,19 @@ const jsonLd = [
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
+
+  {
+    data.visual && (
+      <section
+        class="service-story-visual-section"
+        aria-label={`${data.title}の支援イメージ`}
+      >
+        <div class="container">
+          <ServiceVisual {...data.visual} />
+        </div>
+      </section>
+    )
+  }
 
   <section
     class="page-section detail-introduction"

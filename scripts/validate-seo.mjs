@@ -175,8 +175,29 @@ function validateHandoff(html, expectedHref, label) {
   );
 }
 
+function validateServiceVisual(html, visual, label) {
+  assert.equal(
+    count(html, `src="${visual.src}"`),
+    1,
+    `${label}: service visual must appear exactly once`,
+  );
+  assert.equal(
+    html.includes(`alt="${visual.alt}"`),
+    true,
+    `${label}: service visual alt text missing`,
+  );
+}
+
 validateHandoff(advisorPage, developmentRoute, "IT advisor");
 validateHandoff(developmentPage, advisorRoute, "development");
+validateServiceVisual(advisorPage, advisorData.visual, "IT advisor");
+validateServiceVisual(developmentPage, developmentData.visual, "development");
+validateServiceVisual(services, advisorData.visual, "services IT advisor card");
+validateServiceVisual(
+  services,
+  developmentData.visual,
+  "services development card",
+);
 
 assert.equal(
   count(advisorPage, "data-advisor-pricing-summary"),

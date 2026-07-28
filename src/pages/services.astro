@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceVisual from "../components/ServiceVisual.astro";
 import data from "../data/services.json";
 import itAdvisor from "../data/it-advisor.json";
 import development from "../data/service-details/development.json";
@@ -9,14 +10,19 @@ import operations from "../data/service-details/operations.json";
 
 const primaryServiceDetails = [
   {
+    id: "development",
     href: "/services/development/",
     data: development,
   },
   {
+    id: "it-advisor",
     href: "/services/it-advisor/",
     data: itAdvisor,
   },
 ];
+const entryVisuals = new Map(
+  primaryServiceDetails.map((detail) => [detail.id, detail.data.visual]),
+);
 
 const supportingServiceDetails = [
   {
@@ -78,23 +84,33 @@ const serviceDetailGroups = [
       </header>
       <div class="service-entry-points">
         {
-          data.entryPoints.map((entry, index) => (
-            <a
-              class="service-entry-point"
-              id={`service-entry-${entry.id}`}
-              href={entry.href}
-            >
-              <div class="service-entry-point__heading">
-                <p class="editorial-index">
-                  Route {String(index + 1).padStart(2, "0")}
-                </p>
-                <p class="editorial-eyebrow">{entry.eyebrow}</p>
-              </div>
-              <h3>{entry.title}</h3>
-              <p class="service-entry-point__body">{entry.body}</p>
-              <span>{entry.label}</span>
-            </a>
-          ))
+          data.entryPoints.map((entry, index) => {
+            const visual = entryVisuals.get(entry.id);
+            return (
+              <a
+                class="service-entry-point"
+                id={`service-entry-${entry.id}`}
+                href={entry.href}
+              >
+                <div class="service-entry-point__heading">
+                  <p class="editorial-index">
+                    Route {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <p class="editorial-eyebrow">{entry.eyebrow}</p>
+                </div>
+                {visual && (
+                  <ServiceVisual
+                    {...visual}
+                    variant="card"
+                    showCaption={false}
+                  />
+                )}
+                <h3>{entry.title}</h3>
+                <p class="service-entry-point__body">{entry.body}</p>
+                <span>{entry.label}</span>
+              </a>
+            );
+          })
         }
       </div>
     </div>
@@ -243,7 +259,7 @@ const serviceDetailGroups = [
 
   .service-entry-point {
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto auto auto 1fr auto;
     min-height: 420px;
     border-right: 1px solid var(--line);
     padding: clamp(28px, 4vw, 48px);
@@ -293,7 +309,7 @@ const serviceDetailGroups = [
 
   .service-entry-point h3 {
     max-width: 17em;
-    margin-top: 58px;
+    margin-top: 28px;
   }
 
   .service-entry-point__body {
@@ -396,7 +412,7 @@ const serviceDetailGroups = [
     }
 
     .service-entry-point h3 {
-      margin-top: 36px;
+      margin-top: 24px;
     }
   }
 </style>
