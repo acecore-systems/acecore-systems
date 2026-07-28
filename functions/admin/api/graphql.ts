@@ -46,14 +46,6 @@ type CmsCommitInput = {
   deletions: CmsDeletion[];
 };
 
-type PullRequestSummary = {
-  branch: string;
-  head_sha: string;
-  node_id: string;
-  number: number;
-  html_url: string;
-};
-
 const SHA_PATTERN = /^[a-f0-9]{40}$/i;
 const BASE64_PATTERN =
   /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
@@ -62,7 +54,6 @@ const MAX_REQUEST_BYTES = 36 * 1024 * 1024;
 const MAX_CHANGE_COUNT = 100;
 const MAX_TOTAL_CONTENT_BYTES = 25 * 1024 * 1024;
 const MAX_GRAPHQL_BLOB_SIZE = 10 * 1024 * 1024;
-const CMS_PUBLISH_BRANCH = "cms/systems/publish";
 
 export const onRequestPost: PagesFunction = async ({ request }) => {
   try {
@@ -173,23 +164,6 @@ async function handleCommitMutation({
     ...commitInput.additions.map(({ path }) => path),
     ...commitInput.deletions.map(({ path }) => path),
   ];
-  await verifyPublishSettings(token);
-
-  const pendingPullRequest = await findPendingCmsPullRequest(token);
-
-  if (pendingPullRequest) {
-    return json(
-      {
-        message:
-          "前のCMS保存を公開中です。公開完了後にCMSを再読み込みしてから保存してください。",
-        pull_request: {
-          number: pendingPullRequest.number,
-          html_url: pendingPullRequest.html_url,
-        },
-      },
-      409,
-    );
-  }
 
   const mainRef = await githubJson<unknown>({
     path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/ref/heads/${CMS_REPOSITORY.branch}`,
@@ -211,13 +185,9 @@ async function handleCommitMutation({
     );
   }
 
-  const branch = await createCmsBranch({
-    baseSha: mainSha,
-    token,
-  });
+  const operationMarker = `CMS-Operation: ${crypto.randomUUID()}`;
   const mutation = buildCmsCommitMutation(commitInput.additions);
   let githubResult: Record<string, unknown>;
-  let commitOid: string;
 
   try {
     githubResult = await githubJson<Record<string, unknown>>({
@@ -227,7 +197,7 @@ async function handleCommitMutation({
           input: {
             branch: {
               repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
-              branchName: branch,
+              branchName: CMS_REPOSITORY.branch,
             },
             expectedHeadOid: mainSha,
             fileChanges: {
@@ -238,6 +208,14 @@ async function handleCommitMutation({
               deletions: commitInput.deletions,
             },
             message: {
+              body: [
+                "Acecore Systems CMSから検証済みコンテンツを直接公開しました。",
+                `Editor: @${auth.user.login}`,
+                operationMarker,
+                "",
+                "Changed files:",
+                ...changedPaths.map((path) => `- ${summarizePath(path)}`),
+              ].join("\n"),
               headline: buildCommitHeadline(changedPaths),
             },
           },
@@ -248,49 +226,18 @@ async function handleCommitMutation({
       token,
     });
 
-    commitOid = ensureCommitSucceeded(githubResult);
+    ensureCommitSucceeded(githubResult);
   } catch (error) {
-    await deleteCmsBranch(branch, token);
-    throw error;
-  }
-
-  let pullRequest: PullRequestSummary;
-
-  try {
-    pullRequest = await openPullRequest({
-      branch,
-      changedPaths,
-      headSha: commitOid,
-      login: auth.user.login,
+    githubResult = await reconcileAmbiguousCommit({
+      commitInput,
+      expectedHeadOid: mainSha,
+      operationMarker,
+      originalError: error,
       token,
     });
-  } catch (error) {
-    let existingPullRequest: PullRequestSummary | null;
-
-    try {
-      existingPullRequest = await findOpenPullRequest(branch, commitOid, token);
-    } catch (recoveryError) {
-      console.error(
-        JSON.stringify({
-          message: "Failed to recover CMS pull request",
-          branch,
-          error:
-            recoveryError instanceof Error
-              ? recoveryError.message
-              : String(recoveryError),
-        }),
-      );
-
-      throw error;
-    }
-
-    if (!existingPullRequest) {
-      await deleteCmsBranch(branch, token);
-      throw error;
-    }
-
-    pullRequest = existingPullRequest;
   }
+
+  const commit = ensureCommitSucceeded(githubResult);
 
   const extensions = isRecord(githubResult.extensions)
     ? githubResult.extensions
@@ -301,16 +248,9 @@ async function handleCommitMutation({
     extensions: {
       ...extensions,
       cms: {
-        publication: {
-          queued: true,
-          merge_method: "SQUASH",
-          publisher: "CMS Publish Guard",
-        },
-        branch,
-        pull_request: {
-          number: pullRequest.number,
-          html_url: pullRequest.html_url,
-        },
+        branch: CMS_REPOSITORY.branch,
+        commit_oid: commit.oid,
+        mode: "direct",
       },
     },
   });
@@ -737,270 +677,293 @@ function parseCmsCommitInput(value: unknown): CmsCommitInput | null {
   };
 }
 
-async function createCmsBranch({
-  baseSha,
+async function reconcileAmbiguousCommit({
+  commitInput,
+  expectedHeadOid,
+  operationMarker,
+  originalError,
   token,
 }: {
-  baseSha: string;
+  commitInput: CmsCommitInput;
+  expectedHeadOid: string;
+  operationMarker: string;
+  originalError: unknown;
   token: string;
 }) {
+  let currentHeadOid: string;
+
   try {
-    await githubJson({
-      body: {
-        ref: `refs/heads/${CMS_PUBLISH_BRANCH}`,
-        sha: baseSha,
+    const mainRef = await githubJson<unknown>({
+      path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/ref/heads/${CMS_REPOSITORY.branch}`,
+      token,
+    });
+    const mainSha = getGitRefSha(mainRef);
+
+    if (!mainSha) {
+      throw new Error("GitHub branch response is invalid");
+    }
+
+    currentHeadOid = mainSha;
+  } catch (error) {
+    logReconciliationError("head", error);
+    throw ambiguousCommitError();
+  }
+
+  if (currentHeadOid === expectedHeadOid) {
+    throw originalError;
+  }
+
+  let commits: unknown;
+
+  try {
+    commits = await githubJson<unknown>({
+      path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/commits?sha=${CMS_REPOSITORY.branch}&per_page=100`,
+      token,
+    });
+  } catch (error) {
+    logReconciliationError("history", error);
+    throw ambiguousCommitError();
+  }
+
+  const committed = findCmsOperationCommit(
+    commits,
+    expectedHeadOid,
+    operationMarker,
+  );
+
+  if (!committed) {
+    throw staleMainError();
+  }
+
+  let verified: boolean;
+
+  try {
+    verified = await verifyCmsOperationCommit({
+      commit: committed,
+      commitInput,
+      token,
+    });
+  } catch (error) {
+    logReconciliationError("content", error);
+    throw ambiguousCommitError();
+  }
+
+  if (!verified) {
+    throw staleMainError();
+  }
+
+  return {
+    data: {
+      createCommitOnBranch: {
+        commit: committed,
       },
-      method: "POST",
-      path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/refs`,
-      token,
-    });
-  } catch (error) {
-    if (error instanceof GitHubApiError && error.status === 422) {
-      throw new GitHubApiError(
-        "前のCMS保存を公開中です。公開完了後にCMSを再読み込みしてから保存してください。",
-        409,
-      );
-    }
-
-    throw error;
-  }
-
-  return CMS_PUBLISH_BRANCH;
+    },
+  };
 }
 
-async function deleteCmsBranch(branch: string, token: string) {
-  try {
-    const encodedBranch = branch.split("/").map(encodeURIComponent).join("/");
-    const response = await githubRequest({
-      method: "DELETE",
-      path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/refs/heads/${encodedBranch}`,
-      token,
-    });
+function findCmsOperationCommit(
+  value: unknown,
+  expectedHeadOid: string,
+  operationMarker: string,
+) {
+  if (!Array.isArray(value)) return null;
 
-    if (!response.ok && response.status !== 404) {
-      console.error(
-        JSON.stringify({
-          message: "Failed to remove unused CMS branch",
-          branch,
-          status: response.status,
-        }),
-      );
+  for (const item of value) {
+    if (
+      !isRecord(item) ||
+      typeof item.sha !== "string" ||
+      !SHA_PATTERN.test(item.sha) ||
+      !isRecord(item.commit) ||
+      typeof item.commit.message !== "string" ||
+      !item.commit.message
+        .split(/\r?\n/)
+        .some((line) => line.trim() === operationMarker) ||
+      !Array.isArray(item.parents) ||
+      item.parents.length !== 1 ||
+      !isRecord(item.parents[0]) ||
+      item.parents[0].sha !== expectedHeadOid
+    ) {
+      continue;
     }
-  } catch (error) {
-    console.error(
-      JSON.stringify({
-        message: "Failed to remove unused CMS branch",
-        branch,
-        error: error instanceof Error ? error.message : String(error),
-      }),
-    );
+
+    const committedDate =
+      isRecord(item.commit.committer) &&
+      typeof item.commit.committer.date === "string"
+        ? item.commit.committer.date
+        : undefined;
+
+    return {
+      oid: item.sha,
+      ...(committedDate ? { committedDate } : {}),
+    };
   }
+
+  return null;
 }
 
-async function openPullRequest({
-  branch,
-  changedPaths,
-  headSha,
-  login,
+async function verifyCmsOperationCommit({
+  commit,
+  commitInput,
   token,
 }: {
-  branch: string;
-  changedPaths: string[];
-  headSha: string;
-  login: string;
+  commit: { oid: string; committedDate?: string };
+  commitInput: CmsCommitInput;
   token: string;
 }) {
-  const primaryPath = summarizePath(changedPaths[0]);
-  const extraCount = changedPaths.length - 1;
-  const title = `cms: update ${primaryPath}${extraCount > 0 ? ` (+${extraCount})` : ""}`;
-
-  const result = await githubJson<unknown>({
-    body: {
-      base: CMS_REPOSITORY.branch,
-      body: [
-        "Sveltia CMS の公開処理をGitHub認証済みユーザーから受け付けました。",
-        "",
-        `- GitHub user: @${login}`,
-        "- Files:",
-        ...changedPaths.map((path) => `  - \`${path}\``),
-        "",
-        "画像とコンテンツは同じ commit に含まれています。",
-        "required checksに成功すると自動でsquash mergeされ、mainから本番公開されます。",
-        "検証に失敗した場合は公開されません。",
-      ].join("\n"),
-      head: branch,
-      title,
-    },
-    method: "POST",
-    path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/pulls`,
+  const details = await githubJson<unknown>({
+    path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/commits/${commit.oid}?per_page=100`,
     token,
   });
 
   if (
-    !isRecord(result) ||
-    typeof result.node_id !== "string" ||
-    typeof result.number !== "number" ||
-    typeof result.html_url !== "string" ||
-    !isRecord(result.head) ||
-    result.head.ref !== branch ||
-    result.head.sha !== headSha ||
-    !isRecord(result.head.repo) ||
-    result.head.repo.full_name !==
-      `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}` ||
-    !isRecord(result.base) ||
-    result.base.ref !== CMS_REPOSITORY.branch ||
-    !isRecord(result.base.repo) ||
-    result.base.repo.full_name !==
-      `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`
+    !isRecord(details) ||
+    details.sha !== commit.oid ||
+    !Array.isArray(details.files)
   ) {
-    throw new GitHubApiError("GitHub pull request response が不正です。", 502);
+    throw new GitHubApiError("GitHub commit response が不正です。", 502);
   }
 
-  return {
-    branch,
-    head_sha: headSha,
-    node_id: result.node_id,
-    number: result.number,
-    html_url: result.html_url,
-  };
-}
+  const actualPaths = new Set<string>();
 
-async function findOpenPullRequest(
-  branch: string,
-  headSha: string,
-  token: string,
-): Promise<PullRequestSummary | null> {
-  const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
-  const query = new URLSearchParams({
-    state: "open",
-    head: `${CMS_REPOSITORY.owner}:${branch}`,
-    base: CMS_REPOSITORY.branch,
-  });
-  const result = await githubJson<unknown>({
-    path: `/repos/${repository}/pulls?${query.toString()}`,
-    token,
-  });
-
-  if (!Array.isArray(result)) {
-    throw new GitHubApiError(
-      "GitHub pull request lookup response が不正です。",
-      502,
-    );
-  }
-
-  if (result.length === 0) return null;
-
-  const pullRequest = result.find((candidate) => {
+  for (const file of details.files) {
     if (
-      !isRecord(candidate) ||
-      candidate.state !== "open" ||
-      typeof candidate.node_id !== "string" ||
-      typeof candidate.number !== "number" ||
-      typeof candidate.html_url !== "string" ||
-      !isRecord(candidate.head) ||
-      candidate.head.ref !== branch ||
-      candidate.head.sha !== headSha ||
-      !isRecord(candidate.head.repo) ||
-      candidate.head.repo.full_name !== repository ||
-      !isRecord(candidate.base) ||
-      candidate.base.ref !== CMS_REPOSITORY.branch ||
-      !isRecord(candidate.base.repo) ||
-      candidate.base.repo.full_name !== repository
+      !isRecord(file) ||
+      typeof file.filename !== "string" ||
+      normalizeCmsPath(file.filename) !== file.filename
     ) {
+      throw new GitHubApiError(
+        "GitHub commit files response が不正です。",
+        502,
+      );
+    }
+
+    actualPaths.add(file.filename);
+
+    if (file.status === "renamed") {
+      if (
+        typeof file.previous_filename !== "string" ||
+        normalizeCmsPath(file.previous_filename) !== file.previous_filename
+      ) {
+        throw new GitHubApiError(
+          "GitHub renamed file response が不正です。",
+          502,
+        );
+      }
+
+      actualPaths.add(file.previous_filename);
+    }
+  }
+
+  const expectedPaths = new Set([
+    ...commitInput.additions.map(({ path }) => path),
+    ...commitInput.deletions.map(({ path }) => path),
+  ]);
+
+  if (
+    actualPaths.size !== expectedPaths.size ||
+    Array.from(expectedPaths).some((path) => !actualPaths.has(path))
+  ) {
+    return false;
+  }
+
+  const tree = await fetchCmsTree(token, commit.oid);
+  const blobs = new Map(
+    tree.tree
+      .filter((item) => item.type === "blob")
+      .map((item) => [item.path, item.sha]),
+  );
+
+  for (const addition of commitInput.additions) {
+    if (blobs.get(addition.path) !== (await getGitBlobOid(addition))) {
       return false;
     }
-
-    return true;
-  });
-
-  if (!pullRequest || !isRecord(pullRequest)) {
-    throw new GitHubApiError(
-      "GitHub pull request lookup response が不正です。",
-      502,
-    );
   }
 
-  return {
-    branch,
-    head_sha: headSha,
-    node_id: pullRequest.node_id as string,
-    number: pullRequest.number as number,
-    html_url: pullRequest.html_url as string,
-  };
+  return commitInput.deletions.every(({ path }) => !blobs.has(path));
 }
 
-async function verifyPublishSettings(token: string) {
-  const result = await githubJson<unknown>({
-    path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
-    token,
-  });
+async function getGitBlobOid(addition: CmsAddition) {
+  const header = new TextEncoder().encode(`blob ${addition.byteSize}\0`);
+  const object = new Uint8Array(header.byteLength + addition.byteSize);
 
-  if (!isRecord(result) || result.allow_squash_merge !== true) {
-    throw new GitHubApiError(
-      "CMS自動公開のsquash merge設定が有効ではありません。",
-      503,
-    );
+  object.set(header);
+  decodeBase64Into(addition.contents, object, header.byteLength);
+
+  const digest = await crypto.subtle.digest("SHA-1", object);
+
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+}
+
+function decodeBase64Into(
+  value: string,
+  destination: Uint8Array,
+  offset: number,
+) {
+  let accumulator = 0;
+  let bitCount = 0;
+  let outputIndex = offset;
+
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+
+    if (code === 61) break;
+
+    const decoded = decodeBase64Char(code);
+
+    if (decoded < 0) {
+      throw new GitHubApiError("CMS base64 data が不正です。", 400);
+    }
+
+    accumulator = (accumulator << 6) | decoded;
+    bitCount += 6;
+
+    if (bitCount < 8) continue;
+
+    bitCount -= 8;
+    destination[outputIndex] = (accumulator >> bitCount) & 0xff;
+    outputIndex += 1;
+    accumulator &= (1 << bitCount) - 1;
+  }
+
+  if (outputIndex !== destination.byteLength) {
+    throw new GitHubApiError("CMS base64 size が不正です。", 400);
   }
 }
 
-async function findPendingCmsPullRequest(
-  token: string,
-): Promise<PullRequestSummary | null> {
-  const repository = `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
-  const query = new URLSearchParams({
-    state: "open",
-    base: CMS_REPOSITORY.branch,
-    per_page: "100",
-  });
-  const result = await githubJson<unknown>({
-    path: `/repos/${repository}/pulls?${query.toString()}`,
-    token,
-  });
+function decodeBase64Char(code: number) {
+  if (code >= 65 && code <= 90) return code - 65;
+  if (code >= 97 && code <= 122) return code - 71;
+  if (code >= 48 && code <= 57) return code + 4;
+  if (code === 43) return 62;
+  if (code === 47) return 63;
 
-  if (!Array.isArray(result)) {
-    throw new GitHubApiError("GitHub pull request一覧の応答が不正です。", 502);
-  }
+  return -1;
+}
 
-  const candidate = result.find((value) => {
-    return (
-      isRecord(value) &&
-      value.state === "open" &&
-      isRecord(value.head) &&
-      typeof value.head.ref === "string" &&
-      value.head.ref.startsWith("cms/systems/") &&
-      isRecord(value.head.repo) &&
-      value.head.repo.full_name === repository &&
-      isRecord(value.base) &&
-      value.base.ref === CMS_REPOSITORY.branch &&
-      isRecord(value.base.repo) &&
-      value.base.repo.full_name === repository
-    );
-  });
+function logReconciliationError(stage: string, error: unknown) {
+  console.error(
+    JSON.stringify({
+      message: "Failed to reconcile CMS direct commit",
+      stage,
+      error: error instanceof Error ? error.message : String(error),
+    }),
+  );
+}
 
-  if (!candidate || !isRecord(candidate)) return null;
+function ambiguousCommitError() {
+  return new GitHubApiError(
+    "CMSの保存結果を確認できません。再保存せず、CMSを再読み込みして内容を確認してください。",
+    503,
+  );
+}
 
-  if (
-    typeof candidate.node_id !== "string" ||
-    typeof candidate.number !== "number" ||
-    typeof candidate.html_url !== "string" ||
-    !isRecord(candidate.head) ||
-    typeof candidate.head.ref !== "string" ||
-    typeof candidate.head.sha !== "string" ||
-    !SHA_PATTERN.test(candidate.head.sha)
-  ) {
-    throw new GitHubApiError(
-      "GitHub CMS pull request一覧の応答が不正です。",
-      502,
-    );
-  }
-
-  return {
-    branch: candidate.head.ref,
-    head_sha: candidate.head.sha,
-    node_id: candidate.node_id,
-    number: candidate.number,
-    html_url: candidate.html_url,
-  };
+function staleMainError() {
+  return new GitHubApiError(
+    "mainが更新されています。CMSを再読み込みしてから、もう一度保存してください。",
+    409,
+  );
 }
 
 function buildCmsCommitMutation(additions: CmsAddition[]) {
@@ -1049,7 +1012,9 @@ function ensureCommitSucceeded(result: Record<string, unknown>) {
     );
   }
 
-  return result.data.createCommitOnBranch.commit.oid;
+  return result.data.createCommitOnBranch.commit as Record<string, unknown> & {
+    oid: string;
+  };
 }
 
 function parseGraphqlPayload(text: string): GraphqlPayload | null {

@@ -38,8 +38,6 @@ function validateCmsConfig() {
   const configFunction = readText("functions/admin/config.yml.ts");
   const adminIndex = readText("public/admin/index.html");
   const adminInit = readText("public/admin/init.js");
-  const publishGuard = readText("scripts/cms-publish-guard.mjs");
-  const publishWorkflow = readText(".github/workflows/cms-publish-guard.yml");
   const cmsFiles = Array.from(
     config.matchAll(/^\s*file:\s*([^,\s]+),?\s*$/gm),
     (match) => match[1],
@@ -62,7 +60,7 @@ function validateCmsConfig() {
   assert.equal(
     /^publish_mode:\s*editorial_workflow\b/m.test(config),
     false,
-    "Sveltia CMS does not implement editorial_workflow; use the PR proxy",
+    "Sveltia CMS does not implement editorial_workflow; use the validated proxy",
   );
   assert.match(
     config,
@@ -85,35 +83,16 @@ function validateCmsConfig() {
     "CMS must use the same-origin GitHub GraphQL proxy",
   );
   assert.equal(
-    graphql.includes("createCmsBranch") &&
-      graphql.includes('CMS_PUBLISH_BRANCH = "cms/systems/publish"') &&
-      graphql.includes("/pulls") &&
-      graphql.includes("expectedHeadOid"),
+    graphql.includes("createCommitOnBranch") &&
+      graphql.includes("branchName: CMS_REPOSITORY.branch") &&
+      graphql.includes("expectedHeadOid: mainSha") &&
+      graphql.includes("CMS-Operation:") &&
+      graphql.includes("verifyCmsOperationCommit") &&
+      graphql.includes("getGitBlobOid") &&
+      graphql.includes('mode: "direct"') &&
+      !graphql.includes("/pulls"),
     true,
-    "CMS writes must create one atomically locked publication PR",
-  );
-  assert.equal(
-    publishGuard.includes('CMS_PUBLISH_BRANCH = "cms/systems/publish"') &&
-      publishGuard.includes('{ appId: 15368, name: "Build and Format" }') &&
-      publishGuard.includes('{ appId: 85455, name: "Cloudflare Pages" }') &&
-      publishGuard.includes("/pulls/${pullRequest.number}/merge") &&
-      publishGuard.includes('merge_method: "squash"') &&
-      publishGuard.includes("sha: pullRequest.head.sha") &&
-      publishGuard.includes("closeAndDeleteCmsPullRequest"),
-    true,
-    "CMS publish guard must verify both checks and perform a head-pinned squash merge",
-  );
-  assert.equal(
-    publishWorkflow.includes("pull_request_target:") &&
-      publishWorkflow.includes("name: CMS Publish Guard") &&
-      publishWorkflow.includes("checks: read") &&
-      publishWorkflow.includes("contents: write") &&
-      publishWorkflow.includes("pull-requests: write") &&
-      publishWorkflow.includes("ref: refs/heads/main") &&
-      publishWorkflow.includes("persist-credentials: false") &&
-      publishWorkflow.includes("node scripts/cms-publish-guard.mjs"),
-    true,
-    "CMS publish guard workflow must run trusted main with scoped permissions",
+    "CMS writes must publish one direct commit and reconcile ambiguous responses by marker, paths, and blobs",
   );
   assert.equal(
     oauth.includes("repository.permissions.push !== true") &&
@@ -146,7 +125,7 @@ function validateCmsConfig() {
       adminIndex.includes('src="/admin/init.js"') &&
       adminIndex.includes('href="/admin/cms-notice.css"') &&
       adminInit.includes("保存すると自動で公開されます") &&
-      adminInit.includes("問題がなければ数分で反映されます") &&
+      adminInit.includes("保存後、Cloudflare Pagesに反映されます") &&
       adminInit.includes("公開方法の案内を閉じる"),
     true,
     "CMS manual initialization and publish notice are required",

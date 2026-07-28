@@ -56,4 +56,4 @@ npm run preview
 
 Sveltia CMS は `/admin/` から利用します。CMS では固定ページ文言、実績、サイト設定、画像アップロードを管理します。
 
-保存するとPages Functionsが固定の `cms/systems/publish` branchとPull Requestを作成します。`CMS Publish Guard`がCIとCloudflare Pages previewを確認し、成功時だけsquash mergeして、GitHub連携deployから本番公開します。検証失敗や競合時はPull RequestとCMS branchを自動終了し、本番を変更せず次の保存を受け付けます。認証境界、管理対象path、検証手順は [CMS の安全な書き込み運用](docs/cms-write-workflow.md) を参照してください。
+保存するとPages Functionsが変更path、件数、容量、`main`のHEADを同期検証し、内容を1 commitで`main`へ直接反映します。その後はCloudflare PagesのGitHub連携deployで本番公開されます。コード、設定、schemaの変更は従来どおりPull RequestとCIを通します。認証境界、管理対象path、検証手順は [CMS の安全な書き込み運用](docs/cms-write-workflow.md) を参照してください。
