@@ -2,15 +2,23 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import data from "../data/services.json";
 import itAdvisor from "../data/it-advisor.json";
+import development from "../data/service-details/development.json";
 import siteFunctions from "../data/service-details/site-functions.json";
 import siteQuality from "../data/service-details/site-quality.json";
 import operations from "../data/service-details/operations.json";
 
-const serviceDetails = [
+const primaryServiceDetails = [
+  {
+    href: "/services/development/",
+    data: development,
+  },
   {
     href: "/services/it-advisor/",
     data: itAdvisor,
   },
+];
+
+const supportingServiceDetails = [
   {
     href: "/services/site-functions/",
     data: siteFunctions,
@@ -22,6 +30,25 @@ const serviceDetails = [
   {
     href: "/services/operations/",
     data: operations,
+  },
+];
+
+const serviceDetailGroups = [
+  {
+    id: "service-detail-primary",
+    eyebrow: "Primary services",
+    title: "依頼の入口になる二つのサービス",
+    lead: "構想から開発を任せるか、すでにある開発を公開・運用へ進めるかで選びます。",
+    className: "service-detail-index--primary",
+    items: primaryServiceDetails,
+  },
+  {
+    id: "service-detail-supporting",
+    eyebrow: "Focused support",
+    title: "必要な範囲に絞った支援",
+    lead: "サイトの機能追加、品質改善、公開後の運用は、個別の支援メニューから選べます。",
+    className: "service-detail-index--supporting",
+    items: supportingServiceDetails,
   },
 ];
 ---
@@ -36,12 +63,50 @@ const serviceDetails = [
   </section>
 
   <section
+    class="page-section page-section--muted service-entry-section"
+    aria-labelledby="service-entry-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Choose a route / 01</p>
+          <h2 id="service-entry-title">まず、依頼したい範囲を選ぶ</h2>
+        </div>
+        <p>
+          開発そのものを任せるか、すでにある開発を公開・運用へ進めるかで、相談の入口を分けています。
+        </p>
+      </header>
+      <div class="service-entry-points">
+        {
+          data.entryPoints.map((entry, index) => (
+            <a
+              class="service-entry-point"
+              id={`service-entry-${entry.id}`}
+              href={entry.href}
+            >
+              <div class="service-entry-point__heading">
+                <p class="editorial-index">
+                  Route {String(index + 1).padStart(2, "0")}
+                </p>
+                <p class="editorial-eyebrow">{entry.eyebrow}</p>
+              </div>
+              <h3>{entry.title}</h3>
+              <p class="service-entry-point__body">{entry.body}</p>
+              <span>{entry.label}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
     class="page-section page-section--services"
     aria-labelledby="service-domains-title"
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Scope / 01</p>
+        <p class="editorial-eyebrow">Scope / 02</p>
         <h2 id="service-domains-title">設計領域</h2>
       </header>
       <div class="service-list">
@@ -81,29 +146,43 @@ const serviceDetails = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Detailed support / 02</p>
+          <p class="editorial-eyebrow">Detailed support / 03</p>
           <h2 id="service-detail-index-title">目的別の支援メニュー</h2>
         </div>
         <p>
-          IT顧問、サイトの機能、品質、公開後の運用を分けて、対象範囲と進め方を詳しく紹介します。
+          二つの主要サービスと、範囲を絞って依頼できる三つの支援を分けて紹介します。
         </p>
       </header>
-      <div class="service-detail-index service-detail-index--four">
+      <div class="service-detail-groups">
         {
-          serviceDetails.map((detail, index) => (
-            <a class="service-detail-index__item" href={detail.href}>
-              <p class="editorial-index">
-                Menu {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3>{detail.data.title}</h3>
-              <p>{detail.data.indexSummary}</p>
-              <ul aria-label={`${detail.data.title}の主な項目`}>
-                {detail.data.indexTopics.map((topic) => (
-                  <li>{topic}</li>
+          serviceDetailGroups.map((group) => (
+            <section
+              class="service-detail-group"
+              aria-labelledby={`${group.id}-title`}
+            >
+              <header class="service-detail-group__header">
+                <p class="editorial-eyebrow">{group.eyebrow}</p>
+                <h3 id={`${group.id}-title`}>{group.title}</h3>
+                <p>{group.lead}</p>
+              </header>
+              <div class:list={["service-detail-index", group.className]}>
+                {group.items.map((detail, index) => (
+                  <a class="service-detail-index__item" href={detail.href}>
+                    <p class="editorial-index">
+                      Menu {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <h4>{detail.data.title}</h4>
+                    <p>{detail.data.indexSummary}</p>
+                    <ul aria-label={`${detail.data.title}の主な項目`}>
+                      {detail.data.indexTopics.map((topic) => (
+                        <li>{topic}</li>
+                      ))}
+                    </ul>
+                    <span>詳しい支援内容を見る</span>
+                  </a>
                 ))}
-              </ul>
-              <span>詳しい支援内容を見る</span>
-            </a>
+              </div>
+            </section>
           ))
         }
       </div>
@@ -113,7 +192,7 @@ const serviceDetails = [
   <section class="page-section" aria-labelledby="service-process-title">
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Process / 03</p>
+        <p class="editorial-eyebrow">Process / 04</p>
         <h2 id="service-process-title">進め方</h2>
         <p>最初から大きく作り込まず、確認できる単位で段階的に進めます。</p>
       </header>
@@ -153,3 +232,171 @@ const serviceDetails = [
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .service-entry-points {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .service-entry-point {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    min-height: 420px;
+    border-right: 1px solid var(--line);
+    padding: clamp(28px, 4vw, 48px);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .service-entry-point:last-child {
+    border-right: 0;
+  }
+
+  .service-entry-point:hover,
+  .service-entry-point:focus-visible {
+    background: rgba(255, 255, 255, 0.52);
+  }
+
+  .service-entry-point:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+  }
+
+  .service-entry-point__heading {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .service-entry-point__heading .editorial-eyebrow {
+    text-align: right;
+  }
+
+  .service-entry-point h3,
+  .service-detail-index__item h4 {
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    font-weight: 500;
+    line-break: strict;
+    line-height: 1.5;
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+
+  .service-entry-point h3 {
+    max-width: 17em;
+    margin-top: 58px;
+  }
+
+  .service-entry-point__body {
+    max-width: 38em;
+    margin-top: 20px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+  }
+
+  .service-entry-point > span {
+    align-self: end;
+    margin-top: 34px;
+    color: var(--blue);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .service-entry-point > span::after {
+    margin-left: 0.45em;
+    content: "→";
+  }
+
+  .service-detail-groups {
+    display: grid;
+    gap: clamp(64px, 9vw, 112px);
+  }
+
+  .service-detail-group__header {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.7fr) minmax(280px, 1.3fr);
+    gap: 12px clamp(36px, 7vw, 96px);
+    align-items: end;
+    margin-bottom: 30px;
+  }
+
+  .service-detail-group__header .editorial-eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .service-detail-group__header h3 {
+    font-family: var(--font-sans);
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    font-weight: 500;
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+
+  .service-detail-group__header > p:last-child {
+    color: var(--ink-soft);
+    line-height: 1.85;
+  }
+
+  .service-detail-index--primary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-detail-index__item h4 {
+    margin-top: 58px;
+  }
+
+  @media (max-width: 860px) {
+    .service-entry-points,
+    .service-detail-index--primary {
+      grid-template-columns: 1fr;
+    }
+
+    .service-entry-point {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .service-entry-point:last-child {
+      border-bottom: 0;
+    }
+
+    .service-detail-group__header {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .service-detail-index__item h4 {
+      margin-top: 34px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .service-entry-point {
+      padding: 26px 20px;
+    }
+
+    .service-entry-point__heading {
+      display: grid;
+      gap: 12px;
+    }
+
+    .service-entry-point__heading .editorial-eyebrow {
+      text-align: left;
+    }
+
+    .service-entry-point h3 {
+      margin-top: 36px;
+    }
+  }
+</style>

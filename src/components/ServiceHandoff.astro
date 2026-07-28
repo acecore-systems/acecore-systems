@@ -1,0 +1,20 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  body: string;
+  label: string;
+  href: string;
+}
+
+const { eyebrow, title, body, label, href } = Astro.props;
+---
+
+<aside class="service-handoff" data-service-handoff>
+  <div class="service-handoff__copy">
+    <p class="editorial-eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    <p>{body}</p>
+  </div>
+  <a class="editorial-link service-handoff__link" href={href}>{label}</a>
+</aside>

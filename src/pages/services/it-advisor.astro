@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import AdvisorPriceSummary from "../../components/AdvisorPriceSummary.astro";
+import ServiceHandoff from "../../components/ServiceHandoff.astro";
 import data from "../../data/it-advisor.json";
 import pricing from "../../data/pricing.json";
 import site from "../../data/site.json";
@@ -19,14 +21,9 @@ const resolvePricing = (key: string) => {
   }
   return item;
 };
-const startingPrice = resolvePricing(data.startingPriceKey);
-const plans = data.plans.map((plan) => ({
-  ...plan,
-  pricing: resolvePricing(plan.pricingKey),
-}));
-const packages = data.packages.map((item) => ({
+const pricingSummaries = data.pricingSummaries.map((item) => ({
   ...item,
-  pricing: resolvePricing(item.pricingKey),
+  price: resolvePricing(item.pricingKey).price,
 }));
 const relatedServices = [
   {
@@ -145,11 +142,18 @@ const jsonLd = [
           <dt>{data.engagementLabel}</dt>
           <dd>{data.engagementValue}</dd>
         </div>
-        <div>
-          <dt>{data.startingPriceLabel}</dt>
-          <dd>{startingPrice.price}</dd>
-        </div>
       </dl>
+      <AdvisorPriceSummary
+        items={pricingSummaries}
+        priceNote={data.priceNote}
+        placement="hero"
+      />
+    </div>
+  </section>
+
+  <section class="page-section page-section--muted service-handoff-section">
+    <div class="container">
+      <ServiceHandoff {...data.handoff} />
     </div>
   </section>
 
@@ -242,51 +246,6 @@ const jsonLd = [
   </section>
 
   <section
-    class="page-section page-section--muted"
-    aria-labelledby="advisor-starter-title"
-  >
-    <div class="container">
-      <header class="editorial-header editorial-header--split">
-        <div>
-          <p class="editorial-eyebrow">Small start / 04</p>
-          <h2 id="advisor-starter-title">{data.starterTitle}</h2>
-        </div>
-        <p>{data.starterLead}</p>
-      </header>
-      <div class="advisor-packages">
-        {
-          packages.map((item, index) => (
-            <article class="advisor-package" id={item.id}>
-              <div class="advisor-package__heading">
-                <p class="editorial-index">
-                  Package {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </div>
-              <div class="advisor-package__meta">
-                <p class="advisor-price">{item.pricing.price}</p>
-                <p>{item.duration}</p>
-              </div>
-              <ul class="service-points">
-                {item.includes.map((included) => (
-                  <li>{included}</li>
-                ))}
-              </ul>
-              <a
-                class="advisor-text-link"
-                href={`/pricing/#${item.pricingKey}`}
-              >
-                料金一覧で確認する
-              </a>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section
     class="page-section advisor-plan-section"
     id="plans"
     aria-labelledby="advisor-plans-title"
@@ -294,26 +253,19 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Plans / 05</p>
+          <p class="editorial-eyebrow">Plans / 04</p>
           <h2 id="advisor-plans-title">{data.plansTitle}</h2>
         </div>
         <p>{data.plansLead}</p>
       </header>
       <div class="advisor-plans">
         {
-          plans.map((plan, index) => (
-            <article
-              class:list={[
-                "advisor-plan",
-                { "advisor-plan--primary": plan.id === "standard" },
-              ]}
-              id={plan.id}
-            >
+          data.plans.map((plan, index) => (
+            <article class="advisor-plan" id={plan.id}>
               <p class="editorial-index">
                 Plan {String(index + 1).padStart(2, "0")}
               </p>
               <h3>{plan.title}</h3>
-              <p class="advisor-price">{plan.pricing.price}</p>
               <p class="advisor-plan__summary">{plan.summary}</p>
               <ul class="service-points">
                 {plan.includes.map((included) => (
@@ -331,7 +283,6 @@ const jsonLd = [
           ))
         }
       </div>
-      <p class="detail-price-note advisor-price-note">{data.priceNote}</p>
     </div>
   </section>
 
@@ -342,7 +293,7 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Process / 06</p>
+          <p class="editorial-eyebrow">Process / 05</p>
           <h2 id="advisor-process-title">{data.processTitle}</h2>
         </div>
         <p>{data.processLead}</p>
@@ -367,7 +318,7 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Governance / 07</p>
+          <p class="editorial-eyebrow">Governance / 06</p>
           <h2 id="advisor-boundaries-title">{data.governanceTitle}</h2>
         </div>
         <p>{data.governanceLead}</p>
@@ -399,7 +350,7 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">FAQ / 08</p>
+          <p class="editorial-eyebrow">FAQ / 07</p>
           <h2 id="advisor-faq-title">{data.faqTitle}</h2>
         </div>
         <p>{data.faqLead}</p>
@@ -428,7 +379,7 @@ const jsonLd = [
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Related / 09</p>
+        <p class="editorial-eyebrow">Related / 08</p>
         <h2 id="advisor-related-title">隣接する支援内容</h2>
       </header>
       <div class="detail-related-list detail-related-list--three">
@@ -443,6 +394,19 @@ const jsonLd = [
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted advisor-closing-pricing"
+    aria-label="料金の目安"
+  >
+    <div class="container">
+      <AdvisorPriceSummary
+        items={pricingSummaries}
+        priceNote={data.priceNote}
+        placement="closing"
+      />
     </div>
   </section>
 

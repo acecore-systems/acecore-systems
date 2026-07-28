@@ -50,7 +50,7 @@ npm run preview
 
 ブログ、RSS、サイト内検索、多言語ページは含めません。実装判断を詳しく説明する技術記事は、Acecore公式サイトの記事を参照します。
 
-サービス詳細は `it-advisor`、`site-functions`、`site-quality`、`operations` の4ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
+サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 
 ## CMS
 

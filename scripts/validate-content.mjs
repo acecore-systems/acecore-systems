@@ -15,6 +15,17 @@ const requireText = (value, label) =>
     true,
     `${label} is required`,
   );
+const validateHandoff = (handoff, label) => {
+  assert.ok(handoff && typeof handoff === "object", `${label} is required`);
+  for (const field of ["eyebrow", "title", "body", "label", "href"]) {
+    requireText(handoff[field], `${label}: ${field}`);
+  }
+  assert.equal(
+    handoff.href.startsWith("/services/"),
+    true,
+    `${label}: href must target a service route`,
+  );
+};
 
 const expectedCmsFiles = [
   "src/data/site.json",
@@ -179,6 +190,11 @@ assert.deepEqual(
 
 const serviceSources = [
   {
+    route: "/services/development/",
+    page: "src/pages/services/development.astro",
+    data: "src/data/service-details/development.json",
+  },
+  {
     route: "/services/site-functions/",
     page: "src/pages/services/site-functions.astro",
     data: "src/data/service-details/site-functions.json",
@@ -235,6 +251,7 @@ for (const item of pricing.items) {
 }
 
 const serviceAnchors = new Map();
+const serviceDataByRoute = new Map();
 const technicalResources = new Set();
 
 for (const source of serviceSources) {
@@ -244,12 +261,16 @@ for (const source of serviceSources) {
     `${source.page} missing`,
   );
   const data = readJson(source.data);
+  serviceDataByRoute.set(source.route, data);
   requireText(data.title, `${source.data}: title`);
   requireText(data.description, `${source.data}: description`);
   assert.equal(data.challenges.length > 0, true, `${source.data}: challenges`);
   assert.equal(data.offerings.length > 0, true, `${source.data}: offerings`);
   assert.equal(data.process.length > 0, true, `${source.data}: process`);
   assert.equal(data.resources.length > 0, true, `${source.data}: resources`);
+  if (data.handoff) {
+    validateHandoff(data.handoff, `${source.data}: handoff`);
+  }
 
   const ids = data.offerings.map((offering) => offering.id);
   assert.equal(
@@ -275,6 +296,13 @@ for (const source of serviceSources) {
         pricingKeys.has(key),
         true,
         `${source.data}: ${offering.id} references unknown pricing key ${key}`,
+      );
+    }
+    if (source.route === "/services/development/") {
+      assert.deepEqual(
+        offering.pricingKeys,
+        [offering.id],
+        `${source.data}: ${offering.id} must map to one matching use-case price`,
       );
     }
   }
@@ -316,9 +344,9 @@ assert.equal(
   `${advisorSource.data}: useCases`,
 );
 assert.equal(
-  advisor.packages.length > 0,
+  advisor.pricingSummaries.length === 2,
   true,
-  `${advisorSource.data}: packages`,
+  `${advisorSource.data}: pricingSummaries must contain retainer and spot`,
 );
 assert.equal(advisor.plans.length > 0, true, `${advisorSource.data}: plans`);
 assert.equal(
@@ -337,10 +365,35 @@ assert.equal(
   `${advisorSource.data}: excluded`,
 );
 assert.equal(advisor.faqs.length > 0, true, `${advisorSource.data}: faqs`);
+validateHandoff(advisor.handoff, `${advisorSource.data}: handoff`);
+
+assert.deepEqual(
+  new Set(advisor.pricingSummaries.map((item) => item.id)),
+  new Set(["retainer", "spot"]),
+  `${advisorSource.data}: pricingSummaries must use retainer and spot`,
+);
+for (const [index, item] of advisor.pricingSummaries.entries()) {
+  requireText(
+    item.label,
+    `${advisorSource.data}: pricingSummaries[${index}].label`,
+  );
+  requireText(
+    item.pricingKey,
+    `${advisorSource.data}: pricingSummaries[${index}].pricingKey`,
+  );
+  requireText(
+    item.note,
+    `${advisorSource.data}: pricingSummaries[${index}].note`,
+  );
+}
+assert.deepEqual(
+  new Set(advisor.plans.map((item) => item.id)),
+  new Set(["retainer", "spot"]),
+  `${advisorSource.data}: plans must use retainer and spot`,
+);
 
 const advisorAnchors = [
   ...advisor.supportAreas.map((item) => item.id),
-  ...advisor.packages.map((item) => item.id),
   ...advisor.plans.map((item) => item.id),
 ];
 assert.equal(
@@ -378,8 +431,7 @@ for (const [index, faq] of advisor.faqs.entries()) {
 }
 
 const advisorPricingKeys = [
-  advisor.startingPriceKey,
-  ...advisor.packages.map((item) => item.pricingKey),
+  ...advisor.pricingSummaries.map((item) => item.pricingKey),
   ...advisor.plans.map((item) => item.pricingKey),
 ];
 for (const key of advisorPricingKeys) {
@@ -430,6 +482,37 @@ const knownRoutes = new Set([
 ]);
 const services = readJson("src/data/services.json");
 const works = readJson("src/data/works.json");
+assert.deepEqual(
+  new Set(services.entryPoints.map((item) => item.id)),
+  new Set(["development", "it-advisor"]),
+  "src/data/services.json: entryPoints must separate development and IT advisor",
+);
+for (const [index, entryPoint] of services.entryPoints.entries()) {
+  for (const field of ["eyebrow", "title", "body", "href", "label"]) {
+    requireText(
+      entryPoint[field],
+      `src/data/services.json: entryPoints[${index}].${field}`,
+    );
+  }
+  assert.equal(
+    knownRoutes.has(entryPoint.href),
+    true,
+    `src/data/services.json: unknown entry point ${entryPoint.href}`,
+  );
+}
+
+const development = serviceDataByRoute.get("/services/development/");
+assert.ok(development, "development service data missing");
+assert.equal(
+  development.handoff.href,
+  advisorSource.route,
+  "development handoff must target IT advisor",
+);
+assert.equal(
+  advisor.handoff.href,
+  "/services/development/",
+  "IT advisor handoff must target development",
+);
 
 for (const item of [...services.services, ...works.cases]) {
   if (item.detailUrl) {

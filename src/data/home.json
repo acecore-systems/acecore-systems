@@ -59,17 +59,17 @@
     {
       "title": "転記や手作業が増えている",
       "body": "表計算、紙、メールに分かれた作業を整理し、どこから仕組みにするか考えたい。",
-      "href": "/services/#business-system"
+      "href": "/services/development/#small-automation"
     },
     {
       "title": "今のシステムが現場に合わない",
       "body": "使いづらさや属人化を見直し、業務の流れに合う形へ段階的に整えたい。",
-      "href": "/services/#modernization"
+      "href": "/services/development/"
     },
     {
       "title": "データやツールが分かれている",
       "body": "複数のサービスやデータをつなぎ、重複入力や確認漏れを減らしたい。",
-      "href": "/services/#integration"
+      "href": "/services/development/#integrated-system"
     },
     {
       "title": "要件になる前の課題を整理したい",
