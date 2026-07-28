@@ -80,7 +80,8 @@ export function isAllowedCmsWritePath(path: string) {
 }
 
 export function isAllowedCmsDeletePath(path: string) {
-  return normalizeCmsPath(path) === path && isAllowedCmsMediaPath(path);
+  void path;
+  return false;
 }
 
 export function isAllowedCmsDirectoryPath(path: string) {

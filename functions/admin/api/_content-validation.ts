@@ -11,6 +11,7 @@ import siteFunctions from "../../../src/data/service-details/site-functions.json
 import siteQuality from "../../../src/data/service-details/site-quality.json" with { type: "json" };
 import works from "../../../src/data/works.json" with { type: "json" };
 import acecoreSitePlatform from "../../../src/data/work-details/acecore-site-platform.json" with { type: "json" };
+import { validateSystemsContentFiles } from "../../../src/lib/systems-content-validation.ts";
 
 const MAX_JSON_BYTES = 1024 * 1024;
 const MAX_MEDIA_BYTES = 10 * 1024 * 1024;
@@ -45,6 +46,19 @@ type ValidationResult =
   { ok: true; addition: ValidatedCmsAddition } | { ok: false; message: string };
 
 export function validateCmsAddition(
+  path: string,
+  contents: string,
+): ValidationResult {
+  const validation = validateCmsAdditionStructure(path, contents);
+
+  if (!validation.ok) return validation;
+
+  const semanticError = validateSystemsCmsAdditions([validation.addition]);
+
+  return semanticError ? { ok: false, message: semanticError } : validation;
+}
+
+export function validateCmsAdditionStructure(
   path: string,
   contents: string,
 ): ValidationResult {
@@ -88,6 +102,38 @@ export function validateCmsAddition(
     ok: true,
     addition: { path, contents, byteSize: bytes.byteLength },
   };
+}
+
+export function validateSystemsCmsAdditions(
+  additions: readonly ValidatedCmsAddition[],
+) {
+  const projectedFiles = new Map(BASELINES);
+
+  for (const addition of additions) {
+    if (!addition.path.endsWith(".json")) continue;
+
+    const bytes = decodeBase64(addition.contents);
+
+    if (!bytes) return "JSONのbase64を再検証できません。";
+
+    let value: unknown;
+
+    try {
+      value = JSON.parse(
+        new TextDecoder("utf-8", { fatal: true, ignoreBOM: false }).decode(
+          bytes,
+        ),
+      );
+    } catch {
+      return "JSONを再検証できません。";
+    }
+
+    projectedFiles.set(addition.path, value);
+  }
+
+  const semanticErrors = validateSystemsContentFiles(projectedFiles);
+
+  return semanticErrors.length > 0 ? semanticErrors[0] : null;
 }
 
 function validateJson(bytes: Uint8Array, baseline: unknown) {

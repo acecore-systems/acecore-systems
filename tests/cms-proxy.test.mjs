@@ -80,7 +80,7 @@ test("CMS対象pathだけを許可する", () => {
     assert.equal(isAllowedCmsWritePath(path), true);
   }
   assert.equal(isAllowedCmsWritePath("public/uploads/example.png"), true);
-  assert.equal(isAllowedCmsDeletePath("public/uploads/example.png"), true);
+  assert.equal(isAllowedCmsDeletePath("public/uploads/example.png"), false);
   assert.equal(isAllowedCmsDeletePath(contentPath), false);
   assert.equal(isAllowedCmsWritePath("public/uploads/example.svg"), false);
   assert.equal(isAllowedCmsWritePath("public/uploads/example.pdf"), false);
@@ -89,6 +89,15 @@ test("CMS対象pathだけを許可する", () => {
   assert.equal(isAllowedCmsWritePath("README.md"), false);
   assert.equal(isAllowedCmsWritePath("../README.md"), false);
   assert.equal(isAllowedCmsWritePath(`${contentPath}\nREADME.md`), false);
+});
+
+test("CMSの公開案内で画像削除をPull Requestへ案内する", async () => {
+  const adminInit = await readFile(
+    new URL("../public/admin/init.js", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(adminInit, /画像の削除は参照確認を伴うPull Request/);
 });
 
 test("現行mainの全CMS対象ファイルを同期validatorが受理する", async () => {
@@ -179,6 +188,168 @@ test("CMS由来のlink・form action・画像URLを安全なpathまたはHTTPS�
     ).ok,
     false,
   );
+});
+
+test("CIと共有するsemantic ruleで必須配列・未知key・不正な相互参照を拒否する", async () => {
+  const operationsPath = "src/data/service-details/operations.json";
+  const operations = JSON.parse(
+    await readFile(new URL(`../${operationsPath}`, import.meta.url), "utf8"),
+  );
+  const invalidValues = [
+    { ...operations, challenges: [] },
+    { ...operations, layout: "../../secret" },
+    {
+      ...operations,
+      offerings: [
+        {
+          ...operations.offerings[0],
+          pricingKeys: ["unknown-pricing-key"],
+        },
+        ...operations.offerings.slice(1),
+      ],
+    },
+  ];
+
+  for (const value of invalidValues) {
+    assert.equal(
+      validateCmsAddition(
+        operationsPath,
+        Buffer.from(JSON.stringify(value)).toString("base64"),
+      ).ok,
+      false,
+      JSON.stringify(value),
+    );
+  }
+});
+
+test("複数JSONの協調更新を1つのprojected stateとして直接保存する", async () => {
+  const operationsPath = "src/data/service-details/operations.json";
+  const pricingPath = "src/data/pricing.json";
+  const operations = JSON.parse(
+    await readFile(new URL(`../${operationsPath}`, import.meta.url), "utf8"),
+  );
+  const pricing = JSON.parse(
+    await readFile(new URL(`../${pricingPath}`, import.meta.url), "utf8"),
+  );
+  const newPricingKey = "cms-combined-test";
+  const updatedOperations = structuredClone(operations);
+  const updatedPricing = structuredClone(pricing);
+
+  updatedOperations.offerings[0].pricingKeys = [newPricingKey];
+  updatedPricing.items.push({
+    ...updatedPricing.items.find(({ detailUrl }) => detailUrl === ""),
+    key: newPricingKey,
+  });
+
+  mockGitHub(async (url, _init, body) => {
+    if (url.endsWith("/git/ref/heads/main")) {
+      return jsonResponse({ object: { sha: mainSha } });
+    }
+
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      assert.deepEqual(
+        body.variables.input.fileChanges.additions.map(({ path }) => path),
+        [operationsPath, pricingPath],
+      );
+
+      return jsonResponse({
+        data: {
+          createCommitOnBranch: {
+            commit: { oid: topicSha },
+          },
+        },
+      });
+    }
+
+    throw new Error(`Unexpected GitHub request: ${url}`);
+  });
+
+  const response = await handleGraphql({
+    request: graphqlRequest({
+      variables: {
+        input: {
+          branch: {
+            repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            branchName: "main",
+          },
+          expectedHeadOid: mainSha,
+          fileChanges: {
+            additions: [
+              {
+                path: operationsPath,
+                contents: Buffer.from(
+                  JSON.stringify(updatedOperations),
+                ).toString("base64"),
+              },
+              {
+                path: pricingPath,
+                contents: Buffer.from(JSON.stringify(updatedPricing)).toString(
+                  "base64",
+                ),
+              },
+            ],
+            deletions: [],
+          },
+          message: { headline: "cms: coordinated content update" },
+        },
+      },
+    }),
+  });
+
+  assert.equal(response.status, 200);
+});
+
+test("複数JSONの最終projected stateに未知料金keyが残る保存を拒否する", async () => {
+  const operationsPath = "src/data/service-details/operations.json";
+  const pricingPath = "src/data/pricing.json";
+  const operations = JSON.parse(
+    await readFile(new URL(`../${operationsPath}`, import.meta.url), "utf8"),
+  );
+  const pricing = JSON.parse(
+    await readFile(new URL(`../${pricingPath}`, import.meta.url), "utf8"),
+  );
+  let cmsOperationCalled = false;
+
+  operations.offerings[0].pricingKeys = ["cms-missing-pricing-key"];
+  mockGitHub(async () => {
+    cmsOperationCalled = true;
+    throw new Error("CMS operation must not continue");
+  });
+
+  const response = await handleGraphql({
+    request: graphqlRequest({
+      variables: {
+        input: {
+          branch: {
+            repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            branchName: "main",
+          },
+          expectedHeadOid: mainSha,
+          fileChanges: {
+            additions: [
+              {
+                path: operationsPath,
+                contents: Buffer.from(JSON.stringify(operations)).toString(
+                  "base64",
+                ),
+              },
+              {
+                path: pricingPath,
+                contents: Buffer.from(JSON.stringify(pricing)).toString(
+                  "base64",
+                ),
+              },
+            ],
+            deletions: [],
+          },
+          message: { headline: "cms: invalid coordinated content update" },
+        },
+      },
+    }),
+  });
+
+  assert.equal(response.status, 403);
+  assert.equal(cmsOperationCalled, false);
 });
 
 test("CMS設定で公開したfolderとfileがproxyの許可範囲に収まる", async () => {
@@ -575,46 +746,13 @@ test("direct保存の応答喪失後にmarker・親SHA・path・blob SHAを照�
   assert.equal(mainRefReads, 2);
 });
 
-test("direct削除の応答喪失後に変更pathと削除済みtreeを照合して復旧する", async () => {
+test("参照確認できない画像削除をGitHubへ送らない", async () => {
   const deletedPath = "public/uploads/unused.png";
-  let mainRefReads = 0;
-  let operationMarker = "";
+  let cmsOperationCalled = false;
 
-  mockGitHub(async (url, _init, body) => {
-    if (url.endsWith("/git/ref/heads/main")) {
-      mainRefReads += 1;
-      return jsonResponse({
-        object: { sha: mainRefReads === 1 ? mainSha : topicSha },
-      });
-    }
-
-    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
-      operationMarker = getOperationMarker(body.variables.input.message.body);
-      throw new TypeError("upstream response was lost");
-    }
-
-    if (url.includes("/commits?sha=main&per_page=100")) {
-      return jsonResponse([
-        operationCommit({ marker: operationMarker, sha: topicSha }),
-      ]);
-    }
-
-    if (url.endsWith(`/commits/${topicSha}?per_page=100`)) {
-      return jsonResponse({
-        sha: topicSha,
-        files: [{ filename: deletedPath, status: "removed" }],
-      });
-    }
-
-    if (url.includes(`/git/trees/${topicSha}?recursive=1`)) {
-      return jsonResponse({
-        sha: "c".repeat(40),
-        truncated: false,
-        tree: [],
-      });
-    }
-
-    throw new Error(`Unexpected GitHub request: ${url}`);
+  mockGitHub(async () => {
+    cmsOperationCalled = true;
+    throw new Error("CMS operation must not continue");
   });
 
   const response = await handleGraphql({
@@ -635,10 +773,8 @@ test("direct削除の応答喪失後に変更pathと削除済みtreeを照合し
       },
     }),
   });
-  const result = await response.json();
-
-  assert.equal(response.status, 200);
-  assert.equal(result.extensions.cms.commit_oid, topicSha);
+  assert.equal(response.status, 403);
+  assert.equal(cmsOperationCalled, false);
 });
 
 test("編集開始後にmain HEADが変わっていればmutation前に保存を拒否する", async () => {

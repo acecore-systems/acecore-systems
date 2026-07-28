@@ -15,7 +15,8 @@ import {
   normalizeCmsPath,
 } from "./_cms-policy.ts";
 import {
-  validateCmsAddition,
+  validateCmsAdditionStructure,
+  validateSystemsCmsAdditions,
   type ValidatedCmsAddition,
 } from "./_content-validation.ts";
 import {
@@ -652,7 +653,7 @@ function parseCmsCommitInput(value: unknown): CmsCommitInput | null {
       return null;
     }
 
-    const validation = validateCmsAddition(path, addition.contents);
+    const validation = validateCmsAdditionStructure(path, addition.contents);
 
     if (!validation.ok) return null;
 
@@ -687,6 +688,8 @@ function parseCmsCommitInput(value: unknown): CmsCommitInput | null {
     paths.add(path);
     deletions.push({ path });
   }
+
+  if (validateSystemsCmsAdditions(additions)) return null;
 
   return {
     expectedHeadOid: value.expectedHeadOid,
