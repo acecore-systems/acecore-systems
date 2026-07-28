@@ -6,21 +6,20 @@
   "cases": [
     {
       "id": "case-acecore-contact",
-      "detailUrl": "",
       "title": "Acecore公式サイトの問い合わせ導線改善",
       "category": "フォーム・AI導線・CMS",
       "summary": "サービス選定、見積り相談、問い合わせ前の不安を減らすため、固定ページ、FAQ、AIチャット、CMS管理項目を整理しました。",
       "challenge": "訪問者が何を相談できるか判断しづらく、問い合わせ内容も分散しやすい状態でした。",
       "proposal": "サービス別の導線、問い合わせ種別、FAQ、AIによる事前案内を組み合わせ、必要な情報をフォームに集約しました。",
       "result": "相談前の確認と正式な問い合わせを分け、見積りやサービス相談に進みやすい流れになりました。",
-      "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1000&h=680&fit=crop&q=84&fm=webp",
+      "image": "/uploads/cms-e2e-20260728-019fa1a6-arrow-blue.png",
       "imageAlt": "オフィスでノートパソコンを操作する開発チーム",
       "externalUrl": "https://acecore.net/contact/",
-      "externalLabel": "Acecoreへ相談・問い合わせる"
+      "externalLabel": "Acecoreへ相談・問い合わせる",
+      "detailUrl": ""
     },
     {
       "id": "case-acecore-site-platform",
-      "detailUrl": "/works/acecore-site-platform/",
       "title": "Acecore公式サイトの機能追加・運用基盤",
       "category": "CMS・検索・セキュリティ・パフォーマンス",
       "summary": "静的サイトにCMS、記事基盤、サイト内検索、構造化データ、CSP、アクセシビリティ改善、表示速度改善を段階的に追加しました。",
@@ -30,11 +29,11 @@
       "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&h=680&fit=crop&q=84&fm=webp",
       "imageAlt": "Webサイトのコードを表示したノートパソコンと外部モニター",
       "externalUrl": "https://acecore.net/blog/",
-      "externalLabel": "Acecore公式ブログを見る"
+      "externalLabel": "Acecore公式ブログを見る",
+      "detailUrl": "/works/acecore-site-platform/"
     },
     {
       "id": "case-aceserver",
-      "detailUrl": "",
       "title": "Aceserver運用で得た安定化・監視の知見",
       "category": "サーバー運用・コミュニティ基盤",
       "summary": "Minecraft公開サーバーの運用を通じて、接続安定性、監視、バックアップ、案内導線を継続的に改善しています。",
@@ -44,11 +43,11 @@
       "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&h=680&fit=crop&q=84&fm=webp",
       "imageAlt": "ネットワーク機器と配線が並ぶサーバーラック",
       "externalUrl": "https://asv.acecore.net/",
-      "externalLabel": "エースサーバーの参加案内を見る"
+      "externalLabel": "エースサーバーの参加案内を見る",
+      "detailUrl": ""
     },
     {
       "id": "case-aceserver-portal",
-      "detailUrl": "",
       "title": "エースサーバーポータル制作",
       "category": "Web制作・コミュニティポータル・CMS",
       "summary": "Minecraft無料公開サーバー「エースサーバー」の参加案内、動画、ワールドマップ、Wiki、Discordへの導線を一つの入口に整理しました。",
@@ -58,11 +57,11 @@
       "image": "https://acecore.net/uploads/aceserver-portal-screenshot-1600.webp",
       "imageAlt": "エースサーバーポータルのトップページ",
       "externalUrl": "https://asv.acecore.net/",
-      "externalLabel": "エースサーバーポータルを見る"
+      "externalLabel": "エースサーバーポータルを見る",
+      "detailUrl": ""
     },
     {
       "id": "case-cherry-homepage",
-      "detailUrl": "",
       "title": "Cherry英語教室サイトのリニューアル",
       "category": "Web制作・CMS・サイト内検索",
       "summary": "教室案内、コース、お知らせ、ブログ、イベント、FAQを一つのサイトへ整理し、既存サイトをAstro構成へリニューアルしました。",
@@ -72,11 +71,11 @@
       "image": "/images/works/cherry-homepage.webp",
       "imageAlt": "Cherry英語教室ホームページのトップページ",
       "externalUrl": "https://cherry.acecore.net/",
-      "externalLabel": "Cherry英語教室のホームページを見る"
+      "externalLabel": "Cherry英語教室のホームページを見る",
+      "detailUrl": ""
     },
     {
       "id": "case-hatt-homepage",
-      "detailUrl": "",
       "title": "Hattのホームページ制作",
       "category": "Web制作・CMS・サイト内検索",
       "summary": "絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめ、創作活動を継続して発信できる個人サイトとして設計しました。",
@@ -86,7 +85,8 @@
       "image": "https://acecore.net/uploads/hatt-homepage-screenshot-1600.webp",
       "imageAlt": "Hattのホームページのトップページ",
       "externalUrl": "https://hatt.acecore.net/",
-      "externalLabel": "Hattの作品・ブログを見る"
+      "externalLabel": "Hattの作品・ブログを見る",
+      "detailUrl": ""
     }
   ]
 }
