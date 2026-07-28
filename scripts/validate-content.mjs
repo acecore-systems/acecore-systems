@@ -3,6 +3,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { validateSystemsContentFiles } from "../src/lib/systems-content-validation.ts";
+
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const readText = (relativePath) =>
   readFileSync(join(root, relativePath), "utf8");
@@ -29,10 +31,19 @@ const expectedCmsFolders = [
   "src/data/service-details",
   "src/data/work-details",
 ];
+const cmsJsonPaths = [
+  ...expectedCmsFiles,
+  "src/data/privacy.json",
+  "src/data/service-details/site-functions.json",
+  "src/data/service-details/site-quality.json",
+  "src/data/service-details/operations.json",
+  "src/data/work-details/acecore-site-platform.json",
+];
 
 function validateCmsConfig() {
   const config = readText("public/admin/config.yml");
   const graphql = readText("functions/admin/api/graphql.ts");
+  const policy = readText("functions/admin/api/_cms-policy.ts");
   const oauth = readText("functions/admin/api/_github-oauth.ts");
   const appOAuth = readText("functions/admin/api/_github-app-oauth.ts");
   const configFunction = readText("functions/admin/config.yml.ts");
@@ -98,7 +109,11 @@ function validateCmsConfig() {
     oauth.includes("repository.permissions.push !== true") &&
       oauth.includes('path: "/user"') &&
       oauth.includes('token.startsWith("ghu_")') &&
-      oauth.includes('CMS_PRODUCTION_HOSTNAME = "systems.acecore.net"'),
+      oauth.includes("CMS_PRODUCTION_HOSTNAME") &&
+      policy.includes('CMS_PRODUCTION_HOSTNAME = "systems.acecore.net"') &&
+      configFunction.includes(
+        "new URL(request.url).hostname !== CMS_PRODUCTION_HOSTNAME",
+      ),
     true,
     "CMS proxy must be production-only and validate repository write access",
   );
@@ -126,6 +141,7 @@ function validateCmsConfig() {
       adminIndex.includes('href="/admin/cms-notice.css"') &&
       adminInit.includes("保存すると自動で公開されます") &&
       adminInit.includes("保存後、Cloudflare Pagesに反映されます") &&
+      adminInit.includes("画像の削除は参照確認を伴うPull Request") &&
       adminInit.includes("公開方法の案内を閉じる"),
     true,
     "CMS manual initialization and publish notice are required",
@@ -151,6 +167,15 @@ function validateCmsConfig() {
 }
 
 validateCmsConfig();
+assert.deepEqual(
+  validateSystemsContentFiles(
+    new Map(
+      cmsJsonPaths.map((contentPath) => [contentPath, readJson(contentPath)]),
+    ),
+  ),
+  [],
+  "CMS direct publish validator and CI content rules must agree",
+);
 
 const serviceSources = [
   {

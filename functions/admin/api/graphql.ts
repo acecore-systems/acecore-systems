@@ -14,6 +14,15 @@ import {
   isAllowedCmsWritePath,
   normalizeCmsPath,
 } from "./_cms-policy.ts";
+import {
+  validateCmsAdditionStructure,
+  validateSystemsCmsAdditions,
+  type ValidatedCmsAddition,
+} from "./_content-validation.ts";
+import {
+  getGitHubInstallationId,
+  type CmsOAuthEnv,
+} from "./_github-app-oauth.ts";
 import { getGitHubEditor, type GitHubEditor } from "./_github-oauth.ts";
 import {
   GitHubApiError,
@@ -30,11 +39,7 @@ type GraphqlPayload = {
   variables: Record<string, unknown>;
 };
 
-type CmsAddition = {
-  path: string;
-  contents: string;
-  byteSize: number;
-};
+type CmsAddition = ValidatedCmsAddition;
 
 type CmsDeletion = {
   path: string;
@@ -55,7 +60,9 @@ const MAX_CHANGE_COUNT = 100;
 const MAX_TOTAL_CONTENT_BYTES = 25 * 1024 * 1024;
 const MAX_GRAPHQL_BLOB_SIZE = 10 * 1024 * 1024;
 
-export const onRequestPost: PagesFunction = async ({ request }) => {
+export const onRequestPost: PagesFunction<
+  Pick<CmsOAuthEnv, "CMS_GITHUB_APP_INSTALLATION_ID">
+> = async ({ request, env }) => {
   try {
     const auth = await getGitHubEditor(request);
     const token = auth.token;
@@ -82,7 +89,17 @@ export const onRequestPost: PagesFunction = async ({ request }) => {
     }
 
     if (operation.operation === "mutation") {
-      return await handleCommitMutation({ auth, operation, payload, token });
+      const freshAuth = await getGitHubEditor(request, {
+        fresh: true,
+        installationId: getGitHubInstallationId(env),
+      });
+
+      return await handleCommitMutation({
+        auth: freshAuth,
+        operation,
+        payload,
+        token: freshAuth.token,
+      });
     }
 
     return json(
@@ -636,14 +653,16 @@ function parseCmsCommitInput(value: unknown): CmsCommitInput | null {
       return null;
     }
 
-    const byteSize = getBase64ByteSize(addition.contents);
+    const validation = validateCmsAdditionStructure(path, addition.contents);
 
-    totalContentBytes += byteSize;
+    if (!validation.ok) return null;
+
+    totalContentBytes += validation.addition.byteSize;
 
     if (totalContentBytes > MAX_TOTAL_CONTENT_BYTES) return null;
 
     paths.add(path);
-    additions.push({ path, contents: addition.contents, byteSize });
+    additions.push(validation.addition);
   }
 
   for (const deletion of deletionsValue) {
@@ -669,6 +688,8 @@ function parseCmsCommitInput(value: unknown): CmsCommitInput | null {
     paths.add(path);
     deletions.push({ path });
   }
+
+  if (validateSystemsCmsAdditions(additions)) return null;
 
   return {
     expectedHeadOid: value.expectedHeadOid,

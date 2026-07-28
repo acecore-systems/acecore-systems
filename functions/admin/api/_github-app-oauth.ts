@@ -49,10 +49,9 @@ export class CmsOAuthError extends Error {
 export function getOAuthConfig(env: CmsOAuthEnv) {
   const clientId = env.CMS_GITHUB_APP_CLIENT_ID?.trim();
   const clientSecret = env.CMS_GITHUB_APP_CLIENT_SECRET?.trim();
-  const installationIdValue = env.CMS_GITHUB_APP_INSTALLATION_ID?.trim();
   const stateSecret = env.CMS_OAUTH_STATE_SECRET?.trim();
 
-  if (!clientId || !clientSecret || !installationIdValue || !stateSecret) {
+  if (!clientId || !clientSecret || !stateSecret) {
     throw new CmsOAuthError(
       "CMS GitHub App設定がCloudflare Pagesにありません。",
       503,
@@ -62,6 +61,23 @@ export function getOAuthConfig(env: CmsOAuthEnv) {
   if (new TextEncoder().encode(stateSecret).byteLength < 32) {
     throw new CmsOAuthError(
       "CMS OAuth state secretは32バイト以上にしてください。",
+      503,
+    );
+  }
+
+  const installationId = getGitHubInstallationId(env);
+
+  return { clientId, clientSecret, installationId, stateSecret };
+}
+
+export function getGitHubInstallationId(
+  env: Pick<CmsOAuthEnv, "CMS_GITHUB_APP_INSTALLATION_ID">,
+) {
+  const installationIdValue = env.CMS_GITHUB_APP_INSTALLATION_ID?.trim();
+
+  if (!installationIdValue) {
+    throw new CmsOAuthError(
+      "CMS GitHub App設定がCloudflare Pagesにありません。",
       503,
     );
   }
@@ -76,7 +92,7 @@ export function getOAuthConfig(env: CmsOAuthEnv) {
     throw new CmsOAuthError("CMS GitHub App installation IDが不正です。", 503);
   }
 
-  return { clientId, clientSecret, installationId, stateSecret };
+  return installationId;
 }
 
 export async function createOAuthState(secret: string) {
@@ -357,10 +373,49 @@ function isExpiringGitHubAppToken(
   );
 }
 
-async function verifyRepositoryWriteAccess(
+export async function verifyRepositoryWriteAccess(
   token: string,
   installationId: number,
 ) {
+  const installationResponse = await fetch(
+    `https://api.github.com/user/installations/${installationId}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "User-Agent": "acecore-systems-sveltia-cms",
+        "X-GitHub-Api-Version": GITHUB_API_VERSION,
+      },
+    },
+  );
+  const installation = (await installationResponse
+    .json()
+    .catch(() => null)) as {
+    permissions?: Record<string, unknown>;
+  } | null;
+  const permissions =
+    installation?.permissions &&
+    typeof installation.permissions === "object" &&
+    !Array.isArray(installation.permissions)
+      ? installation.permissions
+      : null;
+  const unexpectedWritePermission = permissions
+    ? Object.entries(permissions).some(
+        ([name, level]) => name !== "contents" && level === "write",
+      )
+    : true;
+
+  if (
+    !installationResponse.ok ||
+    permissions?.contents !== "write" ||
+    unexpectedWritePermission
+  ) {
+    throw new CmsOAuthError(
+      "CMS GitHub AppはContents write以外のwrite権限を持たない設定にしてください。",
+      503,
+    );
+  }
+
   const response = await fetch(
     `https://api.github.com/user/installations/${installationId}/repositories?per_page=100`,
     {

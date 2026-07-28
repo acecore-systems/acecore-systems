@@ -3,6 +3,7 @@ export const CMS_REPOSITORY = {
   name: "acecore-systems",
   branch: "main",
 } as const;
+export const CMS_PRODUCTION_HOSTNAME = "systems.acecore.net";
 
 const CONTENT_RULES: readonly {
   prefix: string;
@@ -79,7 +80,8 @@ export function isAllowedCmsWritePath(path: string) {
 }
 
 export function isAllowedCmsDeletePath(path: string) {
-  return normalizeCmsPath(path) === path && isAllowedCmsMediaPath(path);
+  void path;
+  return false;
 }
 
 export function isAllowedCmsDirectoryPath(path: string) {

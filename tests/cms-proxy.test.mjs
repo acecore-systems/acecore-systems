@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, test } from "node:test";
 
 import {
@@ -9,8 +11,10 @@ import {
   isAllowedCmsDirectoryPath,
   isAllowedCmsWritePath,
 } from "../functions/admin/api/_cms-policy.ts";
+import { validateCmsAddition } from "../functions/admin/api/_content-validation.ts";
 import { clearGitHubEditorCacheForTests } from "../functions/admin/api/_github-oauth.ts";
-import { onRequestPost as handleGraphql } from "../functions/admin/api/graphql.ts";
+import { onRequestGet as handleCmsConfig } from "../functions/admin/config.yml.ts";
+import { onRequestPost as handleGraphqlRequest } from "../functions/admin/api/graphql.ts";
 import { onRequest as handleGithubRest } from "../functions/admin/api/github/[[path]].ts";
 
 const originalFetch = globalThis.fetch;
@@ -19,8 +23,21 @@ const mainSha = "a".repeat(40);
 const topicSha = "b".repeat(40);
 const oauthToken = "ghu_test-oauth-token";
 const cmsOrigin = "https://systems.acecore.net";
+const installationId = 987654321;
+const cmsEnv = {
+  CMS_GITHUB_APP_INSTALLATION_ID: String(installationId),
+};
 const repositoryApi = `https://api.github.com/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
 const contentPath = "src/data/home.json";
+const validContentBase64 = (
+  await readFile(new URL(`../${contentPath}`, import.meta.url))
+).toString("base64");
+const validPngBase64 = Buffer.from([
+  0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49,
+  0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x02,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45,
+  0x4e, 0x44, 0x00, 0x00, 0x00, 0x00,
+]).toString("base64");
 const rejectedPath = "src/pages/index.astro";
 const collectionWritePaths = [
   "src/data/site.json",
@@ -48,6 +65,9 @@ const editor = {
   type: "User",
 };
 
+const handleGraphql = (context) =>
+  handleGraphqlRequest({ env: cmsEnv, ...context });
+
 afterEach(() => {
   globalThis.fetch = originalFetch;
   console.error = originalConsoleError;
@@ -60,7 +80,7 @@ test("CMS対象pathだけを許可する", () => {
     assert.equal(isAllowedCmsWritePath(path), true);
   }
   assert.equal(isAllowedCmsWritePath("public/uploads/example.png"), true);
-  assert.equal(isAllowedCmsDeletePath("public/uploads/example.png"), true);
+  assert.equal(isAllowedCmsDeletePath("public/uploads/example.png"), false);
   assert.equal(isAllowedCmsDeletePath(contentPath), false);
   assert.equal(isAllowedCmsWritePath("public/uploads/example.svg"), false);
   assert.equal(isAllowedCmsWritePath("public/uploads/example.pdf"), false);
@@ -69,6 +89,267 @@ test("CMS対象pathだけを許可する", () => {
   assert.equal(isAllowedCmsWritePath("README.md"), false);
   assert.equal(isAllowedCmsWritePath("../README.md"), false);
   assert.equal(isAllowedCmsWritePath(`${contentPath}\nREADME.md`), false);
+});
+
+test("CMSの公開案内で画像削除をPull Requestへ案内する", async () => {
+  const adminInit = await readFile(
+    new URL("../public/admin/init.js", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(adminInit, /画像の削除は参照確認を伴うPull Request/);
+});
+
+test("現行mainの全CMS対象ファイルを同期validatorが受理する", async () => {
+  const contentPaths = [contentPath, ...collectionWritePaths];
+  const uploadRoot = new URL("../public/uploads/", import.meta.url);
+  const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
+  const uploads = await readdir(uploadRoot, {
+    recursive: true,
+    withFileTypes: true,
+  }).catch((error) => {
+    if (error?.code === "ENOENT") return [];
+    throw error;
+  });
+
+  for (const path of contentPaths) {
+    const bytes = await readFile(new URL(`../${path}`, import.meta.url));
+    const validation = validateCmsAddition(path, bytes.toString("base64"));
+
+    assert.equal(validation.ok, true, path);
+  }
+
+  for (const entry of uploads) {
+    if (!entry.isFile()) continue;
+    const absolutePath = `${entry.parentPath}/${entry.name}`;
+    const relativePath = path
+      .relative(repositoryRoot, absolutePath)
+      .replaceAll("\\", "/");
+
+    if (!isAllowedCmsWritePath(relativePath)) continue;
+
+    const bytes = await readFile(absolutePath);
+    const validation = validateCmsAddition(
+      relativePath,
+      bytes.toString("base64"),
+    );
+
+    assert.equal(validation.ok, true, relativePath);
+  }
+});
+
+test("壊れたJSONと拡張子を偽装した画像を同期validatorが拒否する", () => {
+  assert.equal(
+    validateCmsAddition(contentPath, Buffer.from('{"hero":').toString("base64"))
+      .ok,
+    false,
+  );
+  assert.equal(
+    validateCmsAddition(
+      "public/uploads/spoofed.png",
+      Buffer.from('<svg onload="alert(1)"/>').toString("base64"),
+    ).ok,
+    false,
+  );
+});
+
+test("CMS由来のlink・form action・画像URLを安全なpathまたはHTTPSに限定する", async () => {
+  for (const dangerousUrl of [
+    "javascript:alert(1)",
+    "java&#x09;script:alert(1)",
+    "java&#13;script:alert(1)",
+    "java&Tab;script:alert(1)",
+    "java&NewLine;script:alert(1)",
+  ]) {
+    const homeValue = JSON.parse(
+      Buffer.from(validContentBase64, "base64").toString("utf8"),
+    );
+    homeValue.primaryCtaHref = dangerousUrl;
+
+    assert.equal(
+      validateCmsAddition(
+        contentPath,
+        Buffer.from(JSON.stringify(homeValue)).toString("base64"),
+      ).ok,
+      false,
+      dangerousUrl,
+    );
+  }
+
+  const siteValue = JSON.parse(
+    await readFile(new URL("../src/data/site.json", import.meta.url), "utf8"),
+  );
+  siteValue.contactFormAction = "http://example.com/contact";
+
+  assert.equal(
+    validateCmsAddition(
+      "src/data/site.json",
+      Buffer.from(JSON.stringify(siteValue)).toString("base64"),
+    ).ok,
+    false,
+  );
+});
+
+test("CIと共有するsemantic ruleで必須配列・未知key・不正な相互参照を拒否する", async () => {
+  const operationsPath = "src/data/service-details/operations.json";
+  const operations = JSON.parse(
+    await readFile(new URL(`../${operationsPath}`, import.meta.url), "utf8"),
+  );
+  const invalidValues = [
+    { ...operations, challenges: [] },
+    { ...operations, layout: "../../secret" },
+    {
+      ...operations,
+      offerings: [
+        {
+          ...operations.offerings[0],
+          pricingKeys: ["unknown-pricing-key"],
+        },
+        ...operations.offerings.slice(1),
+      ],
+    },
+  ];
+
+  for (const value of invalidValues) {
+    assert.equal(
+      validateCmsAddition(
+        operationsPath,
+        Buffer.from(JSON.stringify(value)).toString("base64"),
+      ).ok,
+      false,
+      JSON.stringify(value),
+    );
+  }
+});
+
+test("複数JSONの協調更新を1つのprojected stateとして直接保存する", async () => {
+  const operationsPath = "src/data/service-details/operations.json";
+  const pricingPath = "src/data/pricing.json";
+  const operations = JSON.parse(
+    await readFile(new URL(`../${operationsPath}`, import.meta.url), "utf8"),
+  );
+  const pricing = JSON.parse(
+    await readFile(new URL(`../${pricingPath}`, import.meta.url), "utf8"),
+  );
+  const newPricingKey = "cms-combined-test";
+  const updatedOperations = structuredClone(operations);
+  const updatedPricing = structuredClone(pricing);
+
+  updatedOperations.offerings[0].pricingKeys = [newPricingKey];
+  updatedPricing.items.push({
+    ...updatedPricing.items.find(({ detailUrl }) => detailUrl === ""),
+    key: newPricingKey,
+  });
+
+  mockGitHub(async (url, _init, body) => {
+    if (url.endsWith("/git/ref/heads/main")) {
+      return jsonResponse({ object: { sha: mainSha } });
+    }
+
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      assert.deepEqual(
+        body.variables.input.fileChanges.additions.map(({ path }) => path),
+        [operationsPath, pricingPath],
+      );
+
+      return jsonResponse({
+        data: {
+          createCommitOnBranch: {
+            commit: { oid: topicSha },
+          },
+        },
+      });
+    }
+
+    throw new Error(`Unexpected GitHub request: ${url}`);
+  });
+
+  const response = await handleGraphql({
+    request: graphqlRequest({
+      variables: {
+        input: {
+          branch: {
+            repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            branchName: "main",
+          },
+          expectedHeadOid: mainSha,
+          fileChanges: {
+            additions: [
+              {
+                path: operationsPath,
+                contents: Buffer.from(
+                  JSON.stringify(updatedOperations),
+                ).toString("base64"),
+              },
+              {
+                path: pricingPath,
+                contents: Buffer.from(JSON.stringify(updatedPricing)).toString(
+                  "base64",
+                ),
+              },
+            ],
+            deletions: [],
+          },
+          message: { headline: "cms: coordinated content update" },
+        },
+      },
+    }),
+  });
+
+  assert.equal(response.status, 200);
+});
+
+test("複数JSONの最終projected stateに未知料金keyが残る保存を拒否する", async () => {
+  const operationsPath = "src/data/service-details/operations.json";
+  const pricingPath = "src/data/pricing.json";
+  const operations = JSON.parse(
+    await readFile(new URL(`../${operationsPath}`, import.meta.url), "utf8"),
+  );
+  const pricing = JSON.parse(
+    await readFile(new URL(`../${pricingPath}`, import.meta.url), "utf8"),
+  );
+  let cmsOperationCalled = false;
+
+  operations.offerings[0].pricingKeys = ["cms-missing-pricing-key"];
+  mockGitHub(async () => {
+    cmsOperationCalled = true;
+    throw new Error("CMS operation must not continue");
+  });
+
+  const response = await handleGraphql({
+    request: graphqlRequest({
+      variables: {
+        input: {
+          branch: {
+            repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            branchName: "main",
+          },
+          expectedHeadOid: mainSha,
+          fileChanges: {
+            additions: [
+              {
+                path: operationsPath,
+                contents: Buffer.from(JSON.stringify(operations)).toString(
+                  "base64",
+                ),
+              },
+              {
+                path: pricingPath,
+                contents: Buffer.from(JSON.stringify(pricing)).toString(
+                  "base64",
+                ),
+              },
+            ],
+            deletions: [],
+          },
+          message: { headline: "cms: invalid coordinated content update" },
+        },
+      },
+    }),
+  });
+
+  assert.equal(response.status, 403);
+  assert.equal(cmsOperationCalled, false);
 });
 
 test("CMS設定で公開したfolderとfileがproxyの許可範囲に収まる", async () => {
@@ -146,6 +427,20 @@ test("previewのCMS APIをGitHubへの通信前に拒否する", async () => {
   assert.equal(called, false);
 });
 
+test("previewではCMS設定を配信しない", async () => {
+  let nextCalled = false;
+  const response = await handleCmsConfig({
+    request: new Request("https://cms-preview.pages.dev/admin/config.yml"),
+    next: async () => {
+      nextCalled = true;
+      return new Response("backend:\n  name: github\n");
+    },
+  });
+
+  assert.equal(response.status, 404);
+  assert.equal(nextCalled, false);
+});
+
 test("repositoryへのpush権限がないGitHub userを拒否する", async () => {
   mockGitHub(async () => {
     throw new Error("CMS operation must not continue");
@@ -157,6 +452,30 @@ test("repositoryへのpush権限がないGitHub userを拒否する", async () =
 
   assert.equal(response.status, 403);
   assert.match((await response.json()).message, /write権限/);
+});
+
+test("保存直前にPull requests writeを持つGitHub Appを拒否する", async () => {
+  mockGitHub(
+    async () => {
+      throw new Error("CMS mutation must not continue");
+    },
+    true,
+    {
+      contents: "write",
+      metadata: "read",
+      pull_requests: "write",
+    },
+  );
+
+  const response = await handleGraphql({
+    request: graphqlRequest(),
+  });
+
+  assert.equal(response.status, 503);
+  assert.match(
+    (await response.json()).message,
+    /Contents write以外のwrite権限/,
+  );
 });
 
 test("Sveltia CMS 0.172のlast-commit queryを許可する", async () => {
@@ -330,11 +649,11 @@ test("画像と本文をmainの1 commitへ保存して直接公開する", async
             additions: [
               {
                 path: "public/uploads/example.png",
-                contents: Buffer.from("image").toString("base64"),
+                contents: validPngBase64,
               },
               {
                 path: contentPath,
-                contents: Buffer.from("content").toString("base64"),
+                contents: validContentBase64,
               },
             ],
             deletions: [],
@@ -364,7 +683,7 @@ test("画像と本文をmainの1 commitへ保存して直接公開する", async
 });
 
 test("direct保存の応答喪失後にmarker・親SHA・path・blob SHAを照合して復旧する", async () => {
-  const expectedContents = Buffer.from("content").toString("base64");
+  const expectedContents = validContentBase64;
   const expectedBlobSha = gitBlobOid(expectedContents);
   let mainRefReads = 0;
   let operationMarker = "";
@@ -427,46 +746,13 @@ test("direct保存の応答喪失後にmarker・親SHA・path・blob SHAを照�
   assert.equal(mainRefReads, 2);
 });
 
-test("direct削除の応答喪失後に変更pathと削除済みtreeを照合して復旧する", async () => {
+test("参照確認できない画像削除をGitHubへ送らない", async () => {
   const deletedPath = "public/uploads/unused.png";
-  let mainRefReads = 0;
-  let operationMarker = "";
+  let cmsOperationCalled = false;
 
-  mockGitHub(async (url, _init, body) => {
-    if (url.endsWith("/git/ref/heads/main")) {
-      mainRefReads += 1;
-      return jsonResponse({
-        object: { sha: mainRefReads === 1 ? mainSha : topicSha },
-      });
-    }
-
-    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
-      operationMarker = getOperationMarker(body.variables.input.message.body);
-      throw new TypeError("upstream response was lost");
-    }
-
-    if (url.includes("/commits?sha=main&per_page=100")) {
-      return jsonResponse([
-        operationCommit({ marker: operationMarker, sha: topicSha }),
-      ]);
-    }
-
-    if (url.endsWith(`/commits/${topicSha}?per_page=100`)) {
-      return jsonResponse({
-        sha: topicSha,
-        files: [{ filename: deletedPath, status: "removed" }],
-      });
-    }
-
-    if (url.includes(`/git/trees/${topicSha}?recursive=1`)) {
-      return jsonResponse({
-        sha: "c".repeat(40),
-        truncated: false,
-        tree: [],
-      });
-    }
-
-    throw new Error(`Unexpected GitHub request: ${url}`);
+  mockGitHub(async () => {
+    cmsOperationCalled = true;
+    throw new Error("CMS operation must not continue");
   });
 
   const response = await handleGraphql({
@@ -487,10 +773,8 @@ test("direct削除の応答喪失後に変更pathと削除済みtreeを照合し
       },
     }),
   });
-  const result = await response.json();
-
-  assert.equal(response.status, 200);
-  assert.equal(result.extensions.cms.commit_oid, topicSha);
+  assert.equal(response.status, 403);
+  assert.equal(cmsOperationCalled, false);
 });
 
 test("編集開始後にmain HEADが変わっていればmutation前に保存を拒否する", async () => {
@@ -822,7 +1106,11 @@ test("REST writeを認証前に拒否する", async () => {
   assert.equal(called, false);
 });
 
-function mockGitHub(handler, push = true) {
+function mockGitHub(
+  handler,
+  push = true,
+  installationPermissions = { contents: "write", metadata: "read" },
+) {
   globalThis.fetch = async (input, init = {}) => {
     const url = String(input);
     const body = typeof init.body === "string" ? JSON.parse(init.body) : null;
@@ -838,6 +1126,28 @@ function mockGitHub(handler, push = true) {
     if (url === repositoryApi) {
       return jsonResponse({
         permissions: { push },
+      });
+    }
+
+    if (url === `https://api.github.com/user/installations/${installationId}`) {
+      return jsonResponse({
+        permissions: installationPermissions,
+      });
+    }
+
+    if (
+      url ===
+      `https://api.github.com/user/installations/${installationId}/repositories?per_page=100`
+    ) {
+      return jsonResponse({
+        repositories: [
+          {
+            full_name: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            id: 1268097850,
+            permissions: { push: true },
+          },
+        ],
+        total_count: 1,
       });
     }
 
@@ -859,7 +1169,7 @@ function graphqlRequest({
         additions: [
           {
             path: contentPath,
-            contents: Buffer.from("content").toString("base64"),
+            contents: validContentBase64,
           },
         ],
         deletions: [],
