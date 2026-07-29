@@ -73,7 +73,7 @@ private keyはGitHubから取得したPKCS#1またはPKCS#8 PEMをProduction enc
 - `src/data/service-details/operations.json`
 - `src/data/work-details/acecore-site-platform.json`
 
-画像は`public/uploads/**`配下の`.avif`、`.gif`、`.jpeg`、`.jpg`、`.png`、`.webp`だけを扱います。参照中画像を誤って消さないよう、CMSからの削除はJSON・画像とも拒否します。不要画像の削除は参照確認を含む通常のPull Requestで行います。source code、workflow、設定、列挙外のデータもproxyが拒否します。1回の保存は最大100ファイル、追加データ合計25 MiBです。
+画像は`public/uploads/**`配下の`.avif`、`.gif`、`.jpeg`、`.jpg`、`.png`、`.webp`だけを扱います。参照中画像を誤って消さないよう、CMSからの削除はJSON・画像とも拒否します。不要画像の削除は参照確認を含む通常のPull Requestで行います。source code、workflow、設定、列挙外のデータもproxyが拒否します。JSONはGitHub GraphQLの完全なtextとして再読込できる448 KiB以下、1回の保存は最大100ファイル、追加データ合計25 MiBです。
 
 ## 保存から公開まで
 

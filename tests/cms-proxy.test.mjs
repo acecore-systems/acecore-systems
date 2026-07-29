@@ -182,6 +182,21 @@ test("壊れたJSONと拡張子を偽装した画像を同期validatorが拒否�
   );
 });
 
+test("再読込時にtruncatedされ得る448 KiB超のJSONを保存前に拒否する", () => {
+  const homeValue = JSON.parse(
+    Buffer.from(validContentBase64, "base64").toString("utf8"),
+  );
+  homeValue.description = "a".repeat(448 * 1024);
+
+  const validation = validateCmsAddition(
+    contentPath,
+    Buffer.from(JSON.stringify(homeValue)).toString("base64"),
+  );
+
+  assert.equal(validation.ok, false);
+  assert.match(validation.message, /448 KiB/);
+});
+
 test("CMS由来のlink・form action・画像URLを安全なpathまたはHTTPSに限定する", async () => {
   for (const dangerousUrl of [
     "javascript:alert(1)",

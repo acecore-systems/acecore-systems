@@ -13,7 +13,7 @@ import works from "../../../src/data/works.json";
 import acecoreSitePlatform from "../../../src/data/work-details/acecore-site-platform.json";
 import { validateSystemsContentFiles } from "../../../src/lib/systems-content-validation.ts";
 
-const MAX_JSON_BYTES = 1024 * 1024;
+const MAX_JSON_BYTES = 448 * 1024;
 const MAX_MEDIA_BYTES = 10 * 1024 * 1024;
 const MAX_DEPTH = 32;
 const MAX_NODES = 50_000;
@@ -72,7 +72,7 @@ export function validateCmsAdditionStructure(
     if (bytes.byteLength === 0 || bytes.byteLength > MAX_JSON_BYTES) {
       return {
         ok: false,
-        message: "JSONは1 byte以上1 MiB以下にしてください。",
+        message: "JSONは1 byte以上448 KiB以下にしてください。",
       };
     }
 
