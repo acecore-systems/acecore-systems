@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { createHash, createPrivateKey } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, test } from "node:test";
+import { exportPKCS8, generateKeyPair, jwtVerify } from "jose";
 
 import {
   CMS_REPOSITORY,
@@ -12,6 +13,10 @@ import {
   isAllowedCmsWritePath,
 } from "../functions/admin/api/_cms-policy.ts";
 import { validateCmsAddition } from "../functions/admin/api/_content-validation.ts";
+import {
+  clearGitHubAppTokenCacheForTests,
+  getGitHubAppToken,
+} from "../functions/admin/api/_github-api.ts";
 import { clearGitHubEditorCacheForTests } from "../functions/admin/api/_github-oauth.ts";
 import { onRequestGet as handleCmsConfig } from "../functions/admin/config.yml.ts";
 import { onRequestPost as handleGraphqlRequest } from "../functions/admin/api/graphql.ts";
@@ -22,12 +27,35 @@ const originalConsoleError = console.error;
 const mainSha = "a".repeat(40);
 const topicSha = "b".repeat(40);
 const oauthToken = "ghu_test-oauth-token";
+const appToken = "ghs_test-installation-token";
+const appClientId = "Iv23acecore-systems";
 const cmsOrigin = "https://systems.acecore.net";
 const installationId = 987654321;
+const { privateKey: appPrivateKey, publicKey: appPublicKey } =
+  await generateKeyPair("RS256", { extractable: true });
+const appPrivateKeyPem = await exportPKCS8(appPrivateKey);
+const githubDownloadedPrivateKeyPem = createPrivateKey(appPrivateKeyPem)
+  .export({ format: "pem", type: "pkcs1" })
+  .toString();
 const cmsEnv = {
+  CMS_GITHUB_APP_CLIENT_ID: appClientId,
   CMS_GITHUB_APP_INSTALLATION_ID: String(installationId),
+  CMS_GITHUB_APP_PRIVATE_KEY: githubDownloadedPrivateKeyPem,
 };
 const repositoryApi = `https://api.github.com/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`;
+const installationTokenUrl = `https://api.github.com/app/installations/${installationId}/access_tokens`;
+const installationTokenScope = {
+  permissions: {
+    contents: "write",
+    metadata: "read",
+  },
+  repositories: [
+    {
+      name: CMS_REPOSITORY.name,
+      full_name: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+    },
+  ],
+};
 const contentPath = "src/data/home.json";
 const validContentBase64 = (
   await readFile(new URL(`../${contentPath}`, import.meta.url))
@@ -71,6 +99,7 @@ const handleGraphql = (context) =>
 afterEach(() => {
   globalThis.fetch = originalFetch;
   console.error = originalConsoleError;
+  clearGitHubAppTokenCacheForTests();
   clearGitHubEditorCacheForTests();
 });
 
@@ -151,6 +180,21 @@ test("壊れたJSONと拡張子を偽装した画像を同期validatorが拒否�
     ).ok,
     false,
   );
+});
+
+test("再読込時にtruncatedされ得る448 KiB超のJSONを保存前に拒否する", () => {
+  const homeValue = JSON.parse(
+    Buffer.from(validContentBase64, "base64").toString("utf8"),
+  );
+  homeValue.description = "a".repeat(448 * 1024);
+
+  const validation = validateCmsAddition(
+    contentPath,
+    Buffer.from(JSON.stringify(homeValue)).toString("base64"),
+  );
+
+  assert.equal(validation.ok, false);
+  assert.match(validation.message, /448 KiB/);
 });
 
 test("CMS由来のlink・form action・画像URLを安全なpathまたはHTTPSに限定する", async () => {
@@ -378,6 +422,105 @@ test("CMS設定で公開したfolderとfileがproxyの許可範囲に収まる",
   }
 });
 
+test("GitHub配布形式の秘密鍵からrepository限定installation tokenを発行する", async () => {
+  globalThis.fetch = async (input, init = {}) => {
+    const url = String(input);
+    const headers = new Headers(init.headers);
+    const authorization = headers.get("Authorization") ?? "";
+    const body = JSON.parse(init.body);
+
+    assert.equal(url, installationTokenUrl);
+    assert.match(authorization, /^Bearer eyJ/);
+
+    const { payload, protectedHeader } = await jwtVerify(
+      authorization.slice("Bearer ".length),
+      appPublicKey,
+      {
+        algorithms: ["RS256"],
+        issuer: appClientId,
+      },
+    );
+
+    assert.equal(protectedHeader.alg, "RS256");
+    assert.ok((payload.iat ?? 0) <= Math.floor(Date.now() / 1000));
+    assert.ok((payload.exp ?? 0) - (payload.iat ?? 0) <= 10 * 60);
+    assert.deepEqual(body, {
+      repositories: [CMS_REPOSITORY.name],
+      permissions: {
+        contents: "write",
+      },
+    });
+
+    return jsonResponse({
+      token: appToken,
+      expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      permissions: {
+        contents: "write",
+      },
+      repositories: installationTokenScope.repositories,
+    });
+  };
+
+  assert.equal(
+    await getGitHubAppToken(cmsEnv, { forceRefresh: true }),
+    appToken,
+  );
+});
+
+test("installation tokenの応答scopeが広い場合は保存actorに使わない", async () => {
+  globalThis.fetch = async () =>
+    jsonResponse({
+      token: appToken,
+      expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      permissions: {
+        contents: "write",
+        metadata: "read",
+        pull_requests: "write",
+      },
+      repositories: installationTokenScope.repositories,
+    });
+
+  await assert.rejects(
+    () => getGitHubAppToken(cmsEnv, { forceRefresh: true }),
+    /installation tokenを発行できません/,
+  );
+});
+
+test("installation tokenの有効期限が1時間を大きく超える場合は拒否する", async () => {
+  globalThis.fetch = async () =>
+    jsonResponse({
+      token: appToken,
+      expires_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+      ...installationTokenScope,
+    });
+
+  await assert.rejects(
+    () => getGitHubAppToken(cmsEnv, { forceRefresh: true }),
+    /有効期限が不正/,
+  );
+});
+
+test("private key未設定ではGitHubへの通信前にinstallation token発行を拒否する", async () => {
+  let called = false;
+  globalThis.fetch = async () => {
+    called = true;
+    throw new Error("GitHub must not be called");
+  };
+
+  await assert.rejects(
+    () =>
+      getGitHubAppToken(
+        {
+          CMS_GITHUB_APP_CLIENT_ID: appClientId,
+          CMS_GITHUB_APP_INSTALLATION_ID: String(installationId),
+        },
+        { forceRefresh: true },
+      ),
+    /認証設定がCloudflare Pagesにありません/,
+  );
+  assert.equal(called, false);
+});
+
 test("GitHub OAuth認証がないrequestを拒否する", async () => {
   let called = false;
   globalThis.fetch = async () => {
@@ -452,6 +595,32 @@ test("repositoryへのpush権限がないGitHub userを拒否する", async () =
 
   assert.equal(response.status, 403);
   assert.match((await response.json()).message, /write権限/);
+});
+
+test("private key未設定ではmainへのcommit前に保存を停止する", async () => {
+  let mutationCalled = false;
+
+  mockGitHub(async (url) => {
+    if (url.endsWith("/git/ref/heads/main")) {
+      return jsonResponse({ object: { sha: mainSha } });
+    }
+
+    if (url.endsWith("/graphql")) mutationCalled = true;
+
+    throw new Error(`Unexpected GitHub request: ${url}`);
+  });
+
+  const response = await handleGraphqlRequest({
+    env: {
+      ...cmsEnv,
+      CMS_GITHUB_APP_PRIVATE_KEY: undefined,
+    },
+    request: graphqlRequest(),
+  });
+
+  assert.equal(response.status, 503);
+  assert.match((await response.json()).message, /認証設定/);
+  assert.equal(mutationCalled, false);
 });
 
 test("保存直前にPull requests writeを持つGitHub Appを拒否する", async () => {
@@ -587,6 +756,86 @@ test("Sveltia CMS 0.172のcontent queryをCMS対象blobだけ許可する", asyn
   assert.equal(response.status, 200);
 });
 
+test("共通設定のサイト説明をinstallation tokenでmainへ直接保存する", async () => {
+  const sitePath = "src/data/site.json";
+  const siteValue = JSON.parse(
+    await readFile(new URL(`../${sitePath}`, import.meta.url), "utf8"),
+  );
+  siteValue.description = "CMS installation token regression test";
+
+  mockGitHub(async (url, init, body) => {
+    if (url.endsWith("/git/ref/heads/main")) {
+      return jsonResponse({ object: { sha: mainSha } });
+    }
+
+    if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      assert.equal(
+        new Headers(init.headers).get("Authorization"),
+        `Bearer ${appToken}`,
+      );
+      assert.deepEqual(
+        body.variables.input.fileChanges.additions.map(({ path }) => path),
+        [sitePath],
+      );
+      assert.equal(
+        JSON.parse(
+          Buffer.from(
+            body.variables.input.fileChanges.additions[0].contents,
+            "base64",
+          ).toString("utf8"),
+        ).description,
+        siteValue.description,
+      );
+
+      return jsonResponse({
+        data: {
+          createCommitOnBranch: {
+            commit: {
+              oid: topicSha,
+              committedDate: "2026-07-29T00:00:00Z",
+              file_0: { oid: "d".repeat(40) },
+            },
+          },
+        },
+      });
+    }
+
+    throw new Error(`Unexpected GitHub request: ${url}`);
+  });
+
+  const response = await handleGraphql({
+    request: graphqlRequest({
+      variables: {
+        input: {
+          branch: {
+            repositoryNameWithOwner: `${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}`,
+            branchName: "main",
+          },
+          expectedHeadOid: mainSha,
+          fileChanges: {
+            additions: [
+              {
+                path: sitePath,
+                contents: Buffer.from(JSON.stringify(siteValue)).toString(
+                  "base64",
+                ),
+              },
+            ],
+            deletions: [],
+          },
+          message: { headline: "cms: update settings site" },
+        },
+      },
+    }),
+  });
+
+  assert.equal(response.status, 200);
+  assert.equal(
+    (await response.json()).data.createCommitOnBranch.commit.oid,
+    topicSha,
+  );
+});
+
 test("画像と本文をmainの1 commitへ保存して直接公開する", async () => {
   const calls = [];
 
@@ -594,10 +843,18 @@ test("画像と本文をmainの1 commitへ保存して直接公開する", async
     calls.push({ url, init, body });
 
     if (url.endsWith("/git/ref/heads/main")) {
+      assert.equal(
+        new Headers(init.headers).get("Authorization"),
+        `Bearer ${oauthToken}`,
+      );
       return jsonResponse({ object: { sha: mainSha } });
     }
 
     if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
+      assert.equal(
+        new Headers(init.headers).get("Authorization"),
+        `Bearer ${appToken}`,
+      );
       assert.match(body.query, /mutation CmsCommit/);
       assert.equal(
         body.variables.input.branch.repositoryNameWithOwner,
@@ -688,13 +945,21 @@ test("direct保存の応答喪失後にmarker・親SHA・path・blob SHAを照�
   let mainRefReads = 0;
   let operationMarker = "";
 
-  mockGitHub(async (url, _init, body) => {
+  mockGitHub(async (url, init, body) => {
+    const authorization = new Headers(init.headers).get("Authorization");
+
     if (url.endsWith("/git/ref/heads/main")) {
       mainRefReads += 1;
+      assert.equal(
+        authorization,
+        `Bearer ${mainRefReads === 1 ? oauthToken : appToken}`,
+      );
       return jsonResponse({
         object: { sha: mainRefReads === 1 ? mainSha : topicSha },
       });
     }
+
+    assert.equal(authorization, `Bearer ${appToken}`);
 
     if (url.endsWith("/graphql") && body.query.includes("mutation CmsCommit")) {
       operationMarker = getOperationMarker(body.variables.input.message.body);
@@ -1154,6 +1419,21 @@ function mockGitHub(
           },
         ],
         total_count: 1,
+      });
+    }
+
+    if (url === installationTokenUrl) {
+      assert.deepEqual(body, {
+        repositories: [CMS_REPOSITORY.name],
+        permissions: {
+          contents: "write",
+        },
+      });
+
+      return jsonResponse({
+        token: appToken,
+        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+        ...installationTokenScope,
       });
     }
 

@@ -46,6 +46,7 @@ function validateCmsConfig() {
   const policy = readText("functions/admin/api/_cms-policy.ts");
   const oauth = readText("functions/admin/api/_github-oauth.ts");
   const appOAuth = readText("functions/admin/api/_github-app-oauth.ts");
+  const githubApi = readText("functions/admin/api/_github-api.ts");
   const configFunction = readText("functions/admin/config.yml.ts");
   const adminIndex = readText("public/admin/index.html");
   const adminInit = readText("public/admin/init.js");
@@ -100,10 +101,16 @@ function validateCmsConfig() {
       graphql.includes("CMS-Operation:") &&
       graphql.includes("verifyCmsOperationCommit") &&
       graphql.includes("getGitBlobOid") &&
+      graphql.includes("getGitHubAppToken(env, { forceRefresh: true })") &&
+      graphql.includes("token: commitToken") &&
+      githubApi.includes("CMS_GITHUB_APP_PRIVATE_KEY") &&
+      githubApi.includes("repositories: [CMS_REPOSITORY.name]") &&
+      githubApi.includes('contents: "write"') &&
+      githubApi.includes("hasExpectedInstallationScope") &&
       graphql.includes('mode: "direct"') &&
       !graphql.includes("/pulls"),
     true,
-    "CMS writes must publish one direct commit and reconcile ambiguous responses by marker, paths, and blobs",
+    "CMS writes must use a repository-scoped App token, publish one direct commit, and reconcile ambiguous responses by marker, paths, and blobs",
   );
   assert.equal(
     oauth.includes("repository.permissions.push !== true") &&
