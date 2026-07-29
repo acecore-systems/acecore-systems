@@ -3,7 +3,7 @@ interface Props {
   src: string;
   alt: string;
   caption?: string;
-  variant?: "card" | "detail";
+  variant?: "card" | "detail" | "section";
   showCaption?: boolean;
 }
 
@@ -43,9 +43,7 @@ const {
   .service-visual img {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 68%;
+    height: auto;
   }
 
   .service-visual--card {
@@ -56,11 +54,19 @@ const {
     aspect-ratio: 3 / 2;
   }
 
-  .service-visual--detail .service-visual__frame {
-    aspect-ratio: 12 / 5;
+  .service-visual--card img {
+    height: 100%;
+    object-fit: cover;
   }
 
-  .service-visual--detail figcaption {
+  .service-visual--section {
+    max-width: 960px;
+    margin-block: clamp(32px, 5vw, 56px);
+    margin-inline: auto;
+  }
+
+  .service-visual--detail figcaption,
+  .service-visual--section figcaption {
     max-width: 780px;
     margin-top: 14px;
     color: var(--muted);
@@ -69,12 +75,8 @@ const {
   }
 
   @media (max-width: 640px) {
-    .service-visual--detail .service-visual__frame {
-      aspect-ratio: 4 / 3;
-    }
-
-    .service-visual img {
-      object-position: center 72%;
+    .service-visual--section {
+      margin-block: 28px 36px;
     }
   }
 </style>

@@ -205,6 +205,7 @@ const jsonLd = [
         </div>
         <p>{data.supportLead}</p>
       </header>
+      <ServiceVisual {...data.sectionVisuals.scope} variant="section" />
       <div class="advisor-support-list">
         {
           data.supportAreas.map((area, index) => (
@@ -308,6 +309,7 @@ const jsonLd = [
         </div>
         <p>{data.processLead}</p>
       </header>
+      <ServiceVisual {...data.sectionVisuals.process} variant="section" />
       <ol class="advisor-process">
         {
           data.process.map((step, index) => (

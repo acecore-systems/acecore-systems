@@ -42,6 +42,15 @@ const validateVisual = (visual, label) => {
     `${label}: ${visual.src} missing`,
   );
 };
+const validateSectionVisuals = (sectionVisuals, label) => {
+  assert.ok(
+    sectionVisuals && typeof sectionVisuals === "object",
+    `${label} is required`,
+  );
+  for (const key of ["scope", "process"]) {
+    validateVisual(sectionVisuals[key], `${label}: ${key}`);
+  }
+};
 
 const expectedCmsFiles = [
   "src/data/site.json",
@@ -61,6 +70,7 @@ const expectedCmsFolders = [
 const cmsJsonPaths = [
   ...expectedCmsFiles,
   "src/data/privacy.json",
+  "src/data/service-details/development.json",
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
@@ -286,8 +296,18 @@ for (const source of serviceSources) {
   assert.equal(data.resources.length > 0, true, `${source.data}: resources`);
   if (source.route === "/services/development/") {
     validateVisual(data.visual, `${source.data}: visual`);
+    validateSectionVisuals(
+      data.sectionVisuals,
+      `${source.data}: sectionVisuals`,
+    );
   } else if (data.visual) {
     validateVisual(data.visual, `${source.data}: visual`);
+  }
+  if (source.route !== "/services/development/" && data.sectionVisuals) {
+    validateSectionVisuals(
+      data.sectionVisuals,
+      `${source.data}: sectionVisuals`,
+    );
   }
   if (data.handoff) {
     validateHandoff(data.handoff, `${source.data}: handoff`);
@@ -344,6 +364,10 @@ const advisor = readJson(advisorSource.data);
 requireText(advisor.title, `${advisorSource.data}: title`);
 requireText(advisor.description, `${advisorSource.data}: description`);
 validateVisual(advisor.visual, `${advisorSource.data}: visual`);
+validateSectionVisuals(
+  advisor.sectionVisuals,
+  `${advisorSource.data}: sectionVisuals`,
+);
 requireText(advisor.indexSummary, `${advisorSource.data}: indexSummary`);
 assert.equal(
   advisor.indexTopics.length > 0,

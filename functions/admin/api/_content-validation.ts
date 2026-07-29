@@ -6,6 +6,7 @@ import pricing from "../../../src/data/pricing.json";
 import privacy from "../../../src/data/privacy.json";
 import services from "../../../src/data/services.json";
 import site from "../../../src/data/site.json";
+import development from "../../../src/data/service-details/development.json";
 import operations from "../../../src/data/service-details/operations.json";
 import siteFunctions from "../../../src/data/service-details/site-functions.json";
 import siteQuality from "../../../src/data/service-details/site-quality.json";
@@ -30,6 +31,7 @@ const BASELINES = new Map<string, unknown>([
   ["src/data/works.json", works],
   ["src/data/contact.json", contact],
   ["src/data/privacy.json", privacy],
+  ["src/data/service-details/development.json", development],
   ["src/data/service-details/site-functions.json", siteFunctions],
   ["src/data/service-details/site-quality.json", siteQuality],
   ["src/data/service-details/operations.json", operations],

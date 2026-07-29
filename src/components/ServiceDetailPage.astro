@@ -13,6 +13,7 @@ import operations from "../data/service-details/operations.json";
 type ServiceDetail = typeof siteFunctions & {
   handoff?: typeof development.handoff;
   visual?: typeof development.visual;
+  sectionVisuals?: typeof development.sectionVisuals;
 };
 
 interface Props {
@@ -194,6 +195,11 @@ const jsonLd = [
         </div>
         <p>{data.offeringsLead}</p>
       </header>
+      {
+        data.sectionVisuals?.scope && (
+          <ServiceVisual {...data.sectionVisuals.scope} variant="section" />
+        )
+      }
       <div class="detail-offering-list">
         {
           offerings.map((offering, index) => (
@@ -243,6 +249,11 @@ const jsonLd = [
         </div>
         <p>{data.processLead}</p>
       </header>
+      {
+        data.sectionVisuals?.process && (
+          <ServiceVisual {...data.sectionVisuals.process} variant="section" />
+        )
+      }
       <ol class="service-process">
         {
           data.process.map((step, index) => (

@@ -5,9 +5,21 @@
   "heroTitle": "AIで作って、\n止まっていませんか。",
   "heroLead": "自社やAIで作ったコード・試作の確認から、本番公開、社内定着、運用改善まで。専任のIT担当者を置くほどではない企業に、必要なときに相談できるエンジニアが伴走します。",
   "visual": {
-    "src": "/images/service-it-advisor-bridge.webp",
-    "alt": "完成済みの濃紺の仕組みと公開・運用基盤が配線で安全につながる様子",
-    "caption": "すでにある開発物と公開基盤のあいだをつなぎ、安全に運用できる状態へ整えます。"
+    "src": "/images/service-it-advisor-overview-v2.webp",
+    "alt": "事業担当者とIT顧問が既存アプリとクラウドの公開状況を確認する様子",
+    "caption": "できているものを出発点に、構成・安全性・公開条件を確認し、運用できる状態へつなぎます。"
+  },
+  "sectionVisuals": {
+    "scope": {
+      "src": "/images/service-it-advisor-review.webp",
+      "alt": "既存アプリ、クラウドの公開設定、権限と安全性の確認項目が複数の画面に並ぶ様子",
+      "caption": "既存アプリの構成、公開設定、権限、残るリスクを整理し、本番化に進める状態か確認します。"
+    },
+    "process": {
+      "src": "/images/service-it-advisor-operations.webp",
+      "alt": "公開済みのアプリの稼働状況を事業担当者とIT顧問が確認する様子",
+      "caption": "公開して終わりではなく、監視・権限・更新方法を引き継ぎ、継続的に判断できる状態へ整えます。"
+    }
   },
   "indexSummary": "AI導入、Webアプリのデプロイ、IT基盤の判断を、業務整理から公開・運用改善まで伴走します。",
   "indexTopics": ["AI導入", "デプロイ", "IT基盤", "技術相談"],

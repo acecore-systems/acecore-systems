@@ -192,6 +192,12 @@ validateHandoff(advisorPage, developmentRoute, "IT advisor");
 validateHandoff(developmentPage, advisorRoute, "development");
 validateServiceVisual(advisorPage, advisorData.visual, "IT advisor");
 validateServiceVisual(developmentPage, developmentData.visual, "development");
+for (const [key, visual] of Object.entries(advisorData.sectionVisuals)) {
+  validateServiceVisual(advisorPage, visual, `IT advisor ${key} visual`);
+}
+for (const [key, visual] of Object.entries(developmentData.sectionVisuals)) {
+  validateServiceVisual(developmentPage, visual, `development ${key} visual`);
+}
 validateServiceVisual(services, advisorData.visual, "services IT advisor card");
 validateServiceVisual(
   services,

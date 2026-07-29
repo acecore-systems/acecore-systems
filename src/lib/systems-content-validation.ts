@@ -1,4 +1,5 @@
 const SERVICE_PATHS = [
+  "src/data/service-details/development.json",
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
@@ -14,9 +15,10 @@ const SERVICES_PATH = "src/data/services.json";
 const WORKS_PATH = "src/data/works.json";
 
 const SERVICE_ROUTES = new Map([
-  [SERVICE_PATHS[0], "/services/site-functions/"],
-  [SERVICE_PATHS[1], "/services/site-quality/"],
-  [SERVICE_PATHS[2], "/services/operations/"],
+  [SERVICE_PATHS[0], "/services/development/"],
+  [SERVICE_PATHS[1], "/services/site-functions/"],
+  [SERVICE_PATHS[2], "/services/site-quality/"],
+  [SERVICE_PATHS[3], "/services/operations/"],
   [ADVISOR_PATH, "/services/it-advisor/"],
 ]);
 
@@ -98,6 +100,15 @@ export function validateSystemsContentFiles(
       errors,
     );
     void challenges;
+
+    if (path === SERVICE_PATHS[0]) {
+      validateVisual(data.visual, `${path}.visual`, errors);
+      validateSectionVisuals(
+        data.sectionVisuals,
+        `${path}.sectionVisuals`,
+        errors,
+      );
+    }
 
     const anchors = new Set<string>();
 
@@ -219,13 +230,19 @@ function validateAdvisor(
   for (const key of ["title", "description", "indexSummary"] as const) {
     requireText(data[key], `${ADVISOR_PATH}.${key}`, errors);
   }
+  validateVisual(data.visual, `${ADVISOR_PATH}.visual`, errors);
+  validateSectionVisuals(
+    data.sectionVisuals,
+    `${ADVISOR_PATH}.sectionVisuals`,
+    errors,
+  );
 
   const requiredArrays = [
     "indexTopics",
     "challenges",
     "supportAreas",
     "useCases",
-    "packages",
+    "pricingSummaries",
     "plans",
     "process",
     "governance",
@@ -243,7 +260,7 @@ function validateAdvisor(
 
   const anchors = new Set<string>();
 
-  for (const key of ["supportAreas", "packages", "plans"] as const) {
+  for (const key of ["supportAreas", "plans"] as const) {
     arrays.get(key)?.forEach((entry, index) => {
       const item = asRecord(entry);
       const id =
@@ -286,6 +303,16 @@ function validateAdvisor(
     requireNonEmptyArray(item.includes, `${scope}.includes`, errors);
   });
 
+  arrays.get("pricingSummaries")?.forEach((entry, index) => {
+    const item = asRecord(entry);
+    const scope = `${ADVISOR_PATH}.pricingSummaries[${index}]`;
+
+    if (!item) return;
+    requireText(item.id, `${scope}.id`, errors);
+    requireText(item.label, `${scope}.label`, errors);
+    requireText(item.note, `${scope}.note`, errors);
+  });
+
   arrays.get("faqs")?.forEach((entry, index) => {
     const item = asRecord(entry);
     const scope = `${ADVISOR_PATH}.faqs[${index}]`;
@@ -296,8 +323,7 @@ function validateAdvisor(
   });
 
   const advisorPricingKeys = [
-    data.startingPriceKey,
-    ...(arrays.get("packages") ?? []).map(
+    ...(arrays.get("pricingSummaries") ?? []).map(
       (entry) => asRecord(entry)?.pricingKey,
     ),
     ...(arrays.get("plans") ?? []).map((entry) => asRecord(entry)?.pricingKey),
@@ -400,6 +426,43 @@ function requireText(value: unknown, scope: string, errors: string[]) {
   }
 
   return value;
+}
+
+function validateVisual(value: unknown, scope: string, errors: string[]) {
+  const visual = asRecord(value);
+
+  if (!visual) {
+    errors.push(`${scope}: objectが必要です。`);
+    return;
+  }
+
+  const src = requireText(visual.src, `${scope}.src`, errors);
+  requireText(visual.alt, `${scope}.alt`, errors);
+  requireText(visual.caption, `${scope}.caption`, errors);
+
+  if (
+    src &&
+    !/^\/(?:images|uploads)\/.+\.(?:avif|jpe?g|png|webp)$/iu.test(src)
+  ) {
+    errors.push(`${scope}.src: 公開画像pathが必要です。`);
+  }
+}
+
+function validateSectionVisuals(
+  value: unknown,
+  scope: string,
+  errors: string[],
+) {
+  const sectionVisuals = asRecord(value);
+
+  if (!sectionVisuals) {
+    errors.push(`${scope}: objectが必要です。`);
+    return;
+  }
+
+  for (const key of ["scope", "process"] as const) {
+    validateVisual(sectionVisuals[key], `${scope}.${key}`, errors);
+  }
 }
 
 function getArray(value: unknown, key: string) {

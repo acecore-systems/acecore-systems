@@ -182,6 +182,24 @@ collections:
               - { name: src, label: 画像, widget: image }
               - { name: alt, label: 画像の代替テキスト, widget: string }
               - { name: caption, label: 画像の説明, widget: text }
+          - label: 子ページ内イメージ
+            name: sectionVisuals
+            widget: object
+            fields:
+              - label: 対応範囲の画像
+                name: scope
+                widget: object
+                fields:
+                  - { name: src, label: 画像, widget: image }
+                  - { name: alt, label: 画像の代替テキスト, widget: string }
+                  - { name: caption, label: 画像の説明, widget: text }
+              - label: 進め方の画像
+                name: process
+                widget: object
+                fields:
+                  - { name: src, label: 画像, widget: image }
+                  - { name: alt, label: 画像の代替テキスト, widget: string }
+                  - { name: caption, label: 画像の説明, widget: text }
           - { name: indexSummary, label: 一覧用説明, widget: text }
           - label: 一覧用トピック
             name: indexTopics
@@ -479,6 +497,25 @@ collections:
           - { name: src, label: 画像, widget: image }
           - { name: alt, label: 画像の代替テキスト, widget: string }
           - { name: caption, label: 画像の説明, widget: text }
+      - label: 子ページ内イメージ
+        name: sectionVisuals
+        widget: object
+        required: false
+        fields:
+          - label: 対応範囲の画像
+            name: scope
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
+          - label: 進め方の画像
+            name: process
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
       - { name: indexSummary, label: 一覧用説明, widget: text }
       - label: 一覧用トピック
         name: indexTopics
