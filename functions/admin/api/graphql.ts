@@ -19,16 +19,15 @@ import {
   validateSystemsCmsAdditions,
   type ValidatedCmsAddition,
 } from "./_content-validation.ts";
-import {
-  getGitHubInstallationId,
-  type CmsOAuthEnv,
-} from "./_github-app-oauth.ts";
+import { getGitHubInstallationId } from "./_github-app-oauth.ts";
 import { getGitHubEditor, type GitHubEditor } from "./_github-oauth.ts";
 import {
+  type CmsGitHubAppEnv,
   GitHubApiError,
   copyGitHubResponse,
   fetchCmsTree,
   getAllowedCmsBlobShas,
+  getGitHubAppToken,
   githubJson,
   githubRequest,
   isRecord,
@@ -60,9 +59,10 @@ const MAX_CHANGE_COUNT = 100;
 const MAX_TOTAL_CONTENT_BYTES = 25 * 1024 * 1024;
 const MAX_GRAPHQL_BLOB_SIZE = 10 * 1024 * 1024;
 
-export const onRequestPost: PagesFunction<
-  Pick<CmsOAuthEnv, "CMS_GITHUB_APP_INSTALLATION_ID">
-> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<CmsGitHubAppEnv> = async ({
+  request,
+  env,
+}) => {
   try {
     const auth = await getGitHubEditor(request);
     const token = auth.token;
@@ -96,9 +96,10 @@ export const onRequestPost: PagesFunction<
 
       return await handleCommitMutation({
         auth: freshAuth,
+        env,
         operation,
         payload,
-        token: freshAuth.token,
+        editorToken: freshAuth.token,
       });
     }
 
@@ -152,14 +153,16 @@ async function handleReadQuery({
 
 async function handleCommitMutation({
   auth,
+  editorToken,
+  env,
   operation,
   payload,
-  token,
 }: {
   auth: { user: GitHubEditor };
+  editorToken: string;
+  env: CmsGitHubAppEnv;
   operation: OperationDefinitionNode;
   payload: GraphqlPayload;
-  token: string;
 }) {
   if (!isCmsCommitOperation(operation, payload.variables)) {
     return json(
@@ -184,7 +187,7 @@ async function handleCommitMutation({
 
   const mainRef = await githubJson<unknown>({
     path: `/repos/${CMS_REPOSITORY.owner}/${CMS_REPOSITORY.name}/git/ref/heads/${CMS_REPOSITORY.branch}`,
-    token,
+    token: editorToken,
   });
   const mainSha = getGitRefSha(mainRef);
 
@@ -204,6 +207,7 @@ async function handleCommitMutation({
 
   const operationMarker = `CMS-Operation: ${crypto.randomUUID()}`;
   const mutation = buildCmsCommitMutation(commitInput.additions);
+  const commitToken = await getGitHubAppToken(env, { forceRefresh: true });
   let githubResult: Record<string, unknown>;
 
   try {
@@ -240,7 +244,7 @@ async function handleCommitMutation({
       },
       method: "POST",
       path: "/graphql",
-      token,
+      token: commitToken,
     });
 
     ensureCommitSucceeded(githubResult);
@@ -250,7 +254,7 @@ async function handleCommitMutation({
       expectedHeadOid: mainSha,
       operationMarker,
       originalError: error,
-      token,
+      token: commitToken,
     });
   }
 
