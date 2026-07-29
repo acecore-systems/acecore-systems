@@ -169,18 +169,26 @@ import works from "../data/works.json";
               <p class="editorial-index">
                 {String(index + 1).padStart(2, "0")}
               </p>
+              <figure class="home-work__visual">
+                <img
+                  src={work.image}
+                  alt={work.imageAlt}
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
               <div>
                 <p class="home-work__category">{work.category}</p>
                 <h3>
-                  {
-                    work.detailUrl ? (
-                      <a class="home-work__title-link" href={work.detailUrl}>
-                        {work.title}
-                      </a>
-                    ) : (
-                      work.title
-                    )
-                  }
+                  {work.detailUrl ? (
+                    <a class="home-work__title-link" href={work.detailUrl}>
+                      {work.title}
+                    </a>
+                  ) : (
+                    work.title
+                  )}
                 </h3>
               </div>
               <p>{work.summary}</p>

@@ -46,6 +46,7 @@ const serviceDetailGroups = [
     title: "依頼の入口になる二つのサービス",
     lead: "構想から開発を任せるか、すでにある開発を公開・運用へ進めるかで選びます。",
     className: "service-detail-index--primary",
+    showVisuals: false,
     items: primaryServiceDetails,
   },
   {
@@ -54,6 +55,7 @@ const serviceDetailGroups = [
     title: "必要な範囲に絞った支援",
     lead: "サイトの機能追加、品質改善、公開後の運用は、個別の支援メニューから選べます。",
     className: "service-detail-index--supporting",
+    showVisuals: true,
     items: supportingServiceDetails,
   },
 ];
@@ -183,10 +185,24 @@ const serviceDetailGroups = [
               </header>
               <div class:list={["service-detail-index", group.className]}>
                 {group.items.map((detail, index) => (
-                  <a class="service-detail-index__item" href={detail.href}>
+                  <a
+                    class:list={[
+                      "service-detail-index__item",
+                      group.showVisuals &&
+                        "service-detail-index__item--with-visual",
+                    ]}
+                    href={detail.href}
+                  >
                     <p class="editorial-index">
                       Menu {String(index + 1).padStart(2, "0")}
                     </p>
+                    {group.showVisuals && (
+                      <ServiceVisual
+                        {...detail.data.visual}
+                        variant="card"
+                        showCaption={false}
+                      />
+                    )}
                     <h4>{detail.data.title}</h4>
                     <p>{detail.data.indexSummary}</p>
                     <ul aria-label={`${detail.data.title}の主な項目`}>
@@ -371,6 +387,10 @@ const serviceDetailGroups = [
     margin-top: 58px;
   }
 
+  .service-detail-index__item--with-visual h4 {
+    margin-top: 26px;
+  }
+
   @media (max-width: 860px) {
     .service-entry-points,
     .service-detail-index--primary {
@@ -394,6 +414,10 @@ const serviceDetailGroups = [
 
     .service-detail-index__item h4 {
       margin-top: 34px;
+    }
+
+    .service-detail-index__item--with-visual h4 {
+      margin-top: 24px;
     }
   }
 

@@ -5,6 +5,11 @@
   "heroEyebrow": "事例 / サイト基盤",
   "heroTitle": "静的サイトを、運用できる基盤へ。",
   "heroLead": "CMS、検索、SEO、配信品質を、静的サイトの軽さを保ったまま段階的に追加した自社プロジェクトです。",
+  "visual": {
+    "src": "/images/works/acecore-site-platform.webp",
+    "alt": "Acecore公式サイトのトップページ",
+    "caption": "サービス、料金、技術記事、問い合わせへの入口を一つの公開基盤で運用しています。"
+  },
   "overviewTitle": "更新し続けられるサイト基盤へ。",
   "overviewBody": "AstroとCloudflare Pagesを土台に、CMSや検索などを確認可能な単位で追加しました。編集・確認・公開までを一つの運用として整えています。",
   "facts": [
@@ -40,6 +45,11 @@
       "body": "SEO・CSP・アクセシビリティ・表示品質を同じ公開フローで確認できる"
     }
   ],
+  "outcomesVisual": {
+    "src": "/images/works/acecore-contact-form.webp",
+    "alt": "Acecore公式サイトの問い合わせフォーム",
+    "caption": "相談種別と必要な入力項目を整理し、正式な問い合わせへ進める画面を公開しています。"
+  },
   "story": [
     {
       "label": "課題",
@@ -54,6 +64,11 @@
   ],
   "scopeTitle": "段階的に整えた範囲",
   "scopeLead": "各項目を単独で追加するのではなく、公開・確認・運用とのつながりを見ながら進めました。",
+  "scopeVisual": {
+    "src": "/images/works/acecore-blog.webp",
+    "alt": "Acecore公式サイトのブログ一覧と絞り込み画面",
+    "caption": "記事、タグ、アーカイブ、検索をつなぎ、情報が増えても探せる構成にしています。"
+  },
   "scope": [
     {
       "title": "更新・記事運用",

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceVisual from "./ServiceVisual.astro";
 import site from "../data/site.json";
 import siteFunctions from "../data/service-details/site-functions.json";
 import siteQuality from "../data/service-details/site-quality.json";
@@ -101,6 +102,12 @@ const jsonLd = [
     </div>
   </section>
 
+  <section class="work-detail-visual" aria-label="公開中のAcecore公式サイト">
+    <div class="container">
+      <ServiceVisual {...data.visual} variant="section" />
+    </div>
+  </section>
+
   <section
     id="work-overview"
     class="page-section work-detail-overview"
@@ -140,6 +147,7 @@ const jsonLd = [
           }
         </ul>
       </div>
+      <ServiceVisual {...data.outcomesVisual} variant="section" />
     </div>
   </section>
 
@@ -180,6 +188,7 @@ const jsonLd = [
         </div>
         <p>{data.scopeLead}</p>
       </header>
+      <ServiceVisual {...data.scopeVisual} variant="section" />
       <div class="detail-offering-list">
         {
           data.scope.map((item, index) => (

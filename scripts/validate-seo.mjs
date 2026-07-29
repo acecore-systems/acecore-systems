@@ -15,10 +15,39 @@ const advisorPagePath = "dist/services/it-advisor/index.html";
 const developmentPagePath = "dist/services/development/index.html";
 const advisorData = readJson("src/data/it-advisor.json");
 const developmentData = readJson("src/data/service-details/development.json");
+const focusedServices = [
+  {
+    route: "/services/site-functions/",
+    pagePath: "dist/services/site-functions/index.html",
+    data: readJson("src/data/service-details/site-functions.json"),
+  },
+  {
+    route: "/services/site-quality/",
+    pagePath: "dist/services/site-quality/index.html",
+    data: readJson("src/data/service-details/site-quality.json"),
+  },
+  {
+    route: "/services/operations/",
+    pagePath: "dist/services/operations/index.html",
+    data: readJson("src/data/service-details/operations.json"),
+  },
+];
+const guideData = readJson("src/data/guide.json");
+const worksData = readJson("src/data/works.json");
+const workDetailData = readJson(
+  "src/data/work-details/acecore-site-platform.json",
+);
 const pricingData = readJson("src/data/pricing.json");
 const pricingByKey = new Map(pricingData.items.map((item) => [item.key, item]));
 
-for (const pagePath of [advisorPagePath, developmentPagePath]) {
+for (const pagePath of [
+  advisorPagePath,
+  developmentPagePath,
+  ...focusedServices.map((service) => service.pagePath),
+  "dist/guide/index.html",
+  "dist/works/index.html",
+  "dist/works/acecore-site-platform/index.html",
+]) {
   assert.equal(existsSync(join(root, pagePath)), true, `${pagePath} missing`);
 }
 
@@ -28,6 +57,9 @@ const home = read("dist/index.html");
 const services = read("dist/services/index.html");
 const pricing = read("dist/pricing/index.html");
 const contact = read("dist/contact/index.html");
+const guidePage = read("dist/guide/index.html");
+const worksPage = read("dist/works/index.html");
+const workDetailPage = read("dist/works/acecore-site-platform/index.html");
 
 function validateServicePage({
   data,
@@ -123,6 +155,15 @@ validateServicePage({
   route: developmentRoute,
   serviceEntitySuffix: "#detail-service",
 });
+for (const service of focusedServices) {
+  service.html = read(service.pagePath);
+  validateServicePage({
+    data: service.data,
+    html: service.html,
+    route: service.route,
+    serviceEntitySuffix: "#detail-service",
+  });
+}
 
 for (const [label, html] of [
   ["home", home],
@@ -204,6 +245,61 @@ validateServiceVisual(
   developmentData.visual,
   "services development card",
 );
+for (const service of focusedServices) {
+  validateServiceVisual(
+    service.html,
+    service.data.visual,
+    `${service.route} overview visual`,
+  );
+  for (const [key, visual] of Object.entries(service.data.sectionVisuals)) {
+    validateServiceVisual(
+      service.html,
+      visual,
+      `${service.route} ${key} visual`,
+    );
+  }
+  validateServiceVisual(
+    services,
+    service.data.visual,
+    `services ${service.route} card`,
+  );
+}
+
+validateServiceVisual(guidePage, guideData.visual, "guide visual");
+assert.equal(
+  guideData.journey.length,
+  4,
+  "guide: four journey steps are required",
+);
+for (const step of guideData.journey) {
+  assert.equal(
+    guidePage.includes(step.title),
+    true,
+    `guide: journey step ${step.title} missing`,
+  );
+}
+
+for (const work of worksData.cases) {
+  validateServiceVisual(
+    worksPage,
+    { src: work.image, alt: work.imageAlt },
+    `works ${work.id}`,
+  );
+}
+for (const work of worksData.cases.slice(0, 2)) {
+  validateServiceVisual(
+    home,
+    { src: work.image, alt: work.imageAlt },
+    `home selected work ${work.id}`,
+  );
+}
+for (const field of ["visual", "outcomesVisual", "scopeVisual"]) {
+  validateServiceVisual(
+    workDetailPage,
+    workDetailData[field],
+    `work detail ${field}`,
+  );
+}
 
 assert.equal(
   count(advisorPage, "data-advisor-pricing-summary"),
@@ -298,15 +394,22 @@ const collectXml = (directory) =>
     return extname(entry.name) === ".xml" ? [readFileSync(path, "utf8")] : [];
   });
 const sitemapXml = collectXml(join(root, "dist")).join("\n");
-for (const route of [advisorRoute, developmentRoute]) {
+for (const route of [
+  advisorRoute,
+  developmentRoute,
+  ...focusedServices.map((service) => service.route),
+  "/guide/",
+  "/works/",
+  "/works/acecore-site-platform/",
+]) {
   const expectedUrl = `${siteOrigin}${route}`;
   assert.equal(
-    count(sitemapXml, expectedUrl),
+    count(sitemapXml, `<loc>${expectedUrl}</loc>`),
     1,
     `${route}: route must appear once in sitemap output`,
   );
 }
 
 console.log(
-  "SEO validation passed: separated service routes, handoffs, pricing placement, metadata, JSON-LD",
+  "SEO validation passed: service routes, pricing placement, metadata, structured data, and visual coverage",
 );

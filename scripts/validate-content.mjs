@@ -26,21 +26,26 @@ const validateHandoff = (handoff, label) => {
     `${label}: href must target a service route`,
   );
 };
-const validateVisual = (visual, label) => {
-  assert.ok(visual && typeof visual === "object", `${label} is required`);
-  for (const field of ["src", "alt", "caption"]) {
-    requireText(visual[field], `${label}: ${field}`);
-  }
+const validateImageAsset = (src, label) => {
+  requireText(src, `${label}: src`);
+  const normalizedSrc = typeof src === "string" ? src : "";
   assert.match(
-    visual.src,
+    normalizedSrc,
     /^\/(?:images|uploads)\/.+\.(?:avif|jpe?g|png|webp)$/i,
     `${label}: src must reference a public image asset`,
   );
   assert.equal(
-    existsSync(join(root, "public", visual.src.slice(1))),
+    existsSync(join(root, "public", normalizedSrc.slice(1))),
     true,
-    `${label}: ${visual.src} missing`,
+    `${label}: ${normalizedSrc} missing`,
   );
+};
+const validateVisual = (visual, label) => {
+  assert.ok(visual && typeof visual === "object", `${label} is required`);
+  for (const field of ["alt", "caption"]) {
+    requireText(visual[field], `${label}: ${field}`);
+  }
+  validateImageAsset(visual.src, label);
 };
 const validateSectionVisuals = (sectionVisuals, label) => {
   assert.ok(
@@ -294,21 +299,8 @@ for (const source of serviceSources) {
   assert.equal(data.offerings.length > 0, true, `${source.data}: offerings`);
   assert.equal(data.process.length > 0, true, `${source.data}: process`);
   assert.equal(data.resources.length > 0, true, `${source.data}: resources`);
-  if (source.route === "/services/development/") {
-    validateVisual(data.visual, `${source.data}: visual`);
-    validateSectionVisuals(
-      data.sectionVisuals,
-      `${source.data}: sectionVisuals`,
-    );
-  } else if (data.visual) {
-    validateVisual(data.visual, `${source.data}: visual`);
-  }
-  if (source.route !== "/services/development/" && data.sectionVisuals) {
-    validateSectionVisuals(
-      data.sectionVisuals,
-      `${source.data}: sectionVisuals`,
-    );
-  }
+  validateVisual(data.visual, `${source.data}: visual`);
+  validateSectionVisuals(data.sectionVisuals, `${source.data}: sectionVisuals`);
   if (data.handoff) {
     validateHandoff(data.handoff, `${source.data}: handoff`);
   }
@@ -513,6 +505,9 @@ for (const source of workSources) {
   requireText(data.description, `${source.data}: description`);
   assert.equal(data.story.length > 0, true, `${source.data}: story`);
   assert.equal(data.outcomes.length > 0, true, `${source.data}: outcomes`);
+  for (const field of ["visual", "outcomesVisual", "scopeVisual"]) {
+    validateVisual(data[field], `${source.data}: ${field}`);
+  }
   for (const [index, outcome] of data.outcomes.entries()) {
     requireText(outcome.label, `${source.data}: outcomes[${index}].label`);
     requireText(outcome.body, `${source.data}: outcomes[${index}].body`);
@@ -528,6 +523,25 @@ const knownRoutes = new Set([
 ]);
 const services = readJson("src/data/services.json");
 const works = readJson("src/data/works.json");
+const guide = readJson("src/data/guide.json");
+validateVisual(guide.visual, "src/data/guide.json: visual");
+requireText(guide.journeyTitle, "src/data/guide.json: journeyTitle");
+requireText(guide.journeyLead, "src/data/guide.json: journeyLead");
+assert.equal(
+  Array.isArray(guide.journey),
+  true,
+  "src/data/guide.json: journey must be an array",
+);
+const guideJourney = Array.isArray(guide.journey) ? guide.journey : [];
+assert.equal(
+  guideJourney.length,
+  4,
+  "src/data/guide.json: journey must contain four steps",
+);
+for (const [index, step] of guideJourney.entries()) {
+  requireText(step.title, `src/data/guide.json: journey[${index}].title`);
+  requireText(step.body, `src/data/guide.json: journey[${index}].body`);
+}
 assert.deepEqual(
   new Set(services.entryPoints.map((item) => item.id)),
   new Set(["development", "it-advisor"]),
@@ -571,6 +585,8 @@ for (const item of [...services.services, ...works.cases]) {
 }
 
 for (const [index, work] of works.cases.entries()) {
+  validateImageAsset(work.image, `src/data/works.json: cases[${index}].image`);
+  requireText(work.imageAlt, `src/data/works.json: cases[${index}].imageAlt`);
   if (!work.externalUrl) continue;
   requireText(
     work.externalLabel,

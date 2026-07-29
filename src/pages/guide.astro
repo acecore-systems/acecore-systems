@@ -1,6 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import data from '../data/guide.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceVisual from "../components/ServiceVisual.astro";
+import data from "../data/guide.json";
 ---
 
 <BaseLayout title={data.title} description={data.description}>
@@ -12,7 +13,16 @@ import data from '../data/guide.json'
     </div>
   </section>
 
-  <section class="page-section page-section--guide" aria-labelledby="guide-intro-title">
+  <section class="guide-visual-section" aria-label="導入範囲を整理する様子">
+    <div class="container">
+      <ServiceVisual {...data.visual} variant="section" />
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--guide"
+    aria-labelledby="guide-intro-title"
+  >
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Perspective / 01</p>
@@ -37,10 +47,41 @@ import data from '../data/guide.json'
     </div>
   </section>
 
-  <section class="page-section page-section--muted" aria-labelledby="guide-tips-title">
+  <section
+    class="page-section page-section--guide-journey"
+    aria-labelledby="guide-journey-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Path / 02</p>
+          <h2 id="guide-journey-title">{data.journeyTitle}</h2>
+        </div>
+        <p>{data.journeyLead}</p>
+      </header>
+      <ol class="guide-journey">
+        {
+          data.journey.map((step, index) => (
+            <li class="guide-journey__step">
+              <p class="editorial-index">
+                Step {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="guide-tips-title"
+  >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Checklist / 02</p>
+        <p class="editorial-eyebrow">Checklist / 03</p>
         <h2 id="guide-tips-title">{data.tipsTitle}</h2>
         <p>{data.tipsLead}</p>
       </header>
@@ -69,10 +110,13 @@ import data from '../data/guide.json'
     </div>
   </section>
 
-  <section class="page-section page-section--guide-faq" aria-labelledby="guide-faq-title">
+  <section
+    class="page-section page-section--guide-faq"
+    aria-labelledby="guide-faq-title"
+  >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Questions / 03</p>
+        <p class="editorial-eyebrow">Questions / 04</p>
         <h2 id="guide-faq-title">{data.faqTitle}</h2>
       </header>
       <div class="guide-faq">
@@ -101,8 +145,93 @@ import data from '../data/guide.json'
           <h2 id="guide-cta-title">{data.ctaTitle}</h2>
           <p>{data.ctaBody}</p>
         </div>
-        <a class="editorial-link editorial-link--primary" href="/contact/">{data.ctaLabel}</a>
+        <a class="editorial-link editorial-link--primary" href="/contact/"
+          >{data.ctaLabel}</a
+        >
       </aside>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .guide-visual-section {
+    padding-block: clamp(20px, 4vw, 44px) 0;
+  }
+
+  .guide-journey {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    list-style: none;
+  }
+
+  .guide-journey__step {
+    position: relative;
+    min-height: 240px;
+    border-right: 1px solid var(--line);
+    padding: clamp(24px, 3vw, 36px);
+  }
+
+  .guide-journey__step:last-child {
+    border-right: 0;
+  }
+
+  .guide-journey__step:not(:last-child)::after {
+    position: absolute;
+    z-index: 1;
+    top: 38px;
+    right: -13px;
+    display: grid;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--blue);
+    content: "→";
+    font-size: 0.78rem;
+  }
+
+  .guide-journey__step h3 {
+    margin-top: clamp(42px, 5vw, 68px);
+    font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .guide-journey__step > p:last-child {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 860px) {
+    .guide-journey {
+      grid-template-columns: 1fr;
+    }
+
+    .guide-journey__step {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .guide-journey__step:last-child {
+      border-bottom: 0;
+    }
+
+    .guide-journey__step:not(:last-child)::after {
+      top: auto;
+      right: 24px;
+      bottom: -13px;
+      content: "↓";
+    }
+
+    .guide-journey__step h3 {
+      margin-top: 28px;
+    }
+  }
+</style>
