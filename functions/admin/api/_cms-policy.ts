@@ -21,6 +21,7 @@ const CONTENT_FILES = new Set([
   "src/data/works.json",
   "src/data/contact.json",
   "src/data/privacy.json",
+  "src/data/service-details/development.json",
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",

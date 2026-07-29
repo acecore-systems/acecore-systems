@@ -1,13 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceHandoff from "./ServiceHandoff.astro";
+import ServiceVisual from "./ServiceVisual.astro";
 import site from "../data/site.json";
 import pricing from "../data/pricing.json";
 import itAdvisor from "../data/it-advisor.json";
+import development from "../data/service-details/development.json";
 import siteFunctions from "../data/service-details/site-functions.json";
 import siteQuality from "../data/service-details/site-quality.json";
 import operations from "../data/service-details/operations.json";
 
-type ServiceDetail = typeof siteFunctions;
+type ServiceDetail = typeof siteFunctions & {
+  handoff?: typeof development.handoff;
+  visual?: typeof development.visual;
+  sectionVisuals?: typeof development.sectionVisuals;
+};
 
 interface Props {
   data: ServiceDetail;
@@ -17,6 +24,10 @@ interface Props {
 
 const { data, canonicalPath, serviceKey } = Astro.props;
 const serviceIndex = [
+  {
+    href: "/services/development/",
+    data: development,
+  },
   {
     href: "/services/it-advisor/",
     data: itAdvisor,
@@ -120,6 +131,19 @@ const jsonLd = [
     </div>
   </section>
 
+  {
+    data.visual && (
+      <section
+        class="service-story-visual-section"
+        aria-label={`${data.title}の支援イメージ`}
+      >
+        <div class="container">
+          <ServiceVisual {...data.visual} />
+        </div>
+      </section>
+    )
+  }
+
   <section
     class="page-section detail-introduction"
     aria-labelledby="detail-introduction-title"
@@ -149,6 +173,16 @@ const jsonLd = [
     </div>
   </section>
 
+  {
+    data.handoff && (
+      <section class="page-section page-section--muted service-handoff-section">
+        <div class="container">
+          <ServiceHandoff {...data.handoff} />
+        </div>
+      </section>
+    )
+  }
+
   <section
     class="page-section page-section--muted"
     aria-labelledby="detail-offerings-title"
@@ -161,6 +195,11 @@ const jsonLd = [
         </div>
         <p>{data.offeringsLead}</p>
       </header>
+      {
+        data.sectionVisuals?.scope && (
+          <ServiceVisual {...data.sectionVisuals.scope} variant="section" />
+        )
+      }
       <div class="detail-offering-list">
         {
           offerings.map((offering, index) => (
@@ -210,6 +249,11 @@ const jsonLd = [
         </div>
         <p>{data.processLead}</p>
       </header>
+      {
+        data.sectionVisuals?.process && (
+          <ServiceVisual {...data.sectionVisuals.process} variant="section" />
+        )
+      }
       <ol class="service-process">
         {
           data.process.map((step, index) => (
@@ -271,7 +315,10 @@ const jsonLd = [
       <div
         class:list={[
           "detail-related-list",
-          { "detail-related-list--three": relatedServices.length === 3 },
+          {
+            "detail-related-list--three": relatedServices.length === 3,
+            "detail-related-list--four": relatedServices.length === 4,
+          },
         ]}
       >
         {
@@ -306,3 +353,27 @@ const jsonLd = [
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .detail-related-list--four .detail-related {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-related-list--four .detail-related:nth-child(even) {
+    border-right: 0;
+  }
+
+  .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 860px) {
+    .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-related-list--four .detail-related:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

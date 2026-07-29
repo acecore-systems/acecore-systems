@@ -1,0 +1,82 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  variant?: "card" | "detail" | "section";
+  showCaption?: boolean;
+}
+
+const {
+  src,
+  alt,
+  caption,
+  variant = "detail",
+  showCaption = true,
+} = Astro.props;
+---
+
+<figure class:list={["service-visual", `service-visual--${variant}`]}>
+  <div class="service-visual__frame">
+    <img
+      src={src}
+      alt={alt}
+      width="1536"
+      height="1024"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  {showCaption && caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .service-visual {
+    margin: 0;
+  }
+
+  .service-visual__frame {
+    overflow: hidden;
+    background: #e8e4db;
+  }
+
+  .service-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .service-visual--card {
+    margin-top: 30px;
+  }
+
+  .service-visual--card .service-visual__frame {
+    aspect-ratio: 3 / 2;
+  }
+
+  .service-visual--card img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .service-visual--section {
+    max-width: 960px;
+    margin-block: clamp(32px, 5vw, 56px);
+    margin-inline: auto;
+  }
+
+  .service-visual--detail figcaption,
+  .service-visual--section figcaption {
+    max-width: 780px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 640px) {
+    .service-visual--section {
+      margin-block: 28px 36px;
+    }
+  }
+</style>

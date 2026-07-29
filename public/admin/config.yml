@@ -128,6 +128,18 @@ collections:
           - { name: description, label: 説明, widget: text }
           - { name: heroTitle, label: ヒーロータイトル, widget: string }
           - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: 依頼の入口
+            name: entryPoints
+            widget: list
+            min: 2
+            max: 2
+            fields:
+              - { name: id, label: ID, widget: string }
+              - { name: eyebrow, label: 英字見出し, widget: string }
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - { name: href, label: リンク先, widget: string }
+              - { name: label, label: リンク文言, widget: string }
           - label: サービス項目
             name: services
             widget: list
@@ -163,6 +175,31 @@ collections:
           - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
           - { name: heroTitle, label: ヒーロータイトル, widget: string }
           - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: 支援イメージ
+            name: visual
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
+          - label: 子ページ内イメージ
+            name: sectionVisuals
+            widget: object
+            fields:
+              - label: 対応範囲の画像
+                name: scope
+                widget: object
+                fields:
+                  - { name: src, label: 画像, widget: image }
+                  - { name: alt, label: 画像の代替テキスト, widget: string }
+                  - { name: caption, label: 画像の説明, widget: text }
+              - label: 進め方の画像
+                name: process
+                widget: object
+                fields:
+                  - { name: src, label: 画像, widget: image }
+                  - { name: alt, label: 画像の代替テキスト, widget: string }
+                  - { name: caption, label: 画像の説明, widget: text }
           - { name: indexSummary, label: 一覧用説明, widget: text }
           - label: 一覧用トピック
             name: indexTopics
@@ -174,13 +211,30 @@ collections:
           - { name: audienceValue, label: 対象, widget: string }
           - { name: engagementLabel, label: 契約方法ラベル, widget: string }
           - { name: engagementValue, label: 契約方法, widget: string }
-          - { name: startingPriceLabel, label: 開始料金ラベル, widget: string }
-          - {
-              name: startingPriceKey,
-              label: 開始料金キー,
-              widget: string,
-              hint: 料金ページの料金キーを指定します。,
-            }
+          - label: 料金サマリー
+            name: pricingSummaries
+            widget: list
+            min: 2
+            max: 2
+            fields:
+              - { name: id, label: 区分ID, widget: string }
+              - { name: label, label: 区分名, widget: string }
+              - {
+                  name: pricingKey,
+                  label: 料金キー,
+                  widget: string,
+                  hint: 料金ページの料金キーを指定します。,
+                }
+              - { name: note, label: 説明, widget: text }
+          - label: 受託開発への案内
+            name: handoff
+            widget: object
+            fields:
+              - { name: eyebrow, label: 英字見出し, widget: string }
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - { name: label, label: リンク文言, widget: string }
+              - { name: href, label: リンク先, widget: string }
           - { name: introTitle, label: 導入見出し, widget: string }
           - { name: introBody, label: 導入本文, widget: text }
           - label: よくある停滞
@@ -215,31 +269,6 @@ collections:
             fields:
               - { name: title, label: 見出し, widget: string }
               - { name: body, label: 本文, widget: text }
-          - { name: starterTitle, label: スターター見出し, widget: string }
-          - { name: starterLead, label: スターター説明, widget: text }
-          - label: 導入パッケージ
-            name: packages
-            widget: list
-            fields:
-              - {
-                  name: id,
-                  label: アンカーID,
-                  widget: string,
-                  hint: 公開後は変更しないでください。,
-                }
-              - { name: title, label: 見出し, widget: string }
-              - {
-                  name: pricingKey,
-                  label: 料金キー,
-                  widget: string,
-                  hint: 料金ページの料金キーを指定します。,
-                }
-              - { name: duration, label: 期間, widget: string }
-              - { name: body, label: 本文, widget: text }
-              - label: 含まれる内容
-                name: includes
-                widget: list
-                field: { name: item, label: 項目, widget: string }
           - { name: plansTitle, label: プラン見出し, widget: string }
           - { name: plansLead, label: プラン説明, widget: text }
           - label: 顧問・スポットプラン
@@ -334,6 +363,23 @@ collections:
           - { name: description, label: 説明, widget: text }
           - { name: heroTitle, label: ヒーロータイトル, widget: string }
           - { name: heroLead, label: ヒーローリード, widget: text }
+          - label: 導入整理のイメージ
+            name: visual
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
+          - { name: journeyTitle, label: 導入ステップ見出し, widget: string }
+          - { name: journeyLead, label: 導入ステップ説明, widget: text }
+          - label: 導入ステップ
+            name: journey
+            widget: list
+            min: 4
+            max: 4
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
           - { name: introTitle, label: 導入見出し, widget: string }
           - { name: introBody, label: 導入本文, widget: text }
           - label: 視点
@@ -389,13 +435,12 @@ collections:
               - { name: challenge, label: 課題, widget: text }
               - { name: proposal, label: 提案, widget: text }
               - { name: result, label: 成果, widget: text }
-              - { name: image, label: 画像, widget: image, required: false }
+              - { name: image, label: 画像, widget: image }
               - {
                   name: imageAlt,
                   label: 画像の代替テキスト,
                   widget: string,
-                  required: false,
-                  hint: 画像の内容を具体的に説明してください。未入力時は実績タイトルが使用されます。,
+                  hint: 画像の内容を具体的に説明してください。,
                 }
               - {
                   name: externalUrl,
@@ -460,6 +505,31 @@ collections:
       - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
       - { name: heroTitle, label: ヒーロータイトル, widget: string }
       - { name: heroLead, label: ヒーローリード, widget: text }
+      - label: 支援イメージ
+        name: visual
+        widget: object
+        fields:
+          - { name: src, label: 画像, widget: image }
+          - { name: alt, label: 画像の代替テキスト, widget: string }
+          - { name: caption, label: 画像の説明, widget: text }
+      - label: 子ページ内イメージ
+        name: sectionVisuals
+        widget: object
+        fields:
+          - label: 対応範囲の画像
+            name: scope
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
+          - label: 進め方の画像
+            name: process
+            widget: object
+            fields:
+              - { name: src, label: 画像, widget: image }
+              - { name: alt, label: 画像の代替テキスト, widget: string }
+              - { name: caption, label: 画像の説明, widget: text }
       - { name: indexSummary, label: 一覧用説明, widget: text }
       - label: 一覧用トピック
         name: indexTopics
@@ -467,6 +537,16 @@ collections:
         field: { name: item, label: 項目, widget: string }
       - { name: introTitle, label: 導入見出し, widget: string }
       - { name: introBody, label: 導入本文, widget: text }
+      - label: 別サービスへの案内
+        name: handoff
+        widget: object
+        required: false
+        fields:
+          - { name: eyebrow, label: 英字見出し, widget: string }
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+          - { name: label, label: リンク文言, widget: string }
+          - { name: href, label: リンク先, widget: string }
       - label: よくある課題
         name: challenges
         widget: list
@@ -537,6 +617,13 @@ collections:
       - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
       - { name: heroTitle, label: ヒーロータイトル, widget: string }
       - { name: heroLead, label: ヒーローリード, widget: text }
+      - label: 公開画面
+        name: visual
+        widget: object
+        fields:
+          - { name: src, label: 画像, widget: image }
+          - { name: alt, label: 画像の代替テキスト, widget: string }
+          - { name: caption, label: 画像の説明, widget: text }
       - { name: overviewTitle, label: 概要見出し, widget: string }
       - { name: overviewBody, label: 概要本文, widget: text }
       - label: 基本情報
@@ -552,6 +639,13 @@ collections:
         fields:
           - { name: label, label: 区分, widget: string }
           - { name: body, label: 内容, widget: text }
+      - label: 実現した状態の画面
+        name: outcomesVisual
+        widget: object
+        fields:
+          - { name: src, label: 画像, widget: image }
+          - { name: alt, label: 画像の代替テキスト, widget: string }
+          - { name: caption, label: 画像の説明, widget: text }
       - label: 課題・方針
         name: story
         widget: list
@@ -561,6 +655,13 @@ collections:
           - { name: body, label: 本文, widget: text }
       - { name: scopeTitle, label: 対応範囲見出し, widget: string }
       - { name: scopeLead, label: 対応範囲説明, widget: text }
+      - label: 対応範囲の画面
+        name: scopeVisual
+        widget: object
+        fields:
+          - { name: src, label: 画像, widget: image }
+          - { name: alt, label: 画像の代替テキスト, widget: string }
+          - { name: caption, label: 画像の説明, widget: text }
       - label: 対応範囲
         name: scope
         widget: list

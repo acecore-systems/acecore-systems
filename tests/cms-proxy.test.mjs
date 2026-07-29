@@ -76,6 +76,7 @@ const collectionWritePaths = [
   "src/data/works.json",
   "src/data/contact.json",
   "src/data/privacy.json",
+  "src/data/service-details/development.json",
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
@@ -281,8 +282,10 @@ test("複数JSONの協調更新を1つのprojected stateとして直接保存す
 
   updatedOperations.offerings[0].pricingKeys = [newPricingKey];
   updatedPricing.items.push({
-    ...updatedPricing.items.find(({ detailUrl }) => detailUrl === ""),
+    ...(updatedPricing.items.find(({ detailUrl }) => detailUrl === "") ??
+      updatedPricing.items[0]),
     key: newPricingKey,
+    detailUrl: "",
   });
 
   mockGitHub(async (url, _init, body) => {

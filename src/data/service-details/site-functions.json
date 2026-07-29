@@ -4,6 +4,23 @@
   "heroEyebrow": "Site functions / 機能追加",
   "heroTitle": "いまのサイトを活かしながら、\n必要な機能だけを足す。",
   "heroLead": "全面リニューアルを前提にせず、更新、検索、問い合わせ、発信の詰まりを見つけ、既存構成に合う方法で機能を追加します。",
+  "visual": {
+    "src": "/images/service-site-functions-overview.webp",
+    "alt": "担当者がCMSの編集画面と更新後のWebサイトを確認している様子",
+    "caption": "既存サイトを活かし、更新する人が扱える編集画面と公開フローを整えます。"
+  },
+  "sectionVisuals": {
+    "scope": {
+      "src": "/images/service-site-functions-features.webp",
+      "alt": "CMS編集画面、サイト内検索、問い合わせフォームが複数の端末に表示されている様子",
+      "caption": "必要な機能を選び、現在の構成と日々の運用に合う形で組み合わせます。"
+    },
+    "process": {
+      "src": "/images/service-site-functions-publish.webp",
+      "alt": "担当者とエンジニアがパソコンとスマートフォンで追加機能を確認する様子",
+      "caption": "確認できる単位で追加し、公開前後のチェック方法まで共有します。"
+    }
+  },
   "indexSummary": "CMS、AI、検索、コメント、フォーム連携などを、既存サイトの構成に合わせて追加します。",
   "indexTopics": ["CMS・更新", "AI・コメント", "検索・発信", "フォーム連携"],
   "introTitle": "機能を増やすことより、運用が続くことを優先します。",

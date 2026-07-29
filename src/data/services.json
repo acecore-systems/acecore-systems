@@ -3,21 +3,39 @@
   "description": "Acecore Systemsが提供するIT顧問、AI導入・業務改善、デプロイ支援、業務システム開発、Webアプリ・管理画面、CMS、検索、データ活用、既存システム改善の内容です。",
   "heroTitle": "課題の整理から、\n開発、運用改善まで。",
   "heroLead": "単発の開発だけでなく、業務に定着するまでの設計と改善を重視しています。",
+  "entryPoints": [
+    {
+      "id": "development",
+      "eyebrow": "受託開発 / DEVELOPMENT",
+      "title": "構想から、開発・公開までまとめて任せたい",
+      "body": "プロジェクトの発想や解決したい課題はあるものの、要件整理、設計、開発、公開までを一つの窓口に任せたい方向けです。",
+      "href": "/services/development/",
+      "label": "受託開発の内容を見る"
+    },
+    {
+      "id": "it-advisor",
+      "eyebrow": "IT顧問エンジニア / ADVISORY",
+      "title": "開発は自社やAIで。でも、公開・運用まで伴走してほしい",
+      "body": "すでに作ったシステムやアプリがあり、デプロイ、技術判断、セキュリティ、公開後の運用で止まっている方向けです。",
+      "href": "/services/it-advisor/",
+      "label": "IT顧問エンジニアの内容を見る"
+    }
+  ],
   "services": [
     {
       "id": "it-advisor",
       "detailUrl": "/services/it-advisor/",
-      "title": "IT顧問・AI導入・デプロイ伴走",
-      "body": "専任IT担当者がいない中小企業に、AI導入、Webアプリの公開、クラウド・IT基盤の判断を相談できるエンジニアが伴走します。",
+      "title": "IT顧問・公開・運用伴走",
+      "body": "専任IT担当者がいない中小企業に、自社やAIで作ったアプリの公開、ツール選定、クラウド・IT基盤の判断を相談できるエンジニアが伴走します。",
       "examples": [
         "AIで作ったアプリの構成確認・デプロイ・引き継ぎ",
-        "業務診断、AI化候補の抽出、PoC、本導入",
+        "業務整理、AI・既存サービスの選定、既存PoCの評価",
         "技術選定、セキュリティ、外部ベンダーのセカンドオピニオン"
       ]
     },
     {
       "id": "business-system",
-      "detailUrl": "",
+      "detailUrl": "/services/development/",
       "title": "業務システム開発",
       "body": "受発注、在庫、顧客管理、申請、予約、日報、点検など、現場ごとの業務フローに合わせたシステムを設計・開発します。",
       "examples": [
@@ -28,7 +46,7 @@
     },
     {
       "id": "web-app",
-      "detailUrl": "",
+      "detailUrl": "/services/development/",
       "title": "Webアプリ・管理画面",
       "body": "社内外から使えるWebアプリ、会員向け機能、予約・申込フォーム、CMS、ダッシュボードなどを構築します。",
       "examples": [
@@ -50,7 +68,7 @@
     },
     {
       "id": "integration",
-      "detailUrl": "",
+      "detailUrl": "/services/development/",
       "title": "データ活用・外部連携",
       "body": "既存サービスやAPI、スプレッドシート、メール、チャット通知などをつなぎ、入力の重複や確認漏れを減らします。",
       "examples": [
@@ -61,7 +79,7 @@
     },
     {
       "id": "modernization",
-      "detailUrl": "",
+      "detailUrl": "/services/development/",
       "title": "改善・モダナイゼーション",
       "body": "古くなった仕組み、属人化したツール、保守しづらい画面を整理し、今後も直しやすい形に整えます。",
       "examples": [

@@ -13,8 +13,8 @@
       "challenge": "訪問者が何を相談できるか判断しづらく、問い合わせ内容も分散しやすい状態でした。",
       "proposal": "サービス別の導線、問い合わせ種別、FAQ、AIによる事前案内を組み合わせ、必要な情報をフォームに集約しました。",
       "result": "相談前の確認と正式な問い合わせを分け、見積りやサービス相談に進みやすい流れになりました。",
-      "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1000&h=680&fit=crop&q=84&fm=webp",
-      "imageAlt": "オフィスでノートパソコンを操作する開発チーム",
+      "image": "/images/works/acecore-contact.webp",
+      "imageAlt": "Acecore公式サイトの問い合わせページ",
       "externalUrl": "https://acecore.net/contact/",
       "externalLabel": "Acecoreへ相談・問い合わせる"
     },
@@ -27,8 +27,8 @@
       "challenge": "情報発信や問い合わせ導線を強化する一方で、静的サイトの速度や運用しやすさを崩さない設計が必要でした。",
       "proposal": "Astro、Cloudflare Pages、Sveltia CMS、Pagefind、構造化データ、セキュリティヘッダーを組み合わせ、必要な機能を小さく追加できる形に整理しました。",
       "result": "ブログ、固定ページ、検索、問い合わせ導線を運用しながら改善できる基盤になり、同種のサイト機能追加案件へ転用しやすい知見がまとまりました。",
-      "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&h=680&fit=crop&q=84&fm=webp",
-      "imageAlt": "Webサイトのコードを表示したノートパソコンと外部モニター",
+      "image": "/images/works/acecore-site-platform.webp",
+      "imageAlt": "Acecore公式サイトのトップページ",
       "externalUrl": "https://acecore.net/blog/",
       "externalLabel": "Acecore公式ブログを見る"
     },
@@ -41,8 +41,8 @@
       "challenge": "参加者が増えるほど、接続安定性、情報共有、障害対応、運用ルールの整備が必要になります。",
       "proposal": "技術運用とコミュニティ運営を分けず、サーバー構成、監視、バックアップ、Web導線をまとめて改善しました。",
       "result": "長期運用で得た知見を、業務システムの監視・運用設計にも活かせるようになりました。",
-      "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&h=680&fit=crop&q=84&fm=webp",
-      "imageAlt": "ネットワーク機器と配線が並ぶサーバーラック",
+      "image": "/images/works/aceserver-operations.webp",
+      "imageAlt": "エースサーバーポータルのメイン画面",
       "externalUrl": "https://asv.acecore.net/",
       "externalLabel": "エースサーバーの参加案内を見る"
     },
@@ -55,7 +55,7 @@
       "challenge": "サーバーの概要や参加方法、ルール、動画、ワールドマップなどの情報が複数の場所に分かれ、初めて訪れた人が最初の一歩を選びにくい状態でした。",
       "proposal": "既存の情報源を置き換えず、サーバー紹介からDiscord、動画、各ワールドマップ、Wikiへ迷わず移動できるポータルとして構成しました。",
       "result": "Astro、UnoCSS、Sveltia CMSを使った静的サイトとして公開しています。ページ本文やサイト設定をCMSから更新できる構成です。",
-      "image": "https://acecore.net/uploads/aceserver-portal-screenshot-1600.webp",
+      "image": "/images/works/aceserver-portal.webp",
       "imageAlt": "エースサーバーポータルのトップページ",
       "externalUrl": "https://asv.acecore.net/",
       "externalLabel": "エースサーバーポータルを見る"
@@ -83,7 +83,7 @@
       "challenge": "活動の入口がブログ、外部投稿サイト、BOOTH、YouTube、Xなどに分かれ、初めて訪れた人が活動の全体像や見る順序を把握しにくい状態でした。",
       "proposal": "活動を絵・小説・モデリングの3つに整理し、ブログ、作品、プロフィール、外部サービスへつなぐハブとして構成しました。",
       "result": "Astro、TypeScript、UnoCSS、Sveltia CMS、Pagefindを使った静的サイトとして公開しています。ブログや作品情報をCMSで更新でき、記事や作品を検索できる構成です。",
-      "image": "https://acecore.net/uploads/hatt-homepage-screenshot-1600.webp",
+      "image": "/images/works/hatt-homepage.webp",
       "imageAlt": "Hattのホームページのトップページ",
       "externalUrl": "https://hatt.acecore.net/",
       "externalLabel": "Hattの作品・ブログを見る"

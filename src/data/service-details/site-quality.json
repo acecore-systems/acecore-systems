@@ -4,6 +4,23 @@
   "heroEyebrow": "Site quality / 品質改善",
   "heroTitle": "速さ、伝わりやすさ、安全性を、\n別々にしない。",
   "heroLead": "検索エンジン、利用者、運用担当者のどれか一つだけに偏らず、現在の構成と計測結果を確認して改善の優先順位を決めます。",
+  "visual": {
+    "src": "/images/service-site-quality-overview.webp",
+    "alt": "担当者とエンジニアが同じWebサイトをパソコンとスマートフォンで点検する様子",
+    "caption": "利用者の画面と計測結果を一緒に見て、改善の優先順位を決めます。"
+  },
+  "sectionVisuals": {
+    "scope": {
+      "src": "/images/service-site-quality-audit.webp",
+      "alt": "検索表示、表示速度、キーボード操作、配信設定の確認画面が並ぶ様子",
+      "caption": "SEO、速度、アクセシビリティ、安全性を横断して影響範囲を確認します。"
+    },
+    "process": {
+      "src": "/images/service-site-quality-verification.webp",
+      "alt": "担当者とエンジニアが修正後のWebサイトをパソコンとスマートフォンで再確認する様子",
+      "caption": "修正後の表示と操作を複数の端末で確かめ、次の改善につなげます。"
+    }
+  },
   "indexSummary": "SEO、速度、アクセシビリティ、セキュリティを横断し、直す順序まで整理します。",
   "indexTopics": ["SEO", "表示速度", "アクセシビリティ", "CSP・配信設定"],
   "introTitle": "点数を上げるだけでなく、直し続けられる状態へ。",

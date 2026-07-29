@@ -4,6 +4,23 @@
   "heroEyebrow": "Operations / 保守・改善",
   "heroTitle": "公開後に迷わない、\n運用の境界をつくる。",
   "heroLead": "何を監視するか、誰が判断するか、どこから追加開発になるかを最初に整理し、日常の変更と障害時の対応を続けられる形にします。",
+  "visual": {
+    "src": "/images/service-operations-overview.webp",
+    "alt": "担当者とエンジニアが稼働状況と変更依頼を確認する様子",
+    "caption": "日々の変更と障害時の対応を、担当者が迷わず進められる形に整えます。"
+  },
+  "sectionVisuals": {
+    "scope": {
+      "src": "/images/service-operations-scope.webp",
+      "alt": "監視画面、バックアップ機器、変更確認表、障害記録用ノートが並ぶ運用デスク",
+      "caption": "監視、バックアップ、変更受付、障害記録の対象と責任範囲を明確にします。"
+    },
+    "process": {
+      "src": "/images/service-operations-review.webp",
+      "alt": "担当者とエンジニアが運用履歴と改善候補を確認する様子",
+      "caption": "運用履歴を振り返り、保守で扱う内容と追加開発に分けて優先順位を更新します。"
+    }
+  },
   "indexSummary": "保守範囲、変更受付、監視、バックアップ、追加開発の境界を明確にします。",
   "indexTopics": ["保守範囲", "監視・バックアップ", "変更管理", "継続改善"],
   "introTitle": "保守契約より先に、対応の境界を言葉にします。",

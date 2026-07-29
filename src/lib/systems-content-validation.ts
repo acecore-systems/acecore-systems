@@ -1,4 +1,5 @@
 const SERVICE_PATHS = [
+  "src/data/service-details/development.json",
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
@@ -12,11 +13,13 @@ const ADVISOR_PATH = "src/data/it-advisor.json";
 const PRICING_PATH = "src/data/pricing.json";
 const SERVICES_PATH = "src/data/services.json";
 const WORKS_PATH = "src/data/works.json";
+const GUIDE_PATH = "src/data/guide.json";
 
 const SERVICE_ROUTES = new Map([
-  [SERVICE_PATHS[0], "/services/site-functions/"],
-  [SERVICE_PATHS[1], "/services/site-quality/"],
-  [SERVICE_PATHS[2], "/services/operations/"],
+  [SERVICE_PATHS[0], "/services/development/"],
+  [SERVICE_PATHS[1], "/services/site-functions/"],
+  [SERVICE_PATHS[2], "/services/site-quality/"],
+  [SERVICE_PATHS[3], "/services/operations/"],
   [ADVISOR_PATH, "/services/it-advisor/"],
 ]);
 
@@ -99,6 +102,13 @@ export function validateSystemsContentFiles(
     );
     void challenges;
 
+    validateVisual(data.visual, `${path}.visual`, errors);
+    validateSectionVisuals(
+      data.sectionVisuals,
+      `${path}.sectionVisuals`,
+      errors,
+    );
+
     const anchors = new Set<string>();
 
     for (const [index, value] of offerings.entries()) {
@@ -175,6 +185,9 @@ export function validateSystemsContentFiles(
 
     requireText(data.title, `${path}.title`, errors);
     requireText(data.description, `${path}.description`, errors);
+    for (const field of ["visual", "outcomesVisual", "scopeVisual"] as const) {
+      validateVisual(data[field], `${path}.${field}`, errors);
+    }
     requireNonEmptyArray(data.story, `${path}.story`, errors);
     const outcomes = requireNonEmptyArray(
       data.outcomes,
@@ -198,9 +211,45 @@ export function validateSystemsContentFiles(
     });
   }
 
+  validateGuide(files.get(GUIDE_PATH), errors);
   validateIndexLinks(files, routeAnchors, pricingItems ?? [], errors);
 
   return errors;
+}
+
+function validateGuide(value: unknown, errors: string[]) {
+  const data = asRecord(value);
+
+  if (!data) {
+    errors.push(`${GUIDE_PATH}: objectが必要です。`);
+    return;
+  }
+
+  validateVisual(data.visual, `${GUIDE_PATH}.visual`, errors);
+  requireText(data.journeyTitle, `${GUIDE_PATH}.journeyTitle`, errors);
+  requireText(data.journeyLead, `${GUIDE_PATH}.journeyLead`, errors);
+  const journey = requireNonEmptyArray(
+    data.journey,
+    `${GUIDE_PATH}.journey`,
+    errors,
+  );
+
+  if (journey.length !== 4) {
+    errors.push(`${GUIDE_PATH}.journey: 4件必要です。`);
+  }
+
+  journey.forEach((value, index) => {
+    const step = asRecord(value);
+    const scope = `${GUIDE_PATH}.journey[${index}]`;
+
+    if (!step) {
+      errors.push(`${scope}: objectが必要です。`);
+      return;
+    }
+
+    requireText(step.title, `${scope}.title`, errors);
+    requireText(step.body, `${scope}.body`, errors);
+  });
 }
 
 function validateAdvisor(
@@ -219,13 +268,19 @@ function validateAdvisor(
   for (const key of ["title", "description", "indexSummary"] as const) {
     requireText(data[key], `${ADVISOR_PATH}.${key}`, errors);
   }
+  validateVisual(data.visual, `${ADVISOR_PATH}.visual`, errors);
+  validateSectionVisuals(
+    data.sectionVisuals,
+    `${ADVISOR_PATH}.sectionVisuals`,
+    errors,
+  );
 
   const requiredArrays = [
     "indexTopics",
     "challenges",
     "supportAreas",
     "useCases",
-    "packages",
+    "pricingSummaries",
     "plans",
     "process",
     "governance",
@@ -243,7 +298,7 @@ function validateAdvisor(
 
   const anchors = new Set<string>();
 
-  for (const key of ["supportAreas", "packages", "plans"] as const) {
+  for (const key of ["supportAreas", "plans"] as const) {
     arrays.get(key)?.forEach((entry, index) => {
       const item = asRecord(entry);
       const id =
@@ -286,6 +341,16 @@ function validateAdvisor(
     requireNonEmptyArray(item.includes, `${scope}.includes`, errors);
   });
 
+  arrays.get("pricingSummaries")?.forEach((entry, index) => {
+    const item = asRecord(entry);
+    const scope = `${ADVISOR_PATH}.pricingSummaries[${index}]`;
+
+    if (!item) return;
+    requireText(item.id, `${scope}.id`, errors);
+    requireText(item.label, `${scope}.label`, errors);
+    requireText(item.note, `${scope}.note`, errors);
+  });
+
   arrays.get("faqs")?.forEach((entry, index) => {
     const item = asRecord(entry);
     const scope = `${ADVISOR_PATH}.faqs[${index}]`;
@@ -296,8 +361,7 @@ function validateAdvisor(
   });
 
   const advisorPricingKeys = [
-    data.startingPriceKey,
-    ...(arrays.get("packages") ?? []).map(
+    ...(arrays.get("pricingSummaries") ?? []).map(
       (entry) => asRecord(entry)?.pricingKey,
     ),
     ...(arrays.get("plans") ?? []).map((entry) => asRecord(entry)?.pricingKey),
@@ -340,7 +404,30 @@ function validateIndexLinks(
 
   works.forEach((value, index) => {
     const item = asRecord(value);
-    if (!item || !item.externalUrl) return;
+    if (!item) return;
+
+    const image = requireText(
+      item.image,
+      `${WORKS_PATH}.cases[${index}].image`,
+      errors,
+    );
+    requireText(
+      item.imageAlt,
+      `${WORKS_PATH}.cases[${index}].imageAlt`,
+      errors,
+    );
+    if (
+      image &&
+      !/^\/(?:images\/works|uploads)\/.+\.(?:avif|jpe?g|png|webp)$/iu.test(
+        image,
+      )
+    ) {
+      errors.push(
+        `${WORKS_PATH}.cases[${index}].image: public image pathが必要です。`,
+      );
+    }
+
+    if (!item.externalUrl) return;
 
     requireText(
       item.externalLabel,
@@ -400,6 +487,43 @@ function requireText(value: unknown, scope: string, errors: string[]) {
   }
 
   return value;
+}
+
+function validateVisual(value: unknown, scope: string, errors: string[]) {
+  const visual = asRecord(value);
+
+  if (!visual) {
+    errors.push(`${scope}: objectが必要です。`);
+    return;
+  }
+
+  const src = requireText(visual.src, `${scope}.src`, errors);
+  requireText(visual.alt, `${scope}.alt`, errors);
+  requireText(visual.caption, `${scope}.caption`, errors);
+
+  if (
+    src &&
+    !/^\/(?:images|uploads)\/.+\.(?:avif|jpe?g|png|webp)$/iu.test(src)
+  ) {
+    errors.push(`${scope}.src: 公開画像pathが必要です。`);
+  }
+}
+
+function validateSectionVisuals(
+  value: unknown,
+  scope: string,
+  errors: string[],
+) {
+  const sectionVisuals = asRecord(value);
+
+  if (!sectionVisuals) {
+    errors.push(`${scope}: objectが必要です。`);
+    return;
+  }
+
+  for (const key of ["scope", "process"] as const) {
+    validateVisual(sectionVisuals[key], `${scope}.${key}`, errors);
+  }
 }
 
 function getArray(value: unknown, key: string) {

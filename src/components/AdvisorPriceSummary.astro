@@ -1,0 +1,70 @@
+---
+interface PricingSummaryItem {
+  id: string;
+  label: string;
+  pricingKey: string;
+  note: string;
+  price: string;
+}
+
+interface Props {
+  items: PricingSummaryItem[];
+  priceNote: string;
+  eyebrow?: string;
+  title?: string;
+  placement?: "hero" | "closing";
+}
+
+const {
+  items,
+  priceNote,
+  eyebrow = "Pricing",
+  title = "料金の目安",
+  placement = "closing",
+} = Astro.props;
+---
+
+{
+  placement === "hero" ? (
+    <dl
+      class="advisor-price-summary advisor-price-summary--hero"
+      data-advisor-pricing-summary
+      aria-label={title}
+    >
+      {items.map((item) => (
+        <div data-pricing-kind={item.id}>
+          <dt>{item.label}</dt>
+          <dd>{item.price}</dd>
+        </div>
+      ))}
+    </dl>
+  ) : (
+    <aside
+      class="advisor-price-summary advisor-price-summary--closing"
+      data-advisor-pricing-summary
+      aria-label={title}
+    >
+      <header class="advisor-price-summary__header">
+        <p class="editorial-eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+      </header>
+      <div class="advisor-price-summary__items">
+        {items.map((item) => (
+          <a
+            class="advisor-price-summary__item"
+            data-pricing-kind={item.id}
+            href={`/pricing/#${item.pricingKey}`}
+          >
+            <div class="advisor-price-summary__value">
+              <p>{item.label}</p>
+              <strong>{item.price}</strong>
+            </div>
+            <p class="advisor-price-summary__note">{item.note}</p>
+            <span>料金一覧で確認する</span>
+          </a>
+        ))}
+      </div>
+      <p class="advisor-price-summary__disclaimer">{priceNote}</p>
+    </aside>
+  )
+}
