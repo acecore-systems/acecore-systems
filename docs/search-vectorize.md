@@ -8,7 +8,7 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 - Preview 用 Vectorize index `acecore-systems-search-preview` は、BGE-M3 用の 1024 dimensions / cosine として作成済みです。
 - Preview 用 D1 database `acecore-systems-search-preview`（database ID `9346ee59-7cb7-4da1-9a00-7f75eee19f91`）は作成済みで、検索レート制限の migration を適用済みです。
 - GitHub Environment `cloudflare-search-preview` は作成済みです。`main` branch だけを許可しています。
-- GitHub Actions 用の scoped Cloudflare API token は未作成です。既存の広権限 token は同期には使いません。
+- Preview 同期専用の Cloudflare account token は、対象 account の Workers AI Read と Vectorize Write だけを許可し、GitHub Environment secret に保存済みです。
 
 サイト本文の raw query は corpus や Vectorize metadata に保存しません。同期 corpus は build output から公開対象の日本語ページだけを抽出し、`/admin`、`/api`、noindex、外部 canonical などを除外します。
 
@@ -24,15 +24,15 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 - source page と vector の上限を超えていない
 - 既存 vector の 20% を超える削除を行わない
 
+各 vector は、検索時の分離に使う top-level `namespace` と監査用 metadata の `namespace` の両方へ `ja` を保存します。同じ ID の格納形式を修復する場合だけ `--refresh-existing` を明示すると、検証済み corpus の全件を再 embedding して upsert します。修復時に削除対象が1件でもあれば mutation 前に停止し、通常同期と分離します。
+
 20% を超える削除が意図した変更である場合だけ、手動 workflow の `allow_large_delete=true` を指定します。通常の push / schedule では大規模削除を許可しません。
 
 ## Preview 同期を有効にする
 
-1. Cloudflare account token を、対象 account に限定して作成します。必要権限は Workers AI Read と Vectorize Write です。
-2. token を GitHub Environment `cloudflare-search-preview` の secret `CLOUDFLARE_SEARCH_PREVIEW_API_TOKEN` に保存します。
-3. 変更を `main` に取り込み、GitHub Actions の `Sync Vectorize search index` を `target=preview` で手動実行します。
-4. workflow の corpus 件数、upsert / delete 件数、mutation 完了を確認します。
-5. Cloudflare Pages の Preview deployment で Pagefind、関連検索 API、レート制限、空結果、エラー時フォールバックを確認します。
+1. 変更を `main` に取り込み、GitHub Actions の `Sync Vectorize search index` を `target=preview` で手動実行します。
+2. workflow の corpus 件数、upsert / delete 件数、mutation 完了を確認します。
+3. Cloudflare Pages の Preview deployment で Pagefind、関連検索 API、レート制限、空結果、エラー時フォールバックを確認します。
 
 ## Production を有効にする
 

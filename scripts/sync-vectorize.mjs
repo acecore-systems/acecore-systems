@@ -636,6 +636,7 @@ export async function syncVectorize({
   corpusFile = DEFAULT_CORPUS_FILE,
   dryRun = false,
   allowLargeDelete = false,
+  refreshExisting = false,
   waitForMutations = true,
   fetchImpl = globalThis.fetch,
   requestTimeoutMs = REQUEST_TIMEOUT_MS,
@@ -689,10 +690,15 @@ export async function syncVectorize({
   validateExistingVectorIds(currentIds, indexName);
 
   const expectedIds = new Set(corpus.vectors.map(({ id }) => id));
-  const vectorsToUpsert = corpus.vectors.filter(
-    ({ id }) => !currentIds.has(id),
-  );
+  const vectorsToUpsert = refreshExisting
+    ? corpus.vectors
+    : corpus.vectors.filter(({ id }) => !currentIds.has(id));
   const idsToDelete = [...currentIds].filter((id) => !expectedIds.has(id));
+  if (refreshExisting && idsToDelete.length > 0) {
+    throw new Error(
+      `Refusing to refresh existing vectors while ${idsToDelete.length} stale vector id(s) require deletion; run a normal sync separately first.`,
+    );
+  }
   validateDeletePlan({
     currentCount: currentIds.size,
     deleteCount: idsToDelete.length,
@@ -708,6 +714,7 @@ export async function syncVectorize({
       expected: expectedIds.size,
       upsert: vectorsToUpsert.length,
       delete: idsToDelete.length,
+      refreshExisting,
     }),
   );
 
@@ -723,6 +730,7 @@ export async function syncVectorize({
     const embeddings = await createEmbeddings(client, embeddingBatch);
     const records = embeddingBatch.map((vector, indexInBatch) => ({
       id: vector.id,
+      namespace: SEARCH_NAMESPACE,
       values: embeddings[indexInBatch],
       metadata: vector.metadata,
     }));
@@ -756,6 +764,7 @@ export async function syncVectorize({
     existing: currentIds.size,
     upserted: vectorsToUpsert.length,
     deleted: idsToDelete.length,
+    refreshedExisting: refreshExisting,
     upsertMutationId: lastUpsertMutationId || null,
     deleteMutationId: lastDeleteMutationId || null,
   };
@@ -767,6 +776,7 @@ function parseArguments(argv) {
   const options = {
     dryRun: false,
     allowLargeDelete: false,
+    refreshExisting: false,
     indexName: process.env.VECTORIZE_INDEX_NAME,
     corpusFile: DEFAULT_CORPUS_FILE,
   };
@@ -777,6 +787,8 @@ function parseArguments(argv) {
       options.dryRun = true;
     } else if (argument === "--allow-large-delete") {
       options.allowLargeDelete = true;
+    } else if (argument === "--refresh-existing") {
+      options.refreshExisting = true;
     } else if (argument === "--index") {
       options.indexName = argv[++index];
     } else if (argument === "--corpus") {

@@ -270,7 +270,7 @@ test("upserts missing content, waits, then safely deletes stale content", async 
       assert.equal(record.metadata.url, "/page/4/");
       assert.equal(record.metadata.section, "ページ 4");
       assert.equal(record.metadata.excerpt, "検索対象の本文 4");
-      assert.equal("namespace" in record, false);
+      assert.equal(record.namespace, SEARCH_NAMESPACE);
       return jsonResponse({
         success: true,
         result: { mutationId: "upsert-mutation" },
@@ -314,6 +314,89 @@ test("upserts missing content, waits, then safely deletes stale content", async 
   ]);
   assert.equal(result.upserted, 1);
   assert.equal(result.deleted, 1);
+});
+
+test("refreshes existing vectors only when explicitly requested", async () => {
+  const corpus = makeCorpus(1);
+  const corpusFile = await writeCorpus(corpus);
+  const events = [];
+
+  const fetchImpl = async (input, init = {}) => {
+    const url = new URL(input);
+    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+      events.push("index");
+      return indexResponse();
+    }
+    if (url.pathname.endsWith("/list")) {
+      events.push("list");
+      return listResponse([corpus.vectors[0].id]);
+    }
+    if (url.pathname.includes("/ai/run/")) {
+      events.push("embed");
+      return jsonResponse({
+        success: true,
+        result: { data: [Array(VECTOR_DIMENSIONS).fill(0.25)] },
+      });
+    }
+    if (url.pathname.endsWith("/upsert")) {
+      events.push("upsert");
+      const file = init.body.get("vectors");
+      const record = JSON.parse((await file.text()).trim());
+      assert.equal(record.id, corpus.vectors[0].id);
+      assert.equal(record.namespace, SEARCH_NAMESPACE);
+      return jsonResponse({
+        success: true,
+        result: { mutationId: "refresh-mutation" },
+      });
+    }
+    if (url.pathname.endsWith("/info")) {
+      events.push("wait-upsert");
+      return jsonResponse({
+        success: true,
+        result: { processedUpToMutation: "refresh-mutation" },
+      });
+    }
+    throw new Error(`Unexpected request: ${url}`);
+  };
+
+  const result = await syncVectorize({
+    ...commonOptions(corpusFile, fetchImpl),
+    refreshExisting: true,
+    mutationPollIntervalMs: 1,
+  });
+
+  assert.deepEqual(events, ["index", "list", "embed", "upsert", "wait-upsert"]);
+  assert.equal(result.upserted, 1);
+  assert.equal(result.deleted, 0);
+  assert.equal(result.refreshedExisting, true);
+});
+
+test("refuses to combine an existing-vector refresh with deletion", async () => {
+  const corpus = makeCorpus(1);
+  const corpusFile = await writeCorpus(corpus);
+  const staleId = `v1-${"f".repeat(48)}`;
+  let mutationRequested = false;
+
+  const fetchImpl = async (input) => {
+    const url = new URL(input);
+    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+      return indexResponse();
+    }
+    if (url.pathname.endsWith("/list")) {
+      return listResponse([corpus.vectors[0].id, staleId]);
+    }
+    mutationRequested = true;
+    throw new Error(`Unexpected mutation: ${url}`);
+  };
+
+  await assert.rejects(
+    syncVectorize({
+      ...commonOptions(corpusFile, fetchImpl),
+      refreshExisting: true,
+    }),
+    /run a normal sync separately first/u,
+  );
+  assert.equal(mutationRequested, false);
 });
 
 test("refuses unmanaged ids before making any mutation", async () => {
