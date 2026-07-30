@@ -1,0 +1,18 @@
+---
+import InsightIndexPage from "../../../components/InsightIndexPage.astro";
+import { locales, type Locale } from "../../../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+export function getStaticPaths() {
+  return locales
+    .filter((locale) => locale !== "ja")
+    .map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props;
+---
+
+<InsightIndexPage locale={locale} />

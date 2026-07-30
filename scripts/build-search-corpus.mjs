@@ -157,8 +157,16 @@ function canonicalForPage($, relativePath) {
 
 function extractPage(html, relativePath) {
   const $ = load(html);
-  const language = ($("html").attr("lang") || SEARCH_NAMESPACE).toLowerCase();
-  if (!language.startsWith("ja")) return null;
+  const languageAttribute = $("html").attr("lang");
+  if (!languageAttribute) return null;
+
+  const language = languageAttribute.trim().toLowerCase();
+  if (
+    language !== SEARCH_NAMESPACE &&
+    !language.startsWith(`${SEARCH_NAMESPACE}-`)
+  ) {
+    return null;
+  }
 
   const robots = $('meta[name="robots"], meta[name="googlebot"]')
     .map((_, element) => $(element).attr("content") || "")

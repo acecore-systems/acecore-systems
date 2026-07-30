@@ -170,9 +170,10 @@ a {
 
 .header-inner {
   display: grid;
-  grid-template-columns: minmax(250px, 1fr) auto auto;
-  gap: 28px;
+  grid-template-columns: minmax(230px, 1fr) auto auto auto;
+  gap: clamp(10px, 1.2vw, 18px);
   align-items: center;
+  max-width: 90rem;
   min-height: 96px;
 }
 
@@ -234,6 +235,10 @@ a {
   gap: clamp(20px, 2.3vw, 36px);
 }
 
+.desktop-nav {
+  gap: clamp(12px, 1.2vw, 18px);
+}
+
 .nav a {
   position: relative;
   padding-block: 10px;
@@ -242,6 +247,12 @@ a {
   font-weight: 500;
   letter-spacing: 0.06em;
   text-decoration: none;
+}
+
+.desktop-nav a {
+  font-size: clamp(0.82rem, 0.85vw, 0.94rem);
+  letter-spacing: 0.035em;
+  white-space: nowrap;
 }
 
 .nav a::after {
@@ -271,13 +282,14 @@ a {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--blue);
-  padding: 10px 18px;
+  padding: 10px 14px;
   background: var(--blue);
   color: var(--white);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     border-color 180ms ease,
     background 180ms ease;
@@ -332,6 +344,175 @@ a {
 
 .mobile-menu {
   display: none;
+}
+
+.language-switcher {
+  position: relative;
+}
+
+.language-switcher summary {
+  display: inline-flex;
+  min-height: 42px;
+  gap: 7px;
+  align-items: center;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 9px 2px;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.language-switcher summary::-webkit-details-marker {
+  display: none;
+}
+
+.language-switcher ul {
+  position: absolute;
+  z-index: 120;
+  top: calc(100% + 10px);
+  right: 0;
+  display: grid;
+  width: 178px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-soft);
+  box-shadow: 0 18px 40px rgba(20, 34, 53, 0.14);
+  list-style: none;
+}
+
+.language-switcher a {
+  display: block;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 14px;
+  color: var(--ink);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.language-switcher li:last-child a {
+  border-bottom: 0;
+}
+
+.language-switcher a:hover,
+.language-switcher a:focus-visible,
+.language-switcher a[aria-current="page"] {
+  background: var(--surface);
+  color: var(--blue);
+}
+
+.mobile-language-links {
+  display: none;
+}
+
+@media (max-width: 1279px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .header-actions {
+    display: none;
+  }
+
+  .header-cta {
+    display: none;
+  }
+
+  .header-inner > .language-switcher {
+    display: none;
+  }
+
+  .header-inner {
+    grid-template-columns: 1fr auto;
+    min-height: 82px;
+  }
+
+  .mobile-menu {
+    display: block;
+    position: relative;
+  }
+
+  .mobile-menu summary {
+    display: grid;
+    min-height: 44px;
+    min-width: 88px;
+    place-items: center;
+    border-bottom: 1px solid var(--ink);
+    padding: 11px 2px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-menu nav {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    display: grid;
+    width: min(320px, calc(100vw - 48px));
+    border: 1px solid var(--line-strong);
+    background: var(--paper-soft);
+    box-shadow: 0 18px 40px rgba(20, 34, 53, 0.14);
+  }
+
+  .mobile-menu nav a,
+  .mobile-menu nav button {
+    border-bottom: 1px solid var(--line);
+    padding: 15px 18px;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  .mobile-menu nav button {
+    width: 100%;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    cursor: pointer;
+  }
+
+  .mobile-menu nav button:hover,
+  .mobile-menu nav button:focus-visible {
+    background: var(--paper-deep);
+  }
+
+  .mobile-menu nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .mobile-menu nav .mobile-menu__cta {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .mobile-language-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mobile-menu nav .mobile-language-links a {
+    border-right: 1px solid var(--line);
+    padding: 11px 8px;
+    font-size: 0.72rem;
+    text-align: center;
+  }
+
+  .mobile-menu nav .mobile-language-links a:nth-child(3n) {
+    border-right: 0;
+  }
 }
 
 @media (min-width: 1041px) {
@@ -3079,93 +3260,6 @@ a {
 /* Responsive */
 
 @media (max-width: 1040px) {
-  .desktop-nav {
-    display: none;
-  }
-
-  .header-actions {
-    display: none;
-  }
-
-  .header-cta {
-    display: none;
-  }
-
-  .header-inner {
-    grid-template-columns: 1fr auto;
-    min-height: 82px;
-  }
-
-  .mobile-menu {
-    display: block;
-    position: relative;
-  }
-
-  .mobile-menu summary {
-    display: grid;
-    min-height: 44px;
-    min-width: 88px;
-    place-items: center;
-    border-bottom: 1px solid var(--ink);
-    padding: 11px 2px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-align: center;
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .mobile-menu summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .mobile-menu nav {
-    position: absolute;
-    top: calc(100% + 12px);
-    right: 0;
-    display: grid;
-    width: min(320px, calc(100vw - 48px));
-    border: 1px solid var(--line-strong);
-    background: var(--paper-soft);
-    box-shadow: 0 18px 40px rgba(20, 34, 53, 0.14);
-  }
-
-  .mobile-menu nav a,
-  .mobile-menu nav button {
-    border-bottom: 1px solid var(--line);
-    padding: 15px 18px;
-    background: transparent;
-    color: var(--ink);
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1.5;
-    text-align: left;
-    text-decoration: none;
-  }
-
-  .mobile-menu nav button {
-    width: 100%;
-    border-top: 0;
-    border-right: 0;
-    border-left: 0;
-    cursor: pointer;
-  }
-
-  .mobile-menu nav button:hover,
-  .mobile-menu nav button:focus-visible {
-    background: var(--paper-deep);
-  }
-
-  .mobile-menu nav a:last-child {
-    border-bottom: 0;
-  }
-
-  .mobile-menu nav .mobile-menu__cta {
-    border-color: var(--blue);
-    background: var(--blue);
-    color: var(--white);
-  }
-
   .home-section__header--split,
   .editorial-header--split {
     grid-template-columns: 1fr;

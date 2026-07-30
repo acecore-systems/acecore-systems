@@ -1,0 +1,1581 @@
+{
+  "contact": {
+    "title": "Kontakt",
+    "description": "Wir beraten zu IT-Beratung, AI-Einführung, Deployment, Geschäftssystemen, Webanwendungen, Design und Kreativleistungen sowie zur Automatisierung bestehender Abläufe – auch bevor die Anforderungen vollständig feststehen.",
+    "heroTitle": "Sie können uns ansprechen, auch wenn die Anforderungen noch nicht feststehen.",
+    "heroLead": "Beschreiben Sie Ihren aktuellen Ablauf, die Schwierigkeiten, die eingesetzten Werkzeuge und den gewünschten Zeitraum.",
+    "formLead": "Erstgespräch und erste Kosteneinschätzung sind kostenlos. Wir unterstützen auch bei der Klärung vor einem verbindlichen Angebot. In der Regel antworten wir innerhalb von 1–2 Werktagen.",
+    "faqs": [
+      {
+        "question": "Kann ich Sie konsultieren, auch wenn ich noch nicht entschieden habe, was ich machen soll?",
+        "answer": "Ja. Gemeinsam organisieren wir Ihr aktuelles Geschäft, womit Sie Probleme haben und was manuell zeitaufwändig erledigt werden muss."
+      },
+      {
+        "question": "Kann ich auch nur eine kleine Verbesserung verlangen?",
+        "answer": "Ja. Wir können im Kleinen reagieren, beispielsweise durch die Verbesserung vorhandener Formulare, CSV-Ausgabe, Benachrichtigungen und automatische Aggregation."
+      },
+      {
+        "question": "Können Sie sich auch über das bestehende System informieren?",
+        "answer": "Ja. Wir befassen uns auch mit schwer zu wartenden Bildschirmen, veralteten Mechanismen, Excel-Vorgängen und Überprüfungen der externen Servicezusammenarbeit."
+      }
+    ]
+  },
+  "guide": {
+    "title": "Einführungsleitfaden",
+    "description": "Dieser Leitfaden fasst die wichtigsten Prüfungen zusammen, mit denen sich Fehler bei der Einführung von Geschäftssystemen vermeiden lassen: Anforderungen, Gespräche mit den Mitarbeitenden, schrittweiser Rollout und Verankerung im Betrieb.",
+    "heroTitle": "Der Erfolg eines Geschäftssystems beginnt mit der Klärung vor der Entwicklung.",
+    "heroLead": "Vor der Funktionsliste klären wir Geschäftsziel, Ausnahmen, Daten, Berechtigungen und Betriebsorganisation.",
+    "visual": {
+      "alt": "Eine verantwortliche Person und ein Ingenieur klären den Umfang der Implementierung, während sie sich einen Papierarbeitsablauf und einen Computer ansehen",
+      "caption": "Überprüfen Sie Eingabeelemente, Ausnahmebehandlung, Berechtigungen, aktuelle Tools und organisieren Sie gemeinsam den Umfang, den Sie zuerst ausprobieren möchten."
+    },
+    "journeyTitle": "Fahren Sie mit der Installation fort, indem Sie kleine Überprüfungen durchführen.",
+    "journeyLead": "Organisieren Sie die aktuelle Situation, legen Sie den anfänglichen Umfang fest und wählen Sie die nächste Verbesserung basierend auf den Ergebnissen der tatsächlichen Nutzung aus.",
+    "journey": [
+      {
+        "title": "Aktuelle Statusvereinbarung",
+        "body": "Überprüfen Sie aktuelle Aufgaben, Ausnahmen, Daten und Berechtigungen"
+      },
+      {
+        "title": "Bereichsbestimmung",
+        "body": "Trennen Sie die Arbeit, die Sie zuerst ausprobieren möchten, und den Bereich, der später ausprobiert werden soll"
+      },
+      {
+        "title": "Testeinführung",
+        "body": "Verwendung in kleinen Einheiten zur Überprüfung der Reaktionen vor Ort"
+      },
+      {
+        "title": "Rezension",
+        "body": "Bestimmen Sie die nächste Verbesserung basierend auf den tatsächlichen Abläufen"
+      }
+    ],
+    "introTitle": "3 Perspektiven vor der Einführung",
+    "introBody": "Ein Geschäftssystem kann durch seine Einführung nicht automatisch effizienter gemacht werden. Ein erstelltes System kann unbrauchbar werden, wenn es ein für den Betrieb vor Ort nicht geeignetes Design, eine zu komplexe Eingabemaske, unklare Berechtigungen oder mangelnde Unterstützung nach der Implementierung aufweist.",
+    "insights": [
+      {
+        "title": "Geschäftsablauf",
+        "body": "Wir klären, wer wann welche Entscheidungen trifft und organisieren nicht nur den normalen Ablauf, sondern auch die Ausnahmebehandlung."
+      },
+      {
+        "title": "Daten",
+        "body": "Wir überprüfen zunächst Eingabeelemente, Verlauf, Suchbedingungen, vorhandene Datenmigration und Rechtschreibfehler und machen es nach der Implementierung einsatzbereit."
+      },
+      {
+        "title": "Behoben",
+        "body": "Wir legen Betriebsanweisungen, Befugnisse, Kontaktstellen und Verbesserungszyklen fest und streben danach, einen Zustand zu schaffen, in dem die Site sie weiterhin nutzen kann."
+      }
+    ],
+    "tipsTitle": "7 Punkte, die überprüft werden müssen, um Fehler zu verhindern",
+    "tipsLead": "Anstatt alle Funktionen von Anfang an aufzubauen, empfehlen wir, klein anzufangen und Verbesserungen vorzunehmen und dabei die Reaktionen vor Ort zu beobachten.",
+    "tips": [
+      {
+        "title": "Bestimmen Sie den Zweck basierend auf der Geschäftsverbesserung und nicht auf der Funktionalität",
+        "body": "Bevor Sie eine Funktion benennen, z. B. „Ich möchte eine Kundenverwaltungsfunktion“ oder „Ich möchte eine Reservierungsverwaltungsfunktion erstellen“, organisieren Sie, was Sie mit dieser Funktion verbessern möchten.",
+        "points": [
+          "Reduzieren Sie Auslassungen bei der Beantwortung von Anfragen",
+          "Teilen Sie den Antwortverlauf für jede verantwortliche Person",
+          "Sparen Sie Zeit bei der Erstellung von Kostenvoranschlägen und Rechnungen",
+          "Follow-Timing visualisieren"
+        ]
+      },
+      {
+        "title": "Anhörung der Ausnahmebehandlung vor Ort",
+        "body": "Überprüfen Sie zunächst alle Prozesse, die vom normalen Ablauf abweichen, wie z. B. Rücksendungen, Stornierungen, Wechsel der verantwortlichen Person, Doppelregistrierung, vorübergehende Änderung der Befugnisse usw.",
+        "points": [
+          "Verarbeitung, die nur am Monatsende oder in Stoßzeiten erfolgt",
+          "Beträge und Bedingungen, die einer Genehmigung bedürfen",
+          "Verantwortlich für die Korrektur von Eingabefehlern und doppelten Registrierungen",
+          "Behördenwechsel bei Pensionierung oder Abteilungswechsel"
+        ]
+      },
+      {
+        "title": "Entscheiden Sie frühzeitig über den Umgang mit vorhandenen Daten",
+        "body": "Excel, Papier, Entscheiden Sie bei der Übertragung von in einem alten System gesammelten Daten über den Umfang der Übertragung, Duplikate, Rechtschreibfehler und die für die Prüfung zuständige Person.",
+        "points": [
+          "Welche Daten sollen migriert werden?",
+          "Wie viele vergangene Jahre sollten migriert werden?",
+          "So beseitigen Sie Duplikate und Rechtschreibfehler",
+          "Wie lange werden alte Daten gespeichert?"
+        ]
+      },
+      {
+        "title": "Erstellen Sie nicht alles von Anfang an, sondern führen Sie es Schritt für Schritt ein",
+        "body": "Wir werden uns die Reaktion des Feldes auf die erste Veröffentlichung ansehen und sie in der nächsten Verbesserung widerspiegeln. Es ist wichtig, Lücken in den Anforderungen frühzeitig zu erkennen.",
+        "points": [
+          "Aktuelle Arbeitsabläufe und Probleme organisieren",
+          "1 besonders wirkungsvollen Arbeitsablauf auswählen",
+          "Testimplementierung mit minimaler Funktionalität",
+          "Prioritäten überprüfen und Funktionen hinzufügen"
+        ]
+      },
+      {
+        "title": "Befugnisse und Verantwortungsbereich klären",
+        "body": "Machen Sie klar, wer die Inhalte anzeigen, bearbeiten und genehmigen kann. Unklare Berechtigungen können zu Informationslecks und Betriebsfehlern führen.",
+        "points": [
+          "Einsatzbereich nach Abteilung und Position",
+          "Personen mit Administratorrechten minimieren",
+          "Genehmigungsablauf und verantwortliche Person",
+          "Verfahren zur Änderung von Privilegien bei Pensionierung oder Versetzung"
+        ]
+      },
+      {
+        "title": "Bereiten Sie Bedienungsanleitungen und Kontaktinformationen vor",
+        "body": "Bei der Einführung stellen wir eine Bedienungsanleitung, interne Briefing-Sitzungen, häufig gestellte Fragen und eine Kontaktstelle zur Verfügung, um die Ängste vor Ort zu reduzieren.",
+        "points": [
+          "Erklärung für Erstbenutzer",
+          "Organisation häufig gestellter Fragen",
+          "Kontaktinformationen für den Fall von Problemen",
+          "Folgesystem unmittelbar nach Inbetriebnahme"
+        ]
+      },
+      {
+        "title": "Bestimmen Sie den Verbesserungszyklus nach der Veröffentlichung",
+        "body": "Probleme, die nicht sofort nach der Implementierung sichtbar waren, können während des tatsächlichen Betriebs entdeckt werden. Design unter der Prämisse einer regelmäßigen Überprüfung.",
+        "points": [
+          "Überprüfen von Bildschirmen, deren Eingabe lange dauert",
+          "Überprüfung ungenutzter Funktionen",
+          "Bestätigung der Arbeit, die zur manuellen Arbeit zurückgekehrt ist",
+          "Hinzufügung von Elementen, die für Aggregation und Berichte erforderlich sind"
+        ]
+      }
+    ],
+    "faqTitle": "Häufig gestellte Fragen vor der Implementierung",
+    "faqs": [
+      {
+        "question": "Können wir uns mit Ihnen beraten, auch wenn wir mit dem bestehenden Excel-Vorgang beginnen?",
+        "answer": "Ja. Sie können die aktuellen Excel- und Papierdokumente überprüfen und festlegen, welche Vorgänge systematisiert werden sollen und welche unverändert bleiben sollen."
+      },
+      {
+        "question": "Kann ich klein anfangen?",
+        "answer": "Ja. Es ist effektiv, mit Bereichen zu beginnen, in denen die Auswirkungen leicht sichtbar sind, wie z. B. der Anfrageverwaltung, der Bestandsverwaltung und der Reservierungsverwaltung, und die Funktionen schrittweise zu erweitern."
+      },
+      {
+        "question": "Kann ich nach der Implementierung Verbesserungen anfordern?",
+        "answer": "Ja. Während wir den Betriebsstatus nach der Implementierung überwachen, können wir kontinuierliche Unterstützung beim Hinzufügen von Funktionen, der Verbesserung von Bildschirmen, der Anpassung von Berechtigungen und dem Betrieb der Infrastruktur leisten."
+      }
+    ],
+    "ctaTitle": "Den notwendigen Umfang passend zum aktuellen Ablauf klären.",
+    "ctaBody": "Beschreiben Sie Ihren aktuellen Ablauf, die eingesetzten Werkzeuge und die Schwierigkeiten.",
+    "ctaLabel": "Einführung besprechen"
+  },
+  "home": {
+    "title": "Geschäftssysteme und App-Entwicklung",
+    "description": "Acecore Systems unterstützt durchgängig bei IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Webanwendungsentwicklung, Datennutzung und Betriebsoptimierung.",
+    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
+    "heroTitle": "Damit Abläufe in Bewegung bleiben,\nbraucht es eine ruhige Architektur.",
+    "heroLead": "IT-Beratung, AI-Einführung, Geschäftssysteme, Webanwendungen und externe Integrationen.\nWir begleiten von der Anforderungsklärung und Entwicklung bis zu Verbesserungen nach dem Start.",
+    "primaryCta": "Design und Entwicklung besprechen",
+    "secondaryCta": "Preisrahmen ansehen",
+    "layersTitle": "Sehen Sie Ihr Geschäft in drei Ebenen an.",
+    "layersLead": "Die Website, die Benutzer berühren, das System, das die darunter liegende Verarbeitung unterstützt, und der Betrieb, der eine kontinuierliche Nutzung über einen langen Zeitraum hinweg gewährleistet. Design, ohne die drei zu trennen.",
+    "layers": [
+      {
+        "label": "Site",
+        "title": "Kann vor Ort verwendet werden",
+        "body": "Einfach zu verwenden und ohne Bedenken fortzufahren.\nEntwickelt, um einen natürlichen Ablauf der täglichen Arbeit zu ermöglichen."
+      },
+      {
+        "label": "Wie es funktioniert",
+        "title": "Unterstützt durch Mechanismus",
+        "body": "Ordnen Sie Daten, Berechtigungen, Ausnahmen,\nUnterstützung einer sicheren und konsistenten Verarbeitung."
+      },
+      {
+        "label": "Operation",
+        "title": "Entwicklung durch Betrieb",
+        "body": "Im Überwachungs-, Wartungs- und Verbesserungszyklus\nEs funktioniert noch lange geräuschlos."
+      }
+    ],
+    "philosophyEyebrow": "DESIGN PHILOSOPHY",
+    "philosophyTitle": "Sichtbare und unsichtbare Teile mit der gleichen Präzision.",
+    "philosophyLead": "Nicht nur die Benutzerfreundlichkeit des Bildschirms, sondern auch der Informationsfluss, die Bedingungen für die Beurteilung, die Behandlung von Ausnahmen und die Vorgänge nach der Veröffentlichung. Wir gestalten jeden Schritt, der für einen reibungslosen Geschäftsablauf notwendig ist.",
+    "designPrinciples": [
+      {
+        "title": "Beginnen Sie vom Feld aus",
+        "body": "Bevor Sie sich für Funktionen entscheiden, klären Sie, wer wann was entscheidet und wo das Problem liegt."
+      },
+      {
+        "title": "Schneiden Sie sogar die unsichtbaren Teile",
+        "body": "Wir betrachten Daten, Autorität, Koordination und Ausnahmebehandlung als ein kontinuierliches System."
+      },
+      {
+        "title": "Änderung vorausgesetzt",
+        "body": "Bauen Sie nicht von Anfang an zu viel auf, sondern beginnen Sie mit dem erforderlichen Bereich und bringen Sie ihn in eine Form, die im Laufe Ihrer Arbeit verbessert werden kann."
+      }
+    ],
+    "consultationEyebrow": "WHEN TO TALK",
+    "consultationTitle": "Sie können von diesen Phasen aus konsultieren.",
+    "consultationLead": "Sie müssen sich nicht entscheiden, was Sie zubereiten möchten. Wir organisieren gemeinsam die notwendigen Systeme basierend auf Ihrer aktuellen Arbeit und Ihren Problemen.",
+    "consultationSituations": [
+      {
+        "title": "Mit AI erstellte Apps können nicht veröffentlicht werden",
+        "body": "Der Code wurde erstellt, wurde jedoch aufgrund von Domänen-, Cloud-, Sicherheits- und Betriebsentscheidungen gestoppt."
+      },
+      {
+        "title": "Posting und manuelle Arbeit nehmen zu.",
+        "body": "Ich möchte die Arbeit, die in Tabellenkalkulationen, Papier und E-Mail unterteilt ist, organisieren und darüber nachdenken, wo ich mit dem System beginnen soll."
+      },
+      {
+        "title": "Das aktuelle System passt nicht zur Site",
+        "body": "Ich möchte die Schwierigkeit der Nutzung und Individualisierung überprüfen und nach und nach eine Form schaffen, die zum Arbeitsablauf passt."
+      },
+      {
+        "title": "Daten und Werkzeuge sind getrennt",
+        "body": "Ich möchte mehrere Dienste und Daten verbinden, um doppelte Eingaben und ausgelassene Bestätigungen zu reduzieren."
+      },
+      {
+        "title": "Ich möchte Probleme organisieren, bevor sie zu Anforderungen werden.",
+        "body": "Ich möchte den Zweck, die Benutzer, Einschränkungen und Prioritäten organisieren und mich für eine realistische Vorgehensweise entscheiden."
+      }
+    ],
+    "ctaEyebrow": "START WITH A CONVERSATION",
+    "ctaTitle": "Bevor wir über das Produkt sprechen: Erzählen Sie uns von Ihrem aktuellen Ablauf.",
+    "ctaBody": "Ein Gespräch ist auch möglich, wenn die Anforderungen noch nicht vollständig feststehen. Gemeinsam klären wir Ablauf, Einschränkungen und Prioritäten.",
+    "ctaLabel": "Architektur besprechen"
+  },
+  "itAdvisor": {
+    "title": "IT-Berater auf Abruf",
+    "description": "Acecore Systems begleitet kleine und mittlere Unternehmen mit etwa 5–50 Mitarbeitenden bei AI-Einführung, Prozessverbesserung, Deployment von Webanwendungen und technischen Entscheidungen zur IT-Infrastruktur – von der Arbeitsanalyse bis zum Produktionsstart und zur laufenden Verbesserung.",
+    "heroEyebrow": "IT ADVISOR ENGINEER — AI / DEPLOY / OPERATIONS",
+    "heroTitle": "Mit AI gebaut,\naber vor dem Start steckengeblieben?",
+    "heroLead": "Wir prüfen intern oder mit AI erstellten Code und Prototypen und begleiten bis zum Produktionsstart, zur Verankerung im Unternehmen und zur Betriebsverbesserung. Für Unternehmen, die keinen eigenen Vollzeit-IT-Verantwortlichen benötigen, steht ein Ingenieur bei Bedarf zur Verfügung.",
+    "visual": {
+      "alt": "Geschäftsmitarbeiter und IT-Berater überprüfen den Release-Status vorhandener Apps und Cloud",
+      "caption": "Ausgehend von der fertigen Version prüfen wir die Konfiguration, Sicherheit und Freigabebedingungen und bringen sie in einen betriebsfähigen Zustand."
+    },
+    "sectionVisuals": {
+      "scope": {
+        "alt": "Vorhandene Apps, öffentliche Cloud-Einstellungen, Berechtigungen und Sicherheitsbestätigungselemente werden auf mehreren Bildschirmen angezeigt",
+        "caption": "Wir organisieren die Konfiguration, die öffentlichen Einstellungen, Berechtigungen und verbleibenden Risiken der vorhandenen Anwendung und bestätigen, ob sie für die Produktion bereit ist."
+      },
+      "process": {
+        "alt": "Geschäftsmitarbeiter und IT-Berater überprüfen den Betriebsstatus veröffentlichter Apps",
+        "caption": "Wir veröffentlichen es nicht einfach und es ist vorbei; Wir übernehmen die Überwachungs-, Autoritäts- und Aktualisierungsmethoden und schaffen einen Zustand, in dem wir kontinuierliche Entscheidungen treffen können."
+      }
+    },
+    "indexSummary": "Wir begleiten Sie bei der AI-Implementierung, der Bereitstellung von Webanwendungen und Entscheidungen zur IT-Infrastruktur, von der Unternehmensorganisation über die Veröffentlichung bis hin zu betrieblichen Verbesserungen.",
+    "indexTopics": [
+      "AI-Einführung",
+      "Bereitstellen",
+      "IT-Infrastruktur",
+      "Technische Beratung"
+    ],
+    "heroPrimaryCta": "Die aktuelle Blockade besprechen",
+    "heroSecondaryCta": "Pläne ansehen",
+    "audienceLabel": "Hauptziel",
+    "audienceValue": "Etwa 5 bis 50 Mitarbeiter",
+    "engagementLabel": "Vertragsmethode",
+    "engagementValue": "Monatlicher Berater/Stelle",
+    "pricingSummaries": [
+      {
+        "label": "Monatspauschale",
+        "note": "Kontinuierliche technische Beratung und Unterstützung für kleinere Releases und Verbesserungen"
+      },
+      {
+        "label": "Einmalig",
+        "note": "Unterstützung für die Bereitstellung und den ersten Aufbau durch Festlegung des Umfangs für jeden Fall"
+      }
+    ],
+    "handoff": {
+      "eyebrow": "Trennung von der Auftragsentwicklung",
+      "title": "Wenn Sie alles von der Idee bis zur Entwicklung überlassen möchten, kontaktieren Sie uns bitte für eine Auftragsentwicklung.",
+      "body": "IT Consulting Engineer ist ein Dienst, der die Veröffentlichung und den Betrieb selbst entwickelter Produkte sowie kontinuierliche technische Entscheidungen unterstützt. Vollständige Neuentwicklungen werden eindeutig als Auftragsentwicklung klassifiziert und wir kümmern uns um alles von der Anforderungsorganisation über das Design und die Implementierung bis hin zur Veröffentlichung.",
+      "label": "Siehe Details zur Auftragsentwicklung"
+    },
+    "introTitle": "Nachdem die Möglichkeiten zur Erstellung erweitert wurden, unterstützen wir Entscheidungen zur Veröffentlichung und zum Betrieb.",
+    "introBody": "Auch wenn Sie mit AI Code und Geschäftstools erstellen können, müssen Sie nach der Veröffentlichung noch über die zu verarbeitenden Daten, Berechtigungen, Domäne, Cloud, Sicherheit und Wartung entscheiden. Anstatt sich ausschließlich auf AI zu verlassen, vergleichen wir auch reguläre Entwicklung, Automatisierung, Datenbanken und bestehende Dienste und wählen die Methode aus, die zur Website passt.",
+    "challenges": [
+      {
+        "title": "Die erstellte Anwendung kann nicht veröffentlicht werden",
+        "body": "Viele Entscheidungen wie Domänen, SSL, Cloud, Umgebungsvariablen, Berechtigungen usw. müssen vor der Veröffentlichung getroffen werden."
+      },
+      {
+        "title": "AI kann im Geschäftsbetrieb nicht etabliert werden",
+        "body": "Obwohl ich das Tool ausprobiert habe, habe ich mich noch nicht für die Zieloperationen, Eingaberegeln, Bestätigungsmethode oder die Messung der Wirksamkeit entschieden."
+      },
+      {
+        "title": "Es gibt niemanden, mit dem man sich bei technischen Entscheidungen beraten kann.",
+        "body": "Es gibt keine engagierte Person im Unternehmen, was es schwierig macht, Geräte und Dienstleistungen auszuwählen und Entscheidungen über Angebote externer Anbieter zu treffen."
+      }
+    ],
+    "supportTitle": "Wir verbinden vier Bereiche, von der Beratung bis zur Nachveröffentlichung.",
+    "supportLead": "Wir unterteilen AI nicht nur in die Infrastruktur, sondern bündeln den Bereich, der für den weiteren Einsatz im Unternehmen notwendig ist.",
+    "supportAreas": [
+      {
+        "title": "Geschäftsdiagnose/Implementierungsdesign",
+        "body": "Wir organisieren die aktuelle Arbeit und berücksichtigen Kandidaten für AI/Automatisierung, Prioritäten, Kosteneffizienz und geeignete Methoden.",
+        "includes": [
+          "Anhörung zu Arbeitsabläufen und Problemen",
+          "Extraktion von AI-/Automatisierungskandidaten",
+          "Abschätzung der Zeitersparnis und Kosteneffizienz",
+          "Vergleich von AI, normaler Entwicklung, RPA und bestehenden Diensten"
+        ]
+      },
+      {
+        "title": "PoC-Überprüfung/Produktionsentscheidung",
+        "body": "Wir überprüfen die intern oder mithilfe von AI erstellten Prototypen und organisieren die Kompatibilität mit dem Unternehmen, die Sicherheit, die Verbindungsbedingungen mit vorhandenen Daten und die Entscheidung, ob mit der Produktion fortgefahren werden soll. Wenn eine Neuentwicklung oder eine vollständige Implementierung erforderlich ist, trennen wir diese als Auftragsentwicklung.",
+        "includes": [
+          "Bestätigung des Betriebs, der Konfiguration und der Abhängigkeiten des vorhandenen PoC",
+          "Kompatibilität mit dem Geschäft und der Organisation operationeller Risiken",
+          "Bestätigung der Verbindungsbedingungen mit vorhandenen Dienstdaten",
+          "Organisation der Vertragsentwicklungsanforderungen bei der vollständigen Umsetzung"
+        ]
+      },
+      {
+        "title": "Bereitstellung/IT-Infrastrukturunterstützung",
+        "body": "Nachdem wir die AI und den intern erstellten Code überprüft und die zu bestätigenden Punkte sowie alle verbleibenden Risiken mitgeteilt haben, fahren wir mit der Freigabe und Übergabe der vereinbarten Konfiguration fort.",
+        "includes": [
+          "Überprüfen Sie Code, Abhängigkeiten und Veröffentlichungsbedingungen",
+          "Erster Aufbau von Domain, SSL, VPS/Cloud",
+          "Bereitstellung, Betriebsprüfung, Lieferung",
+          "Technische Beratung für PC-, Server- und Netzwerkinstallation"
+        ]
+      },
+      {
+        "title": "Betrieb und kontinuierliche Verbesserung",
+        "body": "Wir prüfen den Nutzungsstatus nach der Veröffentlichung und überprüfen kontinuierlich die Konfiguration, den Workflow und die Nutzungsregeln.",
+        "includes": [
+          "Regelmäßige Bestätigung des Nutzungsstatus und der Ergebnisse",
+          "Schnelle Verbesserung des Arbeitsablaufs",
+          "Berücksichtigung der Reaktion auf Modell- und API-Spezifikationsänderungen",
+          "Zweite Meinung für Interaktionen mit externen Anbietern"
+        ]
+      }
+    ],
+    "useCasesTitle": "Sie können beispielsweise mit einer solchen Stagnation beginnen.",
+    "useCasesLead": "Bei den Anwendungsbeispielen handelt es sich nicht um eine Liste, die die Kompatibilität garantiert. Bestimmen Sie den Umfang der Implementierung, indem Sie die aktuelle Umgebung und die zu verarbeitenden Daten überprüfen.",
+    "useCases": [
+      {
+        "title": "Veröffentlichen interner Tools, die mit AI erstellt wurden",
+        "body": "Überprüfen Sie die Konfiguration und Sicherheit und organisieren Sie notwendige Änderungen, Veröffentlichungsziele und Übergabemethoden."
+      },
+      {
+        "title": "Entscheidung zur Einführung interner Dokumentensuch-AI",
+        "body": "Bestätigen Sie den Referenzbereich, die Autorität und die Grundlage für Antworten für bestehende Dienste und interne Prototypen und organisieren Sie die Bedingungen für die Fortsetzung der vollständigen Implementierung."
+      },
+      {
+        "title": "Unterstützung bei der Beantwortung von Anfragen",
+        "body": "Basierend auf vorhandenen Tools werden wir die Erstellung von Antwortentwürfen und die menschliche Bestätigung trennen und einen Vorgang erstellen, der eine Verbindung zur offiziellen Kontaktstelle herstellt."
+      },
+      {
+        "title": "Excel / PDF-Büroautomatisierung",
+        "body": "Bestimmen Sie den Umfang, der von vorhandenen Tools verarbeitet werden kann, und legen Sie die Schritte aus Transkription, Klassifizierung, Aggregation und Formularerstellung fest, deren Wirksamkeit und Sicherheit bestätigt werden kann."
+      },
+      {
+        "title": "Auswahl und Aufbau von Cloud/VPS",
+        "body": "Wir organisieren die notwendige Leistung, Betriebsstruktur und Kosten und bauen im Namen des Kunden eine Umgebung auf."
+      },
+      {
+        "title": "Technische Bestätigung des Anbietervorschlags",
+        "body": "Verstehen Sie die Einschätzung, Struktur und den Umfang der Verantwortung und organisieren Sie die Punkte, die Sie für Ihre eigene Entscheidung berücksichtigen müssen."
+      }
+    ],
+    "plansTitle": "Festpreis für kontinuierliche Beratung und einmalige Beratung nur für das, was benötigt wird.",
+    "plansLead": "Bei einem Festhonorar werden die Beratungsfrequenz und der Arbeitsplan vorab festgelegt, bei einem Einmalhonorar werden Ziel und Abschlussbedingungen vorab festgelegt. Kontaktmethoden, Reaktionsrichtlinien, zusätzliche Kosten usw. werden zum Zeitpunkt des Vertragsabschlusses nach Bestätigung der Zielumgebung klar angegeben.",
+    "plans": [
+      {
+        "title": "Festes Honorar – IT-Berater",
+        "summary": "Für Unternehmen, die mit kleinen Einführungen, Releases und betrieblichen Verbesserungen fortfahren und gleichzeitig kontinuierlich technische Entscheidungen beraten möchten.",
+        "includes": [
+          "Regelmäßige Beratung zum Thema AI/IT",
+          "Unterstützung für Werkzeugauswahl und Grundeinstellungen",
+          "Kleine Veröffentlichungen und Verbesserungsunterstützung innerhalb des vereinbarten Arbeitsrahmens",
+          "Technische Bestätigung und Zweitmeinung zu Vorschlägen externer Anbieter"
+        ],
+        "boundary": "Beratungshäufigkeit, maximale Arbeitszeit, Übertrag und Mindestvertragslaufzeit werden vor Vertragsunterzeichnung festgelegt. Vollständige Neuentwicklungen und groß angelegte Kooperationen werden separat als Auftragsentwicklung veranschlagt."
+      },
+      {
+        "title": "Einzelaufnahme – Spot-Unterstützung",
+        "summary": "Für Unternehmen, die Bereitstellung, Domäne und Infrastrukturaufbau nur einmalig anfordern möchten.",
+        "includes": [
+          "Unterstützung bei der Auswahl eines geeigneten VPS- oder Cloud-Angebots",
+          "Unterstützung bei Vertragsabwicklungen im Namen des Kunden",
+          "Erstellen und veröffentlichen Sie mit eingeschränkten Berechtigungen und eingeschränkten Berechtigungen, die durch exklusive Einladung vom Kundenkonto gewährt werden",
+          "Betriebsbestätigung, Konfigurationsinformationen, Vererbung von Zugriffsrechten"
+        ],
+        "boundary": "Der Grundumfang ist die erste Veröffentlichung von 1 bestehenden Webanwendung in 1 Umgebung. Codeänderungen, Datenmigration, CI/CD, Monitoring- und Backup-Design sowie der laufende Betrieb werden separat angeboten. Abnahme- und Nacharbeitsbedingungen stehen im Angebot; externe Gebühren trägt der Kunde."
+      }
+    ],
+    "priceNote": "Der angezeigte Betrag ist ein Richtwert inklusive Steuern. Die offizielle Spanne und Menge wird durch einen individuellen Kostenvoranschlag nach vorheriger Bestätigung ermittelt. Gebühren für die Nutzung externer Dienste, Lizenzgebühren, Domänen-/Servergebühren und zusätzlicher Aufwand nach Festlegung der Anforderungen sind nicht enthalten.",
+    "processTitle": "Nachdem wir uns für die Methode und den Verantwortungsbereich entschieden haben, werden wir mit der eigentlichen Umsetzung fortfahren.",
+    "processLead": "Auch wenn die Veröffentlichung dringend ist, überprüfen Sie die zu verarbeitenden Daten, Berechtigungen, Wiederherstellungsmethode und den endgültigen Entscheidungsträger.",
+    "process": [
+      {
+        "title": "Anfrage",
+        "body": "Wir werden die Punkte teilen, die derzeit ins Stocken geraten, wie z. B. die Einführung von AI, Apps, die wir veröffentlichen möchten, und IT-Beratung."
+      },
+      {
+        "title": "Anhörung zur aktuellen Situation",
+        "body": "Überprüfen Sie das Unternehmen, die Benutzer, die Umgebung, die verarbeiteten Daten und den gewünschten Zeitplan."
+      },
+      {
+        "title": "Methode/Umfangsanordnung",
+        "body": "Bestimmen Sie die geeignete Methode, den Umfang der Deckung, Ausschlüsse, externe Kosten und die erforderliche Autorität."
+      },
+      {
+        "title": "Bestätigung/Vorbereitung zur Veröffentlichung",
+        "body": "Wir bestätigen die Konfiguration und Bereitstellung von vorhandenem Code, Prototypen oder vereinbartem begrenztem Umfang und bereiten die Bedingungen für den Einsatz in der tatsächlichen Arbeit vor."
+      },
+      {
+        "title": "Genehmigung/Veröffentlichung",
+        "body": "Wir werden die Änderungen und Bestätigungsergebnisse teilen und sie nach Genehmigung durch den Kunden veröffentlichen."
+      },
+      {
+        "title": "Übertragung/Verbesserung",
+        "body": "Wir organisieren die Konfiguration, Betriebsmethoden und Zugriffsrechte und verbessern sie bei Bedarf kontinuierlich."
+      }
+    ],
+    "governanceTitle": "Daten und Produktionsumgebung werden so gehandhabt, dass klar ist, wer verantwortlich ist.",
+    "governanceLead": "Wir gleichen die Grenzen zwischen Serviceseiten und Vertragsbedingungen aus und arbeiten nicht mit unklaren Autoritäten oder externen Diensten.",
+    "governance": [
+      "Grundsätzlich werden Domains, Server, Clouds etc. im Namen des Kunden kontrahiert.",
+      "Wenn ein Vertretungsvertrag erforderlich ist, werden Kosten, Haftung bei Ausfall, Stornierung und Namensübertragung in einem Einzelvertrag festgelegt und der Vertrag beginnt erst, wenn eine Einigung erzielt wurde.",
+      "Vermeiden Sie die Ausleihe gemeinsam genutzter IDs oder Besitzerkonten und nutzen Sie exklusive Einladungen und begrenzte Privilegien mit begrenzten Zeitlimits. Aktivieren Sie die Multi-Faktor-Authentifizierung für unterstützte Dienste.",
+      "Nach Abschluss der Arbeiten werden die Berechtigungen entzogen und gegebenenfalls der Ablauf und die Rotation vertraulicher Informationen bestätigt und übergeben.",
+      "Die verwendeten AI-Dienste werden gemäß der Datenklassifizierung und den Vertragsbedingungen für jedes Projekt vereinbart und ohne Genehmigung nicht hinzugefügt oder geändert.",
+      "Überprüfen Sie vor dem Umgang mit vertraulichen oder persönlichen Informationen, ob diese zu Studienzwecken verwendet werden, wo sie gespeichert werden, wie lange sie gespeichert werden, wie sie gelöscht werden und welche Informationen nicht eingegeben werden dürfen, und geben Sie sie nicht in andere als genehmigte Umgebungen ein.",
+      "Wir teilen Umfang und Inhalt von Produktionsänderungen mit und implementieren diese nach Zustimmung des Kunden.",
+      "Projekte, die Autoritätsverwaltung, Genehmigungsablauf und Prüfprotokolle erfordern, werden in den Entwurfsumfang aufgenommen und das Arbeitsziel, Änderungen, Ergebnisse und Übertragungsangelegenheiten werden aufgezeichnet.",
+      "Die Ergebnisse der AI werden von Menschen überprüft und die endgültige Geschäftsentscheidung wird vom Kunden getroffen."
+    ],
+    "excludedTitle": "Arbeit wird nicht als Berater bearbeitet",
+    "excludedLead": "Da der Schwerpunkt auf Beurteilung, Design und Konstruktion liegt, sind der tägliche Helpdesk und der unbegrenzte Support nicht abgedeckt.",
+    "excluded": [
+      "Täglicher Helpdesk für grundlegende Anleitungen zur PC-Bedienung, Zurücksetzen von Passwörtern usw.",
+      "Monitoring 24 Stunden am Tag, 365 Tage im Jahr, und sofortige Störungsbehebung",
+      "Unbegrenzte Entwicklung, Änderung und Forschung im Rahmen einer monatlichen Gebühr",
+      "Groß angelegte Entwicklung oder Änderung des Kernsystems über den vereinbarten Umfang hinaus",
+      "Garantierte AI-Reaktionsgenauigkeit, Reduzierungseffekt, Verkäufe und unterbrechungsfreier Betrieb",
+      "Bedingungslose Freigabe von Code, dessen Sicherheits- und Betriebsbedingungen nicht bestätigt werden können"
+    ],
+    "faqTitle": "Häufig gestellte Fragen vor der Beratung",
+    "faqLead": "Auch wenn Sie sich noch nicht entschieden haben, was Sie machen möchten, können Sie Ihre aktuelle Arbeit und das, was aufgehört hat, organisieren.",
+    "faqs": [
+      {
+        "question": "Kann ich den mit AI erstellten Code veröffentlichen?",
+        "answer": "Nachdem wir die Konfiguration, Abhängigkeiten, Sicherheit und Betriebsbedingungen überprüft haben, schlagen wir eine Veröffentlichungsmethode und notwendige Änderungen vor. Wir werden es nicht ohne Ihre Bestätigung veröffentlichen."
+      },
+      {
+        "question": "Kann ich Sie konsultieren, auch wenn ich noch nicht entschieden habe, wofür ich AI einsetzen soll?",
+        "answer": "Ja. Wir organisieren Geschäftsabläufe und präsentieren Kandidaten und Prioritäten, die für AI/Automatisierung geeignet sind."
+      },
+      {
+        "question": "Gibt es Vorschläge, die keine AI verwenden?",
+        "answer": "Ja. Wenn normale Entwicklung, RPA, Datenbank oder bestehende Dienste besser geeignet sind, schlagen wir diese Methode vor."
+      },
+      {
+        "question": "Enthält die monatliche Gebühr Entwicklungsarbeit?",
+        "answer": "Jeder Plan umfasst den zum Zeitpunkt des Vertragsabschlusses vereinbarten Arbeitsumfang. Für umfassende Neuentwicklungen und groß angelegte Systemintegrationen werden separate Kostenvoranschläge bereitgestellt."
+      },
+      {
+        "question": "Kann ich einfach eine Bereitstellung anfordern?",
+        "answer": "Wir werden vor Ort antworten. Wir können alles von der empfohlenen Umgebungsauswahl über Vertragsunterstützung, Ersteinstellungen, Veröffentlichung und Übergabe abdecken."
+      },
+      {
+        "question": "Wer wird den Server und die Domain unter Vertrag nehmen?",
+        "answer": "Grundsätzlich schließen wir einen Vertrag im Namen des Kunden ab und unterstützen ihn bei Auswahl und Einstellungen. Wir führen kein gemeinsames Ausweis- oder Inhaberkonto, sondern erteilen die erforderliche Mindestberechtigung durch eine besondere Einladung aus dem Kundenkonto und löschen dieses nach Abschluss."
+      },
+      {
+        "question": "Kann ich täglichen PC-Support anfordern?",
+        "answer": "Helpdesk-Dienste wie grundlegende Vorgänge und das Zurücksetzen von Passwörtern werden nicht abgedeckt. Dies umfasst Installationsentscheidungen, Konstruktion, Betriebsdesign und technische Zweitmeinungen."
+      },
+      {
+        "question": "Sind Zeitersparnis und AI-Genauigkeit garantiert?",
+        "answer": "Es handelt sich nicht um eine Garantie, sondern um eine Schätzung, die auf der aktuellen Situation basiert und durch PoC und tatsächlichen Betrieb bestätigt und verbessert wird."
+      }
+    ],
+    "ctaTitle": "Zeigen Sie uns, was bereits existiert, was noch unklar ist und wo es stockt.",
+    "ctaBody": "Ob Veröffentlichung eines mit AI erstellten Werkzeugs, AI-Einführung im Betrieb oder Entscheidung zu Server und IT-Architektur: Im Erstgespräch klären wir Problem und Umfang. Codeanalyse, Umgebungsdiagnose und praktische Arbeiten beginnen nach Angebotsfreigabe.",
+    "ctaLabel": "IT-Beratung anfragen"
+  },
+  "pricing": {
+    "title": "Preisrahmen",
+    "description": "Preisrahmen und Annahmen von Acecore Systems für IT-Beratung, AI-Einführung, Deployment-Unterstützung, Geschäftssysteme, Webanwendungen, Design und Kreativleistungen, AI-Chat, CMS, SEO und Sicherheitsverbesserungen.",
+    "heroTitle": "Mit dem wirklich benötigten Umfang sinnvoll starten.",
+    "heroLead": "Die Beträge sind Richtwerte inklusive Steuern. Externe Dienste, Lizenzen, Serverkosten und zusätzliche Arbeiten nach der verbindlichen Anforderungsklärung werden separat abgestimmt.",
+    "items": [
+      {
+        "label": "IT Advisor Engineer Light",
+        "price": "Ab 30.000 Yen pro Monat",
+        "note": "1–2 Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens 1 kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt."
+      },
+      {
+        "label": "IT Advisor Engineer Standard",
+        "price": "Ab 100.000 Yen pro Monat",
+        "note": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine 24-Stunden-Überwachung und sofortige Fehlerbehebung."
+      },
+      {
+        "label": "Unterstützung für die Spot-Bereitstellung",
+        "price": "Ab 50.000 Yen",
+        "note": "Grundumfang sind 1 bestehende Webanwendung und 1 Umgebung: Auswahl der empfohlenen Umgebung, Ersteinrichtung von Domain, SSL, VPS oder Cloud, Veröffentlichung, Funktionsprüfung und Übergabe. Codeänderungen, Migration, CI/CD, Monitoring- und Backup-Design sowie laufender Betrieb werden separat angeboten."
+      },
+      {
+        "label": "Starterpaket zur AI-Geschäftsverbesserung",
+        "price": "Geschätzte 150.000 Yen",
+        "note": "90-minütiges Gespräch, Prozessaufnahme, 3 AI-Kandidaten, einfacher Prototyp für 1 Kandidaten, Aufwand-Nutzen-Schätzung und kompakte AI-Nutzungsregeln. Der Richtwert für die Dauer beträgt 2–3 Wochen."
+      },
+      {
+        "label": "Haupteinführung in AI/Geschäftssystem",
+        "price": "Ab 500.000 Yen",
+        "note": "Post-PoC-Produktionsaufbau, bestehende Systemverknüpfung, Autoritäts-/Genehmigungs-/Auditprotokolle, Tests, Veröffentlichung und Betriebsübernahme. Wir unterbreiten Ihnen ein Angebot entsprechend Ihren Anforderungen."
+      },
+      {
+        "label": "Kleine Automatisierung/Geschäftsunterstützung",
+        "price": "Ab 300.000 Yen",
+        "note": "Kleine Automatisierung bestehender Eingabe-, Aggregations-, Benachrichtigungs- und Bestätigungsarbeiten."
+      },
+      {
+        "label": "Interne Geschäftstools",
+        "price": "Ab 500.000 Yen",
+        "note": "Ein kleines bis mittelgroßes Tool mit Admin-Bildschirm, Formularen, Listen, CSV-Ausgabe, Berechtigungen usw."
+      },
+      {
+        "label": "Mittelgroße Webanwendung",
+        "price": "Ab 1.500.000 Yen",
+        "note": "Eine Web-App, die mehrere Benutzer, Mitgliedschaftsfunktionen, Genehmigungsabläufe und externe Verknüpfungen umfasst."
+      },
+      {
+        "label": "Design/Kreativ",
+        "price": "Ab 20.000 Yen",
+        "note": "Die durchschnittlichen Kosten betragen 50.000 bis 150.000 Yen für ein Logo, 20.000 bis 120.000 Yen für Flyer und Banner und 100.000 Yen für Markendesign und Web-Zusammenarbeit."
+      },
+      {
+        "label": "Anfrage-AI-Chat",
+        "price": "Ab 80.000 Yen",
+        "note": "Integrieren Sie den AI-Chat für Anfragen in statische Websites und Service-Websites und ordnen Sie den Antwortbereich, das Ratenlimit, die Herkunftsprüfung und das Erstellen sicherer Links."
+      },
+      {
+        "label": "Blog-Kommentarfunktion",
+        "price": "Ab 80.000 Yen",
+        "note": "Verwenden Sie Cloudflare Pages Functions, D1, Turnstile, um Posting-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren, die nicht auf externe Kommentardienste angewiesen sind."
+      },
+      {
+        "label": "Einführung des CMS-Bearbeitungsbildschirms",
+        "price": "Ab 50.000 Yen",
+        "note": "Sveltia CMS fügt einen Verwaltungsbildschirm hinzu, mit dem Sie Blogs, feste Seiten, Ankündigungen und Einstellungselemente über den Browser aktualisieren können."
+      },
+      {
+        "label": "Blog-/Artikelbasis",
+        "price": "Ab 50.000 Yen",
+        "note": "Wir bereiten die notwendige Infrastruktur für die kontinuierliche Verbreitung vor, wie z. B. Artikellisten, Detailseiten, Tags, verwandte Artikel, RSS und Suchkanäle."
+      },
+      {
+        "label": "Mehrsprachiger Blog-Betrieb",
+        "price": "Ab 80.000 Yen",
+        "note": "Wir bereiten einen mehrsprachigen Blog-Vorgang vor, einschließlich japanischer Quellen, übersetzter PR, Hreflang, Sitemap und RSS."
+      },
+      {
+        "label": "SEO/strukturierte Daten",
+        "price": "Ab 50.000 Yen",
+        "note": "Informationen organisieren, die an Suchmaschinen wie OGP, JSON-LD, Sitemap, RSS, Canonical usw. übermittelt werden sollen."
+      },
+      {
+        "label": "Pagefind-Site-Suche",
+        "price": "Ab 30.000 Yen",
+        "note": "Fügen Sie der statischen Site die Suche Pagefind hinzu und ordnen Sie die Suchoberfläche, URL-Parameter und Cache-Einstellungen an."
+      },
+      {
+        "label": "Verbesserte Anzeigegeschwindigkeit",
+        "price": "Ab 50.000 Yen",
+        "note": "Wir werden Core Web Vitals weiter verbessern, indem wir Bilder, CSS, Schriftarten, Lazy Loading und Messergebnisse überprüfen."
+      },
+      {
+        "label": "Verbesserung der Barrierefreiheit",
+        "price": "Ab 50.000 Yen",
+        "note": "Überprüfen Sie Kontrast, Arienattribute, Fokus, Formularvalidierung usw. und korrigieren Sie sie, um WCAG AA zu erreichen."
+      },
+      {
+        "label": "Sicherheitsheader/CSP",
+        "price": "Ab 30.000 Yen",
+        "note": "Wir werden die Verteilungseinstellungen rund um die _Header, den CSP und den Verwaltungsbildschirm von Cloudflare Pages organisieren, um es näher an einen sicheren Veröffentlichungsstatus zu bringen."
+      },
+      {
+        "label": "CTA/Formularverknüpfung",
+        "price": "Ab 30.000 Yen",
+        "note": "Übernehmen Sie Typ, Betreff und Kontext vom Service-CTA auf das Anfrageformular, um den Beratungsablauf zu verbessern."
+      },
+      {
+        "label": "Integrierte System-/Kernzusammenarbeit",
+        "price": "Ab 2.500.000 Yen",
+        "note": "Eine Geschäftsplattform, die mehrere Abteilungen und bestehende Systeme verbindet. Konzipiert für eine schrittweise Einführung."
+      },
+      {
+        "label": "Wartung/Verbesserung",
+        "price": "Ab 30.000 Yen pro Monat",
+        "note": "Kleinere Korrekturen, Beratung, Überwachung, Verbesserungsvorschläge, vorrangige Reaktion für zusätzliche Entwicklung usw."
+      },
+      {
+        "label": "Anforderungen Organisation/technische Beratung",
+        "price": "Individuelles Angebot",
+        "note": "Wir unterstützen auch die Arbeitsorganisation vor der Entwicklung, die Untersuchung bestehender Systeme und die Überprüfung der Konfiguration."
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "description": "Diese Seite beschreibt, wie Acecore Systems personenbezogene Daten bei Anfragen, Angeboten, Leistungserbringung und Nutzung externer Dienste verarbeitet und wie Sie uns dazu erreichen.",
+    "sections": [
+      {
+        "title": "Zweck der Nutzung personenbezogener Daten",
+        "body": "Wir verwenden Ihre Daten, um auf Anfragen zu antworten, Kostenvoranschläge zu erstellen, Dienstleistungen bereitzustellen und notwendige Mitteilungen zu tätigen."
+      },
+      {
+        "title": "Bereitgestellt von einem Dritten",
+        "body": "Wir geben personenbezogene Daten nicht ohne die Zustimmung des Einzelnen an Dritte weiter, es sei denn, dies ist gesetzlich vorgeschrieben."
+      },
+      {
+        "title": "Externe Dienste",
+        "body": "Wir nutzen externe Dienste wie die gemeinsame Acecore-Kontaktstelle und Cloudflare Turnstile für die Formularübermittlung und Missbrauchsprävention sowie Cloudflare Pages für das Hosting. Wenn Sie in der Website-Suche „Verwandte Inhalte“ ausführen, werden die eingegebenen Suchbegriffe von Cloudflare Workers AI in eine numerische Darstellung umgewandelt und mit den in Cloudflare Vectorize gespeicherten öffentlichen Informationen dieser Website abgeglichen. Geben Sie keine Anfrageinhalte oder personenbezogenen Daten als Suchbegriffe ein."
+      },
+      {
+        "title": "Zugriffsanalyse",
+        "body": "Diese Website verwendet Google Analytics, um den Nutzungsstatus zu verstehen und zu verbessern. Durch Cookies usw. können anonyme Nutzungsinformationen erfasst werden, die jedoch nicht zur direkten Identifizierung von Personen verwendet werden. Cookies können in Ihren Browsereinstellungen deaktiviert werden."
+      },
+      {
+        "title": "Kontaktieren Sie uns",
+        "body": "Bei Fragen zum Umgang mit personenbezogenen Daten kontaktieren Sie uns bitte über das Anfrageformular auf der Website."
+      }
+    ]
+  },
+  "serviceDetails": {
+    "development": {
+      "title": "Auftragsentwicklung von Systemen und Webanwendungen",
+      "description": "Acecore Systems übernimmt den gesamten Weg von Projektidee oder Geschäftsproblem über Anforderungen, Design, Entwicklung und Tests bis zur Veröffentlichung und Betriebsübergabe.",
+      "heroEyebrow": "Entwicklung / Vertragsentwicklung",
+      "heroTitle": "Von der Idee\nzum veröffentlichungsreifen System.",
+      "heroLead": "Wir klären Projektidee und Geschäftsproblem und übernehmen Anforderungen, Design, Entwicklung, Tests, Veröffentlichung und Übergabe. Das Angebot richtet sich an Teams, die die Entwicklung selbst übertragen möchten.",
+      "visual": {
+        "alt": "Geschäftsmitarbeiter und Ingenieure überprüfen den Geschäftsablauf und den Bildschirmentwurf der Webanwendung",
+        "caption": "Wir tauschen Ideen und Geschäftsthemen aus und führen den Entwurf, die Implementierung und die Bestätigung durch, bis es vor Ort einsatzbereit ist."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Verwaltungsbildschirm, Antragsformular und Webbildschirm werden auf Desktop, Laptop und Smartphone angezeigt",
+          "caption": "Wir entwerfen und entwickeln notwendige Systeme, die auf das Unternehmen und die Benutzer zugeschnitten sind, wie z. B. Verwaltungsbildschirme, Antrags-/Genehmigungsbildschirme und Kundenbildschirme."
+        },
+        "process": {
+          "alt": "Vertreter und Ingenieure prüfen Geschäftsanwendungen auf Computern und Smartphones",
+          "caption": "Nach der Entwicklung prüfen wir es in der tatsächlichen Nutzungsumgebung und fahren mit der Produktionsfreigabe und der Übergabe an das Betriebspersonal fort."
+        }
+      },
+      "indexSummary": "Wir organisieren das Konzept und die geschäftlichen Belange und kümmern uns um alles vom Design und der Entwicklung bis hin zur Veröffentlichung und Übergabe.",
+      "indexTopics": [
+        "Anforderungsvereinbarung",
+        "Design und Entwicklung",
+        "Veröffentlichen/Migration",
+        "Operationsübernahme"
+      ],
+      "introTitle": "Auch wenn das, was Sie erstellen möchten, nicht in den Spezifikationen enthalten ist, organisieren wir es anhand des Konzepts.",
+      "introBody": "Anstatt nur eine Liste der Funktionen zu erhalten und diese zu implementieren, bestätigen wir, wer an der Arbeit geändert wird, welche Informationen verarbeitet werden und wer sie nach der Veröffentlichung verwaltet. Wir übersetzen Ziele und Prioritäten in Anforderungen, ermitteln den notwendigen Umfang und entwickeln ihn in einen Zustand, in dem er tatsächlich genutzt werden kann.",
+      "challenges": [
+        {
+          "title": "Ich habe ein Konzept, kann es aber nicht in Anforderungen umsetzen.",
+          "body": "Obwohl Sie sehen können, was Sie erreichen möchten und welche geschäftlichen Herausforderungen bestehen, haben Sie nicht die erforderlichen Bildschirme, Funktionen, Daten und Prioritäten organisiert."
+        },
+        {
+          "title": "Mehrere Vorgänge und Systeme werden getrennt",
+          "body": "Informationen sind über Tabellenkalkulationen, E-Mails, Papier und vorhandene Systeme verstreut, was zu Doppeleingaben und Auslassungen führt."
+        },
+        {
+          "title": "Wir brauchen eine Produktionsumgebung, die sicher verwendet werden kann, keinen Prototyp.",
+          "body": "Es ist ein Entwicklungssystem erforderlich, das Berechtigungen, Tests, Datenschutz, Veröffentlichungsverfahren und Bestätigung im Fehlerfall umfasst."
+        }
+      ],
+      "offeringsTitle": "Angenommene Anwendungsfälle und Kostenschätzungen",
+      "offeringsLead": "Wir organisieren die notwendigen Entwicklungsinhalte basierend auf Benutzern, Geschäftsabläufen, verarbeiteten Daten und Umfang der Verbindung mit bestehenden Systemen, anstatt sie nur nach Maßstab aufzuteilen.",
+      "offerings": [
+        {
+          "title": "Starterpaket zur AI-Geschäftsverbesserung",
+          "body": "Wir identifizieren Unternehmen, die für die AI-Implementierung geeignet sind, und anstatt mit der vollständigen Entwicklung fortzufahren, organisieren wir Kandidaten und produzieren kleine Prototypen, um Wirksamkeit, Risiken und nächste Investitionsentscheidungen zu bestätigen.",
+          "includes": [
+            "90-minütige Anhörung und Organisation des aktuellen Arbeitsablaufs",
+            "Präsentation von 3 AI-Kandidaten und einfaches Prototyping von 1 Kandidaten",
+            "Geschätzte Kosteneffizienz und vereinfachte Version der AI-Nutzungsregeln"
+          ],
+          "priceNote": "Der geschätzte Zeitraum beträgt 2 bis 3 Wochen. Für diese Installation wird auf der Grundlage der Bestätigungsergebnisse ein separater Kostenvoranschlag erstellt."
+        },
+        {
+          "title": "Kleine Automatisierung/Geschäftsunterstützung",
+          "body": "Wir werden ein kleines System einführen, das das aktuelle Geschäft nicht allzu sehr verändert und auf Routineaufgaben wie Eingabe, Aggregation, Benachrichtigung und Bestätigung abzielt.",
+          "includes": [
+            "Organisation aktueller Verfahren und Umfang der Automatisierung",
+            "Implementierung von Business-Support-Tools und automatischer Verarbeitung",
+            "Betriebsbestätigung und Übertragung der Nutzungsverfahren"
+          ],
+          "priceNote": "Wir bestätigen das Zielgeschäft und ob eine Zusammenarbeit mit externen Diensten besteht und erstellen Ihnen einen Kostenvoranschlag."
+        },
+        {
+          "title": "Interne Geschäftstools",
+          "body": "Wir werden Tools entwickeln, die es ermöglichen, interne Vorgänge in einem Fluss abzuwickeln, wie z. B. Verwaltungsbildschirme, Eingabeformulare, Listen, CSV-Ausgabe und Autoritätsverwaltung.",
+          "includes": [
+            "Design von Geschäftsabläufen, Daten und Berechtigungen",
+            "Entwicklung von Bildschirmen und Backend-Funktionen",
+            "Testen, Veröffentlichen, Übergeben an das Betriebspersonal"
+          ],
+          "priceNote": "Geschätzt basierend auf der Anzahl der Benutzer, der Art der Autorität und der Menge der zu verarbeitenden Daten."
+        },
+        {
+          "title": "Mittelgroße Webanwendung",
+          "body": "Wir entwickeln eine Webanwendung für interne und externe Benutzer, einschließlich Mitgliedschaftsfunktionen, Antrag/Genehmigung, Zusammenarbeit mit externen Diensten usw.",
+          "includes": [
+            "Organisation von Flusspfaden und funktionalen Anforderungen für jeden Benutzer",
+            "Entwicklung einschließlich Authentifizierung, Autorität und externer Zusammenarbeit",
+            "Umfassende Tests, Veröffentlichung und Übergabe von Wartungsentscheidungen"
+          ],
+          "priceNote": "Wir erstellen eine Schätzung auf Grundlage der Anzahl der Bildschirme, der Benutzerklassifizierung, der externen Verknüpfung und nichtfunktionaler Anforderungen."
+        },
+        {
+          "title": "Einführung eines AI-/Geschäftssystems",
+          "body": "Wir organisieren den Geschäftsablauf mithilfe von AI und bauen ihn als Produktionssystem auf, das Autorität, Bestätigungsverfahren, Überprüfbarkeit und Sicherheit umfasst, sodass er nicht mit einem Prototyp endet.",
+          "includes": [
+            "Entwurf des AI-Nutzungsbereichs, der Beurteilungsgrenzen und der Bewertungskriterien",
+            "Kooperative Entwicklung mit bestehenden Datensystemen",
+            "Testen, Veröffentlichung, Nutzungsregeln und Betriebsübertragung"
+          ],
+          "priceNote": "Schätzungen basieren auf dem Vorhandensein oder Fehlen von PoC, den verarbeiteten Daten, der Genauigkeitsbewertung und der bestehenden Systemverknüpfung."
+        },
+        {
+          "title": "Integrierte System-/Kernzusammenarbeit",
+          "body": "Wir organisieren Abläufe über mehrere Abteilungen und bestehende Systeme hinweg und entwickeln eine Plattform für eine schrittweise Integration bei gleichzeitiger Minimierung von Migrationsrisiken.",
+          "includes": [
+            "Abteilungsübergreifende Anforderungsorganisation und stufenweiser Umsetzungsplan",
+            "API-Verknüpfung/Datenmigration/Autorisierungsdesign",
+            "Integrationstests, Migration, Übergabe an den Produktionsbetrieb"
+          ],
+          "priceNote": "Kostenvoranschläge werden je nach Partner, Migrationsdaten, Verfügbarkeit und Implementierungsstadium individuell bereitgestellt."
+        }
+      ],
+      "processTitle": "Von der Organisation des Konzepts bis zur Übergabe an die tatsächliche Nutzung.",
+      "processLead": "Wir werden Zwischenergebnisse und Entscheidungsgründe austauschen und uns auf bestätigbare Einheiten einigen.",
+      "process": [
+        {
+          "title": "Organisation von Konzepten und Geschäftsthemen",
+          "body": "Wir klären den Zweck des Projekts, indem wir nachfragen, was Sie erreichen möchten, aktuelle Arbeiten, Benutzer, Einschränkungen und erwartete Ergebnisse."
+        },
+        {
+          "title": "Vereinbarung über Anforderungen und Verfahren",
+          "body": "Wir organisieren Funktionen, Daten, Befugnisse, externe Zusammenarbeit, Qualitätsbedingungen und Prioritäten und vereinbaren den Entwicklungsumfang, die Struktur und die Schätzung."
+        },
+        {
+          "title": "Design/Prototyp",
+          "body": "Wir entwerfen Bildschirme, Daten und Systemkonfigurationen und bestätigen den Benutzerfluss und technische Unsicherheiten bei Bedarf mit Prototypen."
+        },
+        {
+          "title": "Entwicklung/Test",
+          "body": "Fahren Sie mit der Implementierung in bestätigbaren Einheiten fort und überprüfen Sie Funktionalität, Berechtigungen, Fehlerverhalten, Sicherheit und tatsächlichen Geschäftsablauf."
+        },
+        {
+          "title": "Veröffentlichung/Migration/Übergabe",
+          "body": "Veröffentlichen Sie in der Produktionsumgebung und migrieren Sie Daten und übergeben Sie Konfigurationen, Konten, Aktualisierungs-/Bestätigungsverfahren und zukünftige Wartungsentscheidungen an das Betriebspersonal."
+        }
+      ],
+      "handoff": {
+        "eyebrow": "Bereits Bau-/IT-Beratungsingenieur",
+        "title": "Die Entwicklung erfolgt intern. Aber für diejenigen, die im Verlagswesen und im Betrieb stecken bleiben.",
+        "body": "Wenn Sie bereits über Code oder Prototypen verfügen und möchten, dass wir Sie bei der „letzten Phase bis zur Veröffentlichung“ wie Infrastrukturauswahl, Domäne/SSL, Bereitstellung, Sicherheitsbestätigung, Betriebsdesign usw. unterstützen, wenden Sie sich bitte an unsere IT-Beratungsingenieure.",
+        "label": "IT-Beratungsingenieur anzeigen"
+      },
+      "resourcesTitle": "Wir veröffentlichen die Designentscheidungen bis zur tatsächlichen Veröffentlichung.",
+      "resourcesLead": "Welche Implementierungsentscheidungen auch bei der Auftragsentwicklung wichtig sind, wie Konfiguration, Sicherheit und AI-Funktionen, können Sie in der technischen Erläuterung von Acecore Systems nachlesen.",
+      "resources": [
+        {
+          "title": "Gesamtdesign zur Verbesserung der Funktionalität der offiziellen Website mit Astro + Cloudflare",
+          "description": "Es fasst die Idee der Trennung von statischer Veröffentlichungsinfrastruktur, dynamischen Funktionen, CMS und Bestätigungs-/Veröffentlichungsfluss zusammen."
+        },
+        {
+          "title": "AstroTechnisches Design zur Integration des AI-Chats für Anfragen in die Website",
+          "description": "Wir haben die API-Grenzen, den Antwortbereich, die Ursprungsbestätigung, das Ratenlimit und die Anzeige sicherer Links für AI-Funktionen organisiert."
+        },
+        {
+          "title": "Sichere statische Site-Bereitstellung mit Cloudflare Pages erreicht",
+          "description": "Verarbeitet die Übermittlungskonfiguration, Sicherheitsheader, CSP und Cache-Betriebsentscheidungen."
+        }
+      ],
+      "ctaTitle": "Ein Projekt ab der Konzeptphase besprechen",
+      "ctaBody": "Nennen Sie uns im bereits bekannten Umfang Ziel, aktuellen Ablauf und Probleme, erwartete Nutzer und gewünschten Zeitraum."
+    },
+    "operations": {
+      "title": "Wartung und Betriebsverbesserung",
+      "description": "Acecore Systems unterstützt veröffentlichte Websites und Systeme fortlaufend in einem vereinbarten Rahmen: Änderungsannahme, kleine Korrekturen, Monitoring und Backups, Störungsanalyse und Verbesserungsvorschläge.",
+      "heroEyebrow": "Betrieb / Wartung/Verbesserung",
+      "heroTitle": "Klare Betriebsgrenzen,\ndamit es nach dem Start weitergeht.",
+      "heroLead": "Wir klären zuerst, was überwacht wird, wer entscheidet und ab wann zusätzliche Entwicklung beginnt. So bleiben tägliche Änderungen und Störungsreaktionen handhabbar.",
+      "visual": {
+        "alt": "Verantwortlicher und Ingenieur prüfen den Betriebsstatus und Änderungswünsche",
+        "caption": "Wir organisieren tägliche Änderungen und Reaktionen auf Störungen so, dass der Verantwortliche ohne Bedenken fortfahren kann."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Betriebsschreibtisch mit Überwachungsbildschirmen, Backup-Geräten, Änderungsbestätigungsblättern und Notizbüchern zur Aufzeichnung von Fehlern",
+          "caption": "Klären Sie die Ziele und den Verantwortungsbereich für Überwachung, Backup, Änderungsakzeptanz und Fehleraufzeichnung."
+        },
+        "process": {
+          "alt": "Personal und Ingenieure überprüfen den Betriebsverlauf und Verbesserungskandidaten",
+          "caption": "Wir werden auf den Betriebsverlauf zurückblicken und die Prioritäten aktualisieren, indem wir den Inhalt in Wartung und zusätzliche Entwicklung unterteilen."
+        }
+      },
+      "indexSummary": "Klären Sie die Grenzen des Wartungsumfangs, der Änderungsakzeptanz, der Überwachung, des Backups und der zusätzlichen Entwicklung.",
+      "indexTopics": [
+        "Wartungsumfang",
+        "Überwachung/Sicherung",
+        "Änderungsmanagement",
+        "Kontinuierliche Verbesserung"
+      ],
+      "introTitle": "Bevor Sie einen Wartungsvertrag abschließen, geben Sie die Grenzen des Supports an.",
+      "introBody": "Das Wort Wartung allein umfasst in der Regel kleinere Korrekturen, Fehlerbehebung, Funktionserweiterungen und Probleme mit externen Diensten. Wir organisieren das Ziel, die Empfangsmethode, die Bestätigungsumgebung, die Kontaktmethode und die Bedingungen für zusätzliche Schätzungen und schaffen eine Situation, in der das Betriebspersonal und die Entwicklerseite die gleichen Entscheidungen treffen können.",
+      "challenges": [
+        {
+          "title": "Ich weiß nicht, wie viel in der Wartung enthalten ist",
+          "body": "Die Grenzen zwischen Wortlautkorrekturen, Einstellungsänderungen, Fehlern und zusätzlichen Funktionen sind unklar und Entscheidungen werden jedes Mal getroffen, wenn eine Anfrage gestellt wird."
+        },
+        {
+          "title": "Die Orte, an denen im Fehlerfall überprüft werden muss, sind verstreut",
+          "body": "Verantwortlichkeiten wie Hosting, DNS, externe APIs, Datenbanken, Formulare usw. sind nicht organisiert."
+        },
+        {
+          "title": "Kleine Verbesserungen zurückgelassen",
+          "body": "Selbst wenn Sie Ihre täglichen Beobachtungen aufzeichnen, gibt es keinen Ort, an dem Sie über Prioritäten und den Zeitpunkt ihrer Umsetzung entscheiden können."
+        }
+      ],
+      "offeringsTitle": "Umfang muss vor der Inbetriebnahme vereinbart werden",
+      "offeringsLead": "Nur die notwendigen Punkte werden entsprechend der Bedeutung und Struktur des Zielsystems im Vertrag/Kostenvoranschlag berücksichtigt.",
+      "offerings": [
+        {
+          "title": "Bedarfsorganisation/Übertragungsbestätigung",
+          "body": "Überprüfen Sie die Konfiguration, Konten, vertraglich vereinbarte externe Dienste, Aktualisierungsverfahren und bekannte Probleme und klären Sie das Operationsziel.",
+          "includes": [
+            "Inventar der Konfigurations- und Verwaltungseinheit",
+            "Bestätigung der Berechtigung, vertraulicher Informationen und Aktualisierungsverfahren",
+            "Klärung, was abgedeckt ist und was nicht"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Kleinere Korrekturen/tägliche Änderungen",
+          "body": "Änderungen innerhalb des vereinbarten Umfangs, wie z. B. Wortlaut, Bilder, Einstellungen, Abhängigkeiten usw., werden in der Bestätigungsumgebung und durch Überprüfung widergespiegelt.",
+          "includes": [
+            "Anfragen entgegennehmen und Prioritäten festlegen",
+            "Vorabprüfung mit Vorschau",
+            "Überprüfen Sie den Änderungsverlauf und die Veröffentlichungsergebnisse"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Überwachung/Sicherung",
+          "body": "Bestimmen Sie die Ziele für die Erkennung von Ausfällen und Anomalien, die für die Wiederherstellung erforderlichen Daten und arrangieren Sie Überwachung und Sicherung, die zur vorhandenen Umgebung passen.",
+          "includes": [
+            "Bestätigung des Lebens-/Todes-/Fehler-/Nutzungsbetrags",
+            "Sicherungsziele und Aufbewahrungszeitraum",
+            "Benachrichtigungsziel und erstes Bestätigungsverfahren"
+          ],
+          "priceNote": "Überprüfen Sie das Überwachungsziel und den Sicherungsbereich einzeln."
+        },
+        {
+          "title": "Fehlerreaktion/Änderungsmanagement",
+          "body": "Erfassen Sie das Phänomen, den Umfang der Auswirkungen und kurzfristige Änderungen und erstellen Sie einen Ablauf, der Notfallreaktion und dauerhafte Reaktion trennt.",
+          "includes": [
+            "Anfragen und erforderliche Informationen",
+            "Aufzeichnung der Isolation, Genesung und Verhinderung eines erneuten Auftretens",
+            "Bedingungen für die Bestätigung mit externen Unternehmern"
+          ],
+          "priceNote": "Supportzeit und -umfang werden individuell bestätigt."
+        },
+        {
+          "title": "Verbesserungsrückstand/zusätzliche Entwicklung",
+          "body": "Wir sammeln tägliche Anfragen in einer Liste und legen die Reihenfolge der Umsetzung unter Berücksichtigung von Auswirkungen, Dringlichkeit und Kosten fest.",
+          "includes": [
+            "Erfassung und Organisation von Verbesserungskandidaten",
+            "Trennung von kleinen Modifikationen und zusätzlicher Entwicklung",
+            "Regelmäßige Überprüfung der Prioritäten"
+          ],
+          "priceNote": "Zusätzliche Entwicklung wird separat geschätzt."
+        }
+      ],
+      "processTitle": "Nachdem Sie das Ziel und die Kontaktmethode festgelegt haben, starten Sie den Betrieb.",
+      "processLead": "Wenn Verfügbarkeits- und Reaktionszeitgarantien erforderlich sind, überprüfen Sie die Bedingungen getrennt von der normalen Wartung.",
+      "process": [
+        {
+          "title": "Inventar",
+          "body": "Überprüfen Sie Konfiguration, Verträge, Berechtigungen, Aktualisierungsanweisungen und aktuelle Probleme."
+        },
+        {
+          "title": "Geltungsbereichsvereinbarung",
+          "body": "Bestimmen Sie, was förderfähig ist und was nicht, wie Sie es akzeptieren, wie Sie es bestätigen und welche Bedingungen für zusätzliche Kostenvoranschläge gelten."
+        },
+        {
+          "title": "Betriebsbeginn",
+          "body": "Wir führen eine Historie der Anfragen, Änderungen, Bestätigungen und Offenlegungen und reagieren entsprechend dem vereinbarten Prozess."
+        },
+        {
+          "title": "Regelmäßige Überprüfung",
+          "body": "Denken Sie über die aufgetretenen Probleme und Verbesserungskandidaten nach und passen Sie die nächste Priorität an."
+        }
+      ],
+      "resourcesTitle": "Wir veröffentlichen auch Implementierungsentscheidungen, die den Betrieb unterstützen.",
+      "resourcesLead": "Spezifische Entscheidungen zu Updates, Verteilung, Sicherheit und Anfragekanälen finden Sie in der technischen Erläuterung von Acecore Systems.",
+      "resources": [
+        {
+          "title": "Sveltia CMS Installationshandbuch",
+          "description": "Wir haben den Betriebsablauf und die Gestaltung der Befugnisse von der Bearbeitung bis zur Bestätigung, PR und Veröffentlichung zusammengefasst."
+        },
+        {
+          "title": "Sichere statische Site-Bereitstellung mit Cloudflare Pages erreicht",
+          "description": "Verwaltet die Übermittlungskonfiguration, Sicherheitsheader und Cache-Betriebsentscheidungen."
+        },
+        {
+          "title": "Gesamtdesign zur Verbesserung der Funktionalität der offiziellen Website mit Astro + Cloudflare",
+          "description": "Es fasst die Idee der Trennung von statischer Veröffentlichungsinfrastruktur, dynamischen Funktionen, CMS und Bestätigungs-/Veröffentlichungsfluss zusammen."
+        }
+      ],
+      "ctaTitle": "Wartungsumfang und erste Prüfpunkte besprechen",
+      "ctaBody": "Nennen Sie Ziel-URL oder Systemname, aktuelle Zuständigkeiten und schwierige Änderungen oder Störungsfälle."
+    },
+    "siteFunctions": {
+      "title": "Website-Funktionen ergänzen",
+      "description": "Acecore Systems ergänzt bestehende Websites schrittweise um notwendige Funktionen wie CMS, Anfrage-AI, Kommentare, Site-Suche, Formularverknüpfung und mehrsprachigen Betrieb.",
+      "heroEyebrow": "Site-Funktionen / Hinzugefügte Funktionen",
+      "heroTitle": "Die bestehende Website bewahren\nund nur das Nötige ergänzen.",
+      "heroLead": "Ohne vollständigen Relaunch als Voraussetzung lösen wir Engpässe bei Aktualisierung, Suche, Anfragen und Veröffentlichung passend zur vorhandenen Architektur.",
+      "visual": {
+        "alt": "Verantwortliche Person, die den CMS-Bearbeitungsbildschirm und die aktualisierte Website überprüft",
+        "caption": "Unter Verwendung der vorhandenen Site erstellen wir einen Bearbeitungsbildschirm und einen Veröffentlichungsablauf, der von denen bearbeitet werden kann, die ihn aktualisieren."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "CMS-Bearbeitungsbildschirm, Site-Suche und Anfrageformular werden auf mehreren Geräten angezeigt",
+          "caption": "Wählen Sie die Funktionen aus, die Sie benötigen, und kombinieren Sie sie so, dass sie zu Ihrer aktuellen Konfiguration und Ihrem täglichen Betrieb passen."
+        },
+        "process": {
+          "alt": "Vertreter und Ingenieure prüfen Zusatzfunktionen auf Computern und Smartphones",
+          "caption": "Wir werden es in überprüfbaren Einheiten hinzufügen und auch erklären, wie es vor und nach der Veröffentlichung überprüft werden kann."
+        }
+      },
+      "indexSummary": "Fügen Sie CMS, AI, Suche, Kommentare, Formularverknüpfung usw. entsprechend der vorhandenen Site-Konfiguration hinzu.",
+      "indexTopics": [
+        "CMS/Update",
+        "AI / Kommentare",
+        "Suchen/Anrufen",
+        "Formularverknüpfung"
+      ],
+      "introTitle": "Für uns hat der kontinuierliche Betrieb Vorrang vor der Erhöhung der Funktionalität.",
+      "introBody": "Auch wenn es sich um eine nützliche Funktion handelt, wird sie sich nicht durchsetzen, wenn die für die Aktualisierung verantwortliche Person nicht damit umgehen kann, sie nach der Veröffentlichung nicht behoben werden kann oder zu viele externe Dienste vorhanden sind. Wir überprüfen Ihre aktuelle Website, die Aktualisierungsmethoden, die Beantwortung von Anfragen und den Veröffentlichungsablauf und entwerfen gemeinsam die erforderlichen Funktionen und Betriebsregeln.",
+      "challenges": [
+        {
+          "title": "Erfordert Entwicklungsarbeit für jedes Update",
+          "body": "Wir können feste Seiten und Ankündigungen nicht selbst reparieren und selbst kleine Änderungen brauchen Zeit."
+        },
+        {
+          "title": "Schwierigkeit beim Abrufen der erforderlichen Informationen",
+          "body": "Während die Anzahl der Artikel und Seiten zugenommen hat, mangelt es an Anleitungen für die Suche, Kategorisierung und verwandte Artikel."
+        },
+        {
+          "title": "Kontext, bevor die Abfrage abgeschnitten wird",
+          "body": "Wenn Sie von der Servicebeschreibung zum Formular wechseln, wird das, worüber Sie Rücksprache halten wollten, nicht übernommen."
+        }
+      ],
+      "offeringsTitle": "Funktionen, die hinzugefügt werden können",
+      "offeringsLead": "Wählen Sie nur die notwendigen Elemente aus und kombinieren Sie sie entsprechend der Konfiguration und dem Betriebssystem Ihrer vorhandenen Site.",
+      "offerings": [
+        {
+          "title": "CMS/Update-Infrastruktur",
+          "body": "Bereiten Sie den Bearbeitungsbildschirm vor, indem Sie den Bereich organisieren, den Sie aktualisieren möchten, z. B. feste Seiten, Artikel, Ankündigungen, Gebühren und Einstellungselemente.",
+          "includes": [
+            "Bearbeitungsziele und Berechtigungen organisieren",
+            "Bild-Upload und Eingabeelementdesign",
+            "Bestätigungs-/Veröffentlichungsablauf mit GitHub"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Anfrage-AI-Chat",
+          "body": "Wir leiten Sie anhand der Informationen auf der Website weiter und erstellen eine Hilfslinie, die Sie bei Fragen, die nicht beantwortet werden können, mit formellen Anfragen verbindet.",
+          "includes": [
+            "Gestaltung des Reaktionsbereichs und der Leitregeln",
+            "Ursprungsüberprüfung und Ratenbegrenzung",
+            "Sichere Linkanzeige und Abfragezeile"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Kommentar-/Posting-Funktion",
+          "body": "Verwenden Sie Cloudflare Pages Functions, D1, Turnstile usw., um Veröffentlichungs-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren.",
+          "includes": [
+            "Posting-API und Speicherzieldesign",
+            "Maßnahmen gegen Spam und kontinuierliches Posten",
+            "Betriebsrichtlinie einschließlich Genehmigung und Löschung"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Artikel/mehrsprachige Verbreitungsplattform",
+          "body": "Wir bereiten die für die kontinuierliche Verbreitung erforderliche Struktur vor, z. B. Artikelliste, Details, Tags, verwandte Artikel, RSS und mehrsprachige Seiten.",
+          "includes": [
+            "Artikelmodell und Veröffentlichungsablauf",
+            "Generierung verwandter Artikel/RSS/Sitemap",
+            "Übersetzungs-PR und mehrsprachiges URL-Design"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Site-Suche",
+          "body": "Verwenden Sie Tools wie Pagefind, die auch auf statischen Websites einfach zu implementieren sind, um einen Suchpfad hinzuzufügen, um zusätzliche Informationen zu finden.",
+          "includes": [
+            "Suchziele und Ausschlussbereiche organisieren",
+            "Suchbildschirm- und URL-Parameter",
+            "Cache-Einstellungen erstellen"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "CTA/Formularverknüpfung",
+          "body": "Der von Ihnen angesehene Service, die Art der Beratung und die erforderlichen Informationen werden in das Anfrageformular übernommen.",
+          "includes": [
+            "URL-Parametervertrag",
+            "Erste Eingabe von Beratungsart und -thema",
+            "Messelemente, mit denen Sie die Quelle des Zuflusses überprüfen können"
+          ],
+          "priceNote": ""
+        }
+      ],
+      "processTitle": "Überprüfen Sie die vorhandene Konfiguration und nehmen Sie dann eine kleine Ergänzung vor.",
+      "processLead": "Wir treffen Entscheidungen nicht ausschließlich auf der Grundlage der Technologie; Wir beziehen auch Personen ein, die nach der Veröffentlichung Aktualisierungen vornehmen, prüfen und antworten.",
+      "process": [
+        {
+          "title": "Aktuelle Situationsbestätigung",
+          "body": "Überprüfen Sie Ihre Site-Konfiguration, Ihr Hosting, Ihre Aktualisierungsmethoden und die verwendeten externen Dienste."
+        },
+        {
+          "title": "Reihendesign",
+          "body": "Entscheiden Sie vor und nach der Veröffentlichung über die erforderlichen Funktionen, zu verarbeitenden Daten, Berechtigungen und Bestätigungsmethoden."
+        },
+        {
+          "title": "Implementierung/Bestätigung",
+          "body": "Implementieren Sie es in überprüfbaren Einheiten und überprüfen Sie die Bildschirmdarstellung, Eingabeinhalte und das Verhalten bei Fehlern."
+        },
+        {
+          "title": "Veröffentlichen/Übertragen",
+          "body": "Wir werden die Betriebsabläufe weitergeben und nach der Veröffentlichung bei Bedarf weiterhin Korrekturen und zusätzliche Verbesserungen vornehmen."
+        }
+      ],
+      "resourcesTitle": "Sie können den Hintergrund des Designs in der technischen Dokumentation überprüfen.",
+      "resourcesLead": "Detaillierte Umsetzungsentscheidungen sind in der technischen Erläuterung von Acecore Systems zusammengefasst, und diese Seite organisiert den Umfang der Konsultation.",
+      "resources": [
+        {
+          "title": "AstroTechnisches Design zur Integration des AI-Chats für Anfragen in die Website",
+          "description": "Organisierte API-Grenzen, Antwortumfang, Ursprungsbestätigung, Ratenbegrenzungen und Anzeige sicherer Links."
+        },
+        {
+          "title": "So erstellen Sie mit Cloudflare allein eine Kommentarfunktion für einen Astro-Blog",
+          "description": "Dies ist eine Entwurfsaufzeichnung der Veröffentlichung, Speicherung und Bedienung mithilfe der Seitenfunktionen D1 und Turnstile."
+        },
+        {
+          "title": "Sveltia CMS Installationshandbuch",
+          "description": "Diese Seite fasst das Konzept der Bearbeitung von Ziel, Bildern, GitHub backend und Bestätigungs-/Veröffentlichungsablauf zusammen."
+        },
+        {
+          "title": "So betreiben Sie einen mehrsprachigen Blog mit Sveltia CMS",
+          "description": "Wir kümmern uns um alles, von japanischen Manuskripten bis hin zu übersetzten PR, Hreflang, RSS und Sitemaps."
+        },
+        {
+          "title": "Astro Mehrsprachige Architektur der Website",
+          "description": "Dies ist ein Datensatz, der UI-Übersetzung, Artikelübersetzung, sprachspezifische URLs und Suchinformationen in einer Struktur organisiert."
+        },
+        {
+          "title": "Astro Fallstricke und Lösungen für Übergänge anzeigen",
+          "description": "PagefindEin Beispiel für die Verbesserung der UX- und Codequalität einer statischen Site, einschließlich der Suche."
+        },
+        {
+          "title": "Technisches Design zur Übernahme des Kontexts vom Service-CTA zum Anfrageformular",
+          "description": "Wir organisieren einen Implementierungsvertrag, um den Beratungstyp, das Thema und die Zuflussquelle an das Formular zu übergeben."
+        }
+      ],
+      "ctaTitle": "Eine neue Funktion für die bestehende Website besprechen",
+      "ctaBody": "Nennen Sie die Website-URL und Schwierigkeiten bei Aktualisierung, Suche oder Anfragen."
+    },
+    "siteQuality": {
+      "title": "Website-Qualität verbessern",
+      "description": "Acecore Systems prüft SEO, strukturierte Daten, Ladegeschwindigkeit, Barrierefreiheit und Sicherheitsheader gemeinsam, damit sich die Website auch nach dem Start kontinuierlich verbessern lässt.",
+      "heroEyebrow": "Site-Qualität / Qualitätsverbesserung",
+      "heroTitle": "Geschwindigkeit, Verständlichkeit und Sicherheit\ngehören zusammen.",
+      "heroLead": "Wir optimieren nicht nur für Suchmaschinen, Nutzer oder Betrieb, sondern bestimmen Prioritäten anhand der aktuellen Architektur und Messergebnisse.",
+      "visual": {
+        "alt": "Eine verantwortliche Person und ein Ingenieur prüfen dieselbe Website auf einem Computer und einem Smartphone",
+        "caption": "Wir schauen uns gemeinsam den Bildschirm des Benutzers und die Messergebnisse an und entscheiden über Prioritäten für Verbesserungen."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Bestätigungsbildschirme für Suchanzeige, Anzeigegeschwindigkeit, Tastaturbedienung und Verteilungseinstellungen werden angezeigt.",
+          "caption": "Sehen Sie sich den Umfang der Auswirkungen auf SEO, Geschwindigkeit, Zugänglichkeit und Sicherheit an."
+        },
+        "process": {
+          "alt": "Verantwortlicher und Ingenieur überprüfen die überarbeitete Website erneut auf PC und Smartphone",
+          "caption": "Überprüfen Sie die korrigierte Anzeige und Bedienung auf mehreren Geräten und nutzen Sie sie für nächste Verbesserungen."
+        }
+      },
+      "indexSummary": "Es kümmert sich um SEO, Geschwindigkeit, Zugänglichkeit und Sicherheit und organisiert die Reihenfolge der Korrekturen.",
+      "indexTopics": [
+        "SEO",
+        "Anzeigegeschwindigkeit",
+        "Barrierefreiheit",
+        "CSP/Verteilungseinstellungen"
+      ],
+      "introTitle": "Nicht nur, um Ihre Punktzahl zu erhöhen, sondern auch, um weiterhin Korrekturen vornehmen zu können.",
+      "introBody": "Qualitätsverbesserung endet nicht mit einer einzigen Diagnose oder Einstellungsergänzung. Überprüfen Sie die Rolle der Seite, die verwendeten Mess- und externen Skripte, die Aktualisierungshäufigkeit und den Veröffentlichungsablauf und nehmen Sie schrittweise Korrekturen vor, während Sie den Wirkungsbereich und die Bestätigungsmethode beibehalten.",
+      "challenges": [
+        {
+          "title": "Suchergebnisse geben den Inhalt nicht korrekt wieder",
+          "body": "Die Rollen von Titel, Beschreibung, kanonischen, strukturierten Daten und Sitemap sind nicht organisiert."
+        },
+        {
+          "title": "Die Anzeige ist langsam, aber ich kann die Ursache nicht isolieren.",
+          "body": "Mehrere Faktoren überschneiden sich, darunter Bilder, CSS, Schriftarten, Analyse-Tags und Cache."
+        },
+        {
+          "title": "Die Änderung führt zu einer weiteren Schwierigkeit bei der Verwendung.",
+          "body": "Wir kümmern uns individuell um Qualitätsaspekte, z. B. wenn Fokus und Kontrast durch visuelle Anpassungen gestört werden."
+        }
+      ],
+      "offeringsTitle": "Qualitätsbereiche, die überprüft werden müssen",
+      "offeringsLead": "Wir führen nur Diagnosen, Korrekturen bestimmter Punkte, umfassende Bestätigungen vor der Veröffentlichung usw. im erforderlichen Umfang durch.",
+      "offerings": [
+        {
+          "title": "SEO/strukturierte Daten",
+          "body": "Wir organisieren die Rollen jeder Seite so, dass die notwendigen Informationen konsistent sind, wenn sie in Suchergebnissen, SNS usw. geteilt werden.",
+          "includes": [
+            "title / description / canonical / OGP",
+            "JSON-LD für Organization, Service und weitere Seitentypen",
+            "Bestätigung der Sitemap/RSS/kanonischen Konsistenz"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Anzeigegeschwindigkeit/Verteilungsoptimierung",
+          "body": "Isolieren Sie anhand der tatsächlichen Seite und der Messergebnisse die Elemente, die die anfängliche Anzeige verhindern, und korrigieren Sie die Teile, die den größten Einfluss haben.",
+          "includes": [
+            "Bildformat/Größe/Lazy Loading",
+            "CSS/Schriftarten/Externe Skripte",
+            "Cache- und Übermittlungseinstellungen"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Barrierefreiheit",
+          "body": "Wir überprüfen die Tastaturbedienung, Lesbarkeit, Kontrast, Formularführung usw. und beheben alle Probleme, die die Verwendung beeinträchtigen könnten.",
+          "includes": [
+            "Überschriftenstruktur/Sehenswürdigkeit/Aria-Attribut",
+            "Fokusanzeige und Tastaturbedienung",
+            "Formularvalidierung und Fehlerinformationen"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Sicherheitsheader/CSP",
+          "body": "Identifizieren Sie die für die Veröffentlichung erforderlichen externen Verbindungen und organisieren Sie die Verteilungseinstellungen und den CSP für jede Seite, einschließlich des Verwaltungsbildschirms.",
+          "includes": [
+            "CSP und Sicherheitsheader",
+            "noindex/cache-Einstellungen auf dem Verwaltungsbildschirm",
+            "Bestandsaufnahme externer Skripte und Verbindungsziele"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Bestätigungsdesign vor und nach der Veröffentlichung",
+          "body": "Wir werden nicht nur einen erfolgreichen Build erstellen, sondern ein Verfahren erstellen, um die Unterschiede zwischen dem Hauptbildschirm, Mobilgeräten, Links, Formularen und Veröffentlichungsumgebungen zu überprüfen.",
+          "includes": [
+            "Bestätigen Sie die repräsentative Route und Bildschirmbreite",
+            "Überprüfung der Link-Formularkonsole",
+            "Überprüfen Sie den Unterschied zwischen Vorschau und Produktion"
+          ],
+          "priceNote": "Wir unterbreiten Ihnen einen Kostenvoranschlag basierend auf dem Verifizierungsziel und dem erforderlichen Verifizierungsumfang."
+        }
+      ],
+      "processTitle": "Messen, lesen Sie die Auswirkungen und setzen Sie Prioritäten.",
+      "processLead": "Da es zu Konflikten zwischen mehreren Qualitätselementen kommen kann, werden wir fortfahren und dabei den Grund für die Änderung und die Bestätigungsergebnisse beibehalten.",
+      "process": [
+        {
+          "title": "Standardanordnung",
+          "body": "Sehen Sie sich die Seiten an, die für Sie, Ihr Publikum, Ihre Geschäftsziele und die Kennzahlen, die Ihnen gerade wichtig sind, wichtig sind."
+        },
+        {
+          "title": "Gegenprüfung",
+          "body": "Ermitteln Sie das Problem und den Umfang der Auswirkungen anhand des Codes, des generierten HTML, der Messergebnisse und der tatsächlichen Vorgänge."
+        },
+        {
+          "title": "Prioritätskorrektur",
+          "body": "Während wir die Auswirkungen und Risiken prüfen, werden wir schrittweise Korrekturen vornehmen, beginnend mit den Elementen, die die größte Auswirkung haben."
+        },
+        {
+          "title": "Erneut bestätigen",
+          "body": "Wir werden auf Desktop- und Mobilgeräten, in der Vorschau und in der Produktion prüfen und zukünftige Inspektionsmethoden teilen."
+        }
+      ],
+      "resourcesTitle": "Wir haben technische Beurteilungen für jeden Verbesserungspunkt veröffentlicht.",
+      "resourcesLead": "Die Hintergründe und zu prüfenden Punkte für einzelne Maßnahmen können im Detail in der technischen Erläuterung von Acecore Systems bestätigt werden.",
+      "resources": [
+        {
+          "title": "AstroSEO-Verbesserungsleitfaden zur Implementierung strukturierter Daten und OGP auf Ihrer Website",
+          "description": "Rollen und Implementierungsbeispiele für JSON-LD, OGP, Sitemap und RSS."
+        },
+        {
+          "title": "AstroPraktische Techniken zur Verbesserung der Anzeigegeschwindigkeit der Website",
+          "description": "Enthält Beispiele zur Verbesserung von CSS, Schriftarten, Bildern, externen Skripten und Caching."
+        },
+        {
+          "title": "Astro Leitfaden zur Verbesserung der Barrierefreiheit der Website",
+          "description": "Wir haben die zu überprüfenden Punkte wie Arienattribute, Kontrast, Fokus, Form usw. organisiert."
+        },
+        {
+          "title": "Sichere statische Site-Bereitstellung mit Cloudflare Pages erreicht",
+          "description": "Verwaltet Sicherheitsheader, CSP, Cache und Seitenbereitstellungseinstellungen."
+        }
+      ],
+      "ctaTitle": "Prioritäten für die Website-Qualität besprechen",
+      "ctaBody": "Nennen Sie Ziel-URL und Ihre Fragen zu Suche, Geschwindigkeit, Bedienung oder Sicherheit."
+    }
+  },
+  "services": {
+    "title": "Leistungen",
+    "description": "Leistungen von Acecore Systems: IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Entwicklung von Geschäftssystemen und Webanwendungen, Administrationsoberflächen, Design und Kreativleistungen, CMS, Suche, Datennutzung und Modernisierung bestehender Systeme.",
+    "heroTitle": "Von der Klärung des Problems\nbis zu Entwicklung, Design und Betriebsverbesserung.",
+    "heroLead": "Wir liefern nicht nur einmalig, sondern gestalten auch den Weg, auf dem die Lösung im Arbeitsalltag ankommt und weiter verbessert werden kann.",
+    "entryPoints": [
+      {
+        "eyebrow": "Auftragsentwicklung / ENTWICKLUNG",
+        "title": "Ich möchte mich um alles kümmern, vom Konzept bis zur Entwicklung und Veröffentlichung.",
+        "body": "Dies ist für Personen gedacht, die eine Idee für ein Projekt oder ein Problem haben, das sie lösen möchten, sich aber auf einen einzigen Ansprechpartner für die Organisation, das Design, die Entwicklung und die Veröffentlichung der Anforderungen verlassen möchten.",
+        "label": "Siehe Details zur Auftragsentwicklung"
+      },
+      {
+        "eyebrow": "IT-Beratungsingenieur / BERATUNG",
+        "title": "Intern oder durch AI entwickelt. Ich möchte jedoch, dass Du mich bis zur Entlassung und Operation begleitest.",
+        "body": "Dies ist für Personen gedacht, die bereits ein System oder eine Anwendung erstellt haben und nach der Veröffentlichung mit der Bereitstellung, technischen Entscheidungen, Sicherheit und Betrieb nicht weiterkommen.",
+        "label": "Sehen Sie sich den Inhalt des IT-Beratungsingenieurs an"
+      }
+    ],
+    "services": [
+      {
+        "title": "IT-Berater/Publikation/Betriebsbegleitung",
+        "body": "Kleine und mittlere Unternehmen, die nicht über dediziertes IT-Personal verfügen, werden von einem Ingenieur begleitet, der sie bei der Veröffentlichung von von ihrem Unternehmen erstellten Anwendungen oder der Verwendung von AI, der Auswahl von Tools und der Entscheidungsfindung über Cloud- und IT-Infrastruktur beraten kann.",
+        "examples": [
+          "Konfigurationsbestätigung, Bereitstellung und Übergabe von mit AI erstellten Anwendungen",
+          "Unternehmensorganisation, Auswahl der AI/bestehenden Dienste, Bewertung des vorhandenen PoC",
+          "Technologieauswahl, Sicherheit, Zweitmeinung von externen Anbietern"
+        ]
+      },
+      {
+        "title": "Entwicklung von Geschäftssystemen",
+        "body": "Wir entwerfen und entwickeln Systeme, die auf den Arbeitsablauf jedes Standorts abgestimmt sind, einschließlich Bestellung, Inventar, Kundenverwaltung, Anträge, Reservierungen, tägliche Berichte und Inspektionen.",
+        "examples": [
+          "Design und Entwicklung von Unternehmensmanagementsystemen, CRM und ERP",
+          "Schrittweiser Übergang von bestehenden Excel- und Papierbetrieben",
+          "Betriebsdesign einschließlich Berechtigungen, Genehmigungen, Verlauf und Benachrichtigungen"
+        ]
+      },
+      {
+        "title": "Webanwendungs-/Verwaltungsbildschirm",
+        "body": "Wir erstellen Webanwendungen, die sowohl innerhalb als auch außerhalb des Unternehmens verwendet werden können, Funktionen für Mitglieder, Reservierungs-/Antragsformulare, CMS, Dashboards usw.",
+        "examples": [
+          "Verwaltungsbildschirm, Mitgliederseite, Formularfunktion",
+          "Suche, Liste, Details, CSV-Ausgabe, Benachrichtigung",
+          "Bildschirmdesign, das auf Smartphones einfach zu verwenden ist"
+        ]
+      },
+      {
+        "title": "Design/Kreativ",
+        "body": "Wir kümmern uns um eine breite Palette kreativer Produktion, einschließlich Logodesign, Druckmaterialien, Banner und Charakterdesigns. Wir legen großen Wert darauf, dem, was unsere Kunden vermitteln wollen, eine präzise Form zu geben. Wenn Sie es mit der Website-Erstellung kombinieren, können Sie uns vom Design bis zur Veröffentlichung überlassen.",
+        "examples": [
+          "Logo-/Markenidentitätsdesign",
+          "Druckmaterialien wie Visitenkarten, Broschüren, Poster usw.",
+          "Kreativ für Web-Banner und SNS",
+          "Charakterdesign/Illustrationsproduktion"
+        ]
+      },
+      {
+        "title": "CMS/AI/Suche/Formularfunktionen hinzugefügt",
+        "body": "Fügen Sie Funktionen wie Anfrage-AI-Chat, CMS-Bearbeitungsbildschirm, Kommentare, Suche, Formularverknüpfung, Artikel-/Mehrsprachigkeitsbetrieb usw. zu bestehenden oder statischen Websites hinzu.",
+        "examples": [
+          "Sveltia CMS Bearbeitungsbildschirm für feste Seiten, Blogs und Einstellungselemente",
+          "Anfrage-AI-Chat, Kommentarveröffentlichung, Kontextvererbung vom CTA zum Formular",
+          "Pagefind Suche, Artikel/Tags/verwandte Artikel/RSS, Betrieb mehrsprachiger Seiten"
+        ]
+      },
+      {
+        "title": "Datennutzung/externe Zusammenarbeit",
+        "body": "Verbinden Sie vorhandene Dienste, APIs, Tabellenkalkulationen, E-Mails, Chat-Benachrichtigungen usw., um doppelte Eingaben und Auslassungen bei der Bestätigung zu reduzieren.",
+        "examples": [
+          "API-Design, externe Servicekooperation, Webhook Zusammenarbeit",
+          "Datenbankdesign, Aggregation, Berichterstattung",
+          "Erstellen eines Systems zur Benachrichtigung, Sicherung und Überwachung"
+        ]
+      },
+      {
+        "title": "Verbesserung/Modernisierung",
+        "body": "Wir organisieren veraltete Mechanismen, individualisierte Tools und Bildschirme, die schwer zu warten sind, und organisieren sie in einem Format, das in Zukunft leicht zu reparieren ist.",
+        "examples": [
+          "Legacy-Systemorganisation und Phasenmigration",
+          "Geschwindigkeitsverbesserung, Verbesserung der Benutzeroberfläche, Fehleruntersuchung",
+          "GitHub-basierte Entwicklung und Wartung des Betriebsablaufs"
+        ]
+      }
+    ],
+    "process": [
+      {
+        "title": "Anhörung",
+        "body": "Organisieren Sie den Zweck, das Problem, das Sie haben, Benutzer, Fristen und Budget."
+      },
+      {
+        "title": "Anforderungsvereinbarung/Vorschlag",
+        "body": "Teilen Sie die erforderlichen Funktionen, Bildschirme, Daten, Berechtigungen und Offenlegungsbereiche auf und legen Sie Prioritäten fest."
+      },
+      {
+        "title": "Design und Entwicklung",
+        "body": "Wir werden es in kleinen, leicht zu überprüfenden Einheiten implementieren und jegliche Unannehmlichkeiten mit dem Bildschirm oder der Bedienung schnell beseitigen."
+      },
+      {
+        "title": "Veröffentlichen/verbessern",
+        "body": "Wir unterstützen Sie auch nach der Veröffentlichung weiterhin, einschließlich Fehlerbehebung, zusätzlichen Anfragen und betrieblichen Verbesserungen."
+      }
+    ]
+  },
+  "workDetail": {
+    "title": "Funktionserweiterungen und Betriebsplattform der offiziellen Acecore-Website",
+    "description": "Die offizielle Acecore-Website wurde auf Basis von Astro und Cloudflare Pages schrittweise um CMS, Artikelbasis, Suche, strukturierte Daten, CSP, Barrierefreiheit und Geschwindigkeitsoptimierung erweitert.",
+    "category": "CMS/Suche/Sicherheit/Leistung",
+    "heroEyebrow": "Fallstudie / Standortinfrastruktur",
+    "heroTitle": "Vom statischen Auftritt zur dauerhaft betreibbaren Plattform.",
+    "heroLead": "Ein internes Projekt, das CMS, Suche, SEO und Auslieferungsqualität schrittweise ergänzt und dabei die Leichtigkeit der statischen Website bewahrt.",
+    "visual": {
+      "alt": "Acecore Offizielle Website-Startseite",
+      "caption": "Wir betreiben eine einzige öffentliche Plattform für Dienstleistungen, Preise, technische Artikel und Anfragen."
+    },
+    "overviewTitle": "Auf dem Weg zu einer Standortinfrastruktur, die kontinuierlich aktualisiert werden kann.",
+    "overviewBody": "Basierend auf Astro und Cloudflare Pages haben wir CMS, Suche usw. in überprüfbaren Einheiten hinzugefügt. Bearbeiten, Prüfen und Veröffentlichen werden als ein Vorgang abgewickelt.",
+    "facts": [
+      {
+        "label": "Ziel",
+        "value": "Offizielle Acecore-Website"
+      },
+      {
+        "label": "Öffentliche Infrastruktur",
+        "value": "Astro / Cloudflare Pages"
+      },
+      {
+        "label": "Aktualisierungsablauf",
+        "value": "Sveltia CMS / GitHub"
+      },
+      {
+        "label": "Positionierung",
+        "value": "Inhouse-Projekt"
+      }
+    ],
+    "outcomesTitle": "Realisierter Zustand",
+    "outcomes": [
+      {
+        "label": "Aktualisiert",
+        "body": "Feste Seiten, Artikel und Einstellungselemente können vom CMS aus aktualisiert werden"
+      },
+      {
+        "label": "Informationserkennung",
+        "body": "Sie können über die Suche und die interne Navigation zu den erforderlichen Informationen navigieren."
+      },
+      {
+        "label": "Veröffentlichungsqualität",
+        "body": "Sie können SEO, CSP, Barrierefreiheit und Anzeigequalität im selben Veröffentlichungsablauf überprüfen"
+      }
+    ],
+    "outcomesVisual": {
+      "alt": "Kontaktformular der offiziellen Acecore-Website",
+      "caption": "Wir haben einen Bildschirm veröffentlicht, der den Konsultationstyp und die erforderlichen Eingabeelemente organisiert und es Ihnen ermöglicht, mit der formellen Anfrage fortzufahren."
+    },
+    "story": [
+      {
+        "label": "Aufgabe",
+        "title": "Verkomplizieren Sie die öffentliche Infrastruktur nicht.",
+        "body": "Auch als die Menge an Informationen und Funktionen zunahm, brauchten wir eine Konfiguration, die es uns ermöglicht, zu den erforderlichen Inhalten zu navigieren und die Auswirkungen von Aktualisierungen und Fehlern zu isolieren."
+      },
+      {
+        "label": "Richtlinie",
+        "title": "Designfunktionalität und Veröffentlichung fließen zusammen.",
+        "body": "Wir haben CMS, Artikel, Suchen usw. nach Rollen unterteilt und festgelegt, wer sie bearbeiten kann, wo sie überprüft werden können und wie sie im Rahmen der Funktionalität veröffentlicht werden können."
+      }
+    ],
+    "scopeTitle": "Abgestuft angeordnetes Sortiment",
+    "scopeLead": "Anstatt jedes Element einzeln hinzuzufügen, haben wir den Zusammenhang mit Veröffentlichung, Bestätigung und Betrieb untersucht.",
+    "scopeVisual": {
+      "alt": "Blogübersicht und Filter der offiziellen Acecore-Website",
+      "caption": "Artikel, Tags, Archive und Suchen werden zu einer Struktur verbunden, die eine Suche auch bei zunehmender Informationsmenge ermöglicht."
+    },
+    "scope": [
+      {
+        "title": "Aktualisierungs-/Artikelvorgang",
+        "body": "Wir haben einen Einstiegspunkt erstellt, der Aktualisierungen über den Browser und einen Ablauf zum Überprüfen von Änderungen über GitHub ermöglicht.",
+        "items": [
+          "Bearbeiten von festen Seiten, Artikeln und Einstellungselementen mit Sveltia CMS",
+          "Ordnen Sie das Bild-Upload-Ziel und die Eingabeelemente",
+          "Artikelliste/Tags/verwandte Artikel/RSS"
+        ]
+      },
+      {
+        "title": "Informationsermittlung/interne Anleitung",
+        "body": "Wir haben eine Struktur hinzugefügt, die es Ihnen ermöglicht, über die Suche und verwandte Links zu den benötigten Informationen zu navigieren, auch wenn die Anzahl der Seiten zunimmt.",
+        "items": [
+          "Durchsuchen Sie die Website nach Pagefind",
+          "Suchziele und Ausschlussbereiche organisieren",
+          "Interne Links zwischen Diensten, Gebühren und Artikeln"
+        ]
+      },
+      {
+        "title": "Informationen zur Übermittlung an Suchmaschinen",
+        "body": "Wir haben Seitenrollen und URLs angepasst und die für Suchergebnisse und Freigabe erforderlichen Informationen konsistent gemacht.",
+        "items": [
+          "title / description / OGP / canonical",
+          "JSON-LD wie Organization, WebSite, WebPage",
+          "Sitemap und mehrsprachige URL-Ausrichtung"
+        ]
+      },
+      {
+        "title": "Öffentliche Qualität",
+        "body": "Wir haben Sicherheit, Benutzerfreundlichkeit und Anzeigegeschwindigkeit zusammen mit der Bereitstellungskonfiguration überprüft, anstatt sie als separate nachträgliche Überlegungen zu betrachten.",
+        "items": [
+          "CSP/Sicherheitsheader/Cache",
+          "Tastaturbedienung/Fokus/Formular",
+          "Bilder, CSS, Schriftarten, externe Skripte"
+        ]
+      }
+    ],
+    "resourcesTitle": "Detaillierte Urteile finden Sie in der technischen Dokumentation.",
+    "resourcesLead": "Die Konfigurations- und Implementierungsentscheidungen sind in der technischen Erläuterung von Acecore Systems zusammengefasst.",
+    "resources": [
+      {
+        "title": "CMS und Veröffentlichungsablauf",
+        "description": "Dies ist der Entwurfsdatensatz des Bearbeitungsziels, des Bildes, GitHub backend und des Bestätigungs-/Veröffentlichungsablaufs."
+      },
+      {
+        "title": "Suche und interne Leads",
+        "description": "Pagefind Beispiele für UX- und Codequalitätsverbesserungen, einschließlich Suche."
+      },
+      {
+        "title": "Lieferqualität und -sicherheit",
+        "description": "CSP, Sicherheitsheader, Cache und Seitenbereitstellungseinstellungen werden organisiert."
+      }
+    ],
+    "ctaTitle": "Die bestehende Website bewahren und eine Basis für Updates und neue Funktionen schaffen.",
+    "ctaBody": "Nennen Sie uns aktuelle URL, Aktualisierungsweg, gewünschte Funktionen und betriebliche Einschränkungen."
+  },
+  "works": {
+    "title": "Projekte",
+    "description": "Fallbeispiele von Acecore Systems zu Website-Entwicklung und -Verbesserung, CMS, Suche und Serverbetrieb.",
+    "heroTitle": "Projekte und Ergebnisse.",
+    "heroLead": "Wir zeigen Ausgangslage und Umsetzung von Projekten rund um Websites, CMS, Suche und Serverbetrieb.",
+    "cases": [
+      {
+        "title": "AcecoreVerbesserte Kontaktlinie auf der offiziellen Website",
+        "category": "Formulare / AI-Navigation / CMS",
+        "summary": "Wir haben feste Seiten, FAQs, AI-Chat und CMS-Verwaltungselemente organisiert, um Ängste vor der Auswahl von Diensten, der Beratung von Kostenvoranschlägen und der Beantragung von Anfragen zu reduzieren.",
+        "challenge": "Es war schwierig zu bestimmen, worüber Besucher diskutieren konnten, und die Anfragen waren in der Regel verstreut.",
+        "proposal": "Wir haben die notwendigen Informationen in ein Formular integriert, indem wir dienstspezifische Routen, Anfragetypen, FAQs und Vorabberatung mithilfe von AI kombiniert haben.",
+        "result": "Wir haben die Bestätigung vor der Konsultation von formellen Anfragen getrennt, um die Durchführung von Kostenvoranschlägen und Serviceberatungen zu erleichtern.",
+        "imageAlt": "Kontaktseite der offiziellen Acecore-Website",
+        "externalLabel": "Konsultieren/Anfragen an Acecore"
+      },
+      {
+        "title": "Funktionserweiterungen und Betriebsplattform der offiziellen Acecore-Website",
+        "category": "CMS/Suche/Sicherheit/Leistung",
+        "summary": "Wir haben der statischen Website schrittweise CMS, Artikelinfrastruktur, Site-Suche, strukturierte Daten, CSP, Verbesserungen der Barrierefreiheit und Verbesserungen der Anzeigegeschwindigkeit hinzugefügt.",
+        "challenge": "Wir brauchten ein Design, das die Informationsverbreitungs- und Anfragekanäle stärkt und gleichzeitig die Geschwindigkeit und Benutzerfreundlichkeit der statischen Website beibehält.",
+        "proposal": "Wir haben Astro, Cloudflare Pages, Sveltia CMS, Pagefind, strukturierte Daten und Sicherheitsheader kombiniert und sie in einem Format organisiert, das es Ihnen ermöglicht, notwendige Funktionen in einer kleinen Menge hinzuzufügen.",
+        "result": "Dies ist zu einer Grundlage für die Verbesserung von Blogs, festen Seiten, Suchen und Anfragezeilen bei deren Betrieb geworden und hat Erkenntnisse gesammelt, die leicht auf ähnliche Projekte zur Erweiterung von Site-Funktionen übertragen werden können.",
+        "imageAlt": "Acecore Offizielle Website-Startseite",
+        "externalLabel": "Siehe entsprechende technische Erklärung"
+      },
+      {
+        "title": "Stabilisierungs- und Überwachungskenntnisse aus dem Aceserver-Betrieb",
+        "category": "Serverbetrieb/Community-Infrastruktur",
+        "summary": "Minecraft Durch den Betrieb öffentlicher Server verbessern wir kontinuierlich die Verbindungsstabilität, Überwachung, Sicherung und Anleitung.",
+        "challenge": "Mit zunehmender Teilnehmerzahl wird es notwendig, die Verbindungsstabilität, den Informationsaustausch, die Fehlerbehandlung und die Betriebsregeln zu verbessern.",
+        "proposal": "Wir haben die Serverkonfiguration, Überwachung, Sicherung und Webverbindungen auf einmal verbessert, ohne technische Abläufe und Community-Abläufe zu trennen.",
+        "result": "Die durch den Langzeitbetrieb gewonnenen Erkenntnisse können nun auf die Überwachung und betriebliche Gestaltung von Geschäftssystemen angewendet werden.",
+        "imageAlt": "Hauptbildschirm des Ace-Serverportals",
+        "externalLabel": "Siehe Informationen zur Ace-Server-Teilnahme"
+      },
+      {
+        "title": "Produktion des Ace-Serverportals",
+        "category": "Webproduktion/Community-Portal/CMS",
+        "summary": "MinecraftWir haben die Teilnahmeinformationen, Videos, Weltkarte, Wiki und Wegbeschreibungen zu Discord des kostenlosen öffentlichen Servers „Ace Server“ in einem Eingang organisiert.",
+        "challenge": "Informationen wie Serverübersicht, Teilnahmemöglichkeiten, Regeln, Videos, Weltkarte usw. waren auf mehrere Standorte verteilt, was es für Erstbesucher schwierig machte, sich für den ersten Schritt zu entscheiden.",
+        "proposal": "Wir haben es als Portal konfiguriert, das es Ihnen ermöglicht, von der Servereinführung zu Discord, Videos, jeder Weltkarte und Wiki zu wechseln, ohne sich zu verlaufen und ohne vorhandene Informationsquellen zu ersetzen.",
+        "result": "Es wird als statische Site mit Astro, UnoCSS und Sveltia CMS veröffentlicht. Mit dieser Konfiguration können Sie den Seitentext und die Site-Einstellungen über das CMS aktualisieren.",
+        "imageAlt": "Ace Server Portal-Startseite",
+        "externalLabel": "Ace Server-Portal anzeigen"
+      },
+      {
+        "title": "Erneuerung der Website des Cherry English-Kurses",
+        "category": "Webentwicklung / CMS / Site-Suche",
+        "summary": "Kursinformationen, Kurse, Ankündigungen, Blogs, Veranstaltungen und FAQs wurden auf einer Website organisiert und die bestehende Website wurde auf die Struktur Astro erneuert.",
+        "challenge": "Während wir Informationen von der bestehenden Website und dem Blog übernommen haben, brauchten wir eine Struktur, die es den Besuchern erleichtert, zu Kursen und Probelektionen zu gelangen, und die kontinuierliche Aktualisierungen ermöglicht.",
+        "proposal": "Durch die Kombination von Astro, UnoCSS, Sveltia CMS und Pagefind haben wir die Migration bestehender Artikel, die Umleitung alter URLs, die Site-Suche und das CMS-Update in einer operativen Plattform kombiniert.",
+        "result": "Wir haben die Suche nach allem, von Unterrichtsinformationen bis hin zu Probestunden, täglichen Ankündigungen und früheren Artikeln, vereinfacht und sind zu einem Vorgang übergegangen, der es Ihnen ermöglicht, CMS-Änderungen in PR zu überprüfen und zu veröffentlichen.",
+        "imageAlt": "Startseite der Cherry English-Klassen-Homepage",
+        "externalLabel": "Sehen Sie sich die Homepage des Cherry English-Kurses an"
+      },
+      {
+        "title": "Erstellung der Hatt-Homepage",
+        "category": "Webentwicklung / CMS / Site-Suche",
+        "summary": "Es wurde als persönliche Website konzipiert, auf der Sie weiterhin Ihre kreativen Aktivitäten teilen können, indem Sie Zeichnungen, Romane und 3D-Avatar-Gimmick-Produktionen für VRChat in einem Portal zusammenführen.",
+        "challenge": "Die Einstiegspunkte zu den Aktivitäten waren in Blogs, externe Posting-Sites, BOOTH, YouTube, X usw. unterteilt, was es für Erstbesucher schwierig machte, das Gesamtbild der Aktivitäten und die Reihenfolge, in der sie angezeigt werden sollten, zu erfassen.",
+        "proposal": "Wir gliederten die Aktivitäten in 3 Bereiche – Illustration, Romane und Modellierung – und schufen einen Hub zu Blog, Werken, Profil und externen Diensten.",
+        "result": "Es wird als statische Site mit Astro, TypeScript, UnoCSS, Sveltia CMS, Pagefind veröffentlicht. Die Struktur ermöglicht es Ihnen, Ihre Blog- und Arbeitsinformationen mithilfe eines CMS zu aktualisieren und nach Artikeln und Werken zu suchen.",
+        "imageAlt": "Die oberste Seite der Hatt-Homepage",
+        "externalLabel": "Hatts Werke/Blog ansehen"
+      }
+    ]
+  },
+  "site": {
+    "description": "Acecore Systems ist ein Service von Acecore für IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Geschäftssysteme und Webanwendungen sowie Design und Kreativleistungen – von der Anforderungsklärung bis zur Betriebsverbesserung.",
+    "nav": [
+      {
+        "label": "Support-Richtlinie"
+      },
+      {
+        "label": "Dienst"
+      },
+      {
+        "label": "Erfolge"
+      },
+      {
+        "label": "Geschätzter Preis"
+      },
+      {
+        "label": "Einführungsleitfaden"
+      },
+      {
+        "label": "Technische Erklärung"
+      }
+    ],
+    "footerLinks": [
+      {
+        "label": "Support-Richtlinie"
+      },
+      {
+        "label": "Dienst"
+      },
+      {
+        "label": "Geschätzter Preis"
+      },
+      {
+        "label": "Erfolge"
+      },
+      {
+        "label": "Einführungsleitfaden"
+      },
+      {
+        "label": "Technische Erklärung"
+      },
+      {
+        "label": "Kontaktieren Sie uns"
+      },
+      {
+        "label": "Datenschutz"
+      }
+    ]
+  }
+}

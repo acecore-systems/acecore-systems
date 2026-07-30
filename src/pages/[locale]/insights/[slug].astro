@@ -1,0 +1,42 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+import InsightArticlePage from "../../../components/InsightArticlePage.astro";
+import {
+  getInsightLocale,
+  getInsightSlug,
+} from "../../../lib/insight-links.mjs";
+import { locales, type Locale } from "../../../i18n";
+
+interface Props {
+  entry: CollectionEntry<"insights">;
+  author?: CollectionEntry<"authors">["data"];
+  locale: Locale;
+}
+
+export async function getStaticPaths() {
+  const [insights, authors] = await Promise.all([
+    getCollection("insights"),
+    getCollection("authors"),
+  ]);
+  const authorById = new Map(authors.map((author) => [author.id, author.data]));
+  const localizedLocales = locales.filter((locale) => locale !== "ja");
+
+  return localizedLocales.flatMap((locale) =>
+    insights
+      .filter((entry) => getInsightLocale(entry.id) === locale)
+      .map((entry) => ({
+        params: { locale, slug: getInsightSlug(entry.id) },
+        props: {
+          entry,
+          author: authorById.get(entry.data.author),
+          locale,
+        },
+      })),
+  );
+}
+
+const { entry, author, locale } = Astro.props;
+---
+
+<InsightArticlePage entry={entry} author={author} locale={locale} />

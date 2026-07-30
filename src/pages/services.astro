@@ -1,22 +1,33 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ServiceVisual from "../components/ServiceVisual.astro";
-import data from "../data/services.json";
-import itAdvisor from "../data/it-advisor.json";
-import development from "../data/service-details/development.json";
-import siteFunctions from "../data/service-details/site-functions.json";
-import siteQuality from "../data/service-details/site-quality.json";
-import operations from "../data/service-details/operations.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const content = getLocalizedContent(locale);
+const data = content.services;
+const { itAdvisor } = content;
+const { development, siteFunctions, siteQuality, operations } =
+  content.serviceDetails;
+const text = getUi(locale);
+const localizeHref = (href: string) =>
+  href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 
 const primaryServiceDetails = [
   {
     id: "development",
-    href: "/services/development/",
+    href: getLocalizedUrl("/services/development/", locale),
     data: development,
   },
   {
     id: "it-advisor",
-    href: "/services/it-advisor/",
+    href: getLocalizedUrl("/services/it-advisor/", locale),
     data: itAdvisor,
   },
 ];
@@ -26,15 +37,15 @@ const entryVisuals = new Map(
 
 const supportingServiceDetails = [
   {
-    href: "/services/site-functions/",
+    href: getLocalizedUrl("/services/site-functions/", locale),
     data: siteFunctions,
   },
   {
-    href: "/services/site-quality/",
+    href: getLocalizedUrl("/services/site-quality/", locale),
     data: siteQuality,
   },
   {
-    href: "/services/operations/",
+    href: getLocalizedUrl("/services/operations/", locale),
     data: operations,
   },
 ];
@@ -43,8 +54,8 @@ const serviceDetailGroups = [
   {
     id: "service-detail-primary",
     eyebrow: "Primary services",
-    title: "依頼の入口になる二つのサービス",
-    lead: "構想から開発を任せるか、すでにある開発を公開・運用へ進めるかで選びます。",
+    title: text.primaryServicesTitle,
+    lead: text.primaryServicesLead,
     className: "service-detail-index--primary",
     showVisuals: false,
     items: primaryServiceDetails,
@@ -52,8 +63,8 @@ const serviceDetailGroups = [
   {
     id: "service-detail-supporting",
     eyebrow: "Focused support",
-    title: "必要な範囲に絞った支援",
-    lead: "サイトの機能追加、品質改善、公開後の運用は、個別の支援メニューから選べます。",
+    title: text.focusedSupportTitle,
+    lead: text.focusedSupportLead,
     className: "service-detail-index--supporting",
     showVisuals: true,
     items: supportingServiceDetails,
@@ -61,10 +72,10 @@ const serviceDetailGroups = [
 ];
 ---
 
-<BaseLayout title={data.title} description={data.description}>
+<BaseLayout title={data.title} description={data.description} locale={locale}>
   <section class="page-hero page-hero--services">
     <div class="container page-hero__inner">
-      <p class="page-eyebrow">Design domains / 設計領域</p>
+      <p class="page-eyebrow">{text.servicesEyebrow}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
@@ -78,11 +89,9 @@ const serviceDetailGroups = [
       <header class="editorial-header editorial-header--split">
         <div>
           <p class="editorial-eyebrow">Choose a route / 01</p>
-          <h2 id="service-entry-title">まず、依頼したい範囲を選ぶ</h2>
+          <h2 id="service-entry-title">{text.chooseScopeTitle}</h2>
         </div>
-        <p>
-          開発そのものを任せるか、すでにある開発を公開・運用へ進めるかで、相談の入口を分けています。
-        </p>
+        <p>{text.chooseScopeLead}</p>
       </header>
       <div class="service-entry-points">
         {
@@ -92,7 +101,7 @@ const serviceDetailGroups = [
               <a
                 class="service-entry-point"
                 id={`service-entry-${entry.id}`}
-                href={entry.href}
+                href={localizeHref(entry.href)}
               >
                 <div class="service-entry-point__heading">
                   <p class="editorial-index">
@@ -125,7 +134,7 @@ const serviceDetailGroups = [
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Scope / 02</p>
-        <h2 id="service-domains-title">設計領域</h2>
+        <h2 id="service-domains-title">{text.serviceDomainsTitle}</h2>
       </header>
       <div class="service-list">
         {
@@ -145,8 +154,11 @@ const serviceDetailGroups = [
                   ))}
                 </ul>
                 {service.detailUrl && (
-                  <a class="service-row__detail" href={service.detailUrl}>
-                    この支援の詳細を見る
+                  <a
+                    class="service-row__detail"
+                    href={localizeHref(service.detailUrl)}
+                  >
+                    {text.viewSupportDetails}
                   </a>
                 )}
               </div>
@@ -165,11 +177,9 @@ const serviceDetailGroups = [
       <header class="editorial-header editorial-header--split">
         <div>
           <p class="editorial-eyebrow">Detailed support / 03</p>
-          <h2 id="service-detail-index-title">目的別の支援メニュー</h2>
+          <h2 id="service-detail-index-title">{text.serviceDetailsTitle}</h2>
         </div>
-        <p>
-          二つの主要サービスと、範囲を絞って依頼できる三つの支援を分けて紹介します。
-        </p>
+        <p>{text.serviceDetailsLead}</p>
       </header>
       <div class="service-detail-groups">
         {
@@ -205,12 +215,12 @@ const serviceDetailGroups = [
                     )}
                     <h4>{detail.data.title}</h4>
                     <p>{detail.data.indexSummary}</p>
-                    <ul aria-label={`${detail.data.title}の主な項目`}>
+                    <ul aria-label={`${detail.data.title}: ${text.mainItems}`}>
                       {detail.data.indexTopics.map((topic) => (
                         <li>{topic}</li>
                       ))}
                     </ul>
-                    <span>詳しい支援内容を見る</span>
+                    <span>{text.viewSupportDetails}</span>
                   </a>
                 ))}
               </div>
@@ -225,8 +235,8 @@ const serviceDetailGroups = [
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Process / 04</p>
-        <h2 id="service-process-title">進め方</h2>
-        <p>最初から大きく作り込まず、確認できる単位で段階的に進めます。</p>
+        <h2 id="service-process-title">{text.processTitle}</h2>
+        <p>{text.processLead}</p>
       </header>
       <ol class="service-process">
         {
@@ -254,11 +264,12 @@ const serviceDetailGroups = [
       >
         <div class="editorial-cta__copy">
           <p class="editorial-eyebrow">Consultation</p>
-          <h2 id="service-cta-title">具体的な進め方を相談する</h2>
-          <p>業務の流れ、現在のツール、困っている点をお知らせください。</p>
+          <h2 id="service-cta-title">{text.consultSpecificTitle}</h2>
+          <p>{text.consultSpecificBody}</p>
         </div>
-        <a class="editorial-link editorial-link--primary" href="/contact/"
-          >問い合わせる</a
+        <a
+          class="editorial-link editorial-link--primary"
+          href={getLocalizedUrl("/contact/", locale)}>{text.contactLabel}</a
         >
       </aside>
     </div>

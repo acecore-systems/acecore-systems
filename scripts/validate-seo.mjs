@@ -136,7 +136,7 @@ function validateServicePage({
     `${route}: site-wide Service URL must target the service index`,
   );
   assert.equal(
-    siteService.serviceType.includes("デザイン・クリエイティブ制作"),
+    siteService.serviceType.includes(designService.title),
     true,
     `${route}: site-wide Service JSON-LD must include design and creative`,
   );

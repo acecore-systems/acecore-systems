@@ -136,8 +136,8 @@ export function t(locale: Locale, key: string): string {
 ```astro
 ---
 // src/pages/[locale]/about.astro（ルートファイル）
-import AboutPage from '../../views/AboutPage.astro'
-const { locale } = Astro.params
+import AboutPage from "../../views/AboutPage.astro";
+const { locale } = Astro.params;
 ---
 
 <AboutPage locale={locale} />
@@ -225,8 +225,8 @@ export function localizePost(
 ```astro
 ---
 // src/views/BlogPostPage.astro
-const localizedPost = localizePost(basePost, allPosts, locale)
-const post = localizedPost // テンプレートの既存参照がそのまま動く
+const localizedPost = localizePost(basePost, allPosts, locale);
+const post = localizedPost; // テンプレートの既存参照がそのまま動く
 ---
 ```
 
@@ -238,9 +238,9 @@ const post = localizedPost // テンプレートの既存参照がそのまま�
 
 ```astro
 ---
-const allPosts = await getCollection('blog')
-const basePosts = allPosts.filter(isBasePost)
-const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale))
+const allPosts = await getCollection("blog");
+const basePosts = allPosts.filter(isBasePost);
+const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale));
 ---
 ```
 

@@ -49,7 +49,7 @@ function html({
   body = "公開されている本文です。",
 }) {
   return `<!doctype html>
-<html lang="${lang}">
+<html${lang ? ` lang="${lang}"` : ""}>
   <head>
     <title>${title} | Acecore Systems</title>
     ${canonical ? `<link rel="canonical" href="${canonical}">` : ""}
@@ -108,6 +108,11 @@ test("builds a deterministic Japanese corpus from eligible public HTML", async (
     fixture.distDirectory,
     path.join("en", "index.html"),
     html({ canonical: `${SITE_ORIGIN}/en/`, lang: "en" }),
+  );
+  await writePage(
+    fixture.distDirectory,
+    path.join("missing-lang", "index.html"),
+    html({ canonical: `${SITE_ORIGIN}/missing-lang/`, lang: "" }),
   );
   await writePage(
     fixture.distDirectory,

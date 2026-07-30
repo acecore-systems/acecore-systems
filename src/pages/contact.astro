@@ -1,13 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import site from "../data/site.json";
-import data from "../data/contact.json";
+import { getLocalizedContent } from "../i18n/content";
+import { htmlLangMap, type Locale } from "../i18n";
+import { getContactFormText } from "../i18n/contact-form";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).contact;
+const formText = getContactFormText(locale);
 ---
 
-<BaseLayout title={data.title} description={data.description}>
+<BaseLayout title={data.title} description={data.description} locale={locale}>
   <section class="page-hero page-hero--contact">
     <div class="container page-hero__inner">
-      <p class="page-eyebrow">Start a conversation / ご相談</p>
+      <p class="page-eyebrow">{formText.eyebrow}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
@@ -21,10 +31,10 @@ import data from "../data/contact.json";
       <aside class="contact-intro">
         <header class="editorial-header">
           <p class="editorial-eyebrow">Contact form / 01</p>
-          <h2 id="contact-form-title">相談内容を送る</h2>
+          <h2 id="contact-form-title">{formText.formTitle}</h2>
           <p>{data.formLead}</p>
         </header>
-        <div class="contact-faq" aria-label="お問い合わせ前のよくある質問">
+        <div class="contact-faq" aria-label={formText.faqLabel}>
           {
             data.faqs.map((faq, index) => (
               <details class="contact-faq__item">
@@ -45,14 +55,16 @@ import data from "../data/contact.json";
         class="contact-form"
         action={site.contactFormAction}
         method="post"
+        data-consultation-suffix={formText.consultationSuffix}
+        data-submitting-text={formText.submitting}
       >
-        <input type="hidden" name="locale" value="ja" />
+        <input type="hidden" name="locale" value={locale} />
         <input type="hidden" name="source" value="systems.acecore.net" />
         <input id="contact-service" type="hidden" name="service" value="" />
         <input id="contact-from" type="hidden" name="from" value="" />
         <input id="contact-entry" type="hidden" name="entry" value="" />
         <div class="contact-honeypot" aria-hidden="true">
-          <label for="company-website">会社Webサイト</label>
+          <label for="company-website">{formText.companyWebsite}</label>
           <input
             id="company-website"
             name="company_website"
@@ -62,31 +74,29 @@ import data from "../data/contact.json";
         </div>
         <div class="contact-field">
           <label for="category"
-            >お問い合わせ種別 <span class="field-required">必須</span></label
+            >{formText.category}
+            <span class="field-required">{formText.required}</span></label
           >
           <select id="category" name="お問い合わせ種別" required>
-            <option value="">選択してください</option>
-            <option>サービス全般について</option>
-            <option>IT顧問・AI導入・デプロイについて</option>
-            <option>業務システム開発について</option>
-            <option>Webアプリ・管理画面について</option>
-            <option>Webサイト機能・品質改善について</option>
-            <option>デザイン・クリエイティブについて</option>
-            <option>データ連携・自動化について</option>
-            <option>保守・運用改善について</option>
-            <option>見積り相談</option>
-            <option>その他</option>
+            <option value="">{formText.select}</option>
+            {
+              formText.categoryOptions.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))
+            }
           </select>
         </div>
         <div class="contact-field">
           <label for="name"
-            >お名前 <span class="field-required">必須</span></label
+            >{formText.name}
+            <span class="field-required">{formText.required}</span></label
           >
           <input id="name" name="お名前" autocomplete="name" required />
         </div>
         <div class="contact-field">
           <label for="email"
-            >メールアドレス <span class="field-required">必須</span></label
+            >{formText.email}
+            <span class="field-required">{formText.required}</span></label
           >
           <input
             id="email"
@@ -98,13 +108,15 @@ import data from "../data/contact.json";
         </div>
         <div class="contact-field">
           <label for="subject"
-            >件名 <span class="field-required">必須</span></label
+            >{formText.subject}
+            <span class="field-required">{formText.required}</span></label
           >
           <input id="subject" name="件名" required />
         </div>
         <div class="contact-field">
           <label for="message"
-            >お問い合わせ内容 <span class="field-required">必須</span></label
+            >{formText.message}
+            <span class="field-required">{formText.required}</span></label
           >
           <textarea id="message" name="お問い合わせ内容" required></textarea>
         </div>
@@ -113,13 +125,13 @@ import data from "../data/contact.json";
           class="cf-turnstile"
           data-sitekey={site.turnstileSiteKey}
           data-theme="light"
-          data-language="ja"
+          data-language={htmlLangMap[locale]}
           data-action="systems-contact"
           data-cdata="acecore-systems"
         >
         </div>
         <p class="contact-form__note">
-          送信はAcecore共通窓口で受け付けます。送信後はAcecore公式サイトの完了画面へ移動します。
+          {formText.submissionNote}
         </p>
         <p
           id="contact-form-status"
@@ -127,13 +139,13 @@ import data from "../data/contact.json";
           role="alert"
           hidden
         >
-          送信前の確認が完了していません。少し待ってからもう一度お試しください。
+          {formText.validationError}
         </p>
         <button
           class="editorial-link editorial-link--primary contact-submit"
           type="submit"
         >
-          送信する
+          {formText.submit}
         </button>
       </form>
     </div>
@@ -154,86 +166,26 @@ import data from "../data/contact.json";
       const categoryParam = readParam("category");
       const fromValue = readParam("from");
       const entryValue = readParam("entry");
-      const serviceDetails: Record<
-        string,
-        { category: string; subject: string }
-      > = {
-        "it-advisor": {
-          category: "IT顧問・AI導入・デプロイについて",
-          subject: "IT顧問・AI導入・デプロイ",
-        },
-        "business-system": {
-          category: "業務システム開発について",
-          subject: "業務システム開発",
-        },
-        system: {
-          category: "業務システム開発について",
-          subject: "業務システム開発",
-        },
-        systems: {
-          category: "業務システム開発について",
-          subject: "業務システム開発",
-        },
-        modernization: {
-          category: "業務システム開発について",
-          subject: "既存システムの改善",
-        },
-        "web-app": {
-          category: "Webアプリ・管理画面について",
-          subject: "Webアプリ・管理画面",
-        },
-        "site-functions": {
-          category: "Webサイト機能・品質改善について",
-          subject: "Webサイト機能追加",
-        },
-        "site-quality": {
-          category: "Webサイト機能・品質改善について",
-          subject: "Webサイト品質改善",
-        },
-        operations: {
-          category: "保守・運用改善について",
-          subject: "保守・運用改善",
-        },
-        web: {
-          category: "Webアプリ・管理画面について",
-          subject: "Webサイト・Webアプリ",
-        },
-        website: {
-          category: "Webアプリ・管理画面について",
-          subject: "Webサイト・Webアプリ",
-        },
-        integration: {
-          category: "データ連携・自動化について",
-          subject: "データ連携・自動化",
-        },
-        automation: {
-          category: "データ連携・自動化について",
-          subject: "データ連携・自動化",
-        },
-        data: {
-          category: "データ連携・自動化について",
-          subject: "データ活用・外部連携",
-        },
-        server: {
-          category: "その他",
-          subject: "サーバー構築・運用",
-        },
-        aceserver: {
-          category: "その他",
-          subject: "Aceserver",
-        },
-        design: {
-          category: "デザイン・クリエイティブについて",
-          subject: "デザイン・クリエイティブ",
-        },
-        education: {
-          category: "その他",
-          subject: "ITスクール・学習支援",
-        },
-        acestudio: {
-          category: "その他",
-          subject: "AceStudio",
-        },
+      const serviceDetails: Record<string, { category: string }> = {
+        "it-advisor": { category: "IT顧問・AI導入・デプロイについて" },
+        "business-system": { category: "業務システム開発について" },
+        system: { category: "業務システム開発について" },
+        systems: { category: "業務システム開発について" },
+        modernization: { category: "業務システム開発について" },
+        "web-app": { category: "Webアプリ・管理画面について" },
+        "site-functions": { category: "Webサイト機能・品質改善について" },
+        "site-quality": { category: "Webサイト機能・品質改善について" },
+        operations: { category: "保守・運用改善について" },
+        web: { category: "Webアプリ・管理画面について" },
+        website: { category: "Webアプリ・管理画面について" },
+        integration: { category: "データ連携・自動化について" },
+        automation: { category: "データ連携・自動化について" },
+        data: { category: "データ連携・自動化について" },
+        server: { category: "その他" },
+        aceserver: { category: "その他" },
+        design: { category: "デザイン・クリエイティブについて" },
+        education: { category: "その他" },
+        acestudio: { category: "その他" },
       };
       const categoryAliases: Record<string, string> = {
         service: "サービス全般について",
@@ -272,10 +224,10 @@ import data from "../data/contact.json";
       }
 
       if (subject && !subject.value.trim()) {
-        if (service?.subject) {
-          subject.value = `${service.subject}についての相談`;
-        } else if (requestedCategory === "見積り相談") {
-          subject.value = "見積り相談";
+        const selectedLabel =
+          category?.selectedOptions[0]?.textContent?.trim() || "";
+        if (selectedLabel) {
+          subject.value = `${selectedLabel} — ${form.dataset.consultationSuffix || ""}`;
         }
       }
 
@@ -302,7 +254,7 @@ import data from "../data/contact.json";
         if (status) status.hidden = true;
         if (submit) {
           submit.disabled = true;
-          submit.textContent = "送信中…";
+          submit.textContent = form.dataset.submittingText || "…";
         }
       });
     }

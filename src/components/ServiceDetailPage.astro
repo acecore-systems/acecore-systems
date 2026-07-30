@@ -1,112 +1,131 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import ServiceHandoff from './ServiceHandoff.astro'
-import ServiceVisual from './ServiceVisual.astro'
-import site from '../data/site.json'
-import pricing from '../data/pricing.json'
-import itAdvisor from '../data/it-advisor.json'
-import development from '../data/service-details/development.json'
-import siteFunctions from '../data/service-details/site-functions.json'
-import siteQuality from '../data/service-details/site-quality.json'
-import operations from '../data/service-details/operations.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceHandoff from "./ServiceHandoff.astro";
+import ServiceVisual from "./ServiceVisual.astro";
+import site from "../data/site.json";
+import development from "../data/service-details/development.json";
+import siteFunctions from "../data/service-details/site-functions.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
 
 type ServiceDetail = typeof siteFunctions & {
-  handoff?: typeof development.handoff
-  visual?: typeof development.visual
-  sectionVisuals?: typeof development.sectionVisuals
-}
+  handoff?: typeof development.handoff;
+  visual?: typeof development.visual;
+  sectionVisuals?: typeof development.sectionVisuals;
+};
 
 interface Props {
-  data: ServiceDetail
-  canonicalPath: string
-  serviceKey: string
+  data: ServiceDetail;
+  canonicalPath: string;
+  serviceKey: string;
+  locale?: Locale;
 }
 
-const { data, canonicalPath, serviceKey } = Astro.props
+const {
+  data,
+  canonicalPath: canonicalInput,
+  serviceKey,
+  locale = "ja",
+} = Astro.props;
+const content = getLocalizedContent(locale);
+const { pricing, itAdvisor } = content;
+const {
+  development: localizedDevelopment,
+  siteFunctions: localizedSiteFunctions,
+  siteQuality,
+  operations,
+} = content.serviceDetails;
+const text = getUi(locale);
+const canonicalPath = getLocalizedUrl(canonicalInput, locale);
+const localizeHref = (href: string) =>
+  href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 const serviceIndex = [
   {
-    href: '/services/development/',
-    data: development,
+    href: getLocalizedUrl("/services/development/", locale),
+    data: localizedDevelopment,
   },
   {
-    href: '/services/it-advisor/',
+    href: getLocalizedUrl("/services/it-advisor/", locale),
     data: itAdvisor,
   },
   {
-    href: '/services/site-functions/',
-    data: siteFunctions,
+    href: getLocalizedUrl("/services/site-functions/", locale),
+    data: localizedSiteFunctions,
   },
   {
-    href: '/services/site-quality/',
+    href: getLocalizedUrl("/services/site-quality/", locale),
     data: siteQuality,
   },
   {
-    href: '/services/operations/',
+    href: getLocalizedUrl("/services/operations/", locale),
     data: operations,
   },
-]
+];
 const relatedServices = serviceIndex.filter(
   (service) => service.href !== canonicalPath,
-)
-const pageUrl = new URL(canonicalPath, site.siteUrl).href
-const serviceEntityId = `${pageUrl}#service`
-const organizationId = `${new URL('/', site.acecoreUrl).href}#organization`
-const pricingByKey = new Map(pricing.items.map((item) => [item.key, item]))
+);
+const pageUrl = new URL(canonicalPath, site.siteUrl).href;
+const serviceEntityId = `${pageUrl}#service`;
+const organizationId = `${new URL("/", site.acecoreUrl).href}#organization`;
+const pricingByKey = new Map(pricing.items.map((item) => [item.key, item]));
 const resolvePricing = (key: string) => {
-  const item = pricingByKey.get(key)
+  const item = pricingByKey.get(key);
   if (!item) {
-    throw new Error(`Unknown pricing key: ${key}`)
+    throw new Error(`Unknown pricing key: ${key}`);
   }
-  return item
-}
+  return item;
+};
 const offerings = data.offerings.map((offering) => ({
   ...offering,
   pricing: offering.pricingKeys.map(resolvePricing),
-}))
-const contactHref = `/contact/?${new URLSearchParams({
-  category: 'service',
-  service: serviceKey,
-  from: `systems-${serviceKey}`,
-  entry: 'service-detail-cta',
-}).toString()}`
+}));
+const contactHref = `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams(
+  {
+    category: "service",
+    service: serviceKey,
+    from: `systems-${serviceKey}`,
+    entry: "service-detail-cta",
+  },
+).toString()}`;
 const jsonLd = [
   {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    '@id': serviceEntityId,
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": serviceEntityId,
     name: data.title,
     url: pageUrl,
     description: data.description,
     serviceType: data.offerings.map((offering) => offering.title),
-    areaServed: 'JP',
-    provider: { '@id': organizationId },
+    areaServed: "JP",
+    provider: { "@id": organizationId },
   },
   {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': `${pageUrl}#breadcrumb`,
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
     itemListElement: [
       {
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: 1,
-        name: 'ホーム',
-        item: new URL('/', site.siteUrl).href,
+        name: text.home,
+        item: new URL(getLocalizedUrl("/", locale), site.siteUrl).href,
       },
       {
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: 2,
-        name: 'サービス',
-        item: new URL('/services/', site.siteUrl).href,
+        name: text.services,
+        item: new URL(getLocalizedUrl("/services/", locale), site.siteUrl).href,
       },
       {
-        '@type': 'ListItem',
+        "@type": "ListItem",
         position: 3,
         name: data.title,
         item: pageUrl,
       },
     ],
   },
-]
+];
 ---
 
 <BaseLayout
@@ -115,13 +134,16 @@ const jsonLd = [
   canonical={canonicalPath}
   jsonLd={jsonLd}
   mainEntityId={serviceEntityId}
+  locale={locale}
 >
   <section class="page-hero page-hero--detail">
     <div class="container page-hero__inner">
-      <nav class="breadcrumb" aria-label="パンくず">
+      <nav class="breadcrumb" aria-label={text.breadcrumbNavigation}>
         <ol>
-          <li><a href="/">ホーム</a></li>
-          <li><a href="/services/">サービス</a></li>
+          <li><a href={getLocalizedUrl("/", locale)}>{text.home}</a></li>
+          <li>
+            <a href={getLocalizedUrl("/services/", locale)}>{text.services}</a>
+          </li>
           <li aria-current="page">{data.title}</li>
         </ol>
       </nav>
@@ -135,7 +157,7 @@ const jsonLd = [
     data.visual && (
       <section
         class="service-story-visual-section"
-        aria-label={`${data.title}の支援イメージ`}
+        aria-label={data.visual.alt}
       >
         <div class="container">
           <ServiceVisual {...data.visual} />
@@ -154,12 +176,12 @@ const jsonLd = [
         <h2 id="detail-introduction-title">{data.introTitle}</h2>
         <p>{data.introBody}</p>
       </header>
-      <div class="detail-challenges" aria-label="よくある課題">
+      <div class="detail-challenges" aria-label={text.challengesLabel}>
         {
           data.challenges.map((challenge, index) => (
             <article class="detail-challenge">
               <p class="editorial-index">
-                Issue {String(index + 1).padStart(2, '0')}
+                Issue {String(index + 1).padStart(2, "0")}
               </p>
               <h3>{challenge.title}</h3>
               <p>{challenge.body}</p>
@@ -167,9 +189,7 @@ const jsonLd = [
           ))
         }
       </div>
-      <p class="detail-price-note">
-        表示金額は税込の目安です。外部サービス利用料、ライセンス費、サーバー費、正式な要件確定後の変動は別途確認します。
-      </p>
+      <p class="detail-price-note">{pricing.heroLead}</p>
     </div>
   </section>
 
@@ -177,7 +197,10 @@ const jsonLd = [
     data.handoff && (
       <section class="page-section page-section--muted service-handoff-section">
         <div class="container">
-          <ServiceHandoff {...data.handoff} />
+          <ServiceHandoff
+            {...data.handoff}
+            href={localizeHref(data.handoff.href)}
+          />
         </div>
       </section>
     )
@@ -206,7 +229,7 @@ const jsonLd = [
             <article class="detail-offering" id={offering.id}>
               <header class="detail-offering__header">
                 <p class="editorial-index">
-                  {String(index + 1).padStart(2, '0')}
+                  {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3>{offering.title}</h3>
               </header>
@@ -231,7 +254,9 @@ const jsonLd = [
                     </p>
                   )}
                 </div>
-                <a href="/pricing/">料金一覧を見る</a>
+                <a href={getLocalizedUrl("/pricing/", locale)}>
+                  {text.pricingList}
+                </a>
               </div>
             </article>
           ))
@@ -259,7 +284,7 @@ const jsonLd = [
           data.process.map((step, index) => (
             <li class="service-process__step">
               <p class="editorial-index">
-                Step {String(index + 1).padStart(2, '0')}
+                Step {String(index + 1).padStart(2, "0")}
               </p>
               <div class="service-process__content">
                 <h3>{step.title}</h3>
@@ -287,15 +312,15 @@ const jsonLd = [
       <div class="detail-resource-list">
         {
           data.resources.map((resource, index) => (
-            <a class="detail-resource" href={resource.href}>
+            <a class="detail-resource" href={localizeHref(resource.href)}>
               <p class="editorial-index">
-                Note {String(index + 1).padStart(2, '0')}
+                Note {String(index + 1).padStart(2, "0")}
               </p>
               <div>
                 <h3>{resource.title}</h3>
                 <p>{resource.description}</p>
               </div>
-              <span>技術資料を読む ↗</span>
+              <span>{text.readTechnicalNote}</span>
             </a>
           ))
         }
@@ -310,14 +335,14 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Related / 05</p>
-        <h2 id="detail-related-title">隣接する支援内容</h2>
+        <h2 id="detail-related-title">{text.relatedSupport}</h2>
       </header>
       <div
         class:list={[
-          'detail-related-list',
+          "detail-related-list",
           {
-            'detail-related-list--three': relatedServices.length === 3,
-            'detail-related-list--four': relatedServices.length === 4,
+            "detail-related-list--three": relatedServices.length === 3,
+            "detail-related-list--four": relatedServices.length === 4,
           },
         ]}
       >
@@ -327,7 +352,7 @@ const jsonLd = [
               <p class="editorial-eyebrow">{service.data.heroEyebrow}</p>
               <h3>{service.data.title}</h3>
               <p>{service.data.indexSummary}</p>
-              <span>支援内容を見る</span>
+              <span>{text.viewSupport}</span>
             </a>
           ))
         }
@@ -347,7 +372,7 @@ const jsonLd = [
           <p>{data.ctaBody}</p>
         </div>
         <a class="editorial-link editorial-link--primary" href={contactHref}>
-          この内容を相談する
+          {text.discussThis}
         </a>
       </aside>
     </div>

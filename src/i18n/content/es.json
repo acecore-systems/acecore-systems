@@ -1,0 +1,1576 @@
+{
+  "contact": {
+    "title": "Contacto",
+    "description": "Atendemos consultas sobre asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, y automatización de operaciones existentes, incluso antes de definir los requisitos.",
+    "heroTitle": "Puede consultarnos aunque los requisitos aún no estén definidos.",
+    "heroLead": "Cuéntenos sobre sus operaciones actuales, dificultades, herramientas y plazos deseados.",
+    "formLead": "La consulta inicial y el presupuesto son gratuitos. También podemos ayudarle a organizar el proyecto antes del presupuesto formal. Normalmente respondemos en 1–2 días laborables.",
+    "faqs": [
+      {
+        "question": "¿Puedo consultarles aunque aún no haya decidido qué construir?",
+        "answer": "Sí. Podemos organizarlo juntos a partir de sus operaciones actuales, problemas y tareas manuales que consumen tiempo."
+      },
+      {
+        "question": "¿Puedo solicitar solo una pequeña mejora?",
+        "answer": "Sí. Podemos comenzar con un alcance reducido, como mejorar un formulario existente, exportar CSV, añadir notificaciones o automatizar cálculos."
+      },
+      {
+        "question": "¿También pueden asesorarme sobre un sistema existente?",
+        "answer": "Sí. Podemos revisar interfaces difíciles de mantener, sistemas antiguos, operaciones con Excel e integraciones con servicios externos."
+      }
+    ]
+  },
+  "guide": {
+    "title": "Guía de implementación",
+    "description": "Puntos clave para evitar errores al implementar un sistema empresarial, incluidos requisitos, entrevistas al personal, despliegue por fases y adopción operativa.",
+    "heroTitle": "La preparación previa al desarrollo determina el resultado de un sistema empresarial.",
+    "heroLead": "Antes de enumerar funciones, confirmamos el propósito de la operación, las excepciones, los datos, los permisos y la estructura operativa.",
+    "visual": {
+      "alt": "Una persona responsable y un ingeniero definen el alcance mientras revisan un flujo de trabajo en papel y un ordenador",
+      "caption": "Revisamos juntos los campos, las excepciones, los permisos y las herramientas actuales para definir el primer alcance que se probará."
+    },
+    "journeyTitle": "La implementación avanza en pasos pequeños y verificables.",
+    "journeyLead": "Organizamos la situación actual, definimos el primer alcance y elegimos la siguiente mejora a partir del uso real.",
+    "journey": [
+      {
+        "title": "Evaluar la situación actual",
+        "body": "Revisar las operaciones, excepciones, datos y permisos actuales"
+      },
+      {
+        "title": "Definir el alcance",
+        "body": "Separar la operación que se probará primero del alcance que se aplazará"
+      },
+      {
+        "title": "Despliegue piloto",
+        "body": "Utilizarlo a pequeña escala y observar la respuesta del personal"
+      },
+      {
+        "title": "Revisión",
+        "body": "Elegir la siguiente mejora a partir de las operaciones reales"
+      }
+    ],
+    "introTitle": "3 perspectivas que revisar antes de la implementación",
+    "introBody": "Un sistema empresarial no mejora automáticamente la eficiencia solo por introducirlo. Si el diseño no encaja con el trabajo, las pantallas son demasiado complejas, los permisos no están claros o falta soporte tras el lanzamiento, el sistema puede quedar sin utilizar.",
+    "insights": [
+      {
+        "title": "Flujo de trabajo",
+        "body": "Aclare quién toma cada decisión y cuándo, y documente tanto las excepciones como el flujo normal."
+      },
+      {
+        "title": "Datos",
+        "body": "Revise con antelación campos, historial, criterios de búsqueda, migración de datos existentes e incoherencias de formato para que los datos sean utilizables después."
+      },
+      {
+        "title": "Adopción",
+        "body": "Defina formación, permisos, un punto de soporte y un ciclo de mejora para que el personal pueda seguir utilizando el sistema."
+      }
+    ],
+    "tipsTitle": "7 comprobaciones para evitar errores",
+    "tipsLead": "En lugar de construir todas las funciones desde el principio, recomendamos comenzar con un área pequeña donde sea fácil observar resultados y mejorarla según la respuesta del personal.",
+    "tips": [
+      {
+        "title": "Definir el objetivo como una mejora operativa, no como una función",
+        "body": "Antes de nombrar funciones como gestión de clientes o reservas, aclare qué debe mejorar esa función.",
+        "points": [
+          "Reducir consultas perdidas u omitidas",
+          "Compartir el historial de atención de cada responsable",
+          "Reducir el tiempo de preparación de presupuestos y facturas",
+          "Hacer visible el momento del seguimiento"
+        ]
+      },
+      {
+        "title": "Entrevistar al personal sobre las excepciones",
+        "body": "Revise con antelación procesos fuera del flujo normal, como devoluciones, cancelaciones, reasignaciones, registros duplicados y cambios temporales de permisos.",
+        "points": [
+          "Procesos que solo ocurren a final de mes o en periodos de alta actividad",
+          "Importes y condiciones que requieren aprobación",
+          "Quién corrige errores de entrada o registros duplicados",
+          "Cambios de permisos tras una baja o un traslado interno"
+        ]
+      },
+      {
+        "title": "Decidir pronto cómo tratar los datos existentes",
+        "body": "Al migrar datos acumulados en Excel, papel o un sistema antiguo, defina antes el alcance, los duplicados, las incoherencias y quién los revisará.",
+        "points": [
+          "Qué datos se migrarán",
+          "Cuántos años de historial se migrarán",
+          "Cómo resolver duplicados e incoherencias",
+          "Cuánto tiempo conservar los datos antiguos"
+        ]
+      },
+      {
+        "title": "Desplegar por fases en lugar de construirlo todo a la vez",
+        "body": "Observe la respuesta del personal al primer lanzamiento y aplíquela a la siguiente mejora. Es importante detectar pronto las carencias de los requisitos.",
+        "points": [
+          "Documentar el flujo actual y sus problemas",
+          "Elegir 1 operación con alto impacto potencial",
+          "Realizar un piloto con las funciones mínimas necesarias",
+          "Revisar prioridades antes de añadir funciones"
+        ]
+      },
+      {
+        "title": "Aclarar permisos y responsabilidades",
+        "body": "Aclare quién puede ver, editar y aprobar. Los permisos ambiguos pueden causar filtraciones de información y errores operativos.",
+        "points": [
+          "Operaciones permitidas por departamento y función",
+          "Reducir al mínimo el número de administradores",
+          "Flujo de aprobación y responsable",
+          "Procedimiento para cambiar permisos tras una baja o traslado"
+        ]
+      },
+      {
+        "title": "Proporcionar formación y un punto de soporte",
+        "body": "Durante el despliegue, proporcione un manual, una sesión interna, preguntas frecuentes y un punto de soporte para reducir la incertidumbre.",
+        "points": [
+          "Formación para los primeros usuarios",
+          "FAQ documentadas",
+          "Un contacto de asistencia",
+          "Soporte inmediatamente después de iniciar las operaciones"
+        ]
+      },
+      {
+        "title": "Definir un ciclo de mejora posterior al lanzamiento",
+        "body": "Las operaciones reales pueden revelar problemas que no eran visibles al principio. Diseñe el proceso en torno a revisiones periódicas.",
+        "points": [
+          "Identificar pantallas que tardan demasiado en completarse",
+          "Revisar funciones que no se utilizan",
+          "Encontrar operaciones que han vuelto al trabajo manual",
+          "Añadir campos necesarios para cálculos e informes"
+        ]
+      }
+    ],
+    "faqTitle": "Preguntas frecuentes antes de la implementación",
+    "faqs": [
+      {
+        "question": "¿Podemos empezar hablando de nuestra operación actual con Excel?",
+        "answer": "Sí. Podemos revisar sus archivos de Excel y formularios en papel e identificar qué operaciones deben convertirse en sistema y cuáles deben mantenerse."
+      },
+      {
+        "question": "¿Podemos empezar con un alcance pequeño?",
+        "answer": "Sí. Es eficaz comenzar en un área donde los resultados sean visibles, como consultas, inventario o reservas, y ampliar las funciones por fases."
+      },
+      {
+        "question": "¿Podemos solicitar mejoras después de la implementación?",
+        "answer": "Sí. Podemos ofrecer soporte continuo para nuevas funciones, mejoras de interfaz, ajustes de permisos y operación de infraestructura mientras revisamos el uso real."
+      }
+    ],
+    "ctaTitle": "Definiremos el alcance necesario en torno a sus operaciones actuales.",
+    "ctaBody": "Cuéntenos sobre sus operaciones actuales, las herramientas que utiliza y los problemas que afronta.",
+    "ctaLabel": "Consultar una implementación"
+  },
+  "home": {
+    "title": "Sistemas empresariales y desarrollo de aplicaciones",
+    "description": "Acecore Systems ofrece soporte integral que abarca asesoría de IT, adopción de AI y mejora operativa, despliegue, desarrollo de aplicaciones Web, uso de datos y mejora continua.",
+    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
+    "heroTitle": "El trabajo que sigue avanzando\nse apoya en un diseño sereno.",
+    "heroLead": "Desde la asesoría de IT y la adopción de AI hasta sistemas empresariales, aplicaciones Web e integraciones externas.\nOfrecemos soporte integral desde los requisitos y el diseño hasta el desarrollo y la mejora posterior al lanzamiento.",
+    "primaryCta": "Consultar sobre diseño y desarrollo",
+    "secondaryCta": "Ver orientación de precios",
+    "layersTitle": "Entendemos las operaciones en tres capas.",
+    "layersLead": "El lugar de trabajo con el que interactúan las personas, los sistemas que sostienen el procesamiento y las operaciones que mantienen todo útil a largo plazo. Diseñamos las tres capas como un conjunto.",
+    "layers": [
+      {
+        "label": "Lugar de trabajo",
+        "title": "Utilizable en el trabajo diario",
+        "body": "Fácil de usar y claro para navegar.\nUn diseño que mantiene el trabajo cotidiano en movimiento."
+      },
+      {
+        "label": "Sistemas",
+        "title": "Respaldado por sistemas",
+        "body": "Organizamos datos, permisos y excepciones\npara respaldar procesos seguros y coherentes."
+      },
+      {
+        "label": "Operaciones",
+        "title": "Mejorado mediante la operación",
+        "body": "La supervisión, el mantenimiento y los ciclos de mejora\nlo mantienen funcionando de forma estable a largo plazo."
+      }
+    ],
+    "philosophyEyebrow": "DESIGN PHILOSOPHY",
+    "philosophyTitle": "La misma precisión para lo visible y lo invisible.",
+    "philosophyLead": "Diseñamos no solo interfaces fáciles de usar, sino también flujos de información, condiciones de decisión, tratamiento de excepciones y operaciones posteriores al lanzamiento, requisito a requisito, para que el trabajo no se detenga.",
+    "designPrinciples": [
+      {
+        "title": "Comenzar desde el lugar de trabajo",
+        "body": "Antes de elegir funciones, aclaramos quién decide qué y cuándo, y dónde surgen las dificultades."
+      },
+      {
+        "title": "Diseñar lo que el usuario no ve",
+        "body": "Tratamos datos, permisos, integraciones y excepciones como un único sistema conectado."
+      },
+      {
+        "title": "Planificar para el cambio",
+        "body": "En lugar de construir demasiado desde el principio, comenzamos con el alcance necesario y permitimos mejorar con el uso."
+      }
+    ],
+    "consultationEyebrow": "WHEN TO TALK",
+    "consultationTitle": "Puede consultarnos en cualquiera de estas etapas.",
+    "consultationLead": "No necesita saber todavía qué construir. Identificaremos juntos el sistema necesario a partir de su trabajo y sus problemas actuales.",
+    "consultationSituations": [
+      {
+        "title": "No puede lanzar una aplicación creada con AI",
+        "body": "El código está listo, pero las decisiones sobre dominio, nube, seguridad y operación han detenido el avance."
+      },
+      {
+        "title": "Aumentan las copias y el trabajo manual",
+        "body": "Quiere organizar tareas repartidas entre hojas de cálculo, papel y correo, y decidir dónde introducir un sistema."
+      },
+      {
+        "title": "El sistema actual no encaja con el trabajo",
+        "body": "Quiere resolver problemas de uso y dependencia de personas, y mejorar el sistema por etapas para adaptarlo al flujo de trabajo."
+      },
+      {
+        "title": "Los datos y las herramientas están fragmentados",
+        "body": "Quiere conectar varios servicios y fuentes de datos para reducir entradas duplicadas y comprobaciones omitidas."
+      },
+      {
+        "title": "Necesita definir el problema antes de los requisitos",
+        "body": "Quiere aclarar objetivos, usuarios, restricciones y prioridades y elegir un camino realista."
+      }
+    ],
+    "ctaEyebrow": "START WITH A CONVERSATION",
+    "ctaTitle": "Cuéntenos sobre su trabajo antes de decidir qué construir.",
+    "ctaBody": "Puede consultarnos antes de definir por completo los requisitos. Los organizaremos juntos a partir del flujo actual, las restricciones y las prioridades.",
+    "ctaLabel": "Consultar sobre el diseño"
+  },
+  "itAdvisor": {
+    "title": "Ingeniero asesor de IT",
+    "description": "Acecore Systems acompaña a pequeñas y medianas empresas de aproximadamente 5–50 empleados en la adopción de AI, la mejora operativa, el despliegue de aplicaciones Web y las decisiones sobre infraestructura IT, desde la organización del trabajo hasta el lanzamiento y la mejora continua.",
+    "heroEyebrow": "IT ADVISOR ENGINEER — AI / DEPLOY / OPERATIONS",
+    "heroTitle": "¿Lo creó con AI,\npero se detuvo antes del lanzamiento?",
+    "heroLead": "Desde la revisión de código y prototipos creados internamente o con AI hasta el lanzamiento, la adopción interna y la mejora operativa. Un ingeniero está disponible cuando lo necesiten empresas que no requieren un especialista IT a tiempo completo.",
+    "visual": {
+      "alt": "Una persona responsable y un asesor IT revisan el estado de lanzamiento de una aplicación y su entorno de nube",
+      "caption": "Partimos de lo que ya existe, revisamos la arquitectura, la seguridad y las condiciones de lanzamiento y lo llevamos a un estado operable."
+    },
+    "sectionVisuals": {
+      "scope": {
+        "alt": "Varias pantallas con una aplicación existente, ajustes de nube, permisos y comprobaciones de seguridad",
+        "caption": "Organizamos la arquitectura, los ajustes de lanzamiento, los permisos y los riesgos pendientes para determinar si está lista para producción."
+      },
+      "process": {
+        "alt": "Una persona responsable y un asesor IT revisan el funcionamiento de una aplicación publicada",
+        "caption": "El lanzamiento no es el final: transferimos supervisión, permisos y procedimientos de actualización para que el equipo pueda seguir tomando decisiones."
+      }
+    },
+    "indexSummary": "Acompañamos la adopción de AI, el despliegue de aplicaciones Web y las decisiones de infraestructura IT desde la organización del trabajo hasta el lanzamiento y la mejora.",
+    "indexTopics": [
+      "Adopción de AI",
+      "Despliegue",
+      "Infraestructura IT",
+      "Consulta técnica"
+    ],
+    "heroPrimaryCta": "Consultar qué está bloqueando el avance",
+    "heroSecondaryCta": "Ver planes",
+    "audienceLabel": "Público principal",
+    "audienceValue": "Aproximadamente 5–50 empleados",
+    "engagementLabel": "Modalidad",
+    "engagementValue": "Asesoría mensual o soporte puntual",
+    "pricingSummaries": [
+      {
+        "label": "Mensual",
+        "note": "Consulta técnica continua y soporte para pequeños lanzamientos y mejoras"
+      },
+      {
+        "label": "Puntual",
+        "note": "Soporte con alcance definido para despliegues y configuraciones iniciales"
+      }
+    ],
+    "handoff": {
+      "eyebrow": "Límite con el desarrollo por encargo",
+      "title": "Para delegar todo desde la idea hasta el desarrollo, elija desarrollo por encargo.",
+      "body": "El ingeniero asesor de IT apoya el lanzamiento y la operación de soluciones desarrolladas internamente y ofrece orientación técnica continua. El nuevo desarrollo a gran escala se trata por separado como desarrollo por encargo, desde los requisitos hasta el diseño, la implementación y el lanzamiento.",
+      "label": "Ver desarrollo por encargo"
+    },
+    "introTitle": "Ahora que más equipos pueden construir, apoyamos las decisiones de lanzamiento y operación.",
+    "introBody": "Aunque AI permita crear código y herramientas, aún hay que decidir sobre datos, permisos, dominios, nube, seguridad y mantenimiento. No suponemos que AI sea siempre la respuesta: comparamos desarrollo convencional, automatización, bases de datos y servicios existentes para elegir lo que mejor encaje.",
+    "challenges": [
+      {
+        "title": "No puede lanzar la aplicación que creó",
+        "body": "El avance está bloqueado por decisiones sobre dominio, SSL, nube, variables de entorno, permisos y otros requisitos previos."
+      },
+      {
+        "title": "AI no se integra en las operaciones",
+        "body": "Ha probado herramientas, pero no ha definido el flujo objetivo, las reglas de entrada, la revisión ni cómo medir los resultados."
+      },
+      {
+        "title": "No hay nadie con quien consultar decisiones técnicas",
+        "body": "Sin un especialista interno, resulta difícil evaluar equipos, servicios y propuestas de proveedores externos."
+      }
+    ],
+    "supportTitle": "Conectamos cuatro áreas desde la consulta hasta después del lanzamiento.",
+    "supportLead": "En lugar de aislar AI o la infraestructura, combinamos lo necesario para que la solución siga siendo útil.",
+    "supportAreas": [
+      {
+        "title": "Evaluación del trabajo y diseño de adopción",
+        "body": "Organizamos las operaciones actuales y evaluamos candidatos para AI y automatización, prioridades, rentabilidad y métodos adecuados.",
+        "includes": [
+          "Entrevistas sobre flujos y problemas",
+          "Identificación de candidatos para AI y automatización",
+          "Estimación del ahorro de tiempo y la rentabilidad",
+          "Comparación de AI, desarrollo convencional, RPA y servicios existentes"
+        ]
+      },
+      {
+        "title": "Revisión del PoC y decisión de producción",
+        "body": "Revisamos prototipos internos o creados con AI y evaluamos su ajuste operativo, seguridad, conexión con datos existentes y preparación para producción. Si se requiere nuevo desarrollo o implementación completa, se separa como desarrollo por encargo.",
+        "includes": [
+          "Revisión del comportamiento, la arquitectura y las dependencias del PoC",
+          "Evaluación del ajuste operativo y los riesgos",
+          "Revisión de conexiones con servicios y datos existentes",
+          "Definición de requisitos de desarrollo por encargo para la implementación completa"
+        ]
+      },
+      {
+        "title": "Soporte de despliegue e infraestructura IT",
+        "body": "Revisamos código creado con AI o internamente, compartimos los puntos revisados y riesgos pendientes y avanzamos hasta el lanzamiento y la entrega con la arquitectura acordada.",
+        "includes": [
+          "Revisión de código, dependencias y requisitos de lanzamiento",
+          "Configuración inicial de dominio, SSL, VPS y nube",
+          "Despliegue, comprobaciones y entrega",
+          "Consulta técnica para introducir PC, servidores y redes"
+        ]
+      },
+      {
+        "title": "Operación y mejora continua",
+        "body": "Después del lanzamiento, revisamos el uso y reevaluamos continuamente la arquitectura, los flujos y las reglas.",
+        "includes": [
+          "Revisiones periódicas del uso y los resultados",
+          "Mejoras de prompts y flujos",
+          "Evaluación de cambios en modelos y especificaciones API",
+          "Segunda opinión sobre comunicaciones con proveedores externos"
+        ]
+      }
+    ],
+    "useCasesTitle": "Puede comenzar con un bloqueo como estos.",
+    "useCasesLead": "Estos ejemplos no garantizan la prestación del servicio. Revisamos el entorno y los datos antes de definir el alcance.",
+    "useCases": [
+      {
+        "title": "Lanzar una herramienta interna creada con AI",
+        "body": "Revisar la arquitectura y la seguridad y definir cambios, destino de publicación y método de entrega."
+      },
+      {
+        "title": "Decidir si adoptar búsqueda AI para documentos internos",
+        "body": "Revisar fuentes, permisos y evidencias de respuesta en un servicio o prototipo y definir las condiciones para una implementación completa."
+      },
+      {
+        "title": "Asistencia para responder consultas",
+        "body": "Con herramientas existentes, separar la generación de borradores de la revisión humana y establecer un flujo hacia el contacto oficial."
+      },
+      {
+        "title": "Automatizar tareas administrativas con Excel y PDF",
+        "body": "Determinar qué pueden cubrir las herramientas existentes y comenzar por transcripción, clasificación, cálculo o documentos cuya eficacia y seguridad puedan verificarse."
+      },
+      {
+        "title": "Seleccionar y configurar nube o VPS",
+        "body": "Aclarar rendimiento, estructura operativa y costes y construir el entorno a nombre del cliente."
+      },
+      {
+        "title": "Revisión técnica de una propuesta de proveedor",
+        "body": "Interpretar presupuesto, arquitectura y responsabilidades y organizar los puntos necesarios para decidir internamente."
+      }
+    ],
+    "plansTitle": "Soporte mensual para consultas continuas o puntual para una necesidad definida.",
+    "plansLead": "En el plan mensual acordamos frecuencia y capacidad; en el puntual, objetivo y criterios de finalización. El contrato también indica comunicación, plazo de respuesta y costes adicionales tras revisar el entorno.",
+    "plans": [
+      {
+        "title": "Mensual — Asesoría IT",
+        "summary": "Para empresas que desean pequeñas adopciones, lanzamientos y mejoras con orientación técnica continua.",
+        "includes": [
+          "Consultas periódicas sobre AI e IT",
+          "Soporte para seleccionar y configurar herramientas",
+          "Pequeños lanzamientos y mejoras dentro de la capacidad acordada",
+          "Revisión técnica y segunda opinión sobre proveedores externos"
+        ],
+        "boundary": "La frecuencia, el límite de horas, la acumulación y el periodo mínimo se fijan antes del contrato. El nuevo desarrollo y las grandes integraciones se presupuestan por separado."
+      },
+      {
+        "title": "Puntual — Soporte específico",
+        "summary": "Para empresas que necesitan una intervención puntual de despliegue, dominio o infraestructura.",
+        "includes": [
+          "Selección de VPS o nube recomendados",
+          "Contratación a nombre del cliente",
+          "Configuración y lanzamiento con acceso temporal y mínimo mediante invitación",
+          "Entrega de comprobaciones, arquitectura y derechos de acceso"
+        ],
+        "boundary": "El alcance base es el primer lanzamiento de 1 aplicación Web existente en 1 entorno. Cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan aparte. El presupuesto indica comprobaciones y retrabajo; el cliente paga servicios externos."
+      }
+    ],
+    "priceNote": "Los precios mostrados son estimaciones con impuestos incluidos. El alcance y precio finales se confirman tras una revisión. No incluyen servicios externos, licencias, dominio, servidor ni trabajo adicional tras definir requisitos.",
+    "processTitle": "Definimos el método y las responsabilidades antes de llevar un alcance pequeño a producción.",
+    "processLead": "Incluso con urgencia, confirmamos los datos, permisos, recuperación y responsable de la decisión final.",
+    "process": [
+      {
+        "title": "Consulta",
+        "body": "Comparta qué está bloqueado, como adopción de AI, una aplicación que desea lanzar o una consulta IT."
+      },
+      {
+        "title": "Entrevista sobre la situación actual",
+        "body": "Confirmamos el trabajo, usuarios, entorno, datos y plazo deseado."
+      },
+      {
+        "title": "Definición de método y alcance",
+        "body": "Decidimos método, alcance incluido y excluido, costes externos y permisos."
+      },
+      {
+        "title": "Revisión y preparación",
+        "body": "Revisamos código y prototipos o la configuración y despliegue acordados y preparamos las condiciones para el uso real."
+      },
+      {
+        "title": "Aprobación y lanzamiento",
+        "body": "Compartimos cambios y resultados y publicamos tras la aprobación del cliente."
+      },
+      {
+        "title": "Entrega y mejora",
+        "body": "Documentamos arquitectura, operación y accesos y seguimos mejorando cuando sea necesario."
+      }
+    ],
+    "governanceTitle": "Los datos y los entornos de producción se gestionan con una propiedad clara.",
+    "governanceLead": "Alineamos los límites de la página con el contrato y no operamos con permisos o servicios externos ambiguos.",
+    "governance": [
+      "Los dominios, servidores y servicios de nube se contratan en principio a nombre del cliente.",
+      "Si se requiere contratación por delegación, costes, responsabilidad en incidentes, cancelación y transferencia se fijan en un contrato individual antes de comenzar.",
+      "Evitamos ID compartidos y cuentas de propietario. Usamos invitaciones y acceso temporal de mínimo privilegio y activamos autenticación multifactor cuando sea posible.",
+      "Al terminar, eliminamos permisos y, cuando procede, revocamos o rotamos secretos antes de la entrega.",
+      "Los servicios de AI se acuerdan por proyecto según la clasificación de datos y el contrato y no se añaden ni cambian sin permiso.",
+      "Antes de tratar información confidencial o personal, confirmamos uso para aprendizaje, ubicación y plazo de almacenamiento, eliminación y datos prohibidos. No se introduce en entornos no aprobados.",
+      "Los cambios de producción solo se realizan después de compartir objetivo y contenido y recibir aprobación.",
+      "Cuando se necesitan permisos, aprobaciones o registros de auditoría, se incluyen en el diseño y se registran objetivo, cambios, resultados y entrega.",
+      "Una persona revisa las salidas de AI y el cliente toma la decisión empresarial final."
+    ],
+    "excludedTitle": "Trabajo no incluido en la asesoría",
+    "excludedLead": "Para centrarnos en decisiones, diseño e implementación, se excluyen el soporte rutinario y la atención ilimitada.",
+    "excluded": [
+      "Soporte rutinario como instrucciones básicas de PC y restablecimiento de contraseñas",
+      "Supervisión 24 horas, 365 días y respuesta inmediata a incidentes",
+      "Desarrollo, cambios o investigación ilimitados dentro de la cuota mensual",
+      "Desarrollo a gran escala o cambios del sistema central fuera del alcance acordado",
+      "Garantías de precisión de AI, ahorro, ventas o funcionamiento ininterrumpido",
+      "Lanzamiento incondicional de código cuya seguridad u operación no puedan verificarse"
+    ],
+    "faqTitle": "Preguntas frecuentes antes de consultar",
+    "faqLead": "Aunque no haya decidido qué construir, podemos comenzar por el trabajo actual y lo que bloquea el avance.",
+    "faqs": [
+      {
+        "question": "¿Pueden lanzar código creado con AI?",
+        "answer": "Tras revisar arquitectura, dependencias, seguridad y operación, proponemos el método y los cambios necesarios. Nunca lo lanzamos sin revisión."
+      },
+      {
+        "question": "¿Podemos consultar aunque no sepamos qué aplicar a AI?",
+        "answer": "Sí. Organizamos el flujo y presentamos candidatos y prioridades adecuados para AI y automatización."
+      },
+      {
+        "question": "¿Pueden recomendar una solución sin AI?",
+        "answer": "Sí. Cuando sean más adecuados el desarrollo convencional, RPA, una base de datos o un servicio existente, recomendamos ese enfoque."
+      },
+      {
+        "question": "¿La cuota mensual incluye desarrollo?",
+        "answer": "Incluye el alcance acordado para cada plan. El nuevo desarrollo a gran escala y las grandes integraciones se presupuestan aparte."
+      },
+      {
+        "question": "¿Podemos solicitar solo el despliegue?",
+        "answer": "Sí, como soporte puntual. Puede cubrir selección de entorno, contratación, configuración, lanzamiento y entrega."
+      },
+      {
+        "question": "¿Quién contrata el servidor y el dominio?",
+        "answer": "En principio, se contratan a nombre del cliente y apoyamos la selección y configuración. No custodiamos ID compartidos ni cuentas de propietario; el cliente concede acceso mínimo mediante invitación y se elimina al terminar."
+      },
+      {
+        "question": "¿Podemos solicitar soporte diario de PC?",
+        "answer": "Se excluye el soporte de operaciones básicas y contraseñas. Cubrimos decisiones de adopción, implementación, diseño operativo y segundas opiniones técnicas."
+      },
+      {
+        "question": "¿Garantizan el ahorro de tiempo o la precisión de AI?",
+        "answer": "No. Los estimamos desde la situación actual y los verificamos y mejoramos mediante un PoC y operaciones reales."
+      }
+    ],
+    "ctaTitle": "Cuéntenos qué creó, qué duda y dónde se detuvo.",
+    "ctaBody": "Lanzar una herramienta creada con AI, adoptar AI o decidir sobre servidores y arquitectura IT. En la consulta inicial organizamos problema y alcance; si se requiere investigar código, diagnosticar el entorno o ejecutar trabajo, comenzamos tras el presupuesto.",
+    "ctaLabel": "Consultar a un ingeniero asesor de IT"
+  },
+  "pricing": {
+    "title": "Guía de precios",
+    "description": "Orientación de precios y condiciones de los servicios de Acecore Systems, incluidos asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, chat de AI, CMS, SEO y mejoras de seguridad.",
+    "heroTitle": "Comience de forma sostenible con el alcance que necesita.",
+    "heroLead": "Los importes son estimaciones con impuestos incluidos. Las tarifas de servicios externos, licencias, servidores y cambios posteriores a la definición formal de requisitos se confirman por separado.",
+    "items": [
+      {
+        "label": "Ingeniero asesor de IT — Light",
+        "price": "Desde ¥30.000/mes",
+        "note": "Incluye 1–2 consultas al mes, selección de herramientas de AI e IT, configuración inicial y soporte para un lanzamiento pequeño con hasta 1 proyecto simultáneo. Los límites de horas y los costes adicionales se indican antes del contrato."
+      },
+      {
+        "label": "Ingeniero asesor de IT — Standard",
+        "price": "Desde ¥100.000/mes",
+        "note": "Dentro de los límites de consultas y horas acordados: despliegue, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión durante 24 horas ni respuesta inmediata a incidentes."
+      },
+      {
+        "label": "Soporte puntual de despliegue",
+        "price": "Desde ¥50.000",
+        "note": "Para 1 aplicación Web existente en 1 entorno: selección del entorno recomendado, configuración inicial de dominio, SSL, VPS o nube, lanzamiento, comprobaciones y entrega. Los cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan por separado."
+      },
+      {
+        "label": "Paquete inicial de mejora operativa con AI",
+        "price": "Aprox. ¥150.000",
+        "note": "Entrevista de 90 minutos, revisión del flujo, 3 candidatos de AI, prototipo sencillo de 1 candidato, estimación de rentabilidad y reglas breves de uso de AI. Duración estimada: 2–3 semanas."
+      },
+      {
+        "label": "Implementación de producción de AI y sistemas empresariales",
+        "price": "Desde ¥500.000",
+        "note": "Construcción de producción tras un PoC, integración con sistemas existentes, permisos, aprobaciones, registros de auditoría, pruebas, lanzamiento y entrega operativa. Se presupuesta según los requisitos."
+      },
+      {
+        "label": "Automatización a pequeña escala y asistencia operativa",
+        "price": "Desde ¥300.000",
+        "note": "Automatización a pequeña escala de tareas existentes de entrada, cálculo, notificación y comprobación."
+      },
+      {
+        "label": "Herramienta empresarial interna",
+        "price": "Desde ¥500.000",
+        "note": "Herramienta pequeña o mediana con interfaz de administración, formularios, listas, exportación CSV y permisos."
+      },
+      {
+        "label": "Aplicación Web mediana",
+        "price": "Desde ¥1.500.000",
+        "note": "Aplicación Web con varios usuarios, funciones de membresía, flujos de aprobación e integraciones externas."
+      },
+      {
+        "label": "Diseño y producción creativa",
+        "price": "Desde ¥20.000",
+        "note": "Orientación: logotipos ¥50.000–¥150.000; folletos y banners ¥20.000–¥120.000; diseño de marca e integración Web desde ¥100.000."
+      },
+      {
+        "label": "Chat de consultas con AI",
+        "price": "Desde ¥80.000",
+        "note": "Añadimos un chat de consultas con AI a un sitio estático o de servicio, con alcance de respuestas, límites de uso, comprobaciones de Origin y representación segura de enlaces."
+      },
+      {
+        "label": "Comentarios de blog",
+        "price": "Desde ¥80.000",
+        "note": "Con Cloudflare Pages Functions, D1 y Turnstile, ofrecemos publicación, almacenamiento, prevención de spam y eliminación sin depender de un servicio externo de comentarios."
+      },
+      {
+        "label": "Interfaz de edición CMS",
+        "price": "Desde ¥50.000",
+        "note": "Añadimos una interfaz de Sveltia CMS para actualizar blogs, páginas fijas, anuncios y ajustes desde el navegador."
+      },
+      {
+        "label": "Base para blogs y artículos",
+        "price": "Desde ¥50.000",
+        "note": "Creamos la base para publicar de forma continua: listas, páginas de detalle, etiquetas, artículos relacionados, RSS y recorridos de búsqueda."
+      },
+      {
+        "label": "Operación de blog multilingüe",
+        "price": "Desde ¥80.000",
+        "note": "Establecemos operaciones multilingües que abarcan la fuente japonesa, PR de traducción, hreflang, sitemap y RSS."
+      },
+      {
+        "label": "SEO y datos estructurados",
+        "price": "Desde ¥50.000",
+        "note": "Organizamos la información para buscadores, incluidos OGP, JSON-LD, sitemap, RSS y canonical."
+      },
+      {
+        "label": "Búsqueda interna con Pagefind",
+        "price": "Desde ¥30.000",
+        "note": "Añadimos Pagefind a un sitio estático, incluida la interfaz de búsqueda, los parámetros URL y la caché."
+      },
+      {
+        "label": "Mejora de velocidad",
+        "price": "Desde ¥50.000",
+        "note": "Revisamos imágenes, CSS, fuentes, carga diferida y mediciones para mejorar Core Web Vitals."
+      },
+      {
+        "label": "Mejora de accesibilidad",
+        "price": "Desde ¥50.000",
+        "note": "Revisamos contraste, atributos aria, foco y validación de formularios y corregimos hacia WCAG AA."
+      },
+      {
+        "label": "Cabeceras de seguridad/CSP",
+        "price": "Desde ¥30.000",
+        "note": "Organizamos _headers de Cloudflare Pages, CSP y ajustes de entrega de la interfaz de administración para mejorar la seguridad."
+      },
+      {
+        "label": "Integración de CTA y formulario",
+        "price": "Desde ¥30.000",
+        "note": "Transferimos categoría, asunto y contexto desde una CTA de servicio al formulario para mejorar el recorrido de consulta."
+      },
+      {
+        "label": "Sistemas integrados e integración con sistemas centrales",
+        "price": "Desde ¥2.500.000",
+        "note": "Base operativa que conecta varios departamentos y sistemas existentes, diseñada para un despliegue por fases."
+      },
+      {
+        "label": "Mantenimiento y mejora",
+        "price": "Desde ¥30.000/mes",
+        "note": "Cambios menores, consultas, supervisión, propuestas de mejora y atención prioritaria al desarrollo adicional."
+      },
+      {
+        "label": "Requisitos y consulta técnica",
+        "price": "Presupuesto personalizado",
+        "note": "También disponible para revisar operaciones antes del desarrollo, investigar sistemas existentes y revisar la arquitectura."
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "description": "Esta política explica cómo Acecore Systems trata los datos personales en consultas, presupuestos, prestación de servicios y servicios externos, y cómo contactarnos al respecto.",
+    "sections": [
+      {
+        "title": "Finalidad del uso de datos personales",
+        "body": "Utilizamos los datos personales para responder consultas, preparar presupuestos, prestar servicios y realizar las comunicaciones necesarias."
+      },
+      {
+        "title": "Cesión a terceros",
+        "body": "No proporcionamos datos personales a terceros sin el consentimiento de la persona, salvo cuando lo exija la ley."
+      },
+      {
+        "title": "Servicios externos",
+        "body": "Utilizamos el punto de contacto común de Acecore y Cloudflare Turnstile para enviar formularios y prevenir abusos, y Cloudflare Pages para el alojamiento. Al ejecutar «Contenido relacionado» en la búsqueda del sitio, los términos introducidos se convierten en una representación numérica mediante Cloudflare Workers AI y se comparan con la información pública de este sitio almacenada en Cloudflare Vectorize. No introduzca datos de consultas ni información personal como términos de búsqueda."
+      },
+      {
+        "title": "Analítica",
+        "body": "Este sitio utiliza Google Analytics para comprender el uso y realizar mejoras. Puede recopilarse información anónima mediante Cookies y tecnologías similares, pero no se utiliza para identificar directamente a una persona. Puede desactivar las Cookies en el navegador."
+      },
+      {
+        "title": "Contacto",
+        "body": "Para preguntas sobre el tratamiento de datos personales, utilice el formulario de contacto de este sitio."
+      }
+    ]
+  },
+  "serviceDetails": {
+    "development": {
+      "title": "Desarrollo por encargo de sistemas y aplicaciones Web",
+      "description": "Acecore Systems cubre integralmente desde el concepto o problema empresarial hasta requisitos, diseño, desarrollo, pruebas, lanzamiento y entrega operativa.",
+      "heroEyebrow": "Development / Desarrollo por encargo",
+      "heroTitle": "Convierta un concepto\nen un sistema listo para publicar.",
+      "heroLead": "Escuchamos la idea y los problemas y nos encargamos de requisitos, diseño, desarrollo, pruebas, lanzamiento y entrega. Es para quienes desean delegar el desarrollo, no solo recibir apoyo para implementarlo internamente.",
+      "visual": {
+        "alt": "Una persona responsable y un ingeniero revisan un flujo y pantallas propuestas para una aplicación Web",
+        "caption": "Compartimos concepto y problemas y avanzamos por diseño, implementación y revisión hasta entregar algo utilizable."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Interfaces, formularios y pantallas Web en ordenador, portátil y teléfono",
+          "caption": "Diseñamos interfaces de administración, solicitudes, aprobaciones y pantallas para clientes según el trabajo y los usuarios."
+        },
+        "process": {
+          "alt": "Una persona responsable y un ingeniero revisan una aplicación en ordenador y teléfono",
+          "caption": "Tras el desarrollo verificamos en el entorno real y continuamos hasta el lanzamiento y la entrega al equipo operativo."
+        }
+      },
+      "indexSummary": "Organizamos concepto y problemas y cubrimos diseño y desarrollo hasta lanzamiento y entrega.",
+      "indexTopics": [
+        "Requisitos",
+        "Diseño y desarrollo",
+        "Lanzamiento y migración",
+        "Entrega operativa"
+      ],
+      "introTitle": "Aunque aún no exista una especificación, organizamos el proyecto desde el concepto.",
+      "introBody": "No nos limitamos a implementar una lista: confirmamos qué trabajo debe cambiar, qué información se trata y quién operará después. Convertimos objetivos y prioridades en requisitos, identificamos el alcance y desarrollamos algo realmente utilizable.",
+      "challenges": [
+        {
+          "title": "Tiene un concepto, pero no puede convertirlo en requisitos",
+          "body": "Conoce el objetivo y el problema, pero no ha organizado pantallas, funciones, datos y prioridades."
+        },
+        {
+          "title": "Los flujos y sistemas están fragmentados",
+          "body": "La información está dispersa entre hojas, correo, papel y sistemas, causando entradas duplicadas y omisiones."
+        },
+        {
+          "title": "Necesita producción segura, no solo un prototipo",
+          "body": "Necesita un proceso que cubra permisos, pruebas, protección de datos, lanzamiento y comprobaciones de incidentes."
+        }
+      ],
+      "offeringsTitle": "Casos habituales y orientación de precios",
+      "offeringsLead": "Determinamos el desarrollo según usuarios, flujo, datos y conexiones con sistemas existentes, no solo por tamaño.",
+      "offerings": [
+        {
+          "title": "Paquete inicial de mejora operativa con AI",
+          "body": "Identificamos trabajos adecuados para AI y, antes del desarrollo completo, evaluamos beneficios, riesgos y la siguiente inversión mediante candidatos y un pequeño prototipo.",
+          "includes": [
+            "Entrevista de 90 minutos y revisión del flujo actual",
+            "3 candidatos de AI y prototipo sencillo de 1 candidato",
+            "Estimación de rentabilidad y reglas breves de AI"
+          ],
+          "priceNote": "Duración estimada: 2–3 semanas. La implementación completa se presupuesta según los resultados."
+        },
+        {
+          "title": "Automatización pequeña y asistencia operativa",
+          "body": "Para tareas rutinarias de entrada, cálculo, notificación y revisión, comenzamos con una solución pequeña que no altere demasiado el flujo.",
+          "includes": [
+            "Revisión del procedimiento y alcance de automatización",
+            "Implementación de herramienta o proceso automático",
+            "Comprobaciones y entrega de instrucciones"
+          ],
+          "priceNote": "Se presupuesta tras confirmar el trabajo y las integraciones externas."
+        },
+        {
+          "title": "Herramienta empresarial interna",
+          "body": "Desarrollamos una herramienta para gestionar en un flujo administración, formularios, listas, exportación CSV y permisos.",
+          "includes": [
+            "Diseño de flujo, datos y permisos",
+            "Desarrollo de interfaz y backend",
+            "Pruebas, lanzamiento y entrega al equipo operativo"
+          ],
+          "priceNote": "Se presupuesta según usuarios, tipos de permisos y volumen de datos."
+        },
+        {
+          "title": "Aplicación Web mediana",
+          "body": "Desarrollamos aplicaciones Web para usuarios internos y externos con membresía, solicitudes, aprobaciones e integraciones.",
+          "includes": [
+            "Recorridos y requisitos por usuario",
+            "Desarrollo con autenticación, permisos e integraciones",
+            "Pruebas integrales, lanzamiento y entrega de decisiones de mantenimiento"
+          ],
+          "priceNote": "Se presupuesta según pantallas, usuarios, integraciones y requisitos no funcionales."
+        },
+        {
+          "title": "Implementación de producción de AI y sistemas empresariales",
+          "body": "Organizamos el flujo con AI y construimos producción con permisos, revisión, auditoría y seguridad para que no termine como prototipo.",
+          "includes": [
+            "Diseño del alcance de AI, límites de decisión y evaluación",
+            "Integración con datos y sistemas existentes",
+            "Pruebas, lanzamiento y entrega de reglas y operación"
+          ],
+          "priceNote": "Se presupuesta según PoC, datos, evaluación de precisión e integraciones."
+        },
+        {
+          "title": "Sistemas integrados e integración central",
+          "body": "Organizamos trabajo entre departamentos y sistemas y desarrollamos una base de integración por fases controlando el riesgo.",
+          "includes": [
+            "Requisitos interdepartamentales y plan por fases",
+            "Integración API, migración de datos y permisos",
+            "Pruebas de integración, migración y entrega a producción"
+          ],
+          "priceNote": "Presupuesto individual según integraciones, datos, disponibilidad y fases."
+        }
+      ],
+      "processTitle": "Desde organizar el concepto hasta entregar el uso en producción.",
+      "processLead": "Compartimos entregables y razones y avanzamos mediante acuerdos en unidades verificables.",
+      "process": [
+        {
+          "title": "Concepto y problema empresarial",
+          "body": "Preguntamos objetivos, trabajo, usuarios, restricciones y resultados esperados y aclaramos el propósito."
+        },
+        {
+          "title": "Acuerdo sobre requisitos y enfoque",
+          "body": "Organizamos funciones, datos, permisos, integraciones, calidad y prioridades y acordamos alcance, equipo y presupuesto."
+        },
+        {
+          "title": "Diseño y prototipo",
+          "body": "Diseñamos pantallas, datos y arquitectura y usamos prototipos cuando hace falta verificar recorridos e incertidumbres."
+        },
+        {
+          "title": "Desarrollo y pruebas",
+          "body": "Implementamos en unidades verificables y validamos funciones, permisos, errores, seguridad y flujo real."
+        },
+        {
+          "title": "Lanzamiento, migración y entrega",
+          "body": "Publicamos o migramos datos y entregamos arquitectura, cuentas, procedimientos y decisiones de mantenimiento."
+        }
+      ],
+      "handoff": {
+        "eyebrow": "Already building / Ingeniero asesor de IT",
+        "title": "Para equipos que desarrollan internamente, pero están bloqueados en lanzamiento u operación.",
+        "body": "Si ya tiene código o prototipo y necesita ayuda con infraestructura, dominio y SSL, despliegue, seguridad u operación, consulte al ingeniero asesor de IT.",
+        "label": "Ver ingeniero asesor de IT"
+      },
+      "resourcesTitle": "Publicamos las decisiones detrás del lanzamiento.",
+      "resourcesLead": "Los artículos de Acecore Systems explican arquitectura, seguridad, funciones AI y otras decisiones importantes.",
+      "resources": [
+        {
+          "title": "Arquitectura para ampliar un sitio corporativo con Astro + Cloudflare",
+          "description": "Cómo separar base estática, funciones dinámicas, CMS y flujos de revisión y publicación."
+        },
+        {
+          "title": "Diseño técnico de chat de consultas con AI en Astro",
+          "description": "Límites API, alcance, comprobaciones Origin, límites de uso y enlaces seguros para funciones AI."
+        },
+        {
+          "title": "Entrega estática segura con Cloudflare Pages",
+          "description": "Decisiones sobre entrega, cabeceras, CSP y caché."
+        }
+      ],
+      "ctaTitle": "Consultar un proyecto que desea delegar desde el concepto",
+      "ctaBody": "Indíquenos objetivo, trabajo y problemas actuales, usuarios esperados y plazo en la medida en que se conozcan."
+    },
+    "operations": {
+      "title": "Mantenimiento y mejora operativa",
+      "description": "Acecore Systems ofrece soporte continuo para sitios y sistemas publicados dentro de un alcance acordado de cambios, correcciones, supervisión, copias, incidentes y propuestas de mejora.",
+      "heroEyebrow": "Operations / Mantenimiento y mejora",
+      "heroTitle": "Defina límites operativos\npara decidir con claridad tras el lanzamiento.",
+      "heroLead": "Definimos qué supervisar, quién decide y dónde comienza el desarrollo adicional para sostener cambios rutinarios e incidentes.",
+      "visual": {
+        "alt": "Una persona responsable y un ingeniero revisan el estado y solicitudes de cambio",
+        "caption": "Organizamos cambios e incidentes para que el equipo avance con claridad."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Mesa operativa con supervisión, copias, lista de cambios y registro de incidentes",
+          "caption": "Aclaramos objetivos y responsabilidades de supervisión, copias, cambios e incidentes."
+        },
+        "process": {
+          "alt": "Una persona responsable y un ingeniero revisan historial y mejoras",
+          "caption": "Revisamos el historial, separamos mantenimiento y desarrollo y actualizamos prioridades."
+        }
+      },
+      "indexSummary": "Aclaramos límites entre mantenimiento, cambios, supervisión, copias y desarrollo adicional.",
+      "indexTopics": [
+        "Alcance de mantenimiento",
+        "Supervisión y copias",
+        "Gestión de cambios",
+        "Mejora continua"
+      ],
+      "introTitle": "Antes del contrato, expresamos por escrito los límites.",
+      "introBody": "Mantenimiento puede mezclar correcciones, incidentes, funciones y problemas externos. Definimos objetivos, solicitudes, entorno de revisión, comunicación y condiciones de presupuesto adicional para decisiones coherentes.",
+      "challenges": [
+        {
+          "title": "No está claro qué incluye el mantenimiento",
+          "body": "Los límites entre textos, configuración, defectos y funciones son ambiguos y cada solicitud detiene la decisión."
+        },
+        {
+          "title": "Las comprobaciones de incidentes están dispersas",
+          "body": "No están organizadas las responsabilidades de hosting, DNS, API externas, bases de datos y formularios."
+        },
+        {
+          "title": "Las pequeñas mejoras quedan pendientes",
+          "body": "Aunque se registren observaciones, no hay un proceso para priorizar y decidir cuándo actuar."
+        }
+      ],
+      "offeringsTitle": "Alcance acordado antes de operar",
+      "offeringsLead": "Contrato y presupuesto incluyen solo lo necesario según la importancia y estructura del sistema.",
+      "offerings": [
+        {
+          "title": "Requisitos y revisión de entrega",
+          "body": "Revisamos arquitectura, cuentas, servicios, actualizaciones y problemas para aclarar el objetivo operativo.",
+          "includes": [
+            "Inventario de arquitectura y responsables",
+            "Revisión de permisos, secretos y actualizaciones",
+            "Documentación de inclusiones y exclusiones"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Correcciones menores y cambios rutinarios",
+          "body": "Aplicamos cambios acordados en textos, imágenes, ajustes y dependencias mediante entorno y revisión.",
+          "includes": [
+            "Recepción y priorización",
+            "Revisión previa en Preview",
+            "Historial de cambios y resultados"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Supervisión y copias",
+          "body": "Definimos qué detectar y qué datos se necesitan para recuperar y configuramos supervisión y copias adecuadas.",
+          "includes": [
+            "Objetivos de disponibilidad, errores y uso",
+            "Objetivos y retención de copias",
+            "Destinatarios y comprobación inicial"
+          ],
+          "priceNote": "Objetivos de supervisión y alcance de copias se revisan individualmente."
+        },
+        {
+          "title": "Incidentes y gestión de cambios",
+          "body": "Registramos síntomas, impacto y cambios recientes y separamos mitigación temporal y solución permanente.",
+          "includes": [
+            "Punto de contacto e información necesaria",
+            "Registros de diagnóstico, recuperación y prevención",
+            "Condiciones para contactar a un proveedor"
+          ],
+          "priceNote": "Horario y alcance se revisan individualmente."
+        },
+        {
+          "title": "Backlog de mejoras y desarrollo adicional",
+          "body": "Reunimos solicitudes y decidimos el orden según impacto, urgencia y coste.",
+          "includes": [
+            "Registro de mejoras",
+            "Separación de correcciones y desarrollo",
+            "Revisión periódica de prioridades"
+          ],
+          "priceNote": "El desarrollo adicional se presupuesta aparte."
+        }
+      ],
+      "processTitle": "Las operaciones comienzan tras definir objetivo y comunicación.",
+      "processLead": "Si se requieren garantías de disponibilidad o respuesta, se revisan aparte del mantenimiento estándar.",
+      "process": [
+        {
+          "title": "Inventario",
+          "body": "Revisamos arquitectura, contratos, permisos, actualizaciones y problemas."
+        },
+        {
+          "title": "Acuerdo de alcance",
+          "body": "Definimos inclusiones, exclusiones, solicitudes, revisión y presupuesto adicional."
+        },
+        {
+          "title": "Inicio de operaciones",
+          "body": "Conservamos historial de solicitudes, cambios, revisiones y publicaciones y seguimos el flujo acordado."
+        },
+        {
+          "title": "Revisión periódica",
+          "body": "Revisamos problemas y mejoras y ajustamos prioridades."
+        }
+      ],
+      "resourcesTitle": "También publicamos decisiones que apoyan la operación.",
+      "resourcesLead": "Los artículos de Acecore Systems explican actualizaciones, entrega, seguridad y consultas.",
+      "resources": [
+        {
+          "title": "Guía de implementación de Sveltia CMS",
+          "description": "Flujo y permisos desde edición hasta revisión, PR y publicación."
+        },
+        {
+          "title": "Entrega estática segura con Cloudflare Pages",
+          "description": "Decisiones sobre entrega, cabeceras y caché."
+        },
+        {
+          "title": "Arquitectura para ampliar un sitio corporativo con Astro + Cloudflare",
+          "description": "Cómo separar base estática, funciones dinámicas, CMS y revisión y publicación."
+        }
+      ],
+      "ctaTitle": "Consultar el alcance de mantenimiento y la revisión inicial",
+      "ctaBody": "Indíquenos URL o sistema, equipo actual y cambios o incidentes problemáticos."
+    },
+    "siteFunctions": {
+      "title": "Mejoras de funciones del sitio",
+      "description": "Acecore Systems añade por fases CMS, AI de consultas, comentarios, búsqueda, formularios y operación multilingüe conservando el sitio Web existente.",
+      "heroEyebrow": "Site functions / Mejoras",
+      "heroTitle": "Conserve su sitio\ny añada solo lo necesario.",
+      "heroLead": "Sin asumir una renovación total, detectamos bloqueos de actualización, búsqueda, consultas y publicación y añadimos funciones adecuadas.",
+      "visual": {
+        "alt": "Una persona revisa la edición CMS y el sitio Web actualizado",
+        "caption": "Conservamos el sitio y creamos una edición y publicación que el equipo puede usar."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Edición CMS, búsqueda y formulario en varios dispositivos",
+          "caption": "Seleccionamos funciones y las combinamos según arquitectura y operación."
+        },
+        "process": {
+          "alt": "Una persona responsable y un ingeniero revisan funciones en ordenador y teléfono",
+          "caption": "Añadimos en unidades verificables y compartimos comprobaciones antes y después."
+        }
+      },
+      "indexSummary": "Añadimos CMS, AI, búsqueda, comentarios y formularios según la arquitectura existente.",
+      "indexTopics": [
+        "CMS y actualización",
+        "AI y comentarios",
+        "Búsqueda y publicación",
+        "Formularios"
+      ],
+      "introTitle": "La operación sostenible importa más que añadir funciones.",
+      "introBody": "Una función no se adopta si el equipo no puede usarla, corregirla o introduce demasiados servicios. Revisamos sitio, actualizaciones, consultas y publicación y diseñamos funciones y reglas.",
+      "challenges": [
+        {
+          "title": "Cada actualización requiere desarrollo",
+          "body": "El equipo no puede cambiar páginas o avisos y los cambios pequeños tardan."
+        },
+        {
+          "title": "La información es difícil de encontrar",
+          "body": "Crecen páginas y artículos, pero faltan búsqueda, clasificación y relacionados."
+        },
+        {
+          "title": "El contexto se pierde antes de consultar",
+          "body": "Al pasar del servicio al formulario no se conserva el tema."
+        }
+      ],
+      "offeringsTitle": "Funciones que podemos añadir",
+      "offeringsLead": "Elija solo lo necesario, combinado según arquitectura y operación.",
+      "offerings": [
+        {
+          "title": "CMS y base de actualización",
+          "body": "Definimos páginas, artículos, avisos, precios y ajustes editables y preparamos la interfaz.",
+          "includes": [
+            "Contenido editable y permisos",
+            "Carga de imágenes y campos",
+            "Revisión y publicación con GitHub"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Chat de consultas con AI",
+          "body": "Guía basada en el sitio que dirige lo que no puede responder hacia una consulta formal.",
+          "includes": [
+            "Alcance y reglas de guía",
+            "Comprobaciones Origin y límites",
+            "Enlaces seguros y recorrido de consulta"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Comentarios y publicaciones",
+          "body": "Con Cloudflare Pages Functions, D1 y Turnstile establecemos publicación, almacenamiento, anti-spam y eliminación.",
+          "includes": [
+            "API de publicación y almacenamiento",
+            "Protección contra spam y repetición",
+            "Política de aprobación y eliminación"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Base de artículos y publicación multilingüe",
+          "body": "Creamos listas, detalles, etiquetas, relacionados, RSS y páginas multilingües.",
+          "includes": [
+            "Modelo de artículo y publicación",
+            "Generación de relacionados, RSS y sitemap",
+            "PR de traducción y URL multilingües"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Búsqueda interna",
+          "body": "Con Pagefind u otra solución para sitios estáticos añadimos búsqueda para el contenido creciente.",
+          "includes": [
+            "Objetivos y exclusiones",
+            "Interfaz y parámetros URL",
+            "Build y caché"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Integración de CTA y formulario",
+          "body": "Transferimos servicio, categoría y datos al formulario.",
+          "includes": [
+            "Contrato de parámetros URL",
+            "Valores iniciales de categoría y asunto",
+            "Campos para identificar el origen"
+          ],
+          "priceNote": ""
+        }
+      ],
+      "processTitle": "Revisamos la arquitectura antes de añadir poco a poco.",
+      "processLead": "Consideramos tecnología y personas que editan, revisan y operan.",
+      "process": [
+        {
+          "title": "Revisión actual",
+          "body": "Revisamos arquitectura, hosting, actualización y servicios externos."
+        },
+        {
+          "title": "Diseño del alcance",
+          "body": "Definimos funciones, datos, permisos y comprobaciones."
+        },
+        {
+          "title": "Implementación y revisión",
+          "body": "Implementamos en unidades verificables y comprobamos pantalla, entradas y errores."
+        },
+        {
+          "title": "Publicación y entrega",
+          "body": "Compartimos operación y continuamos correcciones y mejoras."
+        }
+      ],
+      "resourcesTitle": "Los recursos técnicos explican el diseño.",
+      "resourcesLead": "Los artículos de Acecore Systems documentan decisiones y esta página define el alcance consultable.",
+      "resources": [
+        {
+          "title": "Diseño técnico de chat de consultas con AI en Astro",
+          "description": "Límites API, alcance, Origin, límites de uso y enlaces seguros."
+        },
+        {
+          "title": "Comentarios para un blog Astro solo con Cloudflare",
+          "description": "Diseño de publicación, almacenamiento y operación con Pages Functions, D1 y Turnstile."
+        },
+        {
+          "title": "Guía de implementación de Sveltia CMS",
+          "description": "Contenido editable, imágenes, backend de GitHub y flujos de revisión y publicación."
+        },
+        {
+          "title": "Operar un blog multilingüe con Sveltia CMS",
+          "description": "Fuente japonesa, PR de traducción, hreflang, RSS y sitemap."
+        },
+        {
+          "title": "Arquitectura multilingüe para Astro",
+          "description": "Una arquitectura para traducción de UI y artículos, URL por idioma e información de búsqueda."
+        },
+        {
+          "title": "Problemas y soluciones de Astro View Transitions",
+          "description": "Mejoras de UX y código, incluida búsqueda Pagefind."
+        },
+        {
+          "title": "Diseño para transferir contexto de CTA al formulario",
+          "description": "Contrato para pasar categoría, asunto y origen."
+        }
+      ],
+      "ctaTitle": "Consultar funciones para su sitio actual",
+      "ctaBody": "Indíquenos la URL y problemas de actualización, búsqueda o consultas."
+    },
+    "siteQuality": {
+      "title": "Mejora de calidad del sitio",
+      "description": "Acecore Systems revisa conjuntamente SEO, datos estructurados, rendimiento, accesibilidad y cabeceras para permitir mejoras continuas del sitio Web.",
+      "heroEyebrow": "Site quality / Mejora de calidad",
+      "heroTitle": "Trate velocidad, claridad y seguridad\ncomo una calidad conectada.",
+      "heroLead": "Revisamos arquitectura y mediciones para priorizar sin centrarnos solo en buscadores, usuarios u operadores.",
+      "visual": {
+        "alt": "Una persona responsable y un ingeniero revisan el mismo sitio Web en ordenador y teléfono",
+        "caption": "Revisamos pantallas y mediciones para priorizar mejoras."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Pantallas de búsqueda, rendimiento, teclado y entrega",
+          "caption": "Examinamos el impacto en SEO, velocidad, accesibilidad y seguridad."
+        },
+        "process": {
+          "alt": "Una persona responsable y un ingeniero vuelven a revisar el sitio corregido",
+          "caption": "Verificamos en varios dispositivos y trasladamos los resultados a la siguiente mejora."
+        }
+      },
+      "indexSummary": "Revisamos SEO, velocidad, accesibilidad y seguridad y definimos el orden de mejora.",
+      "indexTopics": ["SEO", "Rendimiento", "Accesibilidad", "CSP y entrega"],
+      "introTitle": "Más allá de subir una puntuación: seguir mejorando.",
+      "introBody": "La calidad no termina con una auditoría. Revisamos funciones de páginas, analítica, scripts, frecuencia y publicación y corregimos por fases documentando impacto y revisión.",
+      "challenges": [
+        {
+          "title": "Los resultados no comunican bien el contenido",
+          "body": "No están claros los papeles de título, description, canonical, datos estructurados y sitemap."
+        },
+        {
+          "title": "Las páginas son lentas y la causa no está clara",
+          "body": "Se combinan imágenes, CSS, fuentes, analítica y caché."
+        },
+        {
+          "title": "Una corrección crea otro problema",
+          "body": "Las áreas se tratan aisladas; un ajuste visual puede romper foco o contraste."
+        }
+      ],
+      "offeringsTitle": "Áreas de calidad revisadas juntas",
+      "offeringsLead": "Adaptamos el alcance: auditoría, correcciones concretas o revisión completa.",
+      "offerings": [
+        {
+          "title": "SEO y datos estructurados",
+          "body": "Definimos cada página y mantenemos coherencia en resultados y redes sociales.",
+          "includes": [
+            "title, description, canonical y OGP",
+            "JSON-LD como Organization y Service",
+            "Coherencia de sitemap, RSS y canonical"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Rendimiento y entrega",
+          "body": "Con páginas y mediciones aislamos lo que retrasa la carga y corregimos primero lo más importante.",
+          "includes": [
+            "Formatos, tamaños y carga diferida",
+            "CSS, fuentes y scripts externos",
+            "Caché y entrega"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Accesibilidad",
+          "body": "Revisamos teclado, lectores, contraste y formularios y corregimos barreras.",
+          "includes": [
+            "Encabezados, landmarks y atributos aria",
+            "Foco y teclado",
+            "Validación y errores de formularios"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Cabeceras de seguridad y CSP",
+          "body": "Inventariamos conexiones y organizamos entrega y CSP por página, incluida administración.",
+          "includes": [
+            "CSP y cabeceras",
+            "noindex y caché de administración",
+            "Inventario de scripts y conexiones"
+          ],
+          "priceNote": ""
+        },
+        {
+          "title": "Revisión antes y después de publicar",
+          "body": "Además del build, establecemos comprobaciones de pantallas, móvil, enlaces, formularios y entorno.",
+          "includes": [
+            "Rutas y anchos representativos",
+            "Enlaces, formularios y consola",
+            "Diferencias entre Preview y producción"
+          ],
+          "priceNote": "Se presupuesta tras confirmar objetivos y validación."
+        }
+      ],
+      "processTitle": "Medir, evaluar el impacto y priorizar.",
+      "processLead": "Como los objetivos pueden competir, documentamos razones y resultados.",
+      "process": [
+        {
+          "title": "Definir criterios",
+          "body": "Confirmamos páginas, usuarios, objetivos y métricas importantes."
+        },
+        {
+          "title": "Auditoría transversal",
+          "body": "Identificamos problemas e impacto desde código, HTML, mediciones e interacción."
+        },
+        {
+          "title": "Correcciones prioritarias",
+          "body": "Corregimos por fases lo más importante considerando beneficios y riesgos."
+        },
+        {
+          "title": "Nueva comprobación",
+          "body": "Comprobamos escritorio y móvil, Preview y producción, y compartimos el método futuro."
+        }
+      ],
+      "resourcesTitle": "Publicamos decisiones para cada área.",
+      "resourcesLead": "Los artículos de Acecore Systems explican contexto y puntos de revisión.",
+      "resources": [
+        {
+          "title": "Guía SEO de datos estructurados y OGP en Astro",
+          "description": "Funciones y ejemplos de JSON-LD, OGP, sitemap y RSS."
+        },
+        {
+          "title": "Técnicas prácticas de rendimiento para Astro",
+          "description": "Mejoras de CSS, fuentes, imágenes, scripts y caché."
+        },
+        {
+          "title": "Guía de accesibilidad para Astro",
+          "description": "Puntos sobre atributos aria, contraste, foco y formularios."
+        },
+        {
+          "title": "Entrega estática segura con Cloudflare Pages",
+          "description": "Cabeceras, CSP, caché y configuración de Pages."
+        }
+      ],
+      "ctaTitle": "Consultar prioridades de calidad",
+      "ctaBody": "Indíquenos la URL y sus inquietudes sobre búsqueda, velocidad, uso o seguridad."
+    }
+  },
+  "services": {
+    "title": "Servicios",
+    "description": "Servicios de Acecore Systems: asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web e interfaces de administración, diseño y producción creativa, CMS, búsqueda, datos y modernización.",
+    "heroTitle": "Desde organizar el problema\nhasta el desarrollo, el diseño y la mejora operativa.",
+    "heroLead": "Además de trabajos puntuales, damos prioridad al diseño y la mejora que ayudan a integrar la solución en las operaciones.",
+    "entryPoints": [
+      {
+        "eyebrow": "Desarrollo por encargo / DEVELOPMENT",
+        "title": "Desea delegar el proyecto desde el concepto hasta el lanzamiento",
+        "body": "Para quienes tienen una idea o problema y quieren un único contacto para requisitos, diseño, desarrollo y lanzamiento.",
+        "label": "Ver desarrollo por encargo"
+      },
+      {
+        "eyebrow": "Ingeniero asesor de IT / ADVISORY",
+        "title": "Desarrolla internamente o con AI, pero necesita apoyo hasta la operación",
+        "body": "Para quienes ya tienen un sistema o aplicación, pero están bloqueados por despliegue, decisiones técnicas, seguridad u operación.",
+        "label": "Ver ingeniero asesor de IT"
+      }
+    ],
+    "services": [
+      {
+        "title": "Asesoría de IT, lanzamiento y operación",
+        "body": "Un ingeniero acompaña a empresas sin especialista IT en el lanzamiento de aplicaciones internas o creadas con AI, la selección de herramientas y las decisiones de nube e infraestructura IT.",
+        "examples": [
+          "Revisión, despliegue y entrega de aplicaciones creadas con AI",
+          "Organización del trabajo, selección de AI y servicios, y evaluación de PoC",
+          "Selección tecnológica, seguridad y segunda opinión sobre proveedores"
+        ]
+      },
+      {
+        "title": "Desarrollo de sistemas empresariales",
+        "body": "Diseñamos sistemas adaptados a cada flujo: pedidos, inventario, clientes, solicitudes, reservas, informes e inspecciones.",
+        "examples": [
+          "Diseño y desarrollo de sistemas de gestión, CRM y ERP",
+          "Migración por fases desde Excel y papel",
+          "Diseño operativo con permisos, aprobaciones, historial y notificaciones"
+        ]
+      },
+      {
+        "title": "Aplicaciones Web e interfaces de administración",
+        "body": "Creamos aplicaciones Web internas y externas, funciones de membresía, formularios, CMS y paneles.",
+        "examples": [
+          "Administración, páginas de miembros y formularios",
+          "Búsqueda, listas, detalles, exportación CSV y notificaciones",
+          "Interfaces fáciles de usar en teléfonos"
+        ]
+      },
+      {
+        "title": "Diseño y producción creativa",
+        "body": "Realizamos logotipos, impresos, banners, personajes y otros trabajos creativos para expresar con precisión lo que el cliente desea comunicar. Combinado con producción Web, cubrimos desde el diseño hasta el lanzamiento.",
+        "examples": [
+          "Logotipo e identidad de marca",
+          "Tarjetas, folletos, carteles y otros impresos",
+          "Banners Web y contenido para redes sociales",
+          "Diseño de personajes e ilustración"
+        ]
+      },
+      {
+        "title": "Mejoras de CMS, AI, búsqueda y formularios",
+        "body": "Añadimos a sitios existentes o estáticos chat de consultas con AI, edición CMS, comentarios, búsqueda, formularios y operación multilingüe.",
+        "examples": [
+          "Edición de páginas, blogs y ajustes con Sveltia CMS",
+          "Chat de AI, comentarios y contexto de CTA en formularios",
+          "Pagefind, artículos, etiquetas, relacionados, RSS y páginas multilingües"
+        ]
+      },
+      {
+        "title": "Uso de datos e integraciones externas",
+        "body": "Conectamos servicios, API, hojas de cálculo, correo y chat para reducir entradas duplicadas y comprobaciones omitidas.",
+        "examples": [
+          "Diseño de API e integración de servicios y Webhook",
+          "Diseño de bases de datos, cálculo e informes",
+          "Notificaciones, copias de seguridad y supervisión"
+        ]
+      },
+      {
+        "title": "Mejora y modernización",
+        "body": "Organizamos sistemas antiguos, herramientas dependientes de personas e interfaces difíciles de mantener para facilitar futuras mejoras.",
+        "examples": [
+          "Evaluación de sistemas heredados y migración por fases",
+          "Mejoras de velocidad y UI e investigación de fallos",
+          "Flujos de desarrollo y operación basados en GitHub"
+        ]
+      }
+    ],
+    "process": [
+      {
+        "title": "Entrevista",
+        "body": "Organizamos objetivos, operaciones problemáticas, usuarios, plazos y presupuesto."
+      },
+      {
+        "title": "Requisitos y propuesta",
+        "body": "Separamos funciones, pantallas, datos, permisos y visibilidad y fijamos prioridades."
+      },
+      {
+        "title": "Diseño y desarrollo",
+        "body": "Implementamos en unidades pequeñas para resolver pronto problemas de interfaz y operación."
+      },
+      {
+        "title": "Lanzamiento y mejora",
+        "body": "Seguimos apoyando la resolución de fallos, nuevas solicitudes y mejora operativa."
+      }
+    ]
+  },
+  "workDetail": {
+    "title": "Funciones y base operativa del sitio corporativo de Acecore",
+    "description": "Proyecto del sitio corporativo de Acecore que añadió por fases CMS, artículos, búsqueda, datos estructurados, CSP, accesibilidad y rendimiento sobre Astro y Cloudflare Pages.",
+    "category": "CMS, búsqueda, seguridad y rendimiento",
+    "heroEyebrow": "Caso / Base del sitio",
+    "heroTitle": "Convertir un sitio estático en una base operable.",
+    "heroLead": "Proyecto interno que añadió por fases CMS, búsqueda, SEO y calidad de entrega manteniendo la ligereza del sitio estático.",
+    "visual": {
+      "alt": "Página principal del sitio corporativo de Acecore",
+      "caption": "Servicios, precios, artículos técnicos y contacto operan sobre una única base de publicación."
+    },
+    "overviewTitle": "Una base que puede seguir evolucionando.",
+    "overviewBody": "Sobre Astro y Cloudflare Pages añadimos CMS, búsqueda y otras funciones en unidades verificables. Edición, revisión y publicación forman un único flujo.",
+    "facts": [
+      {
+        "label": "Objetivo",
+        "value": "Sitio corporativo de Acecore"
+      },
+      {
+        "label": "Base de publicación",
+        "value": "Astro / Cloudflare Pages"
+      },
+      {
+        "label": "Flujo de actualización",
+        "value": "Sveltia CMS / GitHub"
+      },
+      {
+        "label": "Posición",
+        "value": "Proyecto interno"
+      }
+    ],
+    "outcomesTitle": "Resultados logrados",
+    "outcomes": [
+      {
+        "label": "Actualización",
+        "body": "Actualizar páginas, artículos y ajustes desde el CMS"
+      },
+      {
+        "label": "Descubrimiento",
+        "body": "Llegar a la información mediante búsqueda y recorridos internos"
+      },
+      {
+        "label": "Calidad de publicación",
+        "body": "Revisar SEO, CSP, accesibilidad y visualización en el mismo flujo"
+      }
+    ],
+    "outcomesVisual": {
+      "alt": "Formulario de contacto del sitio corporativo de Acecore",
+      "caption": "La interfaz organiza categorías y campos antes de una consulta formal."
+    },
+    "story": [
+      {
+        "label": "Problema",
+        "title": "Mantener sencilla la base de publicación.",
+        "body": "Al crecer contenido y funciones, la arquitectura debía seguir guiando a la información y aislando actualizaciones e incidentes."
+      },
+      {
+        "label": "Enfoque",
+        "title": "Diseñar juntos funciones y publicación.",
+        "body": "Separamos CMS, artículos y búsqueda por función e incluimos quién edita, dónde se revisa y cómo se publica."
+      }
+    ],
+    "scopeTitle": "Alcance mejorado por fases",
+    "scopeLead": "En lugar de añadir cada elemento aislado, consideramos su relación con publicación, revisión y operación.",
+    "scopeVisual": {
+      "alt": "Lista y filtros del blog corporativo de Acecore",
+      "caption": "Artículos, etiquetas, archivos y búsqueda permanecen conectados al crecer el contenido."
+    },
+    "scope": [
+      {
+        "title": "Actualización y operación de artículos",
+        "body": "Creamos edición desde el navegador y revisión de cambios mediante GitHub.",
+        "items": [
+          "Edición de páginas, artículos y ajustes con Sveltia CMS",
+          "Destinos de imágenes y campos organizados",
+          "Listas, etiquetas, relacionados y RSS"
+        ]
+      },
+      {
+        "title": "Descubrimiento y recorridos internos",
+        "body": "Añadimos búsqueda y enlaces relacionados para encontrar información aunque crezca el sitio.",
+        "items": [
+          "Búsqueda interna con Pagefind",
+          "Objetivos y exclusiones de búsqueda",
+          "Enlaces entre servicios, precios y artículos"
+        ]
+      },
+      {
+        "title": "Información para buscadores",
+        "body": "Alineamos funciones y URL de páginas para mantener coherencia en resultados y al compartir.",
+        "items": [
+          "title, description, OGP y canonical",
+          "JSON-LD como Organization, WebSite y WebPage",
+          "Coherencia entre sitemap y URL multilingües"
+        ]
+      },
+      {
+        "title": "Calidad de publicación",
+        "body": "Revisamos seguridad, facilidad de uso y velocidad junto con la entrega, no como añadidos separados.",
+        "items": [
+          "CSP, cabeceras de seguridad y caché",
+          "Teclado, foco y formularios",
+          "Imágenes, CSS, fuentes y scripts externos"
+        ]
+      }
+    ],
+    "resourcesTitle": "Los recursos técnicos explican las decisiones.",
+    "resourcesLead": "Los artículos de Acecore Systems documentan decisiones de arquitectura e implementación.",
+    "resources": [
+      {
+        "title": "CMS y flujo de publicación",
+        "description": "Registro sobre contenido editable, imágenes, backend de GitHub, revisión y publicación."
+      },
+      {
+        "title": "Búsqueda y recorridos internos",
+        "description": "Ejemplos de mejora de UX y código, incluida la búsqueda Pagefind."
+      },
+      {
+        "title": "Calidad de entrega y seguridad",
+        "description": "Resumen de CSP, cabeceras, caché y configuración de Pages."
+      }
+    ],
+    "ctaTitle": "Conserve su sitio y prepare la base para actualizarlo y ampliarlo.",
+    "ctaBody": "Indíquenos la URL, el método de actualización, las funciones deseadas y las restricciones."
+  },
+  "works": {
+    "title": "Proyectos",
+    "description": "Casos de Acecore Systems sobre producción y mejora Web, CMS, búsqueda, operación de servidores y más.",
+    "heroTitle": "Nuestro trabajo\ny sus resultados.",
+    "heroLead": "Conozca el contexto y la implementación de proyectos Web, CMS, búsqueda y servidores.",
+    "cases": [
+      {
+        "title": "Mejora del recorrido de consultas en el sitio corporativo de Acecore",
+        "category": "Formularios, recorrido AI y CMS",
+        "summary": "Organizamos páginas, FAQ, chat de AI y campos CMS para reducir dudas sobre servicios, presupuestos y contacto.",
+        "challenge": "Era difícil saber qué se podía consultar y los datos se fragmentaban.",
+        "proposal": "Combinamos recorridos por servicio, categorías, FAQ y guía de AI para reunir los datos en el formulario.",
+        "result": "Separar la orientación previa de la consulta formal facilitó avanzar hacia presupuesto o servicio.",
+        "imageAlt": "Página de contacto del sitio corporativo de Acecore",
+        "externalLabel": "Consultar o contactar con Acecore"
+      },
+      {
+        "title": "Funciones y base operativa del sitio corporativo de Acecore",
+        "category": "CMS, búsqueda, seguridad y rendimiento",
+        "summary": "Añadimos por fases CMS, artículos, búsqueda, datos estructurados, CSP, accesibilidad y rendimiento a un sitio estático.",
+        "challenge": "Había que reforzar publicación y contacto sin perder velocidad ni facilidad operativa.",
+        "proposal": "Combinamos Astro, Cloudflare Pages, Sveltia CMS, Pagefind, datos estructurados y cabeceras para añadir funciones gradualmente.",
+        "result": "La base permite operar y mejorar blog, páginas, búsqueda y consultas, y ofrece conocimiento reutilizable.",
+        "imageAlt": "Página principal del sitio corporativo de Acecore",
+        "externalLabel": "Ver artículos técnicos relacionados"
+      },
+      {
+        "title": "Conocimiento de estabilidad y supervisión de Aceserver",
+        "category": "Operación de servidores y base comunitaria",
+        "summary": "Al operar un servidor público de Minecraft mejoramos continuamente estabilidad, supervisión, copias y orientación.",
+        "challenge": "Al crecer la participación se necesitan más estabilidad, información, respuesta y reglas.",
+        "proposal": "Mejoramos juntos arquitectura, supervisión, copias y recorridos Web, sin separar técnica y comunidad.",
+        "result": "El conocimiento de largo plazo sirve para supervisión y operación de sistemas empresariales.",
+        "imageAlt": "Pantalla principal del portal Aceserver",
+        "externalLabel": "Ver cómo participar en Aceserver"
+      },
+      {
+        "title": "Desarrollo del portal Aceserver",
+        "category": "Producción Web, portal comunitario y CMS",
+        "summary": "Reunimos guía, vídeos, mapas, Wiki y Discord del servidor público gratuito de Minecraft Aceserver.",
+        "challenge": "La información dispersa dificultaba elegir el primer paso a nuevos visitantes.",
+        "proposal": "Sin reemplazar fuentes existentes, creamos un portal hacia Discord, vídeos, mapas y Wiki.",
+        "result": "Sitio estático con Astro, UnoCSS y Sveltia CMS; contenido y ajustes se actualizan mediante CMS.",
+        "imageAlt": "Página principal del portal Aceserver",
+        "externalLabel": "Ver el portal Aceserver"
+      },
+      {
+        "title": "Renovación del sitio de Cherry English School",
+        "category": "Producción Web, CMS y búsqueda",
+        "summary": "Reunimos escuela, cursos, noticias, blog, eventos y FAQ y renovamos el sitio con Astro.",
+        "challenge": "Debía conservar contenido, facilitar cursos y clases de prueba y permitir actualizaciones continuas.",
+        "proposal": "Unimos Astro, UnoCSS, Sveltia CMS y Pagefind con migración, redirecciones, búsqueda y CMS.",
+        "result": "Es más fácil encontrar información y el equipo revisa cambios CMS en un PR antes de publicar.",
+        "imageAlt": "Página principal de Cherry English School",
+        "externalLabel": "Ver el sitio de Cherry English School"
+      },
+      {
+        "title": "Desarrollo del sitio de Hatt",
+        "category": "Producción Web, CMS y búsqueda",
+        "summary": "Reunimos ilustración, novelas y avatares y accesorios 3D para VRChat en un sitio personal.",
+        "challenge": "Blog, BOOTH, YouTube, X y otros puntos dificultaban entender el conjunto y el orden.",
+        "proposal": "Organizamos la actividad en 3 áreas—ilustración, novelas y modelado—y creamos un centro hacia obras, perfil y servicios.",
+        "result": "Sitio estático con Astro, TypeScript, UnoCSS, Sveltia CMS y Pagefind; el CMS actualiza contenido y la búsqueda encuentra artículos y obras.",
+        "imageAlt": "Página principal del sitio de Hatt",
+        "externalLabel": "Ver obras y blog de Hatt"
+      }
+    ]
+  },
+  "site": {
+    "description": "Acecore Systems es un servicio de Acecore que ofrece asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web y producción creativa desde los requisitos hasta la mejora continua.",
+    "nav": [
+      {
+        "label": "Enfoque"
+      },
+      {
+        "label": "Servicios"
+      },
+      {
+        "label": "Proyectos"
+      },
+      {
+        "label": "Precios"
+      },
+      {
+        "label": "Guía de implantación"
+      },
+      {
+        "label": "Artículos"
+      }
+    ],
+    "footerLinks": [
+      {
+        "label": "Enfoque"
+      },
+      {
+        "label": "Servicios"
+      },
+      {
+        "label": "Precios"
+      },
+      {
+        "label": "Proyectos"
+      },
+      {
+        "label": "Guía de implantación"
+      },
+      {
+        "label": "Artículos"
+      },
+      {
+        "label": "Contacto"
+      },
+      {
+        "label": "Privacidad"
+      }
+    ]
+  }
+}
