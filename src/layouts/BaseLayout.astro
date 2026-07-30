@@ -1,104 +1,110 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import site from "../data/site.json";
-import { serializeJsonForHtmlScript } from "../lib/safe-json.ts";
-import "../styles/global.css";
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import site from '../data/site.json'
+import { serializeJsonForHtmlScript } from '../lib/safe-json.ts'
+import '../styles/global.css'
 
 interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  robots?: string;
-  canonical?: string | null;
-  bodyClass?: string;
-  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  mainEntityId?: string;
+  title: string
+  description?: string
+  image?: string
+  robots?: string
+  canonical?: string | null
+  bodyClass?: string
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
+  mainEntityId?: string
+  ogType?: 'website' | 'article'
+  publishedTime?: string
+  modifiedTime?: string
 }
 
 const {
   title,
   description = site.description,
   image,
-  robots = "index, follow",
+  robots = 'index, follow',
   canonical: canonicalInput = Astro.url.pathname,
   bodyClass,
   jsonLd: pageJsonLd,
   mainEntityId,
-} = Astro.props;
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
+} = Astro.props
 const canonical =
-  canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl);
-const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl);
-const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`;
+  canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl)
+const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl)
+const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`
 const ogImage = new URL(
-  image || "/images/acecore-systems-og.webp",
+  image || '/images/acecore-systems-og.webp',
   site.siteUrl,
-).href;
-const homeUrl = new URL("/", site.siteUrl).href;
-const acecoreHomeUrl = new URL("/", site.acecoreUrl).href;
-const organizationId = `${acecoreHomeUrl}#organization`;
-const serviceId = `${homeUrl}#service`;
-const serviceUrl = new URL("/services/", site.siteUrl).href;
-const websiteId = `${homeUrl}#website`;
-const webPageId = `${pageUrl.href}#webpage`;
+).href
+const homeUrl = new URL('/', site.siteUrl).href
+const acecoreHomeUrl = new URL('/', site.acecoreUrl).href
+const organizationId = `${acecoreHomeUrl}#organization`
+const serviceId = `${homeUrl}#service`
+const serviceUrl = new URL('/services/', site.siteUrl).href
+const websiteId = `${homeUrl}#website`
+const webPageId = `${pageUrl.href}#webpage`
 const baseJsonLd = [
   {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": organizationId,
-    name: "Acecore",
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': organizationId,
+    name: 'Acecore',
     url: acecoreHomeUrl,
-    logo: new URL("/favicon.svg", site.acecoreUrl).href,
+    logo: new URL('/favicon.svg', site.acecoreUrl).href,
     email: site.email,
     telephone: site.phone,
   },
   {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": serviceId,
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': serviceId,
     name: site.name,
     url: serviceUrl,
     description: site.description,
     serviceType: [
-      "IT顧問・技術相談",
-      "AI導入・業務改善支援",
-      "Webアプリのデプロイ支援",
-      "業務システム開発",
-      "Webアプリ・管理画面開発",
-      "データ活用・外部サービス連携",
-      "運用改善",
+      'IT顧問・技術相談',
+      'AI導入・業務改善支援',
+      'Webアプリのデプロイ支援',
+      '業務システム開発',
+      'Webアプリ・管理画面開発',
+      'データ活用・外部サービス連携',
+      '運用改善',
     ],
-    provider: { "@id": organizationId },
+    provider: { '@id': organizationId },
   },
   {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": websiteId,
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': websiteId,
     name: site.name,
     url: homeUrl,
     description: site.description,
-    inLanguage: "ja",
-    publisher: { "@id": organizationId },
-    about: { "@id": serviceId },
+    inLanguage: 'ja',
+    publisher: { '@id': organizationId },
+    about: { '@id': serviceId },
   },
   {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": webPageId,
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': webPageId,
     url: pageUrl.href,
     name: pageTitle,
     description,
-    inLanguage: "ja",
-    isPartOf: { "@id": websiteId },
-    about: { "@id": serviceId },
-    ...(mainEntityId ? { mainEntity: { "@id": mainEntityId } } : {}),
-    publisher: { "@id": organizationId },
+    inLanguage: 'ja',
+    isPartOf: { '@id': websiteId },
+    about: { '@id': serviceId },
+    ...(mainEntityId ? { mainEntity: { '@id': mainEntityId } } : {}),
+    publisher: { '@id': organizationId },
   },
-];
+]
 const jsonLd = pageJsonLd
   ? [...baseJsonLd, ...(Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd])]
-  : baseJsonLd;
-const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
+  : baseJsonLd
+const serializedJsonLd = serializeJsonForHtmlScript(jsonLd)
 ---
 
 <!doctype html>
@@ -114,7 +120,17 @@ const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    {
+      publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )
+    }
+    {
+      modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )
+    }
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={ogImage} />
@@ -123,7 +139,7 @@ const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     {
-      bodyClass === "home-page" && (
+      bodyClass === 'home-page' && (
         <>
           <link
             rel="preload"

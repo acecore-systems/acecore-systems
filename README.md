@@ -45,10 +45,13 @@ npm run preview
 | 実績         | `/works/`                       | `src/data/works.json`                                          |
 | 実績詳細     | `/works/acecore-site-platform/` | `src/data/work-details/*.json`                                 |
 | 導入ガイド   | `/guide/`                       | `src/data/guide.json`                                          |
+| 技術解説     | `/insights/`                    | `src/content/insights/*.md`                                    |
 | お問い合わせ | `/contact/`                     | `src/data/contact.json`                                        |
 | プライバシー | `/privacy/`                     | `src/data/privacy.json`                                        |
 
-ブログ、RSS、サイト内検索、多言語ページは含めません。実装判断を詳しく説明する技術記事は、Acecore公式サイトの記事を参照します。
+技術解説は、サービスや実績の背景にある実装・運用判断だけを扱います。日々のニュース、RSS、サイト内検索、多言語ページは含めず、日本語の少数記事を `src/content/insights/` で管理します。
+
+記事の frontmatter と著者情報は原典を保持し、旧 `/blog/` 形式の本文リンクは表示時に解決します。Systemsへ移管済みの記事は `/insights/`、未移管の記事はAcecore公式サイトの絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 

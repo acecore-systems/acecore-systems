@@ -29,8 +29,8 @@
       "result": "ブログ、固定ページ、検索、問い合わせ導線を運用しながら改善できる基盤になり、同種のサイト機能追加案件へ転用しやすい知見がまとまりました。",
       "image": "/images/works/acecore-site-platform.webp",
       "imageAlt": "Acecore公式サイトのトップページ",
-      "externalUrl": "https://acecore.net/blog/",
-      "externalLabel": "Acecore公式ブログを見る"
+      "externalUrl": "/insights/",
+      "externalLabel": "関連する技術解説を見る"
     },
     {
       "id": "case-aceserver",

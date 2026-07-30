@@ -124,27 +124,27 @@
     }
   ],
   "resourcesTitle": "改善項目ごとの技術判断を公開しています。",
-  "resourcesLead": "個別施策の背景や確認点は、Acecore公式サイトの技術記事で詳しく確認できます。",
+  "resourcesLead": "個別施策の背景や確認点は、Acecore Systemsの技術解説で詳しく確認できます。",
   "resources": [
     {
       "title": "Astroサイトに構造化データとOGPを実装するSEO改善ガイド",
       "description": "JSON-LD、OGP、サイトマップ、RSSの役割と実装例をまとめています。",
-      "href": "https://acecore.net/blog/astro-seo-and-structured-data/"
+      "href": "/insights/astro-seo-and-structured-data/"
     },
     {
       "title": "Astroサイトの表示速度を改善する実践テクニック",
       "description": "CSS、フォント、画像、外部スクリプト、キャッシュの改善例を扱います。",
-      "href": "https://acecore.net/blog/astro-performance-tuning/"
+      "href": "/insights/astro-performance-tuning/"
     },
     {
       "title": "Astroサイトのアクセシビリティ改善ガイド",
       "description": "aria属性、コントラスト、フォーカス、フォームなどの確認点を整理しています。",
-      "href": "https://acecore.net/blog/astro-accessibility-guide/"
+      "href": "/insights/astro-accessibility-guide/"
     },
     {
       "title": "Cloudflare Pagesで実現するセキュアな静的サイト配信",
       "description": "セキュリティヘッダー、CSP、キャッシュ、Pagesの配信設定を扱います。",
-      "href": "https://acecore.net/blog/cloudflare-pages-security/"
+      "href": "/insights/cloudflare-pages-security/"
     }
   ],
   "ctaTitle": "サイト品質の優先順位を相談する",

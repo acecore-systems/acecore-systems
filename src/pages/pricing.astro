@@ -1,9 +1,42 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import data from "../data/pricing.json";
+import BaseLayout from '../layouts/BaseLayout.astro'
+import data from '../data/pricing.json'
+import site from '../data/site.json'
+
+const pageUrl = new URL('/pricing/', site.siteUrl).href
+const itemListId = `${pageUrl}#item-list`
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${pageUrl}#collection`,
+    name: data.title,
+    url: pageUrl,
+    description: data.description,
+    inLanguage: 'ja',
+    mainEntity: { '@id': itemListId },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': itemListId,
+    itemListElement: data.items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      url: new URL(item.detailUrl, site.siteUrl).href,
+    })),
+  },
+]
 ---
 
-<BaseLayout title={data.title} description={data.description}>
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  canonical="/pricing/"
+  jsonLd={jsonLd}
+  mainEntityId={itemListId}
+>
   <section class="page-hero page-hero--pricing">
     <div class="container page-hero__inner">
       <p class="page-eyebrow">Engagement / 費用の目安</p>
@@ -30,7 +63,7 @@ import data from "../data/pricing.json";
             <li class="price-row" id={item.key}>
               <div class="price-row__heading">
                 <p class="editorial-index">
-                  {String(index + 1).padStart(2, "0")}
+                  {String(index + 1).padStart(2, '0')}
                 </p>
                 <h3>{item.label}</h3>
               </div>
@@ -66,9 +99,6 @@ import data from "../data/pricing.json";
             href="/contact/?category=pricing&from=systems-pricing&entry=pricing-cta"
           >
             見積りを相談する
-          </a>
-          <a class="editorial-link" href="https://acecore.net/pricing/">
-            Acecore全体の料金を見る
           </a>
         </div>
       </aside>

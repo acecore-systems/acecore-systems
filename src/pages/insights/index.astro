@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content'
+
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import site from '../../data/site.json'
+import { getInsightSlug } from '../../lib/insight-links.mjs'
+import '../../styles/insights.css'
+
+const insights = (await getCollection('insights')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+)
+const pageUrl = new URL('/insights/', site.siteUrl).href
+const itemListId = `${pageUrl}#item-list`
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date)
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${pageUrl}#collection`,
+    name: '技術解説',
+    url: pageUrl,
+    description:
+      'Acecore Systemsの実装・運用で得た技術判断を、再利用できる形で整理した解説記事です。',
+    inLanguage: 'ja',
+    mainEntity: { '@id': itemListId },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': itemListId,
+    itemListElement: insights.map((entry, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: new URL(`/insights/${getInsightSlug(entry.id)}/`, site.siteUrl).href,
+      name: entry.data.title,
+    })),
+  },
+]
+---
+
+<BaseLayout
+  title="技術解説"
+  description="Acecore Systemsの実装・運用で得た技術判断を、再利用できる形で整理した解説記事です。"
+  canonical="/insights/"
+  jsonLd={jsonLd}
+  mainEntityId={itemListId}
+  bodyClass="insights-index-page"
+>
+  <section class="page-hero page-hero--insights">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">Insights / 技術解説</p>
+      <h1 class="page-title">実装と運用の判断を、<br />再利用できる知見へ。</h1>
+      <p class="page-lead">
+        サービスや実績の背景にある設計判断を、Astro、Cloudflare、CMS、SEO、アクセシビリティなどのテーマごとに整理しています。
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section insights-index" aria-labelledby="insights-title">
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Library / 01</p>
+          <h2 id="insights-title">技術解説一覧</h2>
+        </div>
+        <p>
+          導入の考え方から整理したい場合は、<a href="/guide/">導入ガイド</a
+          >をご覧ください。
+        </p>
+      </header>
+
+      <ol class="insight-index-list">
+        {
+          insights.map((entry, index) => (
+            <li>
+              <a href={`/insights/${getInsightSlug(entry.id)}/`}>
+                <div class="insight-index-list__meta">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <time datetime={entry.data.date.toISOString()}>
+                    {formatDate(entry.data.date)}
+                  </time>
+                </div>
+                <h3>{entry.data.title}</h3>
+                <p>{entry.data.description}</p>
+                <ul aria-label="タグ">
+                  {entry.data.tags?.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside class="editorial-cta" aria-labelledby="insights-cta-title">
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="insights-cta-title">自社の状況に合わせて整理する。</h2>
+          <p>
+            記事の構成をそのまま当てはめるのではなく、現在のサイト、運用体制、制約に合わせて必要な範囲を整理します。
+          </p>
+        </div>
+        <a
+          class="editorial-link editorial-link--primary"
+          href="/contact/?category=service&from=systems-insights&entry=insights-index-cta"
+        >
+          技術相談をする
+        </a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

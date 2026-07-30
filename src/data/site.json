@@ -14,7 +14,8 @@
     { "label": "サービス", "href": "/services/" },
     { "label": "実績", "href": "/works/" },
     { "label": "料金の目安", "href": "/pricing/" },
-    { "label": "導入ガイド", "href": "/guide/" }
+    { "label": "導入ガイド", "href": "/guide/" },
+    { "label": "技術解説", "href": "/insights/" }
   ],
   "footerLinks": [
     { "label": "支援方針", "href": "/#philosophy" },
@@ -22,6 +23,7 @@
     { "label": "料金の目安", "href": "/pricing/" },
     { "label": "実績", "href": "/works/" },
     { "label": "導入ガイド", "href": "/guide/" },
+    { "label": "技術解説", "href": "/insights/" },
     { "label": "お問い合わせ", "href": "/contact/" },
     { "label": "プライバシー", "href": "/privacy/" }
   ]

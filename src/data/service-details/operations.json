@@ -124,22 +124,22 @@
     }
   ],
   "resourcesTitle": "運用を支える実装判断も公開しています。",
-  "resourcesLead": "更新、配信、安全性、問い合わせ導線に関する具体的な判断は、Acecore公式サイトの技術記事で確認できます。",
+  "resourcesLead": "更新、配信、安全性、問い合わせ導線に関する具体的な判断は、Acecore Systemsの技術解説で確認できます。",
   "resources": [
     {
       "title": "Sveltia CMS導入ガイド",
       "description": "編集から確認、PR、公開までの運用フローと権限設計をまとめています。",
-      "href": "https://acecore.net/blog/cms-selection-and-turnstile/"
+      "href": "/insights/cms-selection-and-turnstile/"
     },
     {
       "title": "Cloudflare Pagesで実現するセキュアな静的サイト配信",
       "description": "配信構成、セキュリティヘッダー、キャッシュの運用判断を扱います。",
-      "href": "https://acecore.net/blog/cloudflare-pages-security/"
+      "href": "/insights/cloudflare-pages-security/"
     },
     {
       "title": "Astro + Cloudflareで公式サイトを機能拡張する全体設計",
       "description": "静的な公開基盤、動的機能、CMS、確認・公開フローを分ける考え方をまとめています。",
-      "href": "https://acecore.net/blog/astro-cloudflare-site-architecture/"
+      "href": "/insights/astro-cloudflare-site-architecture/"
     }
   ],
   "ctaTitle": "保守範囲と、最初に確認する項目を相談する",
