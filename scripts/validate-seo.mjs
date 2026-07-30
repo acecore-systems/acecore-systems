@@ -39,8 +39,16 @@ const worksData = readJson("src/data/works.json");
 const workDetailData = readJson(
   "src/data/work-details/acecore-site-platform.json",
 );
+const serviceIndexData = readJson("src/data/services.json");
 const pricingData = readJson("src/data/pricing.json");
 const pricingByKey = new Map(pricingData.items.map((item) => [item.key, item]));
+const designService = serviceIndexData.services.find(
+  (item) => item.id === "design",
+);
+const designPricing = pricingByKey.get("design");
+
+assert.ok(designService, "design service source missing");
+assert.ok(designPricing, "design pricing source missing");
 
 for (const pagePath of [
   advisorPagePath,
@@ -126,6 +134,11 @@ function validateServicePage({
     siteService.url,
     `${siteOrigin}/services/`,
     `${route}: site-wide Service URL must target the service index`,
+  );
+  assert.equal(
+    siteService.serviceType.includes("デザイン・クリエイティブ制作"),
+    true,
+    `${route}: site-wide Service JSON-LD must include design and creative`,
   );
   assert.ok(breadcrumb, `${route}: BreadcrumbList missing`);
   assert.equal(
@@ -337,16 +350,67 @@ for (const expectedHref of [
     `home: direct development route ${expectedHref} missing`,
   );
 }
-assert.equal(
-  /href="\/services\/#[^"]+"/.test(home),
-  false,
-  "home: legacy service-index anchors must not remain",
+assert.deepEqual(
+  Array.from(
+    home.matchAll(/href="(\/services\/#[^"]+)"/g),
+    (match) => match[1],
+  ),
+  ["/services/#design"],
+  "home: only the formal design service may use a service-index anchor",
 );
 
 assert.equal(
   count(services, 'class="service-entry-point"'),
   2,
   "services: development and IT advisor entry points are required",
+);
+assert.equal(
+  services.includes(`id="${designService.id}"`),
+  true,
+  "services: design service anchor missing",
+);
+assert.equal(
+  services.includes(designService.title) &&
+    services.includes(designService.body) &&
+    designService.examples.every((example) => services.includes(example)),
+  true,
+  "services: design service content missing",
+);
+assert.equal(
+  pricing.includes(`id="${designPricing.key}"`) &&
+    pricing.includes(designPricing.label) &&
+    pricing.includes(designPricing.price) &&
+    pricing.includes(designPricing.note) &&
+    pricing.includes(`href="${designPricing.detailUrl}"`),
+  true,
+  "pricing: design service price and service anchor link missing",
+);
+assert.equal(
+  contact.includes("デザイン・クリエイティブについて"),
+  true,
+  "contact: design service category missing",
+);
+
+const pricingJsonLdMatch = pricing.match(
+  /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+);
+assert.ok(pricingJsonLdMatch, "pricing: JSON-LD missing");
+const pricingJsonLd = JSON.parse(pricingJsonLdMatch[1]);
+const pricingJsonLdNodes = Array.isArray(pricingJsonLd)
+  ? pricingJsonLd
+  : [pricingJsonLd];
+const pricingItemList = pricingJsonLdNodes.find(
+  (node) => node["@type"] === "ItemList",
+);
+assert.ok(pricingItemList, "pricing: ItemList JSON-LD missing");
+assert.equal(
+  pricingItemList.itemListElement.some(
+    (item) =>
+      item.name === designPricing.label &&
+      item.url === `${siteOrigin}${designPricing.detailUrl}`,
+  ),
+  true,
+  "pricing: design service JSON-LD item missing",
 );
 
 function validateHandoff(html, expectedHref, label) {

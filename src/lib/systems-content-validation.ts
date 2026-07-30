@@ -15,6 +15,8 @@ const SERVICES_PATH = "src/data/services.json";
 const WORKS_PATH = "src/data/works.json";
 const GUIDE_PATH = "src/data/guide.json";
 
+const DESIGN_SERVICE_ID = "design";
+
 const SERVICE_ROUTES = new Map([
   [SERVICE_PATHS[0], "/services/development/"],
   [SERVICE_PATHS[1], "/services/site-functions/"],
@@ -46,6 +48,7 @@ export function validateSystemsContentFiles(
   const errors: string[] = [];
   const pricingKeys = new Set<string>();
   const pricingItems = getArray(files.get(PRICING_PATH), "items");
+  let designPricingFound = false;
 
   if (!pricingItems) {
     errors.push(`${PRICING_PATH}.items: 配列が必要です。`);
@@ -69,11 +72,21 @@ export function validateSystemsContentFiles(
         }
         pricingKeys.add(key);
       }
+
+      if (key === DESIGN_SERVICE_ID) {
+        designPricingFound = true;
+      }
     });
+  }
+
+  if (!designPricingFound) {
+    errors.push(`${PRICING_PATH}.items: designの料金項目が必要です。`);
   }
 
   const routeAnchors = new Map<string, Set<string>>();
   const technicalResources = new Set<string>();
+
+  validateServiceIndex(files.get(SERVICES_PATH), routeAnchors, errors);
 
   for (const path of SERVICE_PATHS) {
     const data = asRecord(files.get(path));
@@ -233,6 +246,60 @@ export function validateSystemsContentFiles(
   validateIndexLinks(files, routeAnchors, pricingItems ?? [], errors);
 
   return errors;
+}
+
+function validateServiceIndex(
+  value: unknown,
+  routeAnchors: Map<string, Set<string>>,
+  errors: string[],
+) {
+  const services = getArray(value, "services");
+
+  if (!services) {
+    errors.push(`${SERVICES_PATH}.services: 配列が必要です。`);
+    return;
+  }
+
+  const anchors = new Set<string>();
+  let designServiceFound = false;
+
+  services.forEach((value, index) => {
+    const scope = `${SERVICES_PATH}.services[${index}]`;
+    const item = asRecord(value);
+
+    if (!item) {
+      errors.push(`${scope}: objectが必要です。`);
+      return;
+    }
+
+    const id = requireText(item.id, `${scope}.id`, errors);
+    requireText(item.title, `${scope}.title`, errors);
+    requireText(item.body, `${scope}.body`, errors);
+    const examples = requireNonEmptyArray(
+      item.examples,
+      `${scope}.examples`,
+      errors,
+    );
+
+    if (id) {
+      if (anchors.has(id)) errors.push(`${scope}.id: 重複しています。`);
+      anchors.add(id);
+    }
+
+    examples.forEach((example, exampleIndex) => {
+      requireText(example, `${scope}.examples[${exampleIndex}]`, errors);
+    });
+
+    if (id !== DESIGN_SERVICE_ID) return;
+
+    designServiceFound = true;
+  });
+
+  routeAnchors.set("/services/", anchors);
+
+  if (!designServiceFound) {
+    errors.push(`${SERVICES_PATH}.services: designサービスが必要です。`);
+  }
 }
 
 function validateGuide(value: unknown, errors: string[]) {

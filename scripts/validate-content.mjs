@@ -617,6 +617,10 @@ const knownRoutes = new Set([
   ...workSources.map((source) => source.route),
 ]);
 const services = readJson("src/data/services.json");
+serviceAnchors.set(
+  "/services/",
+  new Set(services.services.map((item) => item.id)),
+);
 const works = readJson("src/data/works.json");
 const guide = readJson("src/data/guide.json");
 validateVisual(guide.visual, "src/data/guide.json: visual");

@@ -267,6 +267,85 @@ test("CIと共有するsemantic ruleで必須配列・未知key・不正な相�
   }
 });
 
+test("CMS投影後もdesignサービスと料金項目の削除を拒否する", async () => {
+  const servicesPath = "src/data/services.json";
+  const pricingPath = "src/data/pricing.json";
+  const services = JSON.parse(
+    await readFile(new URL(`../${servicesPath}`, import.meta.url), "utf8"),
+  );
+  const pricing = JSON.parse(
+    await readFile(new URL(`../${pricingPath}`, import.meta.url), "utf8"),
+  );
+  const invalidUpdates = [
+    {
+      path: servicesPath,
+      value: {
+        ...services,
+        services: services.services.filter(({ id }) => id !== "design"),
+      },
+    },
+    {
+      path: pricingPath,
+      value: {
+        ...pricing,
+        items: pricing.items.filter(({ key }) => key !== "design"),
+      },
+    },
+  ];
+
+  for (const update of invalidUpdates) {
+    const validation = validateCmsAddition(
+      update.path,
+      Buffer.from(JSON.stringify(update.value)).toString("base64"),
+    );
+
+    assert.equal(validation.ok, false, update.path);
+    assert.match(validation.message, /design/);
+  }
+});
+
+test("designサービスの説明と料金はCMSから更新できる", async () => {
+  const servicesPath = "src/data/services.json";
+  const pricingPath = "src/data/pricing.json";
+  const services = JSON.parse(
+    await readFile(new URL(`../${servicesPath}`, import.meta.url), "utf8"),
+  );
+  const pricing = JSON.parse(
+    await readFile(new URL(`../${pricingPath}`, import.meta.url), "utf8"),
+  );
+  const updates = [
+    {
+      path: servicesPath,
+      value: {
+        ...services,
+        services: services.services.map((item) =>
+          item.id === "design"
+            ? { ...item, body: `${item.body} ご相談内容に応じて調整します。` }
+            : item,
+        ),
+      },
+    },
+    {
+      path: pricingPath,
+      value: {
+        ...pricing,
+        items: pricing.items.map((item) =>
+          item.key === "design" ? { ...item, price: "個別見積り" } : item,
+        ),
+      },
+    },
+  ];
+
+  for (const update of updates) {
+    const validation = validateCmsAddition(
+      update.path,
+      Buffer.from(JSON.stringify(update.value)).toString("base64"),
+    );
+
+    assert.equal(validation.ok, true, validation.message);
+  }
+});
+
 test("複数JSONの協調更新を1つのprojected stateとして直接保存する", async () => {
   const operationsPath = "src/data/service-details/operations.json";
   const pricingPath = "src/data/pricing.json";
