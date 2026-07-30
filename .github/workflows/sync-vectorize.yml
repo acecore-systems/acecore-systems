@@ -256,6 +256,7 @@ jobs:
           fi
 
           args=()
+          args+=(--confirm-production "$VECTORIZE_INDEX_NAME")
           if [[ "$ALLOW_LARGE_DELETE" == "true" ]]; then
             args+=(--allow-large-delete)
           fi
