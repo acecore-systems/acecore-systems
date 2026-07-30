@@ -1,19 +1,29 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import ServiceVisual from '../components/ServiceVisual.astro'
-import data from '../data/guide.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceVisual from "../components/ServiceVisual.astro";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).guide;
+const text = getUi(locale);
 ---
 
-<BaseLayout title={data.title} description={data.description}>
+<BaseLayout title={data.title} description={data.description} locale={locale}>
   <section class="page-hero page-hero--guide">
     <div class="container page-hero__inner">
-      <p class="page-eyebrow">Field notes / 導入ガイド</p>
+      <p class="page-eyebrow">Field notes / {text.guide}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
 
-  <section class="guide-visual-section" aria-label="導入範囲を整理する様子">
+  <section class="guide-visual-section" aria-label={data.visual.alt}>
     <div class="container">
       <ServiceVisual {...data.visual} variant="section" />
     </div>
@@ -34,7 +44,7 @@ import data from '../data/guide.json'
           data.insights.map((item, index) => (
             <li class="guide-perspective">
               <p class="editorial-index">
-                View {String(index + 1).padStart(2, '0')}
+                View {String(index + 1).padStart(2, "0")}
               </p>
               <div class="guide-perspective__content">
                 <h3>{item.title}</h3>
@@ -64,7 +74,7 @@ import data from '../data/guide.json'
           data.journey.map((step, index) => (
             <li class="guide-journey__step">
               <p class="editorial-index">
-                Step {String(index + 1).padStart(2, '0')}
+                Step {String(index + 1).padStart(2, "0")}
               </p>
               <h3>{step.title}</h3>
               <p>{step.body}</p>
@@ -91,7 +101,7 @@ import data from '../data/guide.json'
             <li class="guide-checkpoint">
               <header class="guide-checkpoint__header">
                 <p class="editorial-index">
-                  Point {String(index + 1).padStart(2, '0')}
+                  Point {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3>{tip.title}</h3>
               </header>
@@ -125,7 +135,7 @@ import data from '../data/guide.json'
             <details class="guide-faq__item">
               <summary>
                 <span class="editorial-index">
-                  Q{String(index + 1).padStart(2, '0')}
+                  Q{String(index + 1).padStart(2, "0")}
                 </span>
                 <span>{item.question}</span>
               </summary>
@@ -148,12 +158,12 @@ import data from '../data/guide.json'
       >
         <div class="editorial-cta__copy">
           <p class="editorial-eyebrow">Technical notes / 05</p>
-          <h2 id="guide-insights-title">実装判断を、技術解説で確認する。</h2>
-          <p>
-            Astro、Cloudflare、CMS、SEO、アクセシビリティなど、サービスや実績の背景にある判断を記事ごとに整理しています。
-          </p>
+          <h2 id="guide-insights-title">{text.guideInsightsTitle}</h2>
+          <p>{text.guideInsightsBody}</p>
         </div>
-        <a class="editorial-link" href="/insights/">技術解説を見る</a>
+        <a class="editorial-link" href={getLocalizedUrl("/insights/", locale)}
+          >{text.insights}</a
+        >
       </aside>
     </div>
   </section>
@@ -166,8 +176,9 @@ import data from '../data/guide.json'
           <h2 id="guide-cta-title">{data.ctaTitle}</h2>
           <p>{data.ctaBody}</p>
         </div>
-        <a class="editorial-link editorial-link--primary" href="/contact/"
-          >{data.ctaLabel}</a
+        <a
+          class="editorial-link editorial-link--primary"
+          href={getLocalizedUrl("/contact/", locale)}>{data.ctaLabel}</a
         >
       </aside>
     </div>
@@ -211,7 +222,7 @@ import data from '../data/guide.json'
     border-radius: 50%;
     background: var(--paper);
     color: var(--blue);
-    content: '→';
+    content: "→";
     font-size: 0.78rem;
   }
 
@@ -248,7 +259,7 @@ import data from '../data/guide.json'
       top: auto;
       right: 24px;
       bottom: -13px;
-      content: '↓';
+      content: "↓";
     }
 
     .guide-journey__step h3 {

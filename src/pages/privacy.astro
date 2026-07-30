@@ -1,22 +1,35 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import data from '../data/privacy.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).privacy;
+const text = getUi(locale);
 ---
 
-<BaseLayout title={data.title} description={data.description}>
+<BaseLayout title={data.title} description={data.description} locale={locale}>
   <section class="page-hero page-hero--privacy">
     <div class="container page-hero__inner">
-      <p class="page-eyebrow">Policy / 個人情報の取り扱い</p>
+      <p class="page-eyebrow">{text.privacyEyebrow}</p>
       <h1 class="page-title">{data.title}</h1>
       <p class="page-lead">{data.description}</p>
     </div>
   </section>
 
-  <section class="page-section page-section--privacy" aria-labelledby="privacy-sections-title">
+  <section
+    class="page-section page-section--privacy"
+    aria-labelledby="privacy-sections-title"
+  >
     <div class="container page-narrow">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Principles / 01</p>
-        <h2 id="privacy-sections-title">取り扱いについて</h2>
+        <h2 id="privacy-sections-title">{text.privacyHandlingTitle}</h2>
       </header>
       <div class="editorial-list">
         {
@@ -30,9 +43,12 @@ import data from '../data/privacy.json'
               </header>
               <div class="editorial-row__body">
                 <p>{section.body}</p>
-                {section.title === "お問い合わせ" && (
-                  <a class="editorial-link" href="/contact/">
-                    お問い合わせフォームへ
+                {index === data.sections.length - 1 && (
+                  <a
+                    class="editorial-link"
+                    href={getLocalizedUrl("/contact/", locale)}
+                  >
+                    {text.contactFormLink}
                   </a>
                 )}
               </div>

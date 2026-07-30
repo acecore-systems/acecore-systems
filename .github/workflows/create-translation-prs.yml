@@ -1,0 +1,62 @@
+name: Create Translation PR
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - src/data/**/*.json
+      - src/content/insights/*.md
+      - src/i18n/contact-form.ts
+      - src/i18n/ui.ts
+  workflow_dispatch:
+    inputs:
+      base_sha:
+        description: Optional base SHA for source diff detection
+        required: false
+        type: string
+      head_sha:
+        description: Optional head SHA for source diff detection
+        required: false
+        type: string
+      changed_files:
+        description: Optional comma-separated source paths
+        required: false
+        type: string
+      dry_run:
+        description: Print the task without creating it
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  create-translation-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+
+      - name: Create translation pull-request task
+        env:
+          COPILOT_AGENT_TOKEN: ${{ secrets.COPILOT_AGENT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.sha }}
+          INPUT_BASE_SHA: ${{ inputs.base_sha }}
+          INPUT_HEAD_SHA: ${{ inputs.head_sha }}
+          INPUT_CHANGED_FILES: ${{ inputs.changed_files }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+        run: node scripts/create-translation-prs.mjs

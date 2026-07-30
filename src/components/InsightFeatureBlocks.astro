@@ -1,71 +1,73 @@
 ---
-import { resolveInsightHref } from '../lib/insight-links.mjs'
+import { resolveInsightHref } from "../lib/insight-links.mjs";
+import type { Locale } from "../i18n";
 
 interface Callout {
-  type: 'info' | 'warning' | 'tip' | 'note'
-  title?: string
-  text: string
+  type: "info" | "warning" | "tip" | "note";
+  title?: string;
+  text: string;
 }
 
 interface ProcessFigure {
-  eyebrow?: string
-  title: string
-  description?: string
+  eyebrow?: string;
+  title: string;
+  description?: string;
   steps: {
-    title: string
-    description: string
-    icon: string
-    accent?: 'brand' | 'emerald' | 'amber' | 'slate'
-  }[]
+    title: string;
+    description: string;
+    icon: string;
+    accent?: "brand" | "emerald" | "amber" | "slate";
+  }[];
 }
 
 interface CompareTable {
-  title?: string
-  before: { label: string; items: string[] }
-  after: { label: string; items: string[] }
+  title?: string;
+  before: { label: string; items: string[] };
+  after: { label: string; items: string[] };
 }
 
 interface Checklist {
-  title?: string
-  items: { text: string; checked?: boolean }[]
+  title?: string;
+  items: { text: string; checked?: boolean }[];
 }
 
 interface InsightGrid {
-  eyebrow?: string
-  title: string
-  description?: string
-  items: { title: string; description: string }[]
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  items: { title: string; description: string }[];
 }
 
 interface StatBar {
   items: {
-    value: string
-    label: string
-    description?: string
-  }[]
+    value: string;
+    label: string;
+    description?: string;
+  }[];
 }
 
 interface LinkCard {
-  href: string
-  title: string
-  description?: string
+  href: string;
+  title: string;
+  description?: string;
 }
 
 interface Faq {
-  title?: string
-  items: { question: string; answer: string }[]
+  title?: string;
+  items: { question: string; answer: string }[];
 }
 
 interface Props {
-  callout?: Callout
-  processFigure?: ProcessFigure
-  compareTable?: CompareTable
-  checklist?: Checklist
-  insightGrid?: InsightGrid
-  statBar?: StatBar
-  linkCards?: LinkCard[]
-  faq?: Faq
-  placement: 'before' | 'after'
+  callout?: Callout;
+  processFigure?: ProcessFigure;
+  compareTable?: CompareTable;
+  checklist?: Checklist;
+  insightGrid?: InsightGrid;
+  statBar?: StatBar;
+  linkCards?: LinkCard[];
+  faq?: Faq;
+  placement: "before" | "after";
+  locale: Locale;
 }
 
 const {
@@ -78,11 +80,87 @@ const {
   linkCards,
   faq,
   placement,
-} = Astro.props
+  locale,
+} = Astro.props;
+const labels: Record<
+  Locale,
+  {
+    comparison: string;
+    keyPoints: string;
+    checklist: string;
+    relatedPages: string;
+    faq: string;
+  }
+> = {
+  ja: {
+    comparison: "比較",
+    keyPoints: "要点",
+    checklist: "確認項目",
+    relatedPages: "関連するページ",
+    faq: "よくある質問",
+  },
+  en: {
+    comparison: "Comparison",
+    keyPoints: "Key points",
+    checklist: "Checklist",
+    relatedPages: "Related pages",
+    faq: "Frequently asked questions",
+  },
+  "zh-cn": {
+    comparison: "对比",
+    keyPoints: "要点",
+    checklist: "检查清单",
+    relatedPages: "相关页面",
+    faq: "常见问题",
+  },
+  es: {
+    comparison: "Comparación",
+    keyPoints: "Puntos clave",
+    checklist: "Lista de comprobación",
+    relatedPages: "Páginas relacionadas",
+    faq: "Preguntas frecuentes",
+  },
+  pt: {
+    comparison: "Comparação",
+    keyPoints: "Pontos principais",
+    checklist: "Lista de verificação",
+    relatedPages: "Páginas relacionadas",
+    faq: "Perguntas frequentes",
+  },
+  fr: {
+    comparison: "Comparaison",
+    keyPoints: "Points clés",
+    checklist: "Liste de contrôle",
+    relatedPages: "Pages associées",
+    faq: "Questions fréquentes",
+  },
+  ko: {
+    comparison: "비교",
+    keyPoints: "핵심 사항",
+    checklist: "확인 항목",
+    relatedPages: "관련 페이지",
+    faq: "자주 묻는 질문",
+  },
+  de: {
+    comparison: "Vergleich",
+    keyPoints: "Kernpunkte",
+    checklist: "Checkliste",
+    relatedPages: "Zugehörige Seiten",
+    faq: "Häufig gestellte Fragen",
+  },
+  ru: {
+    comparison: "Сравнение",
+    keyPoints: "Ключевые моменты",
+    checklist: "Контрольный список",
+    relatedPages: "Связанные страницы",
+    faq: "Частые вопросы",
+  },
+};
+const text = labels[locale];
 ---
 
 {
-  placement === 'before' && (
+  placement === "before" && (
     <>
       {callout && (
         <aside class="insight-callout" data-tone={callout.type}>
@@ -116,7 +194,7 @@ const {
 }
 
 {
-  placement === 'after' && (
+  placement === "after" && (
     <>
       {processFigure && (
         <section
@@ -132,7 +210,7 @@ const {
             {processFigure.steps.map((step, index) => (
               <li>
                 <span aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
                   <h3>{step.title}</h3>
@@ -149,7 +227,9 @@ const {
           class="insight-feature insight-feature--compare"
           aria-labelledby="insight-compare-title"
         >
-          <h2 id="insight-compare-title">{compareTable.title ?? '比較'}</h2>
+          <h2 id="insight-compare-title">
+            {compareTable.title ?? text.comparison}
+          </h2>
           <div>
             {[compareTable.before, compareTable.after].map((column) => (
               <section>
@@ -168,7 +248,7 @@ const {
       {statBar && (
         <section
           class="insight-feature insight-feature--stats"
-          aria-label="要点"
+          aria-label={text.keyPoints}
         >
           <dl>
             {statBar.items.map((item) => (
@@ -187,11 +267,13 @@ const {
           class="insight-feature insight-feature--checklist"
           aria-labelledby="insight-checklist-title"
         >
-          <h2 id="insight-checklist-title">{checklist.title ?? '確認項目'}</h2>
+          <h2 id="insight-checklist-title">
+            {checklist.title ?? text.checklist}
+          </h2>
           <ul>
             {checklist.items.map((item) => (
               <li>
-                <span aria-hidden="true">{item.checked ? '✓' : '—'}</span>
+                <span aria-hidden="true">{item.checked ? "✓" : "—"}</span>
                 <span>{item.text}</span>
               </li>
             ))}
@@ -204,11 +286,11 @@ const {
           class="insight-feature insight-feature--links"
           aria-labelledby="insight-links-title"
         >
-          <h2 id="insight-links-title">関連するページ</h2>
+          <h2 id="insight-links-title">{text.relatedPages}</h2>
           <ul>
             {linkCards.map((item) => (
               <li>
-                <a href={resolveInsightHref(item.href)}>
+                <a href={resolveInsightHref(item.href, locale)}>
                   <strong>{item.title}</strong>
                   {item.description && <span>{item.description}</span>}
                 </a>
@@ -223,7 +305,7 @@ const {
           class="insight-feature insight-feature--faq"
           aria-labelledby="insight-faq-title"
         >
-          <h2 id="insight-faq-title">{faq.title ?? 'よくある質問'}</h2>
+          <h2 id="insight-faq-title">{faq.title ?? text.faq}</h2>
           <div>
             {faq.items.map((item) => (
               <details>

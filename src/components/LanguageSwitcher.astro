@@ -1,0 +1,47 @@
+---
+import {
+  getLocaleFromUrl,
+  getLocalizedUrl,
+  htmlLangMap,
+  localeLabels,
+  locales,
+  type Locale,
+} from "../i18n";
+import { getUi } from "../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+  path?: string;
+  compact?: boolean;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const currentPath = Astro.props.path ?? Astro.url.pathname;
+const compact = Astro.props.compact ?? false;
+const text = getUi(locale);
+---
+
+<details
+  class:list={["language-switcher", compact && "language-switcher--compact"]}
+>
+  <summary aria-label={`${text.languageSelector}: ${localeLabels[locale]}`}>
+    <span aria-hidden="true">文/A</span>
+    <span>{localeLabels[locale]}</span>
+  </summary>
+  <ul aria-label={text.languageSelector}>
+    {
+      locales.map((targetLocale) => (
+        <li>
+          <a
+            href={getLocalizedUrl(currentPath, targetLocale)}
+            lang={htmlLangMap[targetLocale]}
+            hreflang={htmlLangMap[targetLocale]}
+            aria-current={targetLocale === locale ? "page" : undefined}
+          >
+            {localeLabels[targetLocale]}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</details>

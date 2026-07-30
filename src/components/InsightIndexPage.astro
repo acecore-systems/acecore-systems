@@ -1,0 +1,136 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+import {
+  getInsightLocale,
+  getInsightSlug,
+  getLocalizedInsightHref,
+} from "../lib/insight-links.mjs";
+import { getLocalizedUrl, htmlLangMap, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+import "../styles/insights.css";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = getUi(locale);
+const insights = (await getCollection("insights"))
+  .filter((entry) => getInsightLocale(entry.id) === locale)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const canonicalPath = getLocalizedUrl("/insights/", locale);
+const pageUrl = new URL(canonicalPath, site.siteUrl).href;
+const itemListId = `${pageUrl}#item-list`;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat(htmlLangMap[locale], {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#collection`,
+    name: text.insights,
+    url: pageUrl,
+    description: text.insightsLead,
+    inLanguage: htmlLangMap[locale],
+    mainEntity: { "@id": itemListId },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": itemListId,
+    itemListElement: insights.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: new URL(
+        getLocalizedInsightHref(getInsightSlug(entry.id), locale),
+        site.siteUrl,
+      ).href,
+      name: entry.data.title,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={text.insights}
+  description={text.insightsLead}
+  canonical={canonicalPath}
+  jsonLd={jsonLd}
+  mainEntityId={itemListId}
+  bodyClass="insights-index-page"
+  locale={locale}
+>
+  <section class="page-hero page-hero--insights">
+    <div class="container page-hero__inner">
+      <p class="page-eyebrow">{text.insightsEyebrow}</p>
+      <h1 class="page-title">{text.insightsTitle}</h1>
+      <p class="page-lead">{text.insightsLead}</p>
+    </div>
+  </section>
+
+  <section class="page-section insights-index" aria-labelledby="insights-title">
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Library / 01</p>
+          <h2 id="insights-title">{text.insightsList}</h2>
+        </div>
+        <p>
+          {text.insightsGuideLead}
+          <a href={getLocalizedUrl("/guide/", locale)}>{text.viewGuide}</a>
+        </p>
+      </header>
+
+      <ol class="insight-index-list">
+        {
+          insights.map((entry, index) => (
+            <li>
+              <a
+                href={getLocalizedInsightHref(getInsightSlug(entry.id), locale)}
+              >
+                <div class="insight-index-list__meta">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <time datetime={entry.data.date.toISOString()}>
+                    {formatDate(entry.data.date)}
+                  </time>
+                </div>
+                <h3>{entry.data.title}</h3>
+                <p>{entry.data.description}</p>
+                <ul aria-label={text.tags}>
+                  {entry.data.tags?.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside class="editorial-cta" aria-labelledby="insights-cta-title">
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="insights-cta-title">{text.consultationTitle}</h2>
+          <p>{text.consultationBody}</p>
+        </div>
+        <a
+          class="editorial-link editorial-link--primary"
+          href={`${getLocalizedUrl("/contact/", locale)}?category=service&from=systems-insights&entry=insights-index-cta`}
+        >
+          {text.technicalConsultation}
+        </a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

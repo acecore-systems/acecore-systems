@@ -1,45 +1,56 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import data from '../data/pricing.json'
-import site from '../data/site.json'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../data/site.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, htmlLangMap, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
 
-const pageUrl = new URL('/pricing/', site.siteUrl).href
-const itemListId = `${pageUrl}#item-list`
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).pricing;
+const text = getUi(locale);
+const canonicalPath = getLocalizedUrl("/pricing/", locale);
+const pageUrl = new URL(canonicalPath, site.siteUrl).href;
+const itemListId = `${pageUrl}#item-list`;
 const jsonLd = [
   {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    '@id': `${pageUrl}#collection`,
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#collection`,
     name: data.title,
     url: pageUrl,
     description: data.description,
-    inLanguage: 'ja',
-    mainEntity: { '@id': itemListId },
+    inLanguage: htmlLangMap[locale],
+    mainEntity: { "@id": itemListId },
   },
   {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    '@id': itemListId,
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": itemListId,
     itemListElement: data.items.map((item, index) => ({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: index + 1,
       name: item.label,
-      url: new URL(item.detailUrl, site.siteUrl).href,
+      url: new URL(getLocalizedUrl(item.detailUrl, locale), site.siteUrl).href,
     })),
   },
-]
+];
 ---
 
 <BaseLayout
   title={data.title}
   description={data.description}
-  canonical="/pricing/"
+  canonical={canonicalPath}
   jsonLd={jsonLd}
   mainEntityId={itemListId}
+  locale={locale}
 >
   <section class="page-hero page-hero--pricing">
     <div class="container page-hero__inner">
-      <p class="page-eyebrow">Engagement / 費用の目安</p>
+      <p class="page-eyebrow">{text.pricingEyebrow}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
@@ -53,9 +64,9 @@ const jsonLd = [
       <header class="editorial-header editorial-header--split">
         <div>
           <p class="editorial-eyebrow">Reference / 01</p>
-          <h2 id="price-list-title">支援内容と料金</h2>
+          <h2 id="price-list-title">{text.priceListTitle}</h2>
         </div>
-        <p class="price-list__caption">内容と費用の目安</p>
+        <p class="price-list__caption">{text.priceListCaption}</p>
       </header>
       <ol class="price-list">
         {
@@ -63,15 +74,18 @@ const jsonLd = [
             <li class="price-row" id={item.key}>
               <div class="price-row__heading">
                 <p class="editorial-index">
-                  {String(index + 1).padStart(2, '0')}
+                  {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3>{item.label}</h3>
               </div>
               <div class="price-row__body">
                 <p class="price-row__note">{item.note}</p>
                 {item.detailUrl && (
-                  <a class="price-row__detail" href={item.detailUrl}>
-                    詳しい支援内容を見る
+                  <a
+                    class="price-row__detail"
+                    href={getLocalizedUrl(item.detailUrl, locale)}
+                  >
+                    {text.viewSupportDetails}
                   </a>
                 )}
               </div>
@@ -88,17 +102,15 @@ const jsonLd = [
       <aside class="editorial-cta price-cta" aria-labelledby="price-cta-title">
         <div class="editorial-cta__copy">
           <p class="editorial-eyebrow">Estimate</p>
-          <h2 id="price-cta-title">正式な金額は要件整理後に見積ります。</h2>
-          <p>
-            目的、希望時期、現在の課題、予算感があればフォームに記入してください。
-          </p>
+          <h2 id="price-cta-title">{text.estimateTitle}</h2>
+          <p>{text.estimateBody}</p>
         </div>
         <div class="price-cta__actions">
           <a
             class="editorial-link editorial-link--primary"
-            href="/contact/?category=pricing&from=systems-pricing&entry=pricing-cta"
+            href={`${getLocalizedUrl("/contact/", locale)}?category=pricing&from=systems-pricing&entry=pricing-cta`}
           >
-            見積りを相談する
+            {text.estimateLabel}
           </a>
         </div>
       </aside>
