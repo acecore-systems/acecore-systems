@@ -7,8 +7,8 @@ import { load } from "cheerio";
 
 export const SITE_ORIGIN = "https://systems.acecore.net";
 export const SEARCH_NAMESPACE = "ja";
-export const EMBEDDING_MODEL = "@cf/baai/bge-m3";
-export const VECTOR_DIMENSIONS = 1024;
+export const EMBEDDING_MODEL = "text-embedding-3-large";
+export const VECTOR_DIMENSIONS = 1536;
 export const VECTOR_METRIC = "cosine";
 export const MAX_SOURCE_PAGES = 64;
 export const MAX_VECTOR_COUNT = 512;
