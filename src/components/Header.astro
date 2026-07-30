@@ -1,7 +1,29 @@
 ---
 import site from "../data/site.json";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import {
+  getLocalizedUrl,
+  htmlLangMap,
+  localeLabels,
+  locales,
+  type Locale,
+} from "../i18n";
+import { getUi } from "../i18n/ui";
+import { getLocalizedContent } from "../i18n/content";
 
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = getUi(locale);
+const content = getLocalizedContent(locale);
 const currentPath = Astro.url.pathname;
+const contactHref = getLocalizedUrl("/contact/", locale);
+const nav = content.site.nav.map((item) => ({
+  ...item,
+  href: getLocalizedUrl(item.href, locale),
+}));
 const isCurrent = (href: string) =>
   !href.includes("#") &&
   (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
@@ -10,7 +32,11 @@ const isCurrent = (href: string) =>
 <header class="site-header">
   <div class="container header-inner">
     <div class="brand-cluster">
-      <a class="brand" href="/" aria-label="Acecore Systems">
+      <a
+        class="brand"
+        href={getLocalizedUrl("/", locale)}
+        aria-label="Acecore Systems"
+      >
         <img
           class="brand-logo"
           src="/favicon.svg"
@@ -21,11 +47,15 @@ const isCurrent = (href: string) =>
         />
         <span class="brand-name">{site.name}</span>
       </a>
-      <a class="parent-brand-link" href={site.acecoreUrl}>Acecore公式サイト</a>
+      <a
+        class="parent-brand-link"
+        href={new URL(getLocalizedUrl("/", locale), site.acecoreUrl).href}
+        >{text.officialSite}</a
+      >
     </div>
-    <nav class="nav desktop-nav" aria-label="メインナビゲーション">
+    <nav class="nav desktop-nav" aria-label={text.mainNavigation}>
       {
-        site.nav.map((item) => (
+        nav.map((item) => (
           <a
             href={item.href}
             aria-current={isCurrent(item.href) ? "page" : undefined}
@@ -35,18 +65,19 @@ const isCurrent = (href: string) =>
         ))
       }
     </nav>
+    <LanguageSwitcher locale={locale} />
     <a
       class="header-cta"
-      href="/contact/"
-      aria-current={currentPath.startsWith("/contact/") ? "page" : undefined}
+      href={contactHref}
+      aria-current={currentPath.startsWith(contactHref) ? "page" : undefined}
     >
-      お問い合わせ
+      {text.contact}
     </a>
     <details class="mobile-menu">
-      <summary>メニュー</summary>
-      <nav aria-label="モバイルナビゲーション">
+      <summary>{text.menu}</summary>
+      <nav aria-label={text.mobileNavigation}>
         {
-          site.nav.map((item) => (
+          nav.map((item) => (
             <a
               href={item.href}
               aria-current={isCurrent(item.href) ? "page" : undefined}
@@ -57,13 +88,27 @@ const isCurrent = (href: string) =>
         }
         <a
           class="mobile-menu__cta"
-          href="/contact/"
-          aria-current={currentPath.startsWith("/contact/")
+          href={contactHref}
+          aria-current={currentPath.startsWith(contactHref)
             ? "page"
             : undefined}
         >
-          お問い合わせ
+          {text.contact}
         </a>
+        <div class="mobile-language-links" aria-label={text.languageSelector}>
+          {
+            locales.map((targetLocale) => (
+              <a
+                href={getLocalizedUrl(currentPath, targetLocale)}
+                lang={htmlLangMap[targetLocale]}
+                hreflang={htmlLangMap[targetLocale]}
+                aria-current={targetLocale === locale ? "page" : undefined}
+              >
+                {localeLabels[targetLocale]}
+              </a>
+            ))
+          }
+        </div>
       </nav>
     </details>
   </div>

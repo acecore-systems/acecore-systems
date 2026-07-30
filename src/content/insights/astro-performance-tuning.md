@@ -157,10 +157,10 @@ theme: {
 
 ```astro
 ---
-import { generateSrcSet, optimizeImage } from '../utils/image'
+import { generateSrcSet, optimizeImage } from "../utils/image";
 
 const remoteImage =
-  'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop'
+  "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop";
 ---
 
 <img

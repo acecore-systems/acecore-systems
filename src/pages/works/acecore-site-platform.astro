@@ -1,9 +1,18 @@
 ---
 import WorkDetailPage from "../../components/WorkDetailPage.astro";
-import data from "../../data/work-details/acecore-site-platform.json";
+import { getLocalizedContent } from "../../i18n/content";
+import type { Locale } from "../../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).workDetail;
 ---
 
 <WorkDetailPage
   data={data}
   canonicalPath="/works/acecore-site-platform/"
+  locale={locale}
 />

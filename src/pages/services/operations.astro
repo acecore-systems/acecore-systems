@@ -1,10 +1,19 @@
 ---
 import ServiceDetailPage from "../../components/ServiceDetailPage.astro";
-import data from "../../data/service-details/operations.json";
+import { getLocalizedContent } from "../../i18n/content";
+import type { Locale } from "../../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).serviceDetails.operations;
 ---
 
 <ServiceDetailPage
   data={data}
   canonicalPath="/services/operations/"
   serviceKey="operations"
+  locale={locale}
 />

@@ -1,0 +1,74 @@
+---
+import ContactPage from "../contact.astro";
+import ContactThanksPage from "../contact/thanks.astro";
+import GuidePage from "../guide.astro";
+import HomePage from "../index.astro";
+import PricingPage from "../pricing.astro";
+import PrivacyPage from "../privacy.astro";
+import ServicesPage from "../services.astro";
+import DevelopmentPage from "../services/development.astro";
+import ItAdvisorPage from "../services/it-advisor.astro";
+import OperationsPage from "../services/operations.astro";
+import SiteFunctionsPage from "../services/site-functions.astro";
+import SiteQualityPage from "../services/site-quality.astro";
+import WorksPage from "../works.astro";
+import WorkDetailPage from "../works/acecore-site-platform.astro";
+import { locales, type Locale } from "../../i18n";
+
+const pages = {
+  home: HomePage,
+  services: ServicesPage,
+  development: DevelopmentPage,
+  "it-advisor": ItAdvisorPage,
+  operations: OperationsPage,
+  "site-functions": SiteFunctionsPage,
+  "site-quality": SiteQualityPage,
+  pricing: PricingPage,
+  guide: GuidePage,
+  works: WorksPage,
+  "work-detail": WorkDetailPage,
+  contact: ContactPage,
+  "contact-thanks": ContactThanksPage,
+  privacy: PrivacyPage,
+} as const;
+
+type PageKey = keyof typeof pages;
+
+interface Props {
+  locale: Locale;
+  pageKey: PageKey;
+}
+
+export function getStaticPaths() {
+  const routes: Array<{ path?: string; pageKey: PageKey }> = [
+    { pageKey: "home" },
+    { path: "services", pageKey: "services" },
+    { path: "services/development", pageKey: "development" },
+    { path: "services/it-advisor", pageKey: "it-advisor" },
+    { path: "services/operations", pageKey: "operations" },
+    { path: "services/site-functions", pageKey: "site-functions" },
+    { path: "services/site-quality", pageKey: "site-quality" },
+    { path: "pricing", pageKey: "pricing" },
+    { path: "guide", pageKey: "guide" },
+    { path: "works", pageKey: "works" },
+    { path: "works/acecore-site-platform", pageKey: "work-detail" },
+    { path: "contact", pageKey: "contact" },
+    { path: "contact/thanks", pageKey: "contact-thanks" },
+    { path: "privacy", pageKey: "privacy" },
+  ];
+
+  return locales
+    .filter((locale) => locale !== "ja")
+    .flatMap((locale) =>
+      routes.map(({ path, pageKey }) => ({
+        params: { locale, path },
+        props: { locale, pageKey },
+      })),
+    );
+}
+
+const { locale, pageKey } = Astro.props;
+const Page = pages[pageKey];
+---
+
+<Page locale={locale} />
