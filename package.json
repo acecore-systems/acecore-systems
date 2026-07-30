@@ -9,16 +9,25 @@
   "scripts": {
     "predev": "node scripts/write-cms-runtime-config.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/write-cms-runtime-config.mjs && npm run validate:content && npm run test:cms && npm run typecheck:functions",
-    "build": "astro build",
-    "postbuild": "npm run validate:seo",
+    "prebuild": "node scripts/write-cms-runtime-config.mjs && npm run validate:content && npm run validate:i18n && npm run test:cms && npm run test:search && npm run types:cloudflare:check && npm run check:pages-config && npm run typecheck:functions",
+    "build": "astro build && node scripts/validate-search-build.mjs && pagefind --site dist && node scripts/build-search-corpus.mjs && node scripts/write-build-meta.mjs",
+    "postbuild": "node scripts/enrich-sitemap-i18n.mjs && npm run validate:seo && npm run validate:i18n:dist",
     "preview": "astro preview",
     "validate:content": "node scripts/validate-content.mjs",
+    "validate:i18n": "node scripts/validate-i18n.mjs",
+    "validate:i18n:dist": "node scripts/validate-i18n.mjs --dist",
     "validate:seo": "node scripts/validate-seo.mjs",
-    "test:cms": "node --import=./scripts/json-module-loader.mjs --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs",
+    "test:cms": "node --import=./scripts/json-module-loader.mjs --test --test-concurrency=1 --test-isolation=none tests/cms-auth.test.mjs tests/cms-proxy.test.mjs tests/safe-json.test.mjs",
+    "test:search": "node --experimental-strip-types --test tests/deployment-marker.test.mjs tests/search-api.test.mjs tests/search-corpus.test.mjs tests/vectorize-sync.test.mjs",
+    "sync:vectorize": "node scripts/sync-vectorize.mjs",
+    "sync:vectorize:dry-run": "node scripts/sync-vectorize.mjs --dry-run",
+    "types:cloudflare": "wrangler types functions/cloudflare-env.d.ts --env preview --env-interface CloudflareEnv --include-runtime false",
+    "types:cloudflare:check": "wrangler types functions/cloudflare-env.d.ts --env preview --env-interface CloudflareEnv --include-runtime false --check",
+    "check:pages-config": "wrangler pages functions build --outdir .wrangler/pages-functions",
     "typecheck:functions": "tsc --project tsconfig.functions.json",
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name acecore-systems",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "update:i18n-state": "node scripts/update-i18n-state.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -28,11 +37,13 @@
     "sharp": "^0.35.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260726.1",
+    "@cloudflare/workers-types": "^5.20260729.1",
+    "cheerio": "^1.2.0",
+    "pagefind": "^1.5.2",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^7.0.2",
-    "wrangler": "^4.114.0"
+    "wrangler": "^4.115.0"
   },
   "overrides": {
     "sharp": "$sharp"

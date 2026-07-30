@@ -4,12 +4,14 @@
 
 - 本番サイト: https://systems.acecore.net
 - 公開方式: Cloudflare Pages
-- 対象言語: 日本語
+- 対象言語: 日本語、英語、簡体字中国語、スペイン語、ポルトガル語、フランス語、韓国語、ドイツ語、ロシア語
 
 ## 技術スタック
 
 - Astro v7
 - Cloudflare Pages
+- Pagefind
+- Cloudflare Workers AI / Vectorize
 - Sveltia CMS
 
 ## 必要環境
@@ -28,6 +30,7 @@ npm run dev
 
 ```bash
 npm run validate:content
+npm run validate:i18n
 npm run build
 npm run preview
 ```
@@ -49,14 +52,22 @@ npm run preview
 | お問い合わせ | `/contact/`                     | `src/data/contact.json`                                        |
 | プライバシー | `/privacy/`                     | `src/data/privacy.json`                                        |
 
-技術解説は、Acecore公式サイトの日本語記事を起点に、Systemsが提供するサービスの実装・運用判断として再編集します。日本語1記事につきSystems側のURLを単一のcanonicalとして公開し、`src/content/insights/` で管理します。RSS、サイト内検索、タグ一覧、著者一覧、コメントUI、記事のCMS編集、多言語ページは移管しません。
+固定ページと技術解説は、上記9言語を静的HTMLとして公開します。日本語はprefixなし、翻訳ページは `/{locale}/` prefixを使い、各ページをself-canonicalとしたうえでhreflangとx-defaultで対応関係を示します。
 
-記事の frontmatter と著者情報はSystemsの公開情報として管理し、旧 `/blog/` 形式の本文リンクは表示時に解決します。Systemsへ移管済みの記事は `/insights/`、未移管の記事はAcecore公式サイトの絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
+技術解説は、Acecore公式サイトからSystemsの技術・運用判断に関する22記事と既存翻訳を移管し、`src/content/insights/` で管理します。日本語記事は直下、翻訳記事は `src/content/insights/{locale}/` に置き、言語別RSSも公開します。タグ・著者の専用一覧、コメントUI、記事のCMS編集は移管しません。
+
+記事のfrontmatterと著者情報はSystemsの公開情報として管理し、旧 `/blog/` 形式の本文リンクは表示時に各言語の `/insights/` へ解決します。未移管の記事はAcecore公式サイトの同じ言語の絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
+
+日本語ページのサイト内検索は、ブラウザ内で動くPagefindを主検索とし、Cloudflare Workers AI / Vectorizeによる「関連する内容」を補助表示します。
+
+PagefindとVectorizeのcorpusは公開後の日本語HTMLから生成し、VectorizeはPreviewとProductionを分離して同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorizeサイト内検索 運用ガイド](docs/search-vectorize.md) を参照してください。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 
 ## CMS
 
-Sveltia CMS は `/admin/` から利用します。CMS では固定ページ文言、実績、サイト設定、画像アップロードを管理します。技術解説の記事はCMSの管理対象に含めず、Pull Requestで更新します。
+Sveltia CMS は `/admin/` から利用します。CMS では日本語の固定ページ文言、実績、サイト設定、画像アップロードを管理します。翻訳と技術解説の記事はCMSの管理対象に含めず、Pull Requestで更新します。
 
 保存するとPages Functionsがuser tokenで編集者とrepository権限を再確認し、変更path、件数、容量、`main`のHEADを同期検証します。検証後は対象repositoryとContents writeだけに絞った専用GitHub Appの短期installation tokenで、内容を1 commitとして`main`へ直接反映します。その後はCloudflare PagesのGitHub連携deployで本番公開されます。コード、設定、schemaの変更は従来どおりPull RequestとCIを通します。認証境界、管理対象path、検証手順は [CMS の安全な書き込み運用](docs/cms-write-workflow.md) を参照してください。
+
+日本語sourceが変わると翻訳source hashの検証が失敗し、古い翻訳のまま新しいdeployが進まない設計です。`Create Translation PR` workflowが8言語の更新タスクを作り、翻訳完了後に `npm run update:i18n-state`、`npm run validate:i18n`、`npm run build` を実行します。

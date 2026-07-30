@@ -573,6 +573,35 @@ for (const article of migratedTechnicalArticles) {
   }
 }
 
+assert.equal(
+  resolveInsightHref("/services/development/", "en"),
+  "/en/services/development/",
+  "translated article links must target the same-locale Systems service",
+);
+assert.equal(
+  resolveInsightHref("/de/contact/", "fr"),
+  "/fr/contact/",
+  "source locale prefixes must be replaced by the current article locale",
+);
+assert.equal(
+  resolveInsightHref(
+    "https://systems.acecore.net/works/#case-hatt-homepage",
+    "ko",
+  ),
+  "/ko/works/#case-hatt-homepage",
+  "absolute Systems links must become same-locale internal links",
+);
+assert.equal(
+  resolveInsightHref("/en/services/#web", "en"),
+  "/en/services/#web-app",
+  "legacy web service anchors must target the current service id",
+);
+assert.equal(
+  resolveInsightHref("/uploads/example.webp", "en"),
+  "/uploads/example.webp",
+  "global asset paths must not receive a locale prefix",
+);
+
 for (const article of requiredServiceTechnicalArticles) {
   assert.equal(
     technicalResources.has(article),

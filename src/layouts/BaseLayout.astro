@@ -1,126 +1,177 @@
 ---
-import Header from '../components/Header.astro'
-import Footer from '../components/Footer.astro'
-import site from '../data/site.json'
-import { serializeJsonForHtmlScript } from '../lib/safe-json.ts'
-import '../styles/global.css'
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SearchModal from "../components/SearchModal.astro";
+import site from "../data/site.json";
+import { serializeJsonForHtmlScript } from "../lib/safe-json.ts";
+import {
+  getAlternateUrls,
+  getLocaleFromUrl,
+  getLocalizedUrl,
+  htmlLangMap,
+  locales,
+  ogLocaleMap,
+  type Locale,
+} from "../i18n";
+import { getUi } from "../i18n/ui";
+import { getLocalizedContent } from "../i18n/content";
+import "../styles/global.css";
 
 interface Props {
-  title: string
-  description?: string
-  image?: string
-  robots?: string
-  canonical?: string | null
-  bodyClass?: string
-  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
-  mainEntityId?: string
-  ogType?: 'website' | 'article'
-  publishedTime?: string
-  modifiedTime?: string
+  title: string;
+  description?: string;
+  image?: string;
+  robots?: string;
+  canonical?: string | null;
+  bodyClass?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  mainEntityId?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  locale?: Locale;
 }
 
 const {
   title,
   description = site.description,
   image,
-  robots = 'index, follow',
+  robots = "index, follow",
   canonical: canonicalInput = Astro.url.pathname,
   bodyClass,
   jsonLd: pageJsonLd,
   mainEntityId,
-  ogType = 'website',
+  ogType = "website",
   publishedTime,
   modifiedTime,
-} = Astro.props
+  locale: localeInput,
+} = Astro.props;
+const locale = localeInput ?? getLocaleFromUrl(Astro.url);
+const text = getUi(locale);
+const content = getLocalizedContent(locale);
+const localizedDescription =
+  description === site.description && locale !== "ja"
+    ? content.site.description
+    : description;
+const canonicalPath =
+  canonicalInput === null
+    ? null
+    : getLocalizedUrl(new URL(canonicalInput, site.siteUrl).pathname, locale);
 const canonical =
-  canonicalInput === null ? null : new URL(canonicalInput, site.siteUrl)
-const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl)
-const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`
+  canonicalPath === null ? null : new URL(canonicalPath, site.siteUrl);
+const pageUrl = canonical ?? new URL(Astro.url.pathname, site.siteUrl);
+const pageTitle = title === site.name ? site.name : `${title} | ${site.name}`;
 const ogImage = new URL(
-  image || '/images/acecore-systems-og.webp',
+  image || "/images/acecore-systems-og.webp",
   site.siteUrl,
-).href
-const homeUrl = new URL('/', site.siteUrl).href
-const acecoreHomeUrl = new URL('/', site.acecoreUrl).href
-const organizationId = `${acecoreHomeUrl}#organization`
-const serviceId = `${homeUrl}#service`
-const serviceUrl = new URL('/services/', site.siteUrl).href
-const websiteId = `${homeUrl}#website`
-const webPageId = `${pageUrl.href}#webpage`
+).href;
+const homeUrl = new URL(getLocalizedUrl("/", locale), site.siteUrl).href;
+const acecoreHomeUrl = new URL("/", site.acecoreUrl).href;
+const organizationId = `${acecoreHomeUrl}#organization`;
+const serviceId = `${homeUrl}#service`;
+const serviceUrl = new URL(getLocalizedUrl("/services/", locale), site.siteUrl)
+  .href;
+const websiteId = `${homeUrl}#website`;
+const webPageId = `${pageUrl.href}#webpage`;
+const alternateUrls = canonical
+  ? getAlternateUrls(canonical.pathname, site.siteUrl)
+  : [];
 const baseJsonLd = [
   {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': organizationId,
-    name: 'Acecore',
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": organizationId,
+    name: "Acecore",
     url: acecoreHomeUrl,
-    logo: new URL('/favicon.svg', site.acecoreUrl).href,
+    logo: new URL("/favicon.svg", site.acecoreUrl).href,
     email: site.email,
     telephone: site.phone,
   },
   {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    '@id': serviceId,
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": serviceId,
     name: site.name,
     url: serviceUrl,
-    description: site.description,
-    serviceType: [
-      'IT顧問・技術相談',
-      'AI導入・業務改善支援',
-      'Webアプリのデプロイ支援',
-      '業務システム開発',
-      'Webアプリ・管理画面開発',
-      'デザイン・クリエイティブ制作',
-      'データ活用・外部サービス連携',
-      '運用改善',
-    ],
-    provider: { '@id': organizationId },
+    description: localizedDescription,
+    serviceType: content.services.services.map((service) => service.title),
+    inLanguage: htmlLangMap[locale],
+    provider: { "@id": organizationId },
   },
   {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    '@id': websiteId,
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": websiteId,
     name: site.name,
     url: homeUrl,
-    description: site.description,
-    inLanguage: 'ja',
-    publisher: { '@id': organizationId },
-    about: { '@id': serviceId },
+    description: localizedDescription,
+    inLanguage: htmlLangMap[locale],
+    publisher: { "@id": organizationId },
+    about: { "@id": serviceId },
   },
   {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    '@id': webPageId,
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": webPageId,
     url: pageUrl.href,
     name: pageTitle,
-    description,
-    inLanguage: 'ja',
-    isPartOf: { '@id': websiteId },
-    about: { '@id': serviceId },
-    ...(mainEntityId ? { mainEntity: { '@id': mainEntityId } } : {}),
-    publisher: { '@id': organizationId },
+    description: localizedDescription,
+    inLanguage: htmlLangMap[locale],
+    isPartOf: { "@id": websiteId },
+    about: { "@id": serviceId },
+    ...(mainEntityId ? { mainEntity: { "@id": mainEntityId } } : {}),
+    publisher: { "@id": organizationId },
   },
-]
+];
 const jsonLd = pageJsonLd
   ? [...baseJsonLd, ...(Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd])]
-  : baseJsonLd
-const serializedJsonLd = serializeJsonForHtmlScript(jsonLd)
+  : baseJsonLd;
+const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
+const pagefindMainAttributes =
+  locale === "ja" && !robots.toLowerCase().includes("noindex")
+    ? { "data-pagefind-body": "" }
+    : { "data-pagefind-ignore": "all" };
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang={htmlLangMap[locale]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="msvalidate.01" content="B670753BF4A50FA5437E5694CB04BAFD" />
     <title>{pageTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={localizedDescription} />
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
+    {
+      alternateUrls.map((alternate) => (
+        <link
+          rel="alternate"
+          hreflang={htmlLangMap[alternate.locale]}
+          href={alternate.url}
+        />
+      ))
+    }
+    {
+      canonical && (
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={
+            alternateUrls.find((alternate) => alternate.locale === "ja")?.url
+          }
+        />
+      )
+    }
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${site.name} — ${text.insights}`}
+      href={getLocalizedUrl("/rss.xml", locale)}
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={localizedDescription} />
     <meta property="og:type" content={ogType} />
     {
       publishedTime && (
@@ -133,14 +184,25 @@ const serializedJsonLd = serializeJsonForHtmlScript(jsonLd)
       )
     }
     {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:locale" content={ogLocaleMap[locale]} />
+    {
+      locales
+        .filter((targetLocale) => targetLocale !== locale)
+        .map((targetLocale) => (
+          <meta
+            property="og:locale:alternate"
+            content={ogLocaleMap[targetLocale]}
+          />
+        ))
+    }
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={localizedDescription} />
     <meta name="twitter:image" content={ogImage} />
     {
-      bodyClass === 'home-page' && (
+      bodyClass === "home-page" && (
         <>
           <link
             rel="preload"
@@ -208,11 +270,12 @@ const serializedJsonLd = serializeJsonForHtmlScript(jsonLd)
     }
   </head>
   <body class={bodyClass}>
-    <a class="skip-link" href="#main">本文へ移動</a>
-    <Header />
-    <main id="main">
+    <a class="skip-link" href="#main">{text.skipToContent}</a>
+    <Header locale={locale} />
+    {locale === "ja" && <SearchModal />}
+    <main id="main" {...pagefindMainAttributes}>
       <slot />
     </main>
-    <Footer />
+    <Footer locale={locale} />
   </body>
 </html>

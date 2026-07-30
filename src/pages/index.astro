@@ -1,8 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import home from "../data/home.json";
-import services from "../data/services.json";
-import works from "../data/works.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const { home, services, works } = getLocalizedContent(locale);
+const text = getUi(locale);
+const localizeHref = (href: string) =>
+  href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 ---
 
 <BaseLayout
@@ -10,6 +20,7 @@ import works from "../data/works.json";
   description={home.description}
   image="/images/acecore-systems-og.webp"
   bodyClass="home-page"
+  locale={locale}
 >
   <section class="home-hero">
     <div class="home-hero__surface" aria-hidden="true"></div>
@@ -20,11 +31,11 @@ import works from "../data/works.json";
       <div class="home-actions">
         <a
           class="editorial-link editorial-link--primary"
-          href={home.primaryCtaHref}
+          href={localizeHref(home.primaryCtaHref)}
         >
           {home.primaryCta}
         </a>
-        <a class="editorial-link" href={home.secondaryCtaHref}
+        <a class="editorial-link" href={localizeHref(home.secondaryCtaHref)}
           >{home.secondaryCta}</a
         >
       </div>
@@ -54,7 +65,7 @@ import works from "../data/works.json";
         }
       </figcaption>
     </figure>
-    <div class="layer-model__summary" aria-label="三つの設計層">
+    <div class="layer-model__summary" aria-label={text.layerSummary}>
       <div class="container layer-model__summary-inner">
         {home.layers.map((layer) => <p>{layer.title}</p>)}
       </div>
@@ -92,30 +103,32 @@ import works from "../data/works.json";
     <div class="container">
       <header class="home-section__header">
         <p class="home-eyebrow">DESIGN DOMAINS</p>
-        <h2 id="domain-title">画面から運用まで、ひとつの仕組みとして。</h2>
-        <p>
-          Webは目的ではなく、業務を支える接点のひとつです。現場の流れに必要な範囲を組み合わせます。
-        </p>
+        <h2 id="domain-title">{text.designDomainsTitle}</h2>
+        <p>{text.designDomainsLead}</p>
       </header>
       <div class="domain-list">
         {
           services.services.map((service, index) => (
             <a
               class="domain-row"
-              href={service.detailUrl || `/services/#${service.id}`}
+              href={localizeHref(
+                service.detailUrl || `/services/#${service.id}`,
+              )}
             >
               <p class="editorial-index">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3>{service.title}</h3>
               <p>{service.body}</p>
-              <span>詳しく見る</span>
+              <span>{text.viewDetails}</span>
             </a>
           ))
         }
       </div>
       <div class="home-section__foot">
-        <a class="editorial-link" href="/services/">設計領域をすべて見る</a>
+        <a class="editorial-link" href={getLocalizedUrl("/services/", locale)}
+          >{text.viewAllServices}</a
+        >
       </div>
     </div>
   </section>
@@ -135,7 +148,7 @@ import works from "../data/works.json";
       <div class="consultation-list">
         {
           home.consultationSituations.map((situation, index) => (
-            <a class="consultation-row" href={situation.href}>
+            <a class="consultation-row" href={localizeHref(situation.href)}>
               <p class="editorial-index">
                 {String(index + 1).padStart(2, "0")}
               </p>
@@ -143,7 +156,7 @@ import works from "../data/works.json";
                 <h3>{situation.title}</h3>
                 <p>{situation.body}</p>
               </div>
-              <span>相談の入口を見る</span>
+              <span>{text.viewConsultationEntry}</span>
             </a>
           ))
         }
@@ -156,11 +169,9 @@ import works from "../data/works.json";
       <header class="home-section__header home-section__header--split">
         <div>
           <p class="home-eyebrow">SELECTED WORK</p>
-          <h2 id="home-work-title">課題から、運用できる形へ。</h2>
+          <h2 id="home-work-title">{text.selectedWorkTitle}</h2>
         </div>
-        <p>
-          課題をどう整理し、どのような仕組みにしたかを事例ごとに紹介します。
-        </p>
+        <p>{text.selectedWorkLead}</p>
       </header>
       <div class="home-work__list">
         {
@@ -183,7 +194,10 @@ import works from "../data/works.json";
                 <p class="home-work__category">{work.category}</p>
                 <h3>
                   {work.detailUrl ? (
-                    <a class="home-work__title-link" href={work.detailUrl}>
+                    <a
+                      class="home-work__title-link"
+                      href={localizeHref(work.detailUrl)}
+                    >
                       {work.title}
                     </a>
                   ) : (
@@ -197,7 +211,9 @@ import works from "../data/works.json";
         }
       </div>
       <div class="home-section__foot">
-        <a class="editorial-link" href="/works/">取り組みを見る</a>
+        <a class="editorial-link" href={getLocalizedUrl("/works/", locale)}
+          >{text.viewWorks}</a
+        >
       </div>
     </div>
   </section>
@@ -210,7 +226,10 @@ import works from "../data/works.json";
           <h2 id="home-cta-title">{home.ctaTitle}</h2>
           <p>{home.ctaBody}</p>
         </div>
-        <a class="editorial-link editorial-link--primary" href={home.ctaHref}>
+        <a
+          class="editorial-link editorial-link--primary"
+          href={localizeHref(home.ctaHref)}
+        >
           {home.ctaLabel}
         </a>
       </aside>

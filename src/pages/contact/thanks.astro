@@ -1,20 +1,44 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getLocalizedUrl, type Locale } from "../../i18n";
+import { getUi } from "../../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const text = getUi(locale);
+const eyebrow: Record<Locale, string> = {
+  ja: "Message received / 送信完了",
+  en: "Message received",
+  "zh-cn": "消息已收到",
+  es: "Mensaje recibido",
+  pt: "Mensagem recebida",
+  fr: "Message reçu",
+  ko: "메시지를 받았습니다",
+  de: "Nachricht erhalten",
+  ru: "Сообщение получено",
+};
 ---
 
 <BaseLayout
-  title="送信ありがとうございました"
-  description="お問い合わせを受け付けました。"
+  title={text.thanksTitle}
+  description={text.thanksBody}
   robots="noindex, nofollow"
   canonical={null}
+  locale={locale}
 >
   <section class="page-hero page-hero--thanks">
     <div class="container page-hero__inner page-hero__inner--compact">
-      <p class="page-eyebrow">Message received / 送信完了</p>
-      <h1 class="page-title">送信ありがとうございました。</h1>
-      <p class="page-lead">内容を確認し、通常1〜2営業日以内に返信します。</p>
+      <p class="page-eyebrow">{eyebrow[locale]}</p>
+      <h1 class="page-title">{text.thanksTitle}</h1>
+      <p class="page-lead">{text.thanksBody}</p>
       <div class="page-actions">
-        <a class="editorial-link editorial-link--primary" href="/">トップへ戻る</a>
+        <a
+          class="editorial-link editorial-link--primary"
+          href={getLocalizedUrl("/", locale)}>{text.returnHome}</a
+        >
       </div>
     </div>
   </section>

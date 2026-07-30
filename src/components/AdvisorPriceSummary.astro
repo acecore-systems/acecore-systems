@@ -1,4 +1,7 @@
 ---
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
 interface PricingSummaryItem {
   id: string;
   label: string;
@@ -13,15 +16,19 @@ interface Props {
   eyebrow?: string;
   title?: string;
   placement?: "hero" | "closing";
+  locale?: Locale;
 }
 
 const {
   items,
   priceNote,
   eyebrow = "Pricing",
-  title = "料金の目安",
+  title,
   placement = "closing",
+  locale = "ja",
 } = Astro.props;
+const text = getUi(locale);
+const resolvedTitle = title ?? text.pricingGuideTitle;
 ---
 
 {
@@ -29,7 +36,7 @@ const {
     <dl
       class="advisor-price-summary advisor-price-summary--hero"
       data-advisor-pricing-summary
-      aria-label={title}
+      aria-label={resolvedTitle}
     >
       {items.map((item) => (
         <div data-pricing-kind={item.id}>
@@ -42,25 +49,25 @@ const {
     <aside
       class="advisor-price-summary advisor-price-summary--closing"
       data-advisor-pricing-summary
-      aria-label={title}
+      aria-label={resolvedTitle}
     >
       <header class="advisor-price-summary__header">
         <p class="editorial-eyebrow">{eyebrow}</p>
-        <h2>{title}</h2>
+        <h2>{resolvedTitle}</h2>
       </header>
       <div class="advisor-price-summary__items">
         {items.map((item) => (
           <a
             class="advisor-price-summary__item"
             data-pricing-kind={item.id}
-            href={`/pricing/#${item.pricingKey}`}
+            href={`${getLocalizedUrl("/pricing/", locale)}#${item.pricingKey}`}
           >
             <div class="advisor-price-summary__value">
               <p>{item.label}</p>
               <strong>{item.price}</strong>
             </div>
             <p class="advisor-price-summary__note">{item.note}</p>
-            <span>料金一覧で確認する</span>
+            <span>{text.pricingCheck}</span>
           </a>
         ))}
       </div>

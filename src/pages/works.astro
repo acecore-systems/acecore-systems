@@ -1,16 +1,41 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import data from "../data/works.json";
+import site from "../data/site.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+const data = getLocalizedContent(locale).works;
+const text = getUi(locale);
+const localeAwareOrigins = new Set([
+  site.acecoreUrl,
+  "https://asv.acecore.net",
+]);
+const localizeHref = (href: string) => {
+  if (href.startsWith("/")) return getLocalizedUrl(href, locale);
+  const url = new URL(href);
+  if (!localeAwareOrigins.has(url.origin)) return href;
+  return new URL(
+    getLocalizedUrl(`${url.pathname}${url.search}${url.hash}`, locale),
+    url.origin,
+  ).href;
+};
 ---
 
 <BaseLayout
   title={data.title}
   description={data.description}
   bodyClass="works-page"
+  locale={locale}
 >
   <section class="page-hero page-hero--works">
     <div class="container page-hero__inner">
-      <p class="page-eyebrow">Selected work / 取り組み</p>
+      <p class="page-eyebrow">{text.worksEyebrow}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
     </div>
@@ -23,7 +48,7 @@ import data from "../data/works.json";
     <div class="container">
       <header class="editorial-header">
         <p class="editorial-eyebrow">Cases / 01</p>
-        <h2 id="work-list-title">事例</h2>
+        <h2 id="work-list-title">{text.casesTitle}</h2>
       </header>
       <div class="work-list">
         {
@@ -58,15 +83,15 @@ import data from "../data/works.json";
               <div class="work-case__body">
                 <dl class="work-details">
                   <div class="work-details__row">
-                    <dt>課題</dt>
+                    <dt>{text.challenge}</dt>
                     <dd>{work.challenge}</dd>
                   </div>
                   <div class="work-details__row">
-                    <dt>提案</dt>
+                    <dt>{text.proposal}</dt>
                     <dd>{work.proposal}</dd>
                   </div>
                   <div class="work-details__row">
-                    <dt>成果</dt>
+                    <dt>{text.result}</dt>
                     <dd>{work.result}</dd>
                   </div>
                 </dl>
@@ -74,14 +99,17 @@ import data from "../data/works.json";
                   {work.detailUrl && (
                     <a
                       class="editorial-link editorial-link--primary"
-                      href={work.detailUrl}
-                      aria-label={`${work.title}の事例詳細を見る`}
+                      href={localizeHref(work.detailUrl)}
+                      aria-label={`${work.title}: ${text.caseDetails}`}
                     >
-                      事例の詳細を見る
+                      {text.caseDetails}
                     </a>
                   )}
                   {work.externalUrl && (
-                    <a class="editorial-link" href={work.externalUrl}>
+                    <a
+                      class="editorial-link"
+                      href={localizeHref(work.externalUrl)}
+                    >
                       {work.externalLabel}
                     </a>
                   )}

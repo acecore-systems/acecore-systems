@@ -2,42 +2,51 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ServiceVisual from "./ServiceVisual.astro";
 import site from "../data/site.json";
-import siteFunctions from "../data/service-details/site-functions.json";
-import siteQuality from "../data/service-details/site-quality.json";
-import operations from "../data/service-details/operations.json";
 import workData from "../data/work-details/acecore-site-platform.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, htmlLangMap, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
 
 type WorkDetail = typeof workData;
 
 interface Props {
   data: WorkDetail;
   canonicalPath: string;
+  locale?: Locale;
 }
 
-const { data, canonicalPath } = Astro.props;
+const { data, canonicalPath: canonicalInput, locale = "ja" } = Astro.props;
+const content = getLocalizedContent(locale);
+const { siteFunctions, siteQuality, operations } = content.serviceDetails;
+const text = getUi(locale);
+const canonicalPath = getLocalizedUrl(canonicalInput, locale);
+const localizeHref = (href: string) =>
+  href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 const pageUrl = new URL(canonicalPath, site.siteUrl).href;
 const workEntityId = `${pageUrl}#case-study`;
 const organizationId = `${new URL("/", site.acecoreUrl).href}#organization`;
 const relatedServices = [
   {
-    href: "/services/site-functions/",
+    href: getLocalizedUrl("/services/site-functions/", locale),
     title: siteFunctions.title,
   },
   {
-    href: "/services/site-quality/",
+    href: getLocalizedUrl("/services/site-quality/", locale),
     title: siteQuality.title,
   },
   {
-    href: "/services/operations/",
+    href: getLocalizedUrl("/services/operations/", locale),
     title: operations.title,
   },
 ];
-const contactHref = `/contact/?${new URLSearchParams({
-  category: "service",
-  service: "site-functions",
-  from: "systems-work-acecore-site-platform",
-  entry: "work-detail-cta",
-}).toString()}`;
+const contactHref = `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams(
+  {
+    category: "service",
+    service: "site-functions",
+    from: "systems-work-acecore-site-platform",
+    entry: "work-detail-cta",
+  },
+).toString()}`;
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -46,7 +55,7 @@ const jsonLd = [
     name: data.title,
     url: pageUrl,
     description: data.description,
-    inLanguage: "ja",
+    inLanguage: htmlLangMap[locale],
     genre: data.category,
     creator: { "@id": organizationId },
     about: data.scope.map((item) => item.title),
@@ -59,14 +68,14 @@ const jsonLd = [
       {
         "@type": "ListItem",
         position: 1,
-        name: "ホーム",
-        item: new URL("/", site.siteUrl).href,
+        name: text.home,
+        item: new URL(getLocalizedUrl("/", locale), site.siteUrl).href,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "実績",
-        item: new URL("/works/", site.siteUrl).href,
+        name: text.works,
+        item: new URL(getLocalizedUrl("/works/", locale), site.siteUrl).href,
       },
       {
         "@type": "ListItem",
@@ -86,13 +95,14 @@ const jsonLd = [
   jsonLd={jsonLd}
   mainEntityId={workEntityId}
   bodyClass="work-detail-page"
+  locale={locale}
 >
   <section class="page-hero page-hero--detail">
     <div class="container page-hero__inner work-detail-hero__inner">
-      <nav class="breadcrumb" aria-label="パンくず">
+      <nav class="breadcrumb" aria-label={text.breadcrumbNavigation}>
         <ol>
-          <li><a href="/">ホーム</a></li>
-          <li><a href="/works/">実績</a></li>
+          <li><a href={getLocalizedUrl("/", locale)}>{text.home}</a></li>
+          <li><a href={getLocalizedUrl("/works/", locale)}>{text.works}</a></li>
           <li aria-current="page">{data.title}</li>
         </ol>
       </nav>
@@ -102,7 +112,7 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="work-detail-visual" aria-label="公開中のAcecore公式サイト">
+  <section class="work-detail-visual" aria-label={data.visual.alt}>
     <div class="container">
       <ServiceVisual {...data.visual} variant="section" />
     </div>
@@ -116,7 +126,7 @@ const jsonLd = [
     <div class="container">
       <div class="work-detail-overview__layout">
         <header class="editorial-header">
-          <p class="editorial-eyebrow">概要 / 01</p>
+          <p class="editorial-eyebrow">{text.overview} / 01</p>
           <h2 id="work-overview-title">{data.overviewTitle}</h2>
           <p>{data.overviewBody}</p>
         </header>
@@ -133,7 +143,7 @@ const jsonLd = [
       </div>
       <div class="work-detail-outcomes">
         <header class="work-detail-outcomes__header">
-          <p class="editorial-eyebrow">現在</p>
+          <p class="editorial-eyebrow">{text.currentState}</p>
           <h3>{data.outcomesTitle}</h3>
         </header>
         <ul>
@@ -158,8 +168,8 @@ const jsonLd = [
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">課題と方針 / 02</p>
-        <h2 id="work-story-title">複雑にせず、育てられる形へ。</h2>
+        <p class="editorial-eyebrow">{text.challengeAndPolicy} / 02</p>
+        <h2 id="work-story-title">{text.sustainableShape}</h2>
       </header>
       <div class="work-story">
         {
@@ -183,7 +193,7 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">実施内容 / 03</p>
+          <p class="editorial-eyebrow">{text.implementationScope} / 03</p>
           <h2 id="work-scope-title">{data.scopeTitle}</h2>
         </div>
         <p>{data.scopeLead}</p>
@@ -220,8 +230,8 @@ const jsonLd = [
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">関連する支援 / 04</p>
-        <h2 id="work-related-title">この事例で扱った支援</h2>
+        <p class="editorial-eyebrow">{text.relatedSupport} / 04</p>
+        <h2 id="work-related-title">{text.supportInThisCase}</h2>
       </header>
       <ul class="work-related-links">
         {
@@ -229,7 +239,7 @@ const jsonLd = [
             <li>
               <a href={service.href}>
                 <span>{service.title}</span>
-                <span>支援内容を見る →</span>
+                <span>{text.viewSupport} →</span>
               </a>
             </li>
           ))
@@ -245,7 +255,7 @@ const jsonLd = [
           <p>{data.ctaBody}</p>
         </div>
         <a class="editorial-link editorial-link--primary" href={contactHref}>
-          同じような基盤を相談する
+          {text.similarPlatformConsultation}
         </a>
       </aside>
     </div>
@@ -259,7 +269,7 @@ const jsonLd = [
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">技術資料 / 05</p>
+          <p class="editorial-eyebrow">{text.technicalNotes} / 05</p>
           <h2 id="work-resources-title">{data.resourcesTitle}</h2>
         </div>
         <p>{data.resourcesLead}</p>
@@ -267,7 +277,7 @@ const jsonLd = [
       <div class="detail-resource-list">
         {
           data.resources.map((resource, index) => (
-            <a class="detail-resource" href={resource.href}>
+            <a class="detail-resource" href={localizeHref(resource.href)}>
               <p class="editorial-index">
                 Note {String(index + 1).padStart(2, "0")}
               </p>
@@ -275,14 +285,17 @@ const jsonLd = [
                 <h3>{resource.title}</h3>
                 <p>{resource.description}</p>
               </div>
-              <span>技術資料を読む ↗</span>
+              <span>{text.readTechnicalNote}</span>
             </a>
           ))
         }
       </div>
       <div class="work-detail-external">
-        <a class="editorial-link" href={data.externalUrl}>
-          Acecore公式サイトを見る
+        <a
+          class="editorial-link"
+          href={new URL(getLocalizedUrl("/", locale), data.externalUrl).href}
+        >
+          {text.viewAcecoreSite}
         </a>
       </div>
     </div>

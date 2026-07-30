@@ -3,4 +3,41 @@
   "name": "acecore-systems",
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-03-12",
+  "vars": {
+    "SEARCH_ENABLED": "false",
+    "SEARCH_MIN_SCORE": "0.50",
+  },
+  "env": {
+    "preview": {
+      "ai": {
+        "binding": "AI",
+        "remote": true,
+      },
+      "vectorize": [
+        {
+          "binding": "SEARCH_INDEX",
+          "index_name": "acecore-systems-search-preview",
+          "remote": true,
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "SEARCH_RATE_LIMIT_DB",
+          "database_name": "acecore-systems-search-preview",
+          "database_id": "9346ee59-7cb7-4da1-9a00-7f75eee19f91",
+          "migrations_dir": "./migrations/search",
+        },
+      ],
+      "vars": {
+        "SEARCH_ENABLED": "true",
+        "SEARCH_MIN_SCORE": "0.50",
+      },
+    },
+    "production": {
+      "vars": {
+        "SEARCH_ENABLED": "false",
+        "SEARCH_MIN_SCORE": "0.50",
+      },
+    },
+  },
 }
