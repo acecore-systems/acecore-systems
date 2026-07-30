@@ -1,14 +1,14 @@
 ---
-title: 'Astroサイトに構造化データとOGPを実装するSEO改善ガイド'
-description: 'Astro + Cloudflare Pages 構成のサイトに JSON-LD 構造化データ・OGP・サイトマップ・RSSを正しく実装した手順をまとめました。Google のリッチリザルト対応からRSSフィードの最適化まで、実践的な SEO 改善を紹介します。'
+title: "Astroサイトに構造化データとOGPを実装するSEO改善ガイド"
+description: "Astro + Cloudflare Pages 構成のサイトに JSON-LD 構造化データ・OGP・サイトマップ・RSSを正しく実装した手順をまとめました。Google のリッチリザルト対応からRSSフィードの最適化まで、実践的な SEO 改善を紹介します。"
 date: 2026-03-25T11:00
 author: gui
-tags: ['技術', 'Astro', 'SEO']
+tags: ["技術", "Astro", "SEO"]
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
   title: この記事の対象読者
-  text: 'AstroサイトのSEOを体系的に改善したい方向けの内容です。構造化データの種類と実装パターン、OGPの設定方法、サイトマップの最適化など、そのまま適用できる実践的な手順を紹介しています。'
+  text: "AstroサイトのSEOを体系的に改善したい方向けの内容です。構造化データの種類と実装パターン、OGPの設定方法、サイトマップの最適化など、そのまま適用できる実践的な手順を紹介しています。"
 processFigure:
   title: SEO改善の流れ
   steps:
@@ -49,11 +49,11 @@ faq:
   title: よくある質問
   items:
     - question: 構造化データを追加するとすぐに検索結果が変わりますか？
-      answer: 'いいえ。Googleがクロール・再インデックスするまでに数日〜数週間かかります。Google Search Consoleの「リッチリザルト」レポートで反映状況を確認できます。'
+      answer: "いいえ。Googleがクロール・再インデックスするまでに数日〜数週間かかります。Google Search Consoleの「リッチリザルト」レポートで反映状況を確認できます。"
     - question: OGPの画像サイズはどのくらいが適切ですか？
-      answer: '1200×630px が推奨です。X（Twitter）は summary_large_image で表示する場合、この比率が最適です。'
+      answer: "1200×630px が推奨です。X（Twitter）は summary_large_image で表示する場合、この比率が最適です。"
     - question: サイトマップの priority は SEO に影響しますか？
-      answer: 'Googleは公式に priority を無視すると述べていますが、他の検索エンジンでは参考にされる場合があります。設定しておいて損はありません。'
+      answer: "Googleは公式に priority を無視すると述べていますが、他の検索エンジンでは参考にされる場合があります。設定しておいて損はありません。"
 ---
 
 ## はじめに
@@ -168,7 +168,7 @@ items: posts.map((post) => ({
   pubDate: post.data.date,
   author: post.data.author,
   categories: post.data.tags,
-}))
+}));
 ```
 
 ---

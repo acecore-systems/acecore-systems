@@ -1,9 +1,9 @@
 ---
-title: 'サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計'
-description: 'サービスページで読んでいた文脈を問い合わせフォームへ引き継ぐための実装設計です。AstroサイトでのミニCTA、URLパラメータ契約、フォーム種別の初期選択、件名prefill、多言語URL、GA計測、生成HTML確認まで、他サイトでも使える形で整理します。'
+title: "サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計"
+description: "サービスページで読んでいた文脈を問い合わせフォームへ引き継ぐための実装設計です。AstroサイトでのミニCTA、URLパラメータ契約、フォーム種別の初期選択、件名prefill、多言語URL、GA計測、生成HTML確認まで、他サイトでも使える形で整理します。"
 date: 2026-06-07T13:00
 author: gui
-tags: ['技術', 'Webサイト', 'サービス', 'Astro', 'CMS']
+tags: ["技術", "Webサイト", "サービス", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
 callout:
   type: info
@@ -111,19 +111,19 @@ Acecoreのサイトでは、[サービスCTAから問い合わせフォームへ
 
 ```astro
 ---
-import Icon from './Icon.astro'
-import { t, getLocalizedUrl, type Locale } from '../i18n'
+import Icon from "./Icon.astro";
+import { t, getLocalizedUrl, type Locale } from "../i18n";
 
 interface Props {
-  locale: Locale
-  gaLabel: string
-  gaLocation: string
-  serviceKey: string
+  locale: Locale;
+  gaLabel: string;
+  gaLocation: string;
+  serviceKey: string;
 }
 
-const { locale, gaLabel, gaLocation, serviceKey } = Astro.props
-const u = (path: string) => getLocalizedUrl(path, locale)
-const contactUrl = `${u('/contact/')}?category=service&service=${encodeURIComponent(serviceKey)}#contact-form`
+const { locale, gaLabel, gaLocation, serviceKey } = Astro.props;
+const u = (path: string) => getLocalizedUrl(path, locale);
+const contactUrl = `${u("/contact/")}?category=service&service=${encodeURIComponent(serviceKey)}#contact-form`;
 ---
 
 <a
@@ -135,7 +135,7 @@ const contactUrl = `${u('/contact/')}?category=service&service=${encodeURICompon
   data-ga-destination={contactUrl}
 >
   <Icon name="message-circle" class="text-sm" />
-  {t(locale, 'pages.services.miniCta')}
+  {t(locale, "pages.services.miniCta")}
 </a>
 ```
 
@@ -174,18 +174,18 @@ URLパラメータはユーザーが編集できるものです。だからこ�
 ```ts
 const serviceCategoryOptions = [
   {
-    key: 'server',
-    value: 'サーバー構築・運用について',
-    label: t(locale, 'pages.contact.formCategoryServiceServer'),
-    subject: t(locale, 'pages.services.server.title'),
+    key: "server",
+    value: "サーバー構築・運用について",
+    label: t(locale, "pages.contact.formCategoryServiceServer"),
+    subject: t(locale, "pages.services.server.title"),
   },
   {
-    key: 'web',
-    value: 'Webサイト制作・運用について',
-    label: t(locale, 'pages.contact.formCategoryServiceWeb'),
-    subject: t(locale, 'pages.services.web.title'),
+    key: "web",
+    value: "Webサイト制作・運用について",
+    label: t(locale, "pages.contact.formCategoryServiceWeb"),
+    subject: t(locale, "pages.services.web.title"),
   },
-]
+];
 ```
 
 `key`、`value`、`label`、`subject` はそれぞれ役割が違います。
@@ -208,10 +208,10 @@ const serviceCategoryOptions = [
 ```astro
 <select id="category" name="category" required>
   <option value="" disabled selected>
-    {t(locale, 'pages.contact.formCategoryPlaceholder')}
+    {t(locale, "pages.contact.formCategoryPlaceholder")}
   </option>
   <option value="サービス全般について">
-    {t(locale, 'pages.contact.formCategoryService')}
+    {t(locale, "pages.contact.formCategoryService")}
   </option>
   {
     serviceCategoryOptions.map((option) => (
@@ -237,40 +237,40 @@ const serviceCategoryOptions = [
 
 ```js
 function initContactServicePrefill() {
-  const form = document.getElementById('contact-form')
-  if (!form || form.dataset.servicePrefillInitialized === 'true') return
+  const form = document.getElementById("contact-form");
+  if (!form || form.dataset.servicePrefillInitialized === "true") return;
 
-  form.dataset.servicePrefillInitialized = 'true'
+  form.dataset.servicePrefillInitialized = "true";
 
-  const url = new URL(window.location.href)
-  const requestedCategory = url.searchParams.get('category')
-  const requestedService = url.searchParams.get('service') || ''
-  const category = document.getElementById('category')
-  const subject = document.getElementById('subject')
+  const url = new URL(window.location.href);
+  const requestedCategory = url.searchParams.get("category");
+  const requestedService = url.searchParams.get("service") || "";
+  const category = document.getElementById("category");
+  const subject = document.getElementById("subject");
 
   if (
-    requestedCategory === 'service' &&
+    requestedCategory === "service" &&
     category instanceof HTMLSelectElement
   ) {
     const serviceOption = Array.from(category.options).find((option) => {
-      return option.dataset.serviceKey === requestedService
-    })
+      return option.dataset.serviceKey === requestedService;
+    });
 
-    category.value = serviceOption?.value || 'サービス全般について'
-    category.dispatchEvent(new Event('input', { bubbles: true }))
-    category.dispatchEvent(new Event('change', { bubbles: true }))
+    category.value = serviceOption?.value || "サービス全般について";
+    category.dispatchEvent(new Event("input", { bubbles: true }));
+    category.dispatchEvent(new Event("change", { bubbles: true }));
 
     if (
       serviceOption &&
       subject instanceof HTMLInputElement &&
       !subject.value.trim()
     ) {
-      const template = form.dataset.serviceSubjectTemplate || '{service}'
+      const template = form.dataset.serviceSubjectTemplate || "{service}";
       const serviceName =
         serviceOption.dataset.serviceSubject ||
         serviceOption.textContent?.trim() ||
-        ''
-      subject.value = template.replace('{service}', serviceName)
+        "";
+      subject.value = template.replace("{service}", serviceName);
     }
   }
 }
@@ -288,8 +288,8 @@ function initContactServicePrefill() {
 AstroのView Transitionsやクライアントナビゲーションがある場合は、通常の初期ロードだけでなく `astro:page-load` でも初期化します。
 
 ```js
-document.addEventListener('astro:page-load', initContactServicePrefill)
-initContactServicePrefill()
+document.addEventListener("astro:page-load", initContactServicePrefill);
+initContactServicePrefill();
 ```
 
 ## hashでフォーム位置へ移動する
@@ -305,10 +305,10 @@ CTAのURLには `#contact-form` を付けています。
 ただし、フォーム側で初期化を行う場合、スクロールタイミングには少し注意します。要素が描画された後にスクロールしたいので、`requestAnimationFrame` を使っています。
 
 ```js
-if (window.location.hash === '#contact-form') {
+if (window.location.hash === "#contact-form") {
   window.requestAnimationFrame(() => {
-    form.scrollIntoView({ block: 'start' })
-  })
+    form.scrollIntoView({ block: "start" });
+  });
 }
 ```
 

@@ -147,11 +147,11 @@
   background: var(--surface);
 }
 
-.insight-callout[data-tone='warning'] {
+.insight-callout[data-tone="warning"] {
   border-left-color: #a66b18;
 }
 
-.insight-callout[data-tone='tip'] {
+.insight-callout[data-tone="tip"] {
   border-left-color: #2f7d64;
 }
 
@@ -185,7 +185,7 @@
   padding-left: 1.4rem;
 }
 
-.insight-toc li[data-depth='3'] {
+.insight-toc li[data-depth="3"] {
   margin-left: 18px;
 }
 

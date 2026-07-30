@@ -1,34 +1,34 @@
 ---
-title: 'CloudflareだけでAstroブログにコメント機能を作る方法'
-description: '外部コメントサービスに頼らず、Cloudflare Pages Functions、D1、Turnstile、Wrangler設定だけでAstroブログにコメント機能を追加した実装記録です。API設計、保存先、スパム対策、origin制御、Wranglerでのbinding管理、運用時の注意点まで整理します。'
+title: "CloudflareだけでAstroブログにコメント機能を作る方法"
+description: "外部コメントサービスに頼らず、Cloudflare Pages Functions、D1、Turnstile、Wrangler設定だけでAstroブログにコメント機能を追加した実装記録です。API設計、保存先、スパム対策、origin制御、Wranglerでのbinding管理、運用時の注意点まで整理します。"
 date: 2026-06-07T18:00
 author: gui
-tags: ['技術', 'Cloudflare', 'Astro', 'セキュリティ', 'Webサイト']
+tags: ["技術", "Cloudflare", "Astro", "セキュリティ", "Webサイト"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
   title: 外部コメントサービスなしで完結させる
-  text: 'コメント機能は、外部SaaSや埋め込みウィジェットを使わなくても、Cloudflare Pages Functions、D1、Turnstileを組み合わせれば静的サイトのまま実装できます。重要なのは、投稿API、保存先、bot対策、origin制御、削除運用を最初から分けて設計することです。'
+  text: "コメント機能は、外部SaaSや埋め込みウィジェットを使わなくても、Cloudflare Pages Functions、D1、Turnstileを組み合わせれば静的サイトのまま実装できます。重要なのは、投稿API、保存先、bot対策、origin制御、削除運用を最初から分けて設計することです。"
 processFigure:
   eyebrow: Cloudflare Comments
   title: Cloudflareだけで作るコメント機能の構成
-  description: 'AstroはUIを描画し、Cloudflare Pages FunctionsがAPI境界になり、D1とTurnstileをCloudflare内の部品としてつなぎます。'
+  description: "AstroはUIを描画し、Cloudflare Pages FunctionsがAPI境界になり、D1とTurnstileをCloudflare内の部品としてつなぎます。"
   variant: inline
   steps:
     - title: AstroにUIを置く
-      description: '記事詳細の下にコメント一覧、投稿フォーム、Turnstile widgetを配置する。'
+      description: "記事詳細の下にコメント一覧、投稿フォーム、Turnstile widgetを配置する。"
       icon: i-lucide-message-square-text
       accent: brand
     - title: Pages Functionで受ける
-      description: '`/api/comments` がGET/POST/OPTIONSを処理し、入力検証とCORSを担当する。'
+      description: "`/api/comments` がGET/POST/OPTIONSを処理し、入力検証とCORSを担当する。"
       icon: i-lucide-cloud
       accent: slate
     - title: D1に保存する
-      description: '`COMMENTS_DB` bindingでSQLite互換のD1へコメント、hash、作成日時を保存する。'
+      description: "`COMMENTS_DB` bindingでSQLite互換のD1へコメント、hash、作成日時を保存する。"
       icon: i-lucide-database
       accent: emerald
     - title: Turnstileで守る
-      description: 'Cloudflare Turnstile tokenをserver-side validationし、hostname allowlistも確認する。'
+      description: "Cloudflare Turnstile tokenをserver-side validationし、hostname allowlistも確認する。"
       icon: i-lucide-shield-check
       accent: amber
 compareTable:
@@ -36,52 +36,52 @@ compareTable:
   before:
     label: 外部コメントサービス
     items:
-      - '導入は速いが、UI、データ保存先、規約、表示速度をサービス側に寄せる'
-      - '外部scriptやiframeが記事ページの読み込みに影響しやすい'
-      - '多言語UIやサイトデザインとの統一に制約が出やすい'
-      - 'コメントデータの扱い、削除、移行がサービス仕様に依存する'
+      - "導入は速いが、UI、データ保存先、規約、表示速度をサービス側に寄せる"
+      - "外部scriptやiframeが記事ページの読み込みに影響しやすい"
+      - "多言語UIやサイトデザインとの統一に制約が出やすい"
+      - "コメントデータの扱い、削除、移行がサービス仕様に依存する"
   after:
     label: Cloudflareだけで実装
     items:
-      - 'Pages Functions、D1、TurnstileだけでAPIと保存先を持てる'
-      - 'Astro側のHTML/CSSとしてサイトデザインへ自然に合わせられる'
-      - 'Wrangler設定でD1 bindingとCloudflare側のDB名を揃えられる'
-      - 'スパム対策、削除、保存する個人情報の範囲を自分たちで決められる'
+      - "Pages Functions、D1、TurnstileだけでAPIと保存先を持てる"
+      - "Astro側のHTML/CSSとしてサイトデザインへ自然に合わせられる"
+      - "Wrangler設定でD1 bindingとCloudflare側のDB名を揃えられる"
+      - "スパム対策、削除、保存する個人情報の範囲を自分たちで決められる"
 checklist:
   title: 実装前に決めること
   items:
-    - text: 'コメントを外部サービスへ預けず、自サイトのCloudflare構成で持つ'
+    - text: "コメントを外部サービスへ預けず、自サイトのCloudflare構成で持つ"
       checked: true
-    - text: '保存先はD1、API境界はCloudflare Pages Functionsにする'
+    - text: "保存先はD1、API境界はCloudflare Pages Functionsにする"
       checked: true
-    - text: 'Turnstile tokenは必ずserver-side validationする'
+    - text: "Turnstile tokenは必ずserver-side validationする"
       checked: true
-    - text: 'URL、メール、HTML、Markdownリンク、宣伝語句を投稿前に拒否する'
+    - text: "URL、メール、HTML、Markdownリンク、宣伝語句を投稿前に拒否する"
       checked: true
-    - text: 'D1 database名とCOMMENTS_DB bindingをCloudflare側と揃える'
+    - text: "D1 database名とCOMMENTS_DB bindingをCloudflare側と揃える"
       checked: true
 linkCards:
   - href: /blog/cloudflare-pages-security/
     title: Cloudflare Pages のセキュリティ設定
-    description: 'Cloudflare Pagesで静的サイトを安全に配信する基本設計です。'
+    description: "Cloudflare Pagesで静的サイトを安全に配信する基本設計です。"
     icon: i-lucide-shield
   - href: /blog/cms-selection-and-turnstile/
     title: Sveltia CMS導入ガイド
-    description: 'Cloudflare Workers上のOAuthやTurnstileを含むCMS導入の実装記録です。'
+    description: "Cloudflare Workers上のOAuthやTurnstileを含むCMS導入の実装記録です。"
     icon: i-lucide-badge-check
   - href: /blog/astro-ai-contact-chat/
     title: Astroサイトに問い合わせAIチャットを組み込む技術設計
-    description: 'Cloudflare Pages FunctionsでAPI境界を作る別の実装例です。'
+    description: "Cloudflare Pages FunctionsでAPI境界を作る別の実装例です。"
     icon: i-lucide-bot
 faq:
   title: よくある質問
   items:
     - question: 外部コメントサービスを使わないメリットは何ですか？
-      answer: 'データ保存先、UI、スパム対策、削除運用、preview環境の扱いを自分たちで決められることです。外部scriptやサービス仕様への依存も減ります。'
+      answer: "データ保存先、UI、スパム対策、削除運用、preview環境の扱いを自分たちで決められることです。外部scriptやサービス仕様への依存も減ります。"
     - question: D1だけでコメント機能は足りますか？
-      answer: '記事コメントのように、post_slugで取得し、作成日時順に表示する小規模なリレーショナルデータならD1で扱いやすいです。リアルタイム通知や大規模な権限管理が必要なら別設計を検討します。'
+      answer: "記事コメントのように、post_slugで取得し、作成日時順に表示する小規模なリレーショナルデータならD1で扱いやすいです。リアルタイム通知や大規模な権限管理が必要なら別設計を検討します。"
     - question: Turnstileをフロントに置くだけではだめですか？
-      answer: 'だめです。TurnstileのtokenはPages Function側でSiteverify APIへ送り、成功結果とhostnameを確認してから保存処理へ進めます。'
+      answer: "だめです。TurnstileのtokenはPages Function側でSiteverify APIへ送り、成功結果とhostnameを確認してから保存処理へ進めます。"
 ---
 
 静的サイトにコメント欄を付けるとき、まず候補に上がりやすいのは外部コメントサービスやGitHub Discussions連携です。
@@ -240,18 +240,18 @@ Cloudflare PagesのWrangler設定は、Pages project configurationのsource of t
 実装では次のようにしています。
 
 ```ts
-const formData = new FormData()
-formData.append('secret', env.TURNSTILE_SECRET_KEY)
-formData.append('response', token)
-if (remoteIp) formData.append('remoteip', remoteIp)
+const formData = new FormData();
+formData.append("secret", env.TURNSTILE_SECRET_KEY);
+formData.append("response", token);
+if (remoteIp) formData.append("remoteip", remoteIp);
 
 const response = await fetch(
-  'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify",
   {
-    method: 'POST',
+    method: "POST",
     body: formData,
   },
-)
+);
 ```
 
 Cloudflare Turnstileの公式ドキュメントでも、tokenはSiteverify APIでserver-side validationする前提で説明されています。tokenには有効期限があり、期限切れや再利用されたtokenは失敗します。
@@ -262,7 +262,7 @@ Cloudflare Turnstileの公式ドキュメントでも、tokenはSiteverify API�
 return Boolean(
   result.success &&
   (!result.hostname || isAllowedVerifiedHostname(result.hostname, env)),
-)
+);
 ```
 
 これは、Turnstile tokenだけを見ると「どのhostnameで発行されたtokenか」を見落とすためです。CloudflareのAny Hostnameに関するドキュメントでも、server-side codeでhostnameを検証する必要があると説明されています。
@@ -296,13 +296,13 @@ acecore.net,www.acecore.net,acecore-net.pages.dev
 
 ```ts
 type CommentPayload = {
-  slug?: unknown
-  locale?: unknown
-  authorName?: unknown
-  body?: unknown
-  website?: unknown
-  turnstileToken?: unknown
-}
+  slug?: unknown;
+  locale?: unknown;
+  authorName?: unknown;
+  body?: unknown;
+  website?: unknown;
+  turnstileToken?: unknown;
+};
 ```
 
 `website` はハニーポットです。通常ユーザーには見えないhidden inputに値が入っていたらbot投稿として拒否します。
@@ -325,7 +325,7 @@ function isBlockedText(value: string): boolean {
     MARKDOWN_LINK_PATTERN.test(value) ||
     REPEATED_CHARACTER_PATTERN.test(value) ||
     SPAM_WORD_PATTERN.test(value)
-  )
+  );
 }
 ```
 

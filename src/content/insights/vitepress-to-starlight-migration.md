@@ -1,9 +1,9 @@
 ---
-title: 'VitePress から Starlight へ ― ドキュメントサイトのフレームワーク統一'
-description: 'VitePress + UnoCSS で構築していた事業計画ドキュメントを Astro + Starlight に移行し、2つのプロジェクトでフレームワークを統一した記録です。Mermaid 図表の CDN 移行も紹介します。'
+title: "VitePress から Starlight へ ― ドキュメントサイトのフレームワーク統一"
+description: "VitePress + UnoCSS で構築していた事業計画ドキュメントを Astro + Starlight に移行し、2つのプロジェクトでフレームワークを統一した記録です。Mermaid 図表の CDN 移行も紹介します。"
 date: 2026-03-15T00:00
 author: gui
-tags: ['技術', 'Astro', 'Starlight']
+tags: ["技術", "Astro", "Starlight"]
 image: /uploads/acecore-generated/blog-vitepress-to-starlight-migration.webp
 processFigure:
   title: 移行の流れ
@@ -100,23 +100,23 @@ sidebar:
 ### 3. astro.config.mjs の設定
 
 ```javascript
-import { defineConfig } from 'astro/config'
-import starlight from '@astrojs/starlight'
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
 
 export default defineConfig({
   integrations: [
     starlight({
-      title: 'Acecore 事業計画',
-      defaultLocale: 'ja',
+      title: "Acecore 事業計画",
+      defaultLocale: "ja",
       sidebar: [
         {
-          label: '事業計画',
-          autogenerate: { directory: '/' },
+          label: "事業計画",
+          autogenerate: { directory: "/" },
         },
       ],
     }),
   ],
-})
+});
 ```
 
 ### 4. UnoCSS の削除
@@ -138,15 +138,15 @@ Starlight のカスタムヘッドに Mermaid の CDN スクリプトを追加�
 starlight({
   head: [
     {
-      tag: 'script',
-      attrs: { type: 'module' },
+      tag: "script",
+      attrs: { type: "module" },
       content: `
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.16.0/dist/mermaid.esm.min.mjs'
         mermaid.initialize({ startOnLoad: true })
       `,
     },
   ],
-})
+});
 ```
 
 Markdown 内では通常の Mermaid 記法がそのまま使えます：

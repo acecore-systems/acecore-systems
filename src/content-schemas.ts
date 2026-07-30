@@ -1,37 +1,37 @@
-import { z } from 'astro/zod'
+import { z } from "astro/zod";
 
-const BLOG_TIMEZONE_OFFSET = '+09:00'
-const LOCAL_DATETIME_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/
+const BLOG_TIMEZONE_OFFSET = "+09:00";
+const LOCAL_DATETIME_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/;
 const CONTENT_DATETIME_PATTERN =
-  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})?$/
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})?$/;
 
 function parseContentDate(value: string): Date {
-  const raw = value.trim()
+  const raw = value.trim();
   const normalized = LOCAL_DATETIME_PATTERN.test(raw)
     ? `${raw}${BLOG_TIMEZONE_OFFSET}`
-    : raw
-  const date = new Date(normalized)
+    : raw;
+  const date = new Date(normalized);
 
   if (Number.isNaN(date.getTime())) {
-    throw new Error(`Invalid date value in content frontmatter: ${raw}`)
+    throw new Error(`Invalid date value in content frontmatter: ${raw}`);
   }
 
-  return date
+  return date;
 }
 
 const contentDate = z
   .string()
   .refine((value) => CONTENT_DATETIME_PATTERN.test(value.trim()), {
     message:
-      'Content date must include time as YYYY-MM-DDTHH:mm, optionally with timezone',
+      "Content date must include time as YYYY-MM-DDTHH:mm, optionally with timezone",
   })
-  .transform(parseContentDate)
+  .transform(parseContentDate);
 
 const localizedAuthorSchema = z.object({
   name: z.string().optional(),
   bio: z.string().optional(),
   skills: z.array(z.string()).optional(),
-})
+});
 
 export const insightSchema = z
   .object({
@@ -45,7 +45,7 @@ export const insightSchema = z
     author: z.string(),
     callout: z
       .object({
-        type: z.enum(['info', 'warning', 'tip', 'note']).default('info'),
+        type: z.enum(["info", "warning", "tip", "note"]).default("info"),
         title: z.string().optional(),
         text: z.string(),
       })
@@ -71,13 +71,13 @@ export const insightSchema = z
         eyebrow: z.string().optional(),
         title: z.string(),
         description: z.string().optional(),
-        variant: z.enum(['card', 'inline']).optional(),
+        variant: z.enum(["card", "inline"]).optional(),
         steps: z.array(
           z.object({
             title: z.string(),
             description: z.string(),
             icon: z.string(),
-            accent: z.enum(['brand', 'emerald', 'amber', 'slate']).optional(),
+            accent: z.enum(["brand", "emerald", "amber", "slate"]).optional(),
           }),
         ),
       })
@@ -108,13 +108,13 @@ export const insightSchema = z
         eyebrow: z.string().optional(),
         title: z.string(),
         description: z.string().optional(),
-        variant: z.enum(['card', 'inline']).optional(),
+        variant: z.enum(["card", "inline"]).optional(),
         items: z.array(
           z.object({
             title: z.string(),
             description: z.string(),
             icon: z.string(),
-            tone: z.enum(['brand', 'emerald', 'amber', 'slate']).optional(),
+            tone: z.enum(["brand", "emerald", "amber", "slate"]).optional(),
           }),
         ),
       })
@@ -132,7 +132,7 @@ export const insightSchema = z
       })
       .optional(),
   })
-  .passthrough()
+  .passthrough();
 
 export const authorSchema = z
   .object({
@@ -147,4 +147,4 @@ export const authorSchema = z
     skills: z.array(z.string()).optional(),
     i18n: z.record(z.string(), localizedAuthorSchema).optional(),
   })
-  .passthrough()
+  .passthrough();

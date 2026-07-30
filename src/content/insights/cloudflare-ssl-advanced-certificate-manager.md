@@ -1,9 +1,9 @@
 ---
-title: '以前有料だった Cloudflare の SSL オプションの正体 ― Dedicated SSL から Advanced Certificate Manager へ'
-description: 'Cloudflare で以前有料だった「Dedicated SSL Certificates（専用SSL証明書）」は、2021年に「Advanced Certificate Manager（ACM）」として機能拡張・名称変更されました。無料の Universal SSL との違いや ACM が必要なケースを解説します。'
+title: "以前有料だった Cloudflare の SSL オプションの正体 ― Dedicated SSL から Advanced Certificate Manager へ"
+description: "Cloudflare で以前有料だった「Dedicated SSL Certificates（専用SSL証明書）」は、2021年に「Advanced Certificate Manager（ACM）」として機能拡張・名称変更されました。無料の Universal SSL との違いや ACM が必要なケースを解説します。"
 date: 2026-03-31T00:00
 author: gui
-tags: ['技術', 'Cloudflare', 'セキュリティ', 'インフラ']
+tags: ["技術", "Cloudflare", "セキュリティ", "インフラ"]
 image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
 compareTable:
   title: Universal SSL vs Advanced Certificate Manager
@@ -12,7 +12,7 @@ compareTable:
     items:
       - ルートドメイン + 1階層サブドメインのみカバー
       - CA・有効期限・暗号スイートは選択不可
-      - '*.example.com は機能するが dev.staging.example.com は対象外'
+      - "*.example.com は機能するが dev.staging.example.com は対象外"
       - Cloudflare ブランドが証明書の CN に含まれる
   after:
     label: Advanced Certificate Manager（有料・$10/月/ゾーン）
@@ -20,7 +20,7 @@ compareTable:
       - 多階層サブドメインを最大 50 ホスト名まで指定可能
       - CA（Let's Encrypt / Google Trust Services 等）を選択可能
       - 有効期限を 14 日 〜 365 日で設定可能
-      - '独自ドメインが CN になり Cloudflare ブランドが非表示'
+      - "独自ドメインが CN になり Cloudflare ブランドが非表示"
 callout:
   type: info
   title: 名称変更の背景

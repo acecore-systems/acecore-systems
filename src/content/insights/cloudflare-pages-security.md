@@ -1,9 +1,9 @@
 ---
-title: 'Cloudflare Pages で実現するセキュアな静的サイト配信'
-description: 'Cloudflare Pages での静的サイトデプロイと、_headers によるセキュリティヘッダー・CSP 設定の実践ガイドです。Worker から Pages に戻した経緯も紹介します。'
+title: "Cloudflare Pages で実現するセキュアな静的サイト配信"
+description: "Cloudflare Pages での静的サイトデプロイと、_headers によるセキュリティヘッダー・CSP 設定の実践ガイドです。Worker から Pages に戻した経緯も紹介します。"
 date: 2026-03-15T00:00
 author: gui
-tags: ['技術', 'Cloudflare', 'セキュリティ']
+tags: ["技術", "Cloudflare", "セキュリティ"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 processFigure:
   title: デプロイ構成の変遷

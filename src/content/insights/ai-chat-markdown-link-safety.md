@@ -1,9 +1,9 @@
 ---
-title: 'AIチャット回答のMarkdownリンクを安全に描画する実装設計'
-description: 'AIチャットの回答に含まれるMarkdownリンクを、HTMLへ安全に変換するための実装メモです。URL前後の空白を許容しつつ、trim、許可リスト、DOM生成、fallback、テストケースを分けて考えることで、他サイトにも転用しやすいレンダラーになります。'
+title: "AIチャット回答のMarkdownリンクを安全に描画する実装設計"
+description: "AIチャットの回答に含まれるMarkdownリンクを、HTMLへ安全に変換するための実装メモです。URL前後の空白を許容しつつ、trim、許可リスト、DOM生成、fallback、テストケースを分けて考えることで、他サイトにも転用しやすいレンダラーになります。"
 date: 2026-06-07T14:30
 author: gui
-tags: ['技術', 'Webサイト', 'AI', 'セキュリティ', 'Astro']
+tags: ["技術", "Webサイト", "AI", "セキュリティ", "Astro"]
 image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
 callout:
   type: tip
@@ -36,7 +36,7 @@ compareTable:
       - AI回答をinnerHTMLへ直接入れてしまう
       - Markdown仕様全体を一気に実装しようとする
       - URL前後の空白でリンク化に失敗する
-      - '外部URLやjavascript:を同じ扱いにしてしまう'
+      - "外部URLやjavascript:を同じ扱いにしてしまう"
   after:
     label: 小さく安全に描画する場合
     items:
@@ -105,13 +105,13 @@ Markdownとしては人間に意味が通りますが、URL部分を「空白を
 修正前はこういう考え方でした。
 
 ```js
-;/\[([^\]]+)\]\(([^)\s]+)\)/
+/\[([^\]]+)\]\(([^)\s]+)\)/;
 ```
 
 `[^)\s]+` は空白を許さないため、`( /services/ )` をリンクとして拾えません。そこで、括弧の内側では前後空白を許容し、実際に使うURLは後でtrimします。
 
 ```js
-;/\[([^\]]+)\]\(\s*([^)]+?)\s*\)/
+/\[([^\]]+)\]\(\s*([^)]+?)\s*\)/;
 ```
 
 ここで大事なのは、正規表現を緩めて終わりにしないことです。緩めたあとは、必ず正規化と安全判定を入れます。
@@ -126,19 +126,19 @@ Markdownとしては人間に意味が通りますが、URL部分を「空白を
 4. 許可できる場合だけ `<a>` を作る
 
 ```js
-const href = String(rawHref || '').trim()
+const href = String(rawHref || "").trim();
 
 if (label && isSafeMarkdownHref(href)) {
-  const link = document.createElement('a')
-  link.href = href
-  link.rel = 'noopener noreferrer'
+  const link = document.createElement("a");
+  link.href = href;
+  link.rel = "noopener noreferrer";
 
   if (/^https?:\/\//i.test(href)) {
-    link.target = '_blank'
+    link.target = "_blank";
   }
 
-  link.textContent = label
-  parent.appendChild(link)
+  link.textContent = label;
+  parent.appendChild(link);
 }
 ```
 
@@ -163,18 +163,18 @@ Acecoreの問い合わせAIでは、おおむね次のような範囲に絞っ�
 
 ```js
 function isSafeMarkdownHref(href) {
-  if (href.startsWith('/')) return true
+  if (href.startsWith("/")) return true;
 
   try {
-    const url = new URL(href, window.location.origin)
-    if (url.origin === window.location.origin) return true
-    if (url.hostname === 'acecore.net') return true
-    if (url.hostname === 'lin.ee') return true
+    const url = new URL(href, window.location.origin);
+    if (url.origin === window.location.origin) return true;
+    if (url.hostname === "acecore.net") return true;
+    if (url.hostname === "lin.ee") return true;
   } catch {
-    return false
+    return false;
   }
 
-  return href === 'mailto:info@acecore.net' || href === 'tel:05088902788'
+  return href === "mailto:info@acecore.net" || href === "tel:05088902788";
 }
 ```
 

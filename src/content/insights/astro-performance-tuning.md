@@ -1,15 +1,15 @@
 ---
-title: 'AstroサイトのPageSpeedモバイル99点を達成する実践テクニック'
-description: 'Astro + UnoCSS + Cloudflare Pages 構成のサイトで PageSpeed Insights モバイル99点を達成するまでに行った最適化テクニックを紹介します。CSS配信戦略・フォント設定の罠・レスポンシブ画像・AdSense遅延読み込み・キャッシュ設定まで、実践的な手法をまとめました。'
+title: "AstroサイトのPageSpeedモバイル99点を達成する実践テクニック"
+description: "Astro + UnoCSS + Cloudflare Pages 構成のサイトで PageSpeed Insights モバイル99点を達成するまでに行った最適化テクニックを紹介します。CSS配信戦略・フォント設定の罠・レスポンシブ画像・AdSense遅延読み込み・キャッシュ設定まで、実践的な手法をまとめました。"
 date: 2026-03-15T00:00
 lastUpdated: 2026-03-25T00:00
 author: gui
-tags: ['技術', 'Astro', 'パフォーマンス']
+tags: ["技術", "Astro", "パフォーマンス"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: この記事の対象読者
-  text: 'AstroサイトのPageSpeedスコアを上げたい方向けです。CSS・フォント・画像・広告スクリプトの最適化について、そのまま適用できる具体的な手法を紹介しています。'
+  text: "AstroサイトのPageSpeedスコアを上げたい方向けです。CSS・フォント・画像・広告スクリプトの最適化について、そのまま適用できる具体的な手法を紹介しています。"
 processFigure:
   title: 最適化の流れ
   steps:
@@ -38,7 +38,7 @@ compareTable:
   after:
     label: 最適化後
     items:
-      - '@fontsource でセルフホスト（正しいフォント名で参照）'
+      - "@fontsource でセルフホスト（正しいフォント名で参照）"
       - CSSを外部ファイル化しimmutableキャッシュで配信
       - srcset + sizes で画面幅に応じた最適サイズを配信
       - AdSense・GA4を初回スクロール時に遅延読み込み
@@ -47,13 +47,13 @@ faq:
   title: よくある質問
   items:
     - question: CSSはインライン化と外部ファイル化、どちらが速いですか？
-      answer: 'CSSの総量によります。20 KiB 以下ならインライン化が有利です。それ以上の場合は外部ファイル化してブラウザキャッシュを活かすほうが、2回目以降のアクセスが大幅に高速化します。'
+      answer: "CSSの総量によります。20 KiB 以下ならインライン化が有利です。それ以上の場合は外部ファイル化してブラウザキャッシュを活かすほうが、2回目以降のアクセスが大幅に高速化します。"
     - question: Google Fonts CDN はなぜ遅いのですか？
-      answer: 'PageSpeed Insights はslow 4G（約1.6 Mbps、RTT 150ms）をシミュレートします。外部ドメインへの接続にはDNS lookup + TCP接続 + TLSハンドシェイクが必要で、この遅延がレンダーブロッキングになります。セルフホストなら同一ドメインから配信されるため、この遅延がゼロになります。'
+      answer: "PageSpeed Insights はslow 4G（約1.6 Mbps、RTT 150ms）をシミュレートします。外部ドメインへの接続にはDNS lookup + TCP接続 + TLSハンドシェイクが必要で、この遅延がレンダーブロッキングになります。セルフホストなら同一ドメインから配信されるため、この遅延がゼロになります。"
     - question: Cloudflare Images が遅い場合はどうすればいいですか？
       answer: 'Cloudflare Images は通常は高速ですが、初回変換やキャッシュミス時は元画像の取得待ちが発生します。PageSpeed計測時にLCPが悪化する場合は、重要な画像に <link rel="preload"> を設定し、ブラウザに早期取得を指示しましょう。'
     - question: AdSense を遅延読み込みしても収益に影響しませんか？
-      answer: 'ファーストビューに広告がない場合、初回スクロール時の読み込みでも表示タイミングはほぼ同じです。ページ速度改善によるSEO効果のほうがプラスに働きます。'
+      answer: "ファーストビューに広告がない場合、初回スクロール時の読み込みでも表示タイミングはほぼ同じです。ページ速度改善によるSEO効果のほうがプラスに働きます。"
 ---
 
 ## はじめに
@@ -105,9 +105,9 @@ Astro の設定を `build.inlineStylesheets: 'auto'` に変更します。Astro 
 // astro.config.mjs
 export default defineConfig({
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: "auto",
   },
-})
+});
 ```
 
 外部CSSファイルは `/_astro/` ディレクトリに出力されるため、Cloudflare Pages のヘッダー設定で immutable キャッシュを付与します。
@@ -139,7 +139,7 @@ npm install @fontsource-variable/noto-sans-jp
 
 ```javascript
 // BaseLayout.astro
-import '@fontsource-variable/noto-sans-jp'
+import "@fontsource-variable/noto-sans-jp";
 ```
 
 ### 注意：フォント名の不一致
@@ -162,7 +162,7 @@ theme: {
 TypeScript の型エラーが出る場合は、`src/env.d.ts` にモジュール宣言を追加します。
 
 ```typescript
-declare module '@fontsource-variable/noto-sans-jp'
+declare module "@fontsource-variable/noto-sans-jp";
 ```
 
 ---
@@ -225,15 +225,15 @@ Google AdSense のスクリプトは約100 KiB あり、初期表示に大きく
 
 ```javascript
 window.addEventListener(
-  'scroll',
+  "scroll",
   () => {
-    const script = document.createElement('script')
-    script.src = 'https://pagead2.googlesyndication.com/...'
-    script.async = true
-    document.head.appendChild(script)
+    const script = document.createElement("script");
+    script.src = "https://pagead2.googlesyndication.com/...";
+    script.async = true;
+    document.head.appendChild(script);
   },
   { once: true },
-)
+);
 ```
 
 `{ once: true }` でイベントリスナーは1回だけ発火します。これにより、ファーストビューの JavaScript 転送量をゼロに近づけます。

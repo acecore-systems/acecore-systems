@@ -1,9 +1,9 @@
 ---
-title: 'Zoho Mail から KAGOYA MAIL への移行ガイド ― DNS・認証・データ棚卸しの実践記録'
-description: 'Zoho Workplace から KAGOYA MAIL へメールサービスを移行した際の手順・DNS設定・SPF/DKIM認証・Zoho Workplace 全体のデータ棚卸しまで、実践ベースで解説します。'
+title: "Zoho Mail から KAGOYA MAIL への移行ガイド ― DNS・認証・データ棚卸しの実践記録"
+description: "Zoho Workplace から KAGOYA MAIL へメールサービスを移行した際の手順・DNS設定・SPF/DKIM認証・Zoho Workplace 全体のデータ棚卸しまで、実践ベースで解説します。"
 date: 2026-03-16T00:00
 author: gui
-tags: ['技術', 'メール', 'DNS', 'インフラ']
+tags: ["技術", "メール", "DNS", "インフラ"]
 image: /uploads/acecore-generated/blog-zoho-to-kagoya-mail-migration.webp
 processFigure:
   title: 移行作業の全体フロー

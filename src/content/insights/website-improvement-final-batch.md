@@ -1,15 +1,15 @@
 ---
-title: 'Astroサイトの品質改善ガイド 続編 ― PageSpeed Insights 全項目100点を達成した最終調整'
-description: 'Cloudflare Web Analytics の停止、GA4 と検索UIの遅延ロード化、PageSpeed Insights のモバイル / デスクトップ全項目100の達成、Search Console のパンくずと索引整理、SVGアイコン移行、そして試したが採用しなかった最適化の判断まで。前回記事の続編として最終改善をまとめます。'
+title: "Astroサイトの品質改善ガイド 続編 ― PageSpeed Insights 全項目100点を達成した最終調整"
+description: "Cloudflare Web Analytics の停止、GA4 と検索UIの遅延ロード化、PageSpeed Insights のモバイル / デスクトップ全項目100の達成、Search Console のパンくずと索引整理、SVGアイコン移行、そして試したが採用しなかった最適化の判断まで。前回記事の続編として最終改善をまとめます。"
 date: 2026-03-29T02:30
 author: gui
 tags:
-  ['技術', 'Astro', 'パフォーマンス', 'アクセシビリティ', 'SEO', 'Webサイト']
+  ["技術", "Astro", "パフォーマンス", "アクセシビリティ", "SEO", "Webサイト"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
 callout:
   type: tip
   title: 前回記事の続編です
-  text: '前回の「Astroサイトの品質改善ガイド」でまとめた改善の続編として、PageSpeed Insights 全項目100に到達するまでの最終調整を記録します。今回はモバイル / デスクトップともに 4 指標すべて 100 に到達し、GA4 と検索UIの遅延ロード、Search Console のパンくずと索引整理、残診断の読み解き、試したが採用しなかった追加最適化の判断まで含めて整理しました。'
+  text: "前回の「Astroサイトの品質改善ガイド」でまとめた改善の続編として、PageSpeed Insights 全項目100に到達するまでの最終調整を記録します。今回はモバイル / デスクトップともに 4 指標すべて 100 に到達し、GA4 と検索UIの遅延ロード、Search Console のパンくずと索引整理、残診断の読み解き、試したが採用しなかった追加最適化の判断まで含めて整理しました。"
 insightGrid:
   eyebrow: なぜ価値があるのか
   title: PageSpeed 全項目100が高水準と言える理由
@@ -113,15 +113,15 @@ faq:
   title: よくある質問
   items:
     - question: PageSpeed Insights で 100 を取ったら「最速のサイト」と言えますか？
-      answer: '絶対的な意味での最速とは言い切れません。PageSpeed Insights は Lighthouse によるラボ計測であり、実ユーザーの回線や端末、サーバー混雑まで完全には表現しません。ただし、Lighthouse が見る主要監査では取りこぼしの少ない、非常に高水準な状態です。'
+      answer: "絶対的な意味での最速とは言い切れません。PageSpeed Insights は Lighthouse によるラボ計測であり、実ユーザーの回線や端末、サーバー混雑まで完全には表現しません。ただし、Lighthouse が見る主要監査では取りこぼしの少ない、非常に高水準な状態です。"
     - question: 100 点なのにネットワークの依存関係ツリーや render-blocking CSS が見えるのはなぜですか？
-      answer: 'それらは必ずしも失敗監査ではなく、診断情報として表示されることがあります。今回は BaseLayout.css 1 本がクリティカルパスに残っていますが、モバイル 100 を維持できており、費用対効果の観点から現時点では許容と判断しました。'
+      answer: "それらは必ずしも失敗監査ではなく、診断情報として表示されることがあります。今回は BaseLayout.css 1 本がクリティカルパスに残っていますが、モバイル 100 を維持できており、費用対効果の観点から現時点では許容と判断しました。"
     - question: なぜ Cloudflare Web Analytics を切ったのですか？
-      answer: 'GA4 で CTA・検索・問い合わせなどのイベント計測がすでに十分実装されており、Cloudflare 側は役割が性能監視寄りに限定されていました。今回は beacon が PageSpeed に与える影響も考慮し、GA4 主軸へ整理しました。'
+      answer: "GA4 で CTA・検索・問い合わせなどのイベント計測がすでに十分実装されており、Cloudflare 側は役割が性能監視寄りに限定されていました。今回は beacon が PageSpeed に与える影響も考慮し、GA4 主軸へ整理しました。"
     - question: Search Console では何を直したのですか？
-      answer: 'パンくずの invalid item を解消するために BreadcrumbList の出し方を見直し、URL の末尾スラッシュと canonical の整合も整理しました。さらに tag / archive / author / pagination のような一覧ページは noindex, follow と sitemap 除外で役割を明確にし、索引ノイズを減らしました。'
+      answer: "パンくずの invalid item を解消するために BreadcrumbList の出し方を見直し、URL の末尾スラッシュと canonical の整合も整理しました。さらに tag / archive / author / pagination のような一覧ページは noindex, follow と sitemap 除外で役割を明確にし、索引ノイズを減らしました。"
     - question: 試したけれど採用しなかったことはありますか？
-      answer: 'あります。BaseLayout.css のさらなる分割、network dependency tree の表示自体を消すための調整、GA4 まで削って third-party を極小化する案などを比較しました。ただ、モバイル100を維持できている状況では、複雑さや計測損失の方が大きく、採用しませんでした。'
+      answer: "あります。BaseLayout.css のさらなる分割、network dependency tree の表示自体を消すための調整、GA4 まで削って third-party を極小化する案などを比較しました。ただ、モバイル100を維持できている状況では、複雑さや計測損失の方が大きく、採用しませんでした。"
 ---
 
 ## はじめに

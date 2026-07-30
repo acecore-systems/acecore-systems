@@ -1,14 +1,14 @@
 ---
-title: 'GitHub Copilot × Playwright でWebサイトをモンキーテストする実践手法'
-description: 'VS Codeのエージェントモード（GitHub Copilot）とPlaywrightブラウザツールを組み合わせ、静的サイトを体系的にモンキーテストした実践記録です。テスト設計の考え方から、実際に発見・修正したバグ、改善提案までを公開します。'
+title: "GitHub Copilot × Playwright でWebサイトをモンキーテストする実践手法"
+description: "VS Codeのエージェントモード（GitHub Copilot）とPlaywrightブラウザツールを組み合わせ、静的サイトを体系的にモンキーテストした実践記録です。テスト設計の考え方から、実際に発見・修正したバグ、改善提案までを公開します。"
 date: 2026-03-25T14:00
 author: gui
-tags: ['技術', 'GitHub Copilot', 'VS Code', 'Astro', 'Webサイト']
+tags: ["技術", "GitHub Copilot", "VS Code", "Astro", "Webサイト"]
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
   title: この記事の対象読者
-  text: 'AIを使ったテスト自動化に興味がある方、Webサイトの品質保証を効率化したい方、GitHub Copilotのエージェントモードを活用したい方向けです。'
+  text: "AIを使ったテスト自動化に興味がある方、Webサイトの品質保証を効率化したい方、GitHub Copilotのエージェントモードを活用したい方向けです。"
 processFigure:
   title: AIモンキーテストの進め方
   steps:
@@ -44,13 +44,13 @@ faq:
   title: よくある質問
   items:
     - question: GitHub Copilotのエージェントモードは無料で使えますか？
-      answer: 'GitHub Copilot Freeプランではエージェントモードの利用に月間の回数制限があります。ProまたはBusinessプランでは制限が緩和されます。VS Code Insiders版で最新機能が先行利用できます。'
+      answer: "GitHub Copilot Freeプランではエージェントモードの利用に月間の回数制限があります。ProまたはBusinessプランでは制限が緩和されます。VS Code Insiders版で最新機能が先行利用できます。"
     - question: Playwright以外のブラウザツールでも同じことができますか？
-      answer: 'VS Codeの組み込みブラウザツール（Simple Browser + Playwright統合）を使用しています。Copilotがrun_playwright_codeツールでブラウザを直接操作するため、別途Playwrightをインストールする必要はありません。'
+      answer: "VS Codeの組み込みブラウザツール（Simple Browser + Playwright統合）を使用しています。Copilotがrun_playwright_codeツールでブラウザを直接操作するため、別途Playwrightをインストールする必要はありません。"
     - question: 静的サイト以外にも適用できますか？
-      answer: 'はい。SPAやSSRサイトでも同様のアプローチが可能です。ただしログイン認証が必要なページでは、テスト用の認証情報を安全に管理する仕組みが必要です。'
+      answer: "はい。SPAやSSRサイトでも同様のアプローチが可能です。ただしログイン認証が必要なページでは、テスト用の認証情報を安全に管理する仕組みが必要です。"
     - question: テストで見つかったバグの修正もAIに任せられますか？
-      answer: 'エージェントモードではファイルの読み書きが可能なため、バグの検出から修正・ビルド確認まで一連の流れをセッション内で完結できます。本記事でも2件のバグを発見し、その場で修正しました。'
+      answer: "エージェントモードではファイルの読み書きが可能なため、バグの検出から修正・ビルド確認まで一連の流れをセッション内で完結できます。本記事でも2件のバグを発見し、その場で修正しました。"
 ---
 
 ## はじめに
@@ -151,7 +151,7 @@ AIはPlaywrightでブラウザ要素を直接操作し、JavaScriptで動作す�
 
 ```javascript
 // AIが実行したテストコードの例
-const details = document.querySelectorAll('details')
+const details = document.querySelectorAll("details");
 // 初期状態：すべて閉じている → OK
 // クリックで開く → OK
 // 再クリックで閉じる → OK

@@ -1,10 +1,10 @@
 ---
-title: 'Sveltia CMS導入ガイド'
-description: 'Astroなどの静的サイトにSveltia CMSを導入し、GitHub OAuth、専用GitHub App、検証付き直接公開、画像アップロード、多言語運用まで整える手順と反省点をまとめます。'
+title: "Sveltia CMS導入ガイド"
+description: "Astroなどの静的サイトにSveltia CMSを導入し、GitHub OAuth、専用GitHub App、検証付き直接公開、画像アップロード、多言語運用まで整える手順と反省点をまとめます。"
 date: 2026-06-07T16:00
 lastUpdated: 2026-07-28T12:00
 author: gui
-tags: ['技術', 'CMS', 'Astro', 'Cloudflare', 'セキュリティ']
+tags: ["技術", "CMS", "Astro", "Cloudflare", "セキュリティ"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
 processFigure:
   title: Sveltia CMS導入の流れ
@@ -151,10 +151,10 @@ Acecoreでは設定を明示的に上書きできるよう、`window.CMS_MANUAL_
 CMS.init({
   config: {
     backend: {
-      branch: 'main',
+      branch: "main",
     },
   },
-})
+});
 ```
 
 ## 2. GitHub backendを設定する
@@ -263,7 +263,7 @@ Markdownをフォーム化するときは、自由入力を減らすほど運用
   widget: relation
   collection: tags
   value_field: name
-  display_fields: ['{{name}} ({{id}})']
+  display_fields: ["{{name}} ({{id}})"]
   search_fields: [name, id]
   multiple: true
   required: false
@@ -299,10 +299,10 @@ Acecoreでは、ビルド前に `public/admin/runtime-config.js` を生成し、
 
 ```javascript
 await writeFile(
-  'public/admin/runtime-config.js',
-  'window.CMS_MANUAL_INIT = true;\n',
-  'utf8',
-)
+  "public/admin/runtime-config.js",
+  "window.CMS_MANUAL_INIT = true;\n",
+  "utf8",
+);
 ```
 
 そして `init.js` 側でbranchだけ上書きします。
@@ -311,10 +311,10 @@ await writeFile(
 CMS.init({
   config: {
     backend: {
-      branch: 'main',
+      branch: "main",
     },
   },
-})
+});
 ```
 
 productionのpublication branchは`main`に固定し、proxyは`main`以外をbaseにするrequestを拒否します。preview側も設定表示の整合性確認のためbranchは`main`のままですが、writer認証情報がないため保存はできません。
@@ -346,7 +346,7 @@ direct commitのsubjectは`cms: create ...`や`cms: update ...`を維持しま�
 
 ```javascript
 function isCmsCommitSubject(subject) {
-  return /^cms: (create|update|delete) /.test(subject || '')
+  return /^cms: (create|update|delete) /.test(subject || "");
 }
 ```
 
@@ -438,7 +438,7 @@ collections:
   - name: blog
     label: ブログ
     folder: src/content/blog
-    slug: '{{fields._slug}}'
+    slug: "{{fields._slug}}"
     fields:
       - { name: title, label: タイトル, widget: string }
       - { name: description, label: 概要, widget: text }

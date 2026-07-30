@@ -1,9 +1,9 @@
 ---
-title: 'Astro 6 サイトを9言語対応に ― ブログ記事168本の自動翻訳と多言語アーキテクチャ'
-description: 'Astro 6 + UnoCSS + Cloudflare Pages 構成のサイトを9言語対応にした記録です。UI の国際化からブログ記事168本の翻訳、Pages CMS の多言語設定まで、全工程を解説します。'
+title: "Astro 6 サイトを9言語対応に ― ブログ記事168本の自動翻訳と多言語アーキテクチャ"
+description: "Astro 6 + UnoCSS + Cloudflare Pages 構成のサイトを9言語対応にした記録です。UI の国際化からブログ記事168本の翻訳、Pages CMS の多言語設定まで、全工程を解説します。"
 date: 2026-03-25T10:00
 author: gui
-tags: ['技術', 'Astro', 'i18n', 'Webサイト']
+tags: ["技術", "Astro", "i18n", "Webサイト"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
 processFigure:
   title: 多言語化の流れ
@@ -43,26 +43,26 @@ compareTable:
 callout:
   type: info
   title: 対応言語
-  text: '日本語（デフォルト）・英語・簡体字中国語・スペイン語・ポルトガル語・フランス語・韓国語・ドイツ語・ロシア語の9言語に対応しています。'
+  text: "日本語（デフォルト）・英語・簡体字中国語・スペイン語・ポルトガル語・フランス語・韓国語・ドイツ語・ロシア語の9言語に対応しています。"
 statBar:
   items:
-    - value: '9'
+    - value: "9"
       label: 対応言語数
-    - value: '168'
+    - value: "168"
       label: 翻訳記事数
-    - value: '621'
+    - value: "621"
       label: 生成ページ数
 faq:
   title: よくある質問
   items:
     - question: なぜ9言語を選んだのですか？
-      answer: 'グローバルなリーチを最大化するため、世界の主要言語圏をカバーしました。英語・中国語・スペイン語・ポルトガル語でインターネット人口の大部分をカバーし、フランス語・ドイツ語・ロシア語・韓国語で残る主要市場を補完しています。'
+      answer: "グローバルなリーチを最大化するため、世界の主要言語圏をカバーしました。英語・中国語・スペイン語・ポルトガル語でインターネット人口の大部分をカバーし、フランス語・ドイツ語・ロシア語・韓国語で残る主要市場を補完しています。"
     - question: 翻訳の品質はどのように担保していますか？
-      answer: 'GitHub Copilot による AI 翻訳を採用しています。英語版を中間言語として作成し、そこから各言語に翻訳することで品質のばらつきを抑えています。フロントマターのタグ値は日本語のまま保持し、URL・コードブロック・画像パスは変更しない方針です。'
+      answer: "GitHub Copilot による AI 翻訳を採用しています。英語版を中間言語として作成し、そこから各言語に翻訳することで品質のばらつきを抑えています。フロントマターのタグ値は日本語のまま保持し、URL・コードブロック・画像パスは変更しない方針です。"
     - question: 翻訳記事が存在しない場合はどうなりますか？
-      answer: 'フォールバック機能により、翻訳記事が存在しない場合は日本語の原文が表示されます。段階的に翻訳を追加していくことが可能です。'
+      answer: "フォールバック機能により、翻訳記事が存在しない場合は日本語の原文が表示されます。段階的に翻訳を追加していくことが可能です。"
     - question: 新しい記事を追加したら翻訳も必要ですか？
-      answer: '翻訳ファイルが無い場合は日本語版がフォールバック表示されるため、必須ではありません。翻訳を追加する場合は、対応する言語ディレクトリに同名のMarkdownファイルを配置するだけです。'
+      answer: "翻訳ファイルが無い場合は日本語版がフォールバック表示されるため、必須ではありません。翻訳を追加する場合は、対応する言語ディレクトリに同名のMarkdownファイルを配置するだけです。"
 ---
 
 Acecore公式サイトを日本語のみから9言語対応にアップグレードしました。UIの国際化、ブログ記事21本×8言語＝168本の翻訳、Pages CMS の多言語設定まで、全工程を紹介します。翻訳が未追加の記事は日本語版をフォールバック表示する構成です。
@@ -106,13 +106,13 @@ Astro の `prefixDefaultLocale: false` を採用し、日本語はルート直�
 // astro.config.mjs
 export default defineConfig({
   i18n: {
-    defaultLocale: 'ja',
-    locales: ['ja', 'en', 'zh-cn', 'es', 'pt', 'fr', 'ko', 'de', 'ru'],
+    defaultLocale: "ja",
+    locales: ["ja", "en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
     routing: {
       prefixDefaultLocale: false,
     },
   },
-})
+});
 ```
 
 ### 翻訳ユーティリティ
@@ -122,7 +122,7 @@ export default defineConfig({
 ```typescript
 // src/i18n/utils.ts
 export function t(locale: Locale, key: string): string {
-  return translations[locale]?.[key] ?? translations[defaultLocale][key] ?? key
+  return translations[locale]?.[key] ?? translations[defaultLocale][key] ?? key;
 }
 ```
 
@@ -135,8 +135,8 @@ export function t(locale: Locale, key: string): string {
 ```astro
 ---
 // src/pages/[locale]/about.astro（ルートファイル）
-import AboutPage from '../../views/AboutPage.astro'
-const { locale } = Astro.params
+import AboutPage from "../../views/AboutPage.astro";
+const { locale } = Astro.params;
 ---
 
 <AboutPage locale={locale} />
@@ -170,24 +170,24 @@ src/content/blog/
 
 ```typescript
 // ベース記事かどうかを判定（IDにスラッシュが無い = ベース）
-export function isBasePost(post: CollectionEntry<'blog'>): boolean {
-  return !post.id.includes('/')
+export function isBasePost(post: CollectionEntry<"blog">): boolean {
+  return !post.id.includes("/");
 }
 
 // IDからロケールプレフィックスを除去してベーススラッグを取得
 export function getBaseSlug(postId: string): string {
-  const idx = postId.indexOf('/')
-  return idx !== -1 ? postId.slice(idx + 1) : postId
+  const idx = postId.indexOf("/");
+  return idx !== -1 ? postId.slice(idx + 1) : postId;
 }
 
 // ベース記事のローカライズ版を取得（無ければ原文にフォールバック）
 export function localizePost(
-  post: CollectionEntry<'blog'>,
-  allPosts: CollectionEntry<'blog'>[],
+  post: CollectionEntry<"blog">,
+  allPosts: CollectionEntry<"blog">[],
   locale: Locale,
-): CollectionEntry<'blog'> {
-  if (locale === defaultLocale) return post
-  return allPosts.find((p) => p.id === `${locale}/${post.id}`) ?? post
+): CollectionEntry<"blog"> {
+  if (locale === defaultLocale) return post;
+  return allPosts.find((p) => p.id === `${locale}/${post.id}`) ?? post;
 }
 ```
 
@@ -222,8 +222,8 @@ export function localizePost(
 ```astro
 ---
 // src/views/BlogPostPage.astro
-const localizedPost = localizePost(basePost, allPosts, locale)
-const post = localizedPost // テンプレートの既存参照がそのまま動く
+const localizedPost = localizePost(basePost, allPosts, locale);
+const post = localizedPost; // テンプレートの既存参照がそのまま動く
 ---
 ```
 
@@ -235,9 +235,9 @@ const post = localizedPost // テンプレートの既存参照がそのまま�
 
 ```astro
 ---
-const allPosts = await getCollection('blog')
-const basePosts = allPosts.filter(isBasePost)
-const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale))
+const allPosts = await getCollection("blog");
+const basePosts = allPosts.filter(isBasePost);
+const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale));
 ---
 ```
 
@@ -263,13 +263,13 @@ Node.js スクリプトで全ファイルを一括修正しました。英語の
 
 ```typescript
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts = await getCollection('blog')
-  const posts = allPosts.filter(isBasePost)
+  const allPosts = await getCollection("blog");
+  const posts = allPosts.filter(isBasePost);
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { title: post.data.title },
-  }))
-}
+  }));
+};
 ```
 
 ## Pages CMS の多言語対応
@@ -340,8 +340,8 @@ content:
 ```typescript
 // src/utils/blog-i18n.ts
 export function getLocalizedAuthor(author: Author, locale: Locale) {
-  const localized = author.i18n?.[locale]
-  return localized ? { ...author, ...localized } : author
+  const localized = author.i18n?.[locale];
+  return localized ? { ...author, ...localized } : author;
 }
 ```
 
@@ -357,20 +357,20 @@ export function getLocalizedAuthor(author: Author, locale: Locale) {
 // astro.config.mjs
 sitemap({
   i18n: {
-    defaultLocale: 'ja',
+    defaultLocale: "ja",
     locales: {
-      ja: 'ja',
-      en: 'en',
-      'zh-cn': 'zh-CN',
-      es: 'es',
-      pt: 'pt',
-      fr: 'fr',
-      ko: 'ko',
-      de: 'de',
-      ru: 'ru',
+      ja: "ja",
+      en: "en",
+      "zh-cn": "zh-CN",
+      es: "es",
+      pt: "pt",
+      fr: "fr",
+      ko: "ko",
+      de: "de",
+      ru: "ru",
     },
   },
-})
+});
 ```
 
 これにより、すべてのURLに対して9言語分の hreflang リンクが出力され、Google が各言語版の対応関係を正確に把握できます。
@@ -398,7 +398,7 @@ sitemap({
 export const getStaticPaths = () =>
   locales
     .filter((l) => l !== defaultLocale)
-    .map((l) => ({ params: { locale: l } }))
+    .map((l) => ({ params: { locale: l } }));
 ```
 
 `BaseLayout.astro` の `<link rel="alternate" type="application/rss+xml">` もロケールに応じた RSS URL を自動設定しています。

@@ -1,15 +1,15 @@
 ---
-title: 'Astroサイトの品質改善ガイド ― PageSpeedモバイル99点達成までの道のり'
-description: 'Astro + UnoCSS + Cloudflare Pages 構成のサイトをパフォーマンス・SEO・アクセシビリティ・UXの4軸で改善し、PageSpeed Insights モバイル99点・デスクトップ全項目100点を達成した全記録です。'
+title: "Astroサイトの品質改善ガイド ― PageSpeedモバイル99点達成までの道のり"
+description: "Astro + UnoCSS + Cloudflare Pages 構成のサイトをパフォーマンス・SEO・アクセシビリティ・UXの4軸で改善し、PageSpeed Insights モバイル99点・デスクトップ全項目100点を達成した全記録です。"
 date: 2026-03-25T15:00
 author: gui
 tags:
-  ['技術', 'Astro', 'パフォーマンス', 'アクセシビリティ', 'SEO', 'Webサイト']
+  ["技術", "Astro", "パフォーマンス", "アクセシビリティ", "SEO", "Webサイト"]
 image: /uploads/acecore-generated/blog-website-improvement-batches.webp
 callout:
   type: tip
   title: この記事の対象読者
-  text: 'Webサイトの品質改善に取り組んでいる方、Astro + UnoCSS の実践的な運用に興味がある方向けです。この記事は改善の全体像をまとめたハブ記事で、各トピックの詳細は個別の記事にリンクしています。'
+  text: "Webサイトの品質改善に取り組んでいる方、Astro + UnoCSS の実践的な運用に興味がある方向けです。この記事は改善の全体像をまとめたハブ記事で、各トピックの詳細は個別の記事にリンクしています。"
 processFigure:
   title: 改善の進め方
   steps:
@@ -64,13 +64,13 @@ faq:
   title: よくある質問
   items:
     - question: PageSpeed Insights でモバイル100点は出せますか？
-      answer: '技術的には可能ですが、AdSense や GA4 などの外部サービスを含むサイトでは安定して100点を維持するのは極めて困難です。Lighthouse は slow 4G（約1.6 Mbps）をシミュレートするため、外部リソースの読み込みが大きなペナルティになります。99点は現実的な最高到達点です。'
+      answer: "技術的には可能ですが、AdSense や GA4 などの外部サービスを含むサイトでは安定して100点を維持するのは極めて困難です。Lighthouse は slow 4G（約1.6 Mbps）をシミュレートするため、外部リソースの読み込みが大きなペナルティになります。99点は現実的な最高到達点です。"
     - question: 改善はどのような順番で進めるべきですか？
-      answer: 'まずPageSpeed Insightsで現状を把握し、最もインパクトの大きい指摘から対処します。一般的にはパフォーマンス → SEO → アクセシビリティの順がおすすめです。'
+      answer: "まずPageSpeed Insightsで現状を把握し、最もインパクトの大きい指摘から対処します。一般的にはパフォーマンス → SEO → アクセシビリティの順がおすすめです。"
     - question: この改善手法は他のAstroサイトにも適用できますか？
-      answer: 'はい。CSS配信戦略・フォントのセルフホスト・構造化データ・アクセシビリティ改善などは、Astroサイト全般に共通するベストプラクティスです。'
+      answer: "はい。CSS配信戦略・フォントのセルフホスト・構造化データ・アクセシビリティ改善などは、Astroサイト全般に共通するベストプラクティスです。"
     - question: GitHub Copilotを使って改善を進めましたか？
-      answer: 'はい。ほぼすべての改善をGitHub Copilotと協働して実施しました。詳細は「GitHub Copilotを使った開発フロー」の記事で紹介しています。'
+      answer: "はい。ほぼすべての改善をGitHub Copilotと協働して実施しました。詳細は「GitHub Copilotを使った開発フロー」の記事で紹介しています。"
 ---
 
 ## はじめに

@@ -1,9 +1,9 @@
 ---
-title: 'ホームページ制作の費用相場と見積もりで見るべきポイント'
-description: 'ホームページ制作の費用相場を目的別に整理し、見積もりで確認すべき項目、予算内で成果につなげる考え方を解説します。'
+title: "ホームページ制作の費用相場と見積もりで見るべきポイント"
+description: "ホームページ制作の費用相場を目的別に整理し、見積もりで確認すべき項目、予算内で成果につなげる考え方を解説します。"
 date: 2026-04-01T10:00
 author: gui
-tags: ['Web制作', 'Webサイト', 'SEO', 'サービス']
+tags: ["Web制作", "Webサイト", "SEO", "サービス"]
 image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
 callout:
   type: info

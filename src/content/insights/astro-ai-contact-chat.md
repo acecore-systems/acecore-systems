@@ -1,9 +1,9 @@
 ---
-title: 'Astroサイトに問い合わせAIチャットを組み込む技術設計'
-description: 'Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。'
+title: "Astroサイトに問い合わせAIチャットを組み込む技術設計"
+description: "Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
 date: 2026-06-07T12:00
 author: gui
-tags: ['技術', 'Cloudflare', 'Webサイト', 'AI', 'サービス']
+tags: ["技術", "Cloudflare", "Webサイト", "AI", "サービス"]
 image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
 callout:
   type: info
@@ -109,17 +109,17 @@ Astro + Cloudflare Pages の場合、API境界は Cloudflare Pages Functions の
 
 ```ts
 type ContactAiRequest = {
-  message: string
-  locale: 'ja' | 'en' | 'zh-cn' | 'es' | 'pt' | 'fr' | 'ko' | 'de' | 'ru'
+  message: string;
+  locale: "ja" | "en" | "zh-cn" | "es" | "pt" | "fr" | "ko" | "de" | "ru";
   history?: Array<{
-    role: 'user' | 'assistant'
-    content: string
-  }>
-}
+    role: "user" | "assistant";
+    content: string;
+  }>;
+};
 
 type ContactAiResponse = {
-  answer: string
-}
+  answer: string;
+};
 ```
 
 フォーム入力の氏名、メールアドレス、電話番号、会社名などは、AIチャットには送らない方針にしました。問い合わせAIチャットは個人情報を集める場所ではなく、訪問者が「どのサービスを見るべきか」「どこから相談すべきか」を整理する入口だからです。
@@ -132,28 +132,28 @@ Cloudflare Pages Function 側では、次の処理をまとめて行います。
 
 ```ts
 export async function onRequestPost({ request, env }: PagesFunction<Env>) {
-  assertSameOrigin(request)
-  assertRateLimit(request)
+  assertSameOrigin(request);
+  assertRateLimit(request);
 
-  const body = await request.json()
-  const message = validateMessage(body.message)
-  const locale = validateLocale(body.locale)
-  const history = trimHistory(body.history)
+  const body = await request.json();
+  const message = validateMessage(body.message);
+  const locale = validateLocale(body.locale);
+  const history = trimHistory(body.history);
 
   const prompt = buildContactPrompt({
     locale,
     message,
     history,
     siteContext: buildPublicSiteContext(locale),
-  })
+  });
 
   const answer = await callOpenAIResponsesApi({
     apiKey: env.OPENAI_API_KEY,
     model: env.OPENAI_MODEL,
     prompt,
-  })
+  });
 
-  return Response.json({ answer })
+  return Response.json({ answer });
 }
 ```
 
@@ -183,23 +183,23 @@ function buildPublicSiteContext(locale: Locale) {
   return {
     services: [
       {
-        name: 'Web制作',
-        summary: 'コーポレートサイト、採用サイト、LPの制作相談に対応',
-        url: localizePath('/services/web-production/', locale),
+        name: "Web制作",
+        summary: "コーポレートサイト、採用サイト、LPの制作相談に対応",
+        url: localizePath("/services/web-production/", locale),
       },
       {
-        name: 'サーバー運用',
-        summary: 'クラウド、VPS、監視、バックアップ設計の相談に対応',
-        url: localizePath('/services/server-operations/', locale),
+        name: "サーバー運用",
+        summary: "クラウド、VPS、監視、バックアップ設計の相談に対応",
+        url: localizePath("/services/server-operations/", locale),
       },
     ],
     contact: {
-      form: localizePath('/contact/', locale),
-      line: 'https://lin.ee/...',
-      emailPolicy: 'フォームが使えない場合や補足が必要な場合だけ案内する',
-      phonePolicy: '急ぎの確認が必要な場合だけ案内する',
+      form: localizePath("/contact/", locale),
+      line: "https://lin.ee/...",
+      emailPolicy: "フォームが使えない場合や補足が必要な場合だけ案内する",
+      phonePolicy: "急ぎの確認が必要な場合だけ案内する",
     },
-  }
+  };
 }
 ```
 
@@ -252,8 +252,8 @@ AIチャットはフォームの代替ではありません。問い合わせペ
 
 ```ts
 function localizePath(path: string, locale: Locale) {
-  if (locale === 'ja') return path
-  return `/${locale}${path}`
+  if (locale === "ja") return path;
+  return `/${locale}${path}`;
 }
 ```
 
@@ -267,14 +267,14 @@ Originチェックでは、`Origin` ヘッダーがある場合に、リクエ�
 
 ```ts
 function assertSameOrigin(request: Request) {
-  const origin = request.headers.get('Origin')
-  if (!origin) return
+  const origin = request.headers.get("Origin");
+  if (!origin) return;
 
-  const requestUrl = new URL(request.url)
-  const originUrl = new URL(origin)
+  const requestUrl = new URL(request.url);
+  const originUrl = new URL(origin);
 
   if (originUrl.host !== requestUrl.host) {
-    throw new Response('Forbidden', { status: 403 })
+    throw new Response("Forbidden", { status: 403 });
   }
 }
 ```
@@ -310,16 +310,16 @@ AI回答にリンクを含められると、サービス案内としては便利
 
 ```ts
 function sanitizeHref(rawHref: string, currentOrigin: string) {
-  const href = rawHref.trim()
+  const href = rawHref.trim();
 
-  if (href.startsWith('/')) return href
-  if (href.startsWith(`${currentOrigin}/`)) return href
-  if (href.startsWith('https://acecore.net/')) return href
-  if (href.startsWith('https://lin.ee/')) return href
-  if (href === 'mailto:info@acecore.net') return href
-  if (href === 'tel:05088902788') return href
+  if (href.startsWith("/")) return href;
+  if (href.startsWith(`${currentOrigin}/`)) return href;
+  if (href.startsWith("https://acecore.net/")) return href;
+  if (href.startsWith("https://lin.ee/")) return href;
+  if (href === "mailto:info@acecore.net") return href;
+  if (href === "tel:05088902788") return href;
 
-  return null
+  return null;
 }
 ```
 

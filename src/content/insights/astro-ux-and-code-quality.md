@@ -1,14 +1,14 @@
 ---
-title: 'Astro View Transitionsの落とし穴と解決策 ― UX・コード品質改善ガイド'
-description: 'AstroのView Transitionsでスクリプトが動かなくなる問題の解決策、Pagefind全文検索の導入、TypeScript型安全性の向上、定数の一元管理など、UXとコード品質を改善した実践ガイドです。'
+title: "Astro View Transitionsの落とし穴と解決策 ― UX・コード品質改善ガイド"
+description: "AstroのView Transitionsでスクリプトが動かなくなる問題の解決策、Pagefind全文検索の導入、TypeScript型安全性の向上、定数の一元管理など、UXとコード品質を改善した実践ガイドです。"
 date: 2026-03-25T13:00
 author: gui
-tags: ['技術', 'Astro', 'Webサイト']
+tags: ["技術", "Astro", "Webサイト"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: View Transitions を使うなら必読
-  text: 'AstroのClientRouter（View Transitions）を導入すると、ページ遷移がスムーズになる反面、すべてのインラインスクリプトが再実行されなくなります。この記事ではその解決パターンと、UX・コード品質の改善手法をまとめています。'
+  text: "AstroのClientRouter（View Transitions）を導入すると、ページ遷移がスムーズになる反面、すべてのインラインスクリプトが再実行されなくなります。この記事ではその解決パターンと、UX・コード品質の改善手法をまとめています。"
 processFigure:
   title: UX改善の進め方
   steps:
@@ -44,11 +44,11 @@ faq:
   title: よくある質問
   items:
     - question: View Transitionsなしでもこの改善は有効ですか？
-      answer: 'スクリプトの初期化パターン以外の改善（Pagefind、TypeScript、定数管理）はView Transitionsの有無に関係なく有効です。'
+      answer: "スクリプトの初期化パターン以外の改善（Pagefind、TypeScript、定数管理）はView Transitionsの有無に関係なく有効です。"
     - question: Pagefindはどのくらいのサイト規模まで対応できますか？
-      answer: 'Pagefindは静的サイト向けに設計されており、数千ページ規模でも高速に動作します。検索インデックスはビルド時に生成され、ブラウザ側で実行されるためサーバー負荷もありません。'
+      answer: "Pagefindは静的サイト向けに設計されており、数千ページ規模でも高速に動作します。検索インデックスはビルド時に生成され、ブラウザ側で実行されるためサーバー負荷もありません。"
     - question: TypeScriptの型エラーは無視しても動きますか？
-      answer: '動作はしますが、型エラーはバグの予兆です。特にAstroのコンテンツスキーマは型安全にすることで、テンプレート内のプロパティアクセスでIDEの補完が効くようになり、開発効率が大きく向上します。'
+      answer: "動作はしますが、型エラーはバグの予兆です。特にAstroのコンテンツスキーマは型安全にすることで、テンプレート内のプロパティアクセスでIDEの補完が効くようになり、開発効率が大きく向上します。"
 ---
 
 ## はじめに
@@ -80,17 +80,17 @@ AstroのView Transitions（ClientRouter）は、ページ遷移をSPAのよう�
 ```html
 <script>
   function initHeader() {
-    const menuBtn = document.querySelector('[data-menu-toggle]')
-    menuBtn?.addEventListener('click', () => {
+    const menuBtn = document.querySelector("[data-menu-toggle]");
+    menuBtn?.addEventListener("click", () => {
       /* ... */
-    })
+    });
   }
 
   // 初回実行
-  initHeader()
+  initHeader();
 
   // View Transitions後に再実行
-  document.addEventListener('astro:after-swap', initHeader)
+  document.addEventListener("astro:after-swap", initHeader);
 </script>
 ```
 
@@ -165,9 +165,9 @@ HTMLに直接書く `onclick="..."` は手軽ですが、CSP（Content Security 
 ```
 
 ```javascript
-document.querySelectorAll('[data-search-trigger]').forEach((btn) => {
-  btn.addEventListener('click', () => window.openSearch?.())
-})
+document.querySelectorAll("[data-search-trigger]").forEach((btn) => {
+  btn.addEventListener("click", () => window.openSearch?.());
+});
 ```
 
 ---
@@ -200,7 +200,7 @@ document.querySelectorAll('[data-search-trigger]').forEach((btn) => {
 ### コンテンツスキーマのリテラル型
 
 ```typescript
-type: z.enum(['info', 'warning', 'tip', 'note']).default('info')
+type: z.enum(["info", "warning", "tip", "note"]).default("info");
 ```
 
 フロントマターの値をリテラル型ユニオンで定義すると、テンプレート側で `if (callout.type === 'info')` のような分岐が型安全になります。
@@ -229,16 +229,16 @@ Astro 7 で削除予定の `import { z } from 'astro:content'` を `import { z }
 
 ```typescript
 export const SITE = {
-  name: 'Acecore',
-  url: 'https://acecore.net',
-  ga4Id: 'G-XXXXXXXXXX',
-  adsenseClientId: 'ca-pub-XXXXXXXXXXXXXXXX',
+  name: "Acecore",
+  url: "https://acecore.net",
+  ga4Id: "G-XXXXXXXXXX",
+  adsenseClientId: "ca-pub-XXXXXXXXXXXXXXXX",
   social: {
-    x: 'https://x.com/acecore',
-    github: 'https://github.com/acecore-systems',
-    discord: 'https://discord.gg/...',
+    x: "https://x.com/acecore",
+    github: "https://github.com/acecore-systems",
+    discord: "https://discord.gg/...",
   },
-} as const
+} as const;
 ```
 
 ---

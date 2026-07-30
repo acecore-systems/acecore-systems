@@ -1,14 +1,14 @@
 ---
-title: 'Hattのホームページを公開しました'
-description: '絵、小説、VRChat向け3Dアバター・ギミック制作をまとめる「Hattのホームページ」を公開しました。Astro、Sveltia CMS、Pagefindを使い、創作活動を継続して発信できる個人サイトとして設計しています。'
+title: "Hattのホームページを公開しました"
+description: "絵、小説、VRChat向け3Dアバター・ギミック制作をまとめる「Hattのホームページ」を公開しました。Astro、Sveltia CMS、Pagefindを使い、創作活動を継続して発信できる個人サイトとして設計しています。"
 date: 2026-06-06T10:00
 author: gui
-tags: ['お知らせ', 'Web制作', 'Webサイト', 'CMS', 'Astro']
+tags: ["お知らせ", "Web制作", "Webサイト", "CMS", "Astro"]
 image: /uploads/hatt-homepage-screenshot-1600.webp
 callout:
   type: info
   title: 公開サイト
-  text: 'Hattのホームページは https://hatt.acecore.net/ で公開中です。絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめています。'
+  text: "Hattのホームページは https://hatt.acecore.net/ で公開中です。絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめています。"
 processFigure:
   title: 制作で整理した導線
   steps:

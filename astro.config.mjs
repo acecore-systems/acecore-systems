@@ -1,31 +1,31 @@
-import { defineConfig } from 'astro/config'
-import sitemap from '@astrojs/sitemap'
-import { satteri } from '@astrojs/markdown-satteri'
-import { fileURLToPath } from 'node:url'
-import { insightLinksPlugin } from './src/lib/insight-links.mjs'
+import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+import { satteri } from "@astrojs/markdown-satteri";
+import { fileURLToPath } from "node:url";
+import { insightLinksPlugin } from "./src/lib/insight-links.mjs";
 
 const astroPrerenderEntry = fileURLToPath(
-  import.meta.resolve('astro/entrypoints/prerender'),
-)
+  import.meta.resolve("astro/entrypoints/prerender"),
+);
 
 export default defineConfig({
-  output: 'static',
-  site: 'https://systems.acecore.net',
+  output: "static",
+  site: "https://systems.acecore.net",
   integrations: [
     sitemap({
       filter(page) {
-        const pathname = new URL(page).pathname
-        return pathname !== '/404' && !pathname.startsWith('/contact/thanks')
+        const pathname = new URL(page).pathname;
+        return pathname !== "/404" && !pathname.startsWith("/contact/thanks");
       },
       serialize(item) {
-        if (item.url === 'https://systems.acecore.net/') {
-          item.changefreq = 'weekly'
-          item.priority = 1.0
+        if (item.url === "https://systems.acecore.net/") {
+          item.changefreq = "weekly";
+          item.priority = 1.0;
         } else {
-          item.changefreq = 'monthly'
-          item.priority = 0.7
+          item.changefreq = "monthly";
+          item.priority = 0.7;
         }
-        return item
+        return item;
       },
     }),
   ],
@@ -37,8 +37,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        'astro/entrypoints/prerender': astroPrerenderEntry,
+        "astro/entrypoints/prerender": astroPrerenderEntry,
       },
     },
   },
-})
+});

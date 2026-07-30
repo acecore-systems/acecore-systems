@@ -1,14 +1,14 @@
 ---
-title: 'Sveltia CMSで多言語ブログを運用する方法'
-description: 'Sveltia CMSで日本語記事を更新し、GitHub ActionsとGitHub Copilotで翻訳PRを作る運用を、UI翻訳との違い、検索エンジン上のメリット、hreflang、RSS、sitemap、レビュー観点まで含めて整理します。'
+title: "Sveltia CMSで多言語ブログを運用する方法"
+description: "Sveltia CMSで日本語記事を更新し、GitHub ActionsとGitHub Copilotで翻訳PRを作る運用を、UI翻訳との違い、検索エンジン上のメリット、hreflang、RSS、sitemap、レビュー観点まで含めて整理します。"
 date: 2026-06-07T17:00
 author: gui
-tags: ['技術', 'GitHub Copilot', 'i18n', 'CMS', 'SEO']
+tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
 callout:
   type: tip
   title: UI翻訳と多言語コンテンツ運用は別物
-  text: 'ブラウザやウィジェットで画面上の文章を翻訳するだけでは、言語別URL、title、description、内部リンク、RSS、sitemap、hreflangまで言語別の資産にはなりません。検索エンジンに各言語ページとして渡すなら、翻訳結果を静的HTMLとして公開する設計が必要です。'
+  text: "ブラウザやウィジェットで画面上の文章を翻訳するだけでは、言語別URL、title、description、内部リンク、RSS、sitemap、hreflangまで言語別の資産にはなりません。検索エンジンに各言語ページとして渡すなら、翻訳結果を静的HTMLとして公開する設計が必要です。"
 processFigure:
   eyebrow: Translation Workflow
   title: Sveltia CMSから翻訳PRまでの流れ
@@ -20,7 +20,7 @@ processFigure:
       icon: i-lucide-file-pen-line
       accent: brand
     - title: CMS commitを検出
-      description: '`cms:` prefixや変更pathをGitHub Actions側の契約にする。'
+      description: "`cms:` prefixや変更pathをGitHub Actions側の契約にする。"
       icon: i-lucide-git-commit-horizontal
       accent: amber
     - title: 翻訳PRを作成
@@ -36,29 +36,29 @@ compareTable:
   before:
     label: UI翻訳
     items:
-      - 'ユーザーのブラウザや翻訳ウィジェットが表示時に訳す'
-      - 'URL、title、description、OGPは元言語のままになりやすい'
-      - 'sitemap、RSS、hreflangに言語別ページとして出しにくい'
-      - '共有URLや検索結果の表示文言が元言語に寄る'
+      - "ユーザーのブラウザや翻訳ウィジェットが表示時に訳す"
+      - "URL、title、description、OGPは元言語のままになりやすい"
+      - "sitemap、RSS、hreflangに言語別ページとして出しにくい"
+      - "共有URLや検索結果の表示文言が元言語に寄る"
   after:
     label: 静的な多言語ページ
     items:
-      - '`/{locale}/blog/{slug}/` のように言語別URLを公開できる'
-      - 'title、description、本文、FAQ、構造化データを言語別に持てる'
-      - 'hreflangで各言語版の対応関係を検索エンジンへ伝えられる'
-      - 'RSS、sitemap、内部リンク、Search Console確認を言語別に扱える'
+      - "`/{locale}/blog/{slug}/` のように言語別URLを公開できる"
+      - "title、description、本文、FAQ、構造化データを言語別に持てる"
+      - "hreflangで各言語版の対応関係を検索エンジンへ伝えられる"
+      - "RSS、sitemap、内部リンク、Search Console確認を言語別に扱える"
 checklist:
   title: 導入時に決めること
   items:
-    - text: '日本語記事を翻訳元として扱う'
+    - text: "日本語記事を翻訳元として扱う"
       checked: true
-    - text: '翻訳ファイルのslugを日本語記事と一致させる'
+    - text: "翻訳ファイルのslugを日本語記事と一致させる"
       checked: true
-    - text: '`cms:` commitなど、翻訳ワークフローの起動条件を固定する'
+    - text: "`cms:` commitなど、翻訳ワークフローの起動条件を固定する"
       checked: true
-    - text: 'URL、画像path、コードブロック、タグIDを翻訳で壊さない'
+    - text: "URL、画像path、コードブロック、タグIDを翻訳で壊さない"
       checked: true
-    - text: 'hreflang、canonical、RSS、sitemapの出力をbuildで確認する'
+    - text: "hreflang、canonical、RSS、sitemapの出力をbuildで確認する"
       checked: true
 linkCards:
   - href: /blog/cms-selection-and-turnstile/
@@ -77,11 +77,11 @@ faq:
   title: よくある質問
   items:
     - question: UI上の翻訳だけではだめですか？
-      answer: 'ユーザーが読むだけなら役に立ちます。ただし検索エンジンやSNS共有に対して、言語別URL、title、description、構造化データ、内部リンクを安定して渡したい場合は、翻訳済みページを静的HTMLとして持つほうが扱いやすいです。'
+      answer: "ユーザーが読むだけなら役に立ちます。ただし検索エンジンやSNS共有に対して、言語別URL、title、description、構造化データ、内部リンクを安定して渡したい場合は、翻訳済みページを静的HTMLとして持つほうが扱いやすいです。"
     - question: AI翻訳した記事は検索上不利ですか？
-      answer: 'AIを使うこと自体より、ユーザー価値のない大量生成になっていないかが重要です。用語、リンク、事実関係、現地語としての自然さをレビューし、各言語ページとして読む価値を持たせる運用にします。'
+      answer: "AIを使うこと自体より、ユーザー価値のない大量生成になっていないかが重要です。用語、リンク、事実関係、現地語としての自然さをレビューし、各言語ページとして読む価値を持たせる運用にします。"
     - question: 翻訳ページは重複コンテンツになりませんか？
-      answer: 'Googleは、主本文が翻訳されているローカライズページを単なる重複とは扱いません。各言語版を同じslugで対応させ、hreflangやsitemapで関係を示すのが基本です。'
+      answer: "Googleは、主本文が翻訳されているローカライズページを単なる重複とは扱いません。各言語版を同じslugで対応させ、hreflangやsitemapで関係を示すのが基本です。"
 ---
 
 問い合わせAI、Sveltia CMS、サービスCTAの導線まで整えてくると、次に効いてくるのが **多言語ブログの運用** です。
@@ -170,8 +170,8 @@ UI翻訳だけの場合、元HTMLのメタ情報は日本語のままになり�
 翻訳ファイルを持つ構成なら、frontmatter自体を翻訳できます。
 
 ```yaml
-title: 'How to Run a Multilingual Blog with Sveltia CMS'
-description: 'A practical workflow for publishing Japanese source articles through Sveltia CMS and generating localized static pages with GitHub Copilot.'
+title: "How to Run a Multilingual Blog with Sveltia CMS"
+description: "A practical workflow for publishing Japanese source articles through Sveltia CMS and generating localized static pages with GitHub Copilot."
 ```
 
 この差は、検索結果だけでなく、SNS共有、OGP画像、サイト内関連記事にも効きます。
@@ -398,18 +398,18 @@ src/content/blog/
 ```
 
 ```ts
-const posts = await getCollection('blog')
-const basePosts = posts.filter(isBasePost)
-const displayPosts = basePosts.map((post) => localizePost(post, posts, locale))
+const posts = await getCollection("blog");
+const basePosts = posts.filter(isBasePost);
+const displayPosts = basePosts.map((post) => localizePost(post, posts, locale));
 ```
 
 ```yaml
-title: 'Sveltia CMSで多言語ブログを運用する方法'
-description: 'Sveltia CMSとGitHub Copilotで翻訳PRを作る運用メモ'
+title: "Sveltia CMSで多言語ブログを運用する方法"
+description: "Sveltia CMSとGitHub Copilotで翻訳PRを作る運用メモ"
 date: 2026-06-07T17:00
 lastUpdated: 2026-06-07T00:00
 author: gui
-tags: ['技術', 'GitHub Copilot', 'i18n', 'CMS', 'SEO']
+tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
 ```
 
 この状態に、Sveltia CMS、GitHub Actions、Copilot task作成、build確認を順に足していけばよいです。

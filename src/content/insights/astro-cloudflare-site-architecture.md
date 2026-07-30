@@ -1,14 +1,14 @@
 ---
-title: 'Astro + Cloudflareで公式サイトを機能拡張する全体設計'
-description: 'AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。'
+title: "Astro + Cloudflareで公式サイトを機能拡張する全体設計"
+description: "AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。"
 date: 2026-06-07T19:00
 author: gui
-tags: ['技術', 'Astro', 'Cloudflare', 'Webサイト', 'AI', 'CMS']
+tags: ["技術", "Astro", "Cloudflare", "Webサイト", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
 callout:
   type: tip
   title: 単体機能を足す前に、境界を決める
-  text: '問い合わせAI、CMS、多言語、コメント欄のような機能は、それぞれ便利ですが、同じ公式サイトに載せるなら役割と境界をそろえる必要があります。Astroは静的HTMLを作り、Cloudflareは配信、API、DB、bot対策を受け持ち、GitHub PRで変更履歴を残す。この分担にすると、機能を増やしてもサイト全体の説明が崩れにくくなります。'
+  text: "問い合わせAI、CMS、多言語、コメント欄のような機能は、それぞれ便利ですが、同じ公式サイトに載せるなら役割と境界をそろえる必要があります。Astroは静的HTMLを作り、Cloudflareは配信、API、DB、bot対策を受け持ち、GitHub PRで変更履歴を残す。この分担にすると、機能を増やしてもサイト全体の説明が崩れにくくなります。"
 processFigure:
   eyebrow: Site Architecture
   title: 公式サイトを機能拡張するレイヤー
@@ -44,31 +44,31 @@ compareTable:
   before:
     label: 機能ごとに足す
     items:
-      - 'AI、CMS、コメント、フォームがそれぞれ別の設計思想になる'
-      - '外部サービスのscriptや管理画面が増え、説明責任が分散する'
-      - '多言語URL、検索index、preview環境でズレが起きやすい'
-      - '機能同士の関係が見えず、導入順を決めにくい'
+      - "AI、CMS、コメント、フォームがそれぞれ別の設計思想になる"
+      - "外部サービスのscriptや管理画面が増え、説明責任が分散する"
+      - "多言語URL、検索index、preview環境でズレが起きやすい"
+      - "機能同士の関係が見えず、導入順を決めにくい"
   after:
     label: レイヤーで足す
     items:
-      - 'Astro、Cloudflare、GitHub、OpenAI APIの役割を分けて説明できる'
-      - '動的APIはPages Functionsに集め、保存先はD1などCloudflare側に寄せられる'
-      - 'CMS更新、多言語翻訳、検索、RSS、sitemapを同じコンテンツ構造で扱える'
-      - '用途別・導入順のインデックスとして読み進めやすい'
+      - "Astro、Cloudflare、GitHub、OpenAI APIの役割を分けて説明できる"
+      - "動的APIはPages Functionsに集め、保存先はD1などCloudflare側に寄せられる"
+      - "CMS更新、多言語翻訳、検索、RSS、sitemapを同じコンテンツ構造で扱える"
+      - "用途別・導入順のインデックスとして読み進めやすい"
 checklist:
   title: 他サイトへ転用するときの設計チェック
   items:
-    - text: '静的に出せるものと、APIが必要なものを分ける'
+    - text: "静的に出せるものと、APIが必要なものを分ける"
       checked: true
-    - text: 'CMSは編集入口、翻訳はPR、公開判断はbuildに分離する'
+    - text: "CMSは編集入口、翻訳はPR、公開判断はbuildに分離する"
       checked: true
-    - text: '問い合わせAIには個人情報を渡さず、公開済み情報だけを案内させる'
+    - text: "問い合わせAIには個人情報を渡さず、公開済み情報だけを案内させる"
       checked: true
-    - text: 'フォーム導線はURLパラメータで文脈を渡し、受信値は安定した分類にする'
+    - text: "フォーム導線はURLパラメータで文脈を渡し、受信値は安定した分類にする"
       checked: true
-    - text: 'コメントなど投稿データはD1の実体名とbindingを設定で明示する'
+    - text: "コメントなど投稿データはD1の実体名とbindingを設定で明示する"
       checked: true
-    - text: 'AI出力やユーザー投稿は、HTMLとして信頼せず許可リストで扱う'
+    - text: "AI出力やユーザー投稿は、HTMLとして信頼せず許可リストで扱う"
       checked: true
 linkCards:
   - href: /blog/astro-ai-contact-chat/
@@ -99,11 +99,11 @@ faq:
   title: よくある質問
   items:
     - question: どこから導入すべきですか？
-      answer: 'まずAstroの静的ページ、ブログ、RSS、sitemap、OGPを固めます。次にCMSと多言語を入れ、相談導線が必要になってからAIチャット、サービスCTA、コメント機能を足す順番が扱いやすいです。'
+      answer: "まずAstroの静的ページ、ブログ、RSS、sitemap、OGPを固めます。次にCMSと多言語を入れ、相談導線が必要になってからAIチャット、サービスCTA、コメント機能を足す順番が扱いやすいです。"
     - question: すべてCloudflareだけで作るべきですか？
-      answer: 'いいえ。問い合わせAIのようにOpenAI APIを使う部分もあります。ポイントは、配信、API境界、DB、bot対策をCloudflareへ寄せ、外部サービスを入れる場所と入れない場所を意識して分けることです。'
+      answer: "いいえ。問い合わせAIのようにOpenAI APIを使う部分もあります。ポイントは、配信、API境界、DB、bot対策をCloudflareへ寄せ、外部サービスを入れる場所と入れない場所を意識して分けることです。"
     - question: 小規模サイトでもここまで必要ですか？
-      answer: '最初から全部は不要です。ただ、CMS、問い合わせ導線、多言語、コメントのどれかを足す予定があるなら、URL、データ保存先、preview環境、検索indexの扱いを早めに決めると後から楽になります。'
+      answer: "最初から全部は不要です。ただ、CMS、問い合わせ導線、多言語、コメントのどれかを足す予定があるなら、URL、データ保存先、preview環境、検索indexの扱いを早めに決めると後から楽になります。"
 ---
 
 AstroとCloudflare Pagesで静的サイトを作ると、最初はページを速く安全に配信できれば十分です。
