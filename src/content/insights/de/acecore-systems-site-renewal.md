@@ -143,7 +143,7 @@ Auch von der [Acecore-Preisseite](https://acecore.net/de/pricing/) gelangen Besu
 
 Statt Dachmarke und spezialisierten Service als voneinander getrennte Angebote darzustellen, haben wir eine Beziehung gestaltet, in der Besucher je nach Anliegen natürlich zwischen beiden wechseln können.
 
-## Veröffentlichungsprüfungen, die über das Erscheinungsbild hinausgehen
+## Prüfungen vor der Veröffentlichung, die über das Erscheinungsbild hinausgehen
 
 Als technische Grundlage nutzt die Website weiterhin Astro und Cloudflare Pages. Veröffentlichte Informationen werden als JSON-Daten verwaltet und können auch über Sveltia CMS aktualisiert werden. Die Überlegungen zu Funktionen und Veröffentlichungsbasis erläutert [die Gesamtarchitektur zur Erweiterung einer offiziellen Website mit Astro und Cloudflare](/de/insights/astro-cloudflare-site-architecture/).
 
