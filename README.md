@@ -10,6 +10,8 @@
 
 - Astro v7
 - Cloudflare Pages
+- Pagefind
+- Cloudflare Workers AI / Vectorize
 - Sveltia CMS
 
 ## 必要環境
@@ -52,9 +54,13 @@ npm run preview
 
 固定ページと技術解説は、上記9言語を静的HTMLとして公開します。日本語はprefixなし、翻訳ページは `/{locale}/` prefixを使い、各ページをself-canonicalとしたうえでhreflangとx-defaultで対応関係を示します。
 
-技術解説は、Acecore公式サイトからSystemsの技術・運用判断に関する22記事と既存翻訳を移管し、`src/content/insights/` で管理します。日本語記事は直下、翻訳記事は `src/content/insights/{locale}/` に置き、言語別RSSも公開します。サイト内検索、タグ・著者の専用一覧、コメントUI、記事のCMS編集は移管しません。
+技術解説は、Acecore公式サイトからSystemsの技術・運用判断に関する22記事と既存翻訳を移管し、`src/content/insights/` で管理します。日本語記事は直下、翻訳記事は `src/content/insights/{locale}/` に置き、言語別RSSも公開します。タグ・著者の専用一覧、コメントUI、記事のCMS編集は移管しません。
 
 記事のfrontmatterと著者情報はSystemsの公開情報として管理し、旧 `/blog/` 形式の本文リンクは表示時に各言語の `/insights/` へ解決します。未移管の記事はAcecore公式サイトの同じ言語の絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
+
+日本語ページのサイト内検索は、ブラウザ内で動くPagefindを主検索とし、Cloudflare Workers AI / Vectorizeによる「関連する内容」を補助表示します。
+
+PagefindとVectorizeのcorpusは公開後の日本語HTMLから生成し、VectorizeはPreviewとProductionを分離して同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorizeサイト内検索 運用ガイド](docs/search-vectorize.md) を参照してください。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 

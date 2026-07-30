@@ -624,7 +624,7 @@
       },
       {
         "title": "Externe Dienste",
-        "body": "Wir nutzen externe Dienste wie Acecore Common Counter und Cloudflare Turnstile für die Formularübermittlung und die Verhinderung unbefugter Nutzung sowie Cloudflare Pages für das Hosting."
+        "body": "Wir nutzen externe Dienste wie die gemeinsame Acecore-Kontaktstelle und Cloudflare Turnstile für die Formularübermittlung und Missbrauchsprävention sowie Cloudflare Pages für das Hosting. Wenn Sie in der Website-Suche „Verwandte Inhalte“ ausführen, werden die eingegebenen Suchbegriffe von Cloudflare Workers AI in eine numerische Darstellung umgewandelt und mit den in Cloudflare Vectorize gespeicherten öffentlichen Informationen dieser Website abgeglichen. Geben Sie keine Anfrageinhalte oder personenbezogenen Daten als Suchbegriffe ein."
       },
       {
         "title": "Zugriffsanalyse",

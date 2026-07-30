@@ -1,22 +1,6 @@
-# Legacy localized URLs now resolve to the Japanese canonical page.
+# Legacy Japanese-prefixed URLs resolve to the unprefixed canonical page.
 /ja / 301
 /ja/ / 301
-/en / 301
-/en/ / 301
-/de / 301
-/de/ / 301
-/es / 301
-/es/ / 301
-/fr / 301
-/fr/ / 301
-/ko / 301
-/ko/ / 301
-/pt / 301
-/pt/ / 301
-/ru / 301
-/ru/ / 301
-/zh-cn / 301
-/zh-cn/ / 301
 
 # Content that moved to the main Acecore site.
 /about https://acecore.net/about/ 301

@@ -391,10 +391,31 @@ function translatableFrontmatter(frontmatter) {
   );
 }
 
+function validateLocaleRedirects(relativePath) {
+  const redirectSources = new Set(
+    read(relativePath)
+      .split(/\r?\n/gu)
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith("#"))
+      .map((line) => line.split(/\s+/u, 1)[0]),
+  );
+
+  for (const locale of translatedLocales) {
+    for (const route of [`/${locale}`, `/${locale}/`]) {
+      assert.equal(
+        redirectSources.has(route),
+        false,
+        `${relativePath}: translated locale route must not redirect: ${route}`,
+      );
+    }
+  }
+}
+
 function validateSourceTranslations({
   articlesOnly = false,
   onlyLocale = null,
 } = {}) {
+  validateLocaleRedirects("public/_redirects");
   const localesToValidate = onlyLocale ? [onlyLocale] : translatedLocales;
   const sourceTree = readSourceTree(sourceFiles);
   if (!articlesOnly) {
@@ -774,6 +795,7 @@ function validateLocalReferences(html, route) {
 }
 
 function validateBuiltSite() {
+  validateLocaleRedirects("dist/_redirects");
   const indexableRoutes = [
     ...fixedRoutes.filter((route) => route !== "/contact/thanks/"),
     "/insights/",

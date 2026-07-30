@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SearchModal from "../components/SearchModal.astro";
 import site from "../data/site.json";
 import { serializeJsonForHtmlScript } from "../lib/safe-json.ts";
 import {
@@ -126,6 +127,10 @@ const jsonLd = pageJsonLd
   ? [...baseJsonLd, ...(Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd])]
   : baseJsonLd;
 const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
+const pagefindMainAttributes =
+  locale === "ja" && !robots.toLowerCase().includes("noindex")
+    ? { "data-pagefind-body": "" }
+    : { "data-pagefind-ignore": "all" };
 ---
 
 <!doctype html>
@@ -267,7 +272,8 @@ const serializedJsonLd = serializeJsonForHtmlScript(jsonLd);
   <body class={bodyClass}>
     <a class="skip-link" href="#main">{text.skipToContent}</a>
     <Header locale={locale} />
-    <main id="main">
+    {locale === "ja" && <SearchModal />}
+    <main id="main" {...pagefindMainAttributes}>
       <slot />
     </main>
     <Footer locale={locale} />

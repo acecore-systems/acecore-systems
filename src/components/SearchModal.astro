@@ -1,0 +1,114 @@
+<dialog
+  id="site-search-dialog"
+  class="search-dialog"
+  aria-labelledby="site-search-title"
+  data-search-dialog
+>
+  <div class="search-dialog__surface">
+    <header class="search-dialog__header">
+      <div>
+        <p class="editorial-eyebrow">Site search / サイト内検索</p>
+        <h2 id="site-search-title">必要な情報を探す</h2>
+        <p>
+          ページ内の言葉を探す検索と、意味が近い内容を探す検索を使い分けられます。
+        </p>
+      </div>
+      <button
+        class="search-dialog__close"
+        type="button"
+        aria-label="検索を閉じる"
+        data-search-close
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="m5 5 14 14M19 5 5 19"></path>
+        </svg>
+      </button>
+    </header>
+
+    <form
+      class="search-form"
+      role="search"
+      aria-describedby="site-search-help site-search-disclosure"
+      data-search-form
+    >
+      <label class="search-form__label" for="site-search-query">
+        <span>検索語</span>
+        <span>2〜160文字</span>
+      </label>
+      <div class="search-form__controls">
+        <input
+          id="site-search-query"
+          name="query"
+          type="search"
+          minlength="2"
+          maxlength="160"
+          autocomplete="off"
+          enterkeyhint="search"
+          placeholder="例：Cloudflare Pages、料金、導入の流れ"
+          required
+          data-search-input
+        />
+        <button type="submit">検索する</button>
+      </div>
+      <p id="site-search-help" class="search-form__help">
+        入力すると、端末内でPagefindのサイト内検索結果を表示します。
+      </p>
+    </form>
+
+    <div class="search-dialog__results">
+      <section
+        class="search-result-section"
+        aria-labelledby="pagefind-results-title"
+        data-pagefind-section
+      >
+        <header class="search-result-section__header">
+          <div>
+            <p class="editorial-eyebrow">Pagefind</p>
+            <h3 id="pagefind-results-title">サイト内検索</h3>
+          </div>
+          <p aria-live="polite" data-pagefind-status>
+            2文字以上入力すると候補を表示します。
+          </p>
+        </header>
+        <ol
+          class="search-result-list"
+          aria-label="サイト内検索結果"
+          data-pagefind-results
+        >
+        </ol>
+      </section>
+
+      <section
+        class="search-result-section search-result-section--semantic"
+        aria-labelledby="semantic-results-title"
+        hidden
+        data-semantic-section
+      >
+        <header class="search-result-section__header">
+          <div>
+            <p class="editorial-eyebrow">Cloudflare Vectorize</p>
+            <h3 id="semantic-results-title">関連する内容</h3>
+          </div>
+          <p aria-live="polite" data-semantic-status></p>
+        </header>
+        <ol
+          class="search-result-list"
+          aria-label="意味が近い検索結果"
+          data-semantic-results
+        >
+        </ol>
+      </section>
+    </div>
+
+    <p id="site-search-disclosure" class="search-dialog__disclosure">
+      「検索する」を実行すると、入力した検索語をCloudflare Workers
+      AIへ送り数値表現に変換し、その数値表現をCloudflare
+      Vectorizeで当サイトの公開情報と照合します。個人情報や機密情報は入力しないでください。
+      <a href="/privacy/">個人情報の取り扱い</a>
+    </p>
+  </div>
+</dialog>
+
+<script>
+  import "../scripts/search-modal.ts";
+</script>
