@@ -4,8 +4,9 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 
 ## 現在の状態
 
-- Production の関連検索は、初回同期と本番 QA が完了するまで `SEARCH_ENABLED=false` で無効にします。
+- Production の関連検索は `SEARCH_ENABLED=true` で有効です。障害時は `wrangler.jsonc` の Production だけを `false` に戻して、GitHub 連携の Pages deployment で停止します。
 - Production 用 Vectorize index `acecore-systems-search-production` は、BGE-M3 用の 1024 dimensions / cosine として作成済みです。
+- Production 初回同期は GitHub Actions run [30539728752](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) で完了済みです。公開 commit `b03d4b145c6f21983806c629e9f555267f3eb355` と corpus version `2b36c3896e085be1dfbf` を照合し、36ページから250 vectorsを upsert、削除0件で完了しました。
 - Production 用 D1 database `acecore-systems-search-production`（database ID `ac8a06c2-deb4-4b27-9fbc-0fa2eef3c76d`）は APAC に作成済みで、検索レート制限の migration を適用済みです。
 - GitHub Environment `cloudflare-search-production` は、`main` branch だけを許可し、required reviewer と管理者 bypass 無効を設定済みです。
 - Production 同期専用の Cloudflare account token は、Acecore account の Workers AI Read と Vectorize Write だけを許可し、GitHub Environment secret に保存済みです。
