@@ -1,6 +1,6 @@
 {
   "name": "Acecore Systems",
-  "description": "Acecore Systemsは、IT顧問、AI導入・業務改善、デプロイ、業務システム・Webアプリ開発を、要件整理から運用改善まで一貫して支援するAcecoreの開発サービスです。",
+  "description": "Acecore Systemsは、IT顧問、AI導入・業務改善、デプロイ、業務システム・Webアプリ開発、デザイン・クリエイティブ制作を、要件整理から運用改善まで支援するAcecoreのサービスです。",
   "siteUrl": "https://systems.acecore.net",
   "acecoreUrl": "https://acecore.net",
   "contactFormAction": "https://acecore.net/api/contact",
@@ -14,7 +14,8 @@
     { "label": "サービス", "href": "/services/" },
     { "label": "実績", "href": "/works/" },
     { "label": "料金の目安", "href": "/pricing/" },
-    { "label": "導入ガイド", "href": "/guide/" }
+    { "label": "導入ガイド", "href": "/guide/" },
+    { "label": "技術解説", "href": "/insights/" }
   ],
   "footerLinks": [
     { "label": "支援方針", "href": "/#philosophy" },
@@ -22,6 +23,7 @@
     { "label": "料金の目安", "href": "/pricing/" },
     { "label": "実績", "href": "/works/" },
     { "label": "導入ガイド", "href": "/guide/" },
+    { "label": "技術解説", "href": "/insights/" },
     { "label": "お問い合わせ", "href": "/contact/" },
     { "label": "プライバシー", "href": "/privacy/" }
   ]

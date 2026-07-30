@@ -147,22 +147,22 @@
     "href": "/services/it-advisor/"
   },
   "resourcesTitle": "本番公開までの設計判断を公開しています。",
-  "resourcesLead": "構成、安全性、AI機能など、受託開発でも重要になる実装判断をAcecore公式サイトの技術記事で確認できます。",
+  "resourcesLead": "構成、安全性、AI機能など、受託開発でも重要になる実装判断をAcecore Systemsの技術解説で確認できます。",
   "resources": [
     {
       "title": "Astro + Cloudflareで公式サイトを機能拡張する全体設計",
       "description": "静的な公開基盤、動的機能、CMS、確認・公開フローを分ける考え方をまとめています。",
-      "href": "https://acecore.net/blog/astro-cloudflare-site-architecture/"
+      "href": "/insights/astro-cloudflare-site-architecture/"
     },
     {
       "title": "Astroサイトに問い合わせAIチャットを組み込む技術設計",
       "description": "AI機能のAPI境界、回答範囲、Origin確認、レート制限、安全なリンク表示を整理しています。",
-      "href": "https://acecore.net/blog/astro-ai-contact-chat/"
+      "href": "/insights/astro-ai-contact-chat/"
     },
     {
       "title": "Cloudflare Pagesで実現するセキュアな静的サイト配信",
       "description": "配信構成、セキュリティヘッダー、CSP、キャッシュの運用判断を扱います。",
-      "href": "https://acecore.net/blog/cloudflare-pages-security/"
+      "href": "/insights/cloudflare-pages-security/"
     }
   ],
   "ctaTitle": "構想から任せたいプロジェクトを相談する",

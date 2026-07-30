@@ -3,6 +3,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { insightSlugs } from "../src/lib/insight-links.mjs";
+
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (relativePath) => readFileSync(join(root, relativePath), "utf8");
 const readJson = (relativePath) => JSON.parse(read(relativePath));
@@ -37,14 +39,23 @@ const worksData = readJson("src/data/works.json");
 const workDetailData = readJson(
   "src/data/work-details/acecore-site-platform.json",
 );
+const serviceIndexData = readJson("src/data/services.json");
 const pricingData = readJson("src/data/pricing.json");
 const pricingByKey = new Map(pricingData.items.map((item) => [item.key, item]));
+const designService = serviceIndexData.services.find(
+  (item) => item.id === "design",
+);
+const designPricing = pricingByKey.get("design");
+
+assert.ok(designService, "design service source missing");
+assert.ok(designPricing, "design pricing source missing");
 
 for (const pagePath of [
   advisorPagePath,
   developmentPagePath,
   ...focusedServices.map((service) => service.pagePath),
   "dist/guide/index.html",
+  "dist/insights/index.html",
   "dist/works/index.html",
   "dist/works/acecore-site-platform/index.html",
 ]) {
@@ -124,6 +135,11 @@ function validateServicePage({
     `${siteOrigin}/services/`,
     `${route}: site-wide Service URL must target the service index`,
   );
+  assert.equal(
+    siteService.serviceType.includes("デザイン・クリエイティブ制作"),
+    true,
+    `${route}: site-wide Service JSON-LD must include design and creative`,
+  );
   assert.ok(breadcrumb, `${route}: BreadcrumbList missing`);
   assert.equal(
     breadcrumb.itemListElement.at(-1).item,
@@ -153,7 +169,7 @@ validateServicePage({
   data: developmentData,
   html: developmentPage,
   route: developmentRoute,
-  serviceEntitySuffix: "#detail-service",
+  serviceEntitySuffix: "#service",
 });
 for (const service of focusedServices) {
   service.html = read(service.pagePath);
@@ -161,8 +177,150 @@ for (const service of focusedServices) {
     data: service.data,
     html: service.html,
     route: service.route,
-    serviceEntitySuffix: "#detail-service",
+    serviceEntitySuffix: "#service",
   });
+}
+
+const insightsIndex = read("dist/insights/index.html");
+const insightsIndexUrl = `${siteOrigin}/insights/`;
+assert.equal(
+  insightsIndex.includes("<title>技術解説 | Acecore Systems</title>"),
+  true,
+  "insights: title missing",
+);
+assert.equal(
+  insightsIndex.includes(`<link rel="canonical" href="${insightsIndexUrl}">`),
+  true,
+  "insights: canonical missing",
+);
+const insightsIndexJsonLdMatch = insightsIndex.match(
+  /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+);
+assert.ok(insightsIndexJsonLdMatch, "insights: JSON-LD missing");
+const insightsIndexJsonLd = JSON.parse(insightsIndexJsonLdMatch[1]);
+const insightsIndexNodes = Array.isArray(insightsIndexJsonLd)
+  ? insightsIndexJsonLd
+  : [insightsIndexJsonLd];
+const insightsCollection = insightsIndexNodes.find(
+  (node) =>
+    node["@type"] === "CollectionPage" &&
+    node["@id"] === `${insightsIndexUrl}#collection`,
+);
+const insightsItemList = insightsIndexNodes.find(
+  (node) =>
+    node["@type"] === "ItemList" &&
+    node["@id"] === `${insightsIndexUrl}#item-list`,
+);
+assert.ok(insightsCollection, "insights: CollectionPage missing");
+assert.ok(insightsItemList, "insights: ItemList missing");
+assert.equal(
+  insightsItemList.itemListElement.length,
+  insightSlugs.length,
+  "insights: ItemList must include every migrated article",
+);
+
+const insightPages = [];
+for (const slug of insightSlugs) {
+  const route = `/insights/${slug}/`;
+  const pagePath = `dist/insights/${slug}/index.html`;
+  const pageUrl = `${siteOrigin}${route}`;
+  assert.equal(existsSync(join(root, pagePath)), true, `${pagePath} missing`);
+
+  const html = read(pagePath);
+  insightPages.push({ route, pagePath, html });
+  assert.equal(
+    html.includes(`<link rel="canonical" href="${pageUrl}">`),
+    true,
+    `${route}: canonical missing`,
+  );
+  assert.equal(
+    (html.match(/<h1(?:\s[^>]*)?>/g) || []).length,
+    1,
+    `${route}: exactly one h1 is required`,
+  );
+  assert.equal(
+    html.includes('<meta property="og:type" content="article">'),
+    true,
+    `${route}: article OGP type missing`,
+  );
+  assert.equal(
+    html.includes('<meta property="article:published_time"'),
+    true,
+    `${route}: published time missing`,
+  );
+  assert.equal(
+    /href="\/blog\//.test(html),
+    false,
+    `${route}: unresolved relative legacy blog link remains`,
+  );
+
+  const jsonLdMatch = html.match(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+  );
+  assert.ok(jsonLdMatch, `${route}: JSON-LD missing`);
+  const jsonLd = JSON.parse(jsonLdMatch[1]);
+  const nodes = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+  const article = nodes.find(
+    (node) =>
+      node["@type"] === "TechArticle" && node["@id"] === `${pageUrl}#article`,
+  );
+  const breadcrumb = nodes.find((node) => node["@type"] === "BreadcrumbList");
+  assert.ok(article, `${route}: TechArticle missing`);
+  assert.deepEqual(
+    article.mainEntityOfPage,
+    { "@id": `${pageUrl}#webpage` },
+    `${route}: mainEntityOfPage mismatch`,
+  );
+  assert.deepEqual(
+    article.about,
+    { "@id": `${siteOrigin}/#service` },
+    `${route}: Systems service relationship missing`,
+  );
+  assert.equal(
+    article.publisher?.["@id"],
+    "https://acecore.net/#organization",
+    `${route}: publisher mismatch`,
+  );
+  assert.equal(
+    typeof article.image === "string" && article.image.startsWith("https://"),
+    true,
+    `${route}: absolute article image missing`,
+  );
+  assert.ok(breadcrumb, `${route}: BreadcrumbList missing`);
+  assert.equal(
+    breadcrumb.itemListElement.at(-1).item,
+    pageUrl,
+    `${route}: breadcrumb URL mismatch`,
+  );
+
+  const ogImage = html.match(/<meta property="og:image" content="([^"]+)">/);
+  assert.equal(
+    ogImage?.[1],
+    article.image.replaceAll("&", "&amp;"),
+    `${route}: OGP and TechArticle images must match`,
+  );
+  assert.equal(
+    html.includes(`class="insight-article__cover"`),
+    true,
+    `${route}: visible article cover missing`,
+  );
+}
+
+for (const { route, html } of insightPages) {
+  for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
+    const value = match[1].replaceAll("&amp;", "&");
+    if (!value.startsWith("/")) continue;
+
+    const pathname = new URL(value, siteOrigin).pathname;
+    const target = extname(pathname)
+      ? join(root, "dist", pathname.slice(1))
+      : join(root, "dist", pathname.slice(1), "index.html");
+    assert.equal(
+      existsSync(target),
+      true,
+      `${route}: local target ${pathname} missing`,
+    );
+  }
 }
 
 for (const [label, html] of [
@@ -192,16 +350,67 @@ for (const expectedHref of [
     `home: direct development route ${expectedHref} missing`,
   );
 }
-assert.equal(
-  /href="\/services\/#[^"]+"/.test(home),
-  false,
-  "home: legacy service-index anchors must not remain",
+assert.deepEqual(
+  Array.from(
+    home.matchAll(/href="(\/services\/#[^"]+)"/g),
+    (match) => match[1],
+  ),
+  ["/services/#design"],
+  "home: only the formal design service may use a service-index anchor",
 );
 
 assert.equal(
   count(services, 'class="service-entry-point"'),
   2,
   "services: development and IT advisor entry points are required",
+);
+assert.equal(
+  services.includes(`id="${designService.id}"`),
+  true,
+  "services: design service anchor missing",
+);
+assert.equal(
+  services.includes(designService.title) &&
+    services.includes(designService.body) &&
+    designService.examples.every((example) => services.includes(example)),
+  true,
+  "services: design service content missing",
+);
+assert.equal(
+  pricing.includes(`id="${designPricing.key}"`) &&
+    pricing.includes(designPricing.label) &&
+    pricing.includes(designPricing.price) &&
+    pricing.includes(designPricing.note) &&
+    pricing.includes(`href="${designPricing.detailUrl}"`),
+  true,
+  "pricing: design service price and service anchor link missing",
+);
+assert.equal(
+  contact.includes("デザイン・クリエイティブについて"),
+  true,
+  "contact: design service category missing",
+);
+
+const pricingJsonLdMatch = pricing.match(
+  /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+);
+assert.ok(pricingJsonLdMatch, "pricing: JSON-LD missing");
+const pricingJsonLd = JSON.parse(pricingJsonLdMatch[1]);
+const pricingJsonLdNodes = Array.isArray(pricingJsonLd)
+  ? pricingJsonLd
+  : [pricingJsonLd];
+const pricingItemList = pricingJsonLdNodes.find(
+  (node) => node["@type"] === "ItemList",
+);
+assert.ok(pricingItemList, "pricing: ItemList JSON-LD missing");
+assert.equal(
+  pricingItemList.itemListElement.some(
+    (item) =>
+      item.name === designPricing.label &&
+      item.url === `${siteOrigin}${designPricing.detailUrl}`,
+  ),
+  true,
+  "pricing: design service JSON-LD item missing",
 );
 
 function validateHandoff(html, expectedHref, label) {
@@ -399,6 +608,8 @@ for (const route of [
   developmentRoute,
   ...focusedServices.map((service) => service.route),
   "/guide/",
+  "/insights/",
+  ...insightSlugs.map((slug) => `/insights/${slug}/`),
   "/works/",
   "/works/acecore-site-platform/",
 ]) {

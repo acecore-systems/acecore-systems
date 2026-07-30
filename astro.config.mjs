@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import { satteri } from "@astrojs/markdown-satteri";
 import { fileURLToPath } from "node:url";
+import { insightLinksPlugin } from "./src/lib/insight-links.mjs";
 
 const astroPrerenderEntry = fileURLToPath(
   import.meta.resolve("astro/entrypoints/prerender"),
@@ -27,6 +29,11 @@ export default defineConfig({
       },
     }),
   ],
+  markdown: {
+    processor: satteri({
+      mdastPlugins: [insightLinksPlugin],
+    }),
+  },
   vite: {
     resolve: {
       alias: {

@@ -1,6 +1,6 @@
 {
   "title": "料金の目安",
-  "description": "IT顧問、AI導入、デプロイ支援、業務システム、Webアプリ、AIチャット、CMS、SEO、セキュリティ改善など、Acecore Systemsの費用の目安と前提をまとめています。",
+  "description": "IT顧問、AI導入、デプロイ支援、業務システム、Webアプリ、デザイン・クリエイティブ制作、AIチャット、CMS、SEO、セキュリティ改善など、Acecore Systemsの費用の目安と前提をまとめています。",
   "heroTitle": "必要な範囲から、無理なく始める。",
   "heroLead": "金額は税込の目安です。外部サービス利用料、ライセンス費、サーバー費、正式な要件確定後の変動は別途確認します。",
   "items": [
@@ -59,6 +59,13 @@
       "price": "150万円〜",
       "note": "複数ユーザー、会員機能、承認フロー、外部連携を含むWebアプリ。",
       "detailUrl": "/services/development/#web-app"
+    },
+    {
+      "key": "design",
+      "label": "デザイン・クリエイティブ",
+      "price": "2万円〜",
+      "note": "ロゴは5万〜15万円、チラシ・バナーは2万〜12万円、ブランド設計やWeb連携は10万円〜が目安です。",
+      "detailUrl": "/services/#design"
     },
     {
       "key": "inquiry-ai",

@@ -15,6 +15,8 @@ const SERVICES_PATH = "src/data/services.json";
 const WORKS_PATH = "src/data/works.json";
 const GUIDE_PATH = "src/data/guide.json";
 
+const DESIGN_SERVICE_ID = "design";
+
 const SERVICE_ROUTES = new Map([
   [SERVICE_PATHS[0], "/services/development/"],
   [SERVICE_PATHS[1], "/services/site-functions/"],
@@ -26,17 +28,18 @@ const SERVICE_ROUTES = new Map([
 const WORK_ROUTES = new Map([[WORK_PATHS[0], "/works/acecore-site-platform/"]]);
 
 const MIGRATED_TECHNICAL_ARTICLES = new Set([
-  "https://acecore.net/blog/astro-ai-contact-chat/",
-  "https://acecore.net/blog/cloudflare-only-blog-comments/",
-  "https://acecore.net/blog/cms-selection-and-turnstile/",
-  "https://acecore.net/blog/astro-i18n-blog-translation/",
-  "https://acecore.net/blog/copilot-translation-pipeline/",
-  "https://acecore.net/blog/astro-seo-and-structured-data/",
-  "https://acecore.net/blog/astro-ux-and-code-quality/",
-  "https://acecore.net/blog/astro-performance-tuning/",
-  "https://acecore.net/blog/astro-accessibility-guide/",
-  "https://acecore.net/blog/cloudflare-pages-security/",
-  "https://acecore.net/blog/service-cta-contact-prefill/",
+  "/insights/astro-accessibility-guide/",
+  "/insights/astro-ai-contact-chat/",
+  "/insights/astro-cloudflare-site-architecture/",
+  "/insights/astro-i18n-blog-translation/",
+  "/insights/astro-performance-tuning/",
+  "/insights/astro-seo-and-structured-data/",
+  "/insights/astro-ux-and-code-quality/",
+  "/insights/cloudflare-only-blog-comments/",
+  "/insights/cloudflare-pages-security/",
+  "/insights/cms-selection-and-turnstile/",
+  "/insights/copilot-translation-pipeline/",
+  "/insights/service-cta-contact-prefill/",
 ]);
 
 export function validateSystemsContentFiles(
@@ -45,6 +48,7 @@ export function validateSystemsContentFiles(
   const errors: string[] = [];
   const pricingKeys = new Set<string>();
   const pricingItems = getArray(files.get(PRICING_PATH), "items");
+  let designPricingFound = false;
 
   if (!pricingItems) {
     errors.push(`${PRICING_PATH}.items: 配列が必要です。`);
@@ -68,11 +72,21 @@ export function validateSystemsContentFiles(
         }
         pricingKeys.add(key);
       }
+
+      if (key === DESIGN_SERVICE_ID) {
+        designPricingFound = true;
+      }
     });
+  }
+
+  if (!designPricingFound) {
+    errors.push(`${PRICING_PATH}.items: designの料金項目が必要です。`);
   }
 
   const routeAnchors = new Map<string, Set<string>>();
   const technicalResources = new Set<string>();
+
+  validateServiceIndex(files.get(SERVICES_PATH), routeAnchors, errors);
 
   for (const path of SERVICE_PATHS) {
     const data = asRecord(files.get(path));
@@ -159,10 +173,10 @@ export function validateSystemsContentFiles(
       const scope = `${path}.resources[${index}].href`;
       const href = resource ? requireText(resource.href, scope, errors) : null;
 
-      if (href && isHttpsUrl(href)) {
-        technicalResources.add(new URL(href).href);
+      if (href && MIGRATED_TECHNICAL_ARTICLES.has(href)) {
+        technicalResources.add(href);
       } else if (href) {
-        errors.push(`${scope}: HTTPS URLが必要です。`);
+        errors.push(`${scope}: 移管済みInsights URLが必要です。`);
       }
     }
   }
@@ -195,7 +209,11 @@ export function validateSystemsContentFiles(
       errors,
     );
     requireNonEmptyArray(data.scope, `${path}.scope`, errors);
-    requireNonEmptyArray(data.resources, `${path}.resources`, errors);
+    const resources = requireNonEmptyArray(
+      data.resources,
+      `${path}.resources`,
+      errors,
+    );
 
     outcomes.forEach((value, index) => {
       const outcome = asRecord(value);
@@ -209,12 +227,79 @@ export function validateSystemsContentFiles(
       requireText(outcome.label, `${scope}.label`, errors);
       requireText(outcome.body, `${scope}.body`, errors);
     });
+
+    resources.forEach((value, index) => {
+      const resource = asRecord(value);
+      const href = resource
+        ? requireText(resource.href, `${path}.resources[${index}].href`, errors)
+        : null;
+
+      if (href && !MIGRATED_TECHNICAL_ARTICLES.has(href)) {
+        errors.push(
+          `${path}.resources[${index}].href: 移管済みInsights URLが必要です。`,
+        );
+      }
+    });
   }
 
   validateGuide(files.get(GUIDE_PATH), errors);
   validateIndexLinks(files, routeAnchors, pricingItems ?? [], errors);
 
   return errors;
+}
+
+function validateServiceIndex(
+  value: unknown,
+  routeAnchors: Map<string, Set<string>>,
+  errors: string[],
+) {
+  const services = getArray(value, "services");
+
+  if (!services) {
+    errors.push(`${SERVICES_PATH}.services: 配列が必要です。`);
+    return;
+  }
+
+  const anchors = new Set<string>();
+  let designServiceFound = false;
+
+  services.forEach((value, index) => {
+    const scope = `${SERVICES_PATH}.services[${index}]`;
+    const item = asRecord(value);
+
+    if (!item) {
+      errors.push(`${scope}: objectが必要です。`);
+      return;
+    }
+
+    const id = requireText(item.id, `${scope}.id`, errors);
+    requireText(item.title, `${scope}.title`, errors);
+    requireText(item.body, `${scope}.body`, errors);
+    const examples = requireNonEmptyArray(
+      item.examples,
+      `${scope}.examples`,
+      errors,
+    );
+
+    if (id) {
+      if (anchors.has(id)) errors.push(`${scope}.id: 重複しています。`);
+      anchors.add(id);
+    }
+
+    examples.forEach((example, exampleIndex) => {
+      requireText(example, `${scope}.examples[${exampleIndex}]`, errors);
+    });
+
+    if (id !== DESIGN_SERVICE_ID) return;
+
+    designServiceFound = true;
+  });
+
+  routeAnchors.set("/services/", anchors);
+
+  if (!designServiceFound) {
+    errors.push(`${SERVICES_PATH}.services: designサービスが必要です。`);
+  }
 }
 
 function validateGuide(value: unknown, errors: string[]) {
@@ -435,9 +520,12 @@ function validateIndexLinks(
       errors,
     );
 
-    if (typeof item.externalUrl !== "string" || !isHttpsUrl(item.externalUrl)) {
+    if (
+      typeof item.externalUrl !== "string" ||
+      (item.externalUrl !== "/insights/" && !isHttpsUrl(item.externalUrl))
+    ) {
       errors.push(
-        `${WORKS_PATH}.cases[${index}].externalUrl: HTTPS URLが必要です。`,
+        `${WORKS_PATH}.cases[${index}].externalUrl: HTTPSまたはInsights URLが必要です。`,
       );
     }
   });

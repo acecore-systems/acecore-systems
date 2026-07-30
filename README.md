@@ -45,15 +45,18 @@ npm run preview
 | 実績         | `/works/`                       | `src/data/works.json`                                          |
 | 実績詳細     | `/works/acecore-site-platform/` | `src/data/work-details/*.json`                                 |
 | 導入ガイド   | `/guide/`                       | `src/data/guide.json`                                          |
+| 技術解説     | `/insights/`                    | `src/content/insights/*.md`                                    |
 | お問い合わせ | `/contact/`                     | `src/data/contact.json`                                        |
 | プライバシー | `/privacy/`                     | `src/data/privacy.json`                                        |
 
-ブログ、RSS、サイト内検索、多言語ページは含めません。実装判断を詳しく説明する技術記事は、Acecore公式サイトの記事を参照します。
+技術解説は、Acecore公式サイトの日本語記事を起点に、Systemsが提供するサービスの実装・運用判断として再編集します。日本語1記事につきSystems側のURLを単一のcanonicalとして公開し、`src/content/insights/` で管理します。RSS、サイト内検索、タグ一覧、著者一覧、コメントUI、記事のCMS編集、多言語ページは移管しません。
+
+記事の frontmatter と著者情報はSystemsの公開情報として管理し、旧 `/blog/` 形式の本文リンクは表示時に解決します。Systemsへ移管済みの記事は `/insights/`、未移管の記事はAcecore公式サイトの絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 
 ## CMS
 
-Sveltia CMS は `/admin/` から利用します。CMS では固定ページ文言、実績、サイト設定、画像アップロードを管理します。
+Sveltia CMS は `/admin/` から利用します。CMS では固定ページ文言、実績、サイト設定、画像アップロードを管理します。技術解説の記事はCMSの管理対象に含めず、Pull Requestで更新します。
 
 保存するとPages Functionsがuser tokenで編集者とrepository権限を再確認し、変更path、件数、容量、`main`のHEADを同期検証します。検証後は対象repositoryとContents writeだけに絞った専用GitHub Appの短期installation tokenで、内容を1 commitとして`main`へ直接反映します。その後はCloudflare PagesのGitHub連携deployで本番公開されます。コード、設定、schemaの変更は従来どおりPull RequestとCIを通します。認証境界、管理対象path、検証手順は [CMS の安全な書き込み運用](docs/cms-write-workflow.md) を参照してください。

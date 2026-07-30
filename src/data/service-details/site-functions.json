@@ -136,42 +136,42 @@
     }
   ],
   "resourcesTitle": "設計の背景を、技術資料で確認できます。",
-  "resourcesLead": "詳細な実装判断はAcecore公式サイトの技術記事に残し、このページでは相談できる範囲を整理しています。",
+  "resourcesLead": "詳細な実装判断はAcecore Systemsの技術解説にまとめ、このページでは相談できる範囲を整理しています。",
   "resources": [
     {
       "title": "Astroサイトに問い合わせAIチャットを組み込む技術設計",
       "description": "API境界、回答範囲、Origin確認、レート制限、安全なリンク表示を整理しています。",
-      "href": "https://acecore.net/blog/astro-ai-contact-chat/"
+      "href": "/insights/astro-ai-contact-chat/"
     },
     {
       "title": "CloudflareだけでAstroブログにコメント機能を作る方法",
       "description": "Pages Functions、D1、Turnstileを使った投稿・保存・運用の設計記録です。",
-      "href": "https://acecore.net/blog/cloudflare-only-blog-comments/"
+      "href": "/insights/cloudflare-only-blog-comments/"
     },
     {
       "title": "Sveltia CMS導入ガイド",
       "description": "編集対象、画像、GitHub backend、確認・公開フローの考え方をまとめています。",
-      "href": "https://acecore.net/blog/cms-selection-and-turnstile/"
+      "href": "/insights/cms-selection-and-turnstile/"
     },
     {
       "title": "Sveltia CMSで多言語ブログを運用する方法",
       "description": "日本語の原稿から翻訳PR、hreflang、RSS、サイトマップまでを扱います。",
-      "href": "https://acecore.net/blog/copilot-translation-pipeline/"
+      "href": "/insights/copilot-translation-pipeline/"
     },
     {
       "title": "Astroサイトの多言語アーキテクチャ",
       "description": "UI翻訳、記事翻訳、言語別URL、検索向け情報を一つの構成として整理した記録です。",
-      "href": "https://acecore.net/blog/astro-i18n-blog-translation/"
+      "href": "/insights/astro-i18n-blog-translation/"
     },
     {
       "title": "Astro View Transitionsの落とし穴と解決策",
       "description": "Pagefind検索を含む、静的サイトのUXとコード品質の改善例です。",
-      "href": "https://acecore.net/blog/astro-ux-and-code-quality/"
+      "href": "/insights/astro-ux-and-code-quality/"
     },
     {
       "title": "サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計",
       "description": "相談種別、件名、流入元をフォームへ渡すための実装契約を整理しています。",
-      "href": "https://acecore.net/blog/service-cta-contact-prefill/"
+      "href": "/insights/service-cta-contact-prefill/"
     }
   ],
   "ctaTitle": "いまのサイトに足したい機能を相談する",

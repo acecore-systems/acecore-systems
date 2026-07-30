@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { validateSystemsContentFiles } from "../src/lib/systems-content-validation.ts";
+import { insightSlugs, resolveInsightHref } from "../src/lib/insight-links.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const readText = (relativePath) =>
@@ -260,18 +261,22 @@ const workSources = [
     data: "src/data/work-details/acecore-site-platform.json",
   },
 ];
-const migratedTechnicalArticles = [
-  "https://acecore.net/blog/astro-ai-contact-chat/",
-  "https://acecore.net/blog/cloudflare-only-blog-comments/",
-  "https://acecore.net/blog/cms-selection-and-turnstile/",
-  "https://acecore.net/blog/astro-i18n-blog-translation/",
-  "https://acecore.net/blog/copilot-translation-pipeline/",
-  "https://acecore.net/blog/astro-seo-and-structured-data/",
-  "https://acecore.net/blog/astro-ux-and-code-quality/",
-  "https://acecore.net/blog/astro-performance-tuning/",
-  "https://acecore.net/blog/astro-accessibility-guide/",
-  "https://acecore.net/blog/cloudflare-pages-security/",
-  "https://acecore.net/blog/service-cta-contact-prefill/",
+const migratedTechnicalArticles = insightSlugs.map(
+  (slug) => `/insights/${slug}/`,
+);
+const requiredServiceTechnicalArticles = [
+  "/insights/astro-accessibility-guide/",
+  "/insights/astro-ai-contact-chat/",
+  "/insights/astro-cloudflare-site-architecture/",
+  "/insights/astro-i18n-blog-translation/",
+  "/insights/astro-performance-tuning/",
+  "/insights/astro-seo-and-structured-data/",
+  "/insights/astro-ux-and-code-quality/",
+  "/insights/cloudflare-only-blog-comments/",
+  "/insights/cloudflare-pages-security/",
+  "/insights/cms-selection-and-turnstile/",
+  "/insights/copilot-translation-pipeline/",
+  "/insights/service-cta-contact-prefill/",
 ];
 const pricing = readJson("src/data/pricing.json");
 const pricingKeys = new Map();
@@ -348,9 +353,17 @@ for (const source of serviceSources) {
   }
 
   for (const resource of data.resources) {
-    const url = new URL(resource.href);
-    assert.equal(url.protocol, "https:", `${resource.href}: HTTPS required`);
-    technicalResources.add(url.href);
+    assert.match(
+      resource.href,
+      /^\/insights\/[a-z0-9-]+\/$/,
+      `${resource.href}: technical resources must use a canonical Insights route`,
+    );
+    assert.equal(
+      migratedTechnicalArticles.includes(resource.href),
+      true,
+      `${resource.href}: technical resource has no migrated article`,
+    );
+    technicalResources.add(resource.href);
   }
 }
 
@@ -493,7 +506,74 @@ assert.equal(
   "public/admin/config.yml: IT advisor data file missing",
 );
 
+const author = readJson("src/content/authors/gui.json");
+assert.equal(author.id, "gui", "Insights author id must remain gui");
+requireText(author.name, "src/content/authors/gui.json: name");
+
 for (const article of migratedTechnicalArticles) {
+  const slug = article.split("/").filter(Boolean).at(-1);
+  const sourcePath = `src/content/insights/${slug}.md`;
+  assert.equal(
+    existsSync(join(root, sourcePath)),
+    true,
+    `${sourcePath} missing`,
+  );
+  const source = readText(sourcePath);
+  assert.match(
+    source,
+    /^author:\s*gui\s*$/m,
+    `${sourcePath}: original author must remain gui`,
+  );
+  assert.equal(
+    resolveInsightHref(`/blog/${slug}/`),
+    article,
+    `${sourcePath}: legacy relative URL must resolve to Insights`,
+  );
+  assert.equal(
+    resolveInsightHref(`https://acecore.net/blog/${slug}/`),
+    article,
+    `${sourcePath}: legacy absolute URL must resolve to Insights`,
+  );
+
+  const frontmatter = source.split(/^---\s*$/m)[1] ?? "";
+  for (const match of frontmatter.matchAll(
+    /^(?:image|uploadedImage):\s*(.+?)\s*$/gm,
+  )) {
+    const image = match[1].replace(/^(['"])(.*)\1$/, "$2");
+    if (/^https:\/\//i.test(image)) {
+      assert.equal(
+        new URL(image).protocol,
+        "https:",
+        `${sourcePath}: article image must use HTTPS`,
+      );
+    } else {
+      validateImageAsset(image, `${sourcePath}: article image`);
+    }
+  }
+
+  for (const match of source.matchAll(
+    /!\[[^\]]*\]\((\/(?:images|uploads)\/[^)\s]+)\)/g,
+  )) {
+    validateImageAsset(match[1], `${sourcePath}: Markdown image`);
+  }
+
+  const legacyLinks = [
+    ...source.matchAll(/\]\(((?:https:\/\/acecore\.net)?\/blog\/[^)\s]+)\)/g),
+    ...frontmatter.matchAll(
+      /^\s*-\s+href:\s*((?:https:\/\/acecore\.net)?\/blog\/\S+)\s*$/gm,
+    ),
+  ];
+  for (const match of legacyLinks) {
+    const resolved = resolveInsightHref(match[1]);
+    assert.match(
+      resolved,
+      /^(?:\/insights\/|https:\/\/acecore\.net\/blog\/)/,
+      `${sourcePath}: ${match[1]} cannot be resolved`,
+    );
+  }
+}
+
+for (const article of requiredServiceTechnicalArticles) {
   assert.equal(
     technicalResources.has(article),
     true,
@@ -521,6 +601,14 @@ for (const source of workSources) {
   }
   assert.equal(data.scope.length > 0, true, `${source.data}: scope`);
   assert.equal(data.resources.length > 0, true, `${source.data}: resources`);
+  for (const [index, resource] of data.resources.entries()) {
+    requireText(resource.title, `${source.data}: resources[${index}].title`);
+    assert.equal(
+      migratedTechnicalArticles.includes(resource.href),
+      true,
+      `${source.data}: ${resource.href} has no migrated article`,
+    );
+  }
 }
 
 const knownRoutes = new Set([
@@ -529,6 +617,10 @@ const knownRoutes = new Set([
   ...workSources.map((source) => source.route),
 ]);
 const services = readJson("src/data/services.json");
+serviceAnchors.set(
+  "/services/",
+  new Set(services.services.map((item) => item.id)),
+);
 const works = readJson("src/data/works.json");
 const guide = readJson("src/data/guide.json");
 validateVisual(guide.visual, "src/data/guide.json: visual");
@@ -599,6 +691,14 @@ for (const [index, work] of works.cases.entries()) {
     work.externalLabel,
     `src/data/works.json: cases[${index}].externalLabel`,
   );
+  if (work.externalUrl.startsWith("/")) {
+    assert.equal(
+      work.externalUrl,
+      "/insights/",
+      `${work.externalUrl}: unknown internal work link`,
+    );
+    continue;
+  }
   const externalUrl = new URL(work.externalUrl);
   assert.equal(
     externalUrl.protocol,

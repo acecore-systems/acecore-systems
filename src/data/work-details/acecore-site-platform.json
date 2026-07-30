@@ -108,22 +108,22 @@
     }
   ],
   "resourcesTitle": "詳しい判断は、技術資料で確認できます。",
-  "resourcesLead": "構成や実装上の判断を、Acecore公式サイトの記事にまとめています。",
+  "resourcesLead": "構成や実装上の判断を、Acecore Systemsの技術解説にまとめています。",
   "resources": [
     {
       "title": "CMSと公開フロー",
       "description": "編集対象、画像、GitHub backend、確認・公開フローの設計記録です。",
-      "href": "https://acecore.net/blog/cms-selection-and-turnstile/"
+      "href": "/insights/cms-selection-and-turnstile/"
     },
     {
       "title": "検索と内部導線",
       "description": "Pagefind検索を含む、UXとコード品質の改善例です。",
-      "href": "https://acecore.net/blog/astro-ux-and-code-quality/"
+      "href": "/insights/astro-ux-and-code-quality/"
     },
     {
       "title": "配信品質とセキュリティ",
       "description": "CSP、セキュリティヘッダー、キャッシュ、Pagesの配信設定を整理しています。",
-      "href": "https://acecore.net/blog/cloudflare-pages-security/"
+      "href": "/insights/cloudflare-pages-security/"
     }
   ],
   "externalUrl": "https://acecore.net/",
