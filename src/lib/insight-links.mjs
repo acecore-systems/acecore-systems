@@ -1,4 +1,5 @@
 export const insightSlugs = Object.freeze([
+  "acecore-systems-site-renewal",
   "ai-chat-markdown-link-safety",
   "ai-monkey-testing-methodology",
   "astro-accessibility-guide",
