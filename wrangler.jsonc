@@ -34,8 +34,25 @@
       },
     },
     "production": {
+      "ai": {
+        "binding": "AI",
+      },
+      "vectorize": [
+        {
+          "binding": "SEARCH_INDEX",
+          "index_name": "acecore-systems-search-production",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "SEARCH_RATE_LIMIT_DB",
+          "database_name": "acecore-systems-search-production",
+          "database_id": "ac8a06c2-deb4-4b27-9fbc-0fa2eef3c76d",
+          "migrations_dir": "./migrations/search",
+        },
+      ],
       "vars": {
-        "SEARCH_ENABLED": "false",
+        "SEARCH_ENABLED": "true",
         "SEARCH_MIN_SCORE": "0.50",
       },
     },

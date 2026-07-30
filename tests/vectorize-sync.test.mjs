@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -16,6 +16,7 @@ import {
 } from "../scripts/build-search-corpus.mjs";
 import {
   extractEmbeddingData,
+  PRODUCTION_INDEX_NAME,
   syncVectorize,
   validateCorpus,
 } from "../scripts/sync-vectorize.mjs";
@@ -223,6 +224,56 @@ test("dry-run validates corpus and index allowlist without network access", asyn
       logger: quietLogger,
     }),
     /must be one of/u,
+  );
+});
+
+test("requires an exact confirmation before any production API request", async () => {
+  const corpusFile = await writeCorpus(makeCorpus(1));
+  let requested = false;
+
+  await assert.rejects(
+    syncVectorize({
+      ...commonOptions(corpusFile, async () => {
+        requested = true;
+        throw new Error("network should not be used");
+      }),
+      indexName: PRODUCTION_INDEX_NAME,
+    }),
+    /--confirm-production acecore-systems-search-production/u,
+  );
+  assert.equal(requested, false);
+});
+
+test("never auto-creates a missing production index", async () => {
+  const corpusFile = await writeCorpus(makeCorpus(1));
+  let requestCount = 0;
+
+  await assert.rejects(
+    syncVectorize({
+      ...commonOptions(corpusFile, async () => {
+        requestCount += 1;
+        return jsonResponse(
+          { success: false, errors: [{ message: "not found" }] },
+          { status: 404 },
+        );
+      }),
+      indexName: PRODUCTION_INDEX_NAME,
+      productionConfirmation: PRODUCTION_INDEX_NAME,
+    }),
+    /must be provisioned before sync/u,
+  );
+  assert.equal(requestCount, 1);
+});
+
+test("production workflow passes the exact production confirmation", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/sync-vectorize.yml", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(
+    workflow,
+    /args\+=\(--confirm-production "\$VECTORIZE_INDEX_NAME"\)/u,
   );
 });
 

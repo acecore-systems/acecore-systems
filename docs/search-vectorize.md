@@ -4,7 +4,12 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 
 ## 現在の状態
 
-- Production の関連検索は無効です。Production 用の Vectorize index、D1、GitHub Environment、API token はまだ作成していません。
+- Production の関連検索は `SEARCH_ENABLED=true` で有効です。障害時は `wrangler.jsonc` の Production だけを `false` に戻して、GitHub 連携の Pages deployment で停止します。
+- Production 用 Vectorize index `acecore-systems-search-production` は、BGE-M3 用の 1024 dimensions / cosine として作成済みです。
+- Production 初回同期は GitHub Actions run [30539728752](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) で完了済みです。公開 commit `b03d4b145c6f21983806c629e9f555267f3eb355` と corpus version `2b36c3896e085be1dfbf` を照合し、36ページから250 vectorsを upsert、削除0件で完了しました。
+- Production 用 D1 database `acecore-systems-search-production`（database ID `ac8a06c2-deb4-4b27-9fbc-0fa2eef3c76d`）は APAC に作成済みで、検索レート制限の migration を適用済みです。
+- GitHub Environment `cloudflare-search-production` は、`main` branch だけを許可し、required reviewer と管理者 bypass 無効を設定済みです。
+- Production 同期専用の Cloudflare account token は、Acecore account の Workers AI Read と Vectorize Write だけを許可し、GitHub Environment secret に保存済みです。
 - Preview 用 Vectorize index `acecore-systems-search-preview` は、BGE-M3 用の 1024 dimensions / cosine として作成済みです。
 - Preview 用 D1 database `acecore-systems-search-preview`（database ID `9346ee59-7cb7-4da1-9a00-7f75eee19f91`）は作成済みで、検索レート制限の migration を適用済みです。
 - GitHub Environment `cloudflare-search-preview` は作成済みです。`main` branch だけを許可しています。
@@ -23,6 +28,8 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 - 管理対象外の vector ID が index に混在していない
 - source page と vector の上限を超えていない
 - 既存 vector の 20% を超える削除を行わない
+- Production 同期では index 名を含む `--confirm-production` が明示されている
+- Production index が事前作成済みであり、同期処理から自動作成しない
 
 各 vector は、検索時の分離に使う top-level `namespace` と監査用 metadata の `namespace` の両方へ `ja` を保存します。同じ ID の格納形式を修復する場合だけ `--refresh-existing` を明示すると、検証済み corpus の全件を再 embedding して upsert します。修復時に削除対象が1件でもあれば mutation 前に停止し、通常同期と分離します。
 
@@ -40,9 +47,10 @@ Production は Preview QA 完了後に、次をすべて満たしてから段階
 
 1. Production 用 Vectorize index `acecore-systems-search-production` を BGE-M3 / 1024 dimensions / cosine で作成します。
 2. Production 用 D1 を作成し、検索レート制限 migration を適用します。
-3. `wrangler.jsonc` の Production binding と `SEARCH_ENABLED=true` を設定し、GitHub 連携の Cloudflare Pages deployment が成功することを確認します。
-4. GitHub Environment `cloudflare-search-production` を `main` 限定で作成し、最小権限 token を secret `CLOUDFLARE_SEARCH_PRODUCTION_API_TOKEN` に保存します。
+3. GitHub Environment `cloudflare-search-production` を `main` 限定・required reviewer・管理者 bypass 無効で作成し、最小権限 token を secret `CLOUDFLARE_SEARCH_PRODUCTION_API_TOKEN` に保存します。
+4. `wrangler.jsonc` に Production binding を追加し、`SEARCH_ENABLED=false` のまま GitHub 連携の Cloudflare Pages deployment を成功させます。
 5. repository variable `SYSTEMS_VECTORIZE_PRODUCTION_ENABLED=true` を設定します。この variable がない、または `true` 以外の場合、Production job は push / schedule / manual のすべてで skip します。
-6. 手動同期と本番ブラウザ QAを完了してから、定期同期を運用します。
+6. `target=production`、`allow_large_delete=false` で初回同期し、vector 件数、namespace、日本語 query を確認します。
+7. `SEARCH_ENABLED=true` を別の変更として反映し、本番 API、Pagefind フォールバック、rate limit、停止手順を確認します。
 
 Production 同期は公開 build marker の commit が `main` の祖先であることを確認し、公開中の commit と同じ source から corpus を再生成します。GitHub repository 連携の Pages deployment を完了条件とし、Direct Upload や手動 deploy は使いません。

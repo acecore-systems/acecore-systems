@@ -33,10 +33,11 @@ const CONTENT_HASH_PATTERN = /^[0-9a-f]{64}$/u;
 const VERSION_PATTERN = /^[0-9a-f]{20}$/u;
 const CONTENT_TYPE_PATTERN = /^[a-z0-9][a-z0-9_-]{0,39}$/u;
 const PRIVATE_PATH_SEGMENTS = new Set(["admin", "api"]);
+export const PRODUCTION_INDEX_NAME = "acecore-systems-search-production";
 
 export const ALLOWED_INDEX_NAMES = new Set([
   "acecore-systems-search-preview",
-  "acecore-systems-search-production",
+  PRODUCTION_INDEX_NAME,
 ]);
 
 class CloudflareApiError extends Error {
@@ -264,6 +265,24 @@ function validateIndexName(indexName, { required }) {
   }
 }
 
+function validateProductionConfirmation({
+  indexName,
+  productionConfirmation,
+  dryRun,
+}) {
+  if (
+    dryRun ||
+    indexName !== PRODUCTION_INDEX_NAME ||
+    productionConfirmation === PRODUCTION_INDEX_NAME
+  ) {
+    return;
+  }
+
+  throw new Error(
+    `Refusing to sync the production index; pass --confirm-production ${PRODUCTION_INDEX_NAME}.`,
+  );
+}
+
 function validateExistingVectorIds(ids, indexName) {
   const unmanagedIds = [...ids].filter(
     (id) => !MANAGED_VECTOR_ID_PATTERN.test(id),
@@ -434,7 +453,7 @@ function sleep(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-async function ensureIndex(client, indexName) {
+async function ensureIndex(client, indexName, { allowCreate }) {
   const encodedName = encodeURIComponent(indexName);
   try {
     const payload = await client.request(
@@ -444,6 +463,11 @@ async function ensureIndex(client, indexName) {
   } catch (error) {
     if (!(error instanceof CloudflareApiError) || error.status !== 404) {
       throw error;
+    }
+    if (!allowCreate) {
+      throw new Error(
+        `Vectorize production index ${indexName} must be provisioned before sync.`,
+      );
     }
   }
 
@@ -637,6 +661,7 @@ export async function syncVectorize({
   dryRun = false,
   allowLargeDelete = false,
   refreshExisting = false,
+  productionConfirmation = null,
   waitForMutations = true,
   fetchImpl = globalThis.fetch,
   requestTimeoutMs = REQUEST_TIMEOUT_MS,
@@ -657,6 +682,11 @@ export async function syncVectorize({
     );
   }
   validateIndexName(indexName, { required: !dryRun });
+  validateProductionConfirmation({
+    indexName,
+    productionConfirmation,
+    dryRun,
+  });
 
   if (dryRun) {
     const result = {
@@ -679,7 +709,9 @@ export async function syncVectorize({
     sleepImpl,
     randomImpl,
   });
-  const index = await ensureIndex(client, indexName);
+  const index = await ensureIndex(client, indexName, {
+    allowCreate: indexName !== PRODUCTION_INDEX_NAME,
+  });
   validateIndexConfiguration(index, indexName);
 
   const currentIds = await listVectorIds(client, indexName, {
@@ -777,6 +809,7 @@ function parseArguments(argv) {
     dryRun: false,
     allowLargeDelete: false,
     refreshExisting: false,
+    productionConfirmation: null,
     indexName: process.env.VECTORIZE_INDEX_NAME,
     corpusFile: DEFAULT_CORPUS_FILE,
   };
@@ -789,6 +822,8 @@ function parseArguments(argv) {
       options.allowLargeDelete = true;
     } else if (argument === "--refresh-existing") {
       options.refreshExisting = true;
+    } else if (argument === "--confirm-production") {
+      options.productionConfirmation = argv[++index];
     } else if (argument === "--index") {
       options.indexName = argv[++index];
     } else if (argument === "--corpus") {
