@@ -10,6 +10,8 @@
 
 - Astro v7
 - Cloudflare Pages
+- Pagefind
+- Cloudflare Workers AI / Vectorize
 - Sveltia CMS
 
 ## 必要環境
@@ -49,9 +51,13 @@ npm run preview
 | お問い合わせ | `/contact/`                     | `src/data/contact.json`                                        |
 | プライバシー | `/privacy/`                     | `src/data/privacy.json`                                        |
 
-技術解説は、Acecore公式サイトの日本語記事を起点に、Systemsが提供するサービスの実装・運用判断として再編集します。日本語1記事につきSystems側のURLを単一のcanonicalとして公開し、`src/content/insights/` で管理します。RSS、サイト内検索、タグ一覧、著者一覧、コメントUI、記事のCMS編集、多言語ページは移管しません。
+技術解説は、Acecore公式サイトの日本語記事を起点に、Systemsが提供するサービスの実装・運用判断として再編集します。日本語1記事につきSystems側のURLを単一のcanonicalとして公開し、`src/content/insights/` で管理します。RSS、タグ一覧、著者一覧、コメントUI、記事のCMS編集、多言語ページは移管しません。
 
 記事の frontmatter と著者情報はSystemsの公開情報として管理し、旧 `/blog/` 形式の本文リンクは表示時に解決します。Systemsへ移管済みの記事は `/insights/`、未移管の記事はAcecore公式サイトの絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
+
+サイト内検索は、ブラウザ内で動くPagefindを主検索とし、Cloudflare Workers AI / Vectorizeによる「関連する内容」を補助表示します。
+
+検索indexは公開後のHTMLから生成し、PreviewとProductionを分離して同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorizeサイト内検索 運用ガイド](docs/search-vectorize.md) を参照してください。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 

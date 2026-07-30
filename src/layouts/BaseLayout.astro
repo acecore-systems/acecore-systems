@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
+import SearchModal from '../components/SearchModal.astro'
 import site from '../data/site.json'
 import { serializeJsonForHtmlScript } from '../lib/safe-json.ts'
 import '../styles/global.css'
@@ -106,6 +107,9 @@ const jsonLd = pageJsonLd
   ? [...baseJsonLd, ...(Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd])]
   : baseJsonLd
 const serializedJsonLd = serializeJsonForHtmlScript(jsonLd)
+const pagefindMainAttributes = robots.toLowerCase().includes('noindex')
+  ? { 'data-pagefind-ignore': 'all' }
+  : { 'data-pagefind-body': '' }
 ---
 
 <!doctype html>
@@ -210,7 +214,8 @@ const serializedJsonLd = serializeJsonForHtmlScript(jsonLd)
   <body class={bodyClass}>
     <a class="skip-link" href="#main">本文へ移動</a>
     <Header />
-    <main id="main">
+    <SearchModal />
+    <main id="main" {...pagefindMainAttributes}>
       <slot />
     </main>
     <Footer />

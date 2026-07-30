@@ -12,7 +12,7 @@
     },
     {
       "title": "外部サービス",
-      "body": "フォーム送信と不正利用防止にはAcecore共通窓口およびCloudflare Turnstile、ホスティングにはCloudflare Pagesなどの外部サービスを利用します。"
+      "body": "フォーム送信と不正利用防止にはAcecore共通窓口およびCloudflare Turnstile、ホスティングにはCloudflare Pagesなどの外部サービスを利用します。サイト内検索で「関連する内容」を実行した場合は、入力した検索語をCloudflare Workers AIで数値表現へ変換し、Cloudflare Vectorizeに登録した当サイトの公開情報と照合します。検索語はお問い合わせ内容や個人情報の入力を想定していません。"
     },
     {
       "title": "アクセス解析",
