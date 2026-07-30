@@ -1,14 +1,14 @@
 ---
-title: '「静かな基盤」をかたちに。Acecore Systemsサイトをリニューアルしました'
-description: 'Acecore Systemsのサイトを「静かな基盤」をテーマにリニューアルしました。業務を「現場・仕組み・運用」の三層で捉え、支援方針、サービス、実績、料金、導入ガイド、相談までの流れを再設計した背景と主な変更点を紹介します。'
+title: "「静かな基盤」をかたちに。Acecore Systemsサイトをリニューアルしました"
+description: "Acecore Systemsのサイトを「静かな基盤」をテーマにリニューアルしました。業務を「現場・仕組み・運用」の三層で捉え、支援方針、サービス、実績、料金、導入ガイド、相談までの流れを再設計した背景と主な変更点を紹介します。"
 date: 2026-07-30T15:00
 author: gui
-tags: ['お知らせ', 'サービス', 'Webサイト', 'Web制作']
+tags: ["お知らせ", "サービス", "Webサイト", "Web制作"]
 image: /uploads/acecore-systems-site-renewal.webp
 callout:
   type: info
   title: 公開サイト
-  text: 'Acecore Systemsは https://systems.acecore.net/ で公開中です。業務システム、Webアプリ、管理画面、データ連携などを、要件整理から公開後の運用改善まで一貫してご案内しています。'
+  text: "Acecore Systemsは https://systems.acecore.net/ で公開中です。業務システム、Webアプリ、管理画面、データ連携などを、要件整理から公開後の運用改善まで一貫してご案内しています。"
 insightGrid:
   eyebrow: SYSTEMS FOR OPERATIONS
   title: 業務を支える三つの層
