@@ -624,7 +624,7 @@
       },
       {
         "title": "Servicios externos",
-        "body": "Utilizamos el punto de contacto común de Acecore y Cloudflare Turnstile para enviar formularios y prevenir abusos, y Cloudflare Pages para el alojamiento. Al ejecutar «Contenido relacionado» en la búsqueda del sitio, los términos introducidos se convierten en una representación numérica mediante Cloudflare Workers AI y se comparan con la información pública de este sitio almacenada en Cloudflare Vectorize. No introduzca datos de consultas ni información personal como términos de búsqueda."
+        "body": "Utilizamos el punto de contacto común de Acecore y Cloudflare Turnstile para enviar formularios y prevenir abusos, y Cloudflare Pages para el alojamiento. Al ejecutar «Contenido relacionado» en la búsqueda del sitio, los términos introducidos se convierten en una representación numérica mediante la API de OpenAI y se comparan con la información pública de este sitio almacenada en Cloudflare Vectorize. No introduzca datos de consultas ni información personal como términos de búsqueda."
       },
       {
         "title": "Analítica",

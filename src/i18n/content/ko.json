@@ -619,7 +619,7 @@
       },
       {
         "title": "외부 서비스",
-        "body": "양식 제출과 악용 방지를 위해 Acecore 공통 창구 및 Cloudflare Turnstile을 사용하고, 호스팅에는 Cloudflare Pages 등의 외부 서비스를 사용합니다. 사이트 내 검색에서 ‘관련 콘텐츠’를 실행하면 입력한 검색어가 Cloudflare Workers AI를 통해 수치 표현으로 변환되고 Cloudflare Vectorize에 등록된 이 사이트의 공개 정보와 대조됩니다. 검색어에 문의 내용이나 개인정보를 입력하지 마십시오."
+        "body": "양식 제출과 악용 방지를 위해 Acecore 공통 창구 및 Cloudflare Turnstile을 사용하고, 호스팅에는 Cloudflare Pages 등의 외부 서비스를 사용합니다. 사이트 내 검색에서 ‘관련 콘텐츠’를 실행하면 입력한 검색어가 OpenAI API를 통해 수치 표현으로 변환되고 Cloudflare Vectorize에 등록된 이 사이트의 공개 정보와 대조됩니다. 검색어에 문의 내용이나 개인정보를 입력하지 마십시오."
       },
       {
         "title": "액세스 분석",

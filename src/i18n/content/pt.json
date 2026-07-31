@@ -624,7 +624,7 @@
       },
       {
         "title": "Serviços externos",
-        "body": "Utilizamos serviços externos, como o canal comum da Acecore e o Cloudflare Turnstile para envio de formulários e prevenção de uso indevido, além do Cloudflare Pages para hospedagem. Ao executar “Conteúdo relacionado” na pesquisa do site, os termos inseridos são convertidos em uma representação numérica pelo Cloudflare Workers AI e comparados com as informações públicas deste site armazenadas no Cloudflare Vectorize. Não insira conteúdo de consultas nem informações pessoais nos termos de pesquisa."
+        "body": "Utilizamos serviços externos, como o canal comum da Acecore e o Cloudflare Turnstile para envio de formulários e prevenção de uso indevido, além do Cloudflare Pages para hospedagem. Ao executar “Conteúdo relacionado” na pesquisa do site, os termos inseridos são convertidos em uma representação numérica pela API da OpenAI e comparados com as informações públicas deste site armazenadas no Cloudflare Vectorize. Não insira conteúdo de consultas nem informações pessoais nos termos de pesquisa."
       },
       {
         "title": "Análise de acesso",
