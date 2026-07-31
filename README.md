@@ -62,7 +62,7 @@ npm run preview
 
 PagefindとVectorizeのcorpusは公開後の日本語HTMLから生成します。通常のPages PreviewはVectorize bindingを持たずPagefindだけを使い、VectorizeはProduction indexだけを自動同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorizeサイト内検索 運用ガイド](docs/search-vectorize.md) を参照してください。
 
-OpenAI用1536次元Production indexは作成済みですが、まだcorpusを同期していないため、関連検索は無効です。Production同期の収束、vector件数、`ja` namespaceを確認した後に、別の変更で有効化します。
+OpenAI用1536次元Production indexは256 vectorsを同期し、`ja` namespaceの既知queryを確認済みです。関連検索はProductionで有効、通常のPages Previewでは無効です。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 

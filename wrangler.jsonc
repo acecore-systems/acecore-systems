@@ -4,7 +4,7 @@
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-03-12",
   "vars": {
-    "SEARCH_ENABLED": "false",
+    "SEARCH_ENABLED": "true",
     "SEARCH_MIN_SCORE": "0.50",
     "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
     "OPENAI_EMBEDDING_DIMENSIONS": "1536",
@@ -34,7 +34,7 @@
         },
       ],
       "vars": {
-        "SEARCH_ENABLED": "false",
+        "SEARCH_ENABLED": "true",
         "SEARCH_MIN_SCORE": "0.50",
         "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
         "OPENAI_EMBEDDING_DIMENSIONS": "1536",

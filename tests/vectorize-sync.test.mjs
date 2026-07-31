@@ -302,7 +302,13 @@ test("keeps Pages Preview free of Vectorize and D1 bindings", async () => {
     )?.length,
     1,
   );
-  assert.equal(config.match(/"SEARCH_ENABLED": "false"/gu)?.length, 3);
+  assert.equal(config.match(/"SEARCH_ENABLED": "false"/gu)?.length, 1);
+  assert.equal(config.match(/"SEARCH_ENABLED": "true"/gu)?.length, 2);
+  assert.match(
+    config,
+    /"preview"\s*:\s*\{\s*"vars"\s*:\s*\{\s*"SEARCH_ENABLED": "false"/u,
+  );
+  assert.match(config, /"production"\s*:\s*\{[\s\S]*"SEARCH_ENABLED": "true"/u);
 });
 
 test("upserts missing content, waits, then safely deletes stale content", async () => {
