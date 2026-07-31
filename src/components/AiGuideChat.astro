@@ -1,0 +1,546 @@
+---
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getAiGuideChatText } from "../i18n/ai-guide-chat";
+import { AI_GUIDE_API_URL } from "../scripts/ai-guide-chat";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const text = getAiGuideChatText(locale);
+const contactUrl = getLocalizedUrl("/contact/", locale);
+const privacyUrl = getLocalizedUrl("/privacy/", locale);
+---
+
+<aside
+  id="systems-ai-guide-chat"
+  class="ai-guide"
+  data-ai-guide
+  data-api-url={AI_GUIDE_API_URL}
+  data-locale={locale}
+  data-assistant-label={text.assistantLabel}
+  data-visitor-label={text.visitorLabel}
+  data-empty-error={text.emptyError}
+  data-too-long-error={text.tooLongError}
+  data-timeout-error={text.timeoutError}
+  data-generic-error={text.genericError}
+  data-sending={text.sending}
+>
+  <section
+    id="systems-ai-guide-panel"
+    class="ai-guide__panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="systems-ai-guide-title"
+    aria-describedby="systems-ai-guide-lead systems-ai-guide-disclosure"
+    tabindex="-1"
+    hidden
+    data-ai-guide-panel
+  >
+    <header class="ai-guide__header">
+      <div>
+        <p class="ai-guide__eyebrow">{text.eyebrow}</p>
+        <h2 id="systems-ai-guide-title">{text.title}</h2>
+        <p id="systems-ai-guide-lead" class="ai-guide__lead">{text.lead}</p>
+      </div>
+      <button
+        class="ai-guide__close"
+        type="button"
+        aria-label={text.closeLabel}
+        data-ai-guide-close
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="m5 5 14 14M19 5 5 19"></path>
+        </svg>
+      </button>
+    </header>
+
+    <div
+      class="ai-guide__messages"
+      role="log"
+      aria-live="polite"
+      aria-relevant="additions text"
+      data-ai-guide-messages
+    >
+      <article class="ai-guide__message ai-guide__message--assistant">
+        <p class="ai-guide__message-label">{text.assistantLabel}</p>
+        <div class="ai-guide__message-body">
+          <p>{text.greeting}</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="ai-guide__prompts" aria-label={text.title}>
+      {
+        text.quickPrompts.map((prompt) => (
+          <button
+            type="button"
+            data-ai-guide-prompt={prompt}
+            aria-label={prompt}
+          >
+            {prompt}
+          </button>
+        ))
+      }
+    </div>
+
+    <form class="ai-guide__form" data-ai-guide-form>
+      <label for="systems-ai-guide-input">
+        <span>{text.inputLabel}</span>
+        <span id="systems-ai-guide-character-limit">{text.characterLimit}</span>
+      </label>
+      <div class="ai-guide__composer">
+        <textarea
+          id="systems-ai-guide-input"
+          name="question"
+          rows="3"
+          maxlength="800"
+          required
+          autocomplete="off"
+          enterkeyhint="send"
+          placeholder={text.placeholder}
+          aria-describedby="systems-ai-guide-character-limit systems-ai-guide-disclosure"
+          data-ai-guide-input></textarea>
+        <button type="submit" data-ai-guide-submit>{text.send}</button>
+      </div>
+      <p
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        data-ai-guide-status
+      >
+      </p>
+    </form>
+
+    <footer class="ai-guide__footer">
+      <p id="systems-ai-guide-disclosure">{text.disclosure}</p>
+      <nav aria-label={text.eyebrow}>
+        <a href={contactUrl}>{text.contact}</a>
+        <a href={privacyUrl}>{text.privacy}</a>
+      </nav>
+    </footer>
+  </section>
+
+  <button
+    class="ai-guide__toggle"
+    type="button"
+    aria-haspopup="dialog"
+    aria-controls="systems-ai-guide-panel"
+    aria-expanded="false"
+    aria-label={text.openLabel}
+    data-ai-guide-toggle
+  >
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M5 5.5h14v10H9l-4 3v-13Z"></path>
+      <path d="M8.5 9h7M8.5 12h4.5"></path>
+    </svg>
+    <span>{text.openLabel}</span>
+  </button>
+</aside>
+
+<script>
+  import "../scripts/ai-guide-chat.ts";
+</script>
+
+<style is:global>
+  .ai-guide {
+    position: fixed;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 220;
+    display: grid;
+    gap: 12px;
+    justify-items: end;
+    font-family: var(--font-sans);
+  }
+
+  .ai-guide__panel {
+    display: grid;
+    grid-template-rows: auto minmax(150px, 1fr) auto auto auto;
+    width: min(410px, calc(100vw - 36px));
+    max-height: calc(100vh - 110px);
+    max-height: calc(100dvh - 110px);
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    box-shadow: 0 22px 64px rgba(6, 43, 75, 0.2);
+    color: var(--ink);
+  }
+
+  .ai-guide__panel[hidden] {
+    display: none;
+  }
+
+  .ai-guide__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: start;
+    border-bottom: 1px solid var(--line);
+    padding: 20px;
+    background: var(--paper-soft);
+  }
+
+  .ai-guide__eyebrow {
+    color: var(--blue);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .ai-guide__header h2 {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 4vw, 1.45rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+  }
+
+  .ai-guide__lead {
+    margin-top: 8px;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    line-height: 1.65;
+  }
+
+  .ai-guide__close {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--control-border);
+    padding: 0;
+    place-items: center;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .ai-guide__close:hover {
+    background: var(--paper-deep);
+  }
+
+  .ai-guide__close svg,
+  .ai-guide__toggle svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .ai-guide__messages {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    min-height: 150px;
+    overflow-y: auto;
+    padding: 18px 20px;
+    background:
+      linear-gradient(rgba(20, 34, 53, 0.035) 1px, transparent 1px),
+      var(--paper);
+    background-size: 100% 30px;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .ai-guide__message {
+    display: grid;
+    gap: 5px;
+    width: min(88%, 34rem);
+  }
+
+  .ai-guide__message--user {
+    justify-self: end;
+  }
+
+  .ai-guide__message-label {
+    color: var(--muted);
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .ai-guide__message--user .ai-guide__message-label {
+    text-align: right;
+  }
+
+  .ai-guide__message-body {
+    display: grid;
+    gap: 8px;
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 0.84rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .ai-guide__message--user .ai-guide__message-body {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .ai-guide__message--error .ai-guide__message-body {
+    border-color: #a3433a;
+    color: #742c26;
+  }
+
+  .ai-guide__message-body ul,
+  .ai-guide__message-body ol {
+    display: grid;
+    gap: 5px;
+    padding-left: 1.2rem;
+  }
+
+  .ai-guide__message-body a {
+    color: var(--blue);
+    font-weight: 750;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .ai-guide__message-body code {
+    border: 1px solid var(--line);
+    padding: 0.08em 0.3em;
+    background: var(--paper-soft);
+    font-size: 0.92em;
+  }
+
+  .ai-guide__typing {
+    display: flex;
+    min-height: 46px;
+    gap: 6px;
+    align-items: center;
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    background: var(--surface);
+  }
+
+  .ai-guide__typing span {
+    width: 6px;
+    height: 6px;
+    background: var(--blue);
+    animation: ai-guide-pulse 1.1s ease-in-out infinite;
+  }
+
+  .ai-guide__typing span:nth-child(2) {
+    animation-delay: 0.14s;
+  }
+
+  .ai-guide__typing span:nth-child(3) {
+    animation-delay: 0.28s;
+  }
+
+  .ai-guide__prompts {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    border-top: 1px solid var(--line);
+    padding: 10px 20px;
+    background: var(--paper-soft);
+    scrollbar-width: thin;
+  }
+
+  .ai-guide__prompts button {
+    flex: 0 0 auto;
+    min-height: 36px;
+    border: 1px solid var(--line-strong);
+    padding: 7px 10px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.35;
+    cursor: pointer;
+  }
+
+  .ai-guide__prompts button:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .ai-guide__form {
+    display: grid;
+    gap: 8px;
+    border-top: 1px solid var(--line);
+    padding: 14px 20px;
+    background: var(--surface);
+  }
+
+  .ai-guide__form > label {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .ai-guide__form > label span:last-child {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .ai-guide__composer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .ai-guide__composer textarea {
+    min-height: 76px;
+    resize: vertical;
+    border: 1px solid var(--control-border);
+    border-radius: 0;
+    padding: 10px 12px;
+    background: var(--paper-soft);
+    color: var(--ink);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .ai-guide__composer textarea::placeholder {
+    color: var(--muted);
+  }
+
+  .ai-guide__composer button {
+    min-width: 72px;
+    border: 1px solid var(--blue);
+    padding: 10px 14px;
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .ai-guide__composer button:hover {
+    border-color: var(--blue-deep);
+    background: var(--blue-deep);
+  }
+
+  .ai-guide__composer button:disabled,
+  .ai-guide__composer textarea:disabled {
+    cursor: wait;
+    opacity: 0.62;
+  }
+
+  .ai-guide__footer {
+    display: grid;
+    gap: 7px;
+    border-top: 1px solid var(--line);
+    padding: 11px 20px 13px;
+    background: var(--paper-soft);
+  }
+
+  .ai-guide__footer p {
+    color: var(--muted);
+    font-size: 0.65rem;
+    line-height: 1.55;
+  }
+
+  .ai-guide__footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+
+  .ai-guide__footer a {
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-underline-offset: 0.18em;
+  }
+
+  .ai-guide__toggle {
+    display: inline-flex;
+    min-height: 52px;
+    gap: 9px;
+    align-items: center;
+    border: 1px solid var(--blue-deep);
+    padding: 12px 17px;
+    background: var(--blue);
+    box-shadow: 0 10px 28px rgba(6, 43, 75, 0.24);
+    color: var(--white);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+
+  .ai-guide__toggle:hover {
+    background: var(--blue-deep);
+  }
+
+  .ai-guide.is-open .ai-guide__toggle {
+    box-shadow: none;
+  }
+
+  @keyframes ai-guide-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .ai-guide {
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      left: max(12px, env(safe-area-inset-left));
+    }
+
+    .ai-guide__panel {
+      width: 100%;
+      max-height: calc(100vh - 92px);
+      max-height: calc(100dvh - 92px);
+    }
+
+    .ai-guide__header,
+    .ai-guide__messages,
+    .ai-guide__prompts,
+    .ai-guide__form {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .ai-guide__footer {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .ai-guide__composer {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-guide__composer textarea {
+      min-height: 64px;
+    }
+
+    .ai-guide__composer button {
+      min-height: 44px;
+    }
+
+    .ai-guide__toggle {
+      justify-self: end;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-guide__typing span {
+      animation: none;
+      opacity: 0.7;
+    }
+  }
+</style>
