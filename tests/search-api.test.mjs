@@ -30,6 +30,17 @@ test("同一originの日本語検索をja namespaceで実行し、公開URLだ�
         "/%2525252e%2525252e%2525252fadmin/",
         "ja",
       ),
+      searchMatch(
+        "nfkc-admin-url",
+        0.749,
+        "/%EF%BC%85%36%31dmin/private/",
+        "ja",
+      ),
+      searchMatch("nfkc-api-url", 0.748, "/%EF%BC%85%36%31pi/private/", "ja"),
+      searchMatch("backslash-url", 0.747, "/safe\\private/", "ja"),
+      searchMatch("encoded-slash-url", 0.7465, "/safe%252fprivate/", "ja"),
+      searchMatch("tab-url", 0.746, "\t/services/", "ja"),
+      searchMatch("control-url", 0.745, "/safe/\u0001private/", "ja"),
       searchMatch("cross-origin", 0.74, "https://example.com/", "ja"),
       searchMatch("wrong-locale", 0.73, "/company/", "en"),
       searchMatch("two", 0.72, "/support/", "ja"),
@@ -72,7 +83,7 @@ test("同一originの日本語検索をja namespaceで実行し、公開URLだ�
   assert.deepEqual(
     body.results.map(({ id, url, rank }) => ({ id, url, rank })),
     [
-      { id: "one", url: "/services/", rank: 1 },
+      { id: "duplicate-url", url: "/services/", rank: 1 },
       { id: "two", url: "/support/", rank: 2 },
       { id: "three", url: "/about/", rank: 3 },
       { id: "four", url: "/company/", rank: 4 },
