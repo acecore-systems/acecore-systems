@@ -23,8 +23,8 @@ processFigure:
       description: "将正文分成 chunk，并添加源自 content hash 的 ID 和审计 metadata。"
       icon: i-lucide-boxes
       accent: brand
-    - title: 在 Preview 中同步
-      description: "使用专用 index 和 token 进行 upsert，并确认 API、空结果、fallback 和 rate limit。"
+    - title: 确认 Preview 界面
+      description: "在那里保持语义搜索关闭，并确认 Pagefind 候选项、fallback 和可见说明。"
       icon: i-lucide-flask-conical
       accent: amber
     - title: 将已发布 commit 同步到 Production
@@ -45,8 +45,8 @@ compareTable:
     items:
       - "普通搜索使用 Pagefind，语义搜索作为由用户明确操作触发的辅助功能"
       - "从已发布 HTML 生成 corpus，反映 canonical、noindex 和 locale"
-      - "在同步前后验证环境 allowlist、删除比例、已发布 commit 和 mutation 完成情况"
-      - "将实现、本地验证、Preview 和 Production 运行记录为不同状态"
+      - "在同步前后验证 Production allowlist、删除比例、已发布 commit 和 mutation 完成情况"
+      - "将实现、本地验证、Preview 界面确认和 Production 运行记录为不同状态"
 statBar:
   items:
     - value: "4 repos"
@@ -76,7 +76,7 @@ checklist:
       checked: true
     - text: "使用源自 content hash 的 ID，避免对未变化的 chunk 再次 embedding"
       checked: true
-    - text: "隔离 Preview 与 Production 的 index、binding、token 和审批边界"
+    - text: "让 Preview 只使用 Pagefind，并将 Vectorize、D1 和同步权限限制在 Production"
       checked: true
     - text: "确认 upsert 完成后再 delete，并要求明确批准大量删除"
       checked: true
@@ -109,7 +109,7 @@ faq:
     - question: 现行实现中的 embedding model 和 dimensions 应如何管理？
       answer: "现行 Acecore Systems 实现使用 OpenAI text-embedding-3-large，配置为1,536 dimensions／cosine。旧 BGE-M3 的1,024 dimensions index保留用于 rollback，不会把不同 dimensions 的 vector 混入同一个 index。index 设置在创建后无法更改，因此创建前要确认最新官方规范和实际输出 shape。"
     - question: 在什么阶段可以判断导入完成？
-      answer: "merge 或本地 test 本身不代表完成。只有确认 Preview 的实际请求、已发布 commit 与 corpus 一致、Production index 同步、mutation 收敛、Pagefind fallback、rate limit 和停止步骤后，才记录为正在 Production 运行。"
+      answer: "merge 或本地 test 本身不代表完成。在 Preview 中确认 Pagefind 和 UI fallback；在 Production 中确认已发布 commit 与 corpus 一致、index 同步、mutation 收敛、相关搜索、rate limit 和停止步骤后，才记录为正在运行。"
 ---
 
 ## 先理解：Cloudflare Vectorize 是什么？
@@ -139,7 +139,7 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 
 这些是导入时应先判断的价值和适用范围。之后，本文将 Acecore Systems、World Foundation、Acecore Schools 和 Aceserver Portal 的导入与调查记录汇总为可在其他 Astro／Cloudflare Pages 站点复用的实现与运维实践。
 
-> **当前运行状态（2026年7月31日）：** 导入初期曾验证独立的 Preview 与 Production 环境。现在常规 Pages Preview 不再拥有 Vectorize 或 D1 binding，保持 `SEARCH_ENABLED=false`，只使用 Pagefind。关联搜索和自动同步只对 Production index 运行。下文提到的 Preview index 是导入阶段的记录，不是当前的完成条件。
+> **当前运行状态（2026年7月31日再次确认）：** 常规 Pages Preview 不拥有 Vectorize 或 D1 binding，保持 `SEARCH_ENABLED=false`，只使用 Pagefind。关联搜索和自动同步只对 Production index 运行。在更新本文前确认的最近一次 Production 同步中，核对已发布 commit 与 corpus 后，37个页面和256 vectors 已收敛：`current` 和 `expected` 均为256，upsert 1个，delete 1个。[GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) 下文提到的 Preview index 是导入阶段的记录，不是当前的完成条件。
 
 在多个仓库导入和试用后会发现，仅仅“生成 embedding 并调用 `query()`”远远不够。还要决定如何构建搜索 corpus、如何让 Preview 只保留 Pagefind 同时保护 Production、如何防止错误同步导致大量删除，以及已发布页面是否真的与 index 一致。实际运维中，Vectorize API 调用前后的设计比调用本身更重要。
 
@@ -153,22 +153,22 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 | 相关搜索 API    | fail-soft   | 快速结束错误，不破坏普通搜索结果                          |
 | corpus 生成     | fail-closed | 对象页面、locale、数量或 metadata 不合法时不生成          |
 | index 同步      | fail-closed | 无法确认目标环境、现有 ID、删除比例和 mutation 时不做修改 |
-| Production 启用 | fail-closed | 确认 Preview QA 与已发布 commit 一致后才启用              |
+| Production 启用 | fail-closed | 仅在已发布 commit 与 corpus 一致、Production 同步与 mutation 收敛后才启用 |
 
 这样既能满足“AI 搜索故障时站内搜索仍可使用”，又能满足“同步处理有疑点时一条记录也不修改”。
 
 ## 在四个仓库中确认的状态
 
-把导入记录写成文章时，不将所有状态统称为“已导入”同样重要。本次记录中混合了 Production 运行、本地验证、Preview 资源准备和事前调查。
+把导入记录写成文章时，不将所有状态统称为“已导入”同样重要。本次记录中混合了 Production 运行、本地验证、Preview 界面确认和事前调查。
 
 | 仓库             | 已记录和确认的状态                                                                                  | 获得的经验                                                                                    |
 | ---------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Acecore Systems  | OpenAI 1,536 dimensions index已在 Preview／Production 运行；每个环境同步256 vectors并确认已知 query | 与 Pagefind 并用、已发布 HTML corpus、D1 rate limit、安全的 Production 同步与 dimensions 迁移 |
+| Acecore Systems  | OpenAI 1,536 dimensions index仅在 Production 运行；同步已在37个页面和256 vectors收敛，Preview只使用 Pagefind | 与 Pagefind 并用、已发布 HTML corpus、D1 rate limit、安全的 Production 同步与 dimensions 迁移 |
 | Aceserver Portal | 确认用于 Acecore 信息的 Vectorize 搜索正在 Production 运行                                          | 不要混合企业信息与 WIKI 规则搜索的搜索目标                                                    |
 | World Foundation | 在本地从72 sources生成134 vectors并通过37 tests；尚未发布                                           | content hash、fail-closed 同步、发布前门禁隔离                                                |
 | Acecore Schools  | 仅完成现有架构调查；尚未创建 index 或开始实现                                                       | 添加 binding 前先确定 API、corpus、权限和环境架构                                             |
 
-Acecore Systems 将导入分为三个阶段：[实现 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[Production 准备 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) 和 [Production 启用 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)。
+Acecore Systems 将导入分为三个阶段：[实现 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[Production 准备 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) 和 [Production 启用 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)。初始记录中的 Preview／Production 同步已不是现行运行方式：[PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) 将常规 Pages Preview 改为只使用 Pagefind，现在只有 Production 会同步并提供相关搜索。
 
 首次 Production 同步的 [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) 核对了已发布 commit 和 corpus version，并从36个已发布日语页面生成250 vectors。同步结果为 upsert 250个、delete 0个。将代码 merge、index 准备、首次同步和搜索启用拆分为不同变更后，各阶段的停止条件都更加明确。
 
@@ -187,6 +187,8 @@ Vectorize 适合搜索词与正文不完全一致，或需要通过相关概念�
 3. 为 API 设置较短的 timeout
 4. API 失败时不移除 Pagefind 结果
 5. 使用 kill switch 只停止相关搜索
+
+当前搜索模态框在输入时仅使用浏览器内的 Pagefind 显示候选项。只有读者执行“搜索”时，才会按照界面说明把搜索词发送到 OpenAI Embeddings API，并在 Vectorize 中与本站公开信息进行比对。界面会提醒不要输入个人信息或机密信息，并将这类发送与普通关键词候选项区分开来。
 
 采用这种架构，Vectorize 可以扩展搜索体验，但不会成为整个搜索的单点故障。
 
@@ -248,7 +250,7 @@ const vector = {
 
 ## 将 embedding model 与 index 设置固定为契约
 
-初始实现记录使用了 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。现行 Acecore Systems 实现在另行命名的目标 indexes中使用 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 的 `text-embedding-3-large`，配置为1,536 dimensions／cosine。Preview／Production均以每个环境256 vectors运行；旧 BGE-M3 index保留用于 rollback，不同 dimensions 的 vector 不会混入同一个 index。
+初始实现记录使用了 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。现行 Acecore Systems 实现在另行命名的目标 index中使用 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 的 `text-embedding-3-large`，配置为1,536 dimensions／cosine。只有 Production index 用于同步和查询；Preview 只使用 Pagefind。旧 BGE-M3 index保留用于 rollback，不同 dimensions 的 vector 不会混入同一个 index。
 
 比 model 名称本身更重要的是，让以下四处遵守同一契约。
 
@@ -263,7 +265,7 @@ const vector = {
 
 使用 metadata filtering 时，需要在导入 vector 前创建 metadata index。仅仅在之后添加 metadata index，并不会让先前导入的 vector 成为过滤对象，必须重新 upsert。
 
-产品 limits 也会变化。截至2026年7月30日，Vectorize V2 的 Workers API upsert batch 上限为1,000，HTTP API 为5,000。普通 `topK` 上限为100；使用 `returnValues: true` 或 `returnMetadata: "all"` 时为50。实现时必须重新确认[现行 limits](https://developers.cloudflare.com/vectorize/platform/limits/)和[client API](https://developers.cloudflare.com/vectorize/reference/client-api/)。
+产品 limits 也会变化。截至2026年7月31日再次确认，Vectorize V2 的 Workers API upsert batch 上限为1,000，HTTP API 为5,000。普通 `topK` 上限为100；使用 `returnValues: true` 或 `returnMetadata: "all"` 时为50。实现时必须重新确认[现行 limits](https://developers.cloudflare.com/vectorize/platform/limits/)和[client API](https://developers.cloudflare.com/vectorize/reference/client-api/)。
 
 Acecore Systems 使用 HTTP API 每批同步200个，搜索使用 `topK: 15`，并没有直接把产品上限作为处理数量。产品上限和团队能够安全重试、监控的 batch 数值应分别决定。
 
@@ -285,7 +287,7 @@ Cloudflare 的 [Vectorize API](https://developers.cloudflare.com/vectorize/refer
 
 此外，同步脚本还设置了以下停止条件。
 
-- 目标 index 名称不在 Preview／Production allowlist 中
+- 目标 index 名称不完全匹配 Production index 的 allowlist
 - 尝试由同步处理自动创建 Production index
 - `--confirm-production` 的值与目标 index 名称不一致
 - dimensions／metric 与契约不同
@@ -295,11 +297,11 @@ Cloudflare 的 [Vectorize API](https://developers.cloudflare.com/vectorize/refer
 - 删除超过现有 vector 的20%
 - 超过 retry 上限或 mutation 等待时间
 
-只有大量删除属于有意变更时，才允许在手动执行中明确 override。普通 push 或 schedule 不允许这样做。
+即使是有意的大量删除，也应放入单独审查的迁移流程，而不是在普通 workflow 中 override。普通 push 或 schedule 不允许这样做。
 
-## Preview 与 Production 不仅要分开名称，还要分开权限
+## Preview 只使用 Pagefind，Production 才是唯一的高权限同步目标
 
-隔离环境时，仅修改 binding 的 index 名称还不够。
+导入初期分离 Preview 与 Production 有助于识别权限和停止条件。但常规 Pages Preview 并不需要 Vectorize 或 D1 binding。当前配置保持 `SEARCH_ENABLED=false`：Preview 用于确认 Pagefind 候选项、fallback 和布局。Vectorize／D1 binding、同步 token 和 Production Environment 都限制在 Production。
 
 需要隔离以下对象。
 
@@ -355,6 +357,12 @@ client 侧 UUID 可以由用户修改，因此不能成为强有力的计费边�
 
 本架构使用 D1 进行 rate limit，但 D1 并不是导入 Vectorize 的必备条件，R2 也一样。应根据原文从哪里获取、rate limit 状态放在哪里进行选择。
 
+## 为 Vectorize 搜索和 AI 引导建立不同的契约
+
+Acecore Systems 具有独立于站内“相关内容”搜索的 AI 引导功能。后者仅在读者明确执行搜索时将搜索词发送到 OpenAI Embeddings API，并在 Vectorize 中与本站公开信息比对 embedding。前者则将问题和最近对话发送到 Acecore 共用 AI API，并使用 OpenAI 生成回答。
+
+不要把两者模糊地合并为“AI 搜索”。应分别设计传输的数据、信息源范围、失败时的显示、使用量和隐私说明；绝不能在 Vectorize 搜索失败时悄悄把 fallback 发送给 AI 引导。
+
 ## 不要混合搜索目标的职责
 
 在 Aceserver Portal 中，我们分开了 Acecore 服务信息与 Minecraft 服务器规则和步骤的搜索目标。
@@ -392,7 +400,7 @@ client 侧 UUID 可以由用户修改，因此不能成为强有力的计费边�
 | -------------------- | --------------------------------------------------------- |
 | 已实现               | API、corpus、同步脚本和 UI 已存在于 branch                |
 | 已本地验证           | build、类型检查、契约 test 和 dry-run 成功                |
-| 已确认 Preview       | 已同步到 Preview 资源，并确认实际请求和 fallback          |
+| 已确认 Preview       | 已确认 Pagefind 候选项、相关搜索不可用时的显示和 UI       |
 | 正在 Production 运行 | 已同步已发布 commit，并确认 mutation 收敛、API 和停止步骤 |
 
 World Foundation 已完成本地验证，但 index、secret、deployment 和 browser QA 尚未完成，因此没有记录为正在 Production 运行。Acecore Schools 仍处于调查阶段。
@@ -420,9 +428,13 @@ Cloudflare Pages Function
 GitHub Actions
   -> 解析已发布 commit
   -> 重新生成 corpus
-  -> 隔离 Preview / Production
+  -> 仅同步 allowlist 中的 Production index
   -> upsert 收敛后 delete
   -> 记录 corpus version
+
+Pages Preview
+  -> SEARCH_ENABLED=false
+  -> 确认 Pagefind 候选项和 UI fallback
 ```
 
 没有必要一开始就加入 LLM 回答生成。首先构建能够安全返回相关页面、并可以进行评估的搜索。以后增加回答生成时，也要把获取的原文、可引用 URL 和不能回答的条件设计为单独契约。
@@ -439,8 +451,8 @@ GitHub Actions
 - 将 Vectorize 作为语义搜索的辅助功能
 - 从已发布 HTML 生成 corpus
 - 根据 content hash 确定性地生成 ID 和 version
-- 按资源和权限隔离 Preview 与 Production
+- Preview 只使用 Pagefind，并将 Vectorize、D1 和同步权限限制在 Production
 - 搜索采用 fail-soft，同步与发布采用 fail-closed
-- 将“实现”“验证”“Preview”“Production”记录为不同状态
+- 将“实现”“本地验证”“Preview 界面确认”“Production”记录为不同状态
 
 如果先建立这些边界，Vectorize 就不再是一次性 AI 功能，而更容易作为可持续更新的搜索基础设施运行。

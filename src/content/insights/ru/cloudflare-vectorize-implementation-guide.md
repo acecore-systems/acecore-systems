@@ -23,8 +23,8 @@ processFigure:
       description: "Разделить текст на chunks и назначить ID на основе content hash вместе с metadata для аудита."
       icon: i-lucide-boxes
       accent: brand
-    - title: Синхронизировать Preview
-      description: "Выполнить upsert с отдельными index и token, затем проверить API, пустые результаты, fallback и rate limit."
+    - title: Проверить интерфейс Preview
+      description: "Оставить семантический поиск там отключенным и проверить предложения Pagefind, fallback и видимое предупреждение."
       icon: i-lucide-flask-conical
       accent: amber
     - title: Синхронизировать опубликованный commit с Production
@@ -45,8 +45,8 @@ compareTable:
     items:
       - "Pagefind отвечает за обычный поиск, а семантический поиск вызывается только явным действием как дополнительная функция"
       - "Corpus создается из опубликованного HTML с учетом canonical, noindex и locale"
-      - "Allowlist окружений, доля удалений, опубликованный commit и завершение mutation проверяются до и после синхронизации"
-      - "Реализация, локальная проверка, Preview и Production фиксируются как разные состояния"
+      - "Allowlist Production, доля удалений, опубликованный commit и завершение mutation проверяются до и после синхронизации"
+      - "Реализация, локальная проверка, проверка интерфейса Preview и Production фиксируются как разные состояния"
 statBar:
   items:
     - value: "4 repos"
@@ -76,7 +76,7 @@ checklist:
       checked: true
     - text: "Не выполнять повторный embedding неизменившихся chunks благодаря ID на основе content hash"
       checked: true
-    - text: "Разделить index, binding, token и границы подтверждения для Preview и Production"
+    - text: "Оставить Preview только с Pagefind, а Vectorize, D1 и права синхронизации ограничить Production"
       checked: true
     - text: "Удалять только после подтверждения upsert и требовать явного одобрения для массового удаления"
       checked: true
@@ -109,7 +109,7 @@ faq:
     - question: Как управлять embedding model и dimensions в текущей реализации?
       answer: "Текущая реализация Acecore Systems использует OpenAI text-embedding-3-large с 1,536 dimensions и cosine. Прежний BGE-M3 index с 1,024 dimensions сохранен для rollback; vectors с разными dimensions никогда не смешиваются в одном index. Настройки index нельзя изменить после создания, поэтому перед созданием нужно проверить актуальную официальную спецификацию и реальную форму вывода."
     - question: В какой момент внедрение считается завершенным?
-      answer: "Одного merge или локальных tests недостаточно. Мы фиксируем Production только после реального запроса к Preview, совпадения опубликованного commit и corpus, синхронизации Production index, сходимости mutation, а также проверки Pagefind fallback, rate limit и процедуры отключения."
+      answer: "Одного merge или локальных tests недостаточно. В Preview мы проверяем Pagefind и UI fallback; в Production — совпадение опубликованного commit и corpus, синхронизацию index, сходимость mutation, связанный поиск, rate limit и процедуру отключения, прежде чем фиксировать работу в Production."
 ---
 
 ## Сначала разберемся: что такое Cloudflare Vectorize?
@@ -139,7 +139,7 @@ Cloudflare Vectorize — векторная база данных Cloudflare. О
 
 Сначала следует оценить именно эту ценность и область применения. Далее статья объединяет результаты внедрения и исследования Acecore Systems, World Foundation, Acecore Schools и Aceserver Portal и переводит их в практики, пригодные для других сайтов Astro／Cloudflare Pages.
 
-> **Текущая эксплуатация (31 июля 2026 года):** На начальном этапе были проверены раздельные среды Preview и Production. Обычная Pages Preview теперь не имеет binding для Vectorize или D1, сохраняет `SEARCH_ENABLED=false` и использует только Pagefind. Связанный поиск и автоматическая синхронизация работают только с Production index. Упоминания Preview index ниже — это записи о развертывании, а не актуальный критерий завершения.
+> **Текущая эксплуатация, повторно подтверждена 31 июля 2026 года:** Обычная Pages Preview не имеет binding для Vectorize или D1, сохраняет `SEARCH_ENABLED=false` и использует только Pagefind. Связанный поиск и автоматическая синхронизация работают только с Production index. В последней проверенной перед обновлением статьи Production-синхронизации после сравнения опубликованного commit и corpus сошлись 37 страниц и 256 vectors: `current` и `expected` были равны 256, с 1 upsert и 1 delete. [GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) Упоминания Preview index ниже — это записи о развертывании, а не актуальный критерий завершения.
 
 После внедрения и испытания в нескольких репозиториях становится ясно, что недостаточно просто «создать embedding и вызвать `query()`». Нужно решить, как строить corpus поиска, как оставить Preview только с Pagefind и защищать Production, как не допустить массового удаления из-за ошибочной синхронизации и действительно ли опубликованные страницы совпадают с index. В реальной эксплуатации проектирование вокруг вызова API Vectorize оказалось важнее самого вызова.
 
@@ -153,22 +153,22 @@ Cloudflare Vectorize — векторная база данных Cloudflare. О
 | API связанного поиска  | fail-soft          | Быстро завершить ошибку, не нарушая результаты обычного поиска                                 |
 | Генерация corpus       | fail-closed        | Не создавать corpus при неверных страницах, locale, количестве или metadata                    |
 | Синхронизация index    | fail-closed        | Ничего не менять, если нельзя проверить окружение, существующие ID, долю удалений или mutation |
-| Включение в Production | fail-closed        | Включать только после Preview QA и проверки опубликованного commit                             |
+| Включение в Production | fail-closed        | Включать только после совпадения опубликованного commit и corpus и сходимости Production-синхронизации и mutations |
 
 Так одновременно выполняются два условия: «при сбое AI поиск по сайту остается доступен» и «при любом сомнении синхронизация не меняет ни одной записи».
 
 ## Подтвержденные состояния в четырех репозиториях
 
-При подготовке статьи по журналам внедрения важно не объединять все состояния словом «внедрено». В наших записях одновременно присутствовали работа в Production, локальная проверка, подготовка ресурсов Preview и предварительное исследование.
+При подготовке статьи по журналам внедрения важно не объединять все состояния словом «внедрено». В наших записях одновременно присутствовали работа в Production, локальная проверка, проверка интерфейса Preview и предварительное исследование.
 
 | Репозиторий      | Зафиксированное и подтвержденное состояние                                                                                                 | Полученный вывод                                                                                                         |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| Acecore Systems  | OpenAI index с 1,536 dimensions работает в Preview и Production; в каждой среде синхронизированы 256 vectors и проверены известные queries | Совместная работа с Pagefind, corpus из публичного HTML, D1 rate limit, безопасный Production sync и миграция dimensions |
+| Acecore Systems  | OpenAI index с 1,536 dimensions работает только в Production; синхронизация сошлась на 37 страницах и 256 vectors, а Preview использует только Pagefind | Совместная работа с Pagefind, corpus из публичного HTML, D1 rate limit, безопасный Production sync и миграция dimensions |
 | Aceserver Portal | Поиск информации Acecore через Vectorize подтвержден в Production                                                                          | Не смешивать цели поиска корпоративной информации и правил WIKI                                                          |
 | World Foundation | Локально создано 72 sources／134 vectors, пройдено 37 tests; не опубликовано                                                               | content hash, fail-closed-синхронизация, разделение контрольных этапов до публикации                                     |
 | Acecore Schools  | Исследована текущая конфигурация; index и реализация не начаты                                                                             | Определить API, corpus, права и окружения до добавления binding                                                          |
 
-В Acecore Systems работа была разделена на три этапа: [PR внедрения #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR подготовки Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) и [PR включения Production #42](https://github.com/acecore-systems/acecore-systems/pull/42).
+В Acecore Systems работа была разделена на три этапа: [PR внедрения #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR подготовки Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) и [PR включения Production #42](https://github.com/acecore-systems/acecore-systems/pull/42). Синхронизация Preview/Production из начальных записей больше не является текущей схемой: [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) оставил обычную Pages Preview только с Pagefind, а теперь синхронизируется и обслуживает связанный поиск только Production.
 
 Во время [первой синхронизации Production в GitHub Actions](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) были сверены опубликованный commit и corpus version, после чего из 36 опубликованных японских страниц создано 250 vectors. Результат синхронизации: 250 upserts и 0 deletes. Разделение merge кода, подготовки index, первой синхронизации и включения поиска на разные изменения позволило задать четкие условия остановки для каждого этапа.
 
@@ -187,6 +187,8 @@ Vectorize полезен, когда поисковая фраза не совп
 3. Установить короткий timeout для API
 4. Не удалять результаты Pagefind при сбое API
 5. Позволить kill switch отключить только связанный поиск
+
+В текущем поисковом модальном окне предложения во время ввода поступают только из Pagefind в браузере. Лишь после явного запуска «Поиск» термин, как указано в интерфейсе, отправляется в OpenAI Embeddings API и сопоставляется с публичной информацией этого сайта в Vectorize. Предупреждение просит не вводить персональные или конфиденциальные сведения и отличает эту передачу от обычных подсказок по ключевым словам.
 
 В такой конфигурации Vectorize расширяет поиск, но не становится единой точкой отказа всего поиска.
 
@@ -248,7 +250,7 @@ const vector = {
 
 ## Зафиксировать embedding model и конфигурацию index как единый контракт
 
-В начальной записи реализации использовалась модель Workers AI [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/); после проверки реальной формы вывода все компоненты были приведены к 1,024 dimensions／cosine. Текущая реализация Acecore Systems использует [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` с 1,536 dimensions／cosine в отдельно названных целевых indexes. Preview и Production работают с 256 синхронизированными vectors в каждой среде; прежний BGE-M3 index сохранен для rollback, а vectors с разными dimensions никогда не смешиваются в одном index.
+В начальной записи реализации использовалась модель Workers AI [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/); после проверки реальной формы вывода все компоненты были приведены к 1,024 dimensions／cosine. Текущая реализация Acecore Systems использует [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` с 1,536 dimensions／cosine в отдельно названном целевом index. Синхронизируется и запрашивается только Production index; Preview использует только Pagefind. Прежний BGE-M3 index сохранен для rollback, а vectors с разными dimensions никогда не смешиваются в одном index.
 
 Важнее конкретного названия модели — зафиксировать один контракт в четырех местах.
 
@@ -263,7 +265,7 @@ const vector = {
 
 Если используется metadata filtering, metadata index нужно создать до загрузки vectors. Добавление metadata index позже само по себе не сделает ранее загруженные vectors доступными для фильтрации — потребуется повторный upsert.
 
-Лимиты продукта также меняются. По состоянию на 30 июля 2026 года в Vectorize V2 лимит upsert batch составляет 1,000 для Workers API и 5,000 для HTTP API. Обычный лимит `topK` равен 100, а при `returnValues: true` или `returnMetadata: "all"` — 50. При реализации обязательно заново проверяйте [актуальные limits](https://developers.cloudflare.com/vectorize/platform/limits/) и [client API](https://developers.cloudflare.com/vectorize/reference/client-api/).
+Лимиты продукта также меняются. Повторно подтверждено 31 июля 2026 года: в Vectorize V2 лимит upsert batch составляет 1,000 для Workers API и 5,000 для HTTP API. Обычный лимит `topK` равен 100, а при `returnValues: true` или `returnMetadata: "all"` — 50. При реализации обязательно заново проверяйте [актуальные limits](https://developers.cloudflare.com/vectorize/platform/limits/) и [client API](https://developers.cloudflare.com/vectorize/reference/client-api/).
 
 Acecore Systems синхронизирует по HTTP API пакетами по 200, а поиск использует `topK: 15`; максимальные значения продукта не переносятся напрямую в размер обработки. Лимит сервиса и размер batch, который собственная система способна безопасно повторять и контролировать, нужно выбирать отдельно.
 
@@ -285,7 +287,7 @@ Insert, upsert и delete в Vectorize выполняются асинхронн�
 
 Sync-скрипт также останавливается при следующих условиях:
 
-- Имя целевого index отсутствует в allowlist Preview／Production
+- Имя целевого index не совпадает в точности с allowlist Production index
 - Процесс синхронизации пытается автоматически создать Production index
 - Значение `--confirm-production` не совпадает с целевым index
 - dimensions／metric отличаются от контракта
@@ -295,11 +297,11 @@ Sync-скрипт также останавливается при следую�
 - Нужно удалить больше 20% существующих vectors
 - Превышен предел retry или время ожидания mutation
 
-Массовое удаление разрешается только при намеренном ручном запуске с явным override. Обычные push и schedule не могут его разрешить.
+Даже намеренное массовое удаление выполняется отдельной проверенной процедурой миграции, а не через override обычного workflow. Обычные push и schedule не могут его разрешить.
 
-## Разделить Preview и Production не только по имени, но и по правам
+## Оставить Preview только с Pagefind, а Production сделать единственной высокопривилегированной целью синхронизации
 
-Для разделения окружений недостаточно изменить только имя index в binding.
+Разделение Preview и Production на начальном этапе помогло выявить права и условия остановки. Однако обычной Pages Preview не нужны binding Vectorize или D1. Текущая конфигурация оставляет `SEARCH_ENABLED=false`: в Preview проверяются предложения Pagefind, fallback и layout. Binding Vectorize и D1, токены синхронизации и Production Environment ограничены Production.
 
 Раздельными должны быть:
 
@@ -355,6 +357,12 @@ UUID на стороне client не является надежной гран�
 
 В этой архитектуре D1 используется для rate limit, но не является обязательным условием Vectorize. То же относится к R2. Выбор зависит от места получения исходного текста и хранения данных rate limit.
 
+## Поиску Vectorize и AI-помощнику — отдельные контракты
+
+В Acecore Systems есть AI-помощник, отдельный от поиска «связанного содержимого» на сайте. Второй отправляет термин в OpenAI Embeddings API только после явного запуска поиска читателем, затем сопоставляет embedding с публичной информацией этого сайта в Vectorize. Первый отправляет вопрос и недавнюю беседу в общий AI API Acecore и использует OpenAI для генерации ответа.
+
+Их нельзя объединять под расплывчатым названием «AI-поиск». Передаваемые данные, область источников, отображение ошибок, использование и объяснения приватности должны проектироваться раздельно; fallback Vectorize-поиска никогда не должен молча отправляться AI-помощнику.
+
 ## Не смешивать ответственность источников поиска
 
 В Aceserver Portal источники поиска разделены между информацией об услугах Acecore и правилами или инструкциями Minecraft-сервера.
@@ -392,7 +400,7 @@ UUID на стороне client не является надежной гран�
 | ---------------------- | --------------------------------------------------------------------------------- |
 | Реализовано            | API, corpus, sync-скрипт и UI находятся в branch                                  |
 | Проверено локально     | Успешны build, проверка типов, контрактные tests и dry-run                        |
-| Подтверждено в Preview | Выполнена синхронизация с ресурсами Preview, проверены реальный запрос и fallback |
+| Подтверждено в Preview | Проверены предложения Pagefind, отображение недоступности связанного поиска и UI   |
 | Работает в Production  | Синхронизирован опубликованный commit, проверены mutation, API и отключение       |
 
 World Foundation успешно прошел локальную проверку, но index, secret, deployment и browser QA оставались незавершенными, поэтому Production не был зафиксирован. Schools находился на стадии исследования.
@@ -420,9 +428,13 @@ Cloudflare Pages Function
 GitHub Actions
   -> определить опубликованный commit
   -> повторно создать corpus
-  -> разделить Preview / Production
+  -> синхронизировать только Production index из allowlist
   -> удалять после сходимости upsert
   -> записать corpus version
+
+Pages Preview
+  -> SEARCH_ENABLED=false
+  -> проверить предложения Pagefind и UI fallback
 ```
 
 Необязательно сразу добавлять генерацию ответа LLM. Сначала стоит создать поиск, который «безопасно возвращает связанные страницы» и допускает оценку качества. Даже при добавлении генерации ответа исходный текст, URL для цитирования и условия отказа от ответа нужно оформить отдельным контрактом.
@@ -439,8 +451,8 @@ GitHub Actions
 - Использовать Vectorize как дополнение для семантического поиска
 - Создавать corpus из опубликованного HTML
 - Детерминированно создавать ID и version из content hash
-- Разделить Preview и Production вместе с ресурсами и правами
+- Оставить Preview только с Pagefind и ограничить Vectorize, D1 и права синхронизации Production
 - Сделать поиск fail-soft, а синхронизацию и публикацию fail-closed
-- Фиксировать «реализацию», «проверку», «Preview» и «Production» как разные состояния
+- Фиксировать «реализацию», «локальную проверку», «проверку интерфейса Preview» и «Production» как разные состояния
 
 Если сначала установить эти границы, Vectorize будет не разовой AI-функцией, а поисковой инфраструктурой, которую можно непрерывно обновлять.

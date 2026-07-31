@@ -23,8 +23,8 @@ processFigure:
       description: "Split the body into chunks, then add IDs derived from content hashes and audit metadata."
       icon: i-lucide-boxes
       accent: brand
-    - title: Synchronize in Preview
-      description: "Upsert with a dedicated index and token, then verify the API, empty results, fallback behavior, and rate limit."
+    - title: Verify the Preview UI
+      description: "Keep semantic search disabled there, then verify Pagefind suggestions, fallback behavior, and the visible disclosure."
       icon: i-lucide-flask-conical
       accent: amber
     - title: Synchronize the published commit to Production
@@ -45,8 +45,8 @@ compareTable:
     items:
       - "Use Pagefind for ordinary search and make semantic search an auxiliary feature triggered by an explicit action"
       - "Build the corpus from published HTML so it reflects canonical URLs, noindex directives, and locales"
-      - "Verify the environment allowlist, deletion rate, published commit, and mutation completion before and after synchronization"
-      - "Record implementation, local verification, Preview, and Production operation as separate states"
+      - "Verify the Production allowlist, deletion rate, published commit, and mutation completion before and after synchronization"
+      - "Record implementation, local verification, Preview UI verification, and Production operation as separate states"
 statBar:
   items:
     - value: "4 repos"
@@ -76,7 +76,7 @@ checklist:
       checked: true
     - text: "Use IDs derived from content hashes so unchanged chunks are not embedded again"
       checked: true
-    - text: "Separate the Preview and Production indexes, bindings, tokens, and approval boundaries"
+    - text: "Keep Preview on Pagefind only and limit Vectorize, D1, and synchronization permissions to Production"
       checked: true
     - text: "Confirm completion of upserts before deleting, and require explicit approval for large deletions"
       checked: true
@@ -109,7 +109,7 @@ faq:
     - question: How should the current embedding model and dimensions be managed?
       answer: "The current Acecore Systems implementation uses OpenAI text-embedding-3-large at 1,536 dimensions with cosine. The legacy BGE-M3 1,024-dimension index remains for rollback, and vectors with different dimensions are never mixed in one index. Because index configuration cannot be changed after creation, check the current official specification and the actual output shape before creating an index."
     - question: At what point is the rollout considered complete?
-      answer: "A merge or local test alone is not completion. We record the feature as running in Production only after verifying real Preview requests, agreement between the published commit and corpus, Production index synchronization, mutation convergence, Pagefind fallback, the rate limit, and the shutdown procedure."
+      answer: "A merge or local test alone is not completion. In Preview, verify Pagefind and the UI fallback; in Production, verify agreement between the published commit and corpus, index synchronization, mutation convergence, related search, the rate limit, and the shutdown procedure before recording it as running."
 ---
 
 ## Start here: what is Cloudflare Vectorize?
@@ -139,7 +139,7 @@ For an initial rollout, keeping the existing keyword search and calling Vectoriz
 
 That is the value and scope to judge first. The rest of this article brings together rollout and investigation results from Acecore Systems, World Foundation, Acecore Schools, and Aceserver Portal, then turns them into implementation and operating practices reusable on other Astro and Cloudflare Pages sites.
 
-> **Current operation (31 July 2026):** The early rollout validated separate Preview and Production environments. The ordinary Pages Preview now has no Vectorize or D1 binding, keeps `SEARCH_ENABLED=false`, and uses Pagefind only. Related search and automated synchronization operate only against the Production index. References to Preview indexes below are rollout records, not a current completion criterion.
+> **Current operation, reconfirmed 31 July 2026:** The ordinary Pages Preview has no Vectorize or D1 binding, keeps `SEARCH_ENABLED=false`, and uses Pagefind only. Related search and automated synchronization operate only against the Production index. In the latest Production synchronization checked before this article update, 37 pages and 256 vectors converged after the published commit and corpus were compared: both `current` and `expected` were 256, with 1 upsert and 1 deletion. [GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) References to Preview indexes below are rollout records, not a current completion criterion.
 
 Once Vectorize is introduced across multiple repositories, it becomes clear that simply “creating embeddings and calling `query()`” is not enough. You must decide how to build the search corpus, how to keep Preview on Pagefind while protecting Production, how to prevent an incorrect synchronization from causing mass deletion, and whether the published pages really match the index. In real operations, the design around the Vectorize API call mattered more than the call itself.
 
@@ -153,22 +153,22 @@ The most reusable principle was to apply different failure policies to user-faci
 | Related-search API    | fail-soft      | Fail quickly without disrupting ordinary search results                                                          |
 | Corpus generation     | fail-closed    | Do not generate a corpus if target pages, locale, counts, or metadata are invalid                                |
 | Index synchronization | fail-closed    | Do not change anything unless the target environment, existing IDs, deletion rate, and mutations can be verified |
-| Production enablement | fail-closed    | Enable only after Preview QA and agreement with the published commit                                             |
+| Production enablement | fail-closed    | Enable only after the published commit and corpus agree and Production synchronization and mutations converge    |
 
 This simultaneously ensures that “site search remains available even when AI search is down” and that “a suspicious synchronization changes no records at all.”
 
 ## States verified across four repositories
 
-When documenting a rollout, it is also important not to group every record under “implemented.” These records mixed Production operation, local verification, prepared Preview resources, and preliminary investigation.
+When documenting a rollout, it is also important not to group every record under “implemented.” These records mixed Production operation, local verification, Preview UI verification, and preliminary investigation.
 
 | Repository       | Recorded and verified state                                                                                                    | Lesson learned                                                                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| Acecore Systems  | OpenAI 1,536-dimension indexes operating in Preview and Production; 256 vectors synchronized and known queries checked in each | Coexistence with Pagefind, a published-HTML corpus, D1 rate limiting, safe Production synchronization, and dimension migration |
+| Acecore Systems  | A Production-only OpenAI 1,536-dimension index; synchronization converged at 37 pages and 256 vectors, while Preview uses Pagefind only | Coexistence with Pagefind, a published-HTML corpus, D1 rate limiting, safe Production synchronization, and dimension migration |
 | Aceserver Portal | Confirmed Production Vectorize search for Acecore information                                                                  | Keep the search destination for corporate information separate from WIKI rule search                                           |
 | World Foundation | Generated 134 vectors from 72 sources locally and passed 37 tests; not published                                               | Content hashes, fail-closed synchronization, and separation of pre-release gates                                               |
 | Acecore Schools  | Existing architecture investigated; index creation and implementation not started                                              | Decide the API, corpus, permissions, and environment architecture before adding a binding                                      |
 
-For Acecore Systems, we split the rollout into three stages: [implementation PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production preparation PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), and [Production enablement PR #42](https://github.com/acecore-systems/acecore-systems/pull/42). The later [OpenAI direct-connection migration PR #43](https://github.com/acecore-systems/acecore-systems/pull/43) prepares a separately named 1,536-dimension index instead of mixing vectors with different dimensions. [Enablement PR #44](https://github.com/acecore-systems/acecore-systems/pull/44) synchronized 256 vectors to each environment and enabled related search after checking known queries and the Pagefind fallback.
+For Acecore Systems, we split the rollout into three stages: [implementation PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production preparation PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), and [Production enablement PR #42](https://github.com/acecore-systems/acecore-systems/pull/42). The later [OpenAI direct-connection migration PR #43](https://github.com/acecore-systems/acecore-systems/pull/43) prepares a separately named 1,536-dimension index instead of mixing vectors with different dimensions. The Preview/Production synchronization in [enablement PR #44](https://github.com/acecore-systems/acecore-systems/pull/44) is an early-rollout record. [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) then switched normal Pages Preview to Pagefind only; the current operation synchronizes and serves related search from Production only.
 
 During the initial Production synchronization to the legacy BGE-M3 index in this [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752), the workflow compared the published commit with the corpus version and generated 250 vectors from 36 published Japanese pages. The result was 250 upserts and 0 deletions. Separating the code merge, index preparation, initial synchronization, and search enablement made the stop conditions for each stage explicit.
 
@@ -187,6 +187,8 @@ We therefore separated the UI behavior as well.
 3. Set a short timeout on the API
 4. Do not remove Pagefind results if the API fails
 5. Allow the kill switch to disable related search alone
+
+In the current search modal, suggestions while typing come only from in-browser Pagefind. Only when a reader runs “Search” is the search term sent to the OpenAI Embeddings API, as the UI discloses, then compared with this site's public information in Vectorize. The UI advises against entering personal or confidential information and keeps that transmission distinct from ordinary keyword suggestions.
 
 With this architecture, Vectorize broadens the search experience without becoming a single point of failure for all search.
 
@@ -248,7 +250,7 @@ This produces the same corpus from the same published content and makes the reas
 
 ## Fix the embedding model and index settings as a contract
 
-The initial implementation record used the Workers AI model [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) after checking its actual output shape and standardizing on 1,024 dimensions with cosine. The current Acecore Systems implementation uses [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` at 1,536 dimensions with cosine in separately named target indexes. Both Preview and Production operate with 256 synchronized vectors; the legacy BGE-M3 index remains for rollback, and vectors with different dimensions are never mixed in one index.
+The initial implementation record used the Workers AI model [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) after checking its actual output shape and standardizing on 1,024 dimensions with cosine. The current Acecore Systems implementation uses [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` at 1,536 dimensions with cosine in a separately named target index. Only the Production index is synchronized and queried; Preview uses Pagefind only. The legacy BGE-M3 index remains for rollback, and vectors with different dimensions are never mixed in one index.
 
 The important point is not the model name itself, but keeping the same contract in four places.
 
@@ -263,7 +265,7 @@ As described in Cloudflare's [Create indexes](https://developers.cloudflare.com/
 
 When using metadata filtering, create the metadata index before inserting vectors. Vectors inserted earlier do not become eligible merely because a metadata index is added later; they must be upserted again.
 
-Product limits also change. As of July 30, 2026, Vectorize V2 has an upsert batch limit of 1,000 for the Workers API and 5,000 for the HTTP API. The ordinary `topK` limit is 100, or 50 when using `returnValues: true` or `returnMetadata: "all"`. Always recheck the [current limits](https://developers.cloudflare.com/vectorize/platform/limits/) and [client API](https://developers.cloudflare.com/vectorize/reference/client-api/) during implementation.
+Product limits also change. Reconfirmed on July 31, 2026, Vectorize V2 has an upsert batch limit of 1,000 for the Workers API and 5,000 for the HTTP API. The ordinary `topK` limit is 100, or 50 when using `returnValues: true` or `returnMetadata: "all"`. Always recheck the [current limits](https://developers.cloudflare.com/vectorize/platform/limits/) and [client API](https://developers.cloudflare.com/vectorize/reference/client-api/) during implementation.
 
 Acecore Systems synchronizes through the HTTP API in batches of 200 and searches with `topK: 15`; it does not use the product maximum as its processing batch size. Decide product limits separately from the batch size that your operation can safely retry and monitor.
 
@@ -285,7 +287,7 @@ Cloudflare's [Vectorize API](https://developers.cloudflare.com/vectorize/referen
 
 We also added the following stop conditions to the synchronization script.
 
-- The destination index name is outside the Preview or Production allowlist
+- The destination index name does not exactly match the Production-index allowlist
 - The script attempts to create the Production index automatically
 - The value of `--confirm-production` does not match the destination index name
 - The dimensions or metric differs from the contract
@@ -295,11 +297,11 @@ We also added the following stop conditions to the synchronization script.
 - The deletion would exceed 20% of the current vectors
 - The retry limit or mutation wait time is exceeded
 
-Only an intentional large deletion can be overridden explicitly in a manual run. Ordinary push and schedule runs do not allow it.
+Even an intentional large deletion is separated into a separately reviewed migration procedure rather than overridden in the ordinary workflow. Ordinary push and schedule runs do not allow it.
 
-## Separate Preview and Production by permissions, not only by name
+## Keep Preview on Pagefind only and make Production the sole high-privilege synchronization target
 
-Changing only the index name in a binding was not enough to separate environments.
+Separating Preview and Production during the early rollout helped identify permissions and stop conditions. However, a normal Pages Preview does not need Vectorize or D1 bindings. The current configuration keeps `SEARCH_ENABLED=false`: Preview is where Pagefind suggestions, fallback behavior, and layout are checked. Vectorize and D1 bindings, synchronization tokens, and the Production Environment are limited to Production.
 
 The following elements need to be separated.
 
@@ -355,6 +357,12 @@ A client-side UUID is not a strong billing boundary because the user can change 
 
 This architecture uses D1 for rate limiting, but D1 is not a requirement for adopting Vectorize. The same applies to R2. Choose them according to where the source text comes from and where rate-limit state should live.
 
+## Give Vectorize search and AI guidance separate contracts
+
+Acecore Systems has an AI guidance feature separate from the site's “related content” search. The latter sends a search term to the OpenAI Embeddings API only after the reader explicitly runs a search, then compares the resulting embedding with this site's public information in Vectorize. The former sends the question and recent conversation to Acecore's shared AI API and uses OpenAI to generate a response.
+
+Do not flatten these into one vague “AI search” feature. Design their transmitted data, source scope, failure display, usage, and privacy explanations separately, and never silently send a Vectorize-search fallback to the AI guidance feature.
+
 ## Do not mix the responsibilities of search destinations
 
 In Aceserver Portal, we separated the destinations for Acecore service information and Minecraft server rules and procedures.
@@ -392,7 +400,7 @@ Reports and articles become less ambiguous when they distinguish these states.
 | --------------------- | ------------------------------------------------------------------------------------------------------------ |
 | Implemented           | The API, corpus, synchronization script, and UI exist on a branch                                            |
 | Locally verified      | The build, type check, contract tests, and dry-run pass                                                      |
-| Preview verified      | Preview resources are synchronized, and real requests and fallback behavior are verified                     |
+| Preview verified      | Pagefind suggestions, the display when related search is unavailable, and the UI are verified                 |
 | Running in Production | The published commit is synchronized, and mutation convergence, the API, and shutdown procedure are verified |
 
 World Foundation passed local verification, but its index, secret, deployment, and browser QA remained incomplete, so we did not record it as running in Production. Acecore Schools remains at the investigation stage.
@@ -420,9 +428,13 @@ Cloudflare Pages Function
 GitHub Actions
   -> resolve the published commit
   -> regenerate the corpus
-  -> separate Preview / Production
+  -> synchronize only the allowlisted Production index
   -> delete after upsert convergence
   -> record the corpus version
+
+Pages Preview
+  -> SEARCH_ENABLED=false
+  -> verify Pagefind suggestions and UI fallback
 ```
 
 There is no need to add LLM answer generation from the beginning. First build a search feature that safely returns related pages and can be evaluated. If answer generation is added later, define the retrieved source text, citable URLs, and conditions under which the system must not answer as a separate contract.
@@ -439,8 +451,8 @@ Our conclusions are straightforward.
 - Use Vectorize as an auxiliary semantic search
 - Build the corpus from published HTML
 - Derive IDs and versions deterministically from content hashes
-- Separate Preview and Production resources and permissions
+- Keep Preview on Pagefind only and limit Vectorize, D1, and synchronization permissions to Production
 - Keep search fail-soft, but synchronization and release fail-closed
-- Record implementation, verification, Preview, and Production as separate states
+- Record implementation, local verification, Preview UI verification, and Production as separate states
 
 Establishing these boundaries first makes it easier to operate Vectorize as a continuously updated search foundation rather than a one-off AI feature.
