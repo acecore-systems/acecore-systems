@@ -247,6 +247,9 @@ const formText = getContactFormText(locale);
 
         if (!turnstileToken) {
           event.preventDefault();
+          form
+            .querySelector<HTMLElement>("#turnstile-widget")
+            ?.dispatchEvent(new Event("turnstile-reset"));
           if (status) status.hidden = false;
           return;
         }
@@ -272,6 +275,15 @@ const formText = getContactFormText(locale);
 
       if (!sitekey) return;
 
+      function resetTurnstile() {
+        const widgetId = turnstileEl.dataset.widgetId;
+        if (typeof window.turnstile === "undefined" || !widgetId) return;
+
+        window.turnstile.reset(widgetId);
+      }
+
+      turnstileEl.addEventListener("turnstile-reset", resetTurnstile);
+
       function renderTurnstile() {
         if (
           typeof window.turnstile === "undefined" ||
@@ -286,6 +298,7 @@ const formText = getContactFormText(locale);
           theme,
           action,
           cData,
+          "expired-callback": resetTurnstile,
         });
         turnstileEl.dataset.widgetId = String(widgetId);
       }
