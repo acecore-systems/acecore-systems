@@ -624,7 +624,7 @@
       },
       {
         "title": "External Services",
-        "body": "We use external services including the shared Acecore contact point and Cloudflare Turnstile for form submission and abuse prevention, and Cloudflare Pages for hosting. When you run “Related content” in site search, the search terms you enter are converted into a numerical representation through the OpenAI API and compared with this site's public information stored in Cloudflare Vectorize. Do not enter inquiry details or personal information as search terms."
+        "body": "We use external services including the shared Acecore contact point and Cloudflare Turnstile for form submission and abuse prevention, and Cloudflare Pages for hosting. When you run “Related content” in site search, the search terms you enter are converted into a numerical representation through the OpenAI API and compared with this site's public information stored in Cloudflare Vectorize. Do not enter inquiry details or personal information as search terms. The Systems AI guide sends your question and recent conversation to the shared Acecore AI API (acecore.net), which uses the OpenAI API to generate the answer. Do not enter personal or confidential information."
       },
       {
         "title": "Analytics",
