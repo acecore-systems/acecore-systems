@@ -425,6 +425,19 @@ function validateHandoff(html, expectedHref, label) {
   );
 }
 
+function validateImageAlts(html, label) {
+  assert.doesNotMatch(
+    html,
+    /<img\b(?![^>]*\balt\s*=)[^>]*>/u,
+    `${label}: every rendered image must include an alt attribute`,
+  );
+  assert.doesNotMatch(
+    html,
+    /<img\b[^>]*\balt\s*=\s*["']\s*["']/u,
+    `${label}: every rendered image must have a non-empty alt attribute`,
+  );
+}
+
 function validateServiceVisual(html, visual, label) {
   assert.equal(
     count(html, `src="${visual.src}"`),
@@ -440,6 +453,19 @@ function validateServiceVisual(html, visual, label) {
 
 validateHandoff(advisorPage, developmentRoute, "IT advisor");
 validateHandoff(developmentPage, advisorRoute, "development");
+for (const [label, html] of [
+  ["home", home],
+  ["services", services],
+  ["pricing", pricing],
+  ["contact", contact],
+  ["guide", guidePage],
+  ["works", worksPage],
+  ["work detail", workDetailPage],
+  ["IT advisor", advisorPage],
+  ["development", developmentPage],
+]) {
+  validateImageAlts(html, label);
+}
 validateServiceVisual(advisorPage, advisorData.visual, "IT advisor");
 validateServiceVisual(developmentPage, developmentData.visual, "development");
 for (const [key, visual] of Object.entries(advisorData.sectionVisuals)) {

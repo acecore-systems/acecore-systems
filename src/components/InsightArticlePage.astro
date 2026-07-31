@@ -177,10 +177,10 @@ const jsonLd = [
         }
         {
           articleImage && (
-            <figure class="insight-article__cover" aria-hidden="true">
+            <figure class="insight-article__cover">
               <img
                 src={articleImage}
-                alt=""
+                alt={entry.data.title}
                 width="1600"
                 height="900"
                 decoding="async"
