@@ -1,7 +1,7 @@
 ---
 title: "Практические знания из внедрения Cloudflare Vectorize в нескольких репозиториях"
 description: "Выводы из внедрения и тестирования Cloudflare Vectorize на нескольких сайтах Astro／Cloudflare Pages: разделение ролей с Pagefind, генерация corpus из опубликованного HTML, безопасная дифференциальная синхронизация, разделение Preview и Production, защита API и контрольные этапы."
-date: 2026-07-30T22:50
+date: 2026-07-31T12:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Vectorize", "OpenAI", "Поиск по сайту"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -136,12 +136,12 @@ faq:
 
 При подготовке статьи по журналам внедрения важно не объединять все состояния словом «внедрено». В наших записях одновременно присутствовали работа в Production, локальная проверка, подготовка ресурсов Preview и предварительное исследование.
 
-| Репозиторий      | Зафиксированное и подтвержденное состояние                                   | Полученный вывод                                                                                   |
-| ---------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Acecore Systems  | Работа в Production подтверждена на 30 июля 2026 года                        | Совместная работа с Pagefind, corpus из публичного HTML, D1 rate limit, безопасный Production sync |
-| Aceserver Portal | Поиск информации Acecore через Vectorize подтвержден в Production            | Не смешивать цели поиска корпоративной информации и правил WIKI                                    |
-| World Foundation | Локально создано 72 sources／134 vectors, пройдено 37 tests; не опубликовано | content hash, fail-closed-синхронизация, разделение контрольных этапов до публикации               |
-| Acecore Schools  | Исследована текущая конфигурация; index и реализация не начаты               | Определить API, corpus, права и окружения до добавления binding                                    |
+| Репозиторий      | Зафиксированное и подтвержденное состояние                                                                                                 | Полученный вывод                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Acecore Systems  | OpenAI index с 1,536 dimensions работает в Preview и Production; в каждой среде синхронизированы 256 vectors и проверены известные queries | Совместная работа с Pagefind, corpus из публичного HTML, D1 rate limit, безопасный Production sync и миграция dimensions |
+| Aceserver Portal | Поиск информации Acecore через Vectorize подтвержден в Production                                                                          | Не смешивать цели поиска корпоративной информации и правил WIKI                                                          |
+| World Foundation | Локально создано 72 sources／134 vectors, пройдено 37 tests; не опубликовано                                                               | content hash, fail-closed-синхронизация, разделение контрольных этапов до публикации                                     |
+| Acecore Schools  | Исследована текущая конфигурация; index и реализация не начаты                                                                             | Определить API, corpus, права и окружения до добавления binding                                                          |
 
 В Acecore Systems работа была разделена на три этапа: [PR внедрения #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR подготовки Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) и [PR включения Production #42](https://github.com/acecore-systems/acecore-systems/pull/42).
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## Зафиксировать embedding model и конфигурацию index как единый контракт
 
-В начальной записи реализации использовалась модель Workers AI [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/); после проверки реальной формы вывода все компоненты были приведены к 1,024 dimensions／cosine. Текущая реализация Acecore Systems использует [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` с 1,536 dimensions／cosine в отдельно названном целевом index. Прежний BGE-M3 index сохранен для rollback; vectors с разными dimensions никогда не смешиваются в одном index.
+В начальной записи реализации использовалась модель Workers AI [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/); после проверки реальной формы вывода все компоненты были приведены к 1,024 dimensions／cosine. Текущая реализация Acecore Systems использует [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` с 1,536 dimensions／cosine в отдельно названных целевых indexes. Preview и Production работают с 256 синхронизированными vectors в каждой среде; прежний BGE-M3 index сохранен для rollback, а vectors с разными dimensions никогда не смешиваются в одном index.
 
 Важнее конкретного названия модели — зафиксировать один контракт в четырех местах.
 

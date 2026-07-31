@@ -1,7 +1,7 @@
 ---
 title: "Enseignements pratiques tirés du déploiement de Cloudflare Vectorize dans plusieurs dépôts"
 description: "À partir des traces d'implémentation et d'expérimentation de Cloudflare Vectorize sur plusieurs sites Astro／Cloudflare Pages, nous synthétisons la répartition des rôles avec Pagefind, la génération du corpus depuis le HTML public, la synchronisation différentielle sûre, la séparation Preview／Production, la protection de l'API et les critères de validation."
-date: 2026-07-30T22:50
+date: 2026-07-31T12:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Vectorize", "OpenAI", "Recherche interne"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -136,12 +136,12 @@ Cette approche satisfait simultanément deux exigences : « la recherche du site
 
 Lorsqu'on transforme des traces d'intégration en article, il est également important de ne pas tout résumer par « déployé ». Les traces analysées mêlaient exploitation en Production, validation locale, préparation de ressources Preview et étude préalable.
 
-| Dépôt            | État consigné et confirmé                                                                            | Enseignement                                                                                       |
-| ---------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Acecore Systems  | Exploitation en Production confirmée au 30 juillet 2026                                              | Association à Pagefind, corpus de HTML public, rate limit D1 et synchronisation sûre en Production |
-| Aceserver Portal | Recherche Vectorize des informations Acecore confirmée en Production                                 | Ne pas mélanger la source des informations d'entreprise avec celle des règles de la WIKI           |
-| World Foundation | 72 sources／134 vectors générés localement et 37 tests réussis. Non publié                           | content hash, synchronisation fail-closed et séparation des critères avant publication             |
-| Acecore Schools  | Étude de la configuration existante uniquement. Création de l'index et implémentation non commencées | Définir API, corpus, permissions et environnements avant d'ajouter un binding                      |
+| Dépôt            | État consigné et confirmé                                                                                                                        | Enseignement                                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| Acecore Systems  | Index OpenAI à 1,536 dimensions actif en Preview et Production ; 256 vectors synchronisés et queries connues vérifiées dans chaque environnement | Association à Pagefind, corpus de HTML public, rate limit D1, synchronisation sûre en Production et migration de dimensions |
+| Aceserver Portal | Recherche Vectorize des informations Acecore confirmée en Production                                                                             | Ne pas mélanger la source des informations d'entreprise avec celle des règles de la WIKI                                    |
+| World Foundation | 72 sources／134 vectors générés localement et 37 tests réussis. Non publié                                                                       | content hash, synchronisation fail-closed et séparation des critères avant publication                                      |
+| Acecore Schools  | Étude de la configuration existante uniquement. Création de l'index et implémentation non commencées                                             | Définir API, corpus, permissions et environnements avant d'ajouter un binding                                               |
 
 Dans Acecore Systems, nous avons réparti le travail en trois étapes : [PR d'intégration #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR de préparation de Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) et [PR d'activation de Production #42](https://github.com/acecore-systems/acecore-systems/pull/42).
 
@@ -223,7 +223,7 @@ Ainsi, un même contenu public produit le même corpus et la raison de chaque di
 
 ## Fixer l'embedding model et la configuration de l'index comme un contrat
 
-Le registre initial de l'implémentation utilisait [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) de Workers AI et, après vérification du shape réel de la sortie, normalisait le contrat sur 1,024 dimensions／cosine. L'implémentation actuelle d'Acecore Systems utilise [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` avec 1,536 dimensions／cosine dans un index cible nommé séparément. L'ancien index BGE-M3 est conservé pour le rollback ; des vectors de dimensions différentes ne sont jamais mélangés dans un même index.
+Le registre initial de l'implémentation utilisait [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) de Workers AI et, après vérification du shape réel de la sortie, normalisait le contrat sur 1,024 dimensions／cosine. L'implémentation actuelle d'Acecore Systems utilise [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` avec 1,536 dimensions／cosine dans des index cibles nommés séparément. Preview et Production fonctionnent avec 256 vectors synchronisés dans chaque environnement ; l'ancien index BGE-M3 est conservé pour le rollback et des vectors de dimensions différentes ne sont jamais mélangés dans un même index.
 
 Plus que le nom du modèle, l'important est de conserver le même contrat aux quatre endroits suivants.
 

@@ -1,7 +1,7 @@
 ---
 title: "여러 저장소에 Cloudflare Vectorize를 도입하며 얻은 실전 노하우"
 description: "여러 Astro／Cloudflare Pages 사이트에 Cloudflare Vectorize를 도입하고 시험한 기록을 바탕으로 Pagefind와의 역할 분담, 공개 HTML 기반 corpus 생성, 안전한 차등 동기화, Preview／Production 분리, API 방어, 검증 게이트를 정리합니다."
-date: 2026-07-30T22:50
+date: 2026-07-31T12:00
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "OpenAI", "사이트 검색"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -136,12 +136,12 @@ Cloudflare Vectorize를 여러 저장소에 도입하고 시험해 보면 단순
 
 도입 기록을 글로 정리할 때 모든 상태를 “도입 완료”로 묶지 않는 것도 중요합니다. 이번 기록에는 Production 운영, 로컬 검증, Preview 리소스 준비, 사전 조사가 함께 있었습니다.
 
-| 저장소           | 기록·확인된 상태                                             | 얻은 지식                                                                |
-| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------ |
-| Acecore Systems  | 2026년 7월 30일 기준 Production 운영 확인                    | Pagefind 병용, 공개 HTML corpus, D1 rate limit, 안전한 Production 동기화 |
-| Aceserver Portal | Acecore 정보의 Vectorize 검색을 Production에서 확인          | 기업 정보와 WIKI 규칙 검색의 대상을 섞지 않음                            |
-| World Foundation | 로컬에서 72 sources／134 vectors 생성, 37 tests 성공. 미공개 | content hash, fail-closed 동기화, 공개 전 게이트 분리                    |
-| Acecore Schools  | 기존 구성 조사까지 완료. index 생성·구현은 미착수            | binding 추가 전에 API, corpus, 권한, 환경 구성을 결정                    |
+| 저장소           | 기록·확인된 상태                                                                                                 | 얻은 지식                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Acecore Systems  | OpenAI 1,536 dimensions index를 Preview／Production에서 운영. 각 환경에서 256 vectors 동기화와 알려진 query 확인 | Pagefind 병용, 공개 HTML corpus, D1 rate limit, 안전한 Production 동기화와 dimensions 마이그레이션 |
+| Aceserver Portal | Acecore 정보의 Vectorize 검색을 Production에서 확인                                                              | 기업 정보와 WIKI 규칙 검색의 대상을 섞지 않음                                                      |
+| World Foundation | 로컬에서 72 sources／134 vectors 생성, 37 tests 성공. 미공개                                                     | content hash, fail-closed 동기화, 공개 전 게이트 분리                                              |
+| Acecore Schools  | 기존 구성 조사까지 완료. index 생성·구현은 미착수                                                                | binding 추가 전에 API, corpus, 권한, 환경 구성을 결정                                              |
 
 Acecore Systems에서는 [도입 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production 준비 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), [Production 활성화 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)의 3단계로 나눴습니다.
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## embedding model과 index 설정을 계약으로 고정한다
 
-초기 구현 기록에서는 Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)를 사용하고 실제 출력 shape을 확인한 뒤 1,024 dimensions／cosine으로 통일했습니다. 현재 Acecore Systems 구현은 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings)의 `text-embedding-3-large`를 별도 이름의 대상 index에서 1,536 dimensions／cosine으로 사용합니다. 기존 BGE-M3 index는 rollback용으로 유지하며, dimensions가 다른 vector를 같은 index에 섞지 않습니다.
+초기 구현 기록에서는 Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)를 사용하고 실제 출력 shape을 확인한 뒤 1,024 dimensions／cosine으로 통일했습니다. 현재 Acecore Systems 구현은 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings)의 `text-embedding-3-large`를 별도 이름의 대상 index에서 1,536 dimensions／cosine으로 사용합니다. Preview／Production은 각 환경에서 256 vectors를 동기화해 운영하며, 기존 BGE-M3 index는 rollback용으로 유지합니다. dimensions가 다른 vector를 같은 index에 섞지 않습니다.
 
 모델 이름 자체보다 중요한 것은 다음 네 곳에 같은 계약을 적용하는 것입니다.
 

@@ -1,7 +1,7 @@
 ---
 title: "複数リポジトリへのCloudflare Vectorize導入で得た実践ノウハウ"
 description: "Cloudflare Vectorizeを複数のAstro／Cloudflare Pagesサイトへ導入・試行した記録から、Pagefindとの役割分担、公開HTMLからのcorpus生成、安全な差分同期、Preview／Production分離、API防御、検証ゲートまでを整理します。"
-date: 2026-07-30T22:50
+date: 2026-07-31T12:00
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "OpenAI", "サイト内検索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -136,14 +136,14 @@ Cloudflare Vectorizeを複数のリポジトリへ導入・試行すると、単
 
 導入記録を記事にするときは、すべてを「導入済み」とまとめないことも重要です。今回の記録には、本番稼働、ローカル検証、Preview資源の準備、事前調査が混在していました。
 
-| リポジトリ       | 記録・確認できた状態                                                            | 得られた知見                                                                     |
-| ---------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Acecore Systems  | 旧BGE-M3 indexで本番稼働を確認。OpenAI 1,536 dimensions indexは準備済みで同期前 | Pagefindとの併用、公開HTML corpus、D1 rate limit、安全なProduction同期と次元移行 |
-| Aceserver Portal | Acecore情報のVectorize検索を本番確認                                            | 企業情報とWIKIルール検索の検索先を混ぜない                                       |
-| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開                   | content hash、fail-closed同期、公開前ゲートの分離                                |
-| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                                     | bindingを足す前にAPI、corpus、権限、環境構成を決める                             |
+| リポジトリ       | 記録・確認できた状態                                                                         | 得られた知見                                                                     |
+| ---------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Acecore Systems  | OpenAI 1,536 dimensions indexをPreview／Productionで稼働。各256 vectors同期・既知queryを確認 | Pagefindとの併用、公開HTML corpus、D1 rate limit、安全なProduction同期と次元移行 |
+| Aceserver Portal | Acecore情報のVectorize検索を本番確認                                                         | 企業情報とWIKIルール検索の検索先を混ぜない                                       |
+| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開                                | content hash、fail-closed同期、公開前ゲートの分離                                |
+| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                                                  | bindingを足す前にAPI、corpus、権限、環境構成を決める                             |
 
-Acecore Systemsでは、[導入PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[本番準備PR #41](https://github.com/acecore-systems/acecore-systems/pull/41)、[本番有効化PR #42](https://github.com/acecore-systems/acecore-systems/pull/42) の3段階に分けました。その後の[OpenAI直接接続への移行PR #43](https://github.com/acecore-systems/acecore-systems/pull/43)では、異なるdimensionsのvectorを混在させず、1,536 dimensions用indexを別名で準備しています。
+Acecore Systemsでは、[導入PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[本番準備PR #41](https://github.com/acecore-systems/acecore-systems/pull/41)、[本番有効化PR #42](https://github.com/acecore-systems/acecore-systems/pull/42) の3段階に分けました。その後の[OpenAI直接接続への移行PR #43](https://github.com/acecore-systems/acecore-systems/pull/43)では、異なるdimensionsのvectorを混在させず、1,536 dimensions用indexを別名で準備しています。[有効化PR #44](https://github.com/acecore-systems/acecore-systems/pull/44)ではPreview／Productionへ各256 vectorsを同期し、既知queryとPagefind fallbackを確認した後に関連検索を有効化しました。
 
 旧BGE-M3 indexへの初回Production同期の[GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752)では、公開commitとcorpus versionを照合し、36件の日本語公開ページから250 vectorsを生成しました。同期結果はupsert 250件、delete 0件です。コードのmerge、indexの準備、初回同期、検索有効化を別の変更にしたことで、各段階の停止条件を明確にできました。
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## embedding modelとindex設定を契約として固定する
 
-導入初期の記録では、Workers AIの [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) を使い、実際の出力shapeを確認したうえで、1,024 dimensions／cosineへ統一しました。その後のAcecore Systemsの現行実装では、[OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) の `text-embedding-3-large` を1,536 dimensions／cosineで使い、移行先indexを別名で作成しています。旧BGE-M3 indexはrollback用に保持し、異なるdimensionsのvectorを同じindexに混在させません。
+導入初期の記録では、Workers AIの [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) を使い、実際の出力shapeを確認したうえで、1,024 dimensions／cosineへ統一しました。その後のAcecore Systemsの現行実装では、[OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) の `text-embedding-3-large` を1,536 dimensions／cosineで使い、移行先indexを別名で作成しました。Preview／Productionとも256 vectorsを同期して稼働させ、旧BGE-M3 indexはrollback用に保持しています。異なるdimensionsのvectorを同じindexに混在させません。
 
 重要なのはモデル名そのものより、次の4か所を同じ契約にすることです。
 

@@ -1,7 +1,7 @@
 ---
 title: "Praxiswissen aus der Einführung von Cloudflare Vectorize in mehreren Repositories"
 description: "Erkenntnisse aus der Einführung und Erprobung von Cloudflare Vectorize auf mehreren Astro-/Cloudflare-Pages-Websites: Aufgabenteilung mit Pagefind, Corpus-Erzeugung aus veröffentlichtem HTML, sichere differenzielle Synchronisierung, Trennung von Preview und Production, API-Schutz und Prüf-Gates."
-date: 2026-07-30T22:50
+date: 2026-07-31T12:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Vectorize", "OpenAI", "Website-Suche"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -136,14 +136,14 @@ So lassen sich zwei Ziele gleichzeitig erreichen: „Die Website-Suche funktioni
 
 Wer Einführungsprotokolle in einem Artikel zusammenfasst, sollte nicht alles pauschal als „eingeführt“ bezeichnen. In unseren Aufzeichnungen kamen Produktionsbetrieb, lokale Prüfung, vorbereitete Preview-Ressourcen und reine Voruntersuchung gemeinsam vor.
 
-| Repository       | Dokumentierter und bestätigter Zustand                                                                                                 | Erkenntnis                                                                                                          |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Acecore Systems  | Produktionsbetrieb im bisherigen BGE-M3-Index bestätigt; OpenAI-Index mit 1,536 dimensions vorbereitet, aber noch nicht synchronisiert | Kombination mit Pagefind, öffentlicher HTML-Corpus, D1 rate limit, sicherer Production-Sync und Dimensionsmigration |
-| Aceserver Portal | Vectorize-Suche für Acecore-Informationen in Production bestätigt                                                                      | Suchziele für Unternehmensinformationen und WIKI-Regeln nicht vermischen                                            |
-| World Foundation | 72 sources／134 Vektoren lokal erzeugt, 37 tests bestanden; unveröffentlicht                                                           | content hash, fail-closed-Synchronisierung, Trennung der Gates vor Veröffentlichung                                 |
-| Acecore Schools  | Bestehende Struktur untersucht; Index und Implementierung noch nicht begonnen                                                          | API, Corpus, Rechte und Umgebungsaufbau vor dem binding festlegen                                                   |
+| Repository       | Dokumentierter und bestätigter Zustand                                                                                                | Erkenntnis                                                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Acecore Systems  | OpenAI-Indizes mit 1,536 dimensions in Preview und Production in Betrieb; je 256 Vektoren synchronisiert und bekannte queries geprüft | Kombination mit Pagefind, öffentlicher HTML-Corpus, D1 rate limit, sicherer Production-Sync und Dimensionsmigration |
+| Aceserver Portal | Vectorize-Suche für Acecore-Informationen in Production bestätigt                                                                     | Suchziele für Unternehmensinformationen und WIKI-Regeln nicht vermischen                                            |
+| World Foundation | 72 sources／134 Vektoren lokal erzeugt, 37 tests bestanden; unveröffentlicht                                                          | content hash, fail-closed-Synchronisierung, Trennung der Gates vor Veröffentlichung                                 |
+| Acecore Schools  | Bestehende Struktur untersucht; Index und Implementierung noch nicht begonnen                                                         | API, Corpus, Rechte und Umgebungsaufbau vor dem binding festlegen                                                   |
 
-Bei Acecore Systems wurde die Arbeit in drei Stufen aufgeteilt: [Einführungs-PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production-Vorbereitungs-PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) und [Production-Aktivierungs-PR #42](https://github.com/acecore-systems/acecore-systems/pull/42). Der spätere [PR #43 für die direkte OpenAI-Anbindung](https://github.com/acecore-systems/acecore-systems/pull/43) bereitet einen separat benannten Index mit 1,536 dimensions vor, statt Vektoren mit unterschiedlichen dimensions zu mischen.
+Bei Acecore Systems wurde die Arbeit in drei Stufen aufgeteilt: [Einführungs-PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production-Vorbereitungs-PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) und [Production-Aktivierungs-PR #42](https://github.com/acecore-systems/acecore-systems/pull/42). Der spätere [PR #43 für die direkte OpenAI-Anbindung](https://github.com/acecore-systems/acecore-systems/pull/43) bereitet einen separat benannten Index mit 1,536 dimensions vor, statt Vektoren mit unterschiedlichen dimensions zu mischen. [Aktivierungs-PR #44](https://github.com/acecore-systems/acecore-systems/pull/44) synchronisiert je 256 Vektoren in beide Umgebungen und aktiviert die verwandte Suche nach Prüfung bekannter queries und des Pagefind-Fallbacks.
 
 Im [GitHub-Actions-Lauf der ersten Production-Synchronisierung zum bisherigen BGE-M3-Index](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) wurden veröffentlichter Commit und Corpus-Version abgeglichen und aus 36 öffentlichen japanischen Seiten 250 Vektoren erzeugt. Das Ergebnis waren 250 upserts und 0 deletes. Durch getrennte Änderungen für Code-Merge, Index-Vorbereitung, erste Synchronisierung und Aktivierung der Suche erhielt jede Stufe eindeutige Abbruchbedingungen.
 
@@ -223,7 +223,7 @@ So entsteht aus demselben veröffentlichten Inhalt derselbe Corpus, und der Grun
 
 ## Embedding model und Index-Konfiguration als Vertrag festlegen
 
-Im Einführungsprotokoll kam [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) aus Workers AI zum Einsatz; nach Prüfung der tatsächlichen Ausgabeform wurden alle Komponenten auf 1,024 dimensions／cosine vereinheitlicht. Die aktuelle Acecore-Systems-Implementierung verwendet [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` mit 1,536 dimensions／cosine in einem separat benannten Zielindex. Der bisherige BGE-M3-Index bleibt für rollback erhalten; Vektoren unterschiedlicher dimensions werden nicht in einem Index gemischt.
+Im Einführungsprotokoll kam [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) aus Workers AI zum Einsatz; nach Prüfung der tatsächlichen Ausgabeform wurden alle Komponenten auf 1,024 dimensions／cosine vereinheitlicht. Die aktuelle Acecore-Systems-Implementierung verwendet [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` mit 1,536 dimensions／cosine in separat benannten Zielindizes. Preview und Production laufen jeweils mit 256 synchronisierten Vektoren; der bisherige BGE-M3-Index bleibt für rollback erhalten, und Vektoren unterschiedlicher dimensions werden nicht in einem Index gemischt.
 
 Wichtiger als der konkrete Modellname ist, in vier Bereichen denselben Vertrag festzuschreiben.
 

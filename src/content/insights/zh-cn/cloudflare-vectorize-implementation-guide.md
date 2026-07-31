@@ -1,7 +1,7 @@
 ---
 title: "在多个仓库中导入 Cloudflare Vectorize 后总结的实践经验"
 description: "根据在多个 Astro／Cloudflare Pages 网站中导入和试用 Cloudflare Vectorize 的记录，整理它与 Pagefind 的职责划分、从已发布 HTML 生成 corpus、安全差量同步、Preview／Production 隔离、API 防护和验证门禁。"
-date: 2026-07-30T22:50
+date: 2026-07-31T12:00
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "OpenAI", "站内搜索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -136,12 +136,12 @@ faq:
 
 把导入记录写成文章时，不将所有状态统称为“已导入”同样重要。本次记录中混合了 Production 运行、本地验证、Preview 资源准备和事前调查。
 
-| 仓库             | 已记录和确认的状态                                         | 获得的经验                                                                  |
-| ---------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Acecore Systems  | 截至2026年7月30日确认正在 Production 运行                  | 与 Pagefind 并用、已发布 HTML corpus、D1 rate limit、安全的 Production 同步 |
-| Aceserver Portal | 确认用于 Acecore 信息的 Vectorize 搜索正在 Production 运行 | 不要混合企业信息与 WIKI 规则搜索的搜索目标                                  |
-| World Foundation | 在本地从72 sources生成134 vectors并通过37 tests；尚未发布  | content hash、fail-closed 同步、发布前门禁隔离                              |
-| Acecore Schools  | 仅完成现有架构调查；尚未创建 index 或开始实现              | 添加 binding 前先确定 API、corpus、权限和环境架构                           |
+| 仓库             | 已记录和确认的状态                                                                                  | 获得的经验                                                                                    |
+| ---------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Acecore Systems  | OpenAI 1,536 dimensions index已在 Preview／Production 运行；每个环境同步256 vectors并确认已知 query | 与 Pagefind 并用、已发布 HTML corpus、D1 rate limit、安全的 Production 同步与 dimensions 迁移 |
+| Aceserver Portal | 确认用于 Acecore 信息的 Vectorize 搜索正在 Production 运行                                          | 不要混合企业信息与 WIKI 规则搜索的搜索目标                                                    |
+| World Foundation | 在本地从72 sources生成134 vectors并通过37 tests；尚未发布                                           | content hash、fail-closed 同步、发布前门禁隔离                                                |
+| Acecore Schools  | 仅完成现有架构调查；尚未创建 index 或开始实现                                                       | 添加 binding 前先确定 API、corpus、权限和环境架构                                             |
 
 Acecore Systems 将导入分为三个阶段：[实现 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[Production 准备 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) 和 [Production 启用 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)。
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## 将 embedding model 与 index 设置固定为契约
 
-初始实现记录使用了 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。现行 Acecore Systems 实现在另行命名的目标 index中使用 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 的 `text-embedding-3-large`，配置为1,536 dimensions／cosine。旧 BGE-M3 index保留用于 rollback；不同 dimensions 的 vector 不会混入同一个 index。
+初始实现记录使用了 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。现行 Acecore Systems 实现在另行命名的目标 indexes中使用 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 的 `text-embedding-3-large`，配置为1,536 dimensions／cosine。Preview／Production均以每个环境256 vectors运行；旧 BGE-M3 index保留用于 rollback，不同 dimensions 的 vector 不会混入同一个 index。
 
 比 model 名称本身更重要的是，让以下四处遵守同一契约。
 
