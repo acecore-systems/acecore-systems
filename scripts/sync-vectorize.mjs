@@ -38,10 +38,7 @@ const PRIVATE_PATH_SEGMENTS = new Set(["admin", "api"]);
 export const PRODUCTION_INDEX_NAME =
   "acecore-systems-search-openai-1536-production";
 
-export const ALLOWED_INDEX_NAMES = new Set([
-  "acecore-systems-search-openai-1536-preview",
-  PRODUCTION_INDEX_NAME,
-]);
+export const ALLOWED_INDEX_NAMES = new Set([PRODUCTION_INDEX_NAME]);
 
 class CloudflareApiError extends Error {
   constructor(message, status) {

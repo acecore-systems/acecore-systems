@@ -21,7 +21,6 @@ import {
   validateCorpus,
 } from "../scripts/sync-vectorize.mjs";
 
-const PREVIEW_INDEX = "acecore-systems-search-openai-1536-preview";
 const temporaryDirectories = [];
 const quietLogger = { log() {} };
 
@@ -116,7 +115,7 @@ function indexResponse() {
   return jsonResponse({
     success: true,
     result: {
-      name: PREVIEW_INDEX,
+      name: PRODUCTION_INDEX_NAME,
       config: {
         dimensions: VECTOR_DIMENSIONS,
         metric: VECTOR_METRIC,
@@ -140,7 +139,8 @@ function commonOptions(corpusFile, fetchImpl) {
     accountId: "account-id",
     apiToken: "token",
     openAiApiKey: "openai-key",
-    indexName: PREVIEW_INDEX,
+    indexName: PRODUCTION_INDEX_NAME,
+    productionConfirmation: PRODUCTION_INDEX_NAME,
     corpusFile,
     fetchImpl,
     retryBaseDelayMs: 1,
@@ -205,7 +205,7 @@ test("dry-run validates corpus and index allowlist without network access", asyn
   const result = await syncVectorize({
     corpusFile,
     dryRun: true,
-    indexName: PREVIEW_INDEX,
+    indexName: PRODUCTION_INDEX_NAME,
     fetchImpl: async () => {
       requested = true;
       throw new Error("network should not be used");
@@ -239,6 +239,7 @@ test("requires an exact confirmation before any production API request", async (
         throw new Error("network should not be used");
       }),
       indexName: PRODUCTION_INDEX_NAME,
+      productionConfirmation: null,
     }),
     /--confirm-production acecore-systems-search-openai-1536-production/u,
   );
@@ -276,6 +277,39 @@ test("production workflow passes the exact production confirmation", async () =>
     workflow,
     /args\+=\(--confirm-production "\$VECTORIZE_INDEX_NAME"\)/u,
   );
+  assert.doesNotMatch(
+    workflow,
+    /sync-preview|cloudflare-search-preview|openai-1536-preview|inputs\.target/u,
+  );
+  assert.doesNotMatch(workflow, /allow[_-]large[_-]delete/u);
+  assert.match(workflow, /cloudflare-search-production/u);
+});
+
+test("keeps Pages Preview free of Vectorize and D1 bindings", async () => {
+  const config = await readFile(
+    new URL("../wrangler.jsonc", import.meta.url),
+    "utf8",
+  );
+
+  assert.doesNotMatch(
+    config,
+    /acecore-systems-search-openai-1536-preview|acecore-systems-search-preview/u,
+  );
+  assert.equal(config.match(/"vectorize"\s*:/gu)?.length, 1);
+  assert.equal(config.match(/"d1_databases"\s*:/gu)?.length, 1);
+  assert.equal(
+    config.match(
+      /"index_name": "acecore-systems-search-openai-1536-production"/gu,
+    )?.length,
+    1,
+  );
+  assert.equal(config.match(/"SEARCH_ENABLED": "false"/gu)?.length, 1);
+  assert.equal(config.match(/"SEARCH_ENABLED": "true"/gu)?.length, 2);
+  assert.match(
+    config,
+    /"preview"\s*:\s*\{\s*"vars"\s*:\s*\{\s*"SEARCH_ENABLED": "false"/u,
+  );
+  assert.match(config, /"production"\s*:\s*\{[\s\S]*"SEARCH_ENABLED": "true"/u);
 });
 
 test("upserts missing content, waits, then safely deletes stale content", async () => {
@@ -294,7 +328,7 @@ test("upserts missing content, waits, then safely deletes stale content", async 
 
   const fetchImpl = async (input, init = {}) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       events.push("index");
       return indexResponse();
     }
@@ -382,7 +416,7 @@ test("refreshes existing vectors only when explicitly requested", async () => {
 
   const fetchImpl = async (input, init = {}) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       events.push("index");
       return indexResponse();
     }
@@ -445,7 +479,7 @@ test("refuses to combine an existing-vector refresh with deletion", async () => 
 
   const fetchImpl = async (input) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) {
@@ -472,7 +506,7 @@ test("refuses unmanaged ids before making any mutation", async () => {
 
   const fetchImpl = async (input) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) {
@@ -503,7 +537,7 @@ test("requires an explicit override when deletes exceed 20 percent", async () =>
 
   const fetchImpl = async (input) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) return listResponse(currentIds);
@@ -547,7 +581,7 @@ test("retries a bounded 429 response and honors Retry-After", async () => {
         { status: 429, headers: { "Retry-After": "2" } },
       );
     }
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) {
@@ -573,7 +607,7 @@ test("fails closed on incompatible index configuration", async () => {
     jsonResponse({
       success: true,
       result: {
-        name: PREVIEW_INDEX,
+        name: PRODUCTION_INDEX_NAME,
         config: { dimensions: 768, metric: VECTOR_METRIC },
       },
     });
@@ -590,7 +624,7 @@ test("requires a mutation id from every Vectorize write", async () => {
 
   const fetchImpl = async (input, init = {}) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) return listResponse([]);
@@ -628,7 +662,7 @@ test("bounds mutation polling and does not delete after an upsert wait timeout",
 
   const fetchImpl = async (input) => {
     const url = new URL(input);
-    if (url.pathname.endsWith(`/indexes/${PREVIEW_INDEX}`)) {
+    if (url.pathname.endsWith(`/indexes/${PRODUCTION_INDEX_NAME}`)) {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) {
