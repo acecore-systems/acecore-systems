@@ -1,11 +1,11 @@
 # Vectorize 検索の運用
 
-Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索として使い、利用者が明示的に実行した場合だけ OpenAI Embeddings API と Cloudflare Vectorize による関連検索を呼び出します。
+Acecore Systems の検索は、利用者が明示的に実行した場合に OpenAI Embeddings API と Cloudflare Vectorize で当サイトの公開情報を検索します。結果が取得できない場合だけ、ブラウザ内の Pagefind をキーワード検索のフォールバックとして使います。ローカル結果を表示した後は、Acecore共通検索APIの検証済み結果だけを「Acecore関連サイト」として下部へ追加表示します。
 
 ## 現在の状態
 
-- 通常の Pages Preview は Vectorize と D1 の binding を持たず、`SEARCH_ENABLED=false` のまま Pagefind だけを使います。
-- Production の関連検索は `SEARCH_ENABLED=true` で有効です。Pagefind は通常検索およびAPI障害時のフォールバックとして継続します。
+- 通常の Pages Preview は Vectorize と D1 の binding を持たず、`SEARCH_ENABLED=false` のまま、サイト内検索はPagefindのフォールバックだけを使います。
+- Production のサイト内検索は `SEARCH_ENABLED=true` で有効です。Pagefind はAPI障害、レート制限、無効化、または有効なVectorize結果がない場合だけ使います。
 - Production 用 Vectorize index `acecore-systems-search-openai-1536-production` は、モデル `text-embedding-3-large`、`dimensions: 1536`、metric cosineで稼働しています。[GitHub Actions run 30599301122](https://github.com/acecore-systems/acecore-systems/actions/runs/30599301122) で256 vectorsを同期し、`ja` namespaceの既知queryを確認済みです。[run 30600076505](https://github.com/acecore-systems/acecore-systems/actions/runs/30600076505) でも current / expected が256、upsert / deleteが0件へ収束しています。
 - GitHub Actions run [30539728752](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) の36ページ・250 vectorsという同期実績は、旧BGE-M3用1024次元index `acecore-systems-search-production` の証跡です。新しい1536次元indexの同期完了判定には使いません。
 - Production 用 D1 database `acecore-systems-search-production`（database ID `ac8a06c2-deb4-4b27-9fbc-0fa2eef3c76d`）は APAC に作成済みで、検索レート制限の migration を適用済みです。
@@ -16,6 +16,19 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 旧BGE-M3用1024次元indexはrollback用に保持し、この移行では削除しません。
 
 サイト本文の raw query は corpus や Vectorize metadata に保存しません。同期 corpus は build output から公開対象の日本語ページだけを抽出し、`/admin`、`/api`、noindex、外部 canonical などを除外します。
+
+## Acecore関連サイトの補助表示
+
+ローカルのVectorize検索（または必要時のPagefindフォールバック）を完了してから、ブラウザは
+`https://acecore.net/api/network-search` へ同一の検索語と`locale: "ja"`だけをJSON POSTします。`site`や任意の取得元は送らず、呼び出し元は中央APIが`Origin`から確定します。
+
+この補助表示はローカル検索を待たせず、中央APIの応答失敗、レート制限、timeout、空結果、または不正な応答では非表示のままです。クライアントは既存のsame-origin URL検証を変更せず、横断用の別検証で次だけを受け入れます。
+
+- `ok: true`、UUID形式の`requestId`、有限の`rank`、title、section、excerpt、source、sourceLabel。sourceは`acecore`、`schools`、`wiki`、`portal`、`world-foundation`だけを受け入れ、sourceLabelも各sourceの固定表示名と一致する必要がある
+- HTTPSかつsourceに対応する公式origin、query/hash、認証情報、private pathを持たないURL
+- Systems自身を除いたAcecore、Schools、Aceserver WIKI、Aceserver Portal、World Foundationのallowlist
+
+外部リンクには`noopener noreferrer`と`no-referrer`を付け、文字列はHTMLとして解釈せずtext nodeとして表示します。関連サイトのindexは中央APIがquery-onlyで読むだけであり、Systemsの同期workflowやVectorize削除権限を広げません。
 
 ## 同期の安全境界
 

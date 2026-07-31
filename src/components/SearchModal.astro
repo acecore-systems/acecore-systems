@@ -51,33 +51,12 @@
         <button type="submit">検索する</button>
       </div>
       <p id="site-search-help" class="search-form__help">
-        入力すると、端末内でPagefindのサイト内検索結果を表示します。
+        「検索する」を実行すると、Acecore
+        Systemsの公開情報を意味に基づいて検索します。
       </p>
     </form>
 
     <div class="search-dialog__results">
-      <section
-        class="search-result-section"
-        aria-labelledby="pagefind-results-title"
-        data-pagefind-section
-      >
-        <header class="search-result-section__header">
-          <div>
-            <p class="editorial-eyebrow">Pagefind</p>
-            <h3 id="pagefind-results-title">サイト内検索</h3>
-          </div>
-          <p aria-live="polite" data-pagefind-status>
-            2文字以上入力すると候補を表示します。
-          </p>
-        </header>
-        <ol
-          class="search-result-list"
-          aria-label="サイト内検索結果"
-          data-pagefind-results
-        >
-        </ol>
-      </section>
-
       <section
         class="search-result-section search-result-section--semantic"
         aria-labelledby="semantic-results-title"
@@ -87,14 +66,56 @@
         <header class="search-result-section__header">
           <div>
             <p class="editorial-eyebrow">Cloudflare Vectorize</p>
-            <h3 id="semantic-results-title">関連する内容</h3>
+            <h3 id="semantic-results-title">サイト内検索</h3>
           </div>
           <p aria-live="polite" data-semantic-status></p>
         </header>
         <ol
           class="search-result-list"
-          aria-label="意味が近い検索結果"
+          aria-label="サイト内検索結果"
           data-semantic-results
+        >
+        </ol>
+      </section>
+
+      <section
+        class="search-result-section"
+        aria-labelledby="pagefind-results-title"
+        hidden
+        data-pagefind-section
+      >
+        <header class="search-result-section__header">
+          <div>
+            <p class="editorial-eyebrow">Pagefind / フォールバック</p>
+            <h3 id="pagefind-results-title">キーワード検索</h3>
+          </div>
+          <p aria-live="polite" data-pagefind-status></p>
+        </header>
+        <ol
+          class="search-result-list"
+          aria-label="キーワード検索結果"
+          data-pagefind-results
+        >
+        </ol>
+      </section>
+
+      <section
+        class="search-result-section"
+        aria-labelledby="network-results-title"
+        hidden
+        data-network-section
+      >
+        <header class="search-result-section__header">
+          <div>
+            <p class="editorial-eyebrow">Acecore Network</p>
+            <h3 id="network-results-title">Acecore関連サイト</h3>
+          </div>
+          <p aria-live="polite" data-network-status></p>
+        </header>
+        <ol
+          class="search-result-list"
+          aria-label="Acecore関連サイトの検索結果"
+          data-network-results
         >
         </ol>
       </section>
@@ -103,7 +124,8 @@
     <p id="site-search-disclosure" class="search-dialog__disclosure">
       「検索する」を実行すると、入力した検索語をOpenAI
       APIへ送り数値表現に変換し、その数値表現をCloudflare
-      Vectorizeで当サイトの公開情報と照合します。個人情報や機密情報は入力しないでください。
+      Vectorizeで当サイトの公開情報と照合します。あわせて、Acecore共通検索API（acecore.net）へ送信し、
+      Acecore関連サイトの公開情報を下部に表示することがあります。個人情報や機密情報は入力しないでください。
       <a href="/privacy/">個人情報の取り扱い</a>
     </p>
   </div>

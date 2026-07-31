@@ -18,7 +18,7 @@
     "validate:i18n:dist": "node scripts/validate-i18n.mjs --dist",
     "validate:seo": "node scripts/validate-seo.mjs",
     "test:cms": "node --import=./scripts/json-module-loader.mjs --test --test-concurrency=1 --test-isolation=none tests/cms-auth.test.mjs tests/cms-proxy.test.mjs tests/safe-json.test.mjs",
-    "test:search": "node --experimental-strip-types --test tests/deployment-marker.test.mjs tests/search-api.test.mjs tests/search-corpus.test.mjs tests/vectorize-sync.test.mjs",
+    "test:search": "node --experimental-strip-types --test tests/deployment-marker.test.mjs tests/search-api.test.mjs tests/search-corpus.test.mjs tests/search-modal.test.mjs tests/vectorize-sync.test.mjs",
     "test:ai-guide": "node --experimental-strip-types --test tests/ai-guide-chat.test.mjs",
     "sync:vectorize": "node scripts/sync-vectorize.mjs",
     "sync:vectorize:dry-run": "node scripts/sync-vectorize.mjs --dry-run",
