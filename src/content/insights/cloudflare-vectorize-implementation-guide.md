@@ -1,14 +1,14 @@
 ---
 title: "複数リポジトリへのCloudflare Vectorize導入で得た実践ノウハウ"
-description: "Cloudflare Vectorizeを複数のAstro／Cloudflare Pagesサイトへ導入・試行した記録から、Pagefindとの役割分担、公開HTMLからのcorpus生成、安全な差分同期、Preview／Production分離、API防御、検証ゲートまでを整理します。"
+description: "Cloudflare Vectorizeとは何か、キーワード検索では拾いにくい言い換えや関連情報にどう役立つのかを先に解説し、複数サイトへの導入記録から安全な運用設計までを整理します。"
 date: 2026-07-31T12:00
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "OpenAI", "サイト内検索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
-  title: 検索はfail-soft、同期と公開はfail-closed
-  text: "利用者向け検索ではVectorizeが失敗してもPagefindを残します。一方、index同期と本番公開は、対象環境、corpus、削除率、公開commit、mutation完了を確認できなければ停止します。この非対称な設計が、複数サイトへ横展開したときに最も効きました。"
+  title: Vectorizeは「意味で探す」ための検索基盤
+  text: "キーワードが完全に一致しなくても、質問と近い意味を持つ公開ページを候補として返せるCloudflareのベクトルデータベースです。既存のキーワード検索を置き換えるのではなく、言い換えや関連情報の発見を補う用途で価値が出ます。"
 processFigure:
   eyebrow: Vectorize rollout
   title: 公開HTMLから本番indexまでの流れ
@@ -112,11 +112,36 @@ faq:
       answer: "mergeやローカルtestだけでは完了にしません。Previewの実問い合わせ、公開commitとcorpusの一致、本番index同期、mutation収束、Pagefind fallback、rate limit、停止手順まで確認して本番稼働と記録します。"
 ---
 
-Cloudflare Vectorizeを複数のリポジトリへ導入・試行すると、単に「embeddingを作って `query()` する」だけでは足りないことが分かります。
+## まず理解したい：Cloudflare Vectorizeとは
 
-検索対象をどう作るか、既存検索をどう残すか、PreviewとProductionをどう分離するか、誤った同期で大量削除しないか、公開中のページとindexが本当に一致しているか。実運用では、VectorizeのAPI呼び出しよりも、その前後の設計が重要でした。
+Cloudflare Vectorizeは、文章・画像などから作った **embedding**（意味の特徴を数値列にしたもの）を保存し、入力と近い意味を持つ情報を探すCloudflareのベクトルデータベースです。[Cloudflareの公式概要](https://developers.cloudflare.com/vectorize/)が説明するように、意味検索、推薦、分類、将来のRAGの検索層に使えます。
 
-この記事では、Acecore Systems、World Foundation、Acecore Schools、Aceserver Portalで記録した導入・調査結果を横断し、別のAstro／Cloudflare Pagesサイトにも再利用できる形へ整理します。
+通常のキーワード検索は、商品名、固有名詞、エラーコードのように「その語を含むページ」を素早く見つけるのが得意です。一方Vectorizeは、使われた単語が完全に同じでなくても、質問の意図に近い文章を候補にできます。たとえば「サイトを改善したい」という問いに対して、「継続的なWeb運用支援」や「技術顧問」のページを見つける、といった使い方です。
+
+> Vectorizeは、単体で回答文を生成するチャットボットではありません。まず関連する公開ページとURLを選び出す検索基盤です。生成AIを後から組み合わせる場合も、この検索結果を根拠として扱えます。
+
+## 導入すると何がよくなるか
+
+- **言い換えや質問文から探せる**：利用者がサイト内の正式な用語を知らなくても、近い意図のページを見つけやすくなります。
+- **関連する知識を横断できる**：カテゴリや表現が異なる記事・FAQ・サービス案内でも、内容の近さを手掛かりに候補を出せます。
+- **既存の検索体験を補強できる**：キーワード検索を残したまま「関連情報を探す」操作だけに使えば、検索UIを大きく作り替えずに発見性を上げられます。
+- **RAGや推薦へつなげられる**：元ページとURLを返す設計にしておけば、将来のAI回答、関連記事、コンテンツ推薦にも同じ検索層を再利用できます。
+
+ただし、意味検索は魔法ではありません。検索品質は、公開対象を正しく選んだcorpus、embedding model、検索結果の評価に左右されます。完全一致が重要な商品名やコードを探す通常検索まで置き換えるものではありません。
+
+## まずは既存検索に重ねる
+
+最初の導入では、既存のキーワード検索を残し、利用者が明示的に「関連する情報を探す」ときだけVectorizeを呼ぶ構成が扱いやすくなります。
+
+1. 商品名・固有名詞・短い語句はPagefindなどの通常検索で探す
+2. 質問文・言い換え・関連テーマはVectorizeの関連検索で補う
+3. embedding providerやVectorizeが失敗したときは通常検索をそのまま残す
+
+ここまでが、導入を検討するときに先に判断したい価値と適用範囲です。以下では、Acecore Systems、World Foundation、Acecore Schools、Aceserver Portalで記録した導入・調査結果を横断し、別のAstro／Cloudflare Pagesサイトにも再利用できる実装・運用の設計へ進みます。
+
+> **現行運用（2026年7月31日）**：導入初期にはPreviewとProductionを分離して検証しました。現在の通常Pages PreviewはVectorize／D1 bindingを持たず、`SEARCH_ENABLED=false` のPagefindだけを使います。関連検索と自動同期はProduction indexだけで動かします。以下に出てくるPreview indexの記述は導入段階の記録であり、現行の完了条件ではありません。
+
+実際に複数のリポジトリへ導入・試行すると、単に「embeddingを作って `query()` する」だけでは足りないことが分かります。検索対象をどう作るか、PreviewをPagefindだけに保ちつつProductionをどう守るか、誤った同期で大量削除しないか、公開中のページとindexが本当に一致しているか。実運用では、VectorizeのAPI呼び出しよりも、その前後の設計が重要でした。
 
 ## 結論：検索はfail-soft、同期と公開はfail-closed
 

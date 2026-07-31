@@ -1,14 +1,14 @@
 ---
 title: "여러 저장소에 Cloudflare Vectorize를 도입하며 얻은 실전 노하우"
-description: "여러 Astro／Cloudflare Pages 사이트에 Cloudflare Vectorize를 도입하고 시험한 기록을 바탕으로 Pagefind와의 역할 분담, 공개 HTML 기반 corpus 생성, 안전한 차등 동기화, Preview／Production 분리, API 방어, 검증 게이트를 정리합니다."
+description: "먼저 Cloudflare Vectorize가 무엇이며 키워드 검색이 놓치기 쉬운 바꿔 말한 표현과 관련 정보를 어떻게 찾는지 설명하고, 여러 Astro／Cloudflare Pages 사이트에 안전하게 도입한 경험을 정리합니다."
 date: 2026-07-31T12:00
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "OpenAI", "사이트 검색"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
-  title: 검색은 fail-soft, 동기화와 공개는 fail-closed
-  text: "사용자 검색에서는 Vectorize가 실패해도 Pagefind를 유지합니다. 반면 index 동기화와 Production 공개는 대상 환경, corpus, 삭제율, 공개 commit, mutation 완료를 확인할 수 없으면 중단합니다. 이 비대칭 설계가 여러 사이트로 확장할 때 가장 효과적이었습니다."
+  title: Vectorize는 단어가 아니라 의미로 찾기 위한 검색 기반입니다
+  text: "Cloudflare의 벡터 데이터베이스는 키워드가 완전히 일치하지 않아도 질문과 의미가 가까운 공개 페이지를 후보로 돌려줄 수 있습니다. 기존 키워드 검색을 대체하는 것이 아니라, 바꿔 말한 표현과 관련 정보 발견을 보완할 때 가치가 생깁니다."
 processFigure:
   eyebrow: Vectorize rollout
   title: 공개 HTML에서 Production index까지의 흐름
@@ -112,11 +112,36 @@ faq:
       answer: "merge나 로컬 test만으로는 완료로 보지 않습니다. Preview의 실제 요청, 공개 commit과 corpus 일치, Production index 동기화, mutation 수렴, Pagefind fallback, rate limit, 중단 절차까지 확인한 뒤 Production 운영으로 기록합니다."
 ---
 
-Cloudflare Vectorize를 여러 저장소에 도입하고 시험해 보면 단순히 “embedding을 만들고 `query()`를 호출하는 것”만으로는 충분하지 않다는 사실을 알게 됩니다.
+## 먼저 이해하기: Cloudflare Vectorize란?
 
-검색 대상을 어떻게 만들지, 기존 검색을 어떻게 유지할지, Preview와 Production을 어떻게 분리할지, 잘못된 동기화로 대량 삭제가 일어나지 않게 할지, 공개 중인 페이지와 index가 실제로 일치하는지 등을 고려해야 합니다. 실제 운영에서는 Vectorize API 호출보다 그 전후의 설계가 더 중요했습니다.
+Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스트, 이미지 등 데이터의 특징과 의미를 숫자열로 나타낸 **embedding**을 저장하고, 입력과 의미가 가까운 정보를 찾습니다. [공식 개요](https://developers.cloudflare.com/vectorize/)에서 설명하듯 의미 검색, 추천, 분류, 향후 RAG 애플리케이션의 검색 계층에 활용할 수 있습니다.
 
-이 글에서는 Acecore Systems, World Foundation, Acecore Schools, Aceserver Portal에 기록된 도입·조사 결과를 교차 검토하고, 다른 Astro／Cloudflare Pages 사이트에서도 재사용할 수 있는 형태로 정리합니다.
+일반 키워드 검색은 제품명, 고유명사, 오류 코드처럼 그 단어가 포함된 페이지를 빠르게 찾는 데 뛰어납니다. 반면 Vectorize는 쓰인 단어가 정확히 일치하지 않을 때 도움이 됩니다. 예를 들어 “사이트를 개선하고 싶다”라는 질문으로 “지속적인 웹 운영 지원”이나 “기술 자문” 페이지를 찾는 식입니다.
+
+> Vectorize는 그 자체로 답변 문장을 생성하는 챗봇이 아닙니다. 관련 공개 페이지와 URL을 고르는 검색 기반입니다. 나중에 생성 AI를 결합하더라도 이 검색 결과를 답변의 근거 계층으로 사용할 수 있습니다.
+
+## 도입하면 무엇이 좋아질까?
+
+- **바꿔 말한 표현과 질문을 찾을 수 있습니다**: 독자가 사이트의 정확한 용어를 몰라도 의도와 가까운 페이지에 도달하기 쉬워집니다.
+- **콘텐츠를 가로질러 관련 지식을 연결합니다**: 표현이 다른 글, FAQ, 서비스 안내도 의미의 가까움을 바탕으로 찾을 수 있습니다.
+- **기존 검색 경험을 대체하지 않고 보강합니다**: 키워드 검색을 남기고 “관련 정보 찾기”라는 명시적 동작에만 쓰면 전체 UI를 다시 만들지 않아도 발견성을 높일 수 있습니다.
+- **나중에 검색 계층을 재사용할 수 있습니다**: 원래 페이지와 URL을 돌려주도록 설계하면 인용 가능한 AI 답변, 관련 글, 콘텐츠 추천에도 같은 계층을 활용할 수 있습니다.
+
+의미 검색은 마법이 아닙니다. 품질은 올바르게 고른 공개 corpus, 적절한 embedding model, 실제 검색 결과 평가에 달려 있습니다. 정확한 제품명이나 코드를 찾는 일반 검색을 대체해서는 안 됩니다.
+
+## 먼저 기존 검색 위에 겹치기
+
+첫 도입에서는 기존 키워드 검색을 남기고, 독자가 관련 정보를 명시적으로 찾을 때만 Vectorize를 호출하는 구성이 가장 다루기 쉽습니다.
+
+1. 제품명, 고유명사, 짧고 정확한 용어는 Pagefind 같은 일반 검색으로 찾습니다.
+2. 질문문, 바꿔 말한 표현, 인접한 주제는 Vectorize 관련 검색으로 보완합니다.
+3. embedding provider나 Vectorize가 실패해도 일반 검색은 그대로 남깁니다.
+
+여기까지가 도입을 검토할 때 먼저 판단할 가치와 적용 범위입니다. 이후에는 Acecore Systems, World Foundation, Acecore Schools, Aceserver Portal의 도입·조사 결과를 교차 검토해 다른 Astro／Cloudflare Pages 사이트에도 재사용할 수 있는 구현·운영 설계로 이어갑니다.
+
+> **현재 운영 상태(2026년 7월 31일):** 도입 초기에는 Preview와 Production을 분리해 검증했습니다. 현재 일반 Pages Preview에는 Vectorize／D1 binding이 없고 `SEARCH_ENABLED=false`를 유지하며 Pagefind만 사용합니다. 관련 검색과 자동 동기화는 Production index에서만 동작합니다. 아래의 Preview index 언급은 도입 단계의 기록이며 현재 완료 조건이 아닙니다.
+
+여러 저장소에 도입하고 시험해 보면 단순히 “embedding을 만들고 `query()`를 호출하는 것”만으로는 충분하지 않다는 사실을 알게 됩니다. 검색 대상을 어떻게 만들지, Preview는 Pagefind만 유지하면서 Production을 어떻게 보호할지, 잘못된 동기화로 대량 삭제가 일어나지 않게 할지, 공개 중인 페이지와 index가 실제로 일치하는지 등을 고려해야 합니다. 실제 운영에서는 Vectorize API 호출보다 그 전후의 설계가 더 중요했습니다.
 
 ## 결론: 검색은 fail-soft, 동기화와 공개는 fail-closed
 

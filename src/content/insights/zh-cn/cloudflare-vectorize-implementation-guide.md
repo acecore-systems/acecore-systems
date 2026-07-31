@@ -1,14 +1,14 @@
 ---
 title: "在多个仓库中导入 Cloudflare Vectorize 后总结的实践经验"
-description: "根据在多个 Astro／Cloudflare Pages 网站中导入和试用 Cloudflare Vectorize 的记录，整理它与 Pagefind 的职责划分、从已发布 HTML 生成 corpus、安全差量同步、Preview／Production 隔离、API 防护和验证门禁。"
+description: "先说明 Cloudflare Vectorize 是什么，以及它如何帮助发现关键词搜索容易漏掉的改述和关联信息；再总结在多个 Astro／Cloudflare Pages 站点中安全导入它的经验。"
 date: 2026-07-31T12:00
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "OpenAI", "站内搜索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
-  title: 搜索采用 fail-soft，同步与发布采用 fail-closed
-  text: "面向用户的搜索即使 Vectorize 失败也会保留 Pagefind。另一方面，index 同步和 Production 发布只有在能够确认目标环境、corpus、删除比例、已发布 commit 和 mutation 完成后才会继续。向多个网站横向推广时，这种非对称设计最为有效。"
+  title: Vectorize 是按“语义”检索的搜索基础，而不只是按词匹配
+  text: "Cloudflare 的向量数据库即使在关键词不完全一致时，也能返回语义接近问题的公开页面。它的价值在于用改述和关联信息发现来补强现有关键词搜索，而不是取代它。"
 processFigure:
   eyebrow: Vectorize rollout
   title: 从已发布 HTML 到 Production index 的流程
@@ -112,11 +112,36 @@ faq:
       answer: "merge 或本地 test 本身不代表完成。只有确认 Preview 的实际请求、已发布 commit 与 corpus 一致、Production index 同步、mutation 收敛、Pagefind fallback、rate limit 和停止步骤后，才记录为正在 Production 运行。"
 ---
 
-在多个仓库中导入和试用 Cloudflare Vectorize 后，我们发现，仅仅“生成 embedding 并调用 `query()`”远远不够。
+## 先理解：Cloudflare Vectorize 是什么？
 
-如何生成搜索对象、如何保留现有搜索、如何隔离 Preview 和 Production、如何避免错误同步造成大量删除，以及已发布页面是否真的与 index 一致。在实际运维中，比起调用 Vectorize API，调用前后的设计更为重要。
+Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**（把文本、图像和其他数据的特征与语义表示为数值序列），并查找与输入语义相近的信息。如[官方概览](https://developers.cloudflare.com/vectorize/)所述，它可用于语义搜索、推荐、分类，以及未来 RAG 应用的检索层。
 
-本文横向整理 Acecore Systems、World Foundation、Acecore Schools 和 Aceserver Portal 中记录的导入与调查结果，并将其转化为可在其他 Astro／Cloudflare Pages 网站复用的方法。
+普通关键词搜索擅长快速找到包含产品名、专有名词或错误代码的页面。Vectorize 则适合词语不完全一致的情况。例如，用户询问“我想改进网站”时，即使表述不同，也可能找到“持续 Web 运营支持”或“技术顾问”页面。
+
+> Vectorize 本身不是生成回答文本的聊天机器人。它是选择相关公开页面及其 URL 的搜索基础。以后即使加入生成式 AI，也可以把这些搜索结果作为回答的证据层。
+
+## 加入它后有什么改善？
+
+- **可找到改述和问句**：读者无需知道站点的准确术语，也更容易到达与意图相近的页面。
+- **可跨内容连接相关知识**：表述不同的文章、FAQ 和服务页面仍可按语义相近性被发现。
+- **补强而非取代现有搜索体验**：只把它用于明确的“查找相关信息”操作，同时保留关键词搜索，就无需重做整套 UI 也能提升可发现性。
+- **可在以后复用检索层**：返回原页面和 URL 后，同一层可用于带引用的 AI 回答、相关文章或内容推荐。
+
+语义搜索并非魔法。质量取决于正确选择的公开 corpus、合适的 embedding model，以及对真实搜索结果的评估。它不应取代查找准确产品名或代码的普通搜索。
+
+## 先叠加在现有搜索之上
+
+初次导入时，最容易使用的模式是保留现有关键词搜索，只在读者明确要求查找相关信息时调用 Vectorize。
+
+1. 产品名、专有名词和短的精确词语使用 Pagefind 等普通搜索。
+2. 问句、改述和相邻主题由 Vectorize 关联搜索补充。
+3. embedding provider 或 Vectorize 失败时，仍保留普通搜索。
+
+这些是导入时应先判断的价值和适用范围。之后，本文将 Acecore Systems、World Foundation、Acecore Schools 和 Aceserver Portal 的导入与调查记录汇总为可在其他 Astro／Cloudflare Pages 站点复用的实现与运维实践。
+
+> **当前运行状态（2026年7月31日）：** 导入初期曾验证独立的 Preview 与 Production 环境。现在常规 Pages Preview 不再拥有 Vectorize 或 D1 binding，保持 `SEARCH_ENABLED=false`，只使用 Pagefind。关联搜索和自动同步只对 Production index 运行。下文提到的 Preview index 是导入阶段的记录，不是当前的完成条件。
+
+在多个仓库导入和试用后会发现，仅仅“生成 embedding 并调用 `query()`”远远不够。还要决定如何构建搜索 corpus、如何让 Preview 只保留 Pagefind 同时保护 Production、如何防止错误同步导致大量删除，以及已发布页面是否真的与 index 一致。实际运维中，Vectorize API 调用前后的设计比调用本身更重要。
 
 ## 结论：搜索采用 fail-soft，同步与发布采用 fail-closed
 

@@ -1,14 +1,14 @@
 ---
 title: "Lecciones prácticas al desplegar Cloudflare Vectorize en varios repositorios"
-description: "Experiencia al introducir y probar Cloudflare Vectorize en varios sitios Astro y Cloudflare Pages: reparto de funciones con Pagefind, generación del corpus desde el HTML publicado, sincronización incremental segura, separación de Preview y Production, protección de la API y puertas de validación."
+description: "Primero explica qué es Cloudflare Vectorize y cómo ayuda a encontrar paráfrasis e información relacionada que la búsqueda por palabras clave puede pasar por alto; después recoge lecciones para introducirlo con seguridad en varios sitios Astro y Cloudflare Pages."
 date: 2026-07-31T12:00
 author: gui
 tags: ["Tecnología", "Cloudflare", "Vectorize", "OpenAI", "Búsqueda interna"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
-  title: Búsqueda fail-soft; sincronización y publicación fail-closed
-  text: "Para el usuario, Pagefind sigue disponible aunque Vectorize falle. En cambio, la sincronización del index y la publicación en Production se detienen si no pueden verificar el entorno de destino, el corpus, la tasa de eliminación, el commit publicado y la finalización de las mutations. Este diseño asimétrico fue especialmente eficaz al extender la arquitectura a varios sitios."
+  title: Vectorize es una base para buscar por significado, no solo por palabras
+  text: "La base de datos vectorial de Cloudflare puede devolver páginas publicadas con un significado cercano a una pregunta aunque las palabras clave no coincidan exactamente. Su valor está en complementar la búsqueda actual con paráfrasis e información relacionada, no en sustituirla."
 processFigure:
   eyebrow: Vectorize rollout
   title: Del HTML publicado al index de Production
@@ -112,11 +112,36 @@ faq:
       answer: "Un merge o un test local no bastan. Solo registramos el sistema como activo en Production después de verificar consultas reales en Preview, la coincidencia entre el commit publicado y el corpus, la sincronización del Production index, la convergencia de mutations, el fallback de Pagefind, el rate limit y el procedimiento de detención."
 ---
 
-Al introducir y probar Cloudflare Vectorize en varios repositorios, comprobamos que no basta con «crear embeddings y llamar a `query()`».
+## Primero: ¿qué es Cloudflare Vectorize?
 
-Hay que decidir cómo construir el contenido de búsqueda, cómo conservar la búsqueda existente, cómo separar Preview y Production, cómo evitar eliminaciones masivas por una sincronización incorrecta y si las páginas publicadas coinciden realmente con el index. En operación real, el diseño que rodea la llamada a la API de Vectorize fue más importante que la propia llamada.
+Cloudflare Vectorize es la base de datos vectorial de Cloudflare. Guarda **embeddings** —representaciones numéricas de las características y el significado de texto, imágenes y otros datos— y busca información cuyo significado se acerca a una entrada. Como explica la [visión general oficial](https://developers.cloudflare.com/vectorize/), sirve para búsqueda semántica, recomendaciones, clasificación y la capa de recuperación de futuras aplicaciones RAG.
 
-Este artículo reúne los resultados de adopción e investigación registrados en Acecore Systems, World Foundation, Acecore Schools y Aceserver Portal, y los organiza para poder reutilizarlos en otros sitios Astro y Cloudflare Pages.
+La búsqueda normal por palabras clave es excelente para encontrar rápidamente una página que contiene un nombre de producto, un nombre propio o un código de error. Vectorize ayuda cuando las palabras no coinciden exactamente. Una consulta como «quiero mejorar mi sitio» puede llevar a una página sobre soporte continuo de operaciones web o asesoría técnica aunque la redacción sea distinta.
+
+> Vectorize no es por sí solo un chatbot que genera respuestas. Es una base de búsqueda que selecciona páginas publicadas relevantes y sus URL. Si después se añade IA generativa, esos resultados pueden ser la capa de evidencia de la respuesta.
+
+## ¿Qué mejora al añadirlo?
+
+- **Encuentra paráfrasis y preguntas**: los lectores no necesitan conocer los términos exactos del sitio para llegar a una página cercana a su intención.
+- **Conecta conocimiento relacionado entre contenidos**: artículos, FAQ y páginas de servicios con redacciones distintas pueden descubrirse por su similitud.
+- **Refuerza la búsqueda existente en vez de sustituirla**: si se usa solo para una acción explícita de «buscar información relacionada» y se conserva la búsqueda por palabras clave, mejora la encontrabilidad sin rehacer toda la UI.
+- **Permite reutilizar la capa de recuperación**: devolver la página original y su URL sirve después para respuestas de IA con citas, artículos relacionados o recomendaciones.
+
+La búsqueda semántica no es magia. Su calidad depende de un corpus público bien seleccionado, un embedding model adecuado y la evaluación de resultados reales. No debe sustituir la búsqueda normal de nombres de producto o códigos exactos.
+
+## Primero, superponerla a la búsqueda existente
+
+En una adopción inicial, lo más accesible es conservar la búsqueda actual por palabras clave y llamar a Vectorize solo cuando el lector pide explícitamente información relacionada.
+
+1. Usar Pagefind u otra búsqueda normal para nombres de productos, nombres propios y términos cortos exactos.
+2. Usar la búsqueda relacionada de Vectorize para preguntas, paráfrasis y temas cercanos.
+3. Mantener disponible la búsqueda normal si falla el embedding provider o Vectorize.
+
+Este es el valor y el alcance que conviene juzgar primero. Después, el artículo reúne resultados de adopción e investigación de Acecore Systems, World Foundation, Acecore Schools y Aceserver Portal y los convierte en prácticas reutilizables para otros sitios Astro y Cloudflare Pages.
+
+> **Operación actual (31 de julio de 2026):** En la fase inicial se validaron entornos Preview y Production separados. La Pages Preview habitual ya no tiene binding de Vectorize ni D1, mantiene `SEARCH_ENABLED=false` y usa únicamente Pagefind. La búsqueda relacionada y la sincronización automática funcionan solo contra el index de Production. Las menciones de índices Preview que aparecen más abajo son registros del despliegue, no un criterio actual de finalización.
+
+Al introducir y probar Vectorize en varios repositorios, comprobamos que no basta con «crear embeddings y llamar a `query()`». Hay que decidir cómo construir el contenido de búsqueda, cómo mantener Preview solo con Pagefind mientras se protege Production, cómo evitar eliminaciones masivas por una sincronización incorrecta y si las páginas publicadas coinciden realmente con el index. En operación real, el diseño que rodea la llamada a la API de Vectorize fue más importante que la propia llamada.
 
 ## Conclusión: búsqueda fail-soft; sincronización y publicación fail-closed
 
