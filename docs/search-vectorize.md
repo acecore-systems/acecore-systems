@@ -1,19 +1,25 @@
 # Vectorize 検索の運用
 
-Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索として使い、利用者が明示的に実行した場合だけ Cloudflare Workers AI と Vectorize による関連検索を呼び出します。
+Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索として使い、利用者が明示的に実行した場合だけ OpenAI Embeddings API と Cloudflare Vectorize による関連検索を呼び出します。
 
 ## 現在の状態
 
-- Production の関連検索は `SEARCH_ENABLED=true` で有効です。障害時は `wrangler.jsonc` の Production だけを `false` に戻して、GitHub 連携の Pages deployment で停止します。
-- Production 用 Vectorize index `acecore-systems-search-production` は、BGE-M3 用の 1024 dimensions / cosine として作成済みです。
-- Production 初回同期は GitHub Actions run [30539728752](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) で完了済みです。公開 commit `b03d4b145c6f21983806c629e9f555267f3eb355` と corpus version `2b36c3896e085be1dfbf` を照合し、36ページから250 vectorsを upsert、削除0件で完了しました。
+- Preview／Production の関連検索はどちらも `SEARCH_ENABLED=false` で無効です。新しい1536次元indexの同期と検証が完了するまで有効化しません。
+- Production 用 Vectorize index `acecore-systems-search-openai-1536-production` は、モデル `text-embedding-3-large`、`dimensions: 1536`、metric cosine用として作成済みですが、corpusはまだ同期していません。
+- GitHub Actions run [30539728752](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) の36ページ・250 vectorsという同期実績は、旧BGE-M3用1024次元index `acecore-systems-search-production` の証跡です。新しい1536次元indexの同期完了判定には使いません。
 - Production 用 D1 database `acecore-systems-search-production`（database ID `ac8a06c2-deb4-4b27-9fbc-0fa2eef3c76d`）は APAC に作成済みで、検索レート制限の migration を適用済みです。
 - GitHub Environment `cloudflare-search-production` は、`main` branch だけを許可し、required reviewer と管理者 bypass 無効を設定済みです。
-- Production 同期専用の Cloudflare account token は、Acecore account の Workers AI Read と Vectorize Write だけを許可し、GitHub Environment secret に保存済みです。
-- Preview 用 Vectorize index `acecore-systems-search-preview` は、BGE-M3 用の 1024 dimensions / cosine として作成済みです。
+- Production 同期専用の Cloudflare account token は、Acecore account の Vectorize Read / Write だけを許可し、GitHub Environment secret に保存します。OpenAI keyとは共有しません。
+- Preview 用 Vectorize index `acecore-systems-search-openai-1536-preview` も1536 dimensions / cosine用として作成済みですが、corpusはまだ同期していません。
 - Preview 用 D1 database `acecore-systems-search-preview`（database ID `9346ee59-7cb7-4da1-9a00-7f75eee19f91`）は作成済みで、検索レート制限の migration を適用済みです。
 - GitHub Environment `cloudflare-search-preview` は作成済みです。`main` branch だけを許可しています。
-- Preview 同期専用の Cloudflare account token は、対象 account の Workers AI Read と Vectorize Write だけを許可し、GitHub Environment secret に保存済みです。
+- Preview 同期専用の Cloudflare account token は、対象 account の Vectorize Read / Write だけを許可します。OpenAI project service-account keyはGitHub Environment secret `OPENAI_API_KEY`とPagesの暗号化secretへ保存します。
+
+旧BGE-M3用1024次元indexはrollback用に保持し、新しい1536次元indexの同期とPreview QAが完了するまで削除しません。
+
+現在の移行は新indexの作成までで停止しています。Preview同期とQA、Production同期を順に行い、
+各環境のvector件数、`ja` namespace、embedding設定、既知queryを照合した後にだけ、
+`SEARCH_ENABLED=true`を別の変更として反映します。
 
 サイト本文の raw query は corpus や Vectorize metadata に保存しません。同期 corpus は build output から公開対象の日本語ページだけを抽出し、`/admin`、`/api`、noindex、外部 canonical などを除外します。
 
@@ -45,9 +51,9 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 
 Production は Preview QA 完了後に、次をすべて満たしてから段階的に有効化します。
 
-1. Production 用 Vectorize index `acecore-systems-search-production` を BGE-M3 / 1024 dimensions / cosine で作成します。
+1. Production 用 Vectorize index `acecore-systems-search-openai-1536-production` を 1536 dimensions / cosine で作成します。
 2. Production 用 D1 を作成し、検索レート制限 migration を適用します。
-3. GitHub Environment `cloudflare-search-production` を `main` 限定・required reviewer・管理者 bypass 無効で作成し、最小権限 token を secret `CLOUDFLARE_SEARCH_PRODUCTION_API_TOKEN` に保存します。
+3. GitHub Environment `cloudflare-search-production` を `main` 限定・required reviewer・管理者 bypass 無効で作成し、最小権限 token を secret `CLOUDFLARE_SEARCH_PRODUCTION_API_TOKEN`、Systems専用OpenAI keyを`OPENAI_API_KEY`に保存します。
 4. `wrangler.jsonc` に Production binding を追加し、`SEARCH_ENABLED=false` のまま GitHub 連携の Cloudflare Pages deployment を成功させます。
 5. repository variable `SYSTEMS_VECTORIZE_PRODUCTION_ENABLED=true` を設定します。この variable がない、または `true` 以外の場合、Production job は push / schedule / manual のすべてで skip します。
 6. `target=production`、`allow_large_delete=false` で初回同期し、vector 件数、namespace、日本語 query を確認します。

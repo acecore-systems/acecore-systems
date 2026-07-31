@@ -21,7 +21,7 @@ import {
   validateCorpus,
 } from "../scripts/sync-vectorize.mjs";
 
-const PREVIEW_INDEX = "acecore-systems-search-preview";
+const PREVIEW_INDEX = "acecore-systems-search-openai-1536-preview";
 const temporaryDirectories = [];
 const quietLogger = { log() {} };
 
@@ -139,6 +139,7 @@ function commonOptions(corpusFile, fetchImpl) {
   return {
     accountId: "account-id",
     apiToken: "token",
+    openAiApiKey: "openai-key",
     indexName: PREVIEW_INDEX,
     corpusFile,
     fetchImpl,
@@ -239,7 +240,7 @@ test("requires an exact confirmation before any production API request", async (
       }),
       indexName: PRODUCTION_INDEX_NAME,
     }),
-    /--confirm-production acecore-systems-search-production/u,
+    /--confirm-production acecore-systems-search-openai-1536-production/u,
   );
   assert.equal(requested, false);
 });
@@ -301,14 +302,21 @@ test("upserts missing content, waits, then safely deletes stale content", async 
       events.push("list");
       return listResponse(currentIds);
     }
-    if (url.pathname.includes("/ai/run/")) {
+    if (url.pathname === "/v1/embeddings") {
       events.push("embed");
       const request = JSON.parse(init.body);
+      assert.equal(init.headers.get("Authorization"), "Bearer openai-key");
+      assert.equal(request.model, "text-embedding-3-large");
+      assert.equal(request.dimensions, 1536);
+      assert.equal(request.encoding_format, "float");
       return jsonResponse({
-        success: true,
-        result: {
-          data: request.text.map(() => Array(VECTOR_DIMENSIONS).fill(0.25)),
-        },
+        object: "list",
+        model: "text-embedding-3-large",
+        data: request.input.map((_, index) => ({
+          object: "embedding",
+          index,
+          embedding: Array(VECTOR_DIMENSIONS).fill(0.25),
+        })),
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -382,11 +390,18 @@ test("refreshes existing vectors only when explicitly requested", async () => {
       events.push("list");
       return listResponse([corpus.vectors[0].id]);
     }
-    if (url.pathname.includes("/ai/run/")) {
+    if (url.pathname === "/v1/embeddings") {
       events.push("embed");
       return jsonResponse({
-        success: true,
-        result: { data: [Array(VECTOR_DIMENSIONS).fill(0.25)] },
+        object: "list",
+        model: "text-embedding-3-large",
+        data: [
+          {
+            object: "embedding",
+            index: 0,
+            embedding: Array(VECTOR_DIMENSIONS).fill(0.25),
+          },
+        ],
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -565,7 +580,7 @@ test("fails closed on incompatible index configuration", async () => {
 
   await assert.rejects(
     syncVectorize(commonOptions(corpusFile, fetchImpl)),
-    /must use 1024 dimensions and cosine/u,
+    /must use 1536 dimensions and cosine/u,
   );
 });
 
@@ -579,10 +594,17 @@ test("requires a mutation id from every Vectorize write", async () => {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) return listResponse([]);
-    if (url.pathname.includes("/ai/run/")) {
+    if (url.pathname === "/v1/embeddings") {
       return jsonResponse({
-        success: true,
-        result: { data: [Array(VECTOR_DIMENSIONS).fill(0)] },
+        object: "list",
+        model: "text-embedding-3-large",
+        data: [
+          {
+            object: "embedding",
+            index: 0,
+            embedding: Array(VECTOR_DIMENSIONS).fill(0),
+          },
+        ],
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -612,10 +634,17 @@ test("bounds mutation polling and does not delete after an upsert wait timeout",
     if (url.pathname.endsWith("/list")) {
       return listResponse([`v1-${"f".repeat(48)}`]);
     }
-    if (url.pathname.includes("/ai/run/")) {
+    if (url.pathname === "/v1/embeddings") {
       return jsonResponse({
-        success: true,
-        result: { data: [Array(VECTOR_DIMENSIONS).fill(0)] },
+        object: "list",
+        model: "text-embedding-3-large",
+        data: [
+          {
+            object: "embedding",
+            index: 0,
+            embedding: Array(VECTOR_DIMENSIONS).fill(0),
+          },
+        ],
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -652,13 +681,13 @@ test("bounds mutation polling and does not delete after an upsert wait timeout",
   assert.equal(deleteRequested, false);
 });
 
-test("rejects malformed Workers AI embeddings", () => {
+test("rejects malformed OpenAI embeddings", () => {
   assert.throws(
-    () => extractEmbeddingData({ result: { data: [[0, 1]] } }, 1),
-    /must contain 1024 finite values/u,
+    () => extractEmbeddingData({ data: [{ index: 0, embedding: [0, 1] }] }, 1),
+    /must contain a unique valid index and 1536 finite values/u,
   );
   assert.throws(
-    () => extractEmbeddingData({ result: { data: [] } }, 1),
+    () => extractEmbeddingData({ data: [] }, 1),
     /returned 0 embeddings; expected 1/u,
   );
 });

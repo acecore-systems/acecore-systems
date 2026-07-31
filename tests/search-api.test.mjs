@@ -5,7 +5,12 @@ import { onRequestPost } from "../functions/api/search.ts";
 
 const SITE_ORIGIN = "https://systems.acecore.net";
 const CLIENT_ID = "018f7e5a-7b4d-7c6a-8e9f-0123456789ab";
-const queryVector = Array.from({ length: 1024 }, () => 0.01);
+const queryVector = Array.from({ length: 1536 }, () => 0.01);
+const originalFetch = globalThis.fetch;
+
+test.after(() => {
+  globalThis.fetch = originalFetch;
+});
 
 test("同一originの日本語検索をja namespaceで実行し、公開URLだけを返す", async () => {
   let aiInput;
@@ -34,9 +39,9 @@ test("同一originの日本語検索をja namespaceで実行し、公開URLだ�
       searchMatch("six", 0.68, "/privacy/", "ja"),
       searchMatch("too-low", 0.49, "/terms/", "ja"),
     ],
-    onAiRun(_model, input, options) {
-      aiInput = input;
-      aiOptions = options;
+    onAiRun(_url, init) {
+      aiInput = JSON.parse(init.body);
+      aiOptions = init;
     },
     onQuery(_values, options) {
       queryOptions = options;
@@ -75,8 +80,10 @@ test("同一originの日本語検索をja namespaceで実行し、公開URLだ�
     ],
   );
   assert.deepEqual(aiInput, {
-    text: ["Webサイトの 運用相談"],
-    truncate_inputs: true,
+    model: "text-embedding-3-large",
+    input: ["Webサイトの 運用相談"],
+    dimensions: 1536,
+    encoding_format: "float",
   });
   assert.equal(aiOptions.signal instanceof AbortSignal, true);
   assert.deepEqual(queryOptions, {
@@ -87,7 +94,7 @@ test("同一originの日本語検索をja namespaceで実行し、公開URLだ�
   });
 });
 
-test("Originなし・別OriginのrequestをWorkers AIの前で403にする", async () => {
+test("Originなし・別OriginのrequestをOpenAIの前で403にする", async () => {
   let aiCalls = 0;
   const env = createEnv({
     onAiRun() {
@@ -363,13 +370,13 @@ test("Cloudflare接続IPをhashしたclient keyを自己申告UUIDより優先�
   assert.doesNotMatch(secondKeys[0], /198\.51\.100\.4/);
 });
 
-test("request中止をWorkers AIへ伝播し、Vectorizeを呼ばない", async () => {
+test("request中止をOpenAIへ伝播し、Vectorizeを呼ばない", async () => {
   const controller = new AbortController();
   let aiSignal;
   let vectorCalls = 0;
   const env = createEnv({
-    onAiRun(_model, _input, options) {
-      aiSignal = options.signal;
+    onAiRun(_url, init) {
+      aiSignal = init.signal;
       controller.abort();
     },
     onQuery() {
@@ -383,7 +390,8 @@ test("request中止をWorkers AIへ伝播し、Vectorizeを呼ばない", async 
   );
 
   await assertError(onRequestPost({ request, env }), 499, "request_cancelled");
-  assert.equal(aiSignal, request.signal);
+  assert.equal(aiSignal instanceof AbortSignal, true);
+  assert.equal(aiSignal.aborted, true);
   assert.equal(vectorCalls, 0);
 });
 
@@ -485,26 +493,34 @@ function createEnv({
   onQuery = () => {},
   onRateLimit = () => {},
 } = {}) {
+  globalThis.fetch = async (url, init = {}) => {
+    onAiRun(url, init);
+    assert.equal(url, "https://api.openai.com/v1/embeddings");
+    assert.equal(init.method, "POST");
+    assert.equal(init.headers.Authorization, "Bearer sk-test-openai-key");
+    return Response.json({
+      object: "list",
+      model: "text-embedding-3-large",
+      data: [{ object: "embedding", index: 0, embedding }],
+    });
+  };
+
   return {
     SEARCH_ENABLED: "true",
     SEARCH_MIN_SCORE: searchMinScore,
+    OPENAI_API_KEY: "sk-test-openai-key",
+    OPENAI_EMBEDDING_MODEL: "text-embedding-3-large",
+    OPENAI_EMBEDDING_DIMENSIONS: "1536",
     SEARCH_RATE_LIMIT_DB: createRateLimitDatabase({
       clientRateLimitSuccess,
       globalRateLimitSuccess,
       rateLimitError,
       onRateLimit,
     }),
-    AI: {
-      async run(model, input, options) {
-        onAiRun(model, input, options);
-        assert.equal(model, "@cf/baai/bge-m3");
-        return { data: [embedding] };
-      },
-    },
     SEARCH_INDEX: {
       async query(values, options) {
         if (vectorError) throw vectorError;
-        assert.equal(values.length, 1024);
+        assert.equal(values.length, 1536);
         onQuery(values, options);
         return queryResult ?? { count: matches.length, matches };
       },

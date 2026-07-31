@@ -6,17 +6,15 @@
   "vars": {
     "SEARCH_ENABLED": "false",
     "SEARCH_MIN_SCORE": "0.50",
+    "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
+    "OPENAI_EMBEDDING_DIMENSIONS": "1536",
   },
   "env": {
     "preview": {
-      "ai": {
-        "binding": "AI",
-        "remote": true,
-      },
       "vectorize": [
         {
           "binding": "SEARCH_INDEX",
-          "index_name": "acecore-systems-search-preview",
+          "index_name": "acecore-systems-search-openai-1536-preview",
           "remote": true,
         },
       ],
@@ -29,18 +27,17 @@
         },
       ],
       "vars": {
-        "SEARCH_ENABLED": "true",
+        "SEARCH_ENABLED": "false",
         "SEARCH_MIN_SCORE": "0.50",
+        "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
+        "OPENAI_EMBEDDING_DIMENSIONS": "1536",
       },
     },
     "production": {
-      "ai": {
-        "binding": "AI",
-      },
       "vectorize": [
         {
           "binding": "SEARCH_INDEX",
-          "index_name": "acecore-systems-search-production",
+          "index_name": "acecore-systems-search-openai-1536-production",
         },
       ],
       "d1_databases": [
@@ -52,8 +49,10 @@
         },
       ],
       "vars": {
-        "SEARCH_ENABLED": "true",
+        "SEARCH_ENABLED": "false",
         "SEARCH_MIN_SCORE": "0.50",
+        "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
+        "OPENAI_EMBEDDING_DIMENSIONS": "1536",
       },
     },
   },
