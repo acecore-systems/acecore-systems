@@ -281,6 +281,7 @@ test("production workflow passes the exact production confirmation", async () =>
     workflow,
     /sync-preview|cloudflare-search-preview|openai-1536-preview|inputs\.target/u,
   );
+  assert.doesNotMatch(workflow, /allow[_-]large[_-]delete/u);
   assert.match(workflow, /cloudflare-search-production/u);
 });
 

@@ -34,7 +34,8 @@ Acecore Systems の検索は、ブラウザ内の Pagefind を通常検索とし
 
 各 vector は、検索時の分離に使う top-level `namespace` と監査用 metadata の `namespace` の両方へ `ja` を保存します。同じ ID の格納形式を修復する場合だけ `--refresh-existing` を明示すると、検証済み corpus の全件を再 embedding して upsert します。修復時に削除対象が1件でもあれば mutation 前に停止し、通常同期と分離します。
 
-20% を超える削除が意図した変更である場合だけ、手動 workflow の `allow_large_delete=true` を指定します。通常の push / schedule では大規模削除を許可しません。
+GitHub Actionsから20%超削除のoverrideは指定できません。大規模なcorpus変更は通常同期と分離して
+レビューし、専用の移行手順を用意するまでProduction mutationを停止します。
 
 ## Production の継続運用
 
