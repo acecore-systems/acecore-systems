@@ -624,7 +624,7 @@
       },
       {
         "title": "Services externes",
-        "body": "Pour l’envoi des formulaires et la prévention des abus, nous utilisons des services externes, notamment le point de contact partagé d’Acecore et Cloudflare Turnstile ; le site est hébergé sur Cloudflare Pages. Lorsque vous lancez « Contenu associé » dans la recherche du site, les termes saisis sont convertis en représentation numérique par Cloudflare Workers AI, puis comparés aux informations publiques de ce site enregistrées dans Cloudflare Vectorize. Ne saisissez pas de contenu de demande ni de données personnelles dans les termes de recherche."
+        "body": "Pour l’envoi des formulaires et la prévention des abus, nous utilisons des services externes, notamment le point de contact partagé d’Acecore et Cloudflare Turnstile ; le site est hébergé sur Cloudflare Pages. Lorsque vous lancez « Contenu associé » dans la recherche du site, les termes saisis sont convertis en représentation numérique via l’API OpenAI, puis comparés aux informations publiques de ce site enregistrées dans Cloudflare Vectorize. Ne saisissez pas de contenu de demande ni de données personnelles dans les termes de recherche. Le guide Systems AI envoie votre question et la conversation récente à l’AI API partagée d’Acecore (acecore.net), qui utilise l’API OpenAI pour générer la réponse. Ne saisissez aucune information personnelle ou confidentielle."
       },
       {
         "title": "Mesure d’audience",

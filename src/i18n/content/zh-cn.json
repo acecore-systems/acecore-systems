@@ -619,7 +619,7 @@
       },
       {
         "title": "外部服务",
-        "body": "我们使用 Acecore 通用窗口和 Cloudflare Turnstile 等外部服务来提交表单并防止滥用，并使用 Cloudflare Pages 进行托管。当您在站内搜索中执行“相关内容”时，输入的搜索词会由 Cloudflare Workers AI 转换为数值表示，并与存储在 Cloudflare Vectorize 中的本站公开信息进行比对。请勿在搜索词中输入咨询内容或个人信息。"
+        "body": "我们使用 Acecore 通用窗口和 Cloudflare Turnstile 等外部服务来提交表单并防止滥用，并使用 Cloudflare Pages 进行托管。当您在站内搜索中执行“相关内容”时，输入的搜索词会通过 OpenAI API 转换为数值表示，并与存储在 Cloudflare Vectorize 中的本站公开信息进行比对。请勿在搜索词中输入咨询内容或个人信息。Systems AI 指南会将您的问题和最近对话发送至 Acecore 共用 AI API（acecore.net），该服务使用 OpenAI API 生成回答。请勿输入个人信息或机密信息。"
       },
       {
         "title": "访问分析",

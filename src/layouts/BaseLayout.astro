@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SearchModal from "../components/SearchModal.astro";
+import AiGuideChat from "../components/AiGuideChat.astro";
 import site from "../data/site.json";
 import { serializeJsonForHtmlScript } from "../lib/safe-json.ts";
 import {
@@ -277,5 +278,6 @@ const pagefindMainAttributes =
       <slot />
     </main>
     <Footer locale={locale} />
+    <AiGuideChat locale={locale} />
   </body>
 </html>
