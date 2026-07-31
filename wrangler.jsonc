@@ -11,23 +11,8 @@
   },
   "env": {
     "preview": {
-      "vectorize": [
-        {
-          "binding": "SEARCH_INDEX",
-          "index_name": "acecore-systems-search-openai-1536-preview",
-          "remote": true,
-        },
-      ],
-      "d1_databases": [
-        {
-          "binding": "SEARCH_RATE_LIMIT_DB",
-          "database_name": "acecore-systems-search-preview",
-          "database_id": "9346ee59-7cb7-4da1-9a00-7f75eee19f91",
-          "migrations_dir": "./migrations/search",
-        },
-      ],
       "vars": {
-        "SEARCH_ENABLED": "true",
+        "SEARCH_ENABLED": "false",
         "SEARCH_MIN_SCORE": "0.50",
         "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
         "OPENAI_EMBEDDING_DIMENSIONS": "1536",
