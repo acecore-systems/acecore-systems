@@ -147,12 +147,12 @@ Cloudflare Vectorizeは、文章・画像などから作った **embedding**（�
 
 最も再利用しやすかった原則は、利用者向け検索と運用者向け同期で、失敗時の方針を分けることです。
 
-| 対象               | 失敗時の方針 | 理由                                                           |
-| ------------------ | ------------ | -------------------------------------------------------------- |
-| 通常のサイト内検索 | fail-soft    | Vectorizeが止まってもPagefindで検索を続ける                    |
-| 関連検索API        | fail-soft    | エラーを短時間で閉じ、通常検索の結果を壊さない                 |
-| corpus生成         | fail-closed  | 対象ページ、locale、件数、metadataが不正なら作らない           |
-| index同期          | fail-closed  | 対象環境、既存ID、削除率、mutationを確認できなければ変更しない |
+| 対象               | 失敗時の方針 | 理由                                                                           |
+| ------------------ | ------------ | ------------------------------------------------------------------------------ |
+| 通常のサイト内検索 | fail-soft    | Vectorizeが止まってもPagefindで検索を続ける                                    |
+| 関連検索API        | fail-soft    | エラーを短時間で閉じ、通常検索の結果を壊さない                                 |
+| corpus生成         | fail-closed  | 対象ページ、locale、件数、metadataが不正なら作らない                           |
+| index同期          | fail-closed  | 対象環境、既存ID、削除率、mutationを確認できなければ変更しない                 |
 | 本番有効化         | fail-closed  | 公開commitとcorpusの一致、Production同期とmutation収束を確認してから有効にする |
 
 「AI検索が落ちてもサイト検索は使える」ことと、「同期処理は疑わしければ1件も変更しない」ことを同時に満たします。
@@ -161,12 +161,12 @@ Cloudflare Vectorizeは、文章・画像などから作った **embedding**（�
 
 導入記録を記事にするときは、すべてを「導入済み」とまとめないことも重要です。今回の記録には、本番稼働、ローカル検証、Preview UIの確認、事前調査が混在していました。
 
-| リポジトリ       | 記録・確認できた状態                                                                         | 得られた知見                                                                     |
-| ---------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| リポジトリ       | 記録・確認できた状態                                                                                              | 得られた知見                                                                     |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | Acecore Systems  | OpenAI 1,536 dimensionsのProduction indexを稼働。37ページ・256 vectorsの同期で収束を確認し、PreviewはPagefindのみ | Pagefindとの併用、公開HTML corpus、D1 rate limit、安全なProduction同期と次元移行 |
-| Aceserver Portal | Acecore情報のVectorize検索を本番確認                                                         | 企業情報とWIKIルール検索の検索先を混ぜない                                       |
-| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開                                | content hash、fail-closed同期、公開前ゲートの分離                                |
-| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                                                  | bindingを足す前にAPI、corpus、権限、環境構成を決める                             |
+| Aceserver Portal | Acecore情報のVectorize検索を本番確認                                                                              | 企業情報とWIKIルール検索の検索先を混ぜない                                       |
+| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開                                                     | content hash、fail-closed同期、公開前ゲートの分離                                |
+| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                                                                       | bindingを足す前にAPI、corpus、権限、環境構成を決める                             |
 
 Acecore Systemsでは、[導入PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[本番準備PR #41](https://github.com/acecore-systems/acecore-systems/pull/41)、[本番有効化PR #42](https://github.com/acecore-systems/acecore-systems/pull/42) の3段階に分けました。その後の[OpenAI直接接続への移行PR #43](https://github.com/acecore-systems/acecore-systems/pull/43)では、異なるdimensionsのvectorを混在させず、1,536 dimensions用indexを別名で準備しています。[有効化PR #44](https://github.com/acecore-systems/acecore-systems/pull/44)のPreview／Production同期は導入時の検証記録です。続く[Previewを本番専用へ切り替えたPR #47](https://github.com/acecore-systems/acecore-systems/pull/47)により、現行はPreviewをPagefindだけに保ち、Productionだけを同期・関連検索の対象にしています。
 
@@ -396,12 +396,12 @@ Aceserver Portalでは、Acecoreのサービス情報と、Minecraftサーバー
 
 記事や完了報告では、次の状態を分けると誤解が減ります。
 
-| 状態             | 完了条件の例                                              |
-| ---------------- | --------------------------------------------------------- |
-| 実装済み         | API、corpus、同期スクリプト、UIがbranchにある             |
-| ローカル検証済み | build、型検査、契約test、dry-runが成功した                |
+| 状態             | 完了条件の例                                               |
+| ---------------- | ---------------------------------------------------------- |
+| 実装済み         | API、corpus、同期スクリプト、UIがbranchにある              |
+| ローカル検証済み | build、型検査、契約test、dry-runが成功した                 |
 | Preview確認済み  | Pagefindの候補、関連検索が使えない場合の表示、UIを確認した |
-| 本番稼働中       | 公開commitを同期し、mutation収束、API、停止手順を確認した |
+| 本番稼働中       | 公開commitを同期し、mutation収束、API、停止手順を確認した  |
 
 World Foundationはローカル検証まで成功しましたが、index、secret、deployment、browser QAが未完了だったため、本番済みとは記録しませんでした。Schoolsは調査段階です。
 

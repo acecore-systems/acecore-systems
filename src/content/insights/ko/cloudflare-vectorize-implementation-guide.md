@@ -147,12 +147,12 @@ Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스
 
 가장 재사용하기 쉬웠던 원칙은 사용자 검색과 운영자 동기화에서 실패 시 정책을 분리하는 것입니다.
 
-| 대상              | 실패 시 정책 | 이유                                                                  |
-| ----------------- | ------------ | --------------------------------------------------------------------- |
-| 일반 사이트 검색  | fail-soft    | Vectorize가 중단되어도 Pagefind로 검색을 계속함                       |
-| 관련 검색 API     | fail-soft    | 오류를 짧게 종료하고 일반 검색 결과를 훼손하지 않음                   |
-| corpus 생성       | fail-closed  | 대상 페이지, locale, 개수, metadata가 잘못되면 만들지 않음            |
-| index 동기화      | fail-closed  | 대상 환경, 기존 ID, 삭제율, mutation을 확인할 수 없으면 변경하지 않음 |
+| 대상              | 실패 시 정책 | 이유                                                                              |
+| ----------------- | ------------ | --------------------------------------------------------------------------------- |
+| 일반 사이트 검색  | fail-soft    | Vectorize가 중단되어도 Pagefind로 검색을 계속함                                   |
+| 관련 검색 API     | fail-soft    | 오류를 짧게 종료하고 일반 검색 결과를 훼손하지 않음                               |
+| corpus 생성       | fail-closed  | 대상 페이지, locale, 개수, metadata가 잘못되면 만들지 않음                        |
+| index 동기화      | fail-closed  | 대상 환경, 기존 ID, 삭제율, mutation을 확인할 수 없으면 변경하지 않음             |
 | Production 활성화 | fail-closed  | 공개 commit과 corpus 일치, Production 동기화와 mutation 수렴을 확인한 뒤 활성화함 |
 
 “AI 검색이 중단되어도 사이트 검색은 사용할 수 있다”와 “동기화가 의심스러우면 단 한 건도 변경하지 않는다”를 동시에 충족합니다.
@@ -161,12 +161,12 @@ Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스
 
 도입 기록을 글로 정리할 때 모든 상태를 “도입 완료”로 묶지 않는 것도 중요합니다. 이번 기록에는 Production 운영, 로컬 검증, Preview UI 확인, 사전 조사가 함께 있었습니다.
 
-| 저장소           | 기록·확인된 상태                                                                                                 | 얻은 지식                                                                                          |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| 저장소           | 기록·확인된 상태                                                                                                             | 얻은 지식                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | Acecore Systems  | OpenAI 1,536 dimensions index를 Production에서만 운영. 37페이지·256 vectors 동기화 수렴을 확인했고 Preview는 Pagefind만 사용 | Pagefind 병용, 공개 HTML corpus, D1 rate limit, 안전한 Production 동기화와 dimensions 마이그레이션 |
-| Aceserver Portal | Acecore 정보의 Vectorize 검색을 Production에서 확인                                                              | 기업 정보와 WIKI 규칙 검색의 대상을 섞지 않음                                                      |
-| World Foundation | 로컬에서 72 sources／134 vectors 생성, 37 tests 성공. 미공개                                                     | content hash, fail-closed 동기화, 공개 전 게이트 분리                                              |
-| Acecore Schools  | 기존 구성 조사까지 완료. index 생성·구현은 미착수                                                                | binding 추가 전에 API, corpus, 권한, 환경 구성을 결정                                              |
+| Aceserver Portal | Acecore 정보의 Vectorize 검색을 Production에서 확인                                                                          | 기업 정보와 WIKI 규칙 검색의 대상을 섞지 않음                                                      |
+| World Foundation | 로컬에서 72 sources／134 vectors 생성, 37 tests 성공. 미공개                                                                 | content hash, fail-closed 동기화, 공개 전 게이트 분리                                              |
+| Acecore Schools  | 기존 구성 조사까지 완료. index 생성·구현은 미착수                                                                            | binding 추가 전에 API, corpus, 권한, 환경 구성을 결정                                              |
 
 Acecore Systems에서는 [도입 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production 준비 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), [Production 활성화 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)의 3단계로 나눴습니다. 초기 기록의 Preview／Production 동기화는 더 이상 현행 운영이 아닙니다. [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47)에서 일반 Pages Preview를 Pagefind만 사용하도록 바꿨고, 지금은 Production만 동기화하고 관련 검색을 제공합니다.
 
@@ -396,12 +396,12 @@ Aceserver Portal에서는 Acecore 서비스 정보와 Minecraft 서버 규칙·�
 
 글이나 완료 보고에서는 다음 상태를 구분하면 오해가 줄어듭니다.
 
-| 상태               | 완료 조건 예시                                         |
-| ------------------ | ------------------------------------------------------ |
-| 구현 완료          | API, corpus, 동기화 스크립트, UI가 branch에 있음       |
-| 로컬 검증 완료     | build, typecheck, 계약 test, dry-run 성공              |
+| 상태               | 완료 조건 예시                                               |
+| ------------------ | ------------------------------------------------------------ |
+| 구현 완료          | API, corpus, 동기화 스크립트, UI가 branch에 있음             |
+| 로컬 검증 완료     | build, typecheck, 계약 test, dry-run 성공                    |
 | Preview 확인 완료  | Pagefind 후보, 관련 검색을 사용할 수 없을 때의 표시, UI 확인 |
-| Production 운영 중 | 공개 commit 동기화, mutation 수렴, API, 중단 절차 확인 |
+| Production 운영 중 | 공개 commit 동기화, mutation 수렴, API, 중단 절차 확인       |
 
 World Foundation은 로컬 검증까지 성공했지만 index, secrets, deployment, browser QA가 완료되지 않아 Production으로 기록하지 않았습니다. Schools는 조사 단계입니다.
 

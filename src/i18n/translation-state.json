@@ -1,13 +1,4 @@
 {
-  "sourceHash": "9fe5596a445dfbf69e04c60374f11ee0f971da02820ee8f556a2d0abe4d9190e",
-  "locales": [
-    "en",
-    "zh-cn",
-    "es",
-    "pt",
-    "fr",
-    "ko",
-    "de",
-    "ru"
-  ]
+  "sourceHash": "54c31c1cefe6bb24e841ab5b246a626195ca305321bac58e5a6efced0a01b53a",
+  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }

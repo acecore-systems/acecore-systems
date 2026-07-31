@@ -147,12 +147,12 @@ Al introducir y probar Vectorize en varios repositorios, comprobamos que no bast
 
 El principio más reutilizable fue aplicar políticas de fallo diferentes a la búsqueda para usuarios y a la sincronización para operadores.
 
-| Área                        | Política de fallo | Motivo                                                                                                       |
-| --------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------ |
-| Búsqueda interna normal     | fail-soft         | Seguir buscando con Pagefind aunque Vectorize esté detenido                                                  |
-| API de búsqueda relacionada | fail-soft         | Cerrar el error rápidamente sin afectar los resultados normales                                              |
-| Generación del corpus       | fail-closed       | No generar si las páginas, el locale, la cantidad o la metadata no son válidos                               |
-| Sincronización del index    | fail-closed       | No modificar si no se pueden verificar el entorno, los ID existentes, la tasa de eliminación y las mutations |
+| Área                        | Política de fallo | Motivo                                                                                                                      |
+| --------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Búsqueda interna normal     | fail-soft         | Seguir buscando con Pagefind aunque Vectorize esté detenido                                                                 |
+| API de búsqueda relacionada | fail-soft         | Cerrar el error rápidamente sin afectar los resultados normales                                                             |
+| Generación del corpus       | fail-closed       | No generar si las páginas, el locale, la cantidad o la metadata no son válidos                                              |
+| Sincronización del index    | fail-closed       | No modificar si no se pueden verificar el entorno, los ID existentes, la tasa de eliminación y las mutations                |
 | Habilitación en Production  | fail-closed       | Habilitar solo cuando coincidan el commit publicado y el corpus y converjan la sincronización y las mutations de Production |
 
 Así se cumplen a la vez dos objetivos: «la búsqueda del sitio sigue disponible cuando falla la búsqueda con AI» y «una sincronización dudosa no modifica ni un solo registro».
@@ -161,12 +161,12 @@ Así se cumplen a la vez dos objetivos: «la búsqueda del sitio sigue disponibl
 
 Al documentar una adopción, también es importante no agrupar todos los registros como «implementado». En esta ocasión se mezclaban funcionamiento en Production, validación local, verificación de UI en Preview e investigación previa.
 
-| Repositorio      | Estado registrado y verificado                                                                                                             | Lección obtenida                                                                                                                     |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Repositorio      | Estado registrado y verificado                                                                                                                          | Lección obtenida                                                                                                                     |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Acecore Systems  | Index OpenAI de 1,536 dimensions activo solo en Production; la sincronización convergió en 37 páginas y 256 vectors, mientras Preview usa solo Pagefind | Convivencia con Pagefind, corpus de HTML publicado, rate limit con D1, sincronización segura de Production y migración de dimensions |
-| Aceserver Portal | Confirmada en Production la búsqueda Vectorize de información de Acecore                                                                   | No mezclar el destino de búsqueda de información corporativa con el de reglas del WIKI                                               |
-| World Foundation | Generó localmente 134 vectors a partir de 72 sources y superó 37 tests; no publicado                                                       | Content hash, sincronización fail-closed y separación de puertas previas a la publicación                                            |
-| Acecore Schools  | Solo se investigó la arquitectura existente; no se crearon index ni implementación                                                         | Definir API, corpus, permisos y entornos antes de añadir un binding                                                                  |
+| Aceserver Portal | Confirmada en Production la búsqueda Vectorize de información de Acecore                                                                                | No mezclar el destino de búsqueda de información corporativa con el de reglas del WIKI                                               |
+| World Foundation | Generó localmente 134 vectors a partir de 72 sources y superó 37 tests; no publicado                                                                    | Content hash, sincronización fail-closed y separación de puertas previas a la publicación                                            |
+| Acecore Schools  | Solo se investigó la arquitectura existente; no se crearon index ni implementación                                                                      | Definir API, corpus, permisos y entornos antes de añadir un binding                                                                  |
 
 En Acecore Systems dividimos la adopción en tres etapas: [PR #40 de implementación](https://github.com/acecore-systems/acecore-systems/pull/40), [PR #41 de preparación de Production](https://github.com/acecore-systems/acecore-systems/pull/41) y [PR #42 de habilitación en Production](https://github.com/acecore-systems/acecore-systems/pull/42). La sincronización de Preview y Production de los registros iniciales ya no describe la operación actual: el [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) dejó la Pages Preview normal solo con Pagefind, y ahora solo Production se sincroniza y ofrece búsqueda relacionada.
 
@@ -400,7 +400,7 @@ Distinguir estos estados en artículos e informes reduce las confusiones.
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | Implementado          | La API, el corpus, el script de sincronización y la UI existen en una branch                                            |
 | Validado localmente   | El build, la comprobación de tipos, los contract tests y el dry-run terminan correctamente                              |
-| Verificado en Preview | Se comprobaron las sugerencias de Pagefind, el aviso cuando la búsqueda relacionada no está disponible y la UI            |
+| Verificado en Preview | Se comprobaron las sugerencias de Pagefind, el aviso cuando la búsqueda relacionada no está disponible y la UI          |
 | Activo en Production  | Se sincronizó el commit publicado y se verificaron la convergencia de mutations, la API y el procedimiento de detención |
 
 World Foundation superó la validación local, pero aún faltaban index, secret, deployment y browser QA, por lo que no lo registramos como activo en Production. Acecore Schools continúa en la fase de investigación.

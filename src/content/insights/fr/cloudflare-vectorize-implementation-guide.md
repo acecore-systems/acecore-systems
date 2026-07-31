@@ -147,12 +147,12 @@ L'implémentation et l'expérimentation dans plusieurs dépôts montrent ensuite
 
 Le principe le plus réutilisable consiste à séparer la politique de panne entre la recherche destinée aux utilisateurs et la synchronisation opérée par l'équipe.
 
-| Cible                      | Politique en cas de panne | Raison                                                                                                                       |
-| -------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Recherche interne normale  | fail-soft                 | Continuer à chercher avec Pagefind même si Vectorize s'arrête                                                                |
-| API de recherche associée  | fail-soft                 | Fermer rapidement l'erreur sans détériorer les résultats de la recherche normale                                             |
-| Génération du corpus       | fail-closed               | Ne rien générer si les pages, la locale, le nombre ou les metadata sont incorrects                                           |
-| Synchronisation de l'index | fail-closed               | Ne rien modifier si l'environnement, les ID existants, le taux de suppression ou les mutations ne peuvent pas être confirmés |
+| Cible                      | Politique en cas de panne | Raison                                                                                                                                   |
+| -------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Recherche interne normale  | fail-soft                 | Continuer à chercher avec Pagefind même si Vectorize s'arrête                                                                            |
+| API de recherche associée  | fail-soft                 | Fermer rapidement l'erreur sans détériorer les résultats de la recherche normale                                                         |
+| Génération du corpus       | fail-closed               | Ne rien générer si les pages, la locale, le nombre ou les metadata sont incorrects                                                       |
+| Synchronisation de l'index | fail-closed               | Ne rien modifier si l'environnement, les ID existants, le taux de suppression ou les mutations ne peuvent pas être confirmés             |
 | Activation en Production   | fail-closed               | N'activer qu'après concordance du commit publié et du corpus, ainsi que convergence de la synchronisation et des mutations de Production |
 
 Cette approche satisfait simultanément deux exigences : « la recherche du site reste disponible si la recherche par IA tombe » et « la synchronisation ne modifie aucun élément dès qu'un doute subsiste ».
@@ -161,12 +161,12 @@ Cette approche satisfait simultanément deux exigences : « la recherche du site
 
 Lorsqu'on transforme des traces d'intégration en article, il est également important de ne pas tout résumer par « déployé ». Les traces analysées mêlaient exploitation en Production, validation locale, vérification de l'interface Preview et étude préalable.
 
-| Dépôt            | État consigné et confirmé                                                                                                                        | Enseignement                                                                                                                |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| Dépôt            | État consigné et confirmé                                                                                                                                          | Enseignement                                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
 | Acecore Systems  | Index OpenAI à 1,536 dimensions actif seulement en Production ; synchronisation convergée à 37 pages et 256 vectors, tandis que Preview utilise seulement Pagefind | Association à Pagefind, corpus de HTML public, rate limit D1, synchronisation sûre en Production et migration de dimensions |
-| Aceserver Portal | Recherche Vectorize des informations Acecore confirmée en Production                                                                             | Ne pas mélanger la source des informations d'entreprise avec celle des règles de la WIKI                                    |
-| World Foundation | 72 sources／134 vectors générés localement et 37 tests réussis. Non publié                                                                       | content hash, synchronisation fail-closed et séparation des critères avant publication                                      |
-| Acecore Schools  | Étude de la configuration existante uniquement. Création de l'index et implémentation non commencées                                             | Définir API, corpus, permissions et environnements avant d'ajouter un binding                                               |
+| Aceserver Portal | Recherche Vectorize des informations Acecore confirmée en Production                                                                                               | Ne pas mélanger la source des informations d'entreprise avec celle des règles de la WIKI                                    |
+| World Foundation | 72 sources／134 vectors générés localement et 37 tests réussis. Non publié                                                                                         | content hash, synchronisation fail-closed et séparation des critères avant publication                                      |
+| Acecore Schools  | Étude de la configuration existante uniquement. Création de l'index et implémentation non commencées                                                               | Définir API, corpus, permissions et environnements avant d'ajouter un binding                                               |
 
 Dans Acecore Systems, nous avons réparti le travail en trois étapes : [PR d'intégration #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR de préparation de Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) et [PR d'activation de Production #42](https://github.com/acecore-systems/acecore-systems/pull/42). La synchronisation Preview/Production des traces initiales n'est plus l'exploitation actuelle : le [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) a laissé la Pages Preview normale sur Pagefind seulement, et seule Production est désormais synchronisée et sert la recherche associée.
 
@@ -396,12 +396,12 @@ Il est également essentiel de ne pas attribuer à tort un problème de dépenda
 
 Dans les articles et rapports de fin, séparer les états suivants réduit les malentendus.
 
-| État                   | Exemple de critère d'achèvement                                                          |
-| ---------------------- | ---------------------------------------------------------------------------------------- |
-| Implémenté             | API, corpus, script de synchronisation et UI existent dans la branch                     |
-| Validé localement      | build, typecheck, tests de contrat et dry-run réussis                                    |
+| État                   | Exemple de critère d'achèvement                                                                      |
+| ---------------------- | ---------------------------------------------------------------------------------------------------- |
+| Implémenté             | API, corpus, script de synchronisation et UI existent dans la branch                                 |
+| Validé localement      | build, typecheck, tests de contrat et dry-run réussis                                                |
 | Vérifié en Preview     | Suggestions Pagefind, affichage lorsque la recherche associée est indisponible et interface vérifiés |
-| Exploité en Production | Commit publié synchronisé, convergence des mutations, API et procédure d'arrêt confirmés |
+| Exploité en Production | Commit publié synchronisé, convergence des mutations, API et procédure d'arrêt confirmés             |
 
 World Foundation a réussi la validation locale, mais n'a pas été consigné comme Production car index, secrets, deployment et browser QA n'étaient pas terminés. Schools est resté au stade de l'étude.
 

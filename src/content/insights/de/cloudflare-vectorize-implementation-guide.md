@@ -147,12 +147,12 @@ Bei der Einführung oder Erprobung in mehreren Repositories wird schnell klar: N
 
 Das am besten wiederverwendbare Prinzip war, für die nutzerseitige Suche und die betriebliche Synchronisierung unterschiedliche Fehlerstrategien festzulegen.
 
-| Bereich                 | Strategie bei Fehlern | Grund                                                                                         |
-| ----------------------- | --------------------- | --------------------------------------------------------------------------------------------- |
-| Normale Website-Suche   | fail-soft             | Auch bei einem Vectorize-Ausfall kann mit Pagefind weitergesucht werden                       |
-| API für verwandte Suche | fail-soft             | Fehler schnell beenden, ohne die Ergebnisse der normalen Suche zu beeinträchtigen             |
-| Corpus-Erzeugung        | fail-closed           | Bei ungültigen Seiten, locales, Mengen oder Metadaten keinen Corpus erzeugen                  |
-| Index-Synchronisierung  | fail-closed           | Nichts ändern, wenn Zielumgebung, vorhandene IDs, Löschquote oder Mutation nicht prüfbar sind |
+| Bereich                 | Strategie bei Fehlern | Grund                                                                                                                    |
+| ----------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Normale Website-Suche   | fail-soft             | Auch bei einem Vectorize-Ausfall kann mit Pagefind weitergesucht werden                                                  |
+| API für verwandte Suche | fail-soft             | Fehler schnell beenden, ohne die Ergebnisse der normalen Suche zu beeinträchtigen                                        |
+| Corpus-Erzeugung        | fail-closed           | Bei ungültigen Seiten, locales, Mengen oder Metadaten keinen Corpus erzeugen                                             |
+| Index-Synchronisierung  | fail-closed           | Nichts ändern, wenn Zielumgebung, vorhandene IDs, Löschquote oder Mutation nicht prüfbar sind                            |
 | Production-Aktivierung  | fail-closed           | Erst nach Abgleich von veröffentlichtem Commit und Corpus sowie Konvergenz von Production-Sync und Mutationen aktivieren |
 
 So lassen sich zwei Ziele gleichzeitig erreichen: „Die Website-Suche funktioniert auch bei einem AI-Ausfall“ und „Bei Zweifeln verändert die Synchronisierung keinen einzigen Datensatz“.
@@ -161,12 +161,12 @@ So lassen sich zwei Ziele gleichzeitig erreichen: „Die Website-Suche funktioni
 
 Wer Einführungsprotokolle in einem Artikel zusammenfasst, sollte nicht alles pauschal als „eingeführt“ bezeichnen. In unseren Aufzeichnungen kamen Produktionsbetrieb, lokale Prüfung, Prüfung der Preview-Oberfläche und reine Voruntersuchung gemeinsam vor.
 
-| Repository       | Dokumentierter und bestätigter Zustand                                                                                                | Erkenntnis                                                                                                          |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Repository       | Dokumentierter und bestätigter Zustand                                                                                                             | Erkenntnis                                                                                                          |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | Acecore Systems  | OpenAI-Index mit 1,536 dimensions nur in Production aktiv; Synchronisierung bei 37 Seiten und 256 Vektoren konvergiert, Preview nutzt nur Pagefind | Kombination mit Pagefind, öffentlicher HTML-Corpus, D1 rate limit, sicherer Production-Sync und Dimensionsmigration |
-| Aceserver Portal | Vectorize-Suche für Acecore-Informationen in Production bestätigt                                                                     | Suchziele für Unternehmensinformationen und WIKI-Regeln nicht vermischen                                            |
-| World Foundation | 72 sources／134 Vektoren lokal erzeugt, 37 tests bestanden; unveröffentlicht                                                          | content hash, fail-closed-Synchronisierung, Trennung der Gates vor Veröffentlichung                                 |
-| Acecore Schools  | Bestehende Struktur untersucht; Index und Implementierung noch nicht begonnen                                                         | API, Corpus, Rechte und Umgebungsaufbau vor dem binding festlegen                                                   |
+| Aceserver Portal | Vectorize-Suche für Acecore-Informationen in Production bestätigt                                                                                  | Suchziele für Unternehmensinformationen und WIKI-Regeln nicht vermischen                                            |
+| World Foundation | 72 sources／134 Vektoren lokal erzeugt, 37 tests bestanden; unveröffentlicht                                                                       | content hash, fail-closed-Synchronisierung, Trennung der Gates vor Veröffentlichung                                 |
+| Acecore Schools  | Bestehende Struktur untersucht; Index und Implementierung noch nicht begonnen                                                                      | API, Corpus, Rechte und Umgebungsaufbau vor dem binding festlegen                                                   |
 
 Bei Acecore Systems wurde die Arbeit in drei Stufen aufgeteilt: [Einführungs-PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production-Vorbereitungs-PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) und [Production-Aktivierungs-PR #42](https://github.com/acecore-systems/acecore-systems/pull/42). Der spätere [PR #43 für die direkte OpenAI-Anbindung](https://github.com/acecore-systems/acecore-systems/pull/43) bereitet einen separat benannten Index mit 1,536 dimensions vor, statt Vektoren mit unterschiedlichen dimensions zu mischen. Die Preview-/Production-Synchronisierung in [Aktivierungs-PR #44](https://github.com/acecore-systems/acecore-systems/pull/44) ist ein Einführungsprotokoll. [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) stellte die normale Pages Preview anschließend auf Pagefind allein um; die aktuelle Operation synchronisiert und bedient verwandte Suche nur aus Production.
 

@@ -147,12 +147,12 @@ Ao implementar e testar o Vectorize em vários repositórios, fica claro que ape
 
 O princípio mais fácil de reutilizar foi separar a política de falha entre a pesquisa voltada ao usuário e a sincronização operada pela equipe.
 
-| Alvo                        | Política em caso de falha | Motivo                                                                                             |
-| --------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------- |
-| Pesquisa interna normal     | fail-soft                 | Continuar pesquisando com Pagefind mesmo se o Vectorize parar                                      |
-| API de pesquisa relacionada | fail-soft                 | Encerrar rapidamente o erro sem danificar os resultados da pesquisa normal                         |
-| Geração do corpus           | fail-closed               | Não gerar se páginas, locale, contagem ou metadata estiverem incorretos                            |
-| Sincronização do index      | fail-closed               | Não alterar se ambiente, IDs existentes, taxa de exclusão ou mutations não puderem ser confirmados |
+| Alvo                        | Política em caso de falha | Motivo                                                                                                                                |
+| --------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Pesquisa interna normal     | fail-soft                 | Continuar pesquisando com Pagefind mesmo se o Vectorize parar                                                                         |
+| API de pesquisa relacionada | fail-soft                 | Encerrar rapidamente o erro sem danificar os resultados da pesquisa normal                                                            |
+| Geração do corpus           | fail-closed               | Não gerar se páginas, locale, contagem ou metadata estiverem incorretos                                                               |
+| Sincronização do index      | fail-closed               | Não alterar se ambiente, IDs existentes, taxa de exclusão ou mutations não puderem ser confirmados                                    |
 | Ativação em Production      | fail-closed               | Ativar somente após a correspondência entre commit publicado e corpus e a convergência da sincronização e das mutations de Production |
 
 Isso atende simultaneamente a duas condições: “a pesquisa do site continua disponível quando a pesquisa com AI falha” e “a sincronização não altera nem um único item quando há qualquer dúvida”.
@@ -161,12 +161,12 @@ Isso atende simultaneamente a duas condições: “a pesquisa do site continua d
 
 Ao transformar registros de implementação em um artigo, também é importante não resumir tudo como “implementado”. Os registros analisados misturavam operação em Production, validação local, verificação da interface em Preview e investigação prévia.
 
-| Repositório      | Estado registrado e confirmado                                                                                                                    | Aprendizado                                                                                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Repositório      | Estado registrado e confirmado                                                                                                                          | Aprendizado                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Acecore Systems  | Index OpenAI de 1,536 dimensions ativo somente em Production; sincronização convergiu em 37 páginas e 256 vectors, enquanto Preview usa apenas Pagefind | Uso conjunto com Pagefind, corpus de HTML público, rate limit com D1, sincronização segura em Production e migração de dimensions |
-| Aceserver Portal | Pesquisa Vectorize de informações da Acecore confirmada em Production                                                                             | Não misturar o destino de pesquisa das informações corporativas com o das regras da WIKI                                          |
-| World Foundation | 72 sources／134 vectors gerados localmente e 37 tests concluídos. Não publicado                                                                   | content hash, sincronização fail-closed e separação dos critérios anteriores à publicação                                         |
-| Acecore Schools  | Apenas investigação da configuração existente. Criação do index e implementação ainda não iniciadas                                               | Definir API, corpus, permissões e ambientes antes de adicionar um binding                                                         |
+| Aceserver Portal | Pesquisa Vectorize de informações da Acecore confirmada em Production                                                                                   | Não misturar o destino de pesquisa das informações corporativas com o das regras da WIKI                                          |
+| World Foundation | 72 sources／134 vectors gerados localmente e 37 tests concluídos. Não publicado                                                                         | content hash, sincronização fail-closed e separação dos critérios anteriores à publicação                                         |
+| Acecore Schools  | Apenas investigação da configuração existente. Criação do index e implementação ainda não iniciadas                                                     | Definir API, corpus, permissões e ambientes antes de adicionar um binding                                                         |
 
 No Acecore Systems, dividimos o trabalho em três etapas: [PR de implementação #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR de preparação de Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) e [PR de ativação de Production #42](https://github.com/acecore-systems/acecore-systems/pull/42). A sincronização Preview/Production nos registros iniciais não é mais a operação atual: o [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) deixou a Pages Preview normal somente com Pagefind, e agora apenas Production é sincronizado e atende à pesquisa relacionada.
 
@@ -400,7 +400,7 @@ Em artigos e relatórios de conclusão, separar os estados abaixo reduz mal-ente
 | ------------------------- | -------------------------------------------------------------------------------------------------------- |
 | Implementado              | API, corpus, script de sincronização e UI existem na branch                                              |
 | Validado localmente       | build, typecheck, testes de contrato e dry-run concluídos                                                |
-| Verificado em Preview     | Sugestões do Pagefind, exibição quando a pesquisa relacionada não está disponível e UI verificados        |
+| Verificado em Preview     | Sugestões do Pagefind, exibição quando a pesquisa relacionada não está disponível e UI verificados       |
 | Em operação em Production | Commit publicado sincronizado, convergência das mutations, API e procedimento de interrupção confirmados |
 
 O World Foundation concluiu a validação local, mas não foi registrado como Production porque index, secrets, deployment e browser QA ainda não estavam concluídos. O Schools permaneceu na fase de investigação.

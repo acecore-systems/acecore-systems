@@ -147,12 +147,12 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 
 最容易复用的原则，是让面向用户的搜索和面向运维人员的同步采用不同的失败策略。
 
-| 对象            | 失败策略    | 原因                                                      |
-| --------------- | ----------- | --------------------------------------------------------- |
-| 普通站内搜索    | fail-soft   | 即使 Vectorize 停止，也继续使用 Pagefind 搜索             |
-| 相关搜索 API    | fail-soft   | 快速结束错误，不破坏普通搜索结果                          |
-| corpus 生成     | fail-closed | 对象页面、locale、数量或 metadata 不合法时不生成          |
-| index 同步      | fail-closed | 无法确认目标环境、现有 ID、删除比例和 mutation 时不做修改 |
+| 对象            | 失败策略    | 原因                                                                      |
+| --------------- | ----------- | ------------------------------------------------------------------------- |
+| 普通站内搜索    | fail-soft   | 即使 Vectorize 停止，也继续使用 Pagefind 搜索                             |
+| 相关搜索 API    | fail-soft   | 快速结束错误，不破坏普通搜索结果                                          |
+| corpus 生成     | fail-closed | 对象页面、locale、数量或 metadata 不合法时不生成                          |
+| index 同步      | fail-closed | 无法确认目标环境、现有 ID、删除比例和 mutation 时不做修改                 |
 | Production 启用 | fail-closed | 仅在已发布 commit 与 corpus 一致、Production 同步与 mutation 收敛后才启用 |
 
 这样既能满足“AI 搜索故障时站内搜索仍可使用”，又能满足“同步处理有疑点时一条记录也不修改”。
@@ -161,12 +161,12 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 
 把导入记录写成文章时，不将所有状态统称为“已导入”同样重要。本次记录中混合了 Production 运行、本地验证、Preview 界面确认和事前调查。
 
-| 仓库             | 已记录和确认的状态                                                                                  | 获得的经验                                                                                    |
-| ---------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| 仓库             | 已记录和确认的状态                                                                                           | 获得的经验                                                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
 | Acecore Systems  | OpenAI 1,536 dimensions index仅在 Production 运行；同步已在37个页面和256 vectors收敛，Preview只使用 Pagefind | 与 Pagefind 并用、已发布 HTML corpus、D1 rate limit、安全的 Production 同步与 dimensions 迁移 |
-| Aceserver Portal | 确认用于 Acecore 信息的 Vectorize 搜索正在 Production 运行                                          | 不要混合企业信息与 WIKI 规则搜索的搜索目标                                                    |
-| World Foundation | 在本地从72 sources生成134 vectors并通过37 tests；尚未发布                                           | content hash、fail-closed 同步、发布前门禁隔离                                                |
-| Acecore Schools  | 仅完成现有架构调查；尚未创建 index 或开始实现                                                       | 添加 binding 前先确定 API、corpus、权限和环境架构                                             |
+| Aceserver Portal | 确认用于 Acecore 信息的 Vectorize 搜索正在 Production 运行                                                   | 不要混合企业信息与 WIKI 规则搜索的搜索目标                                                    |
+| World Foundation | 在本地从72 sources生成134 vectors并通过37 tests；尚未发布                                                    | content hash、fail-closed 同步、发布前门禁隔离                                                |
+| Acecore Schools  | 仅完成现有架构调查；尚未创建 index 或开始实现                                                                | 添加 binding 前先确定 API、corpus、权限和环境架构                                             |
 
 Acecore Systems 将导入分为三个阶段：[实现 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[Production 准备 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) 和 [Production 启用 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)。初始记录中的 Preview／Production 同步已不是现行运行方式：[PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) 将常规 Pages Preview 改为只使用 Pagefind，现在只有 Production 会同步并提供相关搜索。
 
