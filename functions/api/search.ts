@@ -76,7 +76,7 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (context) => {
       SEARCH_RATE_LIMIT_DB,
     } = env;
     if (
-      env.SEARCH_ENABLED !== "true" ||
+      String(env.SEARCH_ENABLED) !== "true" ||
       typeof OPENAI_API_KEY !== "string" ||
       !OPENAI_API_KEY.trim() ||
       OPENAI_EMBEDDING_MODEL !== EMBEDDING_MODEL ||
