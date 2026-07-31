@@ -3,7 +3,7 @@ title: "Практические знания из внедрения Cloudflare
 description: "Выводы из внедрения и тестирования Cloudflare Vectorize на нескольких сайтах Astro／Cloudflare Pages: разделение ролей с Pagefind, генерация corpus из опубликованного HTML, безопасная дифференциальная синхронизация, разделение Preview и Production, защита API и контрольные этапы."
 date: 2026-07-30T22:50
 author: gui
-tags: ["Технологии", "Cloudflare", "Vectorize", "Workers AI", "Поиск по сайту"]
+tags: ["Технологии", "Cloudflare", "Vectorize", "OpenAI", "Поиск по сайту"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
@@ -106,8 +106,8 @@ faq:
       answer: "Нет. Pagefind остается обычным поиском с небольшим числом зависимостей, который создается из статического HTML. Vectorize служит дополнительным поиском перефразировок и связанных понятий. Даже при сбое AI или Vectorize обычный поиск остается доступен."
     - question: Обязательны ли D1 или R2 для внедрения Vectorize?
       answer: "Нет. В Systems D1 используется для rate limit поискового API, но не является обязательным хранилищем самого Vectorize. Место хранения исходного текста также выбирается по требованиям: опубликованный HTML, JSON, D1 или R2."
-    - question: Можно ли всегда фиксировать BGE-M3 на 1024 dimensions?
-      answer: "В этой реализации мы проверили реальный вывод и унифицировали конфигурацию на 1024 dimensions／cosine. Но настройки index нельзя изменить после создания, поэтому нельзя полагаться только на название модели. Перед созданием нужно проверить актуальную официальную спецификацию и реальную форму вывода."
+    - question: Как управлять embedding model и dimensions в текущей реализации?
+      answer: "Текущая реализация Acecore Systems использует OpenAI text-embedding-3-large с 1,536 dimensions и cosine. Прежний BGE-M3 index с 1,024 dimensions сохранен для rollback; vectors с разными dimensions никогда не смешиваются в одном index. Настройки index нельзя изменить после создания, поэтому перед созданием нужно проверить актуальную официальную спецификацию и реальную форму вывода."
     - question: В какой момент внедрение считается завершенным?
       answer: "Одного merge или локальных tests недостаточно. Мы фиксируем Production только после реального запроса к Preview, совпадения опубликованного commit и corpus, синхронизации Production index, сходимости mutation, а также проверки Pagefind fallback, rate limit и процедуры отключения."
 ---
@@ -151,7 +151,7 @@ faq:
 
 Цель внедрения Vectorize не состояла в отказе от существующего поиска.
 
-Pagefind создает статический index из собранного HTML и выполняет поиск в браузере. Он удобен как обычный поиск явных терминов — названий продуктов, услуг и собственных имен — и не зависит от состояния Workers AI или Vectorize.
+Pagefind создает статический index из собранного HTML и выполняет поиск в браузере. Он удобен как обычный поиск явных терминов — названий продуктов, услуг и собственных имен — и не зависит от состояния embedding provider или Vectorize.
 
 Vectorize полезен, когда поисковая фраза не совпадает с текстом буквально или страницу нужно найти по связанному понятию. Но для этого нужны генерация embedding и Vectorize query, а значит, необходимо учитывать задержки, ошибки и потребление внешних сервисов.
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## Зафиксировать embedding model и конфигурацию index как единый контракт
 
-Для поиска, включающего японский язык, использовалась модель Workers AI [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/). После проверки реальной формы вывода все компоненты были приведены к 1,024 dimensions／cosine.
+В начальной записи реализации использовалась модель Workers AI [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/); после проверки реальной формы вывода все компоненты были приведены к 1,024 dimensions／cosine. Текущая реализация Acecore Systems использует [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` с 1,536 dimensions／cosine в отдельно названном целевом index. Прежний BGE-M3 index сохранен для rollback; vectors с разными dimensions никогда не смешиваются в одном index.
 
 Важнее конкретного названия модели — зафиксировать один контракт в четырех местах.
 
@@ -287,7 +287,7 @@ Sync-скрипт также останавливается при следую�
 - repository variable для включения
 - kill switch
 
-Sync-token ограничен правами Workers AI Read и Vectorize Write в целевом Cloudflare account. Production запускается только из защищенного `main` и проходит reviewer в GitHub Environment.
+Sync-token ограничен правами Vectorize Read / Write в целевом Cloudflare account и отделен от OpenAI API key. Production запускается только из защищенного `main` и проходит reviewer в GitHub Environment.
 
 У этого решения есть эксплуатационный trade-off. Если Production Environment требует required reviewer, синхронизация, запущенная по schedule, также может ожидать одобрения. До добавления cron нужно решить, одобряется ли только первая публикация, каждая регулярная синхронизация или эти операции следует разделить на разные jobs.
 
@@ -310,7 +310,7 @@ Sync-token ограничен правами Workers AI Read и Vectorize Write 
 
 ## Публичному поисковому API нужны границы стоимости и приватности
 
-Поисковый API отправляет введенную строку в Workers AI через публичный endpoint. Поэтому архитектура должна учитывать не только качество поиска, но и злоупотребления, стоимость, логи и возвращаемые URL.
+Поисковый API отправляет введенную строку embedding provider через публичный endpoint. Поэтому архитектура должна учитывать не только качество поиска, но и злоупотребления, стоимость, логи и возвращаемые URL.
 
 В Acecore Systems реализованы следующие границы:
 
@@ -388,7 +388,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> Workers AI embedding
+  -> OpenAI Embeddings API
   -> Vectorize query
   -> возвращать только публичные URL
 

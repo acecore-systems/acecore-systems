@@ -3,8 +3,7 @@ title: "Lecciones prácticas al desplegar Cloudflare Vectorize en varios reposit
 description: "Experiencia al introducir y probar Cloudflare Vectorize en varios sitios Astro y Cloudflare Pages: reparto de funciones con Pagefind, generación del corpus desde el HTML publicado, sincronización incremental segura, separación de Preview y Production, protección de la API y puertas de validación."
 date: 2026-07-30T22:50
 author: gui
-tags:
-  ["Tecnología", "Cloudflare", "Vectorize", "Workers AI", "Búsqueda interna"]
+tags: ["Tecnología", "Cloudflare", "Vectorize", "OpenAI", "Búsqueda interna"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
@@ -107,8 +106,8 @@ faq:
       answer: "Lo mantuvimos. Pagefind es la búsqueda normal de baja dependencia que se genera desde el HTML estático, mientras que Vectorize actúa como búsqueda auxiliar de paráfrasis y conceptos relacionados. La búsqueda normal puede seguir disponible aunque AI o Vectorize fallen."
     - question: ¿D1 o R2 son obligatorios para adoptar Vectorize?
       answer: "No. Acecore Systems usa D1 para aplicar rate limit a la API de búsqueda, pero no es un almacenamiento obligatorio para Vectorize. El texto original puede estar en HTML publicado, JSON, D1, R2 u otra ubicación elegida según los requisitos."
-    - question: ¿Se pueden fijar siempre 1024 dimensions con BGE-M3?
-      answer: "En esta implementación verificamos la salida real y unificamos la configuración en 1024 dimensions／cosine. Sin embargo, la configuración del index no puede cambiarse después de crearlo. No hay que deducirla solo por el nombre del model: se deben comprobar las especificaciones oficiales vigentes y el output shape real antes de crear el index."
+    - question: ¿Cómo se gestionan el embedding model y las dimensions en la implementación actual?
+      answer: "La implementación actual de Acecore Systems usa OpenAI text-embedding-3-large con 1,536 dimensions y cosine. El index anterior de BGE-M3 con 1,024 dimensions se conserva para rollback, y nunca se mezclan vectors de dimensions diferentes en un mismo index. Como la configuración del index no puede cambiarse después de crearlo, hay que comprobar la especificación oficial vigente y el output shape real antes de crear uno."
     - question: ¿Cuándo se considera terminada la adopción?
       answer: "Un merge o un test local no bastan. Solo registramos el sistema como activo en Production después de verificar consultas reales en Preview, la coincidencia entre el commit publicado y el corpus, la sincronización del Production index, la convergencia de mutations, el fallback de Pagefind, el rate limit y el procedimiento de detención."
 ---
@@ -152,7 +151,7 @@ En el primer [GitHub Actions run](https://github.com/acecore-systems/acecore-sys
 
 El objetivo de introducir Vectorize no era descartar la búsqueda existente.
 
-Pagefind crea un index estático a partir del HTML ya compilado y busca dentro del navegador. Funciona bien como búsqueda normal de términos explícitos, como nombres de productos, servicios y nombres propios, y no depende del estado de Workers AI ni de Vectorize.
+Pagefind crea un index estático a partir del HTML ya compilado y busca dentro del navegador. Funciona bien como búsqueda normal de términos explícitos, como nombres de productos, servicios y nombres propios, y no depende del estado de un embedding provider ni de Vectorize.
 
 Vectorize resulta útil cuando la frase buscada no coincide exactamente con el cuerpo o cuando se quiere encontrar una página a partir de un concepto relacionado. Sin embargo, necesita generar embeddings y ejecutar una Vectorize query, por lo que también hay que considerar la latencia, los errores y el uso del servicio externo.
 
@@ -224,7 +223,7 @@ Así, el mismo contenido publicado produce el mismo corpus y resulta más fácil
 
 ## Fijar el embedding model y la configuración del index como un contrato
 
-Para la búsqueda que incluye japonés usamos [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) de Workers AI. Tras comprobar el output shape real, unificamos la configuración en 1,024 dimensions／cosine.
+El registro inicial de la implementación utilizó [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) de Workers AI tras comprobar el output shape real y unificar la configuración en 1,024 dimensions／cosine. La implementación actual de Acecore Systems usa [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` con 1,536 dimensions／cosine en un index de destino con otro nombre. El index anterior de BGE-M3 se conserva para rollback; no se mezclan vectors de dimensions distintas en un mismo index.
 
 Lo importante no es el nombre del model, sino mantener el mismo contrato en cuatro lugares.
 
@@ -288,7 +287,7 @@ Hay que separar estos elementos.
 - Repository variable de habilitación
 - Kill switch
 
-Limitamos los tokens de sincronización a Workers AI Read y Vectorize Write para la Cloudflare account de destino. Production solo se ejecuta desde el `main` protegido y pasa por un reviewer de GitHub Environment.
+Limitamos los tokens de sincronización a Vectorize Read / Write para la Cloudflare account de destino y los separamos de la OpenAI API key. Production solo se ejecuta desde el `main` protegido y pasa por un reviewer de GitHub Environment.
 
 Esto introduce un trade-off operativo. Si Production Environment tiene required reviewer, las sincronizaciones iniciadas por schedule también pueden quedar esperando aprobación. Antes de añadir cron, hay que decidir si solo se aprueba la primera publicación, si se aprueba cada sincronización periódica o si el trabajo programado se separa en otro job.
 
@@ -311,7 +310,7 @@ Esto evita desajustes como sincronizar un corpus nuevo con un sitio antiguo o mo
 
 ## Establecer límites de coste y privacidad en la API pública de búsqueda
 
-La API de búsqueda es un endpoint público que envía a Workers AI el texto introducido por el usuario. Además de la calidad de búsqueda, su diseño debe contemplar abuso, facturación, logs y URL devueltas.
+La API de búsqueda es un endpoint público que envía el texto introducido por el usuario a un embedding provider. Además de la calidad de búsqueda, su diseño debe contemplar abuso, facturación, logs y URL devueltas.
 
 Acecore Systems implementa estos límites.
 
@@ -389,7 +388,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> Workers AI embedding
+  -> OpenAI Embeddings API
   -> Vectorize query
   -> devolver solo URL publicadas
 

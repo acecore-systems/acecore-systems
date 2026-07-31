@@ -3,7 +3,7 @@ title: "複数リポジトリへのCloudflare Vectorize導入で得た実践ノ�
 description: "Cloudflare Vectorizeを複数のAstro／Cloudflare Pagesサイトへ導入・試行した記録から、Pagefindとの役割分担、公開HTMLからのcorpus生成、安全な差分同期、Preview／Production分離、API防御、検証ゲートまでを整理します。"
 date: 2026-07-30T22:50
 author: gui
-tags: ["技術", "Cloudflare", "Vectorize", "Workers AI", "サイト内検索"]
+tags: ["技術", "Cloudflare", "Vectorize", "OpenAI", "サイト内検索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
@@ -106,8 +106,8 @@ faq:
       answer: "不要にはしませんでした。Pagefindは静的HTMLから作れる低依存の通常検索、Vectorizeは言い換えや関連概念を探す補助検索として役割を分けています。AIやVectorizeが失敗しても通常検索を残せます。"
     - question: Vectorize導入にはD1やR2が必須ですか？
       answer: "必須ではありません。SystemsではD1を検索APIのrate limitに使いましたが、Vectorize自体の必須保存先ではありません。原文の置き場所も、公開HTML、JSON、D1、R2など要件に応じて決めます。"
-    - question: BGE-M3なら1024 dimensionsで固定してよいですか？
-      answer: "今回の実装では実出力を確認して1024 dimensions／cosineに統一しました。ただしindex設定は作成後に変更できないため、モデル名だけで推測せず、導入時の公式仕様と実際の出力shapeを確認してから作成します。"
+    - question: 現行実装のembedding modelとdimensionsはどう管理しますか？
+      answer: "現行のAcecore SystemsはOpenAIのtext-embedding-3-largeを1,536 dimensions／cosineで使います。旧BGE-M3の1,024 dimensions indexはrollback用に保持し、異なるdimensionsのvectorを同じindexへ混在させません。index設定は作成後に変更できないため、導入時の公式仕様と実際の出力shapeを確認してから作成します。"
     - question: どの時点で導入完了と判断しますか？
       answer: "mergeやローカルtestだけでは完了にしません。Previewの実問い合わせ、公開commitとcorpusの一致、本番index同期、mutation収束、Pagefind fallback、rate limit、停止手順まで確認して本番稼働と記録します。"
 ---
@@ -136,22 +136,22 @@ Cloudflare Vectorizeを複数のリポジトリへ導入・試行すると、単
 
 導入記録を記事にするときは、すべてを「導入済み」とまとめないことも重要です。今回の記録には、本番稼働、ローカル検証、Preview資源の準備、事前調査が混在していました。
 
-| リポジトリ       | 記録・確認できた状態                                          | 得られた知見                                                           |
-| ---------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Acecore Systems  | 2026年7月30日時点で本番稼働を確認                             | Pagefindとの併用、公開HTML corpus、D1 rate limit、安全なProduction同期 |
-| Aceserver Portal | Acecore情報のVectorize検索を本番確認                          | 企業情報とWIKIルール検索の検索先を混ぜない                             |
-| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開 | content hash、fail-closed同期、公開前ゲートの分離                      |
-| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                   | bindingを足す前にAPI、corpus、権限、環境構成を決める                   |
+| リポジトリ       | 記録・確認できた状態                                                            | 得られた知見                                                                     |
+| ---------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Acecore Systems  | 旧BGE-M3 indexで本番稼働を確認。OpenAI 1,536 dimensions indexは準備済みで同期前 | Pagefindとの併用、公開HTML corpus、D1 rate limit、安全なProduction同期と次元移行 |
+| Aceserver Portal | Acecore情報のVectorize検索を本番確認                                            | 企業情報とWIKIルール検索の検索先を混ぜない                                       |
+| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開                   | content hash、fail-closed同期、公開前ゲートの分離                                |
+| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                                     | bindingを足す前にAPI、corpus、権限、環境構成を決める                             |
 
-Acecore Systemsでは、[導入PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[本番準備PR #41](https://github.com/acecore-systems/acecore-systems/pull/41)、[本番有効化PR #42](https://github.com/acecore-systems/acecore-systems/pull/42) の3段階に分けました。
+Acecore Systemsでは、[導入PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[本番準備PR #41](https://github.com/acecore-systems/acecore-systems/pull/41)、[本番有効化PR #42](https://github.com/acecore-systems/acecore-systems/pull/42) の3段階に分けました。その後の[OpenAI直接接続への移行PR #43](https://github.com/acecore-systems/acecore-systems/pull/43)では、異なるdimensionsのvectorを混在させず、1,536 dimensions用indexを別名で準備しています。
 
-初回Production同期の[GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752)では、公開commitとcorpus versionを照合し、36件の日本語公開ページから250 vectorsを生成しました。同期結果はupsert 250件、delete 0件です。コードのmerge、indexの準備、初回同期、検索有効化を別の変更にしたことで、各段階の停止条件を明確にできました。
+旧BGE-M3 indexへの初回Production同期の[GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752)では、公開commitとcorpus versionを照合し、36件の日本語公開ページから250 vectorsを生成しました。同期結果はupsert 250件、delete 0件です。コードのmerge、indexの準備、初回同期、検索有効化を別の変更にしたことで、各段階の停止条件を明確にできました。
 
 ## Pagefindを置き換えず、役割を分ける
 
 Vectorizeを入れる目的は、既存の検索を捨てることではありませんでした。
 
-Pagefindはbuild済みHTMLから静的indexを作り、ブラウザ内で検索できます。商品名、サービス名、固有名詞のような明示的な語句を探す通常検索として扱いやすく、Workers AIやVectorizeの状態に依存しません。
+Pagefindはbuild済みHTMLから静的indexを作り、ブラウザ内で検索できます。商品名、サービス名、固有名詞のような明示的な語句を探す通常検索として扱いやすく、embedding providerやVectorizeの状態に依存しません。
 
 Vectorizeは、検索語が本文と完全一致しない場合や、関連する概念からページを見つけたい場合に向いています。ただし、embedding生成とVectorize queryが必要になり、外部サービスの遅延、エラー、利用量も考慮する必要があります。
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## embedding modelとindex設定を契約として固定する
 
-今回の日本語を含む検索では、Workers AIの [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) を使い、実際の出力shapeを確認したうえで、1,024 dimensions／cosineへ統一しました。
+導入初期の記録では、Workers AIの [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) を使い、実際の出力shapeを確認したうえで、1,024 dimensions／cosineへ統一しました。その後のAcecore Systemsの現行実装では、[OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) の `text-embedding-3-large` を1,536 dimensions／cosineで使い、移行先indexを別名で作成しています。旧BGE-M3 indexはrollback用に保持し、異なるdimensionsのvectorを同じindexに混在させません。
 
 重要なのはモデル名そのものより、次の4か所を同じ契約にすることです。
 
@@ -287,7 +287,7 @@ Cloudflareの[Vectorize API](https://developers.cloudflare.com/vectorize/referen
 - 有効化用のrepository variable
 - kill switch
 
-同期tokenは、対象Cloudflare accountのWorkers AI ReadとVectorize Writeに絞りました。Productionは保護された `main` からだけ実行し、GitHub Environmentのreviewerを通します。
+同期tokenは、対象Cloudflare accountのVectorize Read / Writeに絞り、OpenAI API keyとは分離しました。Productionは保護された `main` からだけ実行し、GitHub Environmentのreviewerを通します。
 
 ここには運用上のtrade-offもあります。Production Environmentにrequired reviewerを付けると、scheduleから起動した同期も承認待ちになる場合があります。初回公開だけ承認するのか、定期同期も毎回承認するのか、別jobへ分けるのかを、cronを追加する前に決める必要があります。
 
@@ -310,7 +310,7 @@ GitHubの `main` と、現在Cloudflare Pagesで公開されているcommitは�
 
 ## 公開検索APIにはコストとプライバシーの境界を置く
 
-検索APIは、入力された文字列をWorkers AIへ送る公開endpointです。検索精度だけでなく、乱用、課金、ログ、返却URLを設計対象にします。
+検索APIは、入力された文字列をembedding providerへ送る公開endpointです。検索精度だけでなく、乱用、課金、ログ、返却URLを設計対象にします。
 
 Acecore Systemsでは、次の境界を実装しました。
 
@@ -388,7 +388,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> Workers AI embedding
+  -> OpenAI Embeddings API
   -> Vectorize query
   -> 公開URLだけを返す
 

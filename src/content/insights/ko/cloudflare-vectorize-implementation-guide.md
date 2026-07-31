@@ -3,7 +3,7 @@ title: "여러 저장소에 Cloudflare Vectorize를 도입하며 얻은 실전 �
 description: "여러 Astro／Cloudflare Pages 사이트에 Cloudflare Vectorize를 도입하고 시험한 기록을 바탕으로 Pagefind와의 역할 분담, 공개 HTML 기반 corpus 생성, 안전한 차등 동기화, Preview／Production 분리, API 방어, 검증 게이트를 정리합니다."
 date: 2026-07-30T22:50
 author: gui
-tags: ["기술", "Cloudflare", "Vectorize", "Workers AI", "사이트 검색"]
+tags: ["기술", "Cloudflare", "Vectorize", "OpenAI", "사이트 검색"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
@@ -106,8 +106,8 @@ faq:
       answer: "Pagefind를 제거하지 않았습니다. Pagefind는 정적 HTML에서 만들 수 있는 저의존성 일반 검색, Vectorize는 바꿔 말한 표현이나 관련 개념을 찾는 보조 검색으로 역할을 나눴습니다. AI나 Vectorize가 실패해도 일반 검색은 유지됩니다."
     - question: Vectorize 도입에 D1이나 R2가 필수인가요?
       answer: "필수는 아닙니다. Systems에서는 D1을 검색 API의 rate limit에 사용했지만 Vectorize 자체의 필수 저장소는 아닙니다. 원문의 위치도 공개 HTML, JSON, D1, R2 등 요구 사항에 맞게 결정합니다."
-    - question: BGE-M3라면 항상 1024 dimensions로 고정해도 되나요?
-      answer: "이번 구현에서는 실제 출력을 확인하고 1024 dimensions／cosine으로 통일했습니다. 다만 index 설정은 생성 후 변경할 수 없으므로 모델 이름만으로 추측하지 말고, 도입 시점의 공식 사양과 실제 출력 shape을 확인한 뒤 생성합니다."
+    - question: 현재 구현의 embedding model과 dimensions는 어떻게 관리하나요?
+      answer: "현재 Acecore Systems 구현은 OpenAI text-embedding-3-large를 1,536 dimensions／cosine으로 사용합니다. 기존 BGE-M3 1,024 dimensions index는 rollback용으로 유지하며, dimensions가 다른 vector를 같은 index에 섞지 않습니다. index 설정은 생성 후 변경할 수 없으므로 생성 전에 최신 공식 사양과 실제 출력 shape을 확인합니다."
     - question: 어느 시점에 도입 완료로 판단하나요?
       answer: "merge나 로컬 test만으로는 완료로 보지 않습니다. Preview의 실제 요청, 공개 commit과 corpus 일치, Production index 동기화, mutation 수렴, Pagefind fallback, rate limit, 중단 절차까지 확인한 뒤 Production 운영으로 기록합니다."
 ---
@@ -151,7 +151,7 @@ Acecore Systems에서는 [도입 PR #40](https://github.com/acecore-systems/acec
 
 Vectorize 도입의 목적은 기존 검색을 버리는 것이 아니었습니다.
 
-Pagefind는 build된 HTML에서 정적 index를 만들고 브라우저 안에서 검색할 수 있습니다. 제품명, 서비스명, 고유명사처럼 명시적인 단어를 찾는 일반 검색에 사용하기 쉽고 Workers AI나 Vectorize의 상태에 의존하지 않습니다.
+Pagefind는 build된 HTML에서 정적 index를 만들고 브라우저 안에서 검색할 수 있습니다. 제품명, 서비스명, 고유명사처럼 명시적인 단어를 찾는 일반 검색에 사용하기 쉽고 embedding provider나 Vectorize의 상태에 의존하지 않습니다.
 
 Vectorize는 검색어가 본문과 완전히 일치하지 않거나 관련 개념으로 페이지를 찾고 싶을 때 적합합니다. 다만 embedding 생성과 Vectorize query가 필요하므로 외부 서비스 지연, 오류, 사용량도 고려해야 합니다.
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## embedding model과 index 설정을 계약으로 고정한다
 
-일본어를 포함한 검색에서는 Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)를 사용하고 실제 출력 shape을 확인한 뒤 1,024 dimensions／cosine으로 통일했습니다.
+초기 구현 기록에서는 Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)를 사용하고 실제 출력 shape을 확인한 뒤 1,024 dimensions／cosine으로 통일했습니다. 현재 Acecore Systems 구현은 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings)의 `text-embedding-3-large`를 별도 이름의 대상 index에서 1,536 dimensions／cosine으로 사용합니다. 기존 BGE-M3 index는 rollback용으로 유지하며, dimensions가 다른 vector를 같은 index에 섞지 않습니다.
 
 모델 이름 자체보다 중요한 것은 다음 네 곳에 같은 계약을 적용하는 것입니다.
 
@@ -287,7 +287,7 @@ Cloudflare [Vectorize API](https://developers.cloudflare.com/vectorize/reference
 - 활성화용 repository variable
 - kill switch
 
-동기화 token은 대상 Cloudflare account의 Workers AI Read와 Vectorize Write로 제한했습니다. Production은 보호된 `main`에서만 실행하고 GitHub Environment reviewer를 거칩니다.
+동기화 token은 대상 Cloudflare account의 Vectorize Read / Write로 제한하고 OpenAI API key와 분리했습니다. Production은 보호된 `main`에서만 실행하고 GitHub Environment reviewer를 거칩니다.
 
 여기에는 운영상 trade-off도 있습니다. Production Environment에 required reviewer를 설정하면 schedule로 시작한 동기화도 승인 대기 상태가 될 수 있습니다. 첫 공개만 승인할지, 정기 동기화도 매번 승인할지, 별도 job으로 나눌지를 cron 추가 전에 결정해야 합니다.
 
@@ -310,7 +310,7 @@ GitHub의 `main`과 현재 Cloudflare Pages에 공개된 commit은 항상 같지
 
 ## 공개 검색 API에 비용과 개인정보 경계를 둔다
 
-검색 API는 입력한 문자열을 Workers AI에 보내는 공개 endpoint입니다. 검색 정확도뿐 아니라 악용, 비용, 로그, 반환 URL도 설계 대상입니다.
+검색 API는 입력한 문자열을 embedding provider에 보내는 공개 endpoint입니다. 검색 정확도뿐 아니라 악용, 비용, 로그, 반환 URL도 설계 대상입니다.
 
 Acecore Systems에서는 다음 경계를 구현했습니다.
 
@@ -388,7 +388,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> Workers AI embedding
+  -> OpenAI Embeddings API
   -> Vectorize query
   -> 공개 URL만 반환
 

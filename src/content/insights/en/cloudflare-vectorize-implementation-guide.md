@@ -3,7 +3,7 @@ title: "Practical Lessons from Rolling Out Cloudflare Vectorize Across Multiple 
 description: "Lessons from introducing and testing Cloudflare Vectorize across multiple Astro and Cloudflare Pages sites, covering its division of responsibilities with Pagefind, corpus generation from published HTML, safe incremental synchronization, Preview and Production separation, API safeguards, and verification gates."
 date: 2026-07-30T22:50
 author: gui
-tags: ["Technology", "Cloudflare", "Vectorize", "Workers AI", "Site Search"]
+tags: ["Technology", "Cloudflare", "Vectorize", "OpenAI", "Site Search"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
@@ -106,8 +106,8 @@ faq:
       answer: "We kept it. Pagefind is the low-dependency ordinary search generated from static HTML, while Vectorize is an auxiliary search for paraphrases and related concepts. Ordinary search can remain available even when AI or Vectorize fails."
     - question: Are D1 and R2 required to adopt Vectorize?
       answer: "No. Acecore Systems uses D1 to rate-limit its search API, but it is not required storage for Vectorize itself. The source text can live in published HTML, JSON, D1, R2, or another location selected according to the requirements."
-    - question: Can BGE-M3 always use fixed 1024 dimensions?
-      answer: "In this implementation, we verified the actual output and standardized on 1024 dimensions and cosine. However, index configuration cannot be changed after creation, so do not infer it from the model name alone. Check the current official specifications and the actual output shape before creating the index."
+    - question: How should the current embedding model and dimensions be managed?
+      answer: "The current Acecore Systems implementation uses OpenAI text-embedding-3-large at 1,536 dimensions with cosine. The legacy BGE-M3 1,024-dimension index remains for rollback, and vectors with different dimensions are never mixed in one index. Because index configuration cannot be changed after creation, check the current official specification and the actual output shape before creating an index."
     - question: At what point is the rollout considered complete?
       answer: "A merge or local test alone is not completion. We record the feature as running in Production only after verifying real Preview requests, agreement between the published commit and corpus, Production index synchronization, mutation convergence, Pagefind fallback, the rate limit, and the shutdown procedure."
 ---
@@ -136,22 +136,22 @@ This simultaneously ensures that “site search remains available even when AI s
 
 When documenting a rollout, it is also important not to group every record under “implemented.” These records mixed Production operation, local verification, prepared Preview resources, and preliminary investigation.
 
-| Repository       | Recorded and verified state                                                       | Lesson learned                                                                                            |
-| ---------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Acecore Systems  | Confirmed running in Production as of July 30, 2026                               | Coexistence with Pagefind, a published-HTML corpus, D1 rate limiting, and safe Production synchronization |
-| Aceserver Portal | Confirmed Production Vectorize search for Acecore information                     | Keep the search destination for corporate information separate from WIKI rule search                      |
-| World Foundation | Generated 134 vectors from 72 sources locally and passed 37 tests; not published  | Content hashes, fail-closed synchronization, and separation of pre-release gates                          |
-| Acecore Schools  | Existing architecture investigated; index creation and implementation not started | Decide the API, corpus, permissions, and environment architecture before adding a binding                 |
+| Repository       | Recorded and verified state                                                                                            | Lesson learned                                                                                                                 |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Acecore Systems  | Production confirmed on the legacy BGE-M3 index; the OpenAI 1,536-dimension index is prepared but not yet synchronized | Coexistence with Pagefind, a published-HTML corpus, D1 rate limiting, safe Production synchronization, and dimension migration |
+| Aceserver Portal | Confirmed Production Vectorize search for Acecore information                                                          | Keep the search destination for corporate information separate from WIKI rule search                                           |
+| World Foundation | Generated 134 vectors from 72 sources locally and passed 37 tests; not published                                       | Content hashes, fail-closed synchronization, and separation of pre-release gates                                               |
+| Acecore Schools  | Existing architecture investigated; index creation and implementation not started                                      | Decide the API, corpus, permissions, and environment architecture before adding a binding                                      |
 
-For Acecore Systems, we split the rollout into three stages: [implementation PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production preparation PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), and [Production enablement PR #42](https://github.com/acecore-systems/acecore-systems/pull/42).
+For Acecore Systems, we split the rollout into three stages: [implementation PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production preparation PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), and [Production enablement PR #42](https://github.com/acecore-systems/acecore-systems/pull/42). The later [OpenAI direct-connection migration PR #43](https://github.com/acecore-systems/acecore-systems/pull/43) prepares a separately named 1,536-dimension index instead of mixing vectors with different dimensions.
 
-During the initial Production synchronization in this [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752), the workflow compared the published commit with the corpus version and generated 250 vectors from 36 published Japanese pages. The result was 250 upserts and 0 deletions. Separating the code merge, index preparation, initial synchronization, and search enablement made the stop conditions for each stage explicit.
+During the initial Production synchronization to the legacy BGE-M3 index in this [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752), the workflow compared the published commit with the corpus version and generated 250 vectors from 36 published Japanese pages. The result was 250 upserts and 0 deletions. Separating the code merge, index preparation, initial synchronization, and search enablement made the stop conditions for each stage explicit.
 
 ## Divide responsibilities instead of replacing Pagefind
 
 The purpose of introducing Vectorize was not to discard the existing search.
 
-Pagefind builds a static index from built HTML and searches it in the browser. It works well as ordinary search for explicit terms such as product names, service names, and proper nouns, and it does not depend on the state of Workers AI or Vectorize.
+Pagefind builds a static index from built HTML and searches it in the browser. It works well as ordinary search for explicit terms such as product names, service names, and proper nouns, and it does not depend on the state of an embedding provider or Vectorize.
 
 Vectorize is useful when a search phrase does not exactly match the body text or when a user wants to find a page through a related concept. It does, however, require embedding generation and a Vectorize query, so external-service latency, errors, and usage must also be considered.
 
@@ -223,7 +223,7 @@ This produces the same corpus from the same published content and makes the reas
 
 ## Fix the embedding model and index settings as a contract
 
-For search that includes Japanese, we used the Workers AI model [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/). After checking the actual output shape, we standardized on 1,024 dimensions and cosine.
+The initial implementation record used the Workers AI model [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) after checking its actual output shape and standardizing on 1,024 dimensions with cosine. The current Acecore Systems implementation uses [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` at 1,536 dimensions with cosine in a separately named target index. The legacy BGE-M3 index remains for rollback; vectors with different dimensions are never mixed in one index.
 
 The important point is not the model name itself, but keeping the same contract in four places.
 
@@ -287,7 +287,7 @@ The following elements need to be separated.
 - Repository variable used for enablement
 - Kill switch
 
-We restricted synchronization tokens to Workers AI Read and Vectorize Write for the target Cloudflare account. Production runs only from protected `main` and passes through a GitHub Environment reviewer.
+We restrict synchronization tokens to Vectorize Read / Write for the target Cloudflare account and keep them separate from the OpenAI API key. Production runs only from protected `main` and passes through a GitHub Environment reviewer.
 
 This introduces an operational trade-off. If a Production Environment has a required reviewer, scheduled synchronization may also wait for approval. Before adding cron, decide whether only the initial release requires approval, every scheduled synchronization requires it, or scheduled work should be split into another job.
 
@@ -310,7 +310,7 @@ This prevents mismatches such as synchronizing a new corpus to an old site or pu
 
 ## Put cost and privacy boundaries around the public search API
 
-The search API is a public endpoint that sends user input to Workers AI. Its design must cover abuse, billing, logs, and returned URLs as well as search quality.
+The search API is a public endpoint that sends user input to an embedding provider. Its design must cover abuse, billing, logs, and returned URLs as well as search quality.
 
 Acecore Systems implements the following boundaries.
 
@@ -388,7 +388,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> Workers AI embedding
+  -> OpenAI Embeddings API
   -> Vectorize query
   -> return only published URLs
 

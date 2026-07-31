@@ -3,7 +3,7 @@ title: "在多个仓库中导入 Cloudflare Vectorize 后总结的实践经验"
 description: "根据在多个 Astro／Cloudflare Pages 网站中导入和试用 Cloudflare Vectorize 的记录，整理它与 Pagefind 的职责划分、从已发布 HTML 生成 corpus、安全差量同步、Preview／Production 隔离、API 防护和验证门禁。"
 date: 2026-07-30T22:50
 author: gui
-tags: ["技术", "Cloudflare", "Vectorize", "Workers AI", "站内搜索"]
+tags: ["技术", "Cloudflare", "Vectorize", "OpenAI", "站内搜索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
 callout:
   type: tip
@@ -106,8 +106,8 @@ faq:
       answer: "我们保留了 Pagefind。Pagefind 是从静态 HTML 生成、依赖较少的普通搜索；Vectorize 则作为查找改写表达和相关概念的辅助搜索。即使 AI 或 Vectorize 失败，普通搜索仍然可用。"
     - question: 导入 Vectorize 必须使用 D1 或 R2 吗？
       answer: "不是必须。Acecore Systems 使用 D1 对搜索 API 进行 rate limit，但它并不是 Vectorize 本身必需的存储位置。原文也可以根据需求存放在已发布 HTML、JSON、D1、R2 等位置。"
-    - question: 使用 BGE-M3 时可以固定为1024 dimensions吗？
-      answer: "本次实现确认了实际输出，并统一为1024 dimensions／cosine。但是 index 设置在创建后无法更改，因此不要只根据 model 名称推测，而要先确认导入时的官方规范和实际输出 shape。"
+    - question: 现行实现中的 embedding model 和 dimensions 应如何管理？
+      answer: "现行 Acecore Systems 实现使用 OpenAI text-embedding-3-large，配置为1,536 dimensions／cosine。旧 BGE-M3 的1,024 dimensions index保留用于 rollback，不会把不同 dimensions 的 vector 混入同一个 index。index 设置在创建后无法更改，因此创建前要确认最新官方规范和实际输出 shape。"
     - question: 在什么阶段可以判断导入完成？
       answer: "merge 或本地 test 本身不代表完成。只有确认 Preview 的实际请求、已发布 commit 与 corpus 一致、Production index 同步、mutation 收敛、Pagefind fallback、rate limit 和停止步骤后，才记录为正在 Production 运行。"
 ---
@@ -151,7 +151,7 @@ Acecore Systems 将导入分为三个阶段：[实现 PR #40](https://github.com
 
 导入 Vectorize 的目的并不是丢弃现有搜索。
 
-Pagefind 从 build 完成的 HTML 生成静态 index，并在浏览器中进行搜索。它适合作为查找产品名、服务名和专有名词等明确词语的普通搜索，而且不依赖 Workers AI 或 Vectorize 的状态。
+Pagefind 从 build 完成的 HTML 生成静态 index，并在浏览器中进行搜索。它适合作为查找产品名、服务名和专有名词等明确词语的普通搜索，而且不依赖 embedding provider 或 Vectorize 的状态。
 
 Vectorize 适合搜索词与正文不完全一致，或需要通过相关概念查找页面的情况。不过，它需要生成 embedding 并执行 Vectorize query，因此还必须考虑外部服务的延迟、错误和使用量。
 
@@ -223,7 +223,7 @@ const vector = {
 
 ## 将 embedding model 与 index 设置固定为契约
 
-在本次包含日语的搜索中，我们使用 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。
+初始实现记录使用了 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。现行 Acecore Systems 实现在另行命名的目标 index中使用 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 的 `text-embedding-3-large`，配置为1,536 dimensions／cosine。旧 BGE-M3 index保留用于 rollback；不同 dimensions 的 vector 不会混入同一个 index。
 
 比 model 名称本身更重要的是，让以下四处遵守同一契约。
 
@@ -287,7 +287,7 @@ Cloudflare 的 [Vectorize API](https://developers.cloudflare.com/vectorize/refer
 - 用于启用的 repository variable
 - kill switch
 
-同步 token 仅授予目标 Cloudflare account 的 Workers AI Read 和 Vectorize Write。Production 只能从受保护的 `main` 执行，并通过 GitHub Environment reviewer。
+同步 token 仅授予目标 Cloudflare account 的 Vectorize Read / Write，并与 OpenAI API key分离。Production 只能从受保护的 `main` 执行，并通过 GitHub Environment reviewer。
 
 这里也存在运维上的 trade-off。如果 Production Environment 设置了 required reviewer，从 schedule 启动的同步也可能等待审批。在添加 cron 前，需要决定只批准首次发布、每次定期同步都批准，还是将定期同步拆分到其他 job。
 
@@ -310,7 +310,7 @@ GitHub 的 `main` 与 Cloudflare Pages 当前已发布的 commit 并不总是相
 
 ## 为公开搜索 API 设置成本与隐私边界
 
-搜索 API 是将用户输入发送到 Workers AI 的公开 endpoint。除了搜索准确度，还需要设计滥用、计费、日志和返回 URL。
+搜索 API 是将用户输入发送到 embedding provider 的公开 endpoint。除了搜索准确度，还需要设计滥用、计费、日志和返回 URL。
 
 Acecore Systems 实现了以下边界。
 
@@ -388,7 +388,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> Workers AI embedding
+  -> OpenAI Embeddings API
   -> Vectorize query
   -> 仅返回已发布 URL
 
