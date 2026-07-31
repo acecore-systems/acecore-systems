@@ -1,6 +1,6 @@
 ---
-title: "在多个仓库中导入 Cloudflare Vectorize 后总结的实践经验"
-description: "先说明 Cloudflare Vectorize 是什么，以及它如何帮助发现关键词搜索容易漏掉的改述和关联信息；再总结在多个 Astro／Cloudflare Pages 站点中安全导入它的经验。"
+title: "Cloudflare Vectorize 指南：为网站添加安全的语义搜索"
+description: "说明 Cloudflare Vectorize 是什么、语义搜索何时有帮助，以及如何在明确边界内逐步将其导入网站。"
 date: 2026-07-31T12:00
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "OpenAI", "站内搜索"]
@@ -11,7 +11,7 @@ callout:
   text: "Cloudflare 的向量数据库即使在关键词不完全一致时，也能返回语义接近问题的公开页面。它的价值在于用改述和关联信息发现来补强现有关键词搜索，而不是取代它。"
 processFigure:
   eyebrow: Vectorize rollout
-  title: 从已发布 HTML 到 Production index 的流程
+  title: 从已发布 HTML 到安全的关联搜索
   description: "不直接导入可编辑 source，而是以实际发布的 HTML 和已部署 commit 作为同步基准。"
   variant: inline
   steps:
@@ -49,24 +49,24 @@ compareTable:
       - "将实现、本地验证、Preview 界面确认和 Production 运行记录为不同状态"
 statBar:
   items:
-    - value: "4 repos"
-      label: 横向比较导入与试用记录
-      description: "没有把 Production、本地验证、Preview 和事前调查视为同一状态，而是分别比较。"
+    - value: "按语义搜索"
+      label: 找到超过精确词汇的内容
+      description: "有助于处理问句、改述和主题相关的页面。"
       icon: i-lucide-git-branch
-    - value: "36 → 250"
-      label: Acecore Systems Production 首次同步
-      description: "从36个已发布日语页面生成250 vectors，以删除0个的结果完成同步。"
+    - value: "两条搜索路径"
+      label: Pagefind 加 Vectorize
+      description: "保留可靠的关键词搜索，并由 Vectorize 有选择地补强。"
       icon: i-lucide-database
-    - value: "72 → 134"
-      label: World Foundation 本地验证
-      description: "从72 sources生成134 vectors，但将其记录为 Production 发布前状态。"
+    - value: "已发布 HTML"
+      label: 搜索读者实际看到的内容
+      description: "index 以真实发布的页面为准，而不是 CMS 草稿。"
       icon: i-lucide-test-tube-2
-    - value: "37 tests"
-      label: 搜索契约验证
-      description: "World Foundation 通过了搜索、corpus 和同步的37项契约测试。"
+    - value: "逐步导入"
+      label: 先验证，再发布
+      description: "界面、corpus 和同步分别拥有安全边界。"
       icon: i-lucide-badge-check
 checklist:
-  title: 导入下一个仓库前的确认事项
+  title: 导入下一个网站前的确认事项
   items:
     - text: "保留现有关键词搜索，确保 Vectorize 停止时搜索入口仍可使用"
       checked: true
@@ -105,9 +105,9 @@ faq:
     - question: 导入 Vectorize 后就不需要 Pagefind 了吗？
       answer: "我们保留了 Pagefind。Pagefind 是从静态 HTML 生成、依赖较少的普通搜索；Vectorize 则作为查找改写表达和相关概念的辅助搜索。即使 AI 或 Vectorize 失败，普通搜索仍然可用。"
     - question: 导入 Vectorize 必须使用 D1 或 R2 吗？
-      answer: "不是必须。Acecore Systems 使用 D1 对搜索 API 进行 rate limit，但它并不是 Vectorize 本身必需的存储位置。原文也可以根据需求存放在已发布 HTML、JSON、D1、R2 等位置。"
+      answer: "不是必须。D1 例如可以用于管理搜索 API 的 rate limit，但它并不是 Vectorize 本身必需的存储位置。原文也可以根据需求存放在已发布 HTML、JSON、D1、R2 等位置。"
     - question: 现行实现中的 embedding model 和 dimensions 应如何管理？
-      answer: "现行 Acecore Systems 实现使用 OpenAI text-embedding-3-large，配置为1,536 dimensions／cosine。旧 BGE-M3 的1,024 dimensions index保留用于 rollback，不会把不同 dimensions 的 vector 混入同一个 index。index 设置在创建后无法更改，因此创建前要确认最新官方规范和实际输出 shape。"
+      answer: "model、dimensions 和 metric 是 corpus、index、API 与同步共同遵守的契约。不同 dimensions 的 vector 绝不能混在同一个 index。index 设置在创建后无法更改，因此创建前要确认最新官方规范和实际输出 shape。"
     - question: 在什么阶段可以判断导入完成？
       answer: "merge 或本地 test 本身不代表完成。在 Preview 中确认 Pagefind 和 UI fallback；在 Production 中确认已发布 commit 与 corpus 一致、index 同步、mutation 收敛、相关搜索、rate limit 和停止步骤后，才记录为正在运行。"
 ---
@@ -137,11 +137,11 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 2. 问句、改述和相邻主题由 Vectorize 关联搜索补充。
 3. embedding provider 或 Vectorize 失败时，仍保留普通搜索。
 
-这些是导入时应先判断的价值和适用范围。之后，本文将 Acecore Systems、World Foundation、Acecore Schools 和 Aceserver Portal 的导入与调查记录汇总为可在其他 Astro／Cloudflare Pages 站点复用的实现与运维实践。
+这些是导入时应先判断的价值和适用范围。本文其余部分说明可在 Astro／Cloudflare Pages 站点复用的实施与运维方法。
 
-> **当前运行状态（2026年7月31日再次确认）：** 常规 Pages Preview 不拥有 Vectorize 或 D1 binding，保持 `SEARCH_ENABLED=false`，只使用 Pagefind。关联搜索和自动同步只对 Production index 运行。在更新本文前确认的最近一次 Production 同步中，核对已发布 commit 与 corpus 后，37个页面和256 vectors 已收敛：`current` 和 `expected` 均为256，upsert 1个，delete 1个。[GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) 下文提到的 Preview index 是导入阶段的记录，不是当前的完成条件。
+> **实用的第一种配置：** 常规 Pages Preview 通过 `SEARCH_ENABLED=false` 只使用 Pagefind。Vectorize／D1 binding 和自动同步限制在 Production。先在 Preview 确认搜索界面和 fallback；在 Production 只同步从已发布 commit 创建的 corpus。这样，测试中的改动和广泛权限不会进入生产搜索。
 
-在多个仓库导入和试用后会发现，仅仅“生成 embedding 并调用 `query()`”远远不够。还要决定如何构建搜索 corpus、如何让 Preview 只保留 Pagefind 同时保护 Production、如何防止错误同步导致大量删除，以及已发布页面是否真的与 index 一致。实际运维中，Vectorize API 调用前后的设计比调用本身更重要。
+在规划导入时会发现，仅仅“生成 embedding 并调用 `query()`”远远不够。还要决定如何构建搜索 corpus、如何让 Preview 只保留 Pagefind 同时保护 Production、如何防止错误同步导致大量删除，以及已发布页面是否真的与 index 一致。实际运维中，Vectorize API 调用前后的设计比调用本身更重要。
 
 ## 结论：搜索采用 fail-soft，同步与发布采用 fail-closed
 
@@ -157,20 +157,18 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 
 这样既能满足“AI 搜索故障时站内搜索仍可使用”，又能满足“同步处理有疑点时一条记录也不修改”。
 
-## 在四个仓库中确认的状态
+## 先决定这四件事
 
-把导入记录写成文章时，不将所有状态统称为“已导入”同样重要。本次记录中混合了 Production 运行、本地验证、Preview 界面确认和事前调查。
+选择 provider 或 index 名称之前，先回答这四个问题。这样会更容易判断架构。
 
-| 仓库             | 已记录和确认的状态                                                                                           | 获得的经验                                                                                    |
-| ---------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| Acecore Systems  | OpenAI 1,536 dimensions index仅在 Production 运行；同步已在37个页面和256 vectors收敛，Preview只使用 Pagefind | 与 Pagefind 并用、已发布 HTML corpus、D1 rate limit、安全的 Production 同步与 dimensions 迁移 |
-| Aceserver Portal | 确认用于 Acecore 信息的 Vectorize 搜索正在 Production 运行                                                   | 不要混合企业信息与 WIKI 规则搜索的搜索目标                                                    |
-| World Foundation | 在本地从72 sources生成134 vectors并通过37 tests；尚未发布                                                    | content hash、fail-closed 同步、发布前门禁隔离                                                |
-| Acecore Schools  | 仅完成现有架构调查；尚未创建 index 或开始实现                                                                | 添加 binding 前先确定 API、corpus、权限和环境架构                                             |
+| 要决定的事        | 容易开始的选择                                | 原因                                       |
+| ----------------- | --------------------------------------------- | ------------------------------------------ |
+| 读者目标          | “查找关联页面”                                | 不必一开始就生成回答，而是先评估搜索质量。 |
+| 搜索入口          | 输入时使用 Pagefind；明确操作后使用 Vectorize | 速度、成本和数据传输范围更容易理解。       |
+| 作为依据的 corpus | 已发布 HTML                                   | 草稿和管理界面不会意外出现在结果中。       |
+| 发布流程          | 在 Preview 确认 UI；只同步 Production         | 测试数据和权限不会进入生产搜索。           |
 
-Acecore Systems 将导入分为三个阶段：[实现 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[Production 准备 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41) 和 [Production 启用 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)。初始记录中的 Preview／Production 同步已不是现行运行方式：[PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) 将常规 Pages Preview 改为只使用 Pagefind，现在只有 Production 会同步并提供相关搜索。
-
-首次 Production 同步的 [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) 核对了已发布 commit 和 corpus version，并从36个已发布日语页面生成250 vectors。同步结果为 upsert 250个、delete 0个。将代码 merge、index 准备、首次同步和搜索启用拆分为不同变更后，各阶段的停止条件都更加明确。
+回答这四个问题后，再根据自身需求选择 embedding provider、D1、R2 和未来的回答生成方式。
 
 ## 不替换 Pagefind，而是划分职责
 
@@ -206,7 +204,7 @@ Vectorize 适合搜索词与正文不完全一致，或需要通过相关概念�
 
 因此，我们读取 Astro build 后生成的 HTML，在反映发布条件后再生成 corpus。
 
-Acecore Systems 只包含满足以下条件的日语页面。
+对于多语言网站，首个 corpus 例如可以只包含一种选定语言中满足以下条件的页面。
 
 - 具有 same-origin canonical
 - `lang` 为日语
@@ -250,7 +248,7 @@ const vector = {
 
 ## 将 embedding model 与 index 设置固定为契约
 
-初始实现记录使用了 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)，并在确认实际输出 shape 后统一为1,024 dimensions／cosine。现行 Acecore Systems 实现在另行命名的目标 index中使用 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 的 `text-embedding-3-large`，配置为1,536 dimensions／cosine。只有 Production index 用于同步和查询；Preview 只使用 Pagefind。旧 BGE-M3 index保留用于 rollback，不同 dimensions 的 vector 不会混入同一个 index。
+只有在确认实际输出后再选择 embedding provider 和 model。可以使用 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) 或 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 等 model，但其 dimensions 与 metric 必须和计划使用的 index 一致。以后需要切换时，请创建独立的目标 index，保留旧 index 用于 rollback，并且绝不要把不同 dimensions 的 vector 混入同一 index。
 
 比 model 名称本身更重要的是，让以下四处遵守同一契约。
 
@@ -267,7 +265,7 @@ const vector = {
 
 产品 limits 也会变化。截至2026年7月31日再次确认，Vectorize V2 的 Workers API upsert batch 上限为1,000，HTTP API 为5,000。普通 `topK` 上限为100；使用 `returnValues: true` 或 `returnMetadata: "all"` 时为50。实现时必须重新确认[现行 limits](https://developers.cloudflare.com/vectorize/platform/limits/)和[client API](https://developers.cloudflare.com/vectorize/reference/client-api/)。
 
-Acecore Systems 使用 HTTP API 每批同步200个，搜索使用 `topK: 15`，并没有直接把产品上限作为处理数量。产品上限和团队能够安全重试、监控的 batch 数值应分别决定。
+请有意识地选择小于产品上限、便于安全观察的 batch 大小和 `topK` 值，而不要直接把产品上限作为处理数量。provider 上限与团队能够安全重试、监控的 batch 大小是两个不同的决定。
 
 ## 先 upsert 并等待收敛，然后再 delete
 
@@ -339,7 +337,7 @@ GitHub 的 `main` 与 Cloudflare Pages 当前已发布的 commit 并不总是相
 
 搜索 API 是将用户输入发送到 embedding provider 的公开 endpoint。除了搜索准确度，还需要设计滥用、计费、日志和返回 URL。
 
-Acecore Systems 实现了以下边界。
+公开搜索 API 至少应设置以下边界。
 
 | 项目         | 实现示例                                                      |
 | ------------ | ------------------------------------------------------------- |
@@ -347,7 +345,7 @@ Acecore Systems 实现了以下边界。
 | body         | 最大2KiB；即使没有 `Content-Length`，也会在读取 stream 时停止 |
 | query        | NFKC 规范化后2～160字符                                       |
 | locale       | 仅 `ja`                                                       |
-| rate limit   | D1 固定窗口：client 每分钟20次、global 每分钟300次            |
+| rate limit   | 与成本、流量和威胁模型相匹配的 client 与 global 限制          |
 | 停止         | 使用 `SEARCH_ENABLED` 只停止相关搜索                          |
 | query        | 不把 raw query 保存到日志、corpus 或 Vectorize metadata       |
 | 结果 URL     | 只允许 same-origin 的已发布 root-relative URL                 |
@@ -357,27 +355,27 @@ client 侧 UUID 可以由用户修改，因此不能成为强有力的计费边�
 
 本架构使用 D1 进行 rate limit，但 D1 并不是导入 Vectorize 的必备条件，R2 也一样。应根据原文从哪里获取、rate limit 状态放在哪里进行选择。
 
-## 为 Vectorize 搜索和 AI 引导建立不同的契约
+## 为关联搜索与生成式 AI 聊天建立不同的契约
 
-Acecore Systems 具有独立于站内“相关内容”搜索的 AI 引导功能。后者仅在读者明确执行搜索时将搜索词发送到 OpenAI Embeddings API，并在 Vectorize 中与本站公开信息比对 embedding。前者则将问题和最近对话发送到 Acecore 共用 AI API，并使用 OpenAI 生成回答。
+“相关内容”搜索可以只在读者明确操作后才把搜索词发送到 embedding provider，并在 Vectorize 中将 embedding 与网站公开信息比对。相对地，独立的 AI 聊天会把问题以及必要时的对话上下文发送到回答服务，以生成回答。
 
 不要把两者模糊地合并为“AI 搜索”。应分别设计传输的数据、信息源范围、失败时的显示、使用量和隐私说明；绝不能在 Vectorize 搜索失败时悄悄把 fallback 发送给 AI 引导。
 
-## 不要混合搜索目标的职责
+## 不要混合搜索信息源的职责
 
-在 Aceserver Portal 中，我们分开了 Acecore 服务信息与 Minecraft 服务器规则和步骤的搜索目标。
+网站、帮助中心、政策和内部知识库具有不同职责。请预先决定每类问题属于哪个信息源。
 
-- 关于 Acecore 的问题使用 Vectorize 搜索
-- 服务器规则使用官方 WIKI 搜索
-- Vectorize 失败时，不 fallback 到无关的 WIKI 回答
-- 只链接被选为依据的 WIKI 文章
-- 不推测无法在 WIKI 中确认的规则
+- 在网站 corpus 中搜索公开的产品与服务信息
+- 在相应的官方信息源中查找具有约束力的规则与步骤
+- Vectorize 失败时，不 fallback 到不合适的信息源
+- 只链接实际被选为依据的信息源
+- 不推测未经确认的规则或信息
 
 这一点在 RAG 和引导聊天中也很重要。可搜索位置越多，越需要先决定哪些问题发送到哪个信息源，以及找不到信息时哪些内容不能回答。
 
 ## 实际发生的失败与后续改进
 
-根据多个 repo 的记录，可以整理出容易重复发生的问题。
+以下是容易重复发生、应从一开始考虑的问题。
 
 | 症状                                | 原因                                     | 后续措施                                                         |
 | ----------------------------------- | ---------------------------------------- | ---------------------------------------------------------------- |
@@ -403,9 +401,7 @@ Acecore Systems 具有独立于站内“相关内容”搜索的 AI 引导功能
 | 已确认 Preview       | 已确认 Pagefind 候选项、相关搜索不可用时的显示和 UI       |
 | 正在 Production 运行 | 已同步已发布 commit，并确认 mutation 收敛、API 和停止步骤 |
 
-World Foundation 已完成本地验证，但 index、secret、deployment 和 browser QA 尚未完成，因此没有记录为正在 Production 运行。Acecore Schools 仍处于调查阶段。
-
-另一方面，Acecore Systems 已确认分阶段 PR、Production 首次同步、Production 启用、已发布 marker 和实际搜索 API。
+在完成报告和 release notes 中也要分别记录这些状态。这样就不会把“已有代码”和“实际安全地在 Production 运行”混为一谈。
 
 不仅记录成功的 test 数，还写清哪些项目尚未确认，才是对下一位维护者最有用的运维信息。
 
@@ -443,7 +439,7 @@ Pages Preview
 
 导入 Cloudflare Vectorize 的难点并不是 nearest-neighbor query 本身。
 
-要把哪些内容作为公开信息加入 index、如何识别未变化的 chunk、如何停止错误同步、如何与已发布 commit 保持一致，以及故障时如何保留普通搜索。向多个 repo 横向推广时，正是这些运维设计决定了质量。
+要把哪些内容作为公开信息加入 index、如何识别未变化的 chunk、如何停止错误同步、如何与已发布 commit 保持一致，以及故障时如何保留普通搜索。推广到另一个网站时，正是这些运维设计决定了质量。
 
 本次结论很简单。
 

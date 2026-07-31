@@ -1,6 +1,6 @@
 ---
-title: "Lições práticas aprendidas ao implementar o Cloudflare Vectorize em vários repositórios"
-description: "Primeiro explicamos o que é o Cloudflare Vectorize e como ele ajuda a encontrar paráfrases e informações relacionadas que a pesquisa por palavras-chave pode não encontrar; depois reunimos lições para implementá-lo com segurança em vários sites Astro／Cloudflare Pages."
+title: "Guia do Cloudflare Vectorize: adicione pesquisa semântica segura ao seu site"
+description: "O que é o Cloudflare Vectorize, quando a pesquisa semântica ajuda e como introduzi-la gradualmente com limites claros em um site."
 date: 2026-07-31T12:00
 author: gui
 tags: ["Tecnologia", "Cloudflare", "Vectorize", "OpenAI", "Pesquisa interna"]
@@ -11,7 +11,7 @@ callout:
   text: "O banco de dados vetorial da Cloudflare pode devolver páginas públicas cujo significado é próximo ao de uma pergunta, mesmo quando as palavras-chave não coincidem exatamente. Seu valor está em complementar a pesquisa atual com paráfrases e informações relacionadas, não em substituí-la."
 processFigure:
   eyebrow: Vectorize rollout
-  title: Fluxo do HTML público até o index de Production
+  title: Do HTML publicado à pesquisa relacionada segura
   description: "Em vez de inserir diretamente a fonte de edição, usamos como referência para a sincronização o HTML que realmente será publicado e o commit já implantado."
   variant: inline
   steps:
@@ -49,24 +49,24 @@ compareTable:
       - "Registrar implementação, validação local, verificação da interface em Preview e operação em Production como estados diferentes"
 statBar:
   items:
-    - value: "4 repos"
-      label: Registros de implementação e testes analisados
-      description: "Comparamos Production, validação local, Preview e investigação prévia sem tratá-los como o mesmo estado."
+    - value: "Pesquisa por significado"
+      label: Encontrar mais que termos exatos
+      description: "Ajuda com perguntas, paráfrases e páginas de tema relacionado."
       icon: i-lucide-git-branch
-    - value: "36 → 250"
-      label: Primeira sincronização de Production do Systems
-      description: "Geramos 250 vectors a partir de 36 páginas públicas em japonês e sincronizamos sem exclusões."
+    - value: "Dois caminhos de pesquisa"
+      label: Pagefind mais Vectorize
+      description: "A pesquisa por palavras-chave continua disponível e o Vectorize a complementa de modo seletivo."
       icon: i-lucide-database
-    - value: "72 → 134"
-      label: Validação local do World Foundation
-      description: "Geramos 134 vectors a partir de 72 sources, mas registramos o resultado como anterior à publicação em Production."
+    - value: "HTML publicado"
+      label: Pesquisar o que os leitores veem
+      description: "O index acompanha as páginas realmente publicadas, não rascunhos do CMS."
       icon: i-lucide-test-tube-2
-    - value: "37 tests"
-      label: Validação do contrato de pesquisa
-      description: "No World Foundation, passaram 37 testes dos contratos de pesquisa, corpus e sincronização."
+    - value: "Introdução gradual"
+      label: Verificar antes de publicar
+      description: "Interface, corpus e sincronização recebem limites de segurança próprios."
       icon: i-lucide-badge-check
 checklist:
-  title: Verificações antes de implementar no próximo repositório
+  title: Verificações antes de implementar no próximo site
   items:
     - text: "Manter a pesquisa por palavras-chave existente e preservar o caminho de pesquisa quando o Vectorize estiver indisponível"
       checked: true
@@ -105,9 +105,9 @@ faq:
     - question: O Pagefind se torna desnecessário depois de instalar o Vectorize?
       answer: "Não o removemos. Dividimos as funções: Pagefind é a pesquisa normal de baixa dependência, criada a partir de HTML estático; Vectorize é a pesquisa auxiliar para encontrar paráfrases e conceitos relacionados. Assim, a pesquisa normal continua disponível mesmo se AI ou Vectorize falhar."
     - question: D1 ou R2 é obrigatório para implementar o Vectorize?
-      answer: "Não. No Systems, usamos D1 para o rate limit da API de pesquisa, mas ele não é um armazenamento obrigatório do próprio Vectorize. O local do texto original também deve ser escolhido conforme os requisitos, entre HTML público, JSON, D1, R2 e outras opções."
+      answer: "Não. O D1 pode, por exemplo, controlar o rate limit da API de pesquisa, mas não é um armazenamento obrigatório do Vectorize. O local do texto original também deve ser escolhido conforme os requisitos, entre HTML publicado, JSON, D1, R2 e outras opções."
     - question: Como gerenciar o embedding model e as dimensions na implementação atual?
-      answer: "A implementação atual do Acecore Systems usa OpenAI text-embedding-3-large com 1,536 dimensions e cosine. O index anterior do BGE-M3 com 1,024 dimensions é mantido para rollback, e vectors com dimensions diferentes nunca são misturados no mesmo index. Como a configuração do index não pode ser alterada depois da criação, confira a especificação oficial atual e o shape real da saída antes de criar o index."
+      answer: "Model, dimensions e metric são um contrato compartilhado entre corpus, index, API e sincronização. Nunca misture vectors com dimensions diferentes no mesmo index. Como a configuração do index não pode ser alterada depois da criação, confira a especificação oficial atual e o shape real da saída antes de criar o index."
     - question: Em que momento a implementação é considerada concluída?
       answer: "Não consideramos merge ou testes locais suficientes. Em Preview verificamos Pagefind e o fallback da interface; em Production verificamos a correspondência entre commit publicado e corpus, a sincronização do index, a convergência das mutations, a pesquisa relacionada, o rate limit e o procedimento de interrupção antes de registrar a operação."
 ---
@@ -137,11 +137,11 @@ Em uma adoção inicial, o padrão mais acessível é manter a pesquisa atual po
 2. Usar a pesquisa relacionada do Vectorize para perguntas, paráfrases e temas próximos.
 3. Manter a pesquisa comum disponível se o embedding provider ou o Vectorize falhar.
 
-Esse é o valor e o escopo que devem ser avaliados primeiro. Depois, o artigo cruza resultados de implementação e investigação do Acecore Systems, World Foundation, Acecore Schools e Aceserver Portal e os transforma em práticas reutilizáveis em outros sites Astro／Cloudflare Pages.
+Esse é o valor e o escopo que devem ser avaliados primeiro. O restante deste artigo mostra um procedimento reutilizável para sites Astro／Cloudflare Pages.
 
-> **Operação atual, reconfirmada em 31 de julho de 2026:** A Pages Preview comum não possui binding de Vectorize nem D1, mantém `SEARCH_ENABLED=false` e usa apenas o Pagefind. A pesquisa relacionada e a sincronização automática operam somente no index de Production. Na última sincronização de Production verificada antes desta atualização, 37 páginas e 256 vectors convergiram depois de comparar o commit publicado e o corpus: `current` e `expected` eram ambos 256, com 1 upsert e 1 delete. [GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) As menções a índices Preview mais abaixo são registros da implantação, não um critério atual de conclusão.
+> **Uma primeira configuração prática:** a Pages Preview comum usa apenas Pagefind com `SEARCH_ENABLED=false`. Os bindings de Vectorize/D1 e a sincronização automática ficam restritos a Production. Em Preview, confirme a interface de pesquisa e o fallback; em Production, sincronize somente o corpus criado a partir do commit publicado. Assim, mudanças em teste e permissões amplas não chegam à pesquisa em produção.
 
-Ao implementar e testar o Vectorize em vários repositórios, fica claro que apenas “criar embeddings e chamar `query()`” não é suficiente. Como criar o conteúdo pesquisável, como manter Preview apenas com Pagefind enquanto se protege Production, como evitar exclusões em massa causadas por uma sincronização incorreta e como confirmar que as páginas publicadas realmente correspondem ao index? Na operação real, o projeto ao redor das chamadas da API do Vectorize foi mais importante do que as chamadas em si.
+Ao planejar a implementação do Vectorize, fica claro que apenas “criar embeddings e chamar `query()`” não é suficiente. Como criar o conteúdo pesquisável, como manter Preview apenas com Pagefind enquanto se protege Production, como evitar exclusões em massa causadas por uma sincronização incorreta e como confirmar que as páginas publicadas realmente correspondem ao index? Na operação real, o projeto ao redor das chamadas da API do Vectorize é mais importante do que as chamadas em si.
 
 ## Conclusão: pesquisa fail-soft; sincronização e publicação fail-closed
 
@@ -157,20 +157,18 @@ O princípio mais fácil de reutilizar foi separar a política de falha entre a 
 
 Isso atende simultaneamente a duas condições: “a pesquisa do site continua disponível quando a pesquisa com AI falha” e “a sincronização não altera nem um único item quando há qualquer dúvida”.
 
-## Estado confirmado nos quatro repositórios
+## Decida primeiro estas quatro coisas
 
-Ao transformar registros de implementação em um artigo, também é importante não resumir tudo como “implementado”. Os registros analisados misturavam operação em Production, validação local, verificação da interface em Preview e investigação prévia.
+Antes de escolher provider ou nome de index, responda a estas quatro perguntas. Elas tornam a arquitetura muito mais fácil de avaliar.
 
-| Repositório      | Estado registrado e confirmado                                                                                                                          | Aprendizado                                                                                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Acecore Systems  | Index OpenAI de 1,536 dimensions ativo somente em Production; sincronização convergiu em 37 páginas e 256 vectors, enquanto Preview usa apenas Pagefind | Uso conjunto com Pagefind, corpus de HTML público, rate limit com D1, sincronização segura em Production e migração de dimensions |
-| Aceserver Portal | Pesquisa Vectorize de informações da Acecore confirmada em Production                                                                                   | Não misturar o destino de pesquisa das informações corporativas com o das regras da WIKI                                          |
-| World Foundation | 72 sources／134 vectors gerados localmente e 37 tests concluídos. Não publicado                                                                         | content hash, sincronização fail-closed e separação dos critérios anteriores à publicação                                         |
-| Acecore Schools  | Apenas investigação da configuração existente. Criação do index e implementação ainda não iniciadas                                                     | Definir API, corpus, permissões e ambientes antes de adicionar um binding                                                         |
+| Decisão              | Opção simples para começar                                       | Por quê                                                                                      |
+| -------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Objetivo do leitor   | “Encontrar páginas relacionadas”                                 | Em vez de gerar respostas imediatamente, você pode primeiro avaliar a qualidade da pesquisa. |
+| Entrada da pesquisa  | Pagefind durante a digitação; Vectorize após uma ação explícita  | Velocidade, custo e envio de dados ficam fáceis de entender.                                 |
+| Corpus de referência | HTML publicado                                                   | Rascunhos e telas administrativas não aparecem acidentalmente nos resultados.                |
+| Fluxo de publicação  | Verificar a interface em Preview; sincronizar somente Production | Dados de teste e permissões não entram na pesquisa em produção.                              |
 
-No Acecore Systems, dividimos o trabalho em três etapas: [PR de implementação #40](https://github.com/acecore-systems/acecore-systems/pull/40), [PR de preparação de Production #41](https://github.com/acecore-systems/acecore-systems/pull/41) e [PR de ativação de Production #42](https://github.com/acecore-systems/acecore-systems/pull/42). A sincronização Preview/Production nos registros iniciais não é mais a operação atual: o [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47) deixou a Pages Preview normal somente com Pagefind, e agora apenas Production é sincronizado e atende à pesquisa relacionada.
-
-Na primeira sincronização de Production, o [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752) comparou o commit publicado com a corpus version e gerou 250 vectors a partir de 36 páginas públicas em japonês. O resultado da sincronização foi 250 upserts e 0 deletes. Separar merge do código, preparação do index, primeira sincronização e ativação da pesquisa tornou claras as condições de parada de cada etapa.
+Depois de responder a essas quatro perguntas, escolha embedding provider, D1, R2 e uma futura geração de respostas de acordo com seus próprios requisitos.
 
 ## Não substituir o Pagefind: dividir responsabilidades
 
@@ -206,7 +204,7 @@ Criar o corpus diretamente de rascunhos do CMS ou Markdown causa diferenças em 
 
 Por isso, lemos o HTML gerado após o build do Astro e criamos o corpus somente depois de aplicar as condições de publicação.
 
-No Acecore Systems, incluímos apenas páginas em japonês que atendem às condições abaixo.
+Em um site multilíngue, o primeiro corpus pode incluir, por exemplo, apenas páginas de um idioma escolhido que atendam às condições abaixo.
 
 - Ter canonical same-origin
 - Ter `lang` em japonês
@@ -250,7 +248,7 @@ Assim, o mesmo conteúdo público produz o mesmo corpus, facilitando a explicaç
 
 ## Fixar o embedding model e as configurações do index como um contrato
 
-O registro inicial da implementação usou o [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) do Workers AI e, após confirmar o shape real da saída, padronizou em 1,024 dimensions／cosine. A implementação atual do Acecore Systems usa [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) `text-embedding-3-large` com 1,536 dimensions／cosine em um index de destino com nome separado. Somente o index de Production é sincronizado e consultado; Preview usa apenas Pagefind. O index anterior do BGE-M3 é mantido para rollback e vectors com dimensions diferentes nunca são misturados no mesmo index.
+Escolha o embedding provider e o model somente depois de verificar a saída real. Um model como o [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) do Workers AI ou [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) pode ser adequado, mas dimensions e metric precisam corresponder ao index planejado. Ao mudar depois, crie um index de destino separado, mantenha o anterior para rollback e nunca misture vectors com dimensions diferentes.
 
 Mais importante do que o nome do modelo é manter o mesmo contrato nos quatro pontos abaixo.
 
@@ -267,7 +265,7 @@ Ao usar metadata filtering, crie o metadata index antes de inserir os vectors. O
 
 Os limits do produto também mudam. Reconfirmado em 31 de julho de 2026, no Vectorize V2, o limite de upsert batch da Workers API é 1,000 e o da HTTP API é 5,000. O limite normal de `topK` é 100 e cai para 50 com `returnValues: true` ou `returnMetadata: "all"`. Durante a implementação, consulte sempre os [limits atuais](https://developers.cloudflare.com/vectorize/platform/limits/) e a [client API](https://developers.cloudflare.com/vectorize/reference/client-api/).
 
-A sincronização do Acecore Systems usa a HTTP API em batches de 200, e a pesquisa usa `topK: 15`; portanto, não tratamos os limites máximos do produto como tamanho de processamento. Decida separadamente o limite do produto e um tamanho de batch que sua equipe consiga repetir e monitorar com segurança.
+Escolha conscientemente batches e valores de `topK` menores e seguros de observar, em vez de usar diretamente os limites máximos do produto. O limite do provider e um tamanho de batch que sua equipe consegue repetir e monitorar com segurança são decisões diferentes.
 
 ## Fazer upsert, esperar a convergência e somente então executar delete
 
@@ -339,7 +337,7 @@ Isso evita divergências como “sincronizar um corpus novo em um site antigo”
 
 A API de pesquisa é um endpoint público que envia o texto digitado para um embedding provider. Além da precisão, seu projeto precisa considerar abuso, custo, logs e as URLs retornadas.
 
-No Acecore Systems, implementamos os limites abaixo.
+Uma API pública de pesquisa deve implementar ao menos os limites abaixo.
 
 | Item             | Exemplo implementado                                                         |
 | ---------------- | ---------------------------------------------------------------------------- |
@@ -347,7 +345,7 @@ No Acecore Systems, implementamos os limites abaixo.
 | body             | Até 2KiB; interromper durante a leitura do stream mesmo sem `Content-Length` |
 | query            | 2〜160 caracteres depois da normalização NFKC                                |
 | locale           | Somente `ja`                                                                 |
-| rate limit       | Janela fixa no D1: client 20/min e global 300/min                            |
+| rate limit       | Limites por client e globais adequados a custo, tráfego e modelo de ameaça   |
 | interrupção      | Desativar somente a pesquisa relacionada com `SEARCH_ENABLED`                |
 | query            | Não armazenar a raw query em logs, corpus ou Vectorize metadata              |
 | URL do resultado | Permitir apenas URL pública root-relative e same-origin                      |
@@ -357,27 +355,27 @@ Um UUID apenas no client não é um limite forte de custo, pois pode ser alterad
 
 Nesta arquitetura, D1 é usado para rate limit, mas não é obrigatório para implementar o Vectorize. O mesmo vale para R2. Escolha conforme a origem do texto e onde o rate limit precisa ser armazenado.
 
-## Dar contratos distintos à pesquisa Vectorize e ao guia de AI
+## Dar contratos distintos à pesquisa relacionada e ao chat de AI generativa
 
-O Acecore Systems possui um guia de AI separado da pesquisa de «conteúdo relacionado» do site. A segunda envia o termo à OpenAI Embeddings API apenas quando o leitor executa explicitamente a pesquisa, e compara o embedding com as informações públicas deste site no Vectorize. O primeiro envia a pergunta e a conversa recente à API de AI compartilhada da Acecore e usa OpenAI para gerar uma resposta.
+Uma pesquisa de «conteúdo relacionado» pode enviar o termo a um embedding provider somente depois de uma ação explícita e comparar o embedding com as informações públicas do site no Vectorize. Já um chat de AI separado envia a pergunta e, se necessário, o contexto da conversa a um serviço de respostas para gerar uma resposta.
 
 Não se deve reduzir ambos a uma vaga «pesquisa de AI». Dados transmitidos, escopo das fontes, exibição de falhas, uso e explicações de privacidade devem ser projetados separadamente; um fallback da pesquisa Vectorize nunca deve ser enviado silenciosamente ao guia de AI.
 
 ## Não misturar as responsabilidades das fontes de pesquisa
 
-No Aceserver Portal, separamos as fontes de pesquisa para informações dos serviços da Acecore e para regras e procedimentos do servidor Minecraft.
+Sites, centrais de ajuda, políticas e bases de conhecimento internas têm responsabilidades diferentes. Defina antes a qual fonte cada tipo de pergunta pertence.
 
-- Pesquisar dúvidas sobre a Acecore com Vectorize
-- Pesquisar regras do servidor na WIKI oficial
-- Não fazer fallback para uma resposta irrelevante da WIKI se o Vectorize falhar
-- Vincular somente os artigos da WIKI selecionados como evidência
-- Não inferir regras que não podem ser confirmadas na WIKI
+- Pesquisar informações públicas de produtos e serviços no corpus do site
+- Buscar regras e procedimentos vinculantes em sua fonte oficial
+- Não fazer fallback para uma fonte inadequada se o Vectorize falhar
+- Vincular somente fontes realmente selecionadas como evidência
+- Não inferir regras ou informações não confirmadas
 
 Isso também é importante em RAG e chats de orientação. Quanto mais fontes pesquisáveis forem adicionadas, mais necessário é decidir previamente para onde enviar cada tipo de pergunta e o que não responder quando não houver informação.
 
 ## Falhas reais e o que mudamos depois
 
-Organizamos os problemas que mais tendem a se repetir nos registros dos vários repos.
+Estes são problemas que tendem a se repetir e devem ser considerados desde o início.
 
 | Sintoma                                                | Causa                                                      | Próxima ação                                                                                |
 | ------------------------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
@@ -403,13 +401,11 @@ Em artigos e relatórios de conclusão, separar os estados abaixo reduz mal-ente
 | Verificado em Preview     | Sugestões do Pagefind, exibição quando a pesquisa relacionada não está disponível e UI verificados       |
 | Em operação em Production | Commit publicado sincronizado, convergência das mutations, API e procedimento de interrupção confirmados |
 
-O World Foundation concluiu a validação local, mas não foi registrado como Production porque index, secrets, deployment e browser QA ainda não estavam concluídos. O Schools permaneceu na fase de investigação.
-
-Por outro lado, no Acecore Systems confirmamos PRs em etapas, a primeira sincronização de Production, a ativação em Production, o marker publicado e a API de pesquisa real.
+Registre esses estados separadamente também em relatórios de conclusão e notas de versão. Assim, código existente e uma operação de produção realmente segura não serão confundidos.
 
 Registrar não apenas o número de testes concluídos, mas também o que ainda não foi verificado, é a informação operacional mais útil para a próxima pessoa responsável.
 
-## Configuração mínima para expandir a outros repositórios
+## Configuração mínima para expandir a outro site
 
 Ao aplicar a solução em outro site Astro／Cloudflare Pages, a configuração mínima se parece com o fluxo abaixo.
 
@@ -443,7 +439,7 @@ Não é necessário incluir geração de respostas por LLM desde o início. Prim
 
 A parte difícil da implementação do Cloudflare Vectorize não é a nearest-neighbor query em si.
 
-O que incluir no index como informação pública, como identificar chunks sem alterações, como impedir uma sincronização incorreta, como corresponder ao commit publicado e como preservar a pesquisa normal durante uma falha: esse projeto operacional define a qualidade quando a solução é expandida para vários repos.
+O que incluir no index como informação pública, como identificar chunks sem alterações, como impedir uma sincronização incorreta, como corresponder ao commit publicado e como preservar a pesquisa normal durante uma falha: esse projeto operacional define a qualidade quando a solução é expandida para outro site.
 
 Nossa conclusão é simples.
 

@@ -1,6 +1,6 @@
 ---
-title: "複数リポジトリへのCloudflare Vectorize導入で得た実践ノウハウ"
-description: "Cloudflare Vectorizeとは何か、キーワード検索では拾いにくい言い換えや関連情報にどう役立つのかを先に解説し、複数サイトへの導入記録から安全な運用設計までを整理します。"
+title: "Cloudflare Vectorize入門：意味検索を安全にサイトへ追加する方法"
+description: "Cloudflare Vectorizeとは何か、キーワード検索では拾いにくい言い換えや関連情報にどう役立つのかを先に解説し、どのサイトでも再現しやすい導入・運用設計を整理します。"
 date: 2026-07-31T12:00
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "OpenAI", "サイト内検索"]
@@ -11,7 +11,7 @@ callout:
   text: "キーワードが完全に一致しなくても、質問と近い意味を持つ公開ページを候補として返せるCloudflareのベクトルデータベースです。既存のキーワード検索を置き換えるのではなく、言い換えや関連情報の発見を補う用途で価値が出ます。"
 processFigure:
   eyebrow: Vectorize rollout
-  title: 公開HTMLから本番indexまでの流れ
+  title: 公開HTMLから安全な関連検索までの流れ
   description: "編集sourceを直接投入せず、実際に公開されるHTMLとデプロイ済みcommitを同期の基準にします。"
   variant: inline
   steps:
@@ -49,24 +49,24 @@ compareTable:
       - "実装、ローカル検証、PreviewのUI確認、本番稼働を別の状態として記録する"
 statBar:
   items:
-    - value: "4 repos"
-      label: 導入・試行記録を横断
-      description: "本番、ローカル検証、Preview、事前調査を同じ扱いにせず比較しました。"
+    - value: "意味で探す"
+      label: キーワードの外も見つける
+      description: "質問文や言い換えから、意図に近い公開ページを候補にできます。"
       icon: i-lucide-git-branch
-    - value: "36 → 250"
-      label: Systems本番初回同期
-      description: "36件の日本語公開ページから250 vectorsを生成し、削除0件で同期しました。"
+    - value: "2つの検索"
+      label: Pagefind＋Vectorize
+      description: "通常検索を残したまま、必要なときだけ関連検索を加えられます。"
       icon: i-lucide-database
-    - value: "72 → 134"
-      label: World Foundationローカル検証
-      description: "72 sourcesから134 vectorsを生成しましたが、本番公開前の状態として記録しました。"
+    - value: "公開HTML"
+      label: 実際に見える内容を検索する
+      description: "下書きではなく、利用者へ公開するページだけをcorpusにできます。"
       icon: i-lucide-test-tube-2
-    - value: "37 tests"
-      label: 検索契約の検証
-      description: "World Foundationでは検索、corpus、同期の契約テスト37件を通しました。"
+    - value: "段階導入"
+      label: 小さく確認してから公開する
+      description: "Previewで画面を確認し、Productionだけを同期対象にできます。"
       icon: i-lucide-badge-check
 checklist:
-  title: 次のリポジトリへ導入する前の確認
+  title: 次のサイトへ導入する前の確認
   items:
     - text: "既存のキーワード検索を残し、Vectorizeの停止時にも検索導線を保つ"
       checked: true
@@ -105,9 +105,9 @@ faq:
     - question: Vectorizeを入れたらPagefindは不要ですか？
       answer: "不要にはしませんでした。Pagefindは静的HTMLから作れる低依存の通常検索、Vectorizeは言い換えや関連概念を探す補助検索として役割を分けています。AIやVectorizeが失敗しても通常検索を残せます。"
     - question: Vectorize導入にはD1やR2が必須ですか？
-      answer: "必須ではありません。SystemsではD1を検索APIのrate limitに使いましたが、Vectorize自体の必須保存先ではありません。原文の置き場所も、公開HTML、JSON、D1、R2など要件に応じて決めます。"
+      answer: "必須ではありません。D1は検索APIのrate limit、R2は原文や生成物の保存に使えますが、Vectorize自体の必須保存先ではありません。公開HTML、JSON、D1、R2などから、要件に合う原文の置き場所を選びます。"
     - question: 現行実装のembedding modelとdimensionsはどう管理しますか？
-      answer: "現行のAcecore SystemsはOpenAIのtext-embedding-3-largeを1,536 dimensions／cosineで使います。旧BGE-M3の1,024 dimensions indexはrollback用に保持し、異なるdimensionsのvectorを同じindexへ混在させません。index設定は作成後に変更できないため、導入時の公式仕様と実際の出力shapeを確認してから作成します。"
+      answer: "embedding model、dimensions、metricを一つの契約として管理します。モデルを変えるときは、実際の出力shapeを確認して別indexへ移行し、異なるdimensionsのvectorを同じindexへ混在させません。index設定は作成後に変更できないため、導入時に公式仕様と実出力を確認します。"
     - question: どの時点で導入完了と判断しますか？
       answer: "mergeやローカルtestだけでは完了にしません。PreviewではPagefindとUIのfallbackを確認し、Productionでは公開commitとcorpusの一致、本番index同期、mutation収束、関連検索、rate limit、停止手順まで確認して本番稼働と記録します。"
 ---
@@ -137,11 +137,11 @@ Cloudflare Vectorizeは、文章・画像などから作った **embedding**（�
 2. 質問文・言い換え・関連テーマはVectorizeの関連検索で補う
 3. embedding providerやVectorizeが失敗したときは通常検索をそのまま残す
 
-ここまでが、導入を検討するときに先に判断したい価値と適用範囲です。以下では、Acecore Systems、World Foundation、Acecore Schools、Aceserver Portalで記録した導入・調査結果を横断し、別のAstro／Cloudflare Pagesサイトにも再利用できる実装・運用の設計へ進みます。
+ここまでが、導入を検討するときに先に判断したい価値と適用範囲です。以下では、Astro／Cloudflare Pagesをはじめとする静的サイトへ再利用しやすい、実装と運用の設計へ進みます。
 
-> **現行運用（2026年7月31日・再確認）**：通常Pages PreviewはVectorize／D1 bindingを持たず、`SEARCH_ENABLED=false` のPagefindだけを使います。関連検索と自動同期はProduction indexだけで動かします。本記事の更新前に確認した直近の本番同期では、公開commitとcorpusを照合した37ページ・256 vectorsが収束し、`current`／`expected` とも256、upsert 1件、delete 1件でした。[GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) 以下に出てくるPreview indexの記述は導入段階の記録であり、現行の完了条件ではありません。
+> **最初に採用しやすい構成**：通常Pages Previewは `SEARCH_ENABLED=false` としてPagefindだけを使い、Vectorize／D1 bindingと自動同期はProductionだけに限定します。Previewでは検索画面とfallbackを確認し、本番では公開済みcommitから作ったcorpusだけを同期します。これにより、試験中の変更や権限を本番検索へ持ち込まずに済みます。
 
-実際に複数のリポジトリへ導入・試行すると、単に「embeddingを作って `query()` する」だけでは足りないことが分かります。検索対象をどう作るか、PreviewをPagefindだけに保ちつつProductionをどう守るか、誤った同期で大量削除しないか、公開中のページとindexが本当に一致しているか。実運用では、VectorizeのAPI呼び出しよりも、その前後の設計が重要でした。
+導入を計画すると、単に「embeddingを作って `query()` する」だけでは足りないことが分かります。検索対象をどう作るか、PreviewをPagefindだけに保ちつつProductionをどう守るか、誤った同期で大量削除しないか、公開中のページとindexが本当に一致しているか。実運用では、VectorizeのAPI呼び出しよりも、その前後の設計が重要です。
 
 ## 結論：検索はfail-soft、同期と公開はfail-closed
 
@@ -157,20 +157,18 @@ Cloudflare Vectorizeは、文章・画像などから作った **embedding**（�
 
 「AI検索が落ちてもサイト検索は使える」ことと、「同期処理は疑わしければ1件も変更しない」ことを同時に満たします。
 
-## 4つのリポジトリで確認した状態
+## 最初に決める4つのこと
 
-導入記録を記事にするときは、すべてを「導入済み」とまとめないことも重要です。今回の記録には、本番稼働、ローカル検証、Preview UIの確認、事前調査が混在していました。
+Vectorizeを入れる前に、providerやindex名より先に次の4つを決めると、構成を選びやすくなります。
 
-| リポジトリ       | 記録・確認できた状態                                                                                              | 得られた知見                                                                     |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| Acecore Systems  | OpenAI 1,536 dimensionsのProduction indexを稼働。37ページ・256 vectorsの同期で収束を確認し、PreviewはPagefindのみ | Pagefindとの併用、公開HTML corpus、D1 rate limit、安全なProduction同期と次元移行 |
-| Aceserver Portal | Acecore情報のVectorize検索を本番確認                                                                              | 企業情報とWIKIルール検索の検索先を混ぜない                                       |
-| World Foundation | 72 sources／134 vectorsをローカル生成し、37 tests成功。未公開                                                     | content hash、fail-closed同期、公開前ゲートの分離                                |
-| Acecore Schools  | 既存構成の調査まで。index作成・実装は未着手                                                                       | bindingを足す前にAPI、corpus、権限、環境構成を決める                             |
+| 決めること   | はじめやすい選択                      | 理由                                             |
+| ------------ | ------------------------------------- | ------------------------------------------------ |
+| 利用者の目的 | 「関連するページを探す」              | いきなり回答生成まで作らず、検索品質を評価できる |
+| 検索の入口   | 入力中はPagefind、明示操作でVectorize | 速度、費用、送信範囲を分かりやすく保てる         |
+| corpusの正   | 公開済みHTML                          | 下書きや管理画面を検索結果へ混ぜない             |
+| 公開の流れ   | PreviewでUI確認、Productionだけ同期   | 試験中の権限やデータを本番検索へ持ち込まない     |
 
-Acecore Systemsでは、[導入PR #40](https://github.com/acecore-systems/acecore-systems/pull/40)、[本番準備PR #41](https://github.com/acecore-systems/acecore-systems/pull/41)、[本番有効化PR #42](https://github.com/acecore-systems/acecore-systems/pull/42) の3段階に分けました。その後の[OpenAI直接接続への移行PR #43](https://github.com/acecore-systems/acecore-systems/pull/43)では、異なるdimensionsのvectorを混在させず、1,536 dimensions用indexを別名で準備しています。[有効化PR #44](https://github.com/acecore-systems/acecore-systems/pull/44)のPreview／Production同期は導入時の検証記録です。続く[Previewを本番専用へ切り替えたPR #47](https://github.com/acecore-systems/acecore-systems/pull/47)により、現行はPreviewをPagefindだけに保ち、Productionだけを同期・関連検索の対象にしています。
-
-旧BGE-M3 indexへの初回Production同期の[GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752)では、公開commitとcorpus versionを照合し、36件の日本語公開ページから250 vectorsを生成しました。同期結果はupsert 250件、delete 0件です。コードのmerge、indexの準備、初回同期、検索有効化を別の変更にしたことで、各段階の停止条件を明確にできました。
+この4つに答えられれば、embedding provider、D1、R2、回答生成の採用は、後から要件に合わせて選べます。
 
 ## Pagefindを置き換えず、役割を分ける
 
@@ -206,7 +204,7 @@ CMS原稿やMarkdownを直接corpusにすると、実際の公開ページとの
 
 そこで、Astroのbuild後に生成されたHTMLを読み、公開条件を反映してからcorpusを作りました。
 
-Acecore Systemsでは、次の条件を満たす日本語ページだけを対象にしています。
+日本語サイトで始めるなら、次の条件を満たすページだけを対象にすると扱いやすくなります。
 
 - same-originのcanonicalを持つ
 - `lang` が日本語である
@@ -250,7 +248,7 @@ const vector = {
 
 ## embedding modelとindex設定を契約として固定する
 
-導入初期の記録では、Workers AIの [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) を使い、実際の出力shapeを確認したうえで、1,024 dimensions／cosineへ統一しました。その後のAcecore Systemsの現行実装では、[OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) の `text-embedding-3-large` を1,536 dimensions／cosineで使い、移行先indexを別名で作成しました。Production indexだけを同期・検索に使い、PreviewはPagefindだけです。旧BGE-M3 indexはrollback用に保持し、異なるdimensionsのvectorを同じindexに混在させません。
+embedding providerやmodelは、対象言語、検索品質、レイテンシ、費用で選びます。たとえば[OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) の `text-embedding-3-large` を使うなら、実際の出力を確認し、1,536 dimensions／cosine用のindexを別名で作ります。modelを変えるときは新しい契約用のindexへ移行し、異なるdimensionsのvectorを同じindexに混在させません。
 
 重要なのはモデル名そのものより、次の4か所を同じ契約にすることです。
 
@@ -267,7 +265,7 @@ metadata filteringを使う場合は、vector投入前にmetadata indexを作り
 
 また、製品limitsは変わります。2026年7月31日再確認時のVectorize V2では、Workers APIのupsert batch上限は1,000、HTTP APIは5,000です。通常の `topK` 上限は100で、`returnValues: true` または `returnMetadata: "all"` の場合は50です。実装時は必ず[現行limits](https://developers.cloudflare.com/vectorize/platform/limits/)と[client API](https://developers.cloudflare.com/vectorize/reference/client-api/)を再確認します。
 
-Acecore Systemsの同期はHTTP APIで200件ずつ、検索は `topK: 15` としており、製品上限をそのまま処理件数にはしていません。上限値と、自分たちが安全に再試行・監視できるbatch値は分けて決めます。
+同期のbatch数や検索の `topK` は、製品上限をそのまま使わず、再試行・監視できる小さな値から始めます。上限値と、自分たちが安全に運用できる処理件数は分けて決めます。
 
 ## 同期はupsertして収束を待ち、それからdeleteする
 
@@ -339,45 +337,45 @@ GitHubの `main` と、現在Cloudflare Pagesで公開されているcommitは�
 
 検索APIは、入力された文字列をembedding providerへ送る公開endpointです。検索精度だけでなく、乱用、課金、ログ、返却URLを設計対象にします。
 
-Acecore Systemsでは、次の境界を実装しました。
+たとえば、公開検索APIには次の境界を設けます。
 
-| 項目         | 実装例                                                  |
-| ------------ | ------------------------------------------------------- |
-| method／形式 | same-originのJSON POSTだけを受理                        |
-| body         | 2KiBまで。`Content-Length` がなくてもstream読取中に停止 |
-| query        | NFKC正規化後2〜160文字                                  |
-| locale       | `ja` のみ                                               |
-| rate limit   | D1固定窓でclient 20回／分、global 300回／分             |
-| 停止         | `SEARCH_ENABLED` で関連検索だけを停止                   |
-| query        | raw queryをログ、corpus、Vectorize metadataへ保存しない |
-| 結果URL      | same-originの公開root-relative URLだけを許可            |
-| エラー       | 段階別の構造化codeを返し、本文をログへ出さない          |
+| 項目         | 実装例                                                   |
+| ------------ | -------------------------------------------------------- |
+| method／形式 | same-originのJSON POSTだけを受理                         |
+| body         | 2KiBまで。`Content-Length` がなくてもstream読取中に停止  |
+| query        | NFKC正規化後2〜160文字                                   |
+| locale       | `ja` のみ                                                |
+| rate limit   | clientとglobalを分け、想定利用量と費用に合わせて制限する |
+| 停止         | `SEARCH_ENABLED` で関連検索だけを停止                    |
+| query        | raw queryをログ、corpus、Vectorize metadataへ保存しない  |
+| 結果URL      | same-originの公開root-relative URLだけを許可             |
+| エラー       | 段階別の構造化codeを返し、本文をログへ出さない           |
 
 client側のUUIDだけでは、利用者が変更できるため強い課金境界にはなりません。Cloudflare接続情報から作るclient key、global limit、利用量監視を組み合わせます。規模や脅威に応じてTurnstile、WAF、Durable Objectsなども検討します。
 
 D1はこの構成でrate limitに使っていますが、Vectorize導入の必須要件ではありません。R2も同様です。原文をどこから取得するか、rate limitをどこで持つかに応じて選びます。
 
-## Vectorize検索とAI案内を別の契約にする
+## 関連検索と生成AIチャットを別の契約にする
 
-Acecore Systemsには、サイト内の「関連する内容」検索とは別に、AI案内があります。前者は利用者が検索を明示実行したときに検索語をOpenAI Embeddings APIへ送り、Vectorize上のこのサイトの公開情報を照合する機能です。後者は質問と直近の会話をAcecore共通AI APIへ送り、OpenAIで回答を生成する案内機能です。
+関連検索は、利用者が明示操作した検索語をembeddingへ変換し、公開ページを近さで探す機能です。生成AIチャットは、質問や会話履歴をもとに回答を作る別の機能です。
 
-両者を同じ「AI検索」として曖昧にしないことが重要です。送信するデータ、情報源、失敗時の表示、利用量、プライバシー説明を個別に設計し、Vectorize関連検索のfallbackとしてAI案内へ勝手に送らないようにします。
+両者を同じ「AI検索」として曖昧にしないことが重要です。送信するデータ、情報源、失敗時の表示、利用量、プライバシー説明を個別に設計し、関連検索のfallbackとして生成AIチャットへ勝手に送らないようにします。
 
 ## 検索先の責務を混ぜない
 
-Aceserver Portalでは、Acecoreのサービス情報と、Minecraftサーバーのルール・手順で検索先を分けました。
+会社情報、サポート手順、規約、社内ナレッジのように、更新頻度や正確さが異なる情報源は検索先を分けます。
 
-- Acecoreに関する質問はVectorizeで検索する
-- サーバールールは公式WIKIを検索する
-- Vectorizeが失敗しても、無関係なWIKI回答へfallbackしない
-- 根拠として選ばれたWIKI記事だけをリンクする
-- WIKIで確認できない規則は推測しない
+- 公開サイトの説明は、そのサイトの公開corpusだけを検索する
+- 変更されやすい規約や手順は、公式の一次情報を検索する
+- 関連検索が失敗しても、無関係な情報源へfallbackしない
+- 根拠として選ばれたページだけをリンクする
+- 情報源で確認できない内容は推測しない
 
 これはRAGや案内チャットでも重要です。検索できる場所を増やすほど、どの質問をどの情報源へ送るか、情報がなかったときに何を答えないかを先に決めます。
 
 ## 実際に起きた失敗と、次に変えたこと
 
-複数repoの記録から、再発しやすい問題を整理します。
+実装で再発しやすい問題を整理します。
 
 | 症状                                     | 原因                                     | 次に行うこと                                                |
 | ---------------------------------------- | ---------------------------------------- | ----------------------------------------------------------- |
@@ -403,9 +401,7 @@ Aceserver Portalでは、Acecoreのサービス情報と、Minecraftサーバー
 | Preview確認済み  | Pagefindの候補、関連検索が使えない場合の表示、UIを確認した |
 | 本番稼働中       | 公開commitを同期し、mutation収束、API、停止手順を確認した  |
 
-World Foundationはローカル検証まで成功しましたが、index、secret、deployment、browser QAが未完了だったため、本番済みとは記録しませんでした。Schoolsは調査段階です。
-
-一方、Acecore Systemsは段階的なPR、Production初回同期、本番有効化、公開marker、実際の検索APIまで確認しました。
+この段階を完了報告やリリースノートでも分けて書けば、コードがあるだけの状態と、実際に安全に公開された状態を混同しません。
 
 成功したtest数だけでなく、何がまだ未確認かを書くことが、次の担当者にとって最も有用な運用情報になります。
 
@@ -443,7 +439,7 @@ Pages Preview
 
 Cloudflare Vectorizeの導入で難しいのは、nearest-neighbor queryそのものではありません。
 
-何を公開情報としてindexするか、変更のないchunkをどう見分けるか、誤った同期をどう止めるか、公開中のcommitとどう一致させるか、障害時に通常検索をどう残すか。この運用設計が、複数repoへ横展開したときの品質を決めます。
+何を公開情報としてindexするか、変更のないchunkをどう見分けるか、誤った同期をどう止めるか、公開中のcommitとどう一致させるか、障害時に通常検索をどう残すか。この運用設計が、別のサイトへ展開したときの品質を決めます。
 
 今回の結論はシンプルです。
 

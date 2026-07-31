@@ -1,6 +1,6 @@
 ---
-title: "여러 저장소에 Cloudflare Vectorize를 도입하며 얻은 실전 노하우"
-description: "먼저 Cloudflare Vectorize가 무엇이며 키워드 검색이 놓치기 쉬운 바꿔 말한 표현과 관련 정보를 어떻게 찾는지 설명하고, 여러 Astro／Cloudflare Pages 사이트에 안전하게 도입한 경험을 정리합니다."
+title: "Cloudflare Vectorize 가이드: 사이트에 안전한 의미 검색을 추가하는 방법"
+description: "Cloudflare Vectorize란 무엇인지, 의미 검색이 도움이 되는 경우와 명확한 경계 안에서 사이트에 단계적으로 도입하는 방법을 설명합니다."
 date: 2026-07-31T12:00
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "OpenAI", "사이트 검색"]
@@ -11,7 +11,7 @@ callout:
   text: "Cloudflare의 벡터 데이터베이스는 키워드가 완전히 일치하지 않아도 질문과 의미가 가까운 공개 페이지를 후보로 돌려줄 수 있습니다. 기존 키워드 검색을 대체하는 것이 아니라, 바꿔 말한 표현과 관련 정보 발견을 보완할 때 가치가 생깁니다."
 processFigure:
   eyebrow: Vectorize rollout
-  title: 공개 HTML에서 Production index까지의 흐름
+  title: 공개 HTML에서 안전한 관련 검색까지의 흐름
   description: "편집 source를 직접 넣지 않고, 실제로 공개되는 HTML과 배포된 commit을 동기화 기준으로 삼습니다."
   variant: inline
   steps:
@@ -49,24 +49,24 @@ compareTable:
       - "구현, 로컬 검증, Preview UI 확인, Production 운영을 서로 다른 상태로 기록"
 statBar:
   items:
-    - value: "4 repos"
-      label: 도입·시험 기록을 교차 검토
-      description: "Production, 로컬 검증, Preview, 사전 조사를 같은 상태로 취급하지 않고 비교했습니다."
+    - value: "의미로 검색"
+      label: 정확한 단어 이상을 찾기
+      description: "질문, 바꿔 말한 표현, 주제가 가까운 페이지를 찾는 데 도움이 됩니다."
       icon: i-lucide-git-branch
-    - value: "36 → 250"
-      label: Systems 첫 Production 동기화
-      description: "일본어 공개 페이지 36개에서 250 vectors를 생성하고 삭제 0건으로 동기화했습니다."
+    - value: "두 가지 검색 경로"
+      label: Pagefind와 Vectorize
+      description: "안정적인 키워드 검색은 유지하고 Vectorize가 선택적으로 보완합니다."
       icon: i-lucide-database
-    - value: "72 → 134"
-      label: World Foundation 로컬 검증
-      description: "72 sources에서 134 vectors를 생성했지만 Production 공개 전 상태로 기록했습니다."
+    - value: "공개 HTML"
+      label: 독자가 보는 내용을 검색
+      description: "index는 CMS 초안이 아니라 실제 공개 페이지를 따릅니다."
       icon: i-lucide-test-tube-2
-    - value: "37 tests"
-      label: 검색 계약 검증
-      description: "World Foundation에서는 검색, corpus, 동기화 계약 테스트 37개를 통과했습니다."
+    - value: "단계적 도입"
+      label: 먼저 검증하고 공개
+      description: "UI, corpus, 동기화에 각각 안전 경계를 둡니다."
       icon: i-lucide-badge-check
 checklist:
-  title: 다음 저장소에 도입하기 전 확인 사항
+  title: 다음 사이트에 도입하기 전 확인 사항
   items:
     - text: "기존 키워드 검색을 유지하고 Vectorize 중단 시에도 검색 경로를 보존한다"
       checked: true
@@ -105,9 +105,9 @@ faq:
     - question: Vectorize를 도입하면 Pagefind가 필요 없나요?
       answer: "Pagefind를 제거하지 않았습니다. Pagefind는 정적 HTML에서 만들 수 있는 저의존성 일반 검색, Vectorize는 바꿔 말한 표현이나 관련 개념을 찾는 보조 검색으로 역할을 나눴습니다. AI나 Vectorize가 실패해도 일반 검색은 유지됩니다."
     - question: Vectorize 도입에 D1이나 R2가 필수인가요?
-      answer: "필수는 아닙니다. Systems에서는 D1을 검색 API의 rate limit에 사용했지만 Vectorize 자체의 필수 저장소는 아닙니다. 원문의 위치도 공개 HTML, JSON, D1, R2 등 요구 사항에 맞게 결정합니다."
+      answer: "필수는 아닙니다. D1은 예를 들어 검색 API의 rate limit에 사용할 수 있지만 Vectorize 자체의 필수 저장소는 아닙니다. 원문의 위치도 공개 HTML, JSON, D1, R2 등 요구 사항에 맞게 결정합니다."
     - question: 현재 구현의 embedding model과 dimensions는 어떻게 관리하나요?
-      answer: "현재 Acecore Systems 구현은 OpenAI text-embedding-3-large를 1,536 dimensions／cosine으로 사용합니다. 기존 BGE-M3 1,024 dimensions index는 rollback용으로 유지하며, dimensions가 다른 vector를 같은 index에 섞지 않습니다. index 설정은 생성 후 변경할 수 없으므로 생성 전에 최신 공식 사양과 실제 출력 shape을 확인합니다."
+      answer: "model, dimensions, metric은 corpus, index, API, 동기화가 함께 지켜야 할 계약입니다. dimensions가 다른 vector를 같은 index에 섞어서는 안 됩니다. index 설정은 생성 후 변경할 수 없으므로 생성 전에 최신 공식 사양과 실제 출력 shape을 확인합니다."
     - question: 어느 시점에 도입 완료로 판단하나요?
       answer: "merge나 로컬 test만으로는 완료로 보지 않습니다. Preview에서는 Pagefind와 UI fallback을 확인하고, Production에서는 공개 commit과 corpus 일치, index 동기화, mutation 수렴, 관련 검색, rate limit, 중단 절차를 확인한 뒤 운영으로 기록합니다."
 ---
@@ -137,11 +137,11 @@ Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스
 2. 질문문, 바꿔 말한 표현, 인접한 주제는 Vectorize 관련 검색으로 보완합니다.
 3. embedding provider나 Vectorize가 실패해도 일반 검색은 그대로 남깁니다.
 
-여기까지가 도입을 검토할 때 먼저 판단할 가치와 적용 범위입니다. 이후에는 Acecore Systems, World Foundation, Acecore Schools, Aceserver Portal의 도입·조사 결과를 교차 검토해 다른 Astro／Cloudflare Pages 사이트에도 재사용할 수 있는 구현·운영 설계로 이어갑니다.
+여기까지가 도입을 검토할 때 먼저 판단할 가치와 적용 범위입니다. 이후에는 Astro／Cloudflare Pages 사이트에서 재사용할 수 있는 구현·운영 설계를 설명합니다.
 
-> **현재 운영 상태(2026년 7월 31일 재확인):** 일반 Pages Preview에는 Vectorize／D1 binding이 없고 `SEARCH_ENABLED=false`를 유지하며 Pagefind만 사용합니다. 관련 검색과 자동 동기화는 Production index에서만 동작합니다. 이 글을 업데이트하기 전에 확인한 최신 Production 동기화에서는 공개 commit과 corpus를 대조한 뒤 37페이지·256 vectors가 수렴했고, `current`／`expected` 모두 256, upsert 1건, delete 1건이었습니다. [GitHub Actions run #30604713256](https://github.com/acecore-systems/acecore-systems/actions/runs/30604713256) 아래의 Preview index 언급은 도입 단계의 기록이며 현재 완료 조건이 아닙니다.
+> **실용적인 첫 구성:** 일반 Pages Preview에서는 `SEARCH_ENABLED=false`로 Pagefind만 사용합니다. Vectorize／D1 binding과 자동 동기화는 Production으로 제한합니다. Preview에서 검색 UI와 fallback을 확인하고, Production에는 공개 commit에서 만든 corpus만 동기화합니다. 이렇게 하면 시험 중인 변경과 넓은 권한이 운영 검색에 들어가지 않습니다.
 
-여러 저장소에 도입하고 시험해 보면 단순히 “embedding을 만들고 `query()`를 호출하는 것”만으로는 충분하지 않다는 사실을 알게 됩니다. 검색 대상을 어떻게 만들지, Preview는 Pagefind만 유지하면서 Production을 어떻게 보호할지, 잘못된 동기화로 대량 삭제가 일어나지 않게 할지, 공개 중인 페이지와 index가 실제로 일치하는지 등을 고려해야 합니다. 실제 운영에서는 Vectorize API 호출보다 그 전후의 설계가 더 중요했습니다.
+도입을 계획해 보면 단순히 “embedding을 만들고 `query()`를 호출하는 것”만으로는 충분하지 않다는 사실을 알게 됩니다. 검색 대상을 어떻게 만들지, Preview는 Pagefind만 유지하면서 Production을 어떻게 보호할지, 잘못된 동기화로 대량 삭제가 일어나지 않게 할지, 공개 중인 페이지와 index가 실제로 일치하는지 등을 고려해야 합니다. 실제 운영에서는 Vectorize API 호출보다 그 전후의 설계가 더 중요합니다.
 
 ## 결론: 검색은 fail-soft, 동기화와 공개는 fail-closed
 
@@ -157,20 +157,18 @@ Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스
 
 “AI 검색이 중단되어도 사이트 검색은 사용할 수 있다”와 “동기화가 의심스러우면 단 한 건도 변경하지 않는다”를 동시에 충족합니다.
 
-## 4개 저장소에서 확인한 상태
+## 먼저 이 네 가지를 결정합니다
 
-도입 기록을 글로 정리할 때 모든 상태를 “도입 완료”로 묶지 않는 것도 중요합니다. 이번 기록에는 Production 운영, 로컬 검증, Preview UI 확인, 사전 조사가 함께 있었습니다.
+provider나 index 이름을 고르기 전에 다음 네 가지 질문에 답합니다. 그러면 아키텍처를 훨씬 쉽게 판단할 수 있습니다.
 
-| 저장소           | 기록·확인된 상태                                                                                                             | 얻은 지식                                                                                          |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Acecore Systems  | OpenAI 1,536 dimensions index를 Production에서만 운영. 37페이지·256 vectors 동기화 수렴을 확인했고 Preview는 Pagefind만 사용 | Pagefind 병용, 공개 HTML corpus, D1 rate limit, 안전한 Production 동기화와 dimensions 마이그레이션 |
-| Aceserver Portal | Acecore 정보의 Vectorize 검색을 Production에서 확인                                                                          | 기업 정보와 WIKI 규칙 검색의 대상을 섞지 않음                                                      |
-| World Foundation | 로컬에서 72 sources／134 vectors 생성, 37 tests 성공. 미공개                                                                 | content hash, fail-closed 동기화, 공개 전 게이트 분리                                              |
-| Acecore Schools  | 기존 구성 조사까지 완료. index 생성·구현은 미착수                                                                            | binding 추가 전에 API, corpus, 권한, 환경 구성을 결정                                              |
+| 결정할 것   | 시작하기 쉬운 선택                                 | 이유                                                          |
+| ----------- | -------------------------------------------------- | ------------------------------------------------------------- |
+| 독자의 목적 | “관련 페이지 찾기”                                 | 처음부터 답변을 생성하지 않고 검색 품질을 평가할 수 있습니다. |
+| 검색 진입점 | 입력 중에는 Pagefind, 명시적 실행 뒤에는 Vectorize | 속도, 비용, 데이터 전송 범위를 이해하기 쉽게 유지합니다.      |
+| 기준 corpus | 공개 HTML                                          | 초안과 관리 화면이 검색 결과에 섞이지 않습니다.               |
+| 공개 흐름   | Preview에서 UI 확인, Production만 동기화           | 시험 데이터와 권한이 운영 검색에 들어가지 않습니다.           |
 
-Acecore Systems에서는 [도입 PR #40](https://github.com/acecore-systems/acecore-systems/pull/40), [Production 준비 PR #41](https://github.com/acecore-systems/acecore-systems/pull/41), [Production 활성화 PR #42](https://github.com/acecore-systems/acecore-systems/pull/42)의 3단계로 나눴습니다. 초기 기록의 Preview／Production 동기화는 더 이상 현행 운영이 아닙니다. [PR #47](https://github.com/acecore-systems/acecore-systems/pull/47)에서 일반 Pages Preview를 Pagefind만 사용하도록 바꿨고, 지금은 Production만 동기화하고 관련 검색을 제공합니다.
-
-첫 Production 동기화 [GitHub Actions run](https://github.com/acecore-systems/acecore-systems/actions/runs/30539728752)에서는 공개 commit과 corpus version을 대조하고 일본어 공개 페이지 36개에서 250 vectors를 생성했습니다. 동기화 결과는 upsert 250건, delete 0건입니다. 코드 merge, index 준비, 첫 동기화, 검색 활성화를 서로 다른 변경으로 분리해 각 단계의 중단 조건을 명확히 했습니다.
+이 네 가지에 답했다면 embedding provider, D1, R2, 나중의 답변 생성은 각자의 요구에 맞춰 선택할 수 있습니다.
 
 ## Pagefind를 대체하지 않고 역할을 분리한다
 
@@ -206,7 +204,7 @@ CMS 초안이나 Markdown을 corpus로 직접 사용하면 실제 공개 페이�
 
 그래서 Astro build 후 생성된 HTML을 읽고 공개 조건을 반영한 뒤 corpus를 만들었습니다.
 
-Acecore Systems에서는 다음 조건을 충족하는 일본어 페이지만 대상으로 삼습니다.
+다국어 사이트라면 첫 corpus에 선택한 한 언어의 페이지 중 다음 조건을 충족하는 것만 넣을 수 있습니다.
 
 - same-origin canonical을 가짐
 - `lang`이 일본어임
@@ -250,7 +248,7 @@ const vector = {
 
 ## embedding model과 index 설정을 계약으로 고정한다
 
-초기 구현 기록에서는 Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)를 사용하고 실제 출력 shape을 확인한 뒤 1,024 dimensions／cosine으로 통일했습니다. 현재 Acecore Systems 구현은 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings)의 `text-embedding-3-large`를 별도 이름의 대상 index에서 1,536 dimensions／cosine으로 사용합니다. Production index만 동기화·검색에 사용하고 Preview는 Pagefind만 사용합니다. 기존 BGE-M3 index는 rollback용으로 유지하며 dimensions가 다른 vector를 같은 index에 섞지 않습니다.
+실제 출력을 확인한 뒤에만 embedding provider와 model을 고릅니다. Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)나 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 같은 model을 쓸 수 있지만 dimensions와 metric은 계획한 index와 일치해야 합니다. 나중에 교체할 때는 별도 대상 index를 만들고 이전 index는 rollback용으로 유지하며, dimensions가 다른 vector를 같은 index에 섞지 않습니다.
 
 모델 이름 자체보다 중요한 것은 다음 네 곳에 같은 계약을 적용하는 것입니다.
 
@@ -267,7 +265,7 @@ metadata filtering을 사용할 때는 vector를 넣기 전에 metadata index를
 
 제품 limits도 바뀝니다. 2026년 7월 31일에 다시 확인한 Vectorize V2에서 Workers API의 upsert batch 제한은 1,000, HTTP API는 5,000입니다. 일반 `topK` 제한은 100이며 `returnValues: true` 또는 `returnMetadata: "all"`일 때는 50입니다. 구현 시 반드시 [최신 limits](https://developers.cloudflare.com/vectorize/platform/limits/)와 [client API](https://developers.cloudflare.com/vectorize/reference/client-api/)를 다시 확인합니다.
 
-Acecore Systems 동기화는 HTTP API에서 200개씩 처리하고 검색은 `topK: 15`를 사용하므로 제품 최대치를 그대로 처리량으로 삼지 않았습니다. 제품 제한과 안전하게 재시도·감시할 수 있는 batch 크기는 따로 결정합니다.
+제품 최대치를 그대로 쓰지 말고, 관찰하고 안전하게 재시도할 수 있는 더 작은 batch 크기와 `topK` 값을 의도적으로 선택합니다. provider 제한과 팀이 안전하게 재시도·감시할 수 있는 batch 크기는 별개의 결정입니다.
 
 ## upsert 후 수렴을 기다리고 나서 delete한다
 
@@ -339,7 +337,7 @@ GitHub의 `main`과 현재 Cloudflare Pages에 공개된 commit은 항상 같지
 
 검색 API는 입력한 문자열을 embedding provider에 보내는 공개 endpoint입니다. 검색 정확도뿐 아니라 악용, 비용, 로그, 반환 URL도 설계 대상입니다.
 
-Acecore Systems에서는 다음 경계를 구현했습니다.
+공개 검색 API에는 최소한 다음 경계를 둡니다.
 
 | 항목         | 구현 예시                                                    |
 | ------------ | ------------------------------------------------------------ |
@@ -347,7 +345,7 @@ Acecore Systems에서는 다음 경계를 구현했습니다.
 | body         | 2KiB 이하. `Content-Length`가 없어도 stream을 읽는 중에 중단 |
 | query        | NFKC 정규화 후 2〜160자                                      |
 | locale       | `ja`만 허용                                                  |
-| rate limit   | D1 고정 창으로 client 20회／분, global 300회／분             |
+| rate limit   | 비용, 트래픽, 위협 모델에 맞는 client·global 제한            |
 | 중단         | `SEARCH_ENABLED`로 관련 검색만 중단                          |
 | query        | raw query를 로그, corpus, Vectorize metadata에 저장하지 않음 |
 | 결과 URL     | same-origin의 공개 root-relative URL만 허용                  |
@@ -357,27 +355,27 @@ client UUID만으로는 사용자가 변경할 수 있어 강력한 비용 경�
 
 D1은 이 구성에서 rate limit에 사용하지만 Vectorize 도입의 필수 요건은 아닙니다. R2도 마찬가지입니다. 원문을 어디서 가져올지, rate limit을 어디에 보관할지에 맞춰 선택합니다.
 
-## Vectorize 검색과 AI 안내를 별도 계약으로 둔다
+## 관련 검색과 생성 AI 채팅을 별도 계약으로 둔다
 
-Acecore Systems에는 사이트의 “관련 내용” 검색과 별도의 AI 안내 기능이 있습니다. 전자는 이용자가 명시적으로 검색을 실행할 때만 검색어를 OpenAI Embeddings API로 보내고, 그 embedding을 이 사이트의 공개 정보와 Vectorize에서 대조합니다. 후자는 질문과 최근 대화를 Acecore 공통 AI API로 보내 OpenAI로 답변을 생성하는 안내 기능입니다.
+“관련 내용” 검색은 이용자가 명시적으로 실행한 뒤에만 검색어를 embedding provider로 보내고, 그 embedding을 사이트의 공개 정보와 Vectorize에서 대조할 수 있습니다. 반면 별도 AI 채팅은 질문과 필요하다면 대화 맥락을 답변 서비스로 보내 답변을 생성합니다.
 
 두 기능을 모호하게 “AI 검색”으로 묶지 않는 것이 중요합니다. 전송 데이터, 정보원 범위, 오류 표시, 사용량, 개인정보 안내를 각각 설계하고, Vectorize 관련 검색의 fallback을 AI 안내로 임의 전송하지 않습니다.
 
-## 검색 대상의 책임을 섞지 않는다
+## 검색 정보원의 책임을 섞지 않는다
 
-Aceserver Portal에서는 Acecore 서비스 정보와 Minecraft 서버 규칙·절차의 검색 대상을 분리했습니다.
+웹사이트, 도움말 센터, 정책, 내부 지식 기반은 서로 다른 책임을 가집니다. 어떤 질문이 어느 정보원에 속하는지 미리 정합니다.
 
-- Acecore 관련 질문은 Vectorize로 검색
-- 서버 규칙은 공식 WIKI에서 검색
-- Vectorize가 실패해도 관련 없는 WIKI 답변으로 fallback하지 않음
-- 근거로 선택된 WIKI 문서만 링크
-- WIKI에서 확인할 수 없는 규칙은 추측하지 않음
+- 공개 제품·서비스 정보는 사이트 corpus에서 검색
+- 구속력 있는 규칙과 절차는 해당 공식 정보원에서 검색
+- Vectorize가 실패해도 맞지 않는 정보원으로 fallback하지 않음
+- 실제 근거로 선택한 정보원만 링크
+- 확인되지 않은 규칙이나 정보를 추측하지 않음
 
 이는 RAG와 안내 채팅에서도 중요합니다. 검색할 수 있는 곳이 늘어날수록 어떤 질문을 어느 정보원으로 보낼지, 정보가 없을 때 무엇을 답하지 않을지를 먼저 정해야 합니다.
 
 ## 실제로 발생한 실패와 다음에 바꾼 점
 
-여러 repo 기록에서 재발하기 쉬운 문제를 정리했습니다.
+처음부터 고려할 만한 재발하기 쉬운 문제를 정리했습니다.
 
 | 증상                                          | 원인                                           | 다음 조치                                               |
 | --------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------- |
@@ -403,13 +401,11 @@ Aceserver Portal에서는 Acecore 서비스 정보와 Minecraft 서버 규칙·�
 | Preview 확인 완료  | Pagefind 후보, 관련 검색을 사용할 수 없을 때의 표시, UI 확인 |
 | Production 운영 중 | 공개 commit 동기화, mutation 수렴, API, 중단 절차 확인       |
 
-World Foundation은 로컬 검증까지 성공했지만 index, secrets, deployment, browser QA가 완료되지 않아 Production으로 기록하지 않았습니다. Schools는 조사 단계입니다.
-
-반면 Acecore Systems는 단계별 PR, 첫 Production 동기화, Production 활성화, 공개 marker, 실제 검색 API까지 확인했습니다.
+이 상태는 완료 보고와 release notes에도 분리해 기록합니다. 그러면 코드가 있는 상태와 실제로 안전한 Production 운영을 혼동하지 않습니다.
 
 성공한 test 수뿐 아니라 아직 확인하지 않은 항목도 기록하는 것이 다음 담당자에게 가장 유용한 운영 정보입니다.
 
-## 다른 저장소로 확장할 때의 최소 구성
+## 다른 사이트로 확장할 때의 최소 구성
 
 다른 Astro／Cloudflare Pages 사이트에 적용할 때 최소 구성은 다음과 같습니다.
 
@@ -443,7 +439,7 @@ Pages Preview
 
 Cloudflare Vectorize 도입에서 어려운 부분은 nearest-neighbor query 자체가 아닙니다.
 
-무엇을 공개 정보로 index할지, 변경되지 않은 chunk를 어떻게 구분할지, 잘못된 동기화를 어떻게 중단할지, 공개 중인 commit과 어떻게 일치시킬지, 장애 시 일반 검색을 어떻게 유지할지가 여러 repo로 확장할 때의 품질을 좌우합니다.
+무엇을 공개 정보로 index할지, 변경되지 않은 chunk를 어떻게 구분할지, 잘못된 동기화를 어떻게 중단할지, 공개 중인 commit과 어떻게 일치시킬지, 장애 시 일반 검색을 어떻게 유지할지가 다른 사이트로 확장할 때의 품질을 좌우합니다.
 
 결론은 간단합니다.
 
