@@ -90,7 +90,7 @@ const jsonLd = [
 
       <ol class="insight-index-list">
         {
-          insights.map((entry, index) => {
+          insights.map((entry) => {
             const image = entry.data.uploadedImage ?? entry.data.image;
 
             return (
@@ -101,12 +101,6 @@ const jsonLd = [
                     locale,
                   )}
                 >
-                  <div class="insight-index-list__meta">
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <time datetime={entry.data.date.toISOString()}>
-                      {formatDate(entry.data.date)}
-                    </time>
-                  </div>
                   <div
                     class:list={{
                       "insight-index-list__media": true,
@@ -119,6 +113,12 @@ const jsonLd = [
                     )}
                   </div>
                   <div class="insight-index-list__content">
+                    <time
+                      class="insight-index-list__date"
+                      datetime={entry.data.date.toISOString()}
+                    >
+                      {formatDate(entry.data.date)}
+                    </time>
                     <h3>{entry.data.title}</h3>
                     <p>{entry.data.description}</p>
                     <ul aria-label={text.tags}>

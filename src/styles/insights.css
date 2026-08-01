@@ -22,8 +22,8 @@
 
 .insight-index-list > li > a {
   display: grid;
-  grid-template-areas: "meta media content";
-  grid-template-columns: 112px minmax(176px, 0.8fr) minmax(0, 1.2fr);
+  grid-template-areas: "media content";
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
   gap: clamp(24px, 4vw, 64px);
   align-items: start;
   padding-block: clamp(28px, 4vw, 46px);
@@ -34,20 +34,6 @@
 .insight-index-list > li > a:hover h3,
 .insight-index-list > li > a:focus-visible h3 {
   color: var(--blue);
-}
-
-.insight-index-list__meta {
-  grid-area: meta;
-  display: grid;
-  gap: 12px;
-  color: var(--ink-soft);
-  font-size: 0.78rem;
-}
-
-.insight-index-list__meta > span {
-  color: var(--blue);
-  font-family: var(--font-display);
-  font-size: 1.2rem;
 }
 
 .insight-index-list__media {
@@ -77,6 +63,11 @@
   display: grid;
   align-content: start;
   gap: 16px;
+}
+
+.insight-index-list__date {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
 }
 
 .insight-index-list__content h3 {
@@ -580,16 +571,10 @@
 @media (max-width: 760px) {
   .insight-index-list > li > a {
     grid-template-areas:
-      "meta"
       "media"
       "content";
     grid-template-columns: 1fr;
     gap: 16px;
-  }
-
-  .insight-index-list__meta {
-    display: flex;
-    justify-content: space-between;
   }
 
   .insight-article__header h1 {
