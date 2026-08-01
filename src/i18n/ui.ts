@@ -113,7 +113,7 @@ export const ui: Record<Locale, UiText> = {
     languageSelector: "言語選択",
     contact: "お問い合わせ",
     menu: "メニュー",
-    operatedBy: "運営：Acecore公式サイト",
+    operatedBy: "運営：株式会社Acecore",
     home: "ホーム",
     philosophy: "支援方針",
     services: "サービス",
