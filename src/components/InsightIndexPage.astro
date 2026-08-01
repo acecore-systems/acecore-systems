@@ -90,27 +90,47 @@ const jsonLd = [
 
       <ol class="insight-index-list">
         {
-          insights.map((entry, index) => (
-            <li>
-              <a
-                href={getLocalizedInsightHref(getInsightSlug(entry.id), locale)}
-              >
-                <div class="insight-index-list__meta">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <time datetime={entry.data.date.toISOString()}>
-                    {formatDate(entry.data.date)}
-                  </time>
-                </div>
-                <h3>{entry.data.title}</h3>
-                <p>{entry.data.description}</p>
-                <ul aria-label={text.tags}>
-                  {entry.data.tags?.map((tag) => (
-                    <li>{tag}</li>
-                  ))}
-                </ul>
-              </a>
-            </li>
-          ))
+          insights.map((entry, index) => {
+            const image = entry.data.uploadedImage ?? entry.data.image;
+
+            return (
+              <li>
+                <a
+                  href={getLocalizedInsightHref(
+                    getInsightSlug(entry.id),
+                    locale,
+                  )}
+                >
+                  <div class="insight-index-list__meta">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <time datetime={entry.data.date.toISOString()}>
+                      {formatDate(entry.data.date)}
+                    </time>
+                  </div>
+                  <div
+                    class:list={{
+                      "insight-index-list__media": true,
+                      "insight-index-list__media--placeholder": !image,
+                    }}
+                    aria-hidden={!image}
+                  >
+                    {image && (
+                      <img src={image} alt="" loading="lazy" decoding="async" />
+                    )}
+                  </div>
+                  <div class="insight-index-list__content">
+                    <h3>{entry.data.title}</h3>
+                    <p>{entry.data.description}</p>
+                    <ul aria-label={text.tags}>
+                      {entry.data.tags?.map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </a>
+              </li>
+            );
+          })
         }
       </ol>
     </div>
