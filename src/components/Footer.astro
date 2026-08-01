@@ -1,5 +1,6 @@
 ---
 import site from "../data/site.json";
+import { ACECORE_ORGANIZATION } from "../data/organization.ts";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
 import { getLocalizedContent } from "../i18n/content";
@@ -44,7 +45,7 @@ const footerLinks = content.site.footerLinks.map((item) => ({
       <a href={new URL(getLocalizedUrl("/", locale), site.acecoreUrl).href}
         >{text.operatedBy}</a
       >
-      <span>© {new Date().getFullYear()} Acecore</span>
+      <span>© {new Date().getFullYear()} {ACECORE_ORGANIZATION.legalName}</span>
     </div>
   </div>
 </footer>

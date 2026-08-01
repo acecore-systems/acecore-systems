@@ -4,6 +4,7 @@ import Footer from "../components/Footer.astro";
 import SearchModal from "../components/SearchModal.astro";
 import AiGuideChat from "../components/AiGuideChat.astro";
 import site from "../data/site.json";
+import { ACECORE_ORGANIZATION } from "../data/organization.ts";
 import { serializeJsonForHtmlScript } from "../lib/safe-json.ts";
 import {
   getAlternateUrls,
@@ -82,7 +83,8 @@ const baseJsonLd = [
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": organizationId,
-    name: "Acecore",
+    name: ACECORE_ORGANIZATION.name,
+    legalName: ACECORE_ORGANIZATION.legalName,
     url: acecoreHomeUrl,
     logo: new URL("/favicon.svg", site.acecoreUrl).href,
     email: site.email,
