@@ -22,7 +22,8 @@
 
 .insight-index-list > li > a {
   display: grid;
-  grid-template-columns: 112px minmax(220px, 0.85fr) minmax(280px, 1.2fr);
+  grid-template-areas: "media content";
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
   gap: clamp(24px, 4vw, 64px);
   align-items: start;
   padding-block: clamp(28px, 4vw, 46px);
@@ -35,20 +36,41 @@
   color: var(--blue);
 }
 
-.insight-index-list__meta {
+.insight-index-list__media {
+  grid-area: media;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper-soft);
+}
+
+.insight-index-list__media--placeholder {
+  background:
+    linear-gradient(135deg, rgb(27 83 137 / 18%), transparent 62%),
+    var(--paper-soft);
+}
+
+.insight-index-list__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+.insight-index-list__content {
+  grid-area: content;
   display: grid;
-  gap: 12px;
+  align-content: start;
+  gap: 16px;
+}
+
+.insight-index-list__date {
   color: var(--ink-soft);
   font-size: 0.78rem;
 }
 
-.insight-index-list__meta > span {
-  color: var(--blue);
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-}
-
-.insight-index-list h3 {
+.insight-index-list__content h3 {
   margin: 0;
   font-size: clamp(1.25rem, 2vw, 1.65rem);
   font-weight: 500;
@@ -56,28 +78,34 @@
   transition: color 180ms ease;
 }
 
-.insight-index-list a > p {
+.insight-index-list__content > p {
   margin: 0;
   color: var(--ink-soft);
   line-height: 1.85;
 }
 
-.insight-index-list a > ul,
+.insight-index-list__content > ul,
 .insight-tags {
   display: flex;
-  grid-column: 2 / -1;
   flex-wrap: wrap;
   gap: 8px;
+  margin: 2px 0 0;
+  padding: 0;
   list-style: none;
 }
 
-.insight-index-list a > ul li,
+.insight-index-list__content > ul li,
 .insight-tags li {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 5px 10px;
   color: var(--ink-soft);
   font-size: 0.72rem;
+}
+
+.insight-index-list > li > a:hover .insight-index-list__media img,
+.insight-index-list > li > a:focus-visible .insight-index-list__media img {
+  transform: scale(1.035);
 }
 
 .insight-article__header-inner {
@@ -542,17 +570,11 @@
 
 @media (max-width: 760px) {
   .insight-index-list > li > a {
+    grid-template-areas:
+      "media"
+      "content";
     grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  .insight-index-list a > ul {
-    grid-column: auto;
-  }
-
-  .insight-index-list__meta {
-    display: flex;
-    justify-content: space-between;
+    gap: 16px;
   }
 
   .insight-article__header h1 {
