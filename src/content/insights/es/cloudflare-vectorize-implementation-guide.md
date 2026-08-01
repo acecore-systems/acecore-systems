@@ -1,10 +1,19 @@
 ---
 title: "Cloudflare Vectorize y RAG: entiende la diferencia entre búsqueda y respuestas de IA"
-description: "Una introducción breve a la búsqueda semántica con Cloudflare Vectorize y a RAG, distinguiendo búsqueda, evidencia y respuestas de IA."
+description: "Explica cómo Cloudflare Vectorize facilita encontrar información ya pública desde preguntas naturales, con sus beneficios, su papel junto a la búsqueda normal, RAG y una adopción gradual."
 date: 2026-07-31T12:00
+lastUpdated: 2026-08-01T17:00
 author: gui
-tags: ["Tecnología", "Cloudflare", "Vectorize", "RAG", "Búsqueda en el sitio"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+tags:
+  [
+    "Tecnología",
+    "Cloudflare",
+    "Vectorize",
+    "RAG",
+    "Búsqueda semántica",
+    "Búsqueda en el sitio",
+  ]
+image: /images/insights/vectorize-rag-hero.webp
 callout:
   type: tip
   title: "RAG significa buscar antes de responder"
@@ -36,6 +45,14 @@ linkCards:
     title: Guía detallada para implementar Vectorize con seguridad
     description: "Léela para corpus de HTML público, sincronización diferencial, separación de Preview y Production, y límites de API."
     icon: i-lucide-wrench
+  - href: /insights/astro-ai-contact-chat/
+    title: "Diseño técnico para un chat de contacto con IA"
+    description: "Consulta los límites de API, los controles de entrada y la lista permitida de URL para una IA que guía con información pública."
+    icon: i-lucide-message-circle
+  - href: /insights/astro-cloudflare-site-architecture/
+    title: "Ampliar un sitio oficial con Astro y Cloudflare"
+    description: "Consulta cómo añadir búsqueda y funciones de IA de forma segura sobre una base estática."
+    icon: i-lucide-layers-3
   - href: https://developers.cloudflare.com/vectorize/
     title: Documentación oficial de Cloudflare Vectorize
     description: "Consulta las capacidades, embeddings y guías de query oficiales de Vectorize."
@@ -44,7 +61,19 @@ linkCards:
     title: Guía de Cloudflare sobre bases vectoriales y RAG
     description: "Explica cómo el contexto recuperado con búsqueda vectorial puede ampliar un prompt para un LLM."
     icon: i-lucide-network
+  - href: https://developers.cloudflare.com/vectorize/best-practices/create-indexes/
+    title: "Guía de Cloudflare para crear índices de Vectorize"
+    description: "Revisa las decisiones, como dimensiones y métrica de distancia, que deben tomarse antes de crear el índice."
+    icon: i-lucide-settings-2
 ---
+
+## Primero, la conclusión: Vectorize reduce la distancia entre una pregunta y una página
+
+Un sitio puede tener guías y FAQ muy cuidadas y, aun así, sus visitantes no las encuentran. A menudo, las palabras del título de una página no son las mismas que las palabras de una pregunta.
+
+Por ejemplo, una página puede hablar de «configuración de la cuenta», mientras una persona pregunta «¿qué debo hacer después de iniciar sesión?» o «no entiendo la configuración inicial». Vectorize busca información pública de significado cercano, no solo palabras idénticas, y ayuda a cerrar esa distancia.
+
+No inventa hechos ni corrige automáticamente información desactualizada. Su valor es crear una entrada más natural a la información que ya se publica y se considera fiable. Cloudflare documenta Vectorize para búsqueda semántica, recomendaciones, clasificación y otros usos. [Documentación de Cloudflare Vectorize](https://developers.cloudflare.com/vectorize/)
 
 ## Primero: ¿qué es RAG?
 
@@ -64,18 +93,29 @@ En vez de enviar una pregunta directamente a un modelo de IA, se recupera materi
 
 Vectorize no genera una respuesta. RAG es más que buscar. Es el contrato entre recuperación, selección de evidencia, generación de respuesta y presentación de fuentes que permite al lector verificar una respuesta.
 
-## Por dónde empezar
+![Comparación entre la búsqueda normal que encuentra palabras exactas y la búsqueda semántica que encuentra varias páginas relacionadas](/images/insights/vectorize-keyword-vs-semantic.webp)
 
-No hace falta crear primero un chatbot. Este orden es más fácil de entender y más seguro de operar.
+_Diagrama: la búsqueda normal sirve para palabras exactas; la semántica sirve para paráfrasis e información relacionada. Es mejor darles roles distintos que sustituir una por otra._
 
-1. Mantener Pagefind como ruta de búsqueda normal.
-2. Añadir Vectorize para encontrar páginas relacionadas y evaluar la calidad de búsqueda.
-3. Definir las fuentes permitidas, los enlaces de origen y el comportamiento cuando la evidencia no es suficiente.
-4. Añadir respuestas RAG solo cuando se puedan cumplir esas condiciones.
+## Cuándo aporta más valor
+
+Es especialmente fácil de evaluar en sitios donde las personas formulan la misma necesidad con palabras distintas, donde guías y FAQ se reparten en varias páginas y donde conviene dirigir a una fuente original. Si las páginas públicas, borradores e información interna no están separados, o si no se puede identificar qué contenido está vigente, primero hay que ordenar esa información.
+
+## Empezar en tres etapas
+
+No hace falta crear un chatbot como primer paso.
+
+1. **Conservar la búsqueda normal.** Mantener Pagefind para nombres de producto y códigos de error.
+2. **Añadir búsqueda de contenido relacionado.** Mostrar con Vectorize páginas públicas cercanas a una pregunta y evaluarlas con preguntas representativas.
+3. **Añadir respuestas basadas en evidencia.** Incorporar RAG solo al definir qué páginas se pueden usar, qué enlaces de fuente se mostrarán y cuándo la respuesta debe rechazarse.
+
+![Ruta de adopción por etapas desde la búsqueda normal hasta la búsqueda semántica de contenido relacionado y las respuestas de IA basadas en evidencia, con retorno seguro a la búsqueda normal](/images/insights/vectorize-adoption-path.webp)
+
+_Diagrama: al conservar la búsqueda normal como base, se pueden validar la búsqueda semántica y las respuestas de IA de forma gradual y volver a una ruta segura cuando sea necesario._
 
 Así se valida la calidad de la información buscable antes de optimizar la apariencia de las respuestas de IA.
 
-## Cuatro decisiones antes de RAG
+## Una respuesta RAG empieza al seleccionar la evidencia
 
 | Decisión                 | Punto de partida sencillo                                     | Motivo                                                         |
 | ------------------------ | ------------------------------------------------------------- | -------------------------------------------------------------- |
@@ -86,6 +126,14 @@ Así se valida la calidad de la información buscable antes de optimizar la apar
 
 RAG no hace imposibles las respuestas incorrectas. La calidad depende de elegir el corpus, comprobar la evidencia y definir explícitamente cuándo no responder.
 
-## Lee los detalles de implementación por separado
+![Flujo RAG que recupera páginas candidatas, comprueba las fuentes, produce una respuesta con citas y se detiene cuando la evidencia es insuficiente](/images/insights/vectorize-rag-evidence-path.webp)
 
-Esta página explica por qué usar Vectorize y RAG. El corpus de HTML público, content hash, sincronización diferencial, separación de Preview y Production, y rate limits están en la [guía detallada para implementar Vectorize con seguridad](/insights/cloudflare-vectorize-safe-implementation/).
+_Diagrama: RAG no trata los resultados de búsqueda como una respuesta. Comprueba la información de origen y conecta solo la evidencia utilizable con la respuesta y la cita._
+
+## Continúa desde la decisión hasta la implementación
+
+1. [Guía detallada para implementar Vectorize con seguridad](/insights/cloudflare-vectorize-safe-implementation/) para corpus de HTML público, content hash, sincronización diferencial, separación de Preview y Production, y rate limits.
+2. [Diseño técnico para un chat de contacto con IA](/insights/astro-ai-contact-chat/) para entradas de IA, límites de API y listas permitidas de URL.
+3. [Ampliar un sitio oficial con Astro y Cloudflare](/insights/astro-cloudflare-site-architecture/) para los roles que permiten añadir búsqueda y funciones de IA de forma segura.
+
+Separar «necesitamos mejor búsqueda» de «necesitamos orientación de IA con fuentes verificables» aclara mucho la implementación y las comprobaciones necesarias.
