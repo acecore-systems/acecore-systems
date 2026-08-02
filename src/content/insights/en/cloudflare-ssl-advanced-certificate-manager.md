@@ -1,5 +1,5 @@
 ---
-title: "What Cloudflare’s Former Paid SSL Option Really Is — From Dedicated SSL to Advanced Certificate Manager"
+title: "Cloudflare Advanced Certificate Manager (ACM)"
 description: 'Cloudflare’s former paid option "Dedicated SSL Certificates" was renamed and expanded in 2021 as "Advanced Certificate Manager (ACM)." This article explains the differences from free Universal SSL and when ACM is needed.'
 date: 2026-03-31T00:00
 author: gui

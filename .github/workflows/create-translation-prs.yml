@@ -1,4 +1,4 @@
-name: Create Translation PR
+name: Submit OpenAI Translation Batch
 
 on:
   push:
@@ -10,31 +10,13 @@ on:
       - src/i18n/contact-form.ts
       - src/i18n/ui.ts
   workflow_dispatch:
-    inputs:
-      base_sha:
-        description: Optional base SHA for source diff detection
-        required: false
-        type: string
-      head_sha:
-        description: Optional head SHA for source diff detection
-        required: false
-        type: string
-      changed_files:
-        description: Optional comma-separated source paths
-        required: false
-        type: string
-      dry_run:
-        description: Print the task without creating it
-        required: false
-        default: false
-        type: boolean
 
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
 
 jobs:
-  create-translation-pr:
+  submit:
     runs-on: ubuntu-latest
 
     steps:
@@ -47,16 +29,28 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
+          cache: npm
 
-      - name: Create translation pull-request task
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Wait for consecutive source edits
+        run: sleep 900
+
+      - name: Use current main as the source version
+        run: |
+          git fetch origin main
+          git checkout --detach origin/main
+
+      - name: Submit OpenAI Batch
         env:
-          COPILOT_AGENT_TOKEN: ${{ secrets.COPILOT_AGENT_TOKEN }}
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
-          GITHUB_SHA: ${{ github.sha }}
-          INPUT_BASE_SHA: ${{ inputs.base_sha }}
-          INPUT_HEAD_SHA: ${{ inputs.head_sha }}
-          INPUT_CHANGED_FILES: ${{ inputs.changed_files }}
-          INPUT_DRY_RUN: ${{ inputs.dry_run }}
-        run: node scripts/create-translation-prs.mjs
+        run: |
+          if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
+            echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was submitted."
+            exit 0
+          fi
+          node --experimental-strip-types scripts/openai-translation-batch.mjs submit --head=HEAD

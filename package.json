@@ -21,6 +21,7 @@
     "test:search": "node --experimental-strip-types --test tests/deployment-marker.test.mjs tests/search-api.test.mjs tests/search-corpus.test.mjs tests/search-modal.test.mjs tests/vectorize-sync.test.mjs",
     "test:ai-guide": "node --experimental-strip-types --test tests/ai-guide-chat.test.mjs",
     "test:contact": "node --test tests/contact-turnstile.test.mjs",
+    "test:openai-translation": "node --experimental-strip-types --test tests/openai-translation-batch.test.mjs tests/merge-openai-translation-pr.test.mjs",
     "sync:vectorize": "node scripts/sync-vectorize.mjs",
     "sync:vectorize:dry-run": "node scripts/sync-vectorize.mjs --dry-run",
     "types:cloudflare": "wrangler types functions/cloudflare-env.d.ts --env production --env-interface CloudflareEnv --include-runtime false",
