@@ -108,7 +108,7 @@ main branch
 CMS save proxy
   -> 경로와 내용을 검증하고 expected-HEAD가 있는 cms: commit을 main에 기록
 
-.github/workflows/create-translation-prs.yml
+.github/workflows/submit-openai-translation-batch.yml
   -> cms: commit에만 번역 PR task 생성
 ```
 

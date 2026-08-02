@@ -110,7 +110,7 @@ main branch
 CMS save proxy
   -> validates allowed paths and content, then writes one expected-HEAD cms: commit to main
 
-.github/workflows/create-translation-prs.yml
+.github/workflows/submit-openai-translation-batch.yml
   -> creates translation PR tasks only for direct cms: commits
 ```
 

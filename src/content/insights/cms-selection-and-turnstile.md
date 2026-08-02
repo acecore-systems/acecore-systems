@@ -110,7 +110,7 @@ main branch
 CMS save proxy
   -> 許可pathと内容を同期検証し、expected-HEAD付きのcms: commitをmainへ直接保存
 
-.github/workflows/create-translation-prs.yml
+.github/workflows/submit-openai-translation-batch.yml
   -> direct pushのcms: commitだけを翻訳PR taskの対象にする
 ```
 

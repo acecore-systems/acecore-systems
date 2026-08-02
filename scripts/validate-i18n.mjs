@@ -605,7 +605,9 @@ function validateSourceTranslations({
     );
   }
   assert.equal(
-    existsSync(join(root, ".github/workflows/create-translation-prs.yml")),
+    existsSync(
+      join(root, ".github/workflows/submit-openai-translation-batch.yml"),
+    ),
     true,
     "translation task workflow missing",
   );

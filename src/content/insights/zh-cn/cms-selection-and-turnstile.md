@@ -110,7 +110,7 @@ main branch
 CMS save proxy
   -> 验证路径与内容，并向 main 写入带 expected HEAD 的 cms: commit
 
-.github/workflows/create-translation-prs.yml
+.github/workflows/submit-openai-translation-batch.yml
   -> 只为 cms: commit 创建翻译 PR task
 ```
 
