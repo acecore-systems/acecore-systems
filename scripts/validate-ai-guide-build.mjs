@@ -4,7 +4,7 @@ import { pathToFileURL } from "node:url";
 
 import { load } from "cheerio";
 
-const API_URL = "https://acecore.net/api/ai-contact";
+const API_URL = "/api/ai-chat";
 const EXPECTED_LANGUAGES = new Set([
   "de",
   "en",
