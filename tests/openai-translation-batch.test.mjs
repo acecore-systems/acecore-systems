@@ -66,7 +66,7 @@ test("UIとフォームのlocale objectは対象localeだけを置き換える",
 
 test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", async () => {
   const [submit, collect, script] = await Promise.all([
-    readFile(".github/workflows/create-translation-prs.yml", "utf8"),
+    readFile(".github/workflows/submit-openai-translation-batch.yml", "utf8"),
     readFile(".github/workflows/collect-openai-translation-batch.yml", "utf8"),
     readFile("scripts/openai-translation-batch.mjs", "utf8"),
   ]);
