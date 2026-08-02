@@ -2,7 +2,7 @@
 title: "Sveltia CMS Einrichtungsleitfaden"
 description: "Praktischer Leitfaden zum Einbau von Sveltia CMS in Astro- und statische Websites: GitHub OAuth, eine Repository-spezifische GitHub App, validierte Direktveröffentlichung, Medien-Uploads und Mehrsprachigkeit."
 date: 2026-06-07T16:00
-lastUpdated: 2026-07-28T12:00
+lastUpdated: 2026-08-02T18:00
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sicherheit"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -109,7 +109,7 @@ CMS save proxy
   -> validiert Pfade und Inhalte und schreibt einen expected-HEAD cms:-Commit nach main
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> erzeugt Übersetzungs-Tasks nur für cms:-Commits
+  -> bündelt Aktualisierungen der japanischen Quelle 15 Minuten lang und übergibt sie an OpenAI Batch
 ```
 
 Die Admin-Seite ist nur der Anfang. Authentifizierung, Medienpfade, Preview-Branches, Übersetzungen und Merge-Strategie gehören zur CMS-Architektur.

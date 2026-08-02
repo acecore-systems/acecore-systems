@@ -2,7 +2,7 @@
 title: "Guide d'installation de Sveltia CMS"
 description: "Guide pratique pour ajouter Sveltia CMS à un site Astro ou statique : backend GitHub, OAuth Worker, images, multilingue, PRs de CMS et retours d'expérience."
 date: 2026-06-07T16:00
-lastUpdated: 2026-07-28T12:00
+lastUpdated: 2026-08-02T18:00
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sécurité"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -109,7 +109,7 @@ CMS save proxy
   -> valide chemins et contenus puis écrit un commit cms: avec expected HEAD sur main
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> crée des tâches de traduction seulement pour les commits cms:
+  -> regroupe pendant 15 minutes les mises à jour de la source japonaise puis les envoie à OpenAI Batch
 ```
 
 Installer la page admin n'est qu'un début. Authentification, médias, preview, traduction et merge strategy font partie du design.

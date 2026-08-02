@@ -2,7 +2,7 @@
 title: "Руководство по внедрению Sveltia CMS"
 description: "Практическое руководство по добавлению Sveltia CMS в Astro или другой статический сайт: GitHub OAuth, отдельное GitHub App, проверяемая прямая публикация, загрузка изображений и многоязычная эксплуатация."
 date: 2026-06-07T16:00
-lastUpdated: 2026-07-28T12:00
+lastUpdated: 2026-08-02T18:00
 author: gui
 tags: ["Технологии", "CMS", "Astro", "Cloudflare", "Безопасность"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -109,7 +109,7 @@ CMS save proxy
   -> проверяет пути и содержимое и пишет cms:-commit с expected HEAD в main
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> создаёт задачи перевода только для cms: commits
+  -> в течение 15 минут объединяет обновления японского источника и отправляет их в OpenAI Batch
 ```
 
 Админская страница — только начало. Аутентификация, пути медиа, preview branches, переводы и стратегия merge тоже становятся частью CMS-дизайна.

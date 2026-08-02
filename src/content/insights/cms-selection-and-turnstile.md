@@ -2,7 +2,7 @@
 title: "Sveltia CMS導入ガイド"
 description: "Astroなどの静的サイトにSveltia CMSを導入し、GitHub OAuth、専用GitHub App、検証付き直接公開、画像アップロード、多言語運用まで整える手順と反省点をまとめます。"
 date: 2026-06-07T16:00
-lastUpdated: 2026-07-28T12:00
+lastUpdated: 2026-08-02T18:00
 author: gui
 tags: ["技術", "CMS", "Astro", "Cloudflare", "セキュリティ"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -111,7 +111,7 @@ CMS save proxy
   -> 許可pathと内容を同期検証し、expected-HEAD付きのcms: commitをmainへ直接保存
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> direct pushのcms: commitだけを翻訳PR taskの対象にする
+  -> 日本語sourceの更新を15分まとめてOpenAI Batchへ投入する
 ```
 
 最初は「CMSを置けば終わり」に見えますが、実際には認証、画像、preview、翻訳、PRの作り方まで含めて設計しないと運用で詰まります。

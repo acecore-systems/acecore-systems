@@ -2,7 +2,7 @@
 title: "Sveltia CMS 导入指南"
 description: "总结在 Astro 等静态网站中导入 Sveltia CMS 的方法，涵盖 GitHub backend、OAuth Worker、图片上传、多语言运维、CMS 专用 PR 流程以及实际修正中得到的经验。"
 date: 2026-06-07T16:00
-lastUpdated: 2026-07-28T12:00
+lastUpdated: 2026-08-02T18:00
 author: gui
 tags: ["技术", "CMS", "Astro", "Cloudflare", "安全"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -111,7 +111,7 @@ CMS save proxy
   -> 验证路径与内容，并向 main 写入带 expected HEAD 的 cms: commit
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> 只为 cms: commit 创建翻译 PR task
+  -> 将日语 source 更新汇总 15 分钟后提交到 OpenAI Batch
 ```
 
 导入 CMS 并不只是放一个管理页面。认证、图片路径、preview 分支、多语言和 merge 策略都会影响实际运维。
