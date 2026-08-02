@@ -3,7 +3,7 @@ export type AiGuideMessage = {
   content: string;
 };
 
-export const AI_GUIDE_API_URL = "https://acecore.net/api/ai-contact";
+export const AI_GUIDE_API_URL = "/api/ai-chat";
 export const AI_GUIDE_CLIENT_HEADER = "X-Acecore-AI-Client";
 export const AI_GUIDE_TIMEOUT_MS = 25_000;
 export const AI_GUIDE_MAX_QUESTION_LENGTH = 800;

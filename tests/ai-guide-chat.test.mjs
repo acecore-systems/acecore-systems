@@ -150,7 +150,7 @@ test("閉じたpanelまたはabort済みrequestの応答を破棄する", () => 
 });
 
 test("中央API、25秒timeout、安全なDOM描画を実装する", () => {
-  assert.equal(AI_GUIDE_API_URL, "https://acecore.net/api/ai-contact");
+  assert.equal(AI_GUIDE_API_URL, "/api/ai-chat");
   assert.equal(AI_GUIDE_CLIENT_HEADER, "X-Acecore-AI-Client");
   assert.equal(AI_GUIDE_TIMEOUT_MS, 25_000);
 
