@@ -2,7 +2,7 @@
 
 ## 対象
 
-- テーマの視覚基準: `docs/design-qa/quiet-infrastructure/implementation-desktop.jpg`
+- テーマの視覚基準: `docs/03_詳細設計/デザイン品質確認/静かなインフラ/実装_デスクトップ.jpg`
   - 1487 × 1058 px
   - 「静かな基盤」の色、書体、三層断面、コピーを維持するための基準
 - 余白設計の視覚基準: `C:\Users\gnish\repos\acecore-net\docs\ui-concepts\selected-technical-workshop\01-home-hero-detail.png`

@@ -1,4 +1,4 @@
-# Vectorize 検索の運用
+# Vectorize検索運用
 
 Acecore Systems の検索は、利用者が明示的に実行した場合に OpenAI Embeddings API と Cloudflare Vectorize で当サイトの公開情報を検索します。結果が取得できない場合だけ、ブラウザ内の Pagefind をキーワード検索のフォールバックとして使います。ローカル結果を表示した後は、Acecore共通検索APIの検証済み結果だけを「Acecore関連サイト」として下部へ追加表示します。
 
