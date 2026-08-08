@@ -6,5 +6,8 @@
 /about https://acecore.net/about/ 301
 /about/ https://acecore.net/about/ 301
 /blog/tags/* https://acecore.net/blog/ 301
-/blog/cloudflare-pages-security https://acecore.net/blog/cloudflare-pages-security/ 301
-/blog/cloudflare-pages-security/ https://acecore.net/blog/cloudflare-pages-security/ 301
+
+# The article is now an internal Systems insight; keep the legacy URL on the
+# same host so visitors and crawlers reach the current canonical page directly.
+/blog/cloudflare-pages-security /insights/cloudflare-pages-security/ 301
+/blog/cloudflare-pages-security/ /insights/cloudflare-pages-security/ 301
