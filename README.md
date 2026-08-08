@@ -60,7 +60,7 @@ npm run preview
 
 日本語ページのサイト内検索は、ブラウザ内で動くPagefindを主検索とし、OpenAI Embeddings / Cloudflare Vectorizeによる「関連する内容」を補助表示します。
 
-PagefindとVectorizeのcorpusは公開後の日本語HTMLから生成します。通常のPages PreviewはVectorize bindingを持たずPagefindだけを使い、VectorizeはProduction indexだけを自動同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorizeサイト内検索 運用ガイド](docs/search-vectorize.md) を参照してください。
+PagefindとVectorizeのcorpusは公開後の日本語HTMLから生成します。通常のPages PreviewはVectorize bindingを持たずPagefindだけを使い、VectorizeはProduction indexだけを自動同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorize検索運用](docs/04_運用設計/02_Vectorize検索運用.md) を参照してください。
 
 OpenAI用1536次元Production indexは256 vectorsを同期し、`ja` namespaceの既知queryを確認済みです。関連検索はProductionで有効、通常のPages Previewでは無効です。
 
@@ -70,6 +70,8 @@ OpenAI用1536次元Production indexは256 vectorsを同期し、`ja` namespace�
 
 Sveltia CMS は `/admin/` から利用します。CMS では日本語の固定ページ文言、実績、サイト設定、画像アップロードを管理します。翻訳と技術解説の記事はCMSの管理対象に含めず、Pull Requestで更新します。
 
-保存するとPages Functionsがuser tokenで編集者とrepository権限を再確認し、変更path、件数、容量、`main`のHEADを同期検証します。検証後は対象repositoryとContents writeだけに絞った専用GitHub Appの短期installation tokenで、内容を1 commitとして`main`へ直接反映します。その後はCloudflare PagesのGitHub連携deployで本番公開されます。コード、設定、schemaの変更は従来どおりPull RequestとCIを通します。認証境界、管理対象path、検証手順は [CMS の安全な書き込み運用](docs/cms-write-workflow.md) を参照してください。
+保存するとPages Functionsがuser tokenで編集者とrepository権限を再確認し、変更path、件数、容量、`main`のHEADを同期検証します。検証後は対象repositoryとContents writeだけに絞った専用GitHub Appの短期installation tokenで、内容を1 commitとして`main`へ直接反映します。その後はCloudflare PagesのGitHub連携deployで本番公開されます。コード、設定、schemaの変更は従来どおりPull RequestとCIを通します。認証境界、管理対象path、検証手順は [CMS保存・自動公開運用](docs/04_運用設計/01_CMS保存・自動公開運用.md) を参照してください。
+
+設計文書の入口は [docs/README.md](docs/README.md) です。
 
 日本語sourceが変わると翻訳source hashの検証が失敗し、古い翻訳のまま新しいdeployが進まない設計です。`Create Translation PR` workflowが8言語の更新タスクを作り、翻訳完了後に `npm run update:i18n-state`、`npm run validate:i18n`、`npm run build` を実行します。
