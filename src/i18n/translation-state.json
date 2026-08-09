@@ -1,4 +1,13 @@
 {
   "sourceHash": "e345eedeafb255c465511a065c108af80ca827e18ea4e0e025ec36a8b4d1eede",
-  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
+  "locales": [
+    "en",
+    "zh-cn",
+    "es",
+    "pt",
+    "fr",
+    "ko",
+    "de",
+    "ru"
+  ]
 }

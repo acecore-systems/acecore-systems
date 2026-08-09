@@ -269,7 +269,12 @@
       }
     },
     "indexSummary": "我们将陪伴您实施 AI、部署 Web 应用程序，并就 IT 基础设施做出从业务组织到发布和运营改进的决策。",
-    "indexTopics": ["AI简介", "部署", "IT基金会", "技术咨询"],
+    "indexTopics": [
+      "AI简介",
+      "部署",
+      "IT基金会",
+      "技术咨询"
+    ],
     "heroPrimaryCta": "咨询当前卡住的问题",
     "heroSecondaryCta": "查看服务方案",
     "audienceLabel": "主要目标",
@@ -669,7 +674,12 @@
         }
       },
       "indexSummary": "我们将组织概念和业务问题，并负责从设计和开发到发布和移交的一切。",
-      "indexTopics": ["需求安排", "设计与开发", "发布/迁移", "操作接管"],
+      "indexTopics": [
+        "需求安排",
+        "设计与开发",
+        "发布/迁移",
+        "操作接管"
+      ],
       "introTitle": "即使您想要创造的东西不在规范中，我们也会从概念上组织它。",
       "introBody": "不仅仅是接收功能列表并实施它们，我们还确认谁的工作将被更改、将处理哪些信息以及在发布后由谁来操作。我们将目标和优先级转化为需求，确定必要的范围，并将其发展到可以实际使用的状态。",
       "challenges": [
@@ -820,7 +830,12 @@
         }
       },
       "indexSummary": "明确维护范围、变更接受、监控、备份和附加开发的界限。",
-      "indexTopics": ["维护范围", "监控/备份", "变更管理", "持续改进"],
+      "indexTopics": [
+        "维护范围",
+        "监控/备份",
+        "变更管理",
+        "持续改进"
+      ],
       "introTitle": "在撰写维护合同之前，请说明支持的范围。",
       "introBody": "维护一词本身往往包括细微的更正、故障排除、功能添加以及外部服务的问题。我们会整理追加预估的对象、接待方式、确认环境、联系方式、条件等，创造运营人员和开发方能够做出相同决策的局面。",
       "challenges": [
@@ -951,7 +966,12 @@
         }
       },
       "indexSummary": "根据现有站点配置添加CMS、AI、搜索、评论、表单联动等。",
-      "indexTopics": ["CMS、已更新", "AI、评论", "搜索/呼叫", "形成联动"],
+      "indexTopics": [
+        "CMS、已更新",
+        "AI、评论",
+        "搜索/呼叫",
+        "形成联动"
+      ],
       "introTitle": "我们优先考虑持续运营而不是增加功能。",
       "introBody": "即使是有用的功能，如果更新负责人无法处理、发布后无法修复、或者外部服务太多，那么它也不会成立。我们将检查您当前的网站、更新方式、查询响应和发布流程，并共同设计必要的功能和操作规则。",
       "challenges": [
@@ -1108,7 +1128,12 @@
         }
       },
       "indexSummary": "SEO，跨越速度、可访问性和安全性，并按修复顺序组织它们。",
-      "indexTopics": ["SEO", "显示速度", "辅助功能", "CSP、分布设置"],
+      "indexTopics": [
+        "SEO",
+        "显示速度",
+        "辅助功能",
+        "CSP、分布设置"
+      ],
       "introTitle": "不仅是为了提高你的分数，也是为了能够继续进行修正。",
       "introBody": "质量改进不会因单一诊断或设置添加而结束。检查页面的作用、使用的测量和外部脚本、更新频率和发布流程，并在保持影响范围和确认方法不变的情况下分阶段进行修正。",
       "challenges": [
@@ -1453,80 +1478,80 @@
     "ctaBody": "请告诉我们当前 URL、更新方式、希望增加的功能和运营限制。"
   },
   "works": {
-    "title": "案例",
-    "description": "介绍 Acecore Systems 在网站制作与改善、CMS、搜索和服务器运营等方面的案例。",
-    "heroTitle": "项目与成果。",
-    "heroLead": "说明网站制作与改善、CMS、搜索和服务器运营等项目的背景与实施内容。",
+    "title": "项目案例",
+    "description": "介绍 Acecore Systems 在网站制作与优化、CMS、搜索、服务器运维等方面的项目案例。",
+    "heroTitle": "介绍我们的项目与\n成果。",
+    "heroLead": "介绍网站制作与优化、CMS、搜索、服务器运维等项目的背景与实施内容。",
     "cases": [
       {
-        "title": "Acecore改进了官方网站上的联系热线",
-        "category": "表单、AI 导流、CMS",
-        "summary": "我们组织了固定页面、常见问题解答、AI聊天和CMS管理项目，以减少选择服务、请求评估和询问之前的焦虑。",
-        "challenge": "很难确定访问者可以讨论什么，而且询问往往很分散。",
-        "proposal": "我们通过 AI 结合特定服务的路线、查询类型、常见问题解答和预先指导，将必要的信息整理成表格。",
-        "result": "咨询前确认和正式咨询已分开，更容易进行估价和服务咨询。",
-        "imageAlt": "Acecore官网查询页面",
+        "title": "Acecore 官方网站咨询入口优化",
+        "category": "表单・AI 引导・CMS",
+        "summary": "为便于选择服务、咨询报价并减少提交咨询前的顾虑，我们梳理了固定页面、FAQ、AI 聊天和 CMS 管理项。",
+        "challenge": "访客难以判断可以咨询哪些内容，咨询内容也容易分散。",
+        "proposal": "我们结合按服务划分的引导路径、咨询类型、FAQ 和 AI 预先引导，将所需信息汇总到表单中。",
+        "result": "我们将咨询前确认与正式咨询分开，形成了更容易进入报价或服务咨询的流程。",
+        "imageAlt": "Acecore 官方网站咨询页面",
         "externalLabel": ""
       },
       {
-        "title": "Acecore Store 的规划与开发",
-        "category": "电商、支付与按需生产",
-        "summary": "我们构建了一个按需生产的商店，将浏览 Acecore 和 Aceserver 官方商品、购物车、运费确认、支付、生产和配送整合为一个完整流程。",
-        "challenge": "商品销售需要在降低库存负担的同时，清楚地说明价格、运费、退换货条件和销售者信息，并可靠地衔接支付、生产和配送。",
-        "proposal": "以 Astro 和 Cloudflare Pages / Pages Functions 为基础，结合 D1、R2、Queues、Turnstile、Stripe Checkout 和 Printful API。用户可在购物车确认运费与总额，并在支付完成后进入生产与配送流程。",
-        "result": "我们公开了一个销售基础，用户可按 Acecore 和 Aceserver 品牌浏览商品，并针对每笔订单委托按需生产。商店不保存支付信息，便于安全运营。",
-        "imageAlt": "Acecore Store 首页，展示 Acecore 和 Aceserver 的官方商品",
-        "externalLabel": "访问 Acecore Store"
+        "title": "Acecore Store 的策划与开发",
+        "category": "电商网站・支付・按需生产",
+        "summary": "我们将 Acecore 和 Aceserver 的官方周边构建为按需生产型商店，实现从浏览商品、加入购物车、确认运费、支付到生产与发货的一体化处理。",
+        "challenge": "在周边商品销售中，需要在降低库存负担的同时，提前清晰说明价格、运费、退货条件和销售者信息，并确保支付与生产、发货可靠衔接。",
+        "proposal": "以 Astro 和 Cloudflare Pages / Pages Functions 为基础，组合使用 D1、R2、Queues、Turnstile、Stripe Checkout 和 Printful API。用户可在购物车中确认运费与总额，并在支付完成后衔接生产与发货。",
+        "result": "我们上线了一个可按 Acecore 和 Aceserver 品牌浏览商品、并按订单委托按需生产的销售平台。商店不保存支付信息，因此更便于安全运营。",
+        "imageAlt": "Acecore Store 首页，展示 Acecore 和 Aceserver 官方周边的页面",
+        "externalLabel": "查看 Acecore Store"
       },
       {
-        "title": "Acecore官网功能添加/运营基础设施",
-        "category": "CMS、搜索、安全、性能",
-        "summary": "我们已分阶段向静态站点添加了 CMS、文章基础结构、站点搜索、结构化数据、CSP、可访问性改进和显示速度改进。",
-        "challenge": "我们需要一种设计，能够加强信息传播和查询渠道，同时保持静态网站的速度和易用性。",
-        "proposal": "我们将Astro、Cloudflare Pages、Sveltia CMS、Pagefind、结构化数据和安全标头组合在一起，并将它们组织成一种允许您少量添加必要功能的格式。",
-        "result": "这已成为在操作博客、固定页面、搜索和查询线路时改进它们的基础，并且收集了可以轻松转移到类似网站功能添加项目的知识。",
-        "imageAlt": "Acecore官方网站首页",
-        "externalLabel": "查看相关技术说明"
+        "title": "Acecore 官方网站的功能扩展与运营基础",
+        "category": "CMS・搜索・安全性・性能",
+        "summary": "我们分阶段为静态网站添加了 CMS、文章系统、站内搜索、结构化数据、CSP、无障碍优化和页面加载速度优化。",
+        "challenge": "在强化信息发布和咨询路径的同时，还需要保持静态网站的速度和易维护性。",
+        "proposal": "我们将 Astro、Cloudflare Pages、Sveltia CMS、Pagefind、结构化数据和安全响应头组合起来，构建了可按需逐步添加功能的架构。",
+        "result": "形成了一个能够持续运营并改进博客、固定页面、搜索和咨询路径的基础，也沉淀了便于复用于同类网站功能扩展项目的经验。",
+        "imageAlt": "Acecore 官方网站首页",
+        "externalLabel": "查看相关技术解读"
       },
       {
-        "title": "从 Aceserver 操作中获得的稳定和监控知识",
-        "category": "服务器运营/社区基础设施",
-        "summary": "Minecraft 通过公共服务器的运营，我们不断提高连接稳定性、监控、备份和指导。",
-        "challenge": "随着参与者数量的增加，需要提高连接稳定性、信息共享、故障处理和操作规则。",
-        "proposal": "我们改进了服务器配置、监控、备份和Web布线，而没有将技术运营和社区运营分开。",
-        "result": "长期运营所获得的知识现在可以应用到业务系统的监控和运营设计中。",
-        "imageAlt": "Ace服务器门户主屏幕",
-        "externalLabel": "查看Ace服务器参与信息"
+        "title": "Aceserver 运维中积累的稳定性与监控经验",
+        "category": "服务器运维・社区基础设施",
+        "summary": "通过运营 Minecraft 公共服务器，我们持续改进连接稳定性、监控、备份和引导路径。",
+        "challenge": "参与者越多，就越需要完善连接稳定性、信息共享、故障响应和运维规则。",
+        "proposal": "我们没有将技术运维与社区运营分开，而是统筹改进了服务器架构、监控、备份和网站引导路径。",
+        "result": "通过长期运营积累的经验，如今也可以应用于业务系统的监控与运维设计。",
+        "imageAlt": "エースサーバーポータル主界面",
+        "externalLabel": "查看エースサーバー的加入指南"
       },
       {
-        "title": "Ace服务器门户制作",
-        "category": "Web生产/社区门户/CMS",
-        "summary": "Minecraft我们将免费公共服务器“王牌服务器”的参与信息、视频、世界地图、Wiki、前往Discord的路线整理为一个入口。",
-        "challenge": "服务器概览、参与方式、规则、视频、世界地图等信息被分散在多个位置，让初次访问者难以选择第一步。",
-        "proposal": "在不替换现有信息源的情况下，我们将其配置为一个门户，您可以轻松地从服务器介绍导航到Discord、视频、每个世界地图和Wiki。",
-        "result": "它使用 Astro、UnoCSS 和 Sveltia CMS 发布为静态站点。此配置允许您从 CMS 更新页面文本和站点设置。",
-        "imageAlt": "Ace Server Portal首页",
-        "externalLabel": "查看 Ace 服务器门户"
+        "title": "エースサーバーポータル网站制作",
+        "category": "网站制作・社区门户・CMS",
+        "summary": "我们将 Minecraft 免费公开服务器「エースサーバー」的加入指南、视频、世界地图、Wiki 及 Discord 入口，整合为一个统一的导航入口。",
+        "challenge": "服务器概况、加入方式、规则、视频、世界地图等信息分散在多个位置，初次访问者难以找到适合开始的入口。",
+        "proposal": "在不替换现有信息源的前提下，我们将其构建为一个门户，让用户能够从服务器介绍顺畅前往 Discord、视频、各个世界地图和 Wiki。",
+        "result": "目前已作为使用 Astro、UnoCSS、Sveltia CMS 构建的静态网站上线。页面正文和网站设置均可通过 CMS 更新。",
+        "imageAlt": "エースサーバーポータル首页",
+        "externalLabel": "查看エースサーバーポータル"
       },
       {
-        "title": "樱桃英语课堂网站更新",
-        "category": "网站制作、CMS、站内搜索",
-        "summary": "课程信息、课程、公告、博客、活动和常见问题解答已组织到一个站点中，并且现有站点已更新为 Astro 结构。",
-        "challenge": "在继承现有网站和博客的信息的同时，我们需要一种结构，使访问者能够轻松地继续学习课程和试听课程，并且能够持续更新。",
-        "proposal": "通过结合Astro、UnoCSS、Sveltia CMS和Pagefind，我们将现有文章迁移、旧URL重定向、站点搜索和CMS更新合并到一个操作平台中。",
-        "result": "我们使搜索从课堂信息到试听课程、每日公告和过去文章的所有内容变得更加容易，并且我们已经转向可以在 PR 中确认和发布对 CMS 的更改的操作。",
-        "imageAlt": "樱桃英语班主页首页",
-        "externalLabel": "查看Cherry英语课堂主页"
+        "title": "Cherry 英语教室网站改版",
+        "category": "网站制作・CMS・站内搜索",
+        "summary": "我们将教室介绍、课程、通知、博客、活动和 FAQ 整理到一个网站中，并将现有网站改版为 Astro 架构。",
+        "challenge": "在继承现有网站和博客信息的同时，还需要让访客更容易进入课程或体验课，并构建可持续更新的结构。",
+        "proposal": "我们结合 Astro、UnoCSS、Sveltia CMS、Pagefind，将既有文章迁移、旧URL重定向、站内搜索和 CMS 更新整合到一个运营平台中。",
+        "result": "从教室介绍、体验课、日常通知到历史文章，内容都变得更易查找；同时迁移到一种可通过 PR 检查 CMS 更改后再发布的运营方式。",
+        "imageAlt": "Cherry 英语教室网站首页",
+        "externalLabel": "查看 Cherry 英语教室网站"
       },
       {
-        "title": "帽子主页制作",
-        "category": "网站制作、CMS、站内搜索",
-        "summary": "我们将其设计为个人网站，您可以通过将 VRChat 的绘画、小说和 3D 头像制作结合到一个门户中，继续分享您的创意活动。",
-        "challenge": "活动入口分为博客、外部发帖网站、BOOTH、YouTube、X等，使得初次访问者很难掌握活动的整体情况以及应该观看的顺序。",
-        "proposal": "将活动整理为绘画、小说和建模 3 个方向，并以连接博客、作品、个人资料和外部服务的中心来构建。",
-        "result": "它使用 Astro、TypeScript、UnoCSS、Sveltia CMS、Pagefind 发布为静态站点。您可以在CMS上更新您的博客和作品信息，并且可以搜索文章和作品。",
-        "imageAlt": "Hatt的主页首页",
-        "externalLabel": "查看 Hatt 的作品/博客"
+        "title": "Hatt 网站制作",
+        "category": "网站制作・CMS・站内搜索",
+        "summary": "我们将绘画、小说、面向 VRChat 的 3D 虚拟形象与互动装置制作整合到一个入口，并将其设计为能够持续发布创作活动内容的个人网站。",
+        "challenge": "创作活动的入口分散在博客、外部投稿网站、BOOTH、YouTube、X 等平台，初次访问者难以了解活动全貌及浏览顺序。",
+        "proposal": "我们将活动归纳为绘画、小说和建模3类，构建为连接博客、作品、个人资料和外部服务的枢纽。",
+        "result": "目前已作为使用 Astro、TypeScript、UnoCSS、Sveltia CMS、Pagefind 构建的静态网站上线。博客和作品信息可通过 CMS 更新，文章和作品也可进行搜索。",
+        "imageAlt": "Hatt 网站首页",
+        "externalLabel": "查看 Hatt 的作品与博客"
       }
     ]
   },
