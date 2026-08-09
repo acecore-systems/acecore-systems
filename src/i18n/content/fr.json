@@ -1494,6 +1494,16 @@
         "externalLabel": ""
       },
       {
+        "title": "Conception et développement d’Acecore Store",
+        "category": "E-commerce, paiements et production à la demande",
+        "summary": "Nous avons conçu une boutique à la demande qui réunit dans un même parcours la découverte des produits officiels d’Acecore et d’Aceserver, le panier, la confirmation des frais de livraison, le paiement, la fabrication et l’expédition.",
+        "challenge": "La vente de produits devait limiter la charge de stock tout en présentant clairement les prix, la livraison, les retours et les informations du vendeur, et en reliant de façon fiable le paiement, la fabrication et l’expédition.",
+        "proposal": "Avec Astro et Cloudflare Pages / Pages Functions comme base, nous avons combiné D1, R2, Queues, Turnstile, Stripe Checkout et l’API Printful. Depuis le panier, les clients peuvent vérifier les frais de livraison et le total, puis passer de la fin du paiement à la fabrication et à l’expédition.",
+        "result": "Nous avons publié une base de vente permettant de parcourir les produits par marque Acecore ou Aceserver et d’envoyer chaque commande en production à la demande. La boutique ne conserve pas les informations de paiement, ce qui facilite une exploitation plus sûre.",
+        "imageAlt": "Page d’accueil d’Acecore Store présentant les produits officiels d’Acecore et d’Aceserver",
+        "externalLabel": "Visiter Acecore Store"
+      },
+      {
         "title": "Évolution fonctionnelle et socle opérationnel du site d’entreprise Acecore",
         "category": "CMS, recherche, sécurité et performances",
         "summary": "Nous avons progressivement ajouté à un site statique un CMS, un socle éditorial, une recherche sur le site, des données structurées, CSP, ainsi que des améliorations d’accessibilité et de performances.",
