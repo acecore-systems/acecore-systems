@@ -149,7 +149,7 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "詳しく見る",
     viewAllServices: "設計領域をすべて見る",
     viewConsultationEntry: "相談の入口を見る",
-    selectedWorkTitle: "課題から、運用できる形へ。",
+    selectedWorkTitle: "小さな課題から、運用できる形へ。",
     selectedWorkLead:
       "課題をどう整理し、どのような仕組みにしたかを事例ごとに紹介します。",
     viewWorks: "取り組みを見る",
@@ -264,7 +264,8 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "View details",
     viewAllServices: "View all service areas",
     viewConsultationEntry: "Choose a consultation route",
-    selectedWorkTitle: "From a problem to something the team can operate.",
+    selectedWorkTitle:
+      "From small challenges to solutions that can be sustained.",
     selectedWorkLead:
       "Each case explains how we framed the problem and shaped it into an operational system.",
     viewWorks: "View our work",
@@ -380,7 +381,7 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "查看详情",
     viewAllServices: "查看全部服务领域",
     viewConsultationEntry: "查看咨询入口",
-    selectedWorkTitle: "从课题走向可运营的成果。",
+    selectedWorkTitle: "从细小课题到可持续运营的形态。",
     selectedWorkLead: "按案例介绍我们如何梳理课题并形成可持续运营的机制。",
     viewWorks: "查看案例",
     servicesEyebrow: "Design domains / 服务领域",
@@ -491,7 +492,7 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "Ver detalles",
     viewAllServices: "Ver todas las áreas",
     viewConsultationEntry: "Elegir una vía de consulta",
-    selectedWorkTitle: "Del problema a una solución operable.",
+    selectedWorkTitle: "De pequeños retos a soluciones que se pueden sostener.",
     selectedWorkLead:
       "Cada caso muestra cómo ordenamos el problema y lo convertimos en un sistema que puede mantenerse.",
     viewWorks: "Ver proyectos",
@@ -610,7 +611,8 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "Ver detalhes",
     viewAllServices: "Ver todas as áreas",
     viewConsultationEntry: "Escolher uma rota de consulta",
-    selectedWorkTitle: "Do problema a uma solução operável.",
+    selectedWorkTitle:
+      "De pequenos desafios a soluções que podem ser sustentadas.",
     selectedWorkLead:
       "Cada caso mostra como organizamos o problema e o transformamos em um sistema sustentável.",
     viewWorks: "Ver projetos",
@@ -729,7 +731,7 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "Voir le détail",
     viewAllServices: "Voir tous les domaines",
     viewConsultationEntry: "Choisir un point d’entrée",
-    selectedWorkTitle: "Du problème à une solution exploitable.",
+    selectedWorkTitle: "Des petits enjeux à des solutions durables.",
     selectedWorkLead:
       "Chaque cas montre comment nous cadrons le problème et le transformons en système durable.",
     viewWorks: "Voir les réalisations",
@@ -846,7 +848,7 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "자세히 보기",
     viewAllServices: "전체 서비스 영역 보기",
     viewConsultationEntry: "상담 경로 보기",
-    selectedWorkTitle: "과제에서 운영 가능한 형태로.",
+    selectedWorkTitle: "작은 과제에서, 운영할 수 있는 형태로.",
     selectedWorkLead:
       "과제를 정리해 어떤 시스템으로 만들었는지 사례별로 소개합니다.",
     viewWorks: "사례 보기",
@@ -960,7 +962,7 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "Details ansehen",
     viewAllServices: "Alle Leistungsbereiche ansehen",
     viewConsultationEntry: "Beratungsweg wählen",
-    selectedWorkTitle: "Vom Problem zur betreibbaren Lösung.",
+    selectedWorkTitle: "Von kleinen Herausforderungen zu tragfähigen Lösungen.",
     selectedWorkLead:
       "Jeder Fall zeigt, wie wir das Problem strukturiert und in ein dauerhaft betreibbares System überführt haben.",
     viewWorks: "Projekte ansehen",
@@ -1079,7 +1081,8 @@ export const ui: Record<Locale, UiText> = {
     viewDetails: "Подробнее",
     viewAllServices: "Все направления услуг",
     viewConsultationEntry: "Выбрать формат консультации",
-    selectedWorkTitle: "От задачи к решению, готовому к эксплуатации.",
+    selectedWorkTitle:
+      "От небольших задач к решениям, которые можно поддерживать.",
     selectedWorkLead:
       "В каждом кейсе показано, как мы сформулировали задачу и превратили её в устойчивую систему.",
     viewWorks: "Смотреть проекты",

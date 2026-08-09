@@ -22,13 +22,29 @@
   },
   "guide": {
     "title": "Guide de mise en œuvre",
-    "description": "Les points essentiels pour réussir la mise en place d’un système métier : définition des besoins, entretiens avec les équipes, déploiement progressif et adoption opérationnelle.",
-    "heroTitle": "La réussite d’un système métier se joue avant même le développement.",
-    "heroLead": "Avant de dresser une liste de fonctionnalités, nous examinons l’objectif du processus, les cas exceptionnels, les données, les droits d’accès et l’organisation opérationnelle.",
+    "description": "Les parcours du développement sur mesure et de l’accompagnement IT, ainsi que les points à vérifier pour les besoins, le déploiement progressif et l’adoption opérationnelle.",
+    "heroTitle": "Choisissez la manière d’avancer adaptée à votre situation.",
+    "heroLead": "Que vous créiez un nouveau système ou publiiez et amélioriez un existant, commencez par choisir la façon d’avancer.",
     "visual": {
       "alt": "Une cheffe de projet et un ingénieur définissent le périmètre de mise en œuvre en examinant un processus sur papier et un ordinateur",
       "caption": "Ensemble, nous examinons les champs de saisie, les cas exceptionnels, les droits d’accès et les outils actuels afin de définir le premier périmètre à tester."
     },
+    "routeTitle": "Choisissez la manière d’avancer adaptée à votre situation.",
+    "routeLead": "Créer un nouveau système ou publier et améliorer l’existant : nous séparons les parcours dès le point de départ de l’échange.",
+    "routes": [
+      {
+        "eyebrow": "DÉVELOPPEMENT SUR MESURE / DEVELOPMENT",
+        "title": "Vous souhaitez nous confier le parcours de l’idée jusqu’au lancement",
+        "body": "Nous clarifions ce que vous souhaitez créer et l’enjeu métier, puis menons un projet des besoins et de la conception au développement, au lancement et à la transmission.",
+        "label": "Voir le déroulement du développement sur mesure"
+      },
+      {
+        "eyebrow": "ACCOMPAGNEMENT IT / ADVISORY",
+        "title": "Vous souhaitez mener un système existant jusqu’au lancement et à l’exploitation",
+        "body": "Nous examinons le code créé en interne ou avec AI, les sites existants et la base cloud ou IT, puis intervenons sur le périmètre nécessaire au forfait ou à la demande.",
+        "label": "Voir le déroulement de l’accompagnement IT"
+      }
+    ],
     "journeyTitle": "Une mise en œuvre progressive, validée à chaque étape.",
     "journeyLead": "Nous dressons l’état des lieux, définissons un premier périmètre, puis choisissons l’amélioration suivante à partir de l’usage réel.",
     "journey": [
@@ -154,40 +170,40 @@
         "answer": "Oui. Nous pouvons assurer un accompagnement continu pour l’ajout de fonctionnalités, l’amélioration des écrans, l’ajustement des droits et l’exploitation de l’infrastructure, en tenant compte de l’usage réel."
       }
     ],
-    "ctaTitle": "Définissons le bon périmètre à partir de vos opérations actuelles.",
-    "ctaBody": "Présentez-nous vos processus actuels, les outils que vous utilisez et les difficultés que vous rencontrez.",
-    "ctaLabel": "Discuter d’une mise en œuvre"
+    "ctaTitle": "Choisissez le parcours adapté à votre situation.",
+    "ctaBody": "Que vous souhaitiez confier le projet dès l’idée ou mener un système existant vers le lancement et l’exploitation, commencez par le parcours le plus proche.",
+    "ctaLabel": "Choisir une manière d’avancer"
   },
   "home": {
     "title": "Systèmes métier et développement d’applications",
     "description": "Acecore Systems vous accompagne de bout en bout : conseil IT, adoption de l’AI, amélioration opérationnelle, déploiement, développement d’applications Web et exploitation des données.",
     "heroEyebrow": "ACECORE SYSTEMS — DES SYSTÈMES AU SERVICE DES OPÉRATIONS",
     "heroTitle": "La continuité de votre activité\nrepose sur une conception discrète.",
-    "heroLead": "Du conseil IT et de l’adoption de l’AI aux systèmes métier, aux applications Web et aux intégrations externes.\nNous vous accompagnons de bout en bout, de la définition des besoins et de la conception au développement et aux améliorations après le lancement.",
-    "primaryCta": "Discuter de la conception et du développement",
-    "secondaryCta": "Consulter les tarifs indicatifs",
-    "layersTitle": "Nous envisageons les opérations en trois dimensions.",
-    "layersLead": "L’environnement avec lequel les personnes interagissent, les systèmes qui assurent les traitements en arrière-plan et les opérations qui garantissent leur utilité dans la durée. Nous concevons ces trois dimensions comme un tout.",
+    "heroLead": "Du conseil IT et de l’adoption de l’AI aux systèmes métier, aux applications Web et aux intégrations externes.\nQue vous souhaitiez un projet de l’idée au lancement ou un accompagnement adapté à votre environnement actuel, nous intervenons des besoins aux améliorations après le lancement.",
+    "primaryCta": "Discuter du développement",
+    "secondaryCta": "Discuter de l’accompagnement IT",
+    "layersTitle": "Mettre en place le système nécessaire à partir de l’objectif.",
+    "layersLead": "Les points de contact client, les opérations quotidiennes et la base IT qui les soutient. Nous améliorons le nécessaire dans un périmètre durable.",
     "layers": [
       {
-        "label": "Terrain",
-        "title": "Simple à utiliser au quotidien",
-        "body": "Une utilisation intuitive et une navigation claire.\nUne conception qui facilite naturellement le travail de chaque jour."
-      },
-      {
-        "label": "Systèmes",
-        "title": "Des traitements bien structurés",
-        "body": "Les données, les droits et les exceptions sont organisés\npour garantir des traitements sûrs et cohérents."
+        "label": "Clients",
+        "title": "Créer le lien avec les clients",
+        "body": "Nous organisons sites, réservations et formulaires de contact\nafin que le premier échange progresse sans friction."
       },
       {
         "label": "Opérations",
-        "title": "Une amélioration continue",
-        "body": "La supervision, la maintenance et les cycles d’amélioration\nassurent un fonctionnement discret et durable."
+        "title": "Fluidifier les opérations",
+        "body": "Applications internes, outils, intégrations et automatisation\nréduisent le travail manuel et les vérifications."
+      },
+      {
+        "label": "Fondation",
+        "title": "Renforcer la base IT",
+        "body": "L’accompagnement IT pour le lancement, l’exploitation et les décisions techniques\naide à faire progresser l’IT de votre entreprise d’un cran."
       }
     ],
     "philosophyEyebrow": "PHILOSOPHIE DE CONCEPTION",
     "philosophyTitle": "La même précision pour ce qui se voit et ce qui ne se voit pas.",
-    "philosophyLead": "Nous concevons non seulement des écrans faciles à utiliser, mais aussi les flux d’information, les conditions de décision, la gestion des exceptions et les opérations après le lancement, exigence après exigence, afin que votre activité se poursuive sans interruption.",
+    "philosophyLead": "Des points de contact client aux systèmes qui soutiennent les opérations et à l’accompagnement qui les maintient, nous traitons le terrain, les systèmes et l’exploitation comme un ensemble cohérent.",
     "designPrinciples": [
       {
         "title": "Partir du terrain",
@@ -230,7 +246,7 @@
     "ctaEyebrow": "COMMENÇONS PAR ÉCHANGER",
     "ctaTitle": "Parlez-nous de votre activité avant de décider quoi développer.",
     "ctaBody": "Vous pouvez nous consulter avant que les besoins soient finalisés. Nous les structurerons avec vous à partir du flux actuel, des contraintes et des priorités.",
-    "ctaLabel": "Discuter de la conception"
+    "ctaLabel": "Choisir comment commencer"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer",
@@ -1475,7 +1491,7 @@
         "proposal": "Nous avons combiné les parcours propres à chaque service, les catégories de consultation, les FAQ et les indications de l’AI afin de recueillir les informations nécessaires dans le formulaire.",
         "result": "La séparation entre les indications avant la consultation et les demandes formelles facilite le passage à un devis ou à une discussion sur le service.",
         "imageAlt": "Page de contact du site d’entreprise Acecore",
-        "externalLabel": "Consulter ou contacter Acecore"
+        "externalLabel": ""
       },
       {
         "title": "Évolution fonctionnelle et socle opérationnel du site d’entreprise Acecore",

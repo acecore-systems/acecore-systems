@@ -6,6 +6,7 @@
   "cases": [
     {
       "id": "case-acecore-contact",
+      "consultationTrack": "development",
       "detailUrl": "",
       "title": "Acecore公式サイトの問い合わせ導線改善",
       "category": "フォーム・AI導線・CMS",
@@ -15,11 +16,12 @@
       "result": "相談前の確認と正式な問い合わせを分け、見積りやサービス相談に進みやすい流れになりました。",
       "image": "/images/works/acecore-contact.webp",
       "imageAlt": "Acecore公式サイトの問い合わせページ",
-      "externalUrl": "https://acecore.net/contact/",
-      "externalLabel": "Acecoreへ相談・問い合わせる"
+      "externalUrl": "",
+      "externalLabel": ""
     },
     {
       "id": "case-acecore-site-platform",
+      "consultationTrack": "development",
       "detailUrl": "/works/acecore-site-platform/",
       "title": "Acecore公式サイトの機能追加・運用基盤",
       "category": "CMS・検索・セキュリティ・パフォーマンス",
@@ -34,6 +36,7 @@
     },
     {
       "id": "case-aceserver",
+      "consultationTrack": "it-advisor",
       "detailUrl": "",
       "title": "Aceserver運用で得た安定化・監視の知見",
       "category": "サーバー運用・コミュニティ基盤",
@@ -48,6 +51,7 @@
     },
     {
       "id": "case-aceserver-portal",
+      "consultationTrack": "development",
       "detailUrl": "",
       "title": "エースサーバーポータル制作",
       "category": "Web制作・コミュニティポータル・CMS",
@@ -62,6 +66,7 @@
     },
     {
       "id": "case-cherry-homepage",
+      "consultationTrack": "development",
       "detailUrl": "",
       "title": "Cherry英語教室サイトのリニューアル",
       "category": "Web制作・CMS・サイト内検索",
@@ -76,6 +81,7 @@
     },
     {
       "id": "case-hatt-homepage",
+      "consultationTrack": "development",
       "detailUrl": "",
       "title": "Hattのホームページ制作",
       "category": "Web制作・CMS・サイト内検索",

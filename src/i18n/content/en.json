@@ -22,13 +22,29 @@
   },
   "guide": {
     "title": "Implementation Guide",
-    "description": "Key points for avoiding failure when implementing a business system, covering requirements, staff interviews, phased rollout, and operational adoption.",
-    "heroTitle": "The preparation before development determines the outcome of a business system.",
-    "heroLead": "Before listing features, we confirm the purpose of the operation, exception handling, data, permissions, and operating structure.",
+    "description": "Guidance for commissioned development and IT advisory support, including each path and the checks needed for requirements, phased rollout, and operational adoption.",
+    "heroTitle": "Choose a path that fits your situation.",
+    "heroLead": "Whether you are building something new or launching and improving what already exists, start by choosing the way to proceed.",
     "visual": {
       "alt": "A project lead and engineer define the implementation scope while reviewing a paper workflow and computer",
       "caption": "Together, we review input fields, exception handling, permissions, and current tools to define the first scope to test."
     },
+    "routeTitle": "Choose a path that fits your situation.",
+    "routeLead": "Whether you need to build something new or launch and improve what already exists, we separate the paths at the point where the conversation starts.",
+    "routes": [
+      {
+        "eyebrow": "COMMISSIONED DEVELOPMENT",
+        "title": "You want to leave the path from concept through launch to us",
+        "body": "We organize what you want to build and the operational challenge, then carry one project through requirements, design, development, launch, and handover.",
+        "label": "View the commissioned development process"
+      },
+      {
+        "eyebrow": "IT ADVISORY / ADVISORY",
+        "title": "You want to take an existing system through launch and operation",
+        "body": "We review code built in-house or with AI, an existing site, and the cloud or IT foundation, then support the necessary scope through a monthly or spot engagement.",
+        "label": "View the IT advisory process"
+      }
+    ],
     "journeyTitle": "Implementation proceeds in small, verifiable steps.",
     "journeyLead": "We organize the current state, define the first scope, and choose the next improvement based on actual use.",
     "journey": [
@@ -154,40 +170,40 @@
         "answer": "Yes. We can provide ongoing support for added features, screen improvements, permission adjustments, and infrastructure operations while reviewing actual use."
       }
     ],
-    "ctaTitle": "We will define the necessary scope around your current operations.",
-    "ctaBody": "Tell us about your current operations, the tools you use, and the problems you face.",
-    "ctaLabel": "Discuss an implementation"
+    "ctaTitle": "Choose the path that fits your situation.",
+    "ctaBody": "Whether you want to leave the project from concept to us or move an existing system into launch and operation, start with the closer path.",
+    "ctaLabel": "Choose a path"
   },
   "home": {
     "title": "Business Systems and App Development",
     "description": "Acecore Systems provides end-to-end development support covering IT advisory services, AI adoption and operational improvement, deployment, Web app development, data use, and operational improvement.",
     "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
     "heroTitle": "Work that keeps moving\nrests on quiet design.",
-    "heroLead": "From IT advisory services and AI adoption to business systems, Web apps, and external integrations.\nWe provide end-to-end support from requirements and design through development and post-launch improvement.",
-    "primaryCta": "Discuss design and development",
-    "secondaryCta": "View pricing guidance",
-    "layersTitle": "We see operations in three layers.",
-    "layersLead": "The workplace people interact with, the systems that support processing underneath, and the operations that keep everything useful over time. We design the three without separating them.",
+    "heroLead": "From IT advisory services and AI adoption to business systems, Web apps, and external integrations.\nWhether you want a project carried from concept to launch or support that fits your current environment, we help from requirements through post-launch improvement.",
+    "primaryCta": "Discuss development",
+    "secondaryCta": "Discuss IT advisory support",
+    "layersTitle": "Put the right systems in place from the goal.",
+    "layersLead": "Customer touchpoints, daily operations, and the IT foundation behind them. We improve the necessary places in a sustainable scope.",
     "layers": [
       {
-        "label": "Workplace",
-        "title": "Usable in daily work",
-        "body": "Easy to use and clear to navigate.\nA design that keeps everyday work moving naturally."
-      },
-      {
-        "label": "Systems",
-        "title": "Supported by systems",
-        "body": "Organize data, permissions, and exceptions\nto support safe, consistent processing."
+        "label": "Customers",
+        "title": "Connect with customers",
+        "body": "Set up websites, reservations, and contact forms\nso the first interaction can move forward without friction."
       },
       {
         "label": "Operations",
-        "title": "Improved through operations",
-        "body": "Monitoring, maintenance, and improvement cycles\nkeep it working quietly for the long term."
+        "title": "Make operations run smoothly",
+        "body": "Use internal apps, tools, integrations, and automation\nto reduce manual work and checking overhead."
+      },
+      {
+        "label": "Foundation",
+        "title": "Strengthen the IT foundation",
+        "body": "IT advisory support for launch, operations, and technical decisions\nhelps move your company's IT one step forward."
       }
     ],
     "philosophyEyebrow": "DESIGN PHILOSOPHY",
     "philosophyTitle": "The same precision for what is visible and what is not.",
-    "philosophyLead": "We design not only usable screens, but also information flows, decision conditions, exception handling, and post-launch operations—one requirement at a time, so work can continue without interruption.",
+    "philosophyLead": "From customer touchpoints to the systems behind operations and the support that keeps them running, we treat the workplace, systems, and operations as one connected whole.",
     "designPrinciples": [
       {
         "title": "Start from the workplace",
@@ -230,7 +246,7 @@
     "ctaEyebrow": "START WITH A CONVERSATION",
     "ctaTitle": "Tell us about your work before deciding what to build.",
     "ctaBody": "You can consult us before the requirements are finalized. We will organize them together from the current flow, constraints, and priorities.",
-    "ctaLabel": "Discuss the design"
+    "ctaLabel": "Choose how to get started"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer",
@@ -1475,7 +1491,7 @@
         "proposal": "We combined service-specific journeys, inquiry categories, FAQs, and AI guidance to collect the necessary information in the form.",
         "result": "Separating pre-consultation guidance from formal inquiries made it easier to proceed to an estimate or service discussion.",
         "imageAlt": "Contact page on the Acecore corporate site",
-        "externalLabel": "Consult or contact Acecore"
+        "externalLabel": ""
       },
       {
         "title": "Feature enhancements and operational foundation for the Acecore corporate site",

@@ -3,33 +3,33 @@
   "description": "Acecore Systemsは、IT顧問、AI導入・業務改善、デプロイ、Webアプリ開発、データ活用、運用改善まで一貫して支援する開発サービスです。",
   "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
   "heroTitle": "動き続ける業務には、\n静かな設計がある。",
-  "heroLead": "IT顧問、AI導入、業務システム、Webアプリ、外部サービス連携まで。\n要件整理から設計・開発、公開後の運用改善まで一貫して支援します。",
-  "primaryCta": "設計・開発を相談する",
-  "primaryCtaHref": "/contact/",
-  "secondaryCta": "料金の目安を見る",
-  "secondaryCtaHref": "/pricing/",
-  "layersTitle": "業務を、三つの層で捉える。",
-  "layersLead": "使う人が触れる現場、その下で処理を支える仕組み、長く使い続けるための運用。三つを切り離さずに設計します。",
+  "heroLead": "IT顧問、AI導入、業務システム、Webアプリ、外部サービス連携まで。\n構想から任せたい開発も、今ある環境に合わせて進める伴走も、要件整理から公開後の運用改善まで支援します。",
+  "primaryCta": "開発を相談する",
+  "primaryCtaHref": "/contact/?category=service&service=business-system&from=systems-home&entry=home-development-cta",
+  "secondaryCta": "IT顧問を相談する",
+  "secondaryCtaHref": "/contact/?category=service&service=it-advisor&from=systems-home&entry=home-it-advisor-cta",
+  "layersTitle": "目的から、必要な仕組みを整える。",
+  "layersLead": "顧客との接点、日々の業務、支えるIT基盤。必要な場所から、無理のない形で整えます。",
   "layers": [
     {
-      "label": "現場",
-      "title": "現場で使える",
-      "body": "使いやすく、迷わず進める。\n毎日の仕事が自然に回る設計。"
+      "label": "顧客",
+      "title": "顧客とつながる",
+      "body": "ホームページ、予約、問い合わせフォームなど、\n最初の接点を迷わず進める形に整えます。"
     },
     {
-      "label": "仕組み",
-      "title": "仕組みで支える",
-      "body": "データ、権限、例外を整え、\n安全で一貫した処理を支える。"
+      "label": "業務",
+      "title": "業務を円滑にする",
+      "body": "社内向けアプリ、ツール、連携・自動化で、\n手作業や確認の負担を減らします。"
     },
     {
-      "label": "運用",
-      "title": "運用で育てる",
-      "body": "監視、保守、改善のサイクルで、\n長く、静かに機能し続ける。"
+      "label": "基盤",
+      "title": "IT基盤を整える",
+      "body": "専任担当者を置かずに、公開・運用・技術判断を相談できるIT顧問。\n会社のITを一段先へ進めます。"
     }
   ],
   "philosophyEyebrow": "DESIGN PHILOSOPHY",
   "philosophyTitle": "見える部分と、見えない部分を、同じ精度で。",
-  "philosophyLead": "画面の使いやすさだけでなく、情報の流れ、判断の条件、例外への対応、公開後の運用まで。業務が滞りなく続くために必要なことを、ひとつずつ設計します。",
+  "philosophyLead": "顧客との接点から、業務を支える仕組み、続けるための運用まで。現場・仕組み・運用を切り離さず、同じ精度で整えます。",
   "designPrinciples": [
     {
       "number": "01",
@@ -80,6 +80,6 @@
   "ctaEyebrow": "START WITH A CONVERSATION",
   "ctaTitle": "作るものより先に、今の業務を聞かせてください。",
   "ctaBody": "要件が固まりきっていない段階でも相談できます。現状の流れ、制約、優先順位から一緒に整理します。",
-  "ctaLabel": "設計を相談する",
-  "ctaHref": "/contact/"
+  "ctaLabel": "相談方法を選ぶ",
+  "ctaHref": "/guide/"
 }

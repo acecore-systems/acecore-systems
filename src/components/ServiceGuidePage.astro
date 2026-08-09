@@ -1,0 +1,253 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceHandoff from "./ServiceHandoff.astro";
+import ServiceVisual from "./ServiceVisual.astro";
+import site from "../data/site.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+
+type GuideRouteId = "development" | "it-advisor";
+
+type GuideRoute = {
+  id: GuideRouteId;
+  eyebrow: string;
+  title: string;
+  body: string;
+  href: string;
+  label: string;
+};
+
+type GuideServiceData = {
+  title: string;
+  description: string;
+  heroEyebrow: string;
+  heroTitle: string;
+  heroLead: string;
+  visual: { src: string; alt: string; caption: string };
+  sectionVisuals?: { process?: { src: string; alt: string; caption: string } };
+  challenges: Array<{ title: string; body: string }>;
+  processTitle: string;
+  processLead: string;
+  process: Array<{ title: string; body: string }>;
+  handoff: { eyebrow: string; title: string; body: string; label: string };
+  ctaTitle: string;
+  ctaBody: string;
+  ctaLabel?: string;
+};
+
+interface Props {
+  routeId: GuideRouteId;
+  locale?: Locale;
+}
+
+const { routeId, locale = "ja" } = Astro.props;
+const content = getLocalizedContent(locale);
+const text = getUi(locale);
+const route = content.guide.routes.find((item) => item.id === routeId) as
+  GuideRoute | undefined;
+
+if (!route) {
+  throw new Error(`Unknown guide route: ${routeId}`);
+}
+
+const serviceData = (
+  routeId === "development"
+    ? content.serviceDetails.development
+    : content.itAdvisor
+) as GuideServiceData;
+const otherRouteId: GuideRouteId =
+  routeId === "development" ? "it-advisor" : "development";
+const otherRoute = content.guide.routes.find(
+  (item) => item.id === otherRouteId,
+) as GuideRoute | undefined;
+
+if (!otherRoute) {
+  throw new Error(`Unknown guide route: ${otherRouteId}`);
+}
+
+const canonicalPath = getLocalizedUrl(`/guide/${routeId}/`, locale);
+const pageUrl = new URL(canonicalPath, site.siteUrl).href;
+const contactHref = `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams(
+  {
+    category: "service",
+    service: routeId === "development" ? "business-system" : "it-advisor",
+    from: `systems-guide-${routeId}`,
+    entry: "guide-cta",
+  },
+).toString()}`;
+const serviceHref = getLocalizedUrl(
+  routeId === "development"
+    ? "/services/development/"
+    : "/services/it-advisor/",
+  locale,
+);
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": `${pageUrl}#breadcrumb`,
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: text.home,
+      item: new URL(getLocalizedUrl("/", locale), site.siteUrl).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: text.guide,
+      item: new URL(getLocalizedUrl("/guide/", locale), site.siteUrl).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: route.title,
+      item: pageUrl,
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={route.title}
+  description={route.body}
+  canonical={canonicalPath}
+  jsonLd={jsonLd}
+  locale={locale}
+>
+  <section class="page-hero page-hero--detail guide-service-hero">
+    <div class="container page-hero__inner">
+      <nav class="breadcrumb" aria-label={text.breadcrumbNavigation}>
+        <ol>
+          <li><a href={getLocalizedUrl("/", locale)}>{text.home}</a></li>
+          <li><a href={getLocalizedUrl("/guide/", locale)}>{text.guide}</a></li>
+          <li aria-current="page">{route.title}</li>
+        </ol>
+      </nav>
+      <p class="page-eyebrow">{route.eyebrow}</p>
+      <h1 class="page-title">{route.title}</h1>
+      <p class="page-lead">{route.body}</p>
+    </div>
+  </section>
+
+  <section
+    class="service-story-visual-section"
+    aria-label={serviceData.visual.alt}
+  >
+    <div class="container">
+      <ServiceVisual {...serviceData.visual} />
+    </div>
+  </section>
+
+  <section
+    class="page-section detail-introduction"
+    aria-labelledby="guide-service-start-title"
+  >
+    <div class="container detail-introduction__layout">
+      <header class="editorial-header">
+        <p class="editorial-eyebrow">Starting point / 01</p>
+        <h2 id="guide-service-start-title">{serviceData.heroTitle}</h2>
+        <p>{serviceData.heroLead}</p>
+      </header>
+      <div class="detail-challenges" aria-label={text.challengesLabel}>
+        {
+          serviceData.challenges.map((challenge, index) => (
+            <article class="detail-challenge">
+              <p class="editorial-index">
+                Issue {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{challenge.title}</h3>
+              <p>{challenge.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="page-section page-section--muted"
+    aria-labelledby="guide-service-process-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Process / 02</p>
+          <h2 id="guide-service-process-title">{serviceData.processTitle}</h2>
+        </div>
+        <p>{serviceData.processLead}</p>
+      </header>
+      {
+        serviceData.sectionVisuals?.process && (
+          <ServiceVisual
+            {...serviceData.sectionVisuals.process}
+            variant="section"
+          />
+        )
+      }
+      <ol class="service-process">
+        {
+          serviceData.process.map((step, index) => (
+            <li class="service-process__step">
+              <p class="editorial-index">
+                Step {String(index + 1).padStart(2, "0")}
+              </p>
+              <div class="service-process__content">
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="page-section service-handoff-section">
+    <div class="container">
+      <ServiceHandoff
+        {...serviceData.handoff}
+        label={otherRoute.label}
+        href={getLocalizedUrl(`/guide/${otherRouteId}/`, locale)}
+      />
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta">
+    <div class="container">
+      <aside
+        class="editorial-cta guide-service-cta"
+        aria-labelledby="guide-service-cta-title"
+      >
+        <div class="editorial-cta__copy">
+          <p class="editorial-eyebrow">Consultation</p>
+          <h2 id="guide-service-cta-title">{serviceData.ctaTitle}</h2>
+          <p>{serviceData.ctaBody}</p>
+        </div>
+        <div class="guide-service-cta__actions">
+          <a class="editorial-link editorial-link--primary" href={contactHref}>
+            {serviceData.ctaLabel ?? text.discussThis}
+          </a>
+          <a class="editorial-link" href={serviceHref}
+            >{text.viewSupportDetails}</a
+          >
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .guide-service-cta__actions {
+    display: grid;
+    gap: 12px;
+    justify-items: end;
+  }
+
+  @media (max-width: 720px) {
+    .guide-service-cta__actions {
+      justify-items: start;
+    }
+  }
+</style>

@@ -22,13 +22,29 @@
   },
   "guide": {
     "title": "Guia de implementação",
-    "description": "Reunimos os pontos a verificar na definição de requisitos, nas entrevistas com as equipes, na implementação gradual e na consolidação da operação para evitar falhas ao adotar um sistema empresarial.",
-    "heroTitle": "Em um sistema empresarial, organizar antes de construir muda o resultado.",
-    "heroLead": "Antes de listar funcionalidades, confirmamos os objetivos da operação, os casos de exceção, os dados, as permissões e a estrutura operacional.",
+    "description": "Reunimos os caminhos de desenvolvimento sob encomenda e assessoria de IT, além dos pontos para requisitos, implantação gradual e consolidação da operação.",
+    "heroTitle": "Escolha a forma de avançar adequada à sua situação.",
+    "heroLead": "Seja para criar um novo sistema ou publicar e melhorar algo já existente, comece escolhendo a forma de seguir.",
     "visual": {
       "alt": "Responsável e engenheiro definindo o escopo da implementação enquanto consultam um fluxo de trabalho em papel e um computador",
       "caption": "Verificamos campos de entrada, exceções, permissões e ferramentas atuais para definir juntos o primeiro escopo a testar."
     },
+    "routeTitle": "Escolha a forma de avançar adequada à sua situação.",
+    "routeLead": "Se você precisa criar algo novo ou publicar e melhorar o que já existe, separamos os caminhos desde o início da conversa.",
+    "routes": [
+      {
+        "eyebrow": "DESENVOLVIMENTO SOB ENCOMENDA / DEVELOPMENT",
+        "title": "Você quer deixar conosco o caminho da ideia até o lançamento",
+        "body": "Organizamos o que você quer criar e o desafio operacional, conduzindo um projeto dos requisitos e do desenho ao desenvolvimento, lançamento e entrega.",
+        "label": "Ver o processo de desenvolvimento sob encomenda"
+      },
+      {
+        "eyebrow": "ASSESSORIA DE IT / ADVISORY",
+        "title": "Você quer levar um sistema existente até o lançamento e a operação",
+        "body": "Revisamos código criado internamente ou com AI, sites existentes e a base de nuvem ou IT, apoiando o escopo necessário em um contrato mensal ou pontual.",
+        "label": "Ver o processo de assessoria de IT"
+      }
+    ],
     "journeyTitle": "A implementação avança em etapas pequenas e verificáveis.",
     "journeyLead": "Organizamos a situação atual, definimos o primeiro escopo e escolhemos a próxima melhoria com base no uso real.",
     "journey": [
@@ -154,40 +170,40 @@
         "answer": "Sim. Podemos prestar suporte contínuo, desde novas funções, melhorias de telas e ajustes de permissões até a operação da infraestrutura, observando o uso após a implementação."
       }
     ],
-    "ctaTitle": "Organizamos primeiro o escopo necessário para sua operação atual.",
-    "ctaBody": "Conte-nos sobre suas operações atuais, as ferramentas utilizadas e as dificuldades.",
-    "ctaLabel": "Consultar sobre a implementação"
+    "ctaTitle": "Escolha o caminho adequado à sua situação.",
+    "ctaBody": "Se você quer delegar desde a ideia ou levar um sistema existente ao lançamento e à operação, comece pelo caminho mais próximo.",
+    "ctaLabel": "Escolher uma forma de avançar"
   },
   "home": {
     "title": "Desenvolvimento de sistemas empresariais e aplicativos",
     "description": "Acecore Systems é um serviço de desenvolvimento que oferece suporte integrado, desde assessoria de TI, adoção de AI e melhoria de operações até implantação, desenvolvimento de aplicativos web, uso de dados e melhoria contínua.",
     "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
     "heroTitle": "Por trás de uma operação contínua,\nhá um projeto silencioso.",
-    "heroLead": "Assessoria de TI, adoção de AI, sistemas empresariais, aplicativos web e integração com serviços externos.\nOferecemos suporte integrado, da definição de requisitos ao projeto e desenvolvimento, além da melhoria da operação após o lançamento.",
-    "primaryCta": "Consultar sobre projeto e desenvolvimento",
-    "secondaryCta": "Ver estimativas de preço",
-    "layersTitle": "Entender a operação em três camadas.",
-    "layersLead": "O trabalho que as pessoas realizam, o mecanismo que processa por baixo e a operação que mantém tudo funcionando por muito tempo. Projetamos as três sem separá-las.",
+    "heroLead": "Assessoria de IT, adoção de AI, sistemas empresariais, aplicativos web e integração com serviços externos.\nSeja para um projeto da ideia ao lançamento ou para apoio adaptado ao ambiente atual, acompanhamos dos requisitos até a melhoria da operação após o lançamento.",
+    "primaryCta": "Consultar sobre desenvolvimento",
+    "secondaryCta": "Consultar assessoria de IT",
+    "layersTitle": "Organizar o sistema necessário a partir do objetivo.",
+    "layersLead": "Pontos de contato com clientes, operações diárias e a base de IT que as sustenta. Melhoramos o necessário em um escopo sustentável.",
     "layers": [
       {
-        "label": "Trabalho",
-        "title": "Útil no trabalho real",
-        "body": "Fácil de usar e simples de seguir.\nUm projeto que faz o trabalho diário fluir naturalmente."
+        "label": "Clientes",
+        "title": "Conectar-se aos clientes",
+        "body": "Organizamos sites, reservas e formulários de contato\npara que o primeiro contato avance sem atrito."
       },
       {
-        "label": "Mecanismo",
-        "title": "Sustentado pelo mecanismo",
-        "body": "Organiza dados, permissões e exceções\npara apoiar processos seguros e consistentes."
+        "label": "Operações",
+        "title": "Fazer as operações fluírem",
+        "body": "Usamos aplicativos internos, ferramentas, integrações e automação\npara reduzir trabalho manual e verificações."
       },
       {
-        "label": "Operação",
-        "title": "Evolui com a operação",
-        "body": "Com um ciclo de monitoramento, manutenção e melhoria,\ncontinua funcionando por muito tempo e sem ruído."
+        "label": "Base",
+        "title": "Fortalecer a base de IT",
+        "body": "A assessoria de IT para lançamento, operação e decisões técnicas\najuda a levar o IT da empresa um passo adiante."
       }
     ],
     "philosophyEyebrow": "DESIGN PHILOSOPHY",
     "philosophyTitle": "A mesma precisão no que se vê e no que não se vê.",
-    "philosophyLead": "Não apenas a usabilidade das telas, mas também o fluxo de informações, as condições de decisão, o tratamento de exceções e a operação após o lançamento. Projetamos, um a um, os elementos necessários para que o trabalho continue sem interrupções.",
+    "philosophyLead": "Dos pontos de contato com clientes aos sistemas que sustentam as operações e ao suporte que os mantém em funcionamento, tratamos trabalho, sistemas e operação como um todo conectado.",
     "designPrinciples": [
       {
         "title": "Começar pelo trabalho real",
@@ -230,7 +246,7 @@
     "ctaEyebrow": "START WITH A CONVERSATION",
     "ctaTitle": "Antes do que será criado, conte-nos sobre sua operação atual.",
     "ctaBody": "Você pode nos consultar mesmo que os requisitos ainda não estejam totalmente definidos. Organizamos juntos o fluxo atual, as restrições e as prioridades.",
-    "ctaLabel": "Consultar sobre o projeto"
+    "ctaLabel": "Escolher como começar"
   },
   "itAdvisor": {
     "title": "Engenheiro consultor de TI",
@@ -1475,7 +1491,7 @@
         "proposal": "Combinamos fluxos por serviço, tipos de consulta, FAQ e orientação prévia com AI, reunindo no formulário as informações necessárias.",
         "result": "Separamos a verificação preliminar do contato formal e criamos um fluxo que facilita avançar para um orçamento ou uma consulta de serviço.",
         "imageAlt": "Página de contato do site oficial da Acecore",
-        "externalLabel": "Consultar ou entrar em contato com a Acecore"
+        "externalLabel": ""
       },
       {
         "title": "Novas funções e base operacional do site oficial da Acecore",

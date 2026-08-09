@@ -2,6 +2,8 @@
 import ContactPage from "../contact.astro";
 import ContactThanksPage from "../contact/thanks.astro";
 import GuidePage from "../guide.astro";
+import GuideDevelopmentPage from "../guide/development.astro";
+import GuideItAdvisorPage from "../guide/it-advisor.astro";
 import HomePage from "../index.astro";
 import PricingPage from "../pricing.astro";
 import PrivacyPage from "../privacy.astro";
@@ -25,6 +27,8 @@ const pages = {
   "site-quality": SiteQualityPage,
   pricing: PricingPage,
   guide: GuidePage,
+  "guide-development": GuideDevelopmentPage,
+  "guide-it-advisor": GuideItAdvisorPage,
   works: WorksPage,
   "work-detail": WorkDetailPage,
   contact: ContactPage,
@@ -50,6 +54,8 @@ export function getStaticPaths() {
     { path: "services/site-quality", pageKey: "site-quality" },
     { path: "pricing", pageKey: "pricing" },
     { path: "guide", pageKey: "guide" },
+    { path: "guide/development", pageKey: "guide-development" },
+    { path: "guide/it-advisor", pageKey: "guide-it-advisor" },
     { path: "works", pageKey: "works" },
     { path: "works/acecore-site-platform", pageKey: "work-detail" },
     { path: "contact", pageKey: "contact" },

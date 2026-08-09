@@ -10,11 +10,48 @@ interface Props {
 }
 
 const locale = Astro.props.locale ?? "ja";
-const data = getLocalizedContent(locale).pricing;
+const content = getLocalizedContent(locale);
+const data = content.pricing;
+const development = content.serviceDetails.development;
+const itAdvisor = content.itAdvisor;
 const text = getUi(locale);
 const canonicalPath = getLocalizedUrl("/pricing/", locale);
 const pageUrl = new URL(canonicalPath, site.siteUrl).href;
 const itemListId = `${pageUrl}#item-list`;
+const tracks = [
+  {
+    id: "development",
+    title: development.title,
+    ctaLabel: development.ctaTitle,
+    contactHref: `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams(
+      {
+        category: "service",
+        service: "business-system",
+        from: "systems-pricing",
+        entry: "pricing-development-cta",
+      },
+    ).toString()}`,
+  },
+  {
+    id: "it-advisor",
+    title: itAdvisor.title,
+    ctaLabel: itAdvisor.ctaLabel,
+    contactHref: `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams(
+      {
+        category: "service",
+        service: "it-advisor",
+        from: "systems-pricing",
+        entry: "pricing-it-advisor-cta",
+      },
+    ).toString()}`,
+  },
+] as const;
+const priceTracks = tracks.map((track) => ({
+  ...track,
+  items: data.items
+    .map((item, index) => ({ ...item, index }))
+    .filter((item) => item.track === track.id),
+}));
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -68,32 +105,45 @@ const jsonLd = [
         </div>
         <p class="price-list__caption">{text.priceListCaption}</p>
       </header>
-      <ol class="price-list">
+      <div class="price-tracks">
         {
-          data.items.map((item, index) => (
-            <li class="price-row" id={item.key}>
-              <div class="price-row__heading">
-                <p class="editorial-index">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3>{item.label}</h3>
-              </div>
-              <div class="price-row__body">
-                <p class="price-row__note">{item.note}</p>
-                {item.detailUrl && (
-                  <a
-                    class="price-row__detail"
-                    href={getLocalizedUrl(item.detailUrl, locale)}
-                  >
-                    {text.viewSupportDetails}
-                  </a>
-                )}
-              </div>
-              <p class="price-row__amount">{item.price}</p>
-            </li>
+          priceTracks.map((track) => (
+            <section
+              class="price-track"
+              aria-labelledby={`price-track-${track.id}`}
+            >
+              <header class="price-track__header">
+                <p class="editorial-eyebrow">{track.id}</p>
+                <h3 id={`price-track-${track.id}`}>{track.title}</h3>
+              </header>
+              <ol class="price-list">
+                {track.items.map((item) => (
+                  <li class="price-row" id={item.key}>
+                    <div class="price-row__heading">
+                      <p class="editorial-index">
+                        {String(item.index + 1).padStart(2, "0")}
+                      </p>
+                      <h4>{item.label}</h4>
+                    </div>
+                    <div class="price-row__body">
+                      <p class="price-row__note">{item.note}</p>
+                      {item.detailUrl && (
+                        <a
+                          class="price-row__detail"
+                          href={getLocalizedUrl(item.detailUrl, locale)}
+                        >
+                          {text.viewSupportDetails}
+                        </a>
+                      )}
+                    </div>
+                    <p class="price-row__amount">{item.price}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
           ))
         }
-      </ol>
+      </div>
     </div>
   </section>
 
@@ -106,14 +156,56 @@ const jsonLd = [
           <p>{text.estimateBody}</p>
         </div>
         <div class="price-cta__actions">
-          <a
-            class="editorial-link editorial-link--primary"
-            href={`${getLocalizedUrl("/contact/", locale)}?category=pricing&from=systems-pricing&entry=pricing-cta`}
-          >
-            {text.estimateLabel}
-          </a>
+          {
+            priceTracks.map((track) => (
+              <a
+                class="editorial-link editorial-link--primary"
+                href={track.contactHref}
+              >
+                {track.ctaLabel}
+              </a>
+            ))
+          }
         </div>
       </aside>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .price-tracks {
+    display: grid;
+    gap: clamp(48px, 7vw, 88px);
+  }
+
+  .price-track__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    border-top: 1px solid var(--line-strong);
+    padding-block: 18px;
+  }
+
+  .price-track__header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+  }
+
+  .price-row__heading h4 {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .price-track__header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>

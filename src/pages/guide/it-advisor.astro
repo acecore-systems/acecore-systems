@@ -1,0 +1,12 @@
+---
+import ServiceGuidePage from "../../components/ServiceGuidePage.astro";
+import type { Locale } from "../../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "ja";
+---
+
+<ServiceGuidePage routeId="it-advisor" locale={locale} />

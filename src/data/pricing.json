@@ -6,6 +6,7 @@
   "items": [
     {
       "key": "it-advisor-light",
+      "track": "it-advisor",
       "label": "IT顧問エンジニア・ライト",
       "price": "月額3万円〜",
       "note": "月1〜2回の相談、AI・ITツール選定、初期設定、同時進行1件までの小規模な公開支援など。作業時間上限と追加費用は契約前に明示します。",
@@ -13,6 +14,7 @@
     },
     {
       "key": "it-advisor-standard",
+      "track": "it-advisor",
       "label": "IT顧問エンジニア・スタンダード",
       "price": "月額10万円〜",
       "note": "契約時に定める相談回数・作業時間上限内のデプロイ、デバッグ・テスト、状況報告、利用状況と改善候補の確認など。24時間監視と即時障害対応は含みません。",
@@ -20,6 +22,7 @@
     },
     {
       "key": "deployment-spot",
+      "track": "it-advisor",
       "label": "スポット・デプロイ支援",
       "price": "5万円〜",
       "note": "既存Webアプリ1件・1環境を基本に、推奨環境の選定、ドメイン・SSL・VPSやクラウドの初期構築、公開、動作確認、引き継ぎ。コード修正、移行、CI/CD、監視・バックアップ設計、継続運用は別途見積ります。",
@@ -27,6 +30,7 @@
     },
     {
       "key": "ai-improvement-starter",
+      "track": "development",
       "label": "AI業務改善スターターパック",
       "price": "15万円目安",
       "note": "90分ヒアリング、業務フロー整理、AI化候補3件、候補1件の簡易試作、費用対効果試算、AI利用ルール簡易版。期間目安は2〜3週間です。",
@@ -34,6 +38,7 @@
     },
     {
       "key": "ai-system-implementation",
+      "track": "development",
       "label": "AI・業務システム本導入",
       "price": "50万円〜",
       "note": "PoC後の本番構築、既存システム連携、権限・承認・監査ログ、テスト、公開、運用引き継ぎ。要件に応じて見積ります。",
@@ -41,6 +46,7 @@
     },
     {
       "key": "small-automation",
+      "track": "development",
       "label": "小規模自動化・業務補助",
       "price": "30万円〜",
       "note": "既存の入力作業、集計、通知、確認作業を小さく自動化します。",
@@ -48,6 +54,7 @@
     },
     {
       "key": "internal-tool",
+      "track": "development",
       "label": "社内向け業務ツール",
       "price": "50万円〜",
       "note": "管理画面、フォーム、一覧、CSV出力、権限などを備えた小〜中規模ツール。",
@@ -55,6 +62,7 @@
     },
     {
       "key": "web-app",
+      "track": "development",
       "label": "中規模Webアプリ",
       "price": "150万円〜",
       "note": "複数ユーザー、会員機能、承認フロー、外部連携を含むWebアプリ。",
@@ -62,6 +70,7 @@
     },
     {
       "key": "design",
+      "track": "development",
       "label": "デザイン・クリエイティブ",
       "price": "2万円〜",
       "note": "ロゴは5万〜15万円、チラシ・バナーは2万〜12万円、ブランド設計やWeb連携は10万円〜が目安です。",
@@ -69,6 +78,7 @@
     },
     {
       "key": "inquiry-ai",
+      "track": "development",
       "label": "問い合わせAIチャット",
       "price": "8万円〜",
       "note": "静的サイトやサービスサイトに問い合わせAIチャットを組み込み、回答範囲、レート制限、Originチェック、安全なリンク描画まで整えます。",
@@ -76,6 +86,7 @@
     },
     {
       "key": "blog-comments",
+      "track": "development",
       "label": "ブログコメント機能",
       "price": "8万円〜",
       "note": "Cloudflare Pages Functions、D1、Turnstileを使い、外部コメントサービスに頼らない投稿、保存、スパム対策、削除運用を整えます。",
@@ -83,6 +94,7 @@
     },
     {
       "key": "cms",
+      "track": "development",
       "label": "CMS編集画面導入",
       "price": "5万円〜",
       "note": "Sveltia CMSでブログ、固定ページ、告知、設定項目をブラウザから更新できる管理画面を追加します。",
@@ -90,6 +102,7 @@
     },
     {
       "key": "content-platform",
+      "track": "development",
       "label": "ブログ・記事基盤",
       "price": "5万円〜",
       "note": "記事一覧、詳細ページ、タグ、関連記事、RSS、検索導線など、継続発信に必要な基盤を整えます。",
@@ -97,6 +110,7 @@
     },
     {
       "key": "multilingual-content",
+      "track": "development",
       "label": "多言語ブログ運用",
       "price": "8万円〜",
       "note": "日本語source、翻訳PR、hreflang、sitemap、RSSまで含めた多言語ブログ運用を整えます。",
@@ -104,6 +118,7 @@
     },
     {
       "key": "seo",
+      "track": "development",
       "label": "SEO・構造化データ",
       "price": "5万円〜",
       "note": "OGP、JSON-LD、サイトマップ、RSS、canonicalなど、検索エンジンに伝える情報を整理します。",
@@ -111,6 +126,7 @@
     },
     {
       "key": "site-search",
+      "track": "development",
       "label": "Pagefindサイト内検索",
       "price": "3万円〜",
       "note": "静的サイトにPagefind検索を追加し、検索UI、URLパラメータ、キャッシュ設定まで整えます。",
@@ -118,6 +134,7 @@
     },
     {
       "key": "performance",
+      "track": "development",
       "label": "表示速度改善",
       "price": "5万円〜",
       "note": "画像、CSS、フォント、遅延読み込み、計測結果を確認し、Core Web Vitalsの改善を進めます。",
@@ -125,6 +142,7 @@
     },
     {
       "key": "accessibility",
+      "track": "development",
       "label": "アクセシビリティ改善",
       "price": "5万円〜",
       "note": "コントラスト、aria属性、フォーカス、フォーム検証などを点検し、WCAG AAを目標に修正します。",
@@ -132,6 +150,7 @@
     },
     {
       "key": "security-headers",
+      "track": "development",
       "label": "セキュリティヘッダー/CSP",
       "price": "3万円〜",
       "note": "Cloudflare Pagesの_headers、CSP、管理画面まわりの配信設定を整理し、安全な公開状態へ近づけます。",
@@ -139,6 +158,7 @@
     },
     {
       "key": "form-prefill",
+      "track": "development",
       "label": "CTA・フォーム連携",
       "price": "3万円〜",
       "note": "サービスCTAから問い合わせフォームへ種別、件名、文脈を引き継ぎ、相談導線を改善します。",
@@ -146,6 +166,7 @@
     },
     {
       "key": "integrated-system",
+      "track": "development",
       "label": "統合システム・基幹連携",
       "price": "250万円〜",
       "note": "複数部門や既存システムとつながる業務基盤。段階導入を前提に設計します。",
@@ -153,6 +174,7 @@
     },
     {
       "key": "maintenance",
+      "track": "it-advisor",
       "label": "保守・改善",
       "price": "月額3万円〜",
       "note": "軽微修正、相談、監視、改善提案、追加開発の優先対応など。",
@@ -160,6 +182,7 @@
     },
     {
       "key": "discovery",
+      "track": "it-advisor",
       "label": "要件整理・技術相談",
       "price": "個別見積り",
       "note": "開発前の業務整理、既存システム調査、構成レビューにも対応します。",

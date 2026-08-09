@@ -56,6 +56,7 @@ const sourceTargetPaths = new Map([
 const stableKeys = new Set([
   "accent",
   "contactFormAction",
+  "consultationTrack",
   "detailUrl",
   "email",
   "externalUrl",
@@ -74,6 +75,7 @@ const stableKeys = new Set([
   "secondaryCtaHref",
   "src",
   "turnstileSiteKey",
+  "track",
   "uploadedImage",
 ]);
 

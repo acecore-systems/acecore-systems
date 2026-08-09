@@ -75,7 +75,7 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(submit, /OPENAI_TRANSLATION_API_KEY/u);
   assert.match(submit, /openai-translation-batch\.mjs submit/u);
   assert.match(collect, /translation\/openai\//u);
-  assert.match(collect, /actions\/create-github-app-token@v2/u);
+  assert.match(collect, /actions\/create-github-app-token@v3/u);
   assert.match(collect, /openai-translation-processed-/u);
   assert.match(script, /gpt-5\.6-luna/u);
   assert.match(script, /reasoning: \{ effort: "max" \}/u);

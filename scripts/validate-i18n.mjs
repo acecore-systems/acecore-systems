@@ -53,6 +53,8 @@ const fixedRoutes = [
   "/services/site-quality/",
   "/pricing/",
   "/guide/",
+  "/guide/development/",
+  "/guide/it-advisor/",
   "/works/",
   "/works/acecore-site-platform/",
   "/contact/",
@@ -80,6 +82,7 @@ const sourceFiles = {
 const stableKeys = new Set([
   "accent",
   "contactFormAction",
+  "consultationTrack",
   "detailUrl",
   "email",
   "externalUrl",
@@ -98,6 +101,7 @@ const stableKeys = new Set([
   "secondaryCtaHref",
   "src",
   "turnstileSiteKey",
+  "track",
   "uploadedImage",
 ]);
 const japaneseText = /[\p{Script=Hiragana}\p{Script=Katakana}々〆〤]/u;

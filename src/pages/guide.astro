@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import GuideRouteChoices from "../components/GuideRouteChoices.astro";
 import ServiceVisual from "../components/ServiceVisual.astro";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
@@ -30,12 +31,29 @@ const text = getUi(locale);
   </section>
 
   <section
+    class="page-section page-section--guide guide-route-section"
+    id="guide-routes"
+    aria-labelledby="guide-routes-title"
+  >
+    <div class="container">
+      <header class="editorial-header editorial-header--split">
+        <div>
+          <p class="editorial-eyebrow">Choose a path / 01</p>
+          <h2 id="guide-routes-title">{data.routeTitle}</h2>
+        </div>
+        <p>{data.routeLead}</p>
+      </header>
+      <GuideRouteChoices routes={data.routes} locale={locale} />
+    </div>
+  </section>
+
+  <section
     class="page-section page-section--guide"
     aria-labelledby="guide-intro-title"
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Perspective / 01</p>
+        <p class="editorial-eyebrow">Perspective / 02</p>
         <h2 id="guide-intro-title">{data.introTitle}</h2>
         <p>{data.introBody}</p>
       </header>
@@ -64,7 +82,7 @@ const text = getUi(locale);
     <div class="container">
       <header class="editorial-header editorial-header--split">
         <div>
-          <p class="editorial-eyebrow">Path / 02</p>
+          <p class="editorial-eyebrow">Path / 03</p>
           <h2 id="guide-journey-title">{data.journeyTitle}</h2>
         </div>
         <p>{data.journeyLead}</p>
@@ -91,7 +109,7 @@ const text = getUi(locale);
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Checklist / 03</p>
+        <p class="editorial-eyebrow">Checklist / 04</p>
         <h2 id="guide-tips-title">{data.tipsTitle}</h2>
         <p>{data.tipsLead}</p>
       </header>
@@ -126,7 +144,7 @@ const text = getUi(locale);
   >
     <div class="container">
       <header class="editorial-header">
-        <p class="editorial-eyebrow">Questions / 04</p>
+        <p class="editorial-eyebrow">Questions / 05</p>
         <h2 id="guide-faq-title">{data.faqTitle}</h2>
       </header>
       <div class="guide-faq">
@@ -157,7 +175,7 @@ const text = getUi(locale);
         aria-labelledby="guide-insights-title"
       >
         <div class="editorial-cta__copy">
-          <p class="editorial-eyebrow">Technical notes / 05</p>
+          <p class="editorial-eyebrow">Technical notes / 06</p>
           <h2 id="guide-insights-title">{text.guideInsightsTitle}</h2>
           <p>{text.guideInsightsBody}</p>
         </div>
@@ -176,10 +194,9 @@ const text = getUi(locale);
           <h2 id="guide-cta-title">{data.ctaTitle}</h2>
           <p>{data.ctaBody}</p>
         </div>
-        <a
-          class="editorial-link editorial-link--primary"
-          href={getLocalizedUrl("/contact/", locale)}>{data.ctaLabel}</a
-        >
+        <a class="editorial-link editorial-link--primary" href="#guide-routes">
+          {data.ctaLabel}
+        </a>
       </aside>
     </div>
   </section>
