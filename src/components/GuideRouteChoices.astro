@@ -1,0 +1,102 @@
+---
+import { getLocalizedUrl, type Locale } from "../i18n";
+
+type GuideRoute = {
+  id: "development" | "it-advisor";
+  eyebrow: string;
+  title: string;
+  body: string;
+  href: string;
+  label: string;
+};
+
+interface Props {
+  routes: GuideRoute[];
+  locale: Locale;
+}
+
+const { routes, locale } = Astro.props;
+---
+
+<div class="guide-route-choices">
+  {
+    routes.map((route) => (
+      <a class="guide-route-choice" href={getLocalizedUrl(route.href, locale)}>
+        <p class="editorial-eyebrow">{route.eyebrow}</p>
+        <h3>{route.title}</h3>
+        <p>{route.body}</p>
+        <span>{route.label}</span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .guide-route-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .guide-route-choice {
+    display: grid;
+    min-height: 290px;
+    align-content: start;
+    gap: 18px;
+    border-right: 1px solid var(--line);
+    padding: clamp(28px, 4vw, 48px);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 180ms ease;
+  }
+
+  .guide-route-choice:last-child {
+    border-right: 0;
+  }
+
+  .guide-route-choice:hover {
+    background: var(--paper-muted);
+  }
+
+  .guide-route-choice h3 {
+    margin: 0;
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .guide-route-choice > p:not(.editorial-eyebrow) {
+    color: var(--ink-soft);
+    line-height: 1.8;
+  }
+
+  .guide-route-choice span {
+    margin-top: auto;
+    color: var(--blue);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .guide-route-choice span::after {
+    content: " →";
+  }
+
+  @media (max-width: 720px) {
+    .guide-route-choices {
+      grid-template-columns: 1fr;
+    }
+
+    .guide-route-choice,
+    .guide-route-choice:last-child {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .guide-route-choice:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

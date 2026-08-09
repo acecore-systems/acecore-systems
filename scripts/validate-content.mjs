@@ -280,9 +280,18 @@ const requiredServiceTechnicalArticles = [
 ];
 const pricing = readJson("src/data/pricing.json");
 const pricingKeys = new Map();
+const consultationTracks = new Set(["development", "it-advisor"]);
+const pricingTracks = new Set();
 
 for (const item of pricing.items) {
   requireText(item.key, "src/data/pricing.json: item key");
+  requireText(item.track, `src/data/pricing.json: ${item.key} track`);
+  assert.equal(
+    consultationTracks.has(item.track),
+    true,
+    `src/data/pricing.json: ${item.key} has an unknown track`,
+  );
+  pricingTracks.add(item.track);
   requireText(item.label, `src/data/pricing.json: ${item.key} label`);
   requireText(item.price, `src/data/pricing.json: ${item.key} price`);
   assert.equal(
@@ -292,6 +301,11 @@ for (const item of pricing.items) {
   );
   pricingKeys.set(item.key, item);
 }
+assert.deepEqual(
+  pricingTracks,
+  consultationTracks,
+  "src/data/pricing.json: both consultation tracks must have pricing",
+);
 
 const serviceAnchors = new Map();
 const serviceDataByRoute = new Map();
@@ -644,6 +658,8 @@ const knownRoutes = new Set([
   advisorSource.route,
   ...serviceSources.map((source) => source.route),
   ...workSources.map((source) => source.route),
+  "/guide/development/",
+  "/guide/it-advisor/",
 ]);
 const services = readJson("src/data/services.json");
 serviceAnchors.set(
@@ -653,6 +669,34 @@ serviceAnchors.set(
 const works = readJson("src/data/works.json");
 const guide = readJson("src/data/guide.json");
 validateVisual(guide.visual, "src/data/guide.json: visual");
+requireText(guide.routeTitle, "src/data/guide.json: routeTitle");
+requireText(guide.routeLead, "src/data/guide.json: routeLead");
+assert.equal(
+  Array.isArray(guide.routes),
+  true,
+  "src/data/guide.json: routes must be an array",
+);
+const guideRoutes = Array.isArray(guide.routes) ? guide.routes : [];
+assert.equal(
+  guideRoutes.length,
+  2,
+  "src/data/guide.json: routes must contain two paths",
+);
+assert.deepEqual(
+  new Set(guideRoutes.map((route) => route.id)),
+  consultationTracks,
+  "src/data/guide.json: routes must separate development and IT advisor",
+);
+for (const [index, route] of guideRoutes.entries()) {
+  for (const field of ["eyebrow", "title", "body", "href", "label"]) {
+    requireText(route[field], `src/data/guide.json: routes[${index}].${field}`);
+  }
+  assert.equal(
+    route.href,
+    `/guide/${route.id}/`,
+    `src/data/guide.json: routes[${index}] must target its guide page`,
+  );
+}
 requireText(guide.journeyTitle, "src/data/guide.json: journeyTitle");
 requireText(guide.journeyLead, "src/data/guide.json: journeyLead");
 assert.equal(
@@ -713,6 +757,15 @@ for (const item of [...services.services, ...works.cases]) {
 }
 
 for (const [index, work] of works.cases.entries()) {
+  requireText(
+    work.consultationTrack,
+    `src/data/works.json: cases[${index}].consultationTrack`,
+  );
+  assert.equal(
+    consultationTracks.has(work.consultationTrack),
+    true,
+    `src/data/works.json: cases[${index}] has an unknown consultation track`,
+  );
   validateImageAsset(work.image, `src/data/works.json: cases[${index}].image`);
   requireText(work.imageAlt, `src/data/works.json: cases[${index}].imageAlt`);
   if (!work.externalUrl) continue;

@@ -22,13 +22,29 @@
   },
   "guide": {
     "title": "Einführungsleitfaden",
-    "description": "Dieser Leitfaden fasst die wichtigsten Prüfungen zusammen, mit denen sich Fehler bei der Einführung von Geschäftssystemen vermeiden lassen: Anforderungen, Gespräche mit den Mitarbeitenden, schrittweiser Rollout und Verankerung im Betrieb.",
-    "heroTitle": "Der Erfolg eines Geschäftssystems beginnt mit der Klärung vor der Entwicklung.",
-    "heroLead": "Vor der Funktionsliste klären wir Geschäftsziel, Ausnahmen, Daten, Berechtigungen und Betriebsorganisation.",
+    "description": "Leitfaden für Auftragsentwicklung und IT-Beratung sowie für die Prüfung von Anforderungen, schrittweisem Rollout und Verankerung im Betrieb.",
+    "heroTitle": "Wählen Sie den Weg, der zu Ihrer Situation passt.",
+    "heroLead": "Ob Sie ein neues System erstellen oder ein vorhandenes veröffentlichen und verbessern möchten: Wählen Sie zuerst den passenden Weg.",
     "visual": {
       "alt": "Eine verantwortliche Person und ein Ingenieur klären den Umfang der Implementierung, während sie sich einen Papierarbeitsablauf und einen Computer ansehen",
       "caption": "Überprüfen Sie Eingabeelemente, Ausnahmebehandlung, Berechtigungen, aktuelle Tools und organisieren Sie gemeinsam den Umfang, den Sie zuerst ausprobieren möchten."
     },
+    "routeTitle": "Wählen Sie den Weg, der zu Ihrer Situation passt.",
+    "routeLead": "Ob etwas Neues erstellt oder Bestehendes veröffentlicht und verbessert werden soll: Wir trennen die Wege schon beim Einstieg in das Gespräch.",
+    "routes": [
+      {
+        "eyebrow": "AUFTRAGSENTWICKLUNG / DEVELOPMENT",
+        "title": "Sie möchten den Weg von der Idee bis zum Launch an uns übergeben",
+        "body": "Wir klären, was entstehen soll und welche betriebliche Aufgabe dahintersteht, und führen ein Projekt von Anforderungen und Entwurf über Entwicklung und Launch bis zur Übergabe.",
+        "label": "Ablauf der Auftragsentwicklung ansehen"
+      },
+      {
+        "eyebrow": "IT-BERATUNG / ADVISORY",
+        "title": "Sie möchten ein vorhandenes System bis zum Launch und Betrieb bringen",
+        "body": "Wir prüfen intern oder mit AI erstellten Code, bestehende Sites sowie Cloud- und IT-Grundlagen und unterstützen den benötigten Umfang monatlich oder punktuell.",
+        "label": "Ablauf der IT-Beratung ansehen"
+      }
+    ],
     "journeyTitle": "Fahren Sie mit der Installation fort, indem Sie kleine Überprüfungen durchführen.",
     "journeyLead": "Organisieren Sie die aktuelle Situation, legen Sie den anfänglichen Umfang fest und wählen Sie die nächste Verbesserung basierend auf den Ergebnissen der tatsächlichen Nutzung aus.",
     "journey": [
@@ -154,40 +170,40 @@
         "answer": "Ja. Während wir den Betriebsstatus nach der Implementierung überwachen, können wir kontinuierliche Unterstützung beim Hinzufügen von Funktionen, der Verbesserung von Bildschirmen, der Anpassung von Berechtigungen und dem Betrieb der Infrastruktur leisten."
       }
     ],
-    "ctaTitle": "Den notwendigen Umfang passend zum aktuellen Ablauf klären.",
-    "ctaBody": "Beschreiben Sie Ihren aktuellen Ablauf, die eingesetzten Werkzeuge und die Schwierigkeiten.",
-    "ctaLabel": "Einführung besprechen"
+    "ctaTitle": "Wählen Sie den Weg, der zu Ihrer Situation passt.",
+    "ctaBody": "Ob Sie bereits die Idee übergeben oder ein vorhandenes System zu Launch und Betrieb führen möchten: Beginnen Sie mit dem näheren Weg.",
+    "ctaLabel": "Vorgehensweise wählen"
   },
   "home": {
     "title": "Geschäftssysteme und App-Entwicklung",
     "description": "Acecore Systems unterstützt durchgängig bei IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Webanwendungsentwicklung, Datennutzung und Betriebsoptimierung.",
     "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
     "heroTitle": "Damit Abläufe in Bewegung bleiben,\nbraucht es eine ruhige Architektur.",
-    "heroLead": "IT-Beratung, AI-Einführung, Geschäftssysteme, Webanwendungen und externe Integrationen.\nWir begleiten von der Anforderungsklärung und Entwicklung bis zu Verbesserungen nach dem Start.",
-    "primaryCta": "Design und Entwicklung besprechen",
-    "secondaryCta": "Preisrahmen ansehen",
-    "layersTitle": "Sehen Sie Ihr Geschäft in drei Ebenen an.",
-    "layersLead": "Die Website, die Benutzer berühren, das System, das die darunter liegende Verarbeitung unterstützt, und der Betrieb, der eine kontinuierliche Nutzung über einen langen Zeitraum hinweg gewährleistet. Design, ohne die drei zu trennen.",
+    "heroLead": "IT-Beratung, AI-Einführung, Geschäftssysteme, Webanwendungen und externe Integrationen.\nOb ein Projekt von der Idee bis zum Launch oder Begleitung passend zur aktuellen Umgebung: Wir unterstützen von der Anforderungsklärung bis zu Verbesserungen nach dem Start.",
+    "primaryCta": "Entwicklung besprechen",
+    "secondaryCta": "IT-Beratung besprechen",
+    "layersTitle": "Die nötigen Systeme vom Ziel her ordnen.",
+    "layersLead": "Kundenkontaktpunkte, tägliche Abläufe und die IT-Grundlage dahinter. Wir verbessern das Nötige in einem tragfähigen Umfang.",
     "layers": [
       {
-        "label": "Site",
-        "title": "Kann vor Ort verwendet werden",
-        "body": "Einfach zu verwenden und ohne Bedenken fortzufahren.\nEntwickelt, um einen natürlichen Ablauf der täglichen Arbeit zu ermöglichen."
+        "label": "Kunden",
+        "title": "Mit Kunden verbinden",
+        "body": "Websites, Reservierungen und Kontaktformulare werden so eingerichtet,\ndass der erste Kontakt ohne Reibung weitergehen kann."
       },
       {
-        "label": "Wie es funktioniert",
-        "title": "Unterstützt durch Mechanismus",
-        "body": "Ordnen Sie Daten, Berechtigungen, Ausnahmen,\nUnterstützung einer sicheren und konsistenten Verarbeitung."
+        "label": "Abläufe",
+        "title": "Abläufe reibungslos machen",
+        "body": "Interne Apps, Werkzeuge, Integrationen und Automatisierung\nverringern manuelle Arbeit und Prüfaufwand."
       },
       {
-        "label": "Operation",
-        "title": "Entwicklung durch Betrieb",
-        "body": "Im Überwachungs-, Wartungs- und Verbesserungszyklus\nEs funktioniert noch lange geräuschlos."
+        "label": "Grundlage",
+        "title": "IT-Grundlage stärken",
+        "body": "IT-Beratung für Launch, Betrieb und technische Entscheidungen\nhilft, die IT des Unternehmens einen Schritt weiterzubringen."
       }
     ],
     "philosophyEyebrow": "DESIGN PHILOSOPHY",
     "philosophyTitle": "Sichtbare und unsichtbare Teile mit der gleichen Präzision.",
-    "philosophyLead": "Nicht nur die Benutzerfreundlichkeit des Bildschirms, sondern auch der Informationsfluss, die Bedingungen für die Beurteilung, die Behandlung von Ausnahmen und die Vorgänge nach der Veröffentlichung. Wir gestalten jeden Schritt, der für einen reibungslosen Geschäftsablauf notwendig ist.",
+    "philosophyLead": "Von Kundenkontaktpunkten über die Systeme hinter den Abläufen bis zur Begleitung für den dauerhaften Betrieb behandeln wir Arbeit, Systeme und Betrieb als verbundenes Ganzes.",
     "designPrinciples": [
       {
         "title": "Beginnen Sie vom Feld aus",
@@ -230,7 +246,7 @@
     "ctaEyebrow": "START WITH A CONVERSATION",
     "ctaTitle": "Bevor wir über das Produkt sprechen: Erzählen Sie uns von Ihrem aktuellen Ablauf.",
     "ctaBody": "Ein Gespräch ist auch möglich, wenn die Anforderungen noch nicht vollständig feststehen. Gemeinsam klären wir Ablauf, Einschränkungen und Prioritäten.",
-    "ctaLabel": "Architektur besprechen"
+    "ctaLabel": "Einstieg wählen"
   },
   "itAdvisor": {
     "title": "IT-Berater auf Abruf",
@@ -1475,7 +1491,7 @@
         "proposal": "Wir haben die notwendigen Informationen in ein Formular integriert, indem wir dienstspezifische Routen, Anfragetypen, FAQs und Vorabberatung mithilfe von AI kombiniert haben.",
         "result": "Wir haben die Bestätigung vor der Konsultation von formellen Anfragen getrennt, um die Durchführung von Kostenvoranschlägen und Serviceberatungen zu erleichtern.",
         "imageAlt": "Kontaktseite der offiziellen Acecore-Website",
-        "externalLabel": "Konsultieren/Anfragen an Acecore"
+        "externalLabel": ""
       },
       {
         "title": "Funktionserweiterungen und Betriebsplattform der offiziellen Acecore-Website",

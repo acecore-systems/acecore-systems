@@ -345,6 +345,16 @@ collections:
                   widget: string,
                   hint: サービス詳細から参照されるため、公開後は変更しないでください。,
                 }
+              - {
+                  name: track,
+                  label: 相談経路,
+                  widget: select,
+                  options:
+                    [
+                      { label: 受託開発, value: development },
+                      { label: IT顧問エンジニア, value: it-advisor },
+                    ],
+                }
               - { name: label, label: ラベル, widget: string }
               - { name: price, label: 料金, widget: string }
               - { name: note, label: 補足, widget: text }
@@ -370,6 +380,20 @@ collections:
               - { name: src, label: 画像, widget: image }
               - { name: alt, label: 画像の代替テキスト, widget: string }
               - { name: caption, label: 画像の説明, widget: text }
+          - { name: routeTitle, label: 進め方の選択見出し, widget: string }
+          - { name: routeLead, label: 進め方の選択説明, widget: text }
+          - label: 進め方の選択肢
+            name: routes
+            widget: list
+            min: 2
+            max: 2
+            fields:
+              - { name: id, label: 経路ID, widget: string }
+              - { name: eyebrow, label: 英字見出し, widget: string }
+              - { name: title, label: 見出し, widget: string }
+              - { name: body, label: 本文, widget: text }
+              - { name: href, label: ガイドURL, widget: string }
+              - { name: label, label: リンク文言, widget: string }
           - { name: journeyTitle, label: 導入ステップ見出し, widget: string }
           - { name: journeyLead, label: 導入ステップ説明, widget: text }
           - label: 導入ステップ
@@ -428,6 +452,16 @@ collections:
                   label: アンカーID,
                   widget: string,
                   hint: case- から始まる変更しない識別子です。外部リンクから参照されます。,
+                }
+              - {
+                  name: consultationTrack,
+                  label: 相談経路,
+                  widget: select,
+                  options:
+                    [
+                      { label: 受託開発, value: development },
+                      { label: IT顧問エンジニア, value: it-advisor },
+                    ],
                 }
               - { name: title, label: タイトル, widget: string }
               - { name: category, label: カテゴリ, widget: string }

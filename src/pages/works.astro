@@ -25,6 +25,16 @@ const localizeHref = (href: string) => {
     url.origin,
   ).href;
 };
+const contactHref = (work: (typeof data.cases)[number]) => {
+  const service =
+    work.consultationTrack === "it-advisor" ? "it-advisor" : "business-system";
+  return `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams({
+    category: "service",
+    service,
+    from: `systems-work-${work.id}`,
+    entry: "work-cta",
+  }).toString()}`;
+};
 ---
 
 <BaseLayout
@@ -96,9 +106,16 @@ const localizeHref = (href: string) => {
                   </div>
                 </dl>
                 <div class="work-case__links">
+                  <a
+                    class="editorial-link editorial-link--primary"
+                    href={contactHref(work)}
+                    aria-label={`${work.title}: ${text.discussThis}`}
+                  >
+                    {text.discussThis}
+                  </a>
                   {work.detailUrl && (
                     <a
-                      class="editorial-link editorial-link--primary"
+                      class="editorial-link"
                       href={localizeHref(work.detailUrl)}
                       aria-label={`${work.title}: ${text.caseDetails}`}
                     >

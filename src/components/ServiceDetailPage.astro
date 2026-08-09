@@ -19,6 +19,7 @@ interface Props {
   data: ServiceDetail;
   canonicalPath: string;
   serviceKey: string;
+  consultationServiceKey?: "business-system" | "it-advisor";
   locale?: Locale;
 }
 
@@ -26,6 +27,7 @@ const {
   data,
   canonicalPath: canonicalInput,
   serviceKey,
+  consultationServiceKey = serviceKey,
   locale = "ja",
 } = Astro.props;
 const content = getLocalizedContent(locale);
@@ -83,7 +85,7 @@ const offerings = data.offerings.map((offering) => ({
 const contactHref = `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams(
   {
     category: "service",
-    service: serviceKey,
+    service: consultationServiceKey,
     from: `systems-${serviceKey}`,
     entry: "service-detail-cta",
   },
