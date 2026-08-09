@@ -1469,6 +1469,16 @@
         "externalLabel": ""
       },
       {
+        "title": "Acecore Store 的规划与开发",
+        "category": "电商、支付与按需生产",
+        "summary": "我们构建了一个按需生产的商店，将浏览 Acecore 和 Aceserver 官方商品、购物车、运费确认、支付、生产和配送整合为一个完整流程。",
+        "challenge": "商品销售需要在降低库存负担的同时，清楚地说明价格、运费、退换货条件和销售者信息，并可靠地衔接支付、生产和配送。",
+        "proposal": "以 Astro 和 Cloudflare Pages / Pages Functions 为基础，结合 D1、R2、Queues、Turnstile、Stripe Checkout 和 Printful API。用户可在购物车确认运费与总额，并在支付完成后进入生产与配送流程。",
+        "result": "我们公开了一个销售基础，用户可按 Acecore 和 Aceserver 品牌浏览商品，并针对每笔订单委托按需生产。商店不保存支付信息，便于安全运营。",
+        "imageAlt": "Acecore Store 首页，展示 Acecore 和 Aceserver 的官方商品",
+        "externalLabel": "访问 Acecore Store"
+      },
+      {
         "title": "Acecore官网功能添加/运营基础设施",
         "category": "CMS、搜索、安全、性能",
         "summary": "我们已分阶段向静态站点添加了 CMS、文章基础结构、站点搜索、结构化数据、CSP、可访问性改进和显示速度改进。",

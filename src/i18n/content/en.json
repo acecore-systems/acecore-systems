@@ -1494,6 +1494,16 @@
         "externalLabel": ""
       },
       {
+        "title": "Acecore Store planning and development",
+        "category": "E-commerce, payments, and on-demand fulfillment",
+        "summary": "We built an on-demand storefront that brings the journey from browsing official Acecore and Aceserver goods through cart, shipping confirmation, payment, manufacturing, and delivery into one coherent flow.",
+        "challenge": "Merchandise sales needed to keep inventory risk low while clearly presenting prices, shipping, returns, and seller information, and reliably connecting payment with manufacturing and delivery.",
+        "proposal": "Using Astro and Cloudflare Pages / Pages Functions, we combined D1, R2, Queues, Turnstile, Stripe Checkout, and the Printful API. Customers can confirm shipping and their total from the cart, then proceed from payment completion to manufacturing and delivery.",
+        "result": "We launched a sales foundation where customers can browse goods by Acecore and Aceserver brand and each order is sent for on-demand manufacturing. Payment information is not retained by the store, making it safer and easier to operate.",
+        "imageAlt": "Acecore Store home page featuring official Acecore and Aceserver goods",
+        "externalLabel": "Visit Acecore Store"
+      },
+      {
         "title": "Feature enhancements and operational foundation for the Acecore corporate site",
         "category": "CMS, search, security, and performance",
         "summary": "We progressively added a CMS, article foundation, site search, structured data, CSP, accessibility improvements, and performance improvements to a static site.",

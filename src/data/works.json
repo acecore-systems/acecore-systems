@@ -20,6 +20,21 @@
       "externalLabel": ""
     },
     {
+      "id": "case-acecore-store",
+      "consultationTrack": "development",
+      "detailUrl": "",
+      "title": "Acecore Storeの企画・開発",
+      "category": "ECサイト・決済・オンデマンド製造",
+      "summary": "AcecoreとAceserverの公式グッズを、商品閲覧からカート、送料確認、決済、製造・発送まで一貫して扱えるオンデマンドストアとして構築しました。",
+      "challenge": "グッズ販売では、在庫負担を抑えながら、価格・送料・返品条件・販売者情報を事前に分かりやすく伝え、決済と製造・発送を確実に連携する必要がありました。",
+      "proposal": "AstroとCloudflare Pages / Pages Functionsを基盤に、D1、R2、Queues、Turnstile、Stripe Checkout、Printful APIを組み合わせました。カートから送料・合計を確認し、決済完了後に製造・発送へつなぐ構成です。",
+      "result": "AcecoreとAceserverのブランド別に商品を閲覧でき、注文ごとにオンデマンド製造を依頼する販売基盤を公開しました。決済情報をストアで保持しない、安全に運用しやすい仕組みです。",
+      "image": "/images/works/acecore-store.jpg",
+      "imageAlt": "Acecore Storeのトップページ。AcecoreとAceserverの公式グッズを紹介する画面",
+      "externalUrl": "https://store.acecore.net/",
+      "externalLabel": "Acecore Storeを見る"
+    },
+    {
       "id": "case-acecore-site-platform",
       "consultationTrack": "development",
       "detailUrl": "/works/acecore-site-platform/",

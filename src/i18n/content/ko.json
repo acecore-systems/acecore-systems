@@ -1484,6 +1484,16 @@
         "externalLabel": ""
       },
       {
+        "title": "Acecore Store 기획 및 개발",
+        "category": "전자상거래, 결제 및 주문형 생산",
+        "summary": "Acecore와 Aceserver의 공식 굿즈를 둘러보는 단계부터 장바구니, 배송비 확인, 결제, 제작과 배송까지 하나의 흐름으로 연결하는 주문형 스토어를 구축했습니다.",
+        "challenge": "굿즈 판매에서는 재고 부담을 줄이면서 가격, 배송비, 반품 조건, 판매자 정보를 명확히 알리고 결제와 제작·배송을 안정적으로 연계해야 했습니다.",
+        "proposal": "Astro와 Cloudflare Pages / Pages Functions를 기반으로 D1, R2, Queues, Turnstile, Stripe Checkout, Printful API를 조합했습니다. 장바구니에서 배송비와 합계를 확인한 뒤 결제 완료 후 제작과 배송으로 이어지는 구성입니다.",
+        "result": "Acecore와 Aceserver 브랜드별로 상품을 살펴보고 주문마다 주문형 생산을 의뢰할 수 있는 판매 기반을 공개했습니다. 스토어가 결제 정보를 보관하지 않아 더 안전하고 운영하기 쉬운 구조입니다.",
+        "imageAlt": "Acecore와 Aceserver의 공식 굿즈를 소개하는 Acecore Store 홈 화면",
+        "externalLabel": "Acecore Store 보기"
+      },
+      {
         "title": "Acecore 공식 사이트의 기능 추가·운영 기반",
         "category": "CMS·검색·보안·성능",
         "summary": "정적 사이트에 CMS, 기사 기반, 사이트 내 검색, 구조화된 데이터, CSP, 접근성 개선, 표시 속도 개선을 단계적으로 추가했습니다.",

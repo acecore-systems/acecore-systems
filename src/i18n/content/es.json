@@ -1489,6 +1489,16 @@
         "externalLabel": ""
       },
       {
+        "title": "Planificación y desarrollo de Acecore Store",
+        "category": "Comercio electrónico, pagos y producción bajo demanda",
+        "summary": "Construimos una tienda bajo demanda que integra en un solo flujo la exploración de productos oficiales de Acecore y Aceserver, el carrito, la confirmación del envío, el pago, la fabricación y la entrega.",
+        "challenge": "La venta de productos requería reducir la carga de inventario y, al mismo tiempo, explicar claramente precios, envío, devoluciones e información del vendedor, además de conectar de forma fiable el pago con la fabricación y la entrega.",
+        "proposal": "Con Astro y Cloudflare Pages / Pages Functions como base, combinamos D1, R2, Queues, Turnstile, Stripe Checkout y la Printful API. Desde el carrito se pueden confirmar el envío y el total antes de continuar de la finalización del pago a la fabricación y la entrega.",
+        "result": "Publicamos una plataforma de venta que permite explorar productos por marca de Acecore y Aceserver y solicita la fabricación bajo demanda para cada pedido. La tienda no guarda información de pago, lo que facilita una operación más segura.",
+        "imageAlt": "Página de inicio de Acecore Store con productos oficiales de Acecore y Aceserver",
+        "externalLabel": "Visitar Acecore Store"
+      },
+      {
         "title": "Funciones y base operativa del sitio corporativo de Acecore",
         "category": "CMS, búsqueda, seguridad y rendimiento",
         "summary": "Añadimos por fases CMS, artículos, búsqueda, datos estructurados, CSP, accesibilidad y rendimiento a un sitio estático.",
