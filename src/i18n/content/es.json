@@ -175,78 +175,78 @@
     "ctaLabel": "Elegir una forma de avanzar"
   },
   "home": {
-    "title": "Sistemas empresariales y desarrollo de aplicaciones",
-    "description": "Acecore Systems ofrece soporte integral que abarca asesoría de IT, adopción de AI y mejora operativa, despliegue, desarrollo de aplicaciones Web, uso de datos y mejora continua.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
-    "heroTitle": "El trabajo que sigue avanzando\nse apoya en un diseño sereno.",
-    "heroLead": "Desde el sitio web, las reservas y las consultas hasta las operaciones diarias y el soporte posterior al lanzamiento.\nAunque aún no sepa por dónde empezar, aclaramos la situación y las prioridades para proponer un camino sostenible.",
+    "title": "Desarrollo de sistemas y aplicaciones empresariales",
+    "description": "Acecore Systems ofrece un servicio de desarrollo integral que abarca desde la asesoría de TI, la implementación de IA y la mejora de procesos hasta el despliegue, el desarrollo de aplicaciones web, el aprovechamiento de datos y la mejora operativa.",
+    "heroEyebrow": "ACECORE SYSTEMS — SISTEMAS PARA LAS OPERACIONES",
+    "heroTitle": "En las operaciones que no se detienen,\nhay un diseño discreto.",
+    "heroLead": "Desde el sitio web y los canales de reserva y contacto hasta la organización del trabajo diario y la gestión posterior a la puesta en marcha.\nAunque todavía no esté claro por dónde empezar, ordenamos la situación actual y las prioridades, y proponemos una forma de avanzar realista.",
     "primaryCta": "Consultar sobre desarrollo",
-    "secondaryCta": "Consultar asesoría de IT",
-    "layersTitle": "Organizar el sistema necesario a partir del objetivo.",
-    "layersLead": "Puntos de contacto con clientes, operaciones diarias y la base de IT que las sostiene. Mejoramos lo necesario con un alcance sostenible.",
+    "secondaryCta": "Consultar sobre asesoría de TI",
+    "layersTitle": "Damos forma a las soluciones necesarias, empezando por el objetivo.",
+    "layersLead": "Los puntos de contacto con los clientes, las operaciones diarias y la infraestructura de TI que las sostiene. Empezamos por donde hace falta y ponemos en orden lo necesario de manera realista.",
     "layers": [
       {
         "label": "Clientes",
         "title": "Conectar con los clientes",
-        "body": "Organizamos sitios web, reservas y formularios de contacto\npara que la primera interacción avance sin fricción."
+        "body": "Sitio web, reservas, formularios de contacto y más:\nestructuramos los primeros puntos de contacto para que el usuario avance sin perderse."
       },
       {
         "label": "Operaciones",
-        "title": "Hacer que las operaciones fluyan",
-        "body": "Usamos aplicaciones internas, herramientas, integraciones y automatización\npara reducir trabajo manual y comprobaciones."
+        "title": "Agilizar las operaciones",
+        "body": "Con aplicaciones internas, herramientas, integraciones y automatización,\nreducimos la carga que suponen el trabajo manual y las comprobaciones."
       },
       {
-        "label": "Base",
-        "title": "Fortalecer la base de IT",
-        "body": "La asesoría de IT para lanzamientos, operación y decisiones técnicas\nayuda a llevar el IT de la empresa un paso adelante."
+        "label": "Infraestructura",
+        "title": "Poner en orden la infraestructura de TI",
+        "body": "Sin necesidad de contar con un responsable dedicado, puede consultar a un asesor de TI sobre la puesta en producción, la operación y las decisiones técnicas.\nLlevamos la TI de su empresa un paso más allá."
       }
     ],
-    "philosophyEyebrow": "DESIGN PHILOSOPHY",
-    "philosophyTitle": "La misma precisión para lo visible y lo invisible.",
-    "philosophyLead": "Desde los puntos de contacto con clientes hasta los sistemas que sostienen las operaciones y el soporte para mantenerlos, tratamos el trabajo, los sistemas y la operación como un todo conectado.",
+    "philosophyEyebrow": "FILOSOFÍA DE DISEÑO",
+    "philosophyTitle": "Lo visible y lo invisible, con la misma precisión.",
+    "philosophyLead": "Desde los puntos de contacto con los clientes hasta los sistemas que sostienen las operaciones y la gestión necesaria para mantenerlas en marcha. No separamos la realidad operativa, los sistemas ni la forma de gestionarlos: damos forma a todo con la misma precisión.",
     "designPrinciples": [
       {
-        "title": "Comenzar desde el lugar de trabajo",
-        "body": "Antes de elegir funciones, aclaramos quién decide qué y cuándo, y dónde surgen las dificultades."
+        "title": "Empezar por la realidad operativa",
+        "body": "Antes de definir las funcionalidades, analizamos quién decide qué y cuándo, y dónde surgen las dificultades."
       },
       {
-        "title": "Diseñar lo que el usuario no ve",
-        "body": "Tratamos datos, permisos, integraciones y excepciones como un único sistema conectado."
+        "title": "Cuidar también lo que no se ve",
+        "body": "Consideramos los datos, los permisos, las integraciones y la gestión de excepciones como un único sistema."
       },
       {
-        "title": "Planificar para el cambio",
-        "body": "En lugar de construir demasiado desde el principio, comenzamos con el alcance necesario y permitimos mejorar con el uso."
+        "title": "Diseñar para el cambio",
+        "body": "Sin sobredimensionar desde el principio, empezamos por lo necesario y lo diseñamos para poder mejorarlo con el uso."
       }
     ],
-    "consultationEyebrow": "WHEN TO TALK",
-    "consultationTitle": "Puede consultarnos en cualquiera de estas etapas.",
-    "consultationLead": "No necesita saber todavía qué construir. Identificaremos juntos el sistema necesario a partir de su trabajo y sus problemas actuales.",
+    "consultationEyebrow": "CUÁNDO CONSULTAR",
+    "consultationTitle": "Puede consultarnos desde las primeras etapas.",
+    "consultationLead": "No es necesario que haya decidido aún qué construir. Partimos de sus operaciones actuales y de los problemas que afronta para definir juntos las soluciones que hacen falta.",
     "consultationSituations": [
       {
-        "title": "No puede lanzar una aplicación creada con AI",
-        "body": "El código está listo, pero las decisiones sobre dominio, nube, seguridad y operación han detenido el avance."
+        "title": "No puede publicar una aplicación creada con IA",
+        "body": "El código está listo, pero el proyecto sigue bloqueado por decisiones sobre el dominio, la nube, la seguridad y la operación."
       },
       {
-        "title": "Aumentan las copias y el trabajo manual",
-        "body": "Quiere organizar tareas repartidas entre hojas de cálculo, papel y correo, y decidir dónde introducir un sistema."
+        "title": "Aumentan las tareas de introducción de datos y el trabajo manual",
+        "body": "Quiere ordenar las tareas repartidas entre hojas de cálculo, papel y correo electrónico, y decidir por dónde empezar a sistematizarlas."
       },
       {
-        "title": "El sistema actual no encaja con el trabajo",
-        "body": "Quiere resolver problemas de uso y dependencia de personas, y mejorar el sistema por etapas para adaptarlo al flujo de trabajo."
+        "title": "El sistema actual no se adapta al trabajo diario",
+        "body": "Quiere revisar las dificultades de uso y la dependencia de personas concretas, y adaptar gradualmente el sistema al flujo de trabajo."
       },
       {
         "title": "Los datos y las herramientas están fragmentados",
-        "body": "Quiere conectar varios servicios y fuentes de datos para reducir entradas duplicadas y comprobaciones omitidas."
+        "body": "Quiere conectar varios servicios y fuentes de datos para reducir la introducción duplicada de información y las comprobaciones que se pasan por alto."
       },
       {
-        "title": "Necesita definir el problema antes de los requisitos",
-        "body": "Quiere aclarar objetivos, usuarios, restricciones y prioridades y elegir un camino realista."
+        "title": "Quiere ordenar los problemas antes de convertirlos en requisitos",
+        "body": "Quiere ordenar los objetivos, los usuarios, las restricciones y las prioridades, y decidir una forma realista de avanzar."
       }
     ],
-    "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Cuéntenos sobre su trabajo antes de decidir qué construir.",
-    "ctaBody": "Puede consultarnos antes de definir por completo los requisitos. Los organizaremos juntos a partir del flujo actual, las restricciones y las prioridades.",
-    "ctaLabel": "Elegir cómo empezar"
+    "ctaEyebrow": "EMPECEMOS CON UNA CONVERSACIÓN",
+    "ctaTitle": "Antes de decidir qué construir, cuéntenos cómo funcionan hoy sus operaciones.",
+    "ctaBody": "Puede consultarnos incluso si los requisitos aún no están completamente definidos. Juntos ponemos en orden el flujo actual, las restricciones y las prioridades.",
+    "ctaLabel": "Elegir una forma de consulta"
   },
   "itAdvisor": {
     "title": "Ingeniero asesor de IT",
@@ -1128,7 +1128,12 @@
         }
       },
       "indexSummary": "Revisamos SEO, velocidad, accesibilidad y seguridad y definimos el orden de mejora.",
-      "indexTopics": ["SEO", "Rendimiento", "Accesibilidad", "CSP y entrega"],
+      "indexTopics": [
+        "SEO",
+        "Rendimiento",
+        "Accesibilidad",
+        "CSP y entrega"
+      ],
       "introTitle": "Más allá de subir una puntuación: seguir mejorando.",
       "introBody": "La calidad no termina con una auditoría. Revisamos funciones de páginas, analítica, scripts, frecuencia y publicación y corregimos por fases documentando impacto y revisión.",
       "challenges": [

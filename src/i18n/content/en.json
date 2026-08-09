@@ -175,78 +175,78 @@
     "ctaLabel": "Choose a path"
   },
   "home": {
-    "title": "Business Systems and App Development",
-    "description": "Acecore Systems provides end-to-end development support covering IT advisory services, AI adoption and operational improvement, deployment, Web app development, data use, and operational improvement.",
+    "title": "Business Systems & App Development",
+    "description": "Acecore Systems provides end-to-end support—from IT advisory, AI adoption, and business process improvement through deployment, web app development, data utilization, and operational improvement.",
     "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
-    "heroTitle": "Work that keeps moving\nrests on quiet design.",
-    "heroLead": "From your website, reservations, and contact flow to daily operations and post-launch support.\nEven before you know where to start, we clarify the current situation and priorities, then propose a sustainable path forward.",
-    "primaryCta": "Discuss development",
-    "secondaryCta": "Discuss IT advisory support",
-    "layersTitle": "Put the right systems in place from the goal.",
-    "layersLead": "Customer touchpoints, daily operations, and the IT foundation behind them. We improve the necessary places in a sustainable scope.",
+    "heroTitle": "For work that never stops,\nthere is quiet design behind it.",
+    "heroLead": "From websites and customer journeys for bookings and inquiries to organizing day-to-day work and managing operations after launch.\nEven if you are not sure where to start, we will help clarify your current situation and priorities and propose a realistic way forward.",
+    "primaryCta": "Discuss your project",
+    "secondaryCta": "Talk to an IT advisor",
+    "layersTitle": "Put the right systems in place, starting with your goals.",
+    "layersLead": "Customer touchpoints, day-to-day operations, and the IT foundation that supports them. We put the right pieces in place where they are needed, in a practical and sustainable way.",
     "layers": [
       {
-        "label": "Customers",
+        "label": "Customer",
         "title": "Connect with customers",
-        "body": "Set up websites, reservations, and contact forms\nso the first interaction can move forward without friction."
+        "body": "Websites, reservation flows, and inquiry forms—the first points of contact—\nare designed to make the next step clear."
       },
       {
         "label": "Operations",
-        "title": "Make operations run smoothly",
-        "body": "Use internal apps, tools, integrations, and automation\nto reduce manual work and checking overhead."
+        "title": "Streamline operations",
+        "body": "Internal apps, tools, integrations, and automation\nreduce the burden of manual work and routine checks."
       },
       {
         "label": "Foundation",
-        "title": "Strengthen the IT foundation",
-        "body": "IT advisory support for launch, operations, and technical decisions\nhelps move your company's IT one step forward."
+        "title": "Strengthen your IT foundation",
+        "body": "An IT advisor you can turn to for launch, operations, and technical decisions—without having to hire a dedicated specialist.\nWe help move your company's IT forward."
       }
     ],
     "philosophyEyebrow": "DESIGN PHILOSOPHY",
-    "philosophyTitle": "The same precision for what is visible and what is not.",
-    "philosophyLead": "From customer touchpoints to the systems behind operations and the support that keeps them running, we treat the workplace, systems, and operations as one connected whole.",
+    "philosophyTitle": "The visible and invisible, designed with equal precision.",
+    "philosophyLead": "From customer touchpoints to the systems that support day-to-day work and the operations that keep it running. We keep the work, the systems, and the operations connected, refining every part with equal precision.",
     "designPrinciples": [
       {
-        "title": "Start from the workplace",
-        "body": "Before choosing features, we clarify who decides what and when, and where the difficulties occur."
+        "title": "Start with the real work",
+        "body": "Before deciding on features, we clarify who decides what, when those decisions are made, and where the difficulties lie."
       },
       {
-        "title": "Design the parts users do not see",
+        "title": "Design the unseen, too.",
         "body": "We treat data, permissions, integrations, and exception handling as one connected system."
       },
       {
-        "title": "Plan for change",
-        "body": "Instead of overbuilding from the start, we begin with the necessary scope and make it possible to improve through use."
+        "title": "Design for change",
+        "body": "We avoid overbuilding from the start, begin with what is needed, and create a system that can evolve through use."
       }
     ],
     "consultationEyebrow": "WHEN TO TALK",
-    "consultationTitle": "You can talk to us at any of these stages.",
-    "consultationLead": "You do not need to know what to build yet. We will identify the system you need from your current work and problems.",
+    "consultationTitle": "You can talk to us at any stage.",
+    "consultationLead": "You do not need to have decided what to build. Starting with your current work and the challenges you face, we will work with you to identify the systems you need.",
     "consultationSituations": [
       {
-        "title": "You cannot launch an app built with AI",
-        "body": "The code is ready, but decisions about the domain, cloud, security, and operations have stopped progress."
+        "title": "Cannot deploy an app built with AI",
+        "body": "The code is done, but you are stuck on decisions about the domain, cloud infrastructure, security, and operations."
       },
       {
-        "title": "Copying and manual work are increasing",
-        "body": "You want to organize work split across spreadsheets, paper, and email, and decide where to introduce a system."
+        "title": "Data re-entry and manual work are piling up",
+        "body": "You want to organize work scattered across spreadsheets, paper, and email, and decide where to start putting a system in place."
       },
       {
-        "title": "The current system does not fit the workplace",
-        "body": "You want to address usability and dependence on individuals, then improve the system in phases to fit the workflow."
+        "title": "Your current system does not fit the way you work",
+        "body": "You want to address usability issues and reliance on individual know-how, then improve it step by step to fit your workflow."
       },
       {
-        "title": "Data and tools are fragmented",
+        "title": "Your data and tools are fragmented",
         "body": "You want to connect multiple services and data sources to reduce duplicate entry and missed checks."
       },
       {
-        "title": "You need to define the problem before the requirements",
-        "body": "You want to clarify the goals, users, constraints, and priorities and choose a realistic way forward."
+        "title": "You want to clarify challenges before defining requirements",
+        "body": "You want to organize your goals, users, constraints, and priorities, then decide on a realistic way forward."
       }
     ],
     "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Tell us about your work before deciding what to build.",
-    "ctaBody": "You can consult us before the requirements are finalized. We will organize them together from the current flow, constraints, and priorities.",
-    "ctaLabel": "Choose how to get started"
+    "ctaTitle": "Before deciding what to build, tell us about your work today.",
+    "ctaBody": "You can talk to us even before the requirements are fully defined. Together, we will organize your current workflow, constraints, and priorities.",
+    "ctaLabel": "Choose how to get in touch"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer",

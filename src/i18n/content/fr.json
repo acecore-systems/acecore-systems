@@ -175,78 +175,78 @@
     "ctaLabel": "Choisir une manière d’avancer"
   },
   "home": {
-    "title": "Systèmes métier et développement d’applications",
-    "description": "Acecore Systems vous accompagne de bout en bout : conseil IT, adoption de l’AI, amélioration opérationnelle, déploiement, développement d’applications Web et exploitation des données.",
-    "heroEyebrow": "ACECORE SYSTEMS — DES SYSTÈMES AU SERVICE DES OPÉRATIONS",
-    "heroTitle": "La continuité de votre activité\nrepose sur une conception discrète.",
-    "heroLead": "Du site, des réservations et des demandes de contact aux opérations quotidiennes et au suivi après mise en ligne.\nMême avant de savoir par où commencer, nous clarifions la situation et les priorités, puis proposons une voie durable.",
-    "primaryCta": "Discuter du développement",
-    "secondaryCta": "Discuter de l’accompagnement IT",
-    "layersTitle": "Mettre en place le système nécessaire à partir de l’objectif.",
-    "layersLead": "Les points de contact client, les opérations quotidiennes et la base IT qui les soutient. Nous améliorons le nécessaire dans un périmètre durable.",
+    "title": "Développement de systèmes métier et d’applications",
+    "description": "Acecore Systems est un service de développement qui vous accompagne de bout en bout : conseil IT, intégration de l’IA, amélioration des processus métier, déploiement, développement d’applications web, valorisation des données et optimisation de l’exploitation.",
+    "heroEyebrow": "ACECORE SYSTEMS — DES SYSTÈMES AU SERVICE DE VOS OPÉRATIONS",
+    "heroTitle": "Les activités qui ne s’arrêtent jamais,\nreposent sur une conception sobre.",
+    "heroLead": "Du site web aux parcours de réservation et de prise de contact, en passant par l’organisation du travail quotidien et la gestion après la mise en ligne.\nMême lorsque vous ne savez pas encore par où commencer, nous clarifions la situation actuelle et les priorités, puis vous proposons une démarche réaliste.",
+    "primaryCta": "Discuter de votre projet de développement",
+    "secondaryCta": "Discuter d’un accompagnement IT",
+    "layersTitle": "À partir de vos objectifs, nous mettons en place les systèmes nécessaires.",
+    "layersLead": "Les points de contact avec vos clients, les opérations quotidiennes et l’infrastructure IT qui les soutient : nous mettons de l’ordre là où c’est nécessaire, à votre rythme.",
     "layers": [
       {
         "label": "Clients",
-        "title": "Créer le lien avec les clients",
-        "body": "Nous organisons sites, réservations et formulaires de contact\nafin que le premier échange progresse sans friction."
+        "title": "Créer du lien avec vos clients",
+        "body": "Site web, réservations, formulaires de contact…\nnous structurons le premier point de contact pour que le parcours soit clair et fluide."
       },
       {
         "label": "Opérations",
-        "title": "Fluidifier les opérations",
-        "body": "Applications internes, outils, intégrations et automatisation\nréduisent le travail manuel et les vérifications."
+        "title": "Fluidifier vos opérations",
+        "body": "Applications internes, outils, intégrations et automatisations :\nnous réduisons la charge liée aux tâches manuelles et aux vérifications."
       },
       {
-        "label": "Fondation",
-        "title": "Renforcer la base IT",
-        "body": "L’accompagnement IT pour le lancement, l’exploitation et les décisions techniques\naide à faire progresser l’IT de votre entreprise d’un cran."
+        "label": "Infrastructure",
+        "title": "Structurer votre infrastructure IT",
+        "body": "Un conseiller IT externalisé pour vous accompagner sur la mise en ligne, l’exploitation et les décisions techniques, sans avoir à recruter de responsable dédié.\nNous faisons progresser l’IT de votre entreprise."
       }
     ],
     "philosophyEyebrow": "PHILOSOPHIE DE CONCEPTION",
-    "philosophyTitle": "La même précision pour ce qui se voit et ce qui ne se voit pas.",
-    "philosophyLead": "Des points de contact client aux systèmes qui soutiennent les opérations et à l’accompagnement qui les maintient, nous traitons le terrain, les systèmes et l’exploitation comme un ensemble cohérent.",
+    "philosophyTitle": "La même précision pour ce qui se voit comme pour ce qui ne se voit pas.",
+    "philosophyLead": "Des points de contact avec vos clients aux systèmes qui soutiennent votre activité, en passant par leur fonctionnement au quotidien. Nous ne dissocions pas la réalité du terrain, les systèmes et leur exploitation : nous les structurons avec le même niveau de précision.",
     "designPrinciples": [
       {
-        "title": "Partir du terrain",
-        "body": "Avant de choisir des fonctionnalités, nous précisons qui décide quoi et à quel moment, ainsi que les points de difficulté."
+        "title": "Commencer par le terrain",
+        "body": "Avant de définir les fonctionnalités, nous clarifions qui décide quoi, à quel moment et où se situent les difficultés."
       },
       {
-        "title": "Concevoir aussi ce que l’utilisateur ne voit pas",
-        "body": "Nous traitons les données, les droits, les intégrations et la gestion des exceptions comme un seul système cohérent."
+        "title": "Soigner l’invisible",
+        "body": "Nous considérons les données, les droits d’accès, les intégrations et la gestion des exceptions comme un ensemble cohérent."
       },
       {
-        "title": "Prévoir le changement",
-        "body": "Au lieu de surdimensionner la première version, nous commençons par le périmètre nécessaire et permettons au système de progresser avec l’usage."
+        "title": "Concevoir pour évoluer",
+        "body": "Nous ne cherchons pas à tout finaliser dès le départ : nous commençons par le nécessaire et mettons en place une base qui pourra évoluer au fil de l’usage."
       }
     ],
     "consultationEyebrow": "QUAND NOUS CONSULTER",
-    "consultationTitle": "Vous pouvez nous parler à chacune de ces étapes.",
-    "consultationLead": "Vous n’avez pas encore besoin de savoir quoi développer. Nous déterminerons le système nécessaire à partir de votre travail actuel et de vos difficultés.",
+    "consultationTitle": "Vous pouvez nous consulter dès les premières étapes.",
+    "consultationLead": "Vous n’avez pas besoin d’avoir déjà défini ce qu’il faut construire. À partir de vos activités actuelles et de vos difficultés, nous clarifions ensemble les solutions dont vous avez besoin.",
     "consultationSituations": [
       {
-        "title": "Vous ne parvenez pas à lancer une application créée avec l’AI",
-        "body": "Le code est prêt, mais les décisions concernant le domaine, le cloud, la sécurité et l’exploitation bloquent le projet."
+        "title": "Impossible de mettre en ligne une application créée avec l’IA",
+        "body": "Le code est prêt, mais le projet reste bloqué par les décisions liées au nom de domaine, au cloud, à la sécurité et à l’exploitation."
       },
       {
-        "title": "Les copier-coller et les tâches manuelles se multiplient",
-        "body": "Vous souhaitez structurer un travail réparti entre feuilles de calcul, papier et e-mail, puis déterminer où introduire un système."
+        "title": "Les ressaisies et les tâches manuelles se multiplient",
+        "body": "Vous souhaitez organiser les tâches dispersées entre tableurs, documents papier et e-mails, puis déterminer lesquelles outiller en priorité."
       },
       {
-        "title": "Le système actuel ne correspond pas au terrain",
-        "body": "Vous souhaitez améliorer l’ergonomie, réduire la dépendance à certaines personnes et faire évoluer le système par étapes pour l’adapter au flux de travail."
+        "title": "Le système actuel ne correspond pas à la réalité du terrain",
+        "body": "Vous souhaitez revoir les problèmes d’ergonomie et la dépendance à certaines personnes, puis faire évoluer progressivement le système pour l’adapter à vos processus métier."
       },
       {
-        "title": "Les données et les outils sont fragmentés",
-        "body": "Vous souhaitez relier plusieurs services et sources de données afin de réduire les doubles saisies et les contrôles oubliés."
+        "title": "Des données et des outils cloisonnés",
+        "body": "Vous souhaitez relier plusieurs services et sources de données pour réduire les doubles saisies et les oublis de vérification."
       },
       {
-        "title": "Vous devez définir le problème avant les besoins",
-        "body": "Vous souhaitez clarifier les objectifs, les utilisateurs, les contraintes et les priorités afin de choisir une voie réaliste."
+        "title": "Structurer les problématiques avant de les traduire en exigences",
+        "body": "Vous souhaitez clarifier les objectifs, les utilisateurs, les contraintes et les priorités, puis définir une démarche réaliste."
       }
     ],
-    "ctaEyebrow": "COMMENÇONS PAR ÉCHANGER",
-    "ctaTitle": "Parlez-nous de votre activité avant de décider quoi développer.",
-    "ctaBody": "Vous pouvez nous consulter avant que les besoins soient finalisés. Nous les structurerons avec vous à partir du flux actuel, des contraintes et des priorités.",
-    "ctaLabel": "Choisir comment commencer"
+    "ctaEyebrow": "COMMENÇONS PAR EN PARLER",
+    "ctaTitle": "Avant de définir ce qu’il faut construire, parlez-nous de votre fonctionnement actuel.",
+    "ctaBody": "Vous pouvez nous consulter même si les exigences ne sont pas encore totalement définies. Nous clarifions ensemble vos processus actuels, vos contraintes et vos priorités.",
+    "ctaLabel": "Choisir un mode de contact"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer",
