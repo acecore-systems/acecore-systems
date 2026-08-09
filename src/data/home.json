@@ -3,7 +3,7 @@
   "description": "Acecore Systemsは、IT顧問、AI導入・業務改善、デプロイ、Webアプリ開発、データ活用、運用改善まで一貫して支援する開発サービスです。",
   "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
   "heroTitle": "動き続ける業務には、\n静かな設計がある。",
-  "heroLead": "IT顧問、AI導入、業務システム、Webアプリ、外部サービス連携まで。\n構想から任せたい開発も、今ある環境に合わせて進める伴走も、要件整理から公開後の運用改善まで支援します。",
+  "heroLead": "ホームページや予約・問い合わせの導線、日々の業務の整理、公開後の運用まで。\n何から始めるべきか決まっていない段階でも、現状と優先順位を整理し、無理のない進め方をご提案します。",
   "primaryCta": "開発を相談する",
   "primaryCtaHref": "/contact/?category=service&service=business-system&from=systems-home&entry=home-development-cta",
   "secondaryCta": "IT顧問を相談する",
@@ -12,16 +12,22 @@
   "layersLead": "顧客との接点、日々の業務、支えるIT基盤。必要な場所から、無理のない形で整えます。",
   "layers": [
     {
+      "id": "customer-touchpoints",
+      "detailHref": "/services/development/",
       "label": "顧客",
       "title": "顧客とつながる",
       "body": "ホームページ、予約、問い合わせフォームなど、\n最初の接点を迷わず進める形に整えます。"
     },
     {
+      "id": "operations",
+      "detailHref": "/services/development/",
       "label": "業務",
       "title": "業務を円滑にする",
       "body": "社内向けアプリ、ツール、連携・自動化で、\n手作業や確認の負担を減らします。"
     },
     {
+      "id": "it-foundation",
+      "detailHref": "/services/it-advisor/",
       "label": "基盤",
       "title": "IT基盤を整える",
       "body": "専任担当者を置かずに、公開・運用・技術判断を相談できるIT顧問。\n会社のITを一段先へ進めます。"

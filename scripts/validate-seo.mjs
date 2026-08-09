@@ -364,9 +364,21 @@ assert.deepEqual(
     home.matchAll(/href="(\/services\/#[^"]+)"/g),
     (match) => match[1],
   ),
-  ["/services/#design"],
-  "home: only the formal design service may use a service-index anchor",
+  [],
+  "home: service-index anchors must not be used as pillar destinations",
 );
+for (const anchor of ["customer-touchpoints", "operations", "it-foundation"]) {
+  assert.equal(
+    home.includes(`href="#${anchor}"`),
+    true,
+    `home: pillar summary anchor ${anchor} missing`,
+  );
+  assert.equal(
+    home.includes(`class="domain-row" id="${anchor}"`),
+    true,
+    `home: pillar destination ${anchor} missing`,
+  );
+}
 
 assert.equal(
   count(services, 'class="service-entry-point"'),

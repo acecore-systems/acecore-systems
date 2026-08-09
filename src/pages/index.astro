@@ -9,7 +9,7 @@ interface Props {
 }
 
 const locale = Astro.props.locale ?? "ja";
-const { home, services, works } = getLocalizedContent(locale);
+const { home, works } = getLocalizedContent(locale);
 const text = getUi(locale);
 const localizeHref = (href: string) =>
   href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
@@ -67,7 +67,7 @@ const localizeHref = (href: string) =>
     </figure>
     <div class="layer-model__summary" aria-label={text.layerSummary}>
       <div class="container layer-model__summary-inner">
-        {home.layers.map((layer) => <p>{layer.title}</p>)}
+        {home.layers.map((layer) => <a href={`#${layer.id}`}>{layer.title}</a>)}
       </div>
     </div>
   </section>
@@ -108,20 +108,15 @@ const localizeHref = (href: string) =>
       </header>
       <div class="domain-list">
         {
-          services.services.map((service, index) => (
-            <a
-              class="domain-row"
-              href={localizeHref(
-                service.detailUrl || `/services/#${service.id}`,
-              )}
-            >
+          home.layers.map((layer, index) => (
+            <article class="domain-row" id={layer.id}>
               <p class="editorial-index">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h3>{service.title}</h3>
-              <p>{service.body}</p>
-              <span>{text.viewDetails}</span>
-            </a>
+              <h3>{layer.title}</h3>
+              <p>{layer.body}</p>
+              <a href={localizeHref(layer.detailHref)}>{text.viewDetails}</a>
+            </article>
           ))
         }
       </div>
