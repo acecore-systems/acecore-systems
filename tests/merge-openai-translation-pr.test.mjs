@@ -285,6 +285,12 @@ test("CI成功とmain更新の両方で安全なAuto-merge経路を再評価す�
   assert.match(workflow, /actions\/create-github-app-token@v3/u);
   assert.match(
     workflow,
+    /client-id:\s+\$\{\{ secrets\.TRANSLATION_BOT_CLIENT_ID \}\}/u,
+  );
+  assert.doesNotMatch(workflow, /TRANSLATION_BOT_APP_ID/u);
+  assert.doesNotMatch(workflow, /^\s+app-id:/mu);
+  assert.match(
+    workflow,
     /GITHUB_TOKEN: \$\{\{ steps\.app-token\.outputs\.token \}\}/u,
   );
   assert.match(

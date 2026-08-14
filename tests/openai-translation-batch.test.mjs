@@ -78,6 +78,12 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(submit, /openai-translation-batch\.mjs submit/u);
   assert.match(collect, /translation\/openai\//u);
   assert.match(collect, /actions\/create-github-app-token@v3/u);
+  assert.match(
+    collect,
+    /client-id:\s+\$\{\{ secrets\.TRANSLATION_BOT_CLIENT_ID \}\}/u,
+  );
+  assert.doesNotMatch(collect, /TRANSLATION_BOT_APP_ID/u);
+  assert.doesNotMatch(collect, /^\s+app-id:/mu);
   assert.match(collect, /openai-translation-processed-/u);
   assert.match(collect, /Format collected translation files/u);
   assert.match(collect, /git diff --name-only --diff-filter=ACMRT -z/u);
