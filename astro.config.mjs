@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import { satteri } from "@astrojs/markdown-satteri";
+import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath } from "node:url";
 import { insightLinksPlugin } from "./src/lib/insight-links.mjs";
 
@@ -73,6 +74,7 @@ export default defineConfig({
     }),
   },
   vite: {
+    plugins: [tailwindcss()],
     resolve: {
       alias: {
         "astro/entrypoints/prerender": astroPrerenderEntry,

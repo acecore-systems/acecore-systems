@@ -272,7 +272,7 @@ const pagefindMainAttributes =
       )
     }
   </head>
-  <body class={bodyClass}>
+  <body class:list={[bodyClass, "bg-paper text-ink font-sans"]}>
     <a class="skip-link" href="#main">{text.skipToContent}</a>
     <Header locale={locale} />
     {locale === "ja" && <SearchModal />}

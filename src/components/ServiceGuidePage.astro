@@ -238,16 +238,19 @@ const jsonLd = {
   </section>
 </BaseLayout>
 
-<style>
-  .guide-service-cta__actions {
-    display: grid;
-    gap: 12px;
-    justify-items: end;
-  }
-
-  @media (max-width: 720px) {
+<style is:global>
+  @layer theme, base, components, utilities;
+  @layer components {
     .guide-service-cta__actions {
-      justify-items: start;
+      display: grid;
+      gap: 12px;
+      justify-items: end;
+    }
+
+    @media (max-width: 720px) {
+      .guide-service-cta__actions {
+        justify-items: start;
+      }
     }
   }
 </style>

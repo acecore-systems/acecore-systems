@@ -202,85 +202,88 @@ const text = getUi(locale);
   </section>
 </BaseLayout>
 
-<style>
-  .guide-visual-section {
-    padding-block: clamp(20px, 4vw, 44px) 0;
-  }
+<style is:global>
+  @layer theme, base, components, utilities;
+  @layer components {
+    .guide-visual-section {
+      padding-block: clamp(20px, 4vw, 44px) 0;
+    }
 
-  .guide-journey {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    border-top: 1px solid var(--line-strong);
-    border-bottom: 1px solid var(--line-strong);
-    list-style: none;
-  }
-
-  .guide-journey__step {
-    position: relative;
-    min-height: 240px;
-    border-right: 1px solid var(--line);
-    padding: clamp(24px, 3vw, 36px);
-  }
-
-  .guide-journey__step:last-child {
-    border-right: 0;
-  }
-
-  .guide-journey__step:not(:last-child)::after {
-    position: absolute;
-    z-index: 1;
-    top: 38px;
-    right: -13px;
-    display: grid;
-    width: 26px;
-    height: 26px;
-    place-items: center;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    background: var(--paper);
-    color: var(--blue);
-    content: "→";
-    font-size: 0.78rem;
-  }
-
-  .guide-journey__step h3 {
-    margin-top: clamp(42px, 5vw, 68px);
-    font-size: clamp(1.15rem, 1.7vw, 1.45rem);
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  .guide-journey__step > p:last-child {
-    margin-top: 14px;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    line-height: 1.8;
-  }
-
-  @media (max-width: 860px) {
     .guide-journey {
-      grid-template-columns: 1fr;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+      list-style: none;
     }
 
     .guide-journey__step {
-      min-height: 0;
-      border-right: 0;
-      border-bottom: 1px solid var(--line);
+      position: relative;
+      min-height: 240px;
+      border-right: 1px solid var(--line);
+      padding: clamp(24px, 3vw, 36px);
     }
 
     .guide-journey__step:last-child {
-      border-bottom: 0;
+      border-right: 0;
     }
 
     .guide-journey__step:not(:last-child)::after {
-      top: auto;
-      right: 24px;
-      bottom: -13px;
-      content: "↓";
+      position: absolute;
+      z-index: 1;
+      top: 38px;
+      right: -13px;
+      display: grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--blue);
+      content: "→";
+      font-size: 0.78rem;
     }
 
     .guide-journey__step h3 {
-      margin-top: 28px;
+      margin-top: clamp(42px, 5vw, 68px);
+      font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .guide-journey__step > p:last-child {
+      margin-top: 14px;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 860px) {
+      .guide-journey {
+        grid-template-columns: 1fr;
+      }
+
+      .guide-journey__step {
+        min-height: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .guide-journey__step:last-child {
+        border-bottom: 0;
+      }
+
+      .guide-journey__step:not(:last-child)::after {
+        top: auto;
+        right: 24px;
+        bottom: -13px;
+        content: "↓";
+      }
+
+      .guide-journey__step h3 {
+        margin-top: 28px;
+      }
     }
   }
 </style>
