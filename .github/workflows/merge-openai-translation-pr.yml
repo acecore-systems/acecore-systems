@@ -79,7 +79,7 @@ jobs:
         if: steps.pr.outputs.numbers != ''
         run: npm ci
 
-      - name: Enable auto-merge for eligible translation PRs
+      - name: Merge or enable auto-merge for eligible translation PRs
         if: steps.pr.outputs.numbers != ''
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}

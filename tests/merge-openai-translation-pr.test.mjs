@@ -155,7 +155,9 @@ test("mergeable判定が未確定でもbehindの翻訳PRをmainへ追従させ�
 test("成功したBuild and Format後に検証済みSHAでsquash Auto-mergeを予約する", async () => {
   const graphqlCalls = [];
   const request = async (pathname) => {
-    if (pathname === "/pulls/42") return createPullRequest();
+    if (pathname === "/pulls/42") {
+      return createPullRequest({ mergeableState: "blocked" });
+    }
     if (pathname === "/pulls/42/files?per_page=100&page=1") {
       return [{ filename: "src/i18n/content/en.json" }];
     }
@@ -190,6 +192,49 @@ test("成功したBuild and Format後に検証済みSHAでsquash Auto-mergeを�
   });
 
   assert.equal(graphqlCalls.length, 1);
+  assert.match(graphqlCalls[0].query, /mergeMethod: SQUASH/u);
+  assert.deepEqual(graphqlCalls[0].variables, {
+    pullRequestId: "PR_kwDORlSgas123",
+    expectedHeadOid: HEAD_SHA,
+    commitHeadline: "[translation] OpenAI Batch batch_example",
+  });
+});
+
+test("必須checkが揃ったcleanのPRは検証済みSHAでsquash mergeする", async () => {
+  const graphqlCalls = [];
+  const request = async (pathname) => {
+    if (pathname === "/pulls/42") return createPullRequest();
+    if (pathname === "/pulls/42/files?per_page=100&page=1") {
+      return [{ filename: "src/i18n/content/en.json" }];
+    }
+    if (pathname === `/compare/main...${HEAD_SHA}`) {
+      return { status: "ahead", ahead_by: 1, behind_by: 0 };
+    }
+    if (pathname === `/commits/${HEAD_SHA}/check-runs?per_page=100`) {
+      return {
+        check_runs: [{ name: "Build and Format", conclusion: "success" }],
+      };
+    }
+    throw new Error(`Unexpected request: ${pathname}`);
+  };
+  const graphql = async (query, variables) => {
+    graphqlCalls.push({ query, variables });
+    return {
+      mergePullRequest: {
+        pullRequest: { number: 42, merged: true },
+      },
+    };
+  };
+
+  await runMergeAutomation([`--pr=42`, `--expected-sha=${HEAD_SHA}`], {
+    request,
+    graphql,
+    repository: REPOSITORY,
+    getCurrentSourceHash: () => SOURCE_HASH,
+  });
+
+  assert.equal(graphqlCalls.length, 1);
+  assert.match(graphqlCalls[0].query, /mergePullRequest/u);
   assert.match(graphqlCalls[0].query, /mergeMethod: SQUASH/u);
   assert.deepEqual(graphqlCalls[0].variables, {
     pullRequestId: "PR_kwDORlSgas123",
@@ -251,6 +296,7 @@ test("CI成功とmain更新の両方で安全なAuto-merge経路を再評価す�
   assert.match(script, /isTranslationPullRequestCurrent/u);
   assert.match(script, /hasOnlyAllowedTranslationFiles/u);
   assert.match(script, /update-branch/u);
+  assert.match(script, /mergePullRequest/u);
   assert.match(script, /enablePullRequestAutoMerge/u);
   assert.doesNotMatch(script, /\/pulls\/\$\{pullRequest\.number\}\/merge/u);
 });

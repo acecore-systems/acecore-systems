@@ -74,4 +74,4 @@ Sveltia CMS は `/admin/` から利用します。CMS では日本語の固定�
 
 設計文書の入口は [docs/README.md](docs/README.md) です。
 
-日本語sourceが変わると翻訳source hashの検証が失敗し、古い翻訳のまま新しいdeployが進まない設計です。OpenAI Batchの回収時は変更した翻訳ファイルだけをPrettierで整形し、専用Translation Botが同一repositoryの `translation/openai/` branchからPRを作成します。自動マージ対象は、Bot、source marker、変更path、現在のsource hash、`Build and Format` を再検証します。behindの場合は検証済みHEAD SHAで最新mainへ追従させ、GitHubの必須checkが揃った時点でsquash Auto-mergeします。
+日本語sourceが変わると翻訳source hashの検証が失敗し、古い翻訳のまま新しいdeployが進まない設計です。OpenAI Batchの回収時は変更した翻訳ファイルだけをPrettierで整形し、専用Translation Botが同一repositoryの `translation/openai/` branchからPRを作成します。自動マージ対象は、Bot、source marker、変更path、現在のsource hash、`Build and Format` を再検証します。behindの場合は検証済みHEAD SHAで最新mainへ追従させ、GitHubの必須checkが未完了ならsquash Auto-mergeを予約し、すべて揃ってcleanなら検証済みHEAD SHAを固定してsquash mergeします。
