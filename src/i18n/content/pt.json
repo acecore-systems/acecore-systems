@@ -175,78 +175,78 @@
     "ctaLabel": "Escolher uma forma de avançar"
   },
   "home": {
-    "title": "Desenvolvimento de sistemas empresariais e aplicativos",
-    "description": "Acecore Systems é um serviço de desenvolvimento que oferece suporte integrado, desde assessoria de TI, adoção de AI e melhoria de operações até implantação, desenvolvimento de aplicativos web, uso de dados e melhoria contínua.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
-    "heroTitle": "Por trás de uma operação contínua,\nhá um projeto silencioso.",
-    "heroLead": "Do site, reservas e consultas às operações diárias e ao suporte após o lançamento.\nMesmo antes de saber por onde começar, esclarecemos a situação e as prioridades para propor um caminho sustentável.",
-    "primaryCta": "Consultar sobre desenvolvimento",
-    "secondaryCta": "Consultar assessoria de IT",
-    "layersTitle": "Organizar o sistema necessário a partir do objetivo.",
-    "layersLead": "Pontos de contato com clientes, operações diárias e a base de IT que as sustenta. Melhoramos o necessário em um escopo sustentável.",
+    "title": "Desenvolvimento de sistemas e aplicativos empresariais",
+    "description": "A Acecore Systems oferece um serviço de desenvolvimento com suporte de ponta a ponta, desde a consultoria de TI, a implementação de AI e a melhoria de processos até o deploy, o desenvolvimento de aplicativos web, o uso de dados e a otimização das operações.",
+    "heroEyebrow": "ACECORE SYSTEMS — SISTEMAS PARA OPERAÇÕES",
+    "heroTitle": "Por trás de operações que não param,\nhá um design silencioso.",
+    "heroLead": "Do site e dos fluxos de reserva e contato à organização das operações diárias e à gestão após o lançamento.\nMesmo quando ainda não está claro por onde começar, organizamos a situação atual e as prioridades e propomos um caminho viável.",
+    "primaryCta": "Falar sobre desenvolvimento",
+    "secondaryCta": "Falar sobre consultoria de TI",
+    "layersTitle": "A partir do objetivo, estruturamos os sistemas necessários.",
+    "layersLead": "Os pontos de contato com os clientes, as operações diárias e a base de TI que dá suporte a tudo isso. Estruturamos o que for necessário, começando pelo ponto certo e de forma viável.",
     "layers": [
       {
         "label": "Clientes",
-        "title": "Conectar-se aos clientes",
-        "body": "Organizamos sites, reservas e formulários de contato\npara que o primeiro contato avance sem atrito."
+        "title": "Conectar-se com os clientes",
+        "body": "Site, reservas e formulários de contato.\nEstruturamos o primeiro ponto de contato para que o cliente saiba como avançar."
       },
       {
         "label": "Operações",
-        "title": "Fazer as operações fluírem",
-        "body": "Usamos aplicativos internos, ferramentas, integrações e automação\npara reduzir trabalho manual e verificações."
+        "title": "Tornar as operações mais fluidas",
+        "body": "Com aplicativos internos, ferramentas, integrações e automações,\nreduzimos o esforço das tarefas manuais e das verificações."
       },
       {
-        "label": "Base",
-        "title": "Fortalecer a base de IT",
-        "body": "A assessoria de IT para lançamento, operação e decisões técnicas\najuda a levar o IT da empresa um passo adiante."
+        "label": "Infraestrutura",
+        "title": "Estruturar a infraestrutura de TI",
+        "body": "Consultoria de TI para discutir o lançamento, a operação e as decisões técnicas, sem a necessidade de manter um responsável dedicado.\nLevamos a TI da sua empresa um passo adiante."
       }
     ],
-    "philosophyEyebrow": "DESIGN PHILOSOPHY",
+    "philosophyEyebrow": "FILOSOFIA DE DESIGN",
     "philosophyTitle": "A mesma precisão no que se vê e no que não se vê.",
-    "philosophyLead": "Dos pontos de contato com clientes aos sistemas que sustentam as operações e ao suporte que os mantém em funcionamento, tratamos trabalho, sistemas e operação como um todo conectado.",
+    "philosophyLead": "Dos pontos de contato com os clientes aos sistemas que sustentam as operações, passando pela gestão necessária para manter tudo funcionando. Não separamos a realidade do trabalho, os sistemas e a operação: estruturamos os três com o mesmo nível de precisão.",
     "designPrinciples": [
       {
-        "title": "Começar pelo trabalho real",
-        "body": "Antes de definir funções, organizamos quem decide o quê e quando, além dos pontos em que surgem dificuldades."
+        "title": "Partir da realidade do trabalho",
+        "body": "Antes de definir as funcionalidades, mapeamos quem decide o quê, em que momento e onde surgem as dificuldades."
       },
       {
-        "title": "Organizar também o que não se vê",
-        "body": "Pensamos nos dados, nas permissões, nas integrações e no tratamento de exceções como um único mecanismo contínuo."
+        "title": "Estruturar também o que não se vê",
+        "body": "Consideramos dados, permissões, integrações e tratamento de exceções como partes de um único sistema."
       },
       {
-        "title": "Projetar para mudanças",
-        "body": "Sem construir demais desde o início, começamos pelo escopo necessário e criamos uma base que possa melhorar durante a operação."
+        "title": "Projetar para a mudança",
+        "body": "Sem tentar construir tudo logo de início, começamos pelo necessário e criamos uma solução que pode ser melhorada à medida que é utilizada."
       }
     ],
-    "consultationEyebrow": "WHEN TO TALK",
-    "consultationTitle": "Você pode nos procurar já nestas etapas.",
-    "consultationLead": "Não há problema se você ainda não decidiu o que criar. Organizamos juntos o mecanismo necessário a partir das operações e dificuldades atuais.",
+    "consultationEyebrow": "QUANDO FALAR CONOSCO",
+    "consultationTitle": "Você pode falar conosco em qualquer uma destas etapas.",
+    "consultationLead": "Não há problema se ainda não estiver definido o que construir. A partir das operações atuais e das dificuldades que você enfrenta, organizamos juntos os sistemas necessários.",
     "consultationSituations": [
       {
-        "title": "Não consigo publicar um aplicativo criado com AI",
-        "body": "O código está pronto, mas o projeto parou nas decisões sobre domínio, nuvem, segurança e operação."
+        "title": "Não consegue publicar um aplicativo criado com AI",
+        "body": "O código está pronto, mas o projeto ficou bloqueado por decisões sobre domínio, nuvem, segurança e operação."
       },
       {
-        "title": "Aumentaram as transcrições e tarefas manuais",
-        "body": "Quero organizar o trabalho dividido entre planilhas, papel e e-mail e decidir por onde começar a sistematização."
+        "title": "A transcrição de dados e o trabalho manual estão aumentando",
+        "body": "Quer organizar tarefas espalhadas entre planilhas, papel e e-mail e decidir por onde começar a transformá-las em um sistema."
       },
       {
-        "title": "O sistema atual não se adapta ao trabalho real",
-        "body": "Quero rever a dificuldade de uso e a dependência de pessoas específicas, ajustando gradualmente o sistema ao fluxo operacional."
+        "title": "O sistema atual não se adapta à realidade do trabalho",
+        "body": "Quer rever o que é difícil de usar e a dependência de pessoas-chave, ajustando o sistema gradualmente ao fluxo de trabalho."
       },
       {
-        "title": "Dados e ferramentas estão separados",
-        "body": "Quero conectar vários serviços e conjuntos de dados para reduzir entradas duplicadas e verificações esquecidas."
+        "title": "Os dados e as ferramentas estão separados",
+        "body": "Quer conectar vários serviços e fontes de dados para reduzir a duplicação de entradas e as falhas na conferência."
       },
       {
-        "title": "Quero organizar os problemas antes que se tornem requisitos",
-        "body": "Quero organizar objetivos, usuários, restrições e prioridades para definir um caminho realista."
+        "title": "Quer organizar os desafios antes que se tornem requisitos",
+        "body": "Quer organizar o objetivo, os usuários, as restrições e as prioridades e definir uma forma realista de avançar."
       }
     ],
-    "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Antes do que será criado, conte-nos sobre sua operação atual.",
-    "ctaBody": "Você pode nos consultar mesmo que os requisitos ainda não estejam totalmente definidos. Organizamos juntos o fluxo atual, as restrições e as prioridades.",
-    "ctaLabel": "Escolher como começar"
+    "ctaEyebrow": "COMECE COM UMA CONVERSA",
+    "ctaTitle": "Antes de decidir o que construir, conte-nos como é o seu trabalho hoje.",
+    "ctaBody": "Você pode falar conosco mesmo que os requisitos ainda não estejam totalmente definidos. Organizamos juntos o fluxo atual, as restrições e as prioridades.",
+    "ctaLabel": "Escolha como falar conosco"
   },
   "itAdvisor": {
     "title": "Engenheiro consultor de TI",

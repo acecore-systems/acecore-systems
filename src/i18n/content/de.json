@@ -175,78 +175,78 @@
     "ctaLabel": "Vorgehensweise wählen"
   },
   "home": {
-    "title": "Geschäftssysteme und App-Entwicklung",
-    "description": "Acecore Systems unterstützt durchgängig bei IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Webanwendungsentwicklung, Datennutzung und Betriebsoptimierung.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
-    "heroTitle": "Damit Abläufe in Bewegung bleiben,\nbraucht es eine ruhige Architektur.",
-    "heroLead": "Von Website, Reservierungen und Kontaktwegen über tägliche Abläufe bis zur Begleitung nach dem Launch.\nAuch wenn noch nicht klar ist, wo Sie beginnen sollen, klären wir Ausgangslage und Prioritäten und schlagen einen tragfähigen Weg vor.",
-    "primaryCta": "Entwicklung besprechen",
-    "secondaryCta": "IT-Beratung besprechen",
-    "layersTitle": "Die nötigen Systeme vom Ziel her ordnen.",
-    "layersLead": "Kundenkontaktpunkte, tägliche Abläufe und die IT-Grundlage dahinter. Wir verbessern das Nötige in einem tragfähigen Umfang.",
+    "title": "Entwicklung von Unternehmenssoftware und Apps",
+    "description": "Acecore Systems unterstützt Sie als Entwicklungsdienstleister ganzheitlich – von der IT-Beratung, der Einführung von AI-Lösungen und der Optimierung von Geschäftsprozessen über Deployment und Web-App-Entwicklung bis hin zur Nutzung von Daten und zur Optimierung des laufenden Betriebs.",
+    "heroEyebrow": "ACECORE SYSTEMS — SYSTEME FÜR BETRIEBLICHE ABLÄUFE",
+    "heroTitle": "Hinter Abläufen, die einfach weiterlaufen,\nsteckt ruhiges Design.",
+    "heroLead": "Von der Website über die Nutzerführung bei Buchungen und Anfragen bis hin zur Strukturierung des Arbeitsalltags und zum Betrieb nach dem Launch.\nAuch wenn noch nicht feststeht, womit Sie beginnen sollten, schaffen wir Klarheit über Ihre Ausgangslage und Prioritäten und schlagen ein Vorgehen vor, das sich realistisch umsetzen lässt.",
+    "primaryCta": "Entwicklung anfragen",
+    "secondaryCta": "IT-Beratung anfragen",
+    "layersTitle": "Ausgehend von Ihren Zielen schaffen wir die nötigen Strukturen.",
+    "layersLead": "Kundenkontakt, tägliche Abläufe und die zugrunde liegende IT-Infrastruktur. Wir setzen dort an, wo es nötig ist, und schaffen Strukturen, die sich ohne unnötigen Aufwand umsetzen lassen.",
     "layers": [
       {
         "label": "Kunden",
-        "title": "Mit Kunden verbinden",
-        "body": "Websites, Reservierungen und Kontaktformulare werden so eingerichtet,\ndass der erste Kontakt ohne Reibung weitergehen kann."
+        "title": "Kunden erreichen",
+        "body": "Website, Buchungen und Kontaktformulare –\nwir gestalten den ersten Kontakt so, dass Besucher ohne Umwege weiterkommen."
       },
       {
         "label": "Abläufe",
-        "title": "Abläufe reibungslos machen",
-        "body": "Interne Apps, Werkzeuge, Integrationen und Automatisierung\nverringern manuelle Arbeit und Prüfaufwand."
+        "title": "Abläufe reibungsloser gestalten",
+        "body": "Mit internen Apps, Tools, Integrationen und Automatisierung\nreduzieren wir manuelle Arbeit und den Aufwand für Kontrollen."
       },
       {
-        "label": "Grundlage",
-        "title": "IT-Grundlage stärken",
-        "body": "IT-Beratung für Launch, Betrieb und technische Entscheidungen\nhilft, die IT des Unternehmens einen Schritt weiterzubringen."
+        "label": "Infrastruktur",
+        "title": "IT-Infrastruktur stärken",
+        "body": "Ein IT-Berater für Fragen rund um Deployment, Betrieb und technische Entscheidungen – ohne dass Sie dafür eine eigene Fachkraft beschäftigen müssen.\nWir bringen die IT Ihres Unternehmens auf die nächste Stufe."
       }
     ],
-    "philosophyEyebrow": "DESIGN PHILOSOPHY",
-    "philosophyTitle": "Sichtbare und unsichtbare Teile mit der gleichen Präzision.",
-    "philosophyLead": "Von Kundenkontaktpunkten über die Systeme hinter den Abläufen bis zur Begleitung für den dauerhaften Betrieb behandeln wir Arbeit, Systeme und Betrieb als verbundenes Ganzes.",
+    "philosophyEyebrow": "DESIGNPHILOSOPHIE",
+    "philosophyTitle": "Sichtbares und Unsichtbares – mit derselben Präzision.",
+    "philosophyLead": "Vom Kundenkontakt über die Systeme, die den Arbeitsalltag unterstützen, bis hin zum laufenden Betrieb. Wir betrachten Praxis, Systeme und Betrieb als Einheit und gestalten sie mit derselben Präzision.",
     "designPrinciples": [
       {
-        "title": "Beginnen Sie vom Feld aus",
-        "body": "Bevor Sie sich für Funktionen entscheiden, klären Sie, wer wann was entscheidet und wo das Problem liegt."
+        "title": "Mit der Praxis beginnen",
+        "body": "Bevor wir Funktionen festlegen, klären wir, wer wann welche Entscheidungen trifft und wo die Schwierigkeiten liegen."
       },
       {
-        "title": "Schneiden Sie sogar die unsichtbaren Teile",
-        "body": "Wir betrachten Daten, Autorität, Koordination und Ausnahmebehandlung als ein kontinuierliches System."
+        "title": "Auch das Unsichtbare mitdenken",
+        "body": "Wir betrachten Daten, Berechtigungen, Integrationen und Ausnahmebehandlungen als ein zusammenhängendes System."
       },
       {
-        "title": "Änderung vorausgesetzt",
-        "body": "Bauen Sie nicht von Anfang an zu viel auf, sondern beginnen Sie mit dem erforderlichen Bereich und bringen Sie ihn in eine Form, die im Laufe Ihrer Arbeit verbessert werden kann."
+        "title": "Veränderung von Anfang an mitdenken",
+        "body": "Wir beginnen mit dem nötigen Umfang, statt von Anfang an zu viel zu bauen, und schaffen eine Lösung, die sich im laufenden Betrieb weiterentwickeln lässt."
       }
     ],
-    "consultationEyebrow": "WHEN TO TALK",
-    "consultationTitle": "Sie können von diesen Phasen aus konsultieren.",
-    "consultationLead": "Sie müssen sich nicht entscheiden, was Sie zubereiten möchten. Wir organisieren gemeinsam die notwendigen Systeme basierend auf Ihrer aktuellen Arbeit und Ihren Problemen.",
+    "consultationEyebrow": "WANN EIN GESPRÄCH SINNVOLL IST",
+    "consultationTitle": "Sie können uns bereits in diesen Phasen ansprechen.",
+    "consultationLead": "Es muss noch nicht feststehen, was entwickelt werden soll. Ausgehend von Ihren aktuellen Abläufen und den Herausforderungen klären wir gemeinsam, welche Strukturen Sie brauchen.",
     "consultationSituations": [
       {
-        "title": "Mit AI erstellte Apps können nicht veröffentlicht werden",
-        "body": "Der Code wurde erstellt, wurde jedoch aufgrund von Domänen-, Cloud-, Sicherheits- und Betriebsentscheidungen gestoppt."
+        "title": "Eine mit AI erstellte App lässt sich nicht live schalten",
+        "body": "Der Code ist fertig, doch das Projekt stockt bei Entscheidungen rund um Domain, Cloud, Sicherheit und Betrieb."
       },
       {
-        "title": "Posting und manuelle Arbeit nehmen zu.",
-        "body": "Ich möchte die Arbeit, die in Tabellenkalkulationen, Papier und E-Mail unterteilt ist, organisieren und darüber nachdenken, wo ich mit dem System beginnen soll."
+        "title": "Der Aufwand für Übertragungen und manuelle Arbeit wächst",
+        "body": "Wir möchten die in Tabellenkalkulationen, auf Papier und in E-Mails verteilten Abläufe ordnen und überlegen, wo sich zuerst eine passende Lösung schaffen lässt."
       },
       {
-        "title": "Das aktuelle System passt nicht zur Site",
-        "body": "Ich möchte die Schwierigkeit der Nutzung und Individualisierung überprüfen und nach und nach eine Form schaffen, die zum Arbeitsablauf passt."
+        "title": "Das aktuelle System passt nicht zum Arbeitsalltag",
+        "body": "Wir möchten die umständliche Bedienung und die Abhängigkeit von einzelnen Personen neu bewerten und das System schrittweise an unsere Abläufe anpassen."
       },
       {
-        "title": "Daten und Werkzeuge sind getrennt",
-        "body": "Ich möchte mehrere Dienste und Daten verbinden, um doppelte Eingaben und ausgelassene Bestätigungen zu reduzieren."
+        "title": "Daten und Tools sind auf mehrere Systeme verteilt",
+        "body": "Wir möchten mehrere Dienste und Datenquellen verknüpfen und so doppelte Eingaben sowie Kontrolllücken reduzieren."
       },
       {
-        "title": "Ich möchte Probleme organisieren, bevor sie zu Anforderungen werden.",
-        "body": "Ich möchte den Zweck, die Benutzer, Einschränkungen und Prioritäten organisieren und mich für eine realistische Vorgehensweise entscheiden."
+        "title": "Herausforderungen klären, bevor daraus Anforderungen werden",
+        "body": "Wir möchten Ziele, Nutzer, Rahmenbedingungen und Prioritäten ordnen und ein realistisches Vorgehen festlegen."
       }
     ],
-    "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Bevor wir über das Produkt sprechen: Erzählen Sie uns von Ihrem aktuellen Ablauf.",
-    "ctaBody": "Ein Gespräch ist auch möglich, wenn die Anforderungen noch nicht vollständig feststehen. Gemeinsam klären wir Ablauf, Einschränkungen und Prioritäten.",
-    "ctaLabel": "Einstieg wählen"
+    "ctaEyebrow": "MIT EINEM GESPRÄCH BEGINNEN",
+    "ctaTitle": "Bevor wir festlegen, was entwickelt werden soll, erzählen Sie uns von Ihren aktuellen Abläufen.",
+    "ctaBody": "Auch wenn die Anforderungen noch nicht vollständig feststehen, können Sie sich an uns wenden. Gemeinsam ordnen wir Ihre aktuellen Abläufe, Rahmenbedingungen und Prioritäten.",
+    "ctaLabel": "Beratungsform wählen"
   },
   "itAdvisor": {
     "title": "IT-Berater auf Abruf",
