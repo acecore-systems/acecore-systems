@@ -166,6 +166,19 @@ async function getCheckRuns(headSha, request) {
   return response.check_runs;
 }
 
+async function isPullRequestBehindMain(pullRequest, request) {
+  const comparison = await request(
+    `/compare/main...${encodeURIComponent(pullRequest.head.sha)}`,
+  );
+  if (
+    !Number.isSafeInteger(comparison?.behind_by) ||
+    comparison.behind_by < 0
+  ) {
+    throw new Error("GitHub comparison response is invalid");
+  }
+  return comparison.behind_by > 0;
+}
+
 export function hasSuccessfulBuildAndFormat(checkRuns) {
   return checkRuns.some(
     (checkRun) =>
@@ -319,7 +332,7 @@ export async function runMergeAutomation(
   if (pullRequest.mergeable_state === "dirty") {
     throw new Error(`PR #${prNumber} has merge conflicts`);
   }
-  if (pullRequest.mergeable_state === "behind") {
+  if (await isPullRequestBehindMain(pullRequest, request)) {
     await updatePullRequestBranch(pullRequest, request);
     return;
   }
