@@ -381,26 +381,29 @@ const jsonLd = [
   </section>
 </BaseLayout>
 
-<style>
-  .detail-related-list--four .detail-related {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .detail-related-list--four .detail-related:nth-child(even) {
-    border-right: 0;
-  }
-
-  .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
-    border-bottom: 0;
-  }
-
-  @media (max-width: 860px) {
-    .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+<style is:global>
+  @layer theme, base, components, utilities;
+  @layer components {
+    .detail-related-list--four .detail-related {
       border-bottom: 1px solid var(--line);
     }
 
-    .detail-related-list--four .detail-related:last-child {
+    .detail-related-list--four .detail-related:nth-child(even) {
+      border-right: 0;
+    }
+
+    .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
       border-bottom: 0;
+    }
+
+    @media (max-width: 860px) {
+      .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .detail-related-list--four .detail-related:last-child {
+        border-bottom: 0;
+      }
     }
   }
 </style>
