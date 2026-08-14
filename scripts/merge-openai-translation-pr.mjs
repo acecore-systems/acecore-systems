@@ -239,6 +239,45 @@ export async function markPullRequestReadyForReview(pullRequest, graphql) {
   console.log(`Marked OpenAI translation PR #${pullRequest.number} ready.`);
 }
 
+export async function mergePullRequest(pullRequest, graphql) {
+  if (typeof pullRequest.node_id !== "string" || !pullRequest.node_id) {
+    throw new Error(`PR #${pullRequest.number} has no node_id`);
+  }
+  const data = await graphql(
+    `
+      mutation MergePullRequest(
+        $pullRequestId: ID!
+        $expectedHeadOid: GitObjectID!
+        $commitHeadline: String!
+      ) {
+        mergePullRequest(
+          input: {
+            pullRequestId: $pullRequestId
+            expectedHeadOid: $expectedHeadOid
+            mergeMethod: SQUASH
+            commitHeadline: $commitHeadline
+          }
+        ) {
+          pullRequest {
+            number
+            merged
+          }
+        }
+      }
+    `,
+    {
+      pullRequestId: pullRequest.node_id,
+      expectedHeadOid: pullRequest.head.sha,
+      commitHeadline: pullRequest.title,
+    },
+  );
+  const result = data?.mergePullRequest?.pullRequest;
+  if (result?.number !== pullRequest.number || result?.merged !== true) {
+    throw new Error(`GitHub did not merge PR #${pullRequest.number}`);
+  }
+  console.log(`Squash-merged OpenAI translation PR #${pullRequest.number}.`);
+}
+
 export async function enablePullRequestAutoMerge(pullRequest, graphql) {
   if (pullRequest.auto_merge && typeof pullRequest.auto_merge === "object") {
     console.log(`Auto-merge is already enabled for PR #${pullRequest.number}.`);
@@ -344,6 +383,10 @@ export async function runMergeAutomation(
   }
 
   await markPullRequestReadyForReview(pullRequest, graphql);
+  if (pullRequest.mergeable_state === "clean") {
+    await mergePullRequest(pullRequest, graphql);
+    return;
+  }
   await enablePullRequestAutoMerge(pullRequest, graphql);
 }
 
