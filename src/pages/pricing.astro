@@ -172,40 +172,43 @@ const jsonLd = [
   </section>
 </BaseLayout>
 
-<style>
-  .price-tracks {
-    display: grid;
-    gap: clamp(48px, 7vw, 88px);
-  }
+<style is:global>
+  @layer theme, base, components, utilities;
+  @layer components {
+    .price-tracks {
+      display: grid;
+      gap: clamp(48px, 7vw, 88px);
+    }
 
-  .price-track__header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 24px;
-    border-top: 1px solid var(--line-strong);
-    padding-block: 18px;
-  }
-
-  .price-track__header h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2vw, 1.8rem);
-  }
-
-  .price-row__heading h4 {
-    margin: 0;
-    font-family: var(--font-sans);
-    font-size: 1.35rem;
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  @media (max-width: 640px) {
     .price-track__header {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 8px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      border-top: 1px solid var(--line-strong);
+      padding-block: 18px;
+    }
+
+    .price-track__header h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2vw, 1.8rem);
+    }
+
+    .price-row__heading h4 {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 1.35rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 640px) {
+      .price-track__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
     }
   }
 </style>
