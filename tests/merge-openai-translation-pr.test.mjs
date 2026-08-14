@@ -114,15 +114,18 @@ test("翻訳PRは所定の翻訳ファイルだけを変更できる", () => {
   );
 });
 
-test("behindの翻訳PRは検証済みHEAD SHAを固定してmainへ追従させる", async () => {
+test("mergeable判定が未確定でもbehindの翻訳PRをmainへ追従させる", async () => {
   const requests = [];
   const request = async (pathname, options) => {
     requests.push({ pathname, options });
     if (pathname === "/pulls/42") {
-      return createPullRequest({ mergeableState: "behind" });
+      return createPullRequest({ mergeableState: "unknown" });
     }
     if (pathname === "/pulls/42/files?per_page=100&page=1") {
       return [{ filename: "src/i18n/content/en.json" }];
+    }
+    if (pathname === `/compare/main...${HEAD_SHA}`) {
+      return { status: "diverged", ahead_by: 1, behind_by: 3 };
     }
     if (pathname === "/pulls/42/update-branch") {
       return { message: "Updating pull request branch." };
@@ -155,6 +158,9 @@ test("成功したBuild and Format後に検証済みSHAでsquash Auto-mergeを�
     if (pathname === "/pulls/42") return createPullRequest();
     if (pathname === "/pulls/42/files?per_page=100&page=1") {
       return [{ filename: "src/i18n/content/en.json" }];
+    }
+    if (pathname === `/compare/main...${HEAD_SHA}`) {
+      return { status: "ahead", ahead_by: 1, behind_by: 0 };
     }
     if (pathname === `/commits/${HEAD_SHA}/check-runs?per_page=100`) {
       return {
@@ -197,6 +203,9 @@ test("Build and Formatが成功していないHEADではAuto-mergeを予約し�
     if (pathname === "/pulls/42") return createPullRequest();
     if (pathname === "/pulls/42/files?per_page=100&page=1") {
       return [{ filename: "src/i18n/content/en.json" }];
+    }
+    if (pathname === `/compare/main...${HEAD_SHA}`) {
+      return { status: "ahead", ahead_by: 1, behind_by: 0 };
     }
     if (pathname === `/commits/${HEAD_SHA}/check-runs?per_page=100`) {
       return {
