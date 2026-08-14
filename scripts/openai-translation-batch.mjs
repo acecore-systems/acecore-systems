@@ -845,7 +845,7 @@ function makePullRequestBody(batchId, sourceHash) {
     "- sourceHash が現在の source と一致する結果だけを含めています。",
     "",
     "## 確認",
-    "- CI が自動実行され、成功時に自動マージされます。",
+    "- CI と必須checkが成功すると、squashで自動マージされます。",
   ].join("\n");
 }
 

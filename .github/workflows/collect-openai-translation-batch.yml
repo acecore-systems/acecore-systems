@@ -55,6 +55,14 @@ jobs:
         if: steps.collector.outputs.has_changes == 'true'
         run: npm run update:i18n-state
 
+      - name: Format collected translation files
+        if: steps.collector.outputs.has_changes == 'true'
+        run: |
+          {
+            git diff --name-only --diff-filter=ACMRT -z -- src/i18n/content src/content/insights src/i18n/ui.ts src/i18n/contact-form.ts src/i18n/translation-state.json
+            git ls-files --others --exclude-standard -z -- src/i18n/content src/content/insights src/i18n/ui.ts src/i18n/contact-form.ts src/i18n/translation-state.json
+          } | sort -zu | xargs -0 -r npx prettier --write --
+
       - name: Check translation Bot configuration
         id: bot
         if: steps.collector.outputs.has_changes == 'true'

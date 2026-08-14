@@ -46,6 +46,8 @@ test("PRのsourceHashが現在の日本語sourceと異なる場合は古い版�
     isTranslationPullRequestCurrent(getSourceMarker(current), current),
     true,
   );
+  assert.equal(isTranslationPullRequestCurrent(null, current), false);
+  assert.equal(isTranslationPullRequestCurrent("markerなし", current), false);
 });
 
 test("UIとフォームのlocale objectは対象localeだけを置き換える", () => {
@@ -77,6 +79,9 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(collect, /translation\/openai\//u);
   assert.match(collect, /actions\/create-github-app-token@v3/u);
   assert.match(collect, /openai-translation-processed-/u);
+  assert.match(collect, /Format collected translation files/u);
+  assert.match(collect, /git diff --name-only --diff-filter=ACMRT -z/u);
+  assert.match(collect, /npx prettier --write --/u);
   assert.match(script, /gpt-5\.6-luna/u);
   assert.match(script, /reasoning: \{ effort: "max" \}/u);
 });
