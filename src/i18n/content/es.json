@@ -176,7 +176,7 @@
   },
   "home": {
     "title": "Desarrollo de sistemas y aplicaciones empresariales",
-    "description": "Acecore Systems ofrece un servicio de desarrollo integral que abarca desde la asesoría de TI, la implementación de IA y la mejora de procesos hasta el despliegue, el desarrollo de aplicaciones web, el aprovechamiento de datos y la mejora operativa.",
+    "description": "Acecore Systems ofrece un servicio de desarrollo integral que abarca desde la asesoría de TI, la implementación de AI y la mejora de procesos hasta el despliegue, el desarrollo de aplicaciones web, el aprovechamiento de datos y la mejora operativa.",
     "heroEyebrow": "ACECORE SYSTEMS — SISTEMAS PARA LAS OPERACIONES",
     "heroTitle": "En las operaciones que no se detienen,\nhay un diseño discreto.",
     "heroLead": "Desde el sitio web y los canales de reserva y contacto hasta la organización del trabajo diario y la gestión posterior a la puesta en marcha.\nAunque todavía no esté claro por dónde empezar, ordenamos la situación actual y las prioridades, y proponemos una forma de avanzar realista.",
@@ -223,7 +223,7 @@
     "consultationLead": "No es necesario que haya decidido aún qué construir. Partimos de sus operaciones actuales y de los problemas que afronta para definir juntos las soluciones que hacen falta.",
     "consultationSituations": [
       {
-        "title": "No puede publicar una aplicación creada con IA",
+        "title": "No puede publicar una aplicación creada con AI",
         "body": "El código está listo, pero el proyecto sigue bloqueado por decisiones sobre el dominio, la nube, la seguridad y la operación."
       },
       {
@@ -1128,12 +1128,7 @@
         }
       },
       "indexSummary": "Revisamos SEO, velocidad, accesibilidad y seguridad y definimos el orden de mejora.",
-      "indexTopics": [
-        "SEO",
-        "Rendimiento",
-        "Accesibilidad",
-        "CSP y entrega"
-      ],
+      "indexTopics": ["SEO", "Rendimiento", "Accesibilidad", "CSP y entrega"],
       "introTitle": "Más allá de subir una puntuación: seguir mejorando.",
       "introBody": "La calidad no termina con una auditoría. Revisamos funciones de páginas, analítica, scripts, frecuencia y publicación y corregimos por fases documentando impacto y revisión.",
       "challenges": [

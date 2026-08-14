@@ -176,7 +176,7 @@
   },
   "home": {
     "title": "Desenvolvimento de sistemas e aplicativos empresariais",
-    "description": "A Acecore Systems oferece um serviço de desenvolvimento com suporte de ponta a ponta, desde a consultoria de TI, a implementação de IA e a melhoria de processos até o deploy, o desenvolvimento de aplicativos web, o uso de dados e a otimização das operações.",
+    "description": "A Acecore Systems oferece um serviço de desenvolvimento com suporte de ponta a ponta, desde a consultoria de TI, a implementação de AI e a melhoria de processos até o deploy, o desenvolvimento de aplicativos web, o uso de dados e a otimização das operações.",
     "heroEyebrow": "ACECORE SYSTEMS — SISTEMAS PARA OPERAÇÕES",
     "heroTitle": "Por trás de operações que não param,\nhá um design silencioso.",
     "heroLead": "Do site e dos fluxos de reserva e contato à organização das operações diárias e à gestão após o lançamento.\nMesmo quando ainda não está claro por onde começar, organizamos a situação atual e as prioridades e propomos um caminho viável.",
@@ -223,7 +223,7 @@
     "consultationLead": "Não há problema se ainda não estiver definido o que construir. A partir das operações atuais e das dificuldades que você enfrenta, organizamos juntos os sistemas necessários.",
     "consultationSituations": [
       {
-        "title": "Não consegue publicar um aplicativo criado com IA",
+        "title": "Não consegue publicar um aplicativo criado com AI",
         "body": "O código está pronto, mas o projeto ficou bloqueado por decisões sobre domínio, nuvem, segurança e operação."
       },
       {

@@ -176,7 +176,7 @@
   },
   "home": {
     "title": "Entwicklung von Unternehmenssoftware und Apps",
-    "description": "Acecore Systems unterstützt Sie als Entwicklungsdienstleister ganzheitlich – von der IT-Beratung, der Einführung von KI und der Optimierung von Geschäftsprozessen über Deployment und Web-App-Entwicklung bis hin zur Nutzung von Daten und zur Optimierung des laufenden Betriebs.",
+    "description": "Acecore Systems unterstützt Sie als Entwicklungsdienstleister ganzheitlich – von der IT-Beratung, der Einführung von AI-Lösungen und der Optimierung von Geschäftsprozessen über Deployment und Web-App-Entwicklung bis hin zur Nutzung von Daten und zur Optimierung des laufenden Betriebs.",
     "heroEyebrow": "ACECORE SYSTEMS — SYSTEME FÜR BETRIEBLICHE ABLÄUFE",
     "heroTitle": "Hinter Abläufen, die einfach weiterlaufen,\nsteckt ruhiges Design.",
     "heroLead": "Von der Website über die Nutzerführung bei Buchungen und Anfragen bis hin zur Strukturierung des Arbeitsalltags und zum Betrieb nach dem Launch.\nAuch wenn noch nicht feststeht, womit Sie beginnen sollten, schaffen wir Klarheit über Ihre Ausgangslage und Prioritäten und schlagen ein Vorgehen vor, das sich realistisch umsetzen lässt.",
@@ -223,7 +223,7 @@
     "consultationLead": "Es muss noch nicht feststehen, was entwickelt werden soll. Ausgehend von Ihren aktuellen Abläufen und den Herausforderungen klären wir gemeinsam, welche Strukturen Sie brauchen.",
     "consultationSituations": [
       {
-        "title": "Eine mit KI erstellte App lässt sich nicht live schalten",
+        "title": "Eine mit AI erstellte App lässt sich nicht live schalten",
         "body": "Der Code ist fertig, doch das Projekt stockt bei Entscheidungen rund um Domain, Cloud, Sicherheit und Betrieb."
       },
       {

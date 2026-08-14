@@ -176,7 +176,7 @@
   },
   "home": {
     "title": "Développement de systèmes métier et d’applications",
-    "description": "Acecore Systems est un service de développement qui vous accompagne de bout en bout : conseil IT, intégration de l’IA, amélioration des processus métier, déploiement, développement d’applications web, valorisation des données et optimisation de l’exploitation.",
+    "description": "Acecore Systems est un service de développement qui vous accompagne de bout en bout : conseil IT, intégration de solutions AI, amélioration des processus métier, déploiement, développement d’applications web, valorisation des données et optimisation de l’exploitation.",
     "heroEyebrow": "ACECORE SYSTEMS — DES SYSTÈMES AU SERVICE DE VOS OPÉRATIONS",
     "heroTitle": "Les activités qui ne s’arrêtent jamais,\nreposent sur une conception sobre.",
     "heroLead": "Du site web aux parcours de réservation et de prise de contact, en passant par l’organisation du travail quotidien et la gestion après la mise en ligne.\nMême lorsque vous ne savez pas encore par où commencer, nous clarifions la situation actuelle et les priorités, puis vous proposons une démarche réaliste.",
@@ -223,7 +223,7 @@
     "consultationLead": "Vous n’avez pas besoin d’avoir déjà défini ce qu’il faut construire. À partir de vos activités actuelles et de vos difficultés, nous clarifions ensemble les solutions dont vous avez besoin.",
     "consultationSituations": [
       {
-        "title": "Impossible de mettre en ligne une application créée avec l’IA",
+        "title": "Impossible de mettre en ligne une application créée avec des outils AI",
         "body": "Le code est prêt, mais le projet reste bloqué par les décisions liées au nom de domaine, au cloud, à la sécurité et à l’exploitation."
       },
       {
