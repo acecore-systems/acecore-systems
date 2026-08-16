@@ -93,6 +93,7 @@ function validateCmsConfig() {
   const configFunction = readText("functions/admin/config.yml.ts");
   const adminIndex = readText("public/admin/index.html");
   const adminInit = readText("public/admin/init.js");
+  const headers = readText("public/_headers");
   const cmsFiles = Array.from(
     config.matchAll(/^\s*file:\s*([^,\s]+),?\s*$/gm),
     (match) => match[1],
@@ -106,6 +107,22 @@ function validateCmsConfig() {
     config,
     /backend:\s*[\s\S]*?\n\s+repo:\s+acecore-systems\/acecore-systems\b/,
     "CMS backend repository must be acecore-systems/acecore-systems",
+  );
+  assert.equal(
+    adminIndex.includes(
+      'src="https://unpkg.com/@sveltia/cms@0.191.1/dist/sveltia-cms.js"',
+    ) &&
+      adminIndex.includes(
+        'integrity="sha384-1e+sEYxphmj/Z7BnuanO53c4BveZJ5fdJIkHSuHRO2T7jmC7Ih0BeJPK6x5XHxx6"',
+      ),
+    true,
+    "CMS script must use the reviewed 0.191.1 bundle and SRI",
+  );
+  assert.equal(
+    /font-src[^;]*https:\/\/cdn\.jsdelivr\.net/u.test(headers) &&
+      /connect-src[^;]*https:\/\/unpkg\.com/u.test(headers),
+    true,
+    "CMS CSP must allow the pinned bundle fonts and locale data",
   );
   assert.match(
     config,
