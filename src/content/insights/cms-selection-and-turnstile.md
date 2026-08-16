@@ -132,7 +132,7 @@ Astroでは `public` 配下が静的ファイルとしてそのまま配信さ�
     <title>CMS</title>
   </head>
   <body>
-    <script src="https://unpkg.com/@sveltia/cms@0.172.4/dist/sveltia-cms.js"></script>
+    <script src="https://unpkg.com/@sveltia/cms@0.191.1/dist/sveltia-cms.js"></script>
   </body>
 </html>
 ```
@@ -143,7 +143,7 @@ Acecoreでは設定を明示的に上書きできるよう、`window.CMS_MANUAL_
 
 ```html
 <script src="/admin/runtime-config.js"></script>
-<script src="https://unpkg.com/@sveltia/cms@0.172.4/dist/sveltia-cms.js"></script>
+<script src="https://unpkg.com/@sveltia/cms@0.191.1/dist/sveltia-cms.js"></script>
 <script src="/admin/init.js"></script>
 ```
 
