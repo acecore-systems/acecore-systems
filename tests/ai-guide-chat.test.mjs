@@ -177,6 +177,10 @@ test("中央API、25秒timeout、安全なDOM描画を実装する", () => {
   assert.doesNotMatch(script, /(?:local|session)Storage/u);
   assert.doesNotMatch(script, /innerHTML|insertAdjacentHTML|eval\(/u);
   assert.match(component, /maxlength="800"/u);
+  assert.match(
+    component,
+    /\.ai-guide__composer textarea\s*\{[^}]*font-size:\s*16px;/u,
+  );
   assert.match(component, /role="dialog"/u);
   assert.match(component, /role="log"/u);
   assert.match(layout, /<AiGuideChat locale=\{locale\} \/>/u);
