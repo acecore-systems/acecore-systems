@@ -61,7 +61,7 @@ checklist:
     - text: "Aligner le nom de la base D1 et le binding COMMENTS_DB avec la configuration Cloudflare"
       checked: true
 linkCards:
-  - href: /fr/blog/cloudflare-pages-security/
+  - href: /fr/insights/cloudflare-pages-security/
     title: Sécurité avec Cloudflare Pages
     description: Headers de sécurité et diffusion statique avec Cloudflare Pages.
     icon: i-lucide-shield

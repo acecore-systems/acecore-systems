@@ -59,7 +59,7 @@ linkCards:
     title: Diseño técnico del chat de contacto con IA
     description: Artículo base sobre respuestas de IA, API boundary y control de prompts.
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Seguridad en Cloudflare Pages
     description: Artículo relacionado sobre CSP y cabeceras de seguridad.
     icon: i-lucide-shield

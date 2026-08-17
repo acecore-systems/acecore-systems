@@ -60,7 +60,7 @@ linkCards:
     title: Contact
     description: The page that organizes the AI chat, LINE, contact form, and direct contact options.
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages Security
     description: A related article on CSP and security headers for static site delivery.
     icon: i-lucide-shield
@@ -157,7 +157,7 @@ The important point is to reduce and validate input before calling the AI API. L
 
 `OPENAI_MODEL` should be configurable through environment variables so the model can be changed in preview or production without touching the frontend. `OPENAI_API_KEY` must stay server-side.
 
-See also [Secure Static Site Delivery with Cloudflare Pages](/blog/cloudflare-pages-security/) for the surrounding delivery and CSP setup.
+See also [Secure Static Site Delivery with Cloudflare Pages](/insights/cloudflare-pages-security/) for the surrounding delivery and CSP setup.
 
 ## Make Site Information Explicit Context
 

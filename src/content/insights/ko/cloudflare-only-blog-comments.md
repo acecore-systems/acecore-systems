@@ -61,7 +61,7 @@ checklist:
     - text: "D1 database 이름과 COMMENTS_DB binding을 Cloudflare 측과 맞춘다"
       checked: true
 linkCards:
-  - href: /ko/blog/cloudflare-pages-security/
+  - href: /ko/insights/cloudflare-pages-security/
     title: Cloudflare Pages 보안 설정
     description: 정적 사이트 배포와 보안 header 설정입니다.
     icon: i-lucide-shield

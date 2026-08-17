@@ -59,7 +59,7 @@ linkCards:
     title: Technisches Design des KI-Kontaktchats
     description: Grundlagenartikel zu KI-Antworten, API-Grenze und Prompt-Steuerung.
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages Sicherheit
     description: Verwandter Artikel zu CSP und Sicherheitsheadern.
     icon: i-lucide-shield

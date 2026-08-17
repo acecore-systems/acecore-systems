@@ -60,7 +60,7 @@ linkCards:
     title: Kontakt
     description: Seite mit KI-Chat, LINE, Formular und direkten Kontaktoptionen.
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages Sicherheit
     description: Verwandter Artikel zu CSP und Sicherheits-Headern für statische Sites.
     icon: i-lucide-shield
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 Wichtig ist, Eingaben vor dem KI-Aufruf zu verkleinern und zu validieren. Lange Texte, unbegrenzter Verlauf und fremde wiederholte Aufrufe destabilisieren den Betrieb.
 
-`OPENAI_MODEL` sollte eine Umgebungsvariable sein, `OPENAI_API_KEY` bleibt ausschließlich serverseitig. Für Auslieferung und CSP siehe [Cloudflare Pages Sicherheit](/blog/cloudflare-pages-security/).
+`OPENAI_MODEL` sollte eine Umgebungsvariable sein, `OPENAI_API_KEY` bleibt ausschließlich serverseitig. Für Auslieferung und CSP siehe [Cloudflare Pages Sicherheit](/insights/cloudflare-pages-security/).
 
 ## Website-Informationen als expliziten Kontext pflegen
 

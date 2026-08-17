@@ -59,7 +59,7 @@ linkCards:
     title: 문의 AI 채팅 기술 설계
     description: AI 답변, API 경계, 프롬프트 제어를 다룬 기반 글입니다.
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages 보안 설정
     description: CSP와 보안 헤더를 정리한 관련 글입니다.
     icon: i-lucide-shield

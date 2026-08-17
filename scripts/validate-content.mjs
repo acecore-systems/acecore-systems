@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -281,6 +281,21 @@ const workSources = [
 const migratedTechnicalArticles = insightSlugs.map(
   (slug) => `/insights/${slug}/`,
 );
+const retiredInsightHref =
+  /(?:\]\(|href:\s*)(?:https:\/\/(?:www\.)?(?:acecore\.net|systems\.acecore\.net))?\/(?:(?:ja|en|zh-cn|es|pt|fr|ko|de|ru)\/)?blog\/cloudflare-pages-security\/?/iu;
+const insightContentRoot = join(root, "src", "content", "insights");
+const insightContentFiles = readdirSync(insightContentRoot, {
+  recursive: true,
+}).filter((relativePath) => relativePath.endsWith(".md"));
+
+for (const relativePath of insightContentFiles) {
+  const sourcePath = join("src", "content", "insights", relativePath);
+  assert.doesNotMatch(
+    readText(sourcePath),
+    retiredInsightHref,
+    `${sourcePath}: link directly to the canonical Insights URL instead of the redirect source`,
+  );
+}
 const requiredServiceTechnicalArticles = [
   "/insights/astro-accessibility-guide/",
   "/insights/astro-ai-contact-chat/",

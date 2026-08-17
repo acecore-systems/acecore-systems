@@ -60,7 +60,7 @@ linkCards:
     title: Contact
     description: Page qui organise le chat IA, LINE, le formulaire et les contacts directs.
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Sécurité Cloudflare Pages
     description: Article lié sur CSP et les en-têtes de sécurité pour sites statiques.
     icon: i-lucide-shield
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 L'essentiel est de réduire et valider l'entrée avant l'appel IA. Les longs textes, historiques illimités et appels externes répétés peuvent rendre l'exploitation instable.
 
-`OPENAI_MODEL` doit être une variable d'environnement, et `OPENAI_API_KEY` doit rester côté serveur. Pour la distribution et CSP, voir [la sécurité Cloudflare Pages](/blog/cloudflare-pages-security/).
+`OPENAI_MODEL` doit être une variable d'environnement, et `OPENAI_API_KEY` doit rester côté serveur. Pour la distribution et CSP, voir [la sécurité Cloudflare Pages](/insights/cloudflare-pages-security/).
 
 ## Rendre le contexte du site explicite
 

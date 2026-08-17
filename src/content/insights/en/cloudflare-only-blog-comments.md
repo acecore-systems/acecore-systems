@@ -61,7 +61,7 @@ checklist:
     - text: "Align the D1 database name and COMMENTS_DB binding with the Cloudflare configuration"
       checked: true
 linkCards:
-  - href: /en/blog/cloudflare-pages-security/
+  - href: /en/insights/cloudflare-pages-security/
     title: Cloudflare Pages Security Settings
     description: "Security headers and Cloudflare Pages delivery for a static site."
     icon: i-lucide-shield

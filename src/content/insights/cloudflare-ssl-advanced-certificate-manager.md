@@ -53,7 +53,7 @@ linkCards:
 
 「Cloudflare に以前あった有料の SSL オプション、なんだっけ？」——そう思ったことがある方は少なくないはずです。この記事では、その正体と現在の名称・機能について整理します。
 
-Cloudflare Pages での静的サイト配信や CSP の実装は、[Cloudflare Pages で実現するセキュアな静的サイト配信](/blog/cloudflare-pages-security/)も参考になります。
+Cloudflare Pages での静的サイト配信や CSP の実装は、[Cloudflare Pages で実現するセキュアな静的サイト配信](/insights/cloudflare-pages-security/)も参考になります。
 
 ## 結論：「Dedicated SSL」→「Advanced Certificate Manager（ACM）」
 

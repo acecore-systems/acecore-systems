@@ -59,7 +59,7 @@ linkCards:
     title: Технический дизайн AI-чата для контактов
     description: Базовая статья об ответах AI, API-границе и управлении prompt.
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Безопасность Cloudflare Pages
     description: Связанная статья про CSP и security headers.
     icon: i-lucide-shield

@@ -61,7 +61,7 @@ checklist:
     - text: "D1-Datenbankname und COMMENTS_DB-Binding mit der Cloudflare-Konfiguration abgleichen"
       checked: true
 linkCards:
-  - href: /de/blog/cloudflare-pages-security/
+  - href: /de/insights/cloudflare-pages-security/
     title: Cloudflare Pages Sicherheit
     description: Sicherheitsheader und statische Auslieferung mit Cloudflare Pages.
     icon: i-lucide-shield

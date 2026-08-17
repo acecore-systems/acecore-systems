@@ -60,7 +60,7 @@ linkCards:
     title: お問い合わせ
     description: AIチャット、LINE、フォーム、直接連絡先の入口を整理したページです。
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages のセキュリティ設定
     description: CSPやヘッダー設定など、静的サイト配信の土台を整理した記事です。
     icon: i-lucide-shield
@@ -161,7 +161,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 `OPENAI_MODEL` は環境変数にしておくと、モデル変更やpreview環境での検証が楽です。`OPENAI_API_KEY` は当然サーバー側の環境変数だけで管理します。
 
-Cloudflare Pages の配信やCSPの考え方は、[Cloudflare Pagesで実現するセキュアな静的サイト配信](/blog/cloudflare-pages-security/) でも整理しています。
+Cloudflare Pages の配信やCSPの考え方は、[Cloudflare Pagesで実現するセキュアな静的サイト配信](/insights/cloudflare-pages-security/) でも整理しています。
 
 ## サイト内情報をコンテキストとして明示する
 
