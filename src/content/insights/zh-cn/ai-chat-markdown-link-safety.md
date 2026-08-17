@@ -59,7 +59,7 @@ linkCards:
     title: 咨询 AI 聊天的技术设计
     description: 介绍 AI 回答、API 边界和 prompt 控制的基础文章。
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages 安全设置
     description: 关于 CSP 和安全响应头的相关文章。
     icon: i-lucide-shield

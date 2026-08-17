@@ -61,7 +61,7 @@ checklist:
     - text: "D1 database名とCOMMENTS_DB bindingをCloudflare側と揃える"
       checked: true
 linkCards:
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages のセキュリティ設定
     description: "Cloudflare Pagesで静的サイトを安全に配信する基本設計です。"
     icon: i-lucide-shield

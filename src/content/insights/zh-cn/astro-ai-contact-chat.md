@@ -60,7 +60,7 @@ linkCards:
     title: 联系我们
     description: 整理 AI 聊天、LINE、表单和直接联系方式入口的页面。
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages 安全设置
     description: 关于静态站点分发中的 CSP 和安全 header 的相关文章。
     icon: i-lucide-shield
@@ -157,7 +157,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 `OPENAI_MODEL` 通过环境变量管理，方便在 preview 或 production 中切换模型。`OPENAI_API_KEY` 只保存在服务端。
 
-Cloudflare Pages 的分发和 CSP 可参考[使用 Cloudflare Pages 实现安全的静态站点分发](/blog/cloudflare-pages-security/)。
+Cloudflare Pages 的分发和 CSP 可参考[使用 Cloudflare Pages 实现安全的静态站点分发](/insights/cloudflare-pages-security/)。
 
 ## 将站内信息显式作为上下文
 

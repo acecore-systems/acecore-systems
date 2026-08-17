@@ -60,7 +60,7 @@ linkCards:
     title: Контакты
     description: Страница, где собраны AI-чат, LINE, форма и прямые контакты.
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Безопасность Cloudflare Pages
     description: Связанная статья о CSP и security headers для статических сайтов.
     icon: i-lucide-shield
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 Главное — уменьшить и проверить ввод до вызова AI API. Длинные сообщения, бесконечная история и внешние повторные запросы быстро делают эксплуатацию нестабильной.
 
-`OPENAI_MODEL` лучше хранить в переменной окружения, а `OPENAI_API_KEY` только на сервере. Про доставку и CSP см. [статью о безопасности Cloudflare Pages](/blog/cloudflare-pages-security/).
+`OPENAI_MODEL` лучше хранить в переменной окружения, а `OPENAI_API_KEY` только на сервере. Про доставку и CSP см. [статью о безопасности Cloudflare Pages](/insights/cloudflare-pages-security/).
 
 ## Сделать контекст сайта явным
 

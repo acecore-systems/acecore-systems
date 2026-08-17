@@ -61,7 +61,7 @@ checklist:
     - text: "Согласовать имя базы D1 и binding COMMENTS_DB с конфигурацией Cloudflare"
       checked: true
 linkCards:
-  - href: /ru/blog/cloudflare-pages-security/
+  - href: /ru/insights/cloudflare-pages-security/
     title: Безопасность Cloudflare Pages
     description: Заголовки безопасности и статическая доставка через Cloudflare Pages.
     icon: i-lucide-shield

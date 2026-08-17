@@ -59,7 +59,7 @@ linkCards:
     title: AI Contact Chat Technical Design
     description: The parent article covering AI answers, API boundaries, and prompt controls.
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages Security
     description: A related article on CSP and security headers.
     icon: i-lucide-shield

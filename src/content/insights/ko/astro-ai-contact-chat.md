@@ -60,7 +60,7 @@ linkCards:
     title: 문의
     description: AI 채팅, LINE, 폼, 직접 연락처의 입구를 정리한 페이지입니다.
     icon: i-lucide-message-square
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages 보안
     description: 정적 사이트 배포의 CSP와 보안 헤더를 다룬 관련 글입니다.
     icon: i-lucide-shield
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 AI API를 호출하기 전에 입력을 작게 정리하고 검증하는 것이 핵심입니다. 긴 입력, 무제한 이력, 외부 사이트의 반복 호출을 그대로 통과시키면 운영이 먼저 흔들립니다.
 
-`OPENAI_MODEL`은 환경 변수로 두고, `OPENAI_API_KEY`는 서버에만 둡니다. 배포와 CSP는 [Cloudflare Pages 보안 글](/blog/cloudflare-pages-security/)도 참고할 수 있습니다.
+`OPENAI_MODEL`은 환경 변수로 두고, `OPENAI_API_KEY`는 서버에만 둡니다. 배포와 CSP는 [Cloudflare Pages 보안 글](/insights/cloudflare-pages-security/)도 참고할 수 있습니다.
 
 ## 사이트 정보를 명시적 컨텍스트로 만들기
 

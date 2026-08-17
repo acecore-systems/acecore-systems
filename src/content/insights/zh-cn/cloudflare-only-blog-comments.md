@@ -61,7 +61,7 @@ checklist:
     - text: "使D1 database名称与COMMENTS_DB binding和Cloudflare侧保持一致"
       checked: true
 linkCards:
-  - href: /zh-cn/blog/cloudflare-pages-security/
+  - href: /zh-cn/insights/cloudflare-pages-security/
     title: Cloudflare Pages 安全设置
     description: 静态网站的安全 header 与 Cloudflare Pages 配信设计。
     icon: i-lucide-shield

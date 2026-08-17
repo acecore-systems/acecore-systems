@@ -61,7 +61,7 @@ checklist:
     - text: "Alinhar o nome do banco D1 e o binding COMMENTS_DB com a configuração no Cloudflare"
       checked: true
 linkCards:
-  - href: /pt/blog/cloudflare-pages-security/
+  - href: /pt/insights/cloudflare-pages-security/
     title: Segurança no Cloudflare Pages
     description: Headers de segurança e entrega estática no Cloudflare Pages.
     icon: i-lucide-shield

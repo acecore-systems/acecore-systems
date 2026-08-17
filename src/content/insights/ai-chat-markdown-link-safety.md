@@ -59,7 +59,7 @@ linkCards:
     title: 問い合わせAIチャットの技術設計
     description: AI回答、API境界、プロンプト制御まで扱った親記事です。
     icon: i-lucide-sparkles
-  - href: /blog/cloudflare-pages-security/
+  - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages のセキュリティ設定
     description: CSPやセキュリティヘッダーを整理した関連記事です。
     icon: i-lucide-shield
