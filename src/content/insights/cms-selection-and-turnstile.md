@@ -111,7 +111,7 @@ CMS save proxy
   -> 許可pathと内容を同期検証し、expected-HEAD付きのcms: commitをmainへ直接保存
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> 日本語sourceの更新を15分まとめてOpenAI Batchへ投入する
+  -> 日本語sourceの更新を15分まとめてWorkers AI Batchへ投入する
 ```
 
 最初は「CMSを置けば終わり」に見えますが、実際には認証、画像、preview、翻訳、PRの作り方まで含めて設計しないと運用で詰まります。

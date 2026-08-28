@@ -1,6 +1,6 @@
 ---
 title: "Design técnico para adicionar um chat de IA de contato a um site Astro"
-description: "Guia prático para adicionar um chat de IA de contato a um site estático Astro + Cloudflare Pages com a OpenAI Responses API. Cobre fronteiras de API, contexto do site, controle de prompt, URLs por locale, verificação de Origin, rate limit e renderização segura de links Markdown."
+description: "Guia prático para adicionar um chat de IA de contato a um site estático Astro + Cloudflare Pages com a Cloudflare Workers AI. Cobre fronteiras de API, contexto do site, controle de prompt, URLs por locale, verificação de Origin, rate limit e renderização segura de links Markdown."
 date: 2026-06-07T12:00
 author: gui
 tags: ["Tecnologia", "Cloudflare", "Site", "AI", "Serviços"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: A OpenAI Responses API recebe o contexto público do site e o estado da conversa.
+      description: A Cloudflare Workers AI recebe o contexto público do site e o estado da conversa.
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: Preciso de RAG ou banco vetorial para criar esse chat?
       answer: Para um site corporativo pequeno, contexto estruturado com informações públicas no prompt costuma ser suficiente. Busca ou banco vetorial podem ser adicionados quando o volume de páginas ou atualizações crescer.
-    - question: A API key da OpenAI aparece no navegador?
-      answer: Não. O navegador envia apenas a pergunta para /api/ai-contact. A Cloudflare Pages Function chama a OpenAI Responses API e gerencia a API key.
+    - question: A API key da Workers AI aparece no navegador?
+      answer: Não. O navegador envia apenas a pergunta para /api/ai-contact. A Cloudflare Pages Function chama a Cloudflare Workers AI e gerencia a API key.
     - question: A IA pode retornar qualquer link?
       answer: Não. Links são limitados a caminhos internos, origin atual, acecore.net, LINE oficial e, quando necessário, mailto ou tel específicos. URLs Markdown são recortadas antes da checagem.
 ---
@@ -87,13 +87,13 @@ Este artigo organiza o design como um padrão reutilizável para outros sites es
 
 ## Estrutura geral
 
-| Camada               | Responsabilidade                                                    |
-| -------------------- | ------------------------------------------------------------------- |
-| Chat widget          | UI, entrada, locale atual, histórico mínimo e renderização Markdown |
-| `/api/ai-contact`    | Validação, Origin check, rate limit, prompt e chamada à OpenAI      |
-| OpenAI Responses API | Gerar resposta com contexto público e estado da conversa            |
+| Camada                | Responsabilidade                                                    |
+| --------------------- | ------------------------------------------------------------------- |
+| Chat widget           | UI, entrada, locale atual, histórico mínimo e renderização Markdown |
+| `/api/ai-contact`     | Validação, Origin check, rate limit, prompt e chamada à Workers AI  |
+| Cloudflare Workers AI | Gerar resposta com contexto público e estado da conversa            |
 
-O navegador não deve chamar a OpenAI diretamente. Manter a chamada atrás de um endpoint evita exposição de chave, permite atualizar prompt e contexto no servidor e centraliza limites e erros.
+O navegador não deve chamar a Workers AI diretamente. Manter a chamada atrás de um endpoint evita exposição de chave, permite atualizar prompt e contexto no servidor e centraliza limites e erros.
 
 Em Astro + Cloudflare Pages, a fronteira pode ser uma Pages Function em `/api/ai-contact`. Em Next.js seria um Route Handler; em Hono ou Express, uma rota API normal.
 
@@ -137,9 +137,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 O ponto é reduzir e validar entrada antes de chamar a IA. Mensagens longas, histórico ilimitado e chamadas de outros sites podem desestabilizar a operação.
 
-`OPENAI_MODEL` deve vir de variável de ambiente, e `OPENAI_API_KEY` deve ficar apenas no servidor. Para distribuição e CSP, veja [segurança com Cloudflare Pages](/insights/cloudflare-pages-security/).
+`WORKERS_AI_CHAT_MODEL` deve vir de variável de ambiente, e `AI` deve ficar apenas no servidor. Para distribuição e CSP, veja [segurança com Cloudflare Pages](/insights/cloudflare-pages-security/).
 
 ## Torne o contexto do site explícito
 
@@ -268,9 +268,9 @@ O `trim()` é essencial porque a IA pode gerar `[Services]( /services/ )`. Um re
 
 ## Teste local, preview e produção
 
-Astro dev ou preview não é igual ao ambiente de Cloudflare Pages Functions. Sem `OPENAI_API_KEY`, teste fallback e erros de UI.
+Astro dev ou preview não é igual ao ambiente de Cloudflare Pages Functions. Sem `AI`, teste fallback e erros de UI.
 
-Em preview ou produção, confirme POST em `/api/ai-contact`, variáveis `OPENAI_API_KEY` e `OPENAI_MODEL`, rejeição de outro Origin, limites de entrada, respostas no locale certo, URLs localizadas, ausência de afirmações sobre orçamento ou contrato, e links Markdown apenas quando permitidos.
+Em preview ou produção, confirme POST em `/api/ai-contact`, variáveis `AI` e `WORKERS_AI_CHAT_MODEL`, rejeição de outro Origin, limites de entrada, respostas no locale certo, URLs localizadas, ausência de afirmações sobre orçamento ou contrato, e links Markdown apenas quando permitidos.
 
 Também teste entradas longas, perguntas inesperadas, páginas em inglês, pedidos de contato direto e perguntas de preço.
 
@@ -293,6 +293,6 @@ Separar os temas melhora a leitura e facilita links internos.
 
 Ao adicionar um chat de IA a um site estático, desenhe primeiro a fronteira de API e o controle de respostas.
 
-As decisões principais foram chamar OpenAI pela Cloudflare Pages Function, manter input pequeno, montar contexto e URLs no servidor, escrever limites no prompt, separar formulário, LINE e contato direto, adicionar Origin check e rate limit, e renderizar links Markdown com `trim()` e lista permitida.
+As decisões principais foram chamar Workers AI pela Cloudflare Pages Function, manter input pequeno, montar contexto e URLs no servidor, escrever limites no prompt, separar formulário, LINE e contato direto, adicionar Origin check e rate limit, e renderizar links Markdown com `trim()` e lista permitida.
 
 Sites estáticos podem ter chats de IA úteis. O centro não é destacar a IA, mas ajudar o visitante a escolher o próximo passo com segurança.

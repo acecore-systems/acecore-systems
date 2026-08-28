@@ -109,7 +109,7 @@ CMS save proxy
   -> 경로와 내용을 검증하고 expected-HEAD가 있는 cms: commit을 main에 기록
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> 일본어 source 업데이트를 15분간 묶어 OpenAI Batch에 제출
+  -> 일본어 source 업데이트를 15분간 묶어 Workers AI Batch에 제출
 ```
 
 관리 화면을 두는 것만으로는 충분하지 않습니다. 인증, 이미지 경로, preview branch, 번역, merge 방식까지 CMS 설계의 일부입니다.

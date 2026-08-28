@@ -111,7 +111,7 @@ CMS save proxy
   -> 验证路径与内容，并向 main 写入带 expected HEAD 的 cms: commit
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> 将日语 source 更新汇总 15 分钟后提交到 OpenAI Batch
+  -> 将日语 source 更新汇总 15 分钟后提交到 Workers AI Batch
 ```
 
 导入 CMS 并不只是放一个管理页面。认证、图片路径、preview 分支、多语言和 merge 策略都会影响实际运维。

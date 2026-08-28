@@ -43,7 +43,7 @@ compareTable:
   after:
     label: Nach Schichten hinzufügen
     items:
-      - "Die Rollen von Astro, Cloudflare, GitHub und OpenAI API lassen sich getrennt erklären"
+      - "Die Rollen von Astro, Cloudflare, GitHub und Workers AI lassen sich getrennt erklären"
       - "Dynamische APIs werden in Pages Functions gebündelt und Speicher mit D1 näher an Cloudflare gebracht"
       - "CMS-Aktualisierungen, Übersetzungen, Suche, RSS und Sitemap verwenden dieselbe Inhaltsstruktur"
       - "Die Seite lässt sich als Index nach Zweck und Einführungsreihenfolge lesen"
@@ -68,7 +68,7 @@ faq:
     - question: Wo sollte man mit der Einführung beginnen?
       answer: "Festigen Sie zuerst die statischen Astro-Seiten, den Blog, RSS, Sitemap und OGP. Fügen Sie danach CMS und Mehrsprachigkeit hinzu; erst wenn ein Anfrageweg nötig wird, folgen KI-Chat, Service-CTAs und Kommentare."
     - question: Sollte alles ausschließlich mit Cloudflare gebaut werden?
-      answer: "Nein. Teile wie die Anfrage-KI verwenden auch die OpenAI API. Entscheidend ist, Auslieferung, API-Grenze, Datenbank und Bot-Schutz bei Cloudflare zu bündeln und bewusst zu trennen, wo externe Dienste eingesetzt werden."
+      answer: "Nein. Teile wie die Anfrage-KI verwenden auch die Workers AI. Entscheidend ist, Auslieferung, API-Grenze, Datenbank und Bot-Schutz bei Cloudflare zu bündeln und bewusst zu trennen, wo externe Dienste eingesetzt werden."
     - question: Braucht eine kleine Website all das?
       answer: "Nicht alles ist von Anfang an nötig. Wenn jedoch CMS, Anfragewege, Mehrsprachigkeit oder Kommentare geplant sind, erleichtert eine frühe Entscheidung über URLs, Speicherort, Vorschauumgebung und Suchindex die spätere Arbeit."
 linkCards:
@@ -114,7 +114,7 @@ Die Architektur trennt Zuständigkeiten:
 | Cloudflare  | Pages, Pages Functions, D1 und Turnstile |
 | GitHub      | PRs, CMS-Diffs, Übersetzungen, Historie  |
 | Sveltia CMS | Japanische Quelle, Autoren, Tags, Bilder |
-| OpenAI API  | Antworten des Kontaktchats               |
+| Workers AI  | Antworten des Kontaktchats               |
 | Pagefind    | Suchindex für geprüftes statisches HTML  |
 
 Was statisch sein kann, bleibt statisch. Dynamik wird als kleine API ergänzt.

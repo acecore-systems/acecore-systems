@@ -6,7 +6,14 @@ import { isTranslationPullRequestCurrent } from "./openai-translation-batch.mjs"
 
 const FULL_SHA_PATTERN = /^[a-f0-9]{40}$/iu;
 const TRANSLATION_BOT_LOGIN = "acecore-translation-bot[bot]";
-const TRANSLATION_TITLE_PREFIX = "[translation] OpenAI Batch ";
+const TRANSLATION_TITLE_PREFIXES = [
+  "[translation] Workers AI Batch ",
+  "[translation] OpenAI Batch ",
+];
+const TRANSLATION_BRANCH_PREFIXES = [
+  "translation/workers-ai/",
+  "translation/openai/",
+];
 const TRANSLATION_LOCALES = "(?:en|zh-cn|es|pt|fr|ko|de|ru)";
 const TRANSLATION_CONTENT_PATH_PATTERN = new RegExp(
   `^src/i18n/content/${TRANSLATION_LOCALES}\\.json$`,
@@ -111,12 +118,16 @@ export function isEligiblePullRequest(
     pullRequest?.base?.ref === "main" &&
     pullRequest?.user?.login === TRANSLATION_BOT_LOGIN &&
     typeof pullRequest?.head?.ref === "string" &&
-    pullRequest.head.ref.startsWith("translation/openai/") &&
+    TRANSLATION_BRANCH_PREFIXES.some((prefix) =>
+      pullRequest.head.ref.startsWith(prefix),
+    ) &&
     typeof pullRequest?.head?.repo?.full_name === "string" &&
     pullRequest.head.repo.full_name.toLowerCase() ===
       repository.toLowerCase() &&
     typeof pullRequest?.title === "string" &&
-    pullRequest.title.startsWith(TRANSLATION_TITLE_PREFIX)
+    TRANSLATION_TITLE_PREFIXES.some((prefix) =>
+      pullRequest.title.startsWith(prefix),
+    )
   );
 }
 
@@ -193,7 +204,7 @@ async function closePullRequest(pullRequest, request) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ state: "closed" }),
   });
-  console.log(`Closed stale OpenAI translation PR #${pullRequest.number}.`);
+  console.log(`Closed stale translation PR #${pullRequest.number}.`);
 }
 
 export async function updatePullRequestBranch(pullRequest, request) {
@@ -207,9 +218,7 @@ export async function updatePullRequestBranch(pullRequest, request) {
       `GitHub did not confirm updating translation PR #${pullRequest.number}`,
     );
   }
-  console.log(
-    `Updated OpenAI translation PR #${pullRequest.number} with main.`,
-  );
+  console.log(`Updated translation PR #${pullRequest.number} with main.`);
 }
 
 export async function markPullRequestReadyForReview(pullRequest, graphql) {
@@ -236,7 +245,7 @@ export async function markPullRequestReadyForReview(pullRequest, graphql) {
   if (result?.number !== pullRequest.number || result?.isDraft !== false) {
     throw new Error(`GitHub did not mark PR #${pullRequest.number} ready`);
   }
-  console.log(`Marked OpenAI translation PR #${pullRequest.number} ready.`);
+  console.log(`Marked translation PR #${pullRequest.number} ready.`);
 }
 
 export async function mergePullRequest(pullRequest, graphql) {
@@ -275,7 +284,7 @@ export async function mergePullRequest(pullRequest, graphql) {
   if (result?.number !== pullRequest.number || result?.merged !== true) {
     throw new Error(`GitHub did not merge PR #${pullRequest.number}`);
   }
-  console.log(`Squash-merged OpenAI translation PR #${pullRequest.number}.`);
+  console.log(`Squash-merged translation PR #${pullRequest.number}.`);
 }
 
 export async function enablePullRequestAutoMerge(pullRequest, graphql) {
@@ -346,7 +355,7 @@ export async function runMergeAutomation(
 
   const pullRequest = await request(`/pulls/${prNumber}`);
   if (!isEligiblePullRequest(pullRequest, repository)) {
-    console.log(`PR #${prNumber} is not an eligible OpenAI translation PR.`);
+    console.log(`PR #${prNumber} is not an eligible translation PR.`);
     return;
   }
   if (expectedSha && pullRequest.head.sha !== expectedSha) {

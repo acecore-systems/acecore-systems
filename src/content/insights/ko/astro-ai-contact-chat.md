@@ -1,6 +1,6 @@
 ---
 title: "Astro 사이트에 문의 AI 채팅을 넣기 위한 기술 설계"
-description: "Astro + Cloudflare Pages 정적 사이트에 OpenAI Responses API 기반 문의 AI 채팅을 넣는 기술 설계입니다. API 경계, 사이트 컨텍스트, 프롬프트 제어, locale별 URL, Origin 검사, rate limit, 안전한 Markdown 링크 렌더링을 정리합니다."
+description: "Astro + Cloudflare Pages 정적 사이트에 Cloudflare Workers AI 기반 문의 AI 채팅을 넣는 기술 설계입니다. API 경계, 사이트 컨텍스트, 프롬프트 제어, locale별 URL, Origin 검사, rate limit, 안전한 Markdown 링크 렌더링을 정리합니다."
 date: 2026-06-07T12:00
 author: gui
 tags: ["기술", "Cloudflare", "웹사이트", "AI", "서비스"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: OpenAI Responses API가 공개 사이트 정보와 대화 상태를 받아 답변을 생성합니다.
+      description: Cloudflare Workers AI가 공개 사이트 정보와 대화 상태를 받아 답변을 생성합니다.
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: RAG나 벡터 DB가 없어도 문의 AI 채팅을 만들 수 있나요?
       answer: 소규모 기업 사이트라면 공개 페이지의 핵심 내용을 구조화해 프롬프트에 넣는 것만으로도 충분히 실용적입니다. 페이지 수와 갱신 빈도가 늘어난 뒤 검색 인덱스나 벡터 DB를 검토하면 됩니다.
-    - question: OpenAI API key가 브라우저에 노출되나요?
-      answer: 아니요. 브라우저는 /api/ai-contact에 질문만 보내고, OpenAI Responses API 호출과 API key 관리는 Cloudflare Pages Function에서 처리합니다.
+    - question: Workers AI key가 브라우저에 노출되나요?
+      answer: 아니요. 브라우저는 /api/ai-contact에 질문만 보내고, Cloudflare Workers AI 호출과 API key 관리는 Cloudflare Pages Function에서 처리합니다.
     - question: AI 답변 안의 링크는 자유롭게 출력할 수 있나요?
       answer: 아니요. 내부 경로, 현재 origin, acecore.net, 공식 LINE, 필요한 mailto와 tel만 허용합니다. Markdown URL은 안전 검사 전에 trim합니다.
 ---
@@ -87,13 +87,13 @@ Acecore 사이트에는 Astro + Cloudflare Pages 정적 구성에 문의 AI 채�
 
 ## 전체 구조
 
-| 계층                 | 역할                                                           |
-| -------------------- | -------------------------------------------------------------- |
-| Chat widget          | UI, 입력, 현재 locale, 최소 이력, Markdown 렌더링              |
-| `/api/ai-contact`    | 입력 검증, Origin 검사, rate limit, 프롬프트 생성, OpenAI 호출 |
-| OpenAI Responses API | 공개 사이트 정보와 대화 상태를 바탕으로 답변 생성              |
+| 계층                  | 역할                                                               |
+| --------------------- | ------------------------------------------------------------------ |
+| Chat widget           | UI, 입력, 현재 locale, 최소 이력, Markdown 렌더링                  |
+| `/api/ai-contact`     | 입력 검증, Origin 검사, rate limit, 프롬프트 생성, Workers AI 호출 |
+| Cloudflare Workers AI | 공개 사이트 정보와 대화 상태를 바탕으로 답변 생성                  |
 
-브라우저에서 OpenAI API를 직접 호출하지 않습니다. 서버 측 엔드포인트 뒤에 두면 key 노출을 막고, 프롬프트와 사이트 컨텍스트를 서버에서 바꾸며, 입력 제한과 오류 처리를 한곳에 모을 수 있습니다.
+브라우저에서 Workers AI를 직접 호출하지 않습니다. 서버 측 엔드포인트 뒤에 두면 key 노출을 막고, 프롬프트와 사이트 컨텍스트를 서버에서 바꾸며, 입력 제한과 오류 처리를 한곳에 모을 수 있습니다.
 
 Astro + Cloudflare Pages에서는 `/api/ai-contact` Pages Function으로 구현할 수 있습니다. Next.js라면 Route Handler, Hono나 Express라면 일반 API route로 바꾸면 됩니다.
 
@@ -137,9 +137,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 AI API를 호출하기 전에 입력을 작게 정리하고 검증하는 것이 핵심입니다. 긴 입력, 무제한 이력, 외부 사이트의 반복 호출을 그대로 통과시키면 운영이 먼저 흔들립니다.
 
-`OPENAI_MODEL`은 환경 변수로 두고, `OPENAI_API_KEY`는 서버에만 둡니다. 배포와 CSP는 [Cloudflare Pages 보안 글](/insights/cloudflare-pages-security/)도 참고할 수 있습니다.
+`WORKERS_AI_CHAT_MODEL`은 환경 변수로 두고, `AI`는 서버에만 둡니다. 배포와 CSP는 [Cloudflare Pages 보안 글](/insights/cloudflare-pages-security/)도 참고할 수 있습니다.
 
 ## 사이트 정보를 명시적 컨텍스트로 만들기
 
@@ -268,9 +268,9 @@ AI는 `[Services]( /services/ )`처럼 공백이 들어간 URL을 만들 수 있
 
 ## local, preview, production 확인
 
-Astro dev나 preview는 Cloudflare Pages Functions 환경과 완전히 같지 않습니다. `OPENAI_API_KEY`가 없을 때는 UI fallback과 오류 표시를 확인합니다.
+Astro dev나 preview는 Cloudflare Pages Functions 환경과 완전히 같지 않습니다. `AI`가 없을 때는 UI fallback과 오류 표시를 확인합니다.
 
-Pages preview 또는 production에서는 `/api/ai-contact` POST, `OPENAI_API_KEY`와 `OPENAI_MODEL`, 다른 Origin 거부, 입력 제한, locale에 맞는 답변, locale URL, 견적과 계약을 단정하지 않는지, email과 phone을 기본 노출하지 않는지, 허용된 Markdown 링크만 변환되는지 확인합니다.
+Pages preview 또는 production에서는 `/api/ai-contact` POST, `AI`와 `WORKERS_AI_CHAT_MODEL`, 다른 Origin 거부, 입력 제한, locale에 맞는 답변, locale URL, 견적과 계약을 단정하지 않는지, email과 phone을 기본 노출하지 않는지, 허용된 Markdown 링크만 변환되는지 확인합니다.
 
 긴 입력, 예상 밖 질문, 영어 페이지, 직접 연락 요청, 가격 질문도 따로 테스트합니다.
 
@@ -293,6 +293,6 @@ Pages preview 또는 production에서는 `/api/ai-contact` POST, `OPENAI_API_KEY
 
 정적 사이트에 문의 AI 채팅을 넣을 때는 UI보다 API 경계와 답변 제어를 먼저 설계해야 합니다.
 
-핵심은 브라우저가 아니라 Cloudflare Pages Function에서 OpenAI를 호출하고, 입력과 이력을 제한하며, 서버에서 사이트 컨텍스트와 locale URL을 만들고, 프롬프트에 단정 금지 범위를 쓰고, 폼/LINE/직접 연락의 역할을 분리하며, Origin 검사와 rate limit을 넣고, Markdown 링크는 `trim()` 후 허용 목록으로 렌더링하는 것입니다.
+핵심은 브라우저가 아니라 Cloudflare Pages Function에서 Workers AI를 호출하고, 입력과 이력을 제한하며, 서버에서 사이트 컨텍스트와 locale URL을 만들고, 프롬프트에 단정 금지 범위를 쓰고, 폼/LINE/직접 연락의 역할을 분리하며, Origin 검사와 rate limit을 넣고, Markdown 링크는 `trim()` 후 허용 목록으로 렌더링하는 것입니다.
 
 정적 사이트에서도 유용한 문의 AI 채팅은 충분히 만들 수 있습니다. 목표는 AI를 돋보이게 하는 것이 아니라, 방문자가 안전하게 다음 행동을 고르게 하는 것입니다.

@@ -1,6 +1,6 @@
 ---
 title: "Technisches Design für einen KI-Kontaktchat in einer Astro-Website"
-description: "Ein praktischer Leitfaden für einen KI-Kontaktchat in einer statischen Astro + Cloudflare Pages Website mit der OpenAI Responses API. Behandelt werden API-Grenzen, Website-Kontext, Prompt-Steuerung, locale-bezogene URLs, Origin-Prüfung, Rate Limiting und sicheres Rendern von Markdown-Links."
+description: "Ein praktischer Leitfaden für einen KI-Kontaktchat in einer statischen Astro + Cloudflare Pages Website mit der Cloudflare Workers AI. Behandelt werden API-Grenzen, Website-Kontext, Prompt-Steuerung, locale-bezogene URLs, Origin-Prüfung, Rate Limiting und sicheres Rendern von Markdown-Links."
 date: 2026-06-07T12:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Website", "AI", "Services"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: Die OpenAI Responses API erhält öffentlichen Website-Kontext und Gesprächszustand.
+      description: Die Cloudflare Workers AI erhält öffentlichen Website-Kontext und Gesprächszustand.
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: Braucht man RAG oder eine Vektordatenbank für einen KI-Kontaktchat?
       answer: Für eine kleine Unternehmenswebsite reicht oft strukturierter Kontext aus öffentlichen Seiten im Prompt. Suche oder Vektordatenbank kann man später ergänzen, wenn Umfang oder Aktualisierungsfrequenz wachsen.
-    - question: Wird der OpenAI API-Schlüssel im Browser sichtbar?
-      answer: Nein. Der Browser sendet nur die Frage an /api/ai-contact. Die Cloudflare Pages Function ruft die OpenAI Responses API auf und verwaltet den Schlüssel.
+    - question: Wird der Workers AI-Schlüssel im Browser sichtbar?
+      answer: Nein. Der Browser sendet nur die Frage an /api/ai-contact. Die Cloudflare Pages Function ruft die Cloudflare Workers AI auf und verwaltet den Schlüssel.
     - question: Darf die KI beliebige Links ausgeben?
       answer: Nein. Links sind auf interne Pfade, den aktuellen Origin, acecore.net, die offizielle LINE-URL sowie notwendige mailto- und tel-Links beschränkt. Markdown-URLs werden vor der Prüfung getrimmt.
 ---
@@ -87,13 +87,13 @@ Dieser Artikel beschreibt das Design als wiederverwendbares Muster für andere s
 
 ## Gesamtstruktur
 
-| Schicht              | Verantwortung                                                        |
-| -------------------- | -------------------------------------------------------------------- |
-| Chat widget          | UI, Eingabe, aktueller locale, minimaler Verlauf, Markdown-Rendering |
-| `/api/ai-contact`    | Validierung, Origin-Prüfung, Rate Limit, Prompt, OpenAI-Aufruf       |
-| OpenAI Responses API | Antwort aus öffentlichem Kontext und Gesprächszustand erzeugen       |
+| Schicht               | Verantwortung                                                        |
+| --------------------- | -------------------------------------------------------------------- |
+| Chat widget           | UI, Eingabe, aktueller locale, minimaler Verlauf, Markdown-Rendering |
+| `/api/ai-contact`     | Validierung, Origin-Prüfung, Rate Limit, Prompt, Workers AI-Aufruf   |
+| Cloudflare Workers AI | Antwort aus öffentlichem Kontext und Gesprächszustand erzeugen       |
 
-Der Browser sollte OpenAI nicht direkt aufrufen. Ein serverseitiger Endpoint verhindert Schlüssel-Leaks, erlaubt Anpassungen von Prompt und Kontext und bündelt Limits sowie Fehlerbehandlung.
+Der Browser sollte Workers AI nicht direkt aufrufen. Ein serverseitiger Endpoint verhindert Schlüssel-Leaks, erlaubt Anpassungen von Prompt und Kontext und bündelt Limits sowie Fehlerbehandlung.
 
 Bei Astro + Cloudflare Pages kann die Grenze eine Pages Function unter `/api/ai-contact` sein. In Next.js wäre es ein Route Handler, in Hono oder Express eine normale API-Route.
 
@@ -137,9 +137,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 Wichtig ist, Eingaben vor dem KI-Aufruf zu verkleinern und zu validieren. Lange Texte, unbegrenzter Verlauf und fremde wiederholte Aufrufe destabilisieren den Betrieb.
 
-`OPENAI_MODEL` sollte eine Umgebungsvariable sein, `OPENAI_API_KEY` bleibt ausschließlich serverseitig. Für Auslieferung und CSP siehe [Cloudflare Pages Sicherheit](/insights/cloudflare-pages-security/).
+`WORKERS_AI_CHAT_MODEL` sollte eine Umgebungsvariable sein, `AI` bleibt ausschließlich serverseitig. Für Auslieferung und CSP siehe [Cloudflare Pages Sicherheit](/insights/cloudflare-pages-security/).
 
 ## Website-Informationen als expliziten Kontext pflegen
 
@@ -268,9 +268,9 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
 
 ## Local, Preview und Produktion testen
 
-Astro dev oder preview entspricht nicht vollständig Cloudflare Pages Functions. Ohne `OPENAI_API_KEY` sollten lokal Fallback und Fehleranzeige geprüft werden.
+Astro dev oder preview entspricht nicht vollständig Cloudflare Pages Functions. Ohne `AI` sollten lokal Fallback und Fehleranzeige geprüft werden.
 
-In Preview oder Produktion prüfen Sie POST auf `/api/ai-contact`, `OPENAI_API_KEY` und `OPENAI_MODEL`, Ablehnung fremder Origins, Eingabelimits, Antworten im richtigen locale, lokalisierte URLs, keine Zusagen zu Angebot oder Vertrag, keine Standardanzeige von E-Mail und Telefon, sowie Markdown-Links nur bei erlaubter URL.
+In Preview oder Produktion prüfen Sie POST auf `/api/ai-contact`, `AI` und `WORKERS_AI_CHAT_MODEL`, Ablehnung fremder Origins, Eingabelimits, Antworten im richtigen locale, lokalisierte URLs, keine Zusagen zu Angebot oder Vertrag, keine Standardanzeige von E-Mail und Telefon, sowie Markdown-Links nur bei erlaubter URL.
 
 Testen Sie außerdem lange Eingaben, unerwartete Fragen, englische Seiten, Direktkontakt-Wünsche und Preisfragen.
 
@@ -293,6 +293,6 @@ Getrennt bleiben beide Artikel lesbarer und lassen sich später besser verlinken
 
 Bei einem KI-Kontaktchat für eine statische Website sollten API-Grenze und Antwortkontrolle vor der UI gestaltet werden.
 
-Die wichtigsten Entscheidungen: OpenAI über Cloudflare Pages Function aufrufen, Eingabe und Verlauf klein halten, Kontext und locale-URLs serverseitig bauen, Grenzen im Prompt formulieren, Formular/LINE/Direktkontakt trennen, Origin-Prüfung und Rate Limit einbauen, Markdown-Links nach `trim()` per Allow-List rendern.
+Die wichtigsten Entscheidungen: Workers AI über Cloudflare Pages Function aufrufen, Eingabe und Verlauf klein halten, Kontext und locale-URLs serverseitig bauen, Grenzen im Prompt formulieren, Formular/LINE/Direktkontakt trennen, Origin-Prüfung und Rate Limit einbauen, Markdown-Links nach `trim()` per Allow-List rendern.
 
 Statische Websites können sinnvolle KI-Kontaktchats haben. Entscheidend ist nicht, die KI sichtbar zu machen, sondern Besucher sicher zur nächsten Aktion zu führen.

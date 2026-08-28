@@ -111,7 +111,7 @@ CMS save proxy
   -> validates allowed paths and content, then writes one expected-HEAD cms: commit to main
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> batches Japanese-source updates for 15 minutes, then submits them to OpenAI Batch
+  -> batches Japanese-source updates for 15 minutes, then submits them to Workers AI Batch
 ```
 
 The first lesson is that installing the admin app is only the beginning. Authentication, media paths, preview branches, translations, and merge strategy all become part of the CMS design.

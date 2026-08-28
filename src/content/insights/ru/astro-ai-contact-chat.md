@@ -1,6 +1,6 @@
 ---
 title: "Технический дизайн AI-чата для обращений на сайте Astro"
-description: "Практический дизайн AI-чата для обращений на статическом сайте Astro + Cloudflare Pages с OpenAI Responses API. Рассмотрены граница API, контекст сайта, управление prompt, URL по locale, проверка Origin, rate limit и безопасный рендеринг Markdown-ссылок."
+description: "Практический дизайн AI-чата для обращений на статическом сайте Astro + Cloudflare Pages с Cloudflare Workers AI. Рассмотрены граница API, контекст сайта, управление prompt, URL по locale, проверка Origin, rate limit и безопасный рендеринг Markdown-ссылок."
 date: 2026-06-07T12:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Веб-сайт", "AI", "Услуги"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: OpenAI Responses API получает публичный контекст сайта и состояние диалога.
+      description: Cloudflare Workers AI получает публичный контекст сайта и состояние диалога.
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: Нужны ли RAG или векторная база для такого AI-чата?
       answer: Для небольшого корпоративного сайта часто достаточно структурированного публичного контекста в prompt. Поиск или векторную базу можно добавить позже, когда вырастет число страниц или частота обновлений.
-    - question: Видит ли браузер OpenAI API key?
-      answer: Нет. Браузер отправляет вопрос только в /api/ai-contact. Cloudflare Pages Function вызывает OpenAI Responses API и хранит API key.
+    - question: Видит ли браузер Workers AI key?
+      answer: Нет. Браузер отправляет вопрос только в /api/ai-contact. Cloudflare Pages Function вызывает Cloudflare Workers AI и хранит API key.
     - question: Может ли AI выводить любые ссылки?
       answer: Нет. Разрешены внутренние пути, текущий origin, acecore.net, официальный LINE и необходимые mailto или tel. Markdown URL очищаются через trim перед проверкой.
 ---
@@ -87,13 +87,13 @@ faq:
 
 ## Общая структура
 
-| Слой                 | Ответственность                                                   |
-| -------------------- | ----------------------------------------------------------------- |
-| Chat widget          | UI, ввод, текущий locale, минимальная история, Markdown rendering |
-| `/api/ai-contact`    | Валидация, Origin check, rate limit, prompt, вызов OpenAI         |
-| OpenAI Responses API | Генерация ответа из публичного контекста и состояния диалога      |
+| Слой                  | Ответственность                                                   |
+| --------------------- | ----------------------------------------------------------------- |
+| Chat widget           | UI, ввод, текущий locale, минимальная история, Markdown rendering |
+| `/api/ai-contact`     | Валидация, Origin check, rate limit, prompt, вызов Workers AI     |
+| Cloudflare Workers AI | Генерация ответа из публичного контекста и состояния диалога      |
 
-Браузер не должен вызывать OpenAI напрямую. Серверный endpoint скрывает ключ, позволяет менять prompt и контекст на сервере, а также централизует лимиты и ошибки.
+Браузер не должен вызывать Workers AI напрямую. Серверный endpoint скрывает ключ, позволяет менять prompt и контекст на сервере, а также централизует лимиты и ошибки.
 
 В Astro + Cloudflare Pages это можно реализовать как Pages Function `/api/ai-contact`. В Next.js это был бы Route Handler, в Hono или Express обычный API route.
 
@@ -137,9 +137,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -149,7 +149,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 Главное — уменьшить и проверить ввод до вызова AI API. Длинные сообщения, бесконечная история и внешние повторные запросы быстро делают эксплуатацию нестабильной.
 
-`OPENAI_MODEL` лучше хранить в переменной окружения, а `OPENAI_API_KEY` только на сервере. Про доставку и CSP см. [статью о безопасности Cloudflare Pages](/insights/cloudflare-pages-security/).
+`WORKERS_AI_CHAT_MODEL` лучше хранить в переменной окружения, а `AI` только на сервере. Про доставку и CSP см. [статью о безопасности Cloudflare Pages](/insights/cloudflare-pages-security/).
 
 ## Сделать контекст сайта явным
 
@@ -268,9 +268,9 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
 
 ## Проверять local, preview и production
 
-Astro dev или preview не полностью совпадает с Cloudflare Pages Functions. Без `OPENAI_API_KEY` локально проверяются fallback и ошибки UI.
+Astro dev или preview не полностью совпадает с Cloudflare Pages Functions. Без `AI` локально проверяются fallback и ошибки UI.
 
-В preview или production проверьте POST на `/api/ai-contact`, переменные `OPENAI_API_KEY` и `OPENAI_MODEL`, отказ для другого Origin, лимиты ввода, ответы в нужном locale, локализованные URL, отсутствие утверждений о смете или договоре, отсутствие email и телефона по умолчанию, а также Markdown-ссылки только при разрешенном URL.
+В preview или production проверьте POST на `/api/ai-contact`, переменные `AI` и `WORKERS_AI_CHAT_MODEL`, отказ для другого Origin, лимиты ввода, ответы в нужном locale, локализованные URL, отсутствие утверждений о смете или договоре, отсутствие email и телефона по умолчанию, а также Markdown-ссылки только при разрешенном URL.
 
 Отдельно тестируйте длинный ввод, неожиданные вопросы, английские страницы, запрос прямого контакта и вопросы о цене.
 
@@ -293,6 +293,6 @@ Astro dev или preview не полностью совпадает с Cloudflar
 
 Для AI-чата на статическом сайте сначала проектируйте API-границу и контроль ответов.
 
-Ключевые решения: вызывать OpenAI из Cloudflare Pages Function, держать ввод и историю маленькими, собирать контекст и locale URL на сервере, писать ограничения в prompt, разделить форму/LINE/прямой контакт, добавить Origin check и rate limit, а Markdown-ссылки рендерить после `trim()` через allowlist.
+Ключевые решения: вызывать Workers AI из Cloudflare Pages Function, держать ввод и историю маленькими, собирать контекст и locale URL на сервере, писать ограничения в prompt, разделить форму/LINE/прямой контакт, добавить Origin check и rate limit, а Markdown-ссылки рендерить после `trim()` через allowlist.
 
 Статические сайты могут иметь полезный AI-чат для обращений. Цель не в том, чтобы выделить AI, а в том, чтобы посетитель безопасно выбрал следующий шаг.

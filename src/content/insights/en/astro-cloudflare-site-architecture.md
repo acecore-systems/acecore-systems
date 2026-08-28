@@ -51,7 +51,7 @@ compareTable:
   after:
     label: Layer by layer
     items:
-      - "Astro, Cloudflare, GitHub, and OpenAI API each have a clear role"
+      - "Astro, Cloudflare, GitHub, and Workers AI each have a clear role"
       - "Dynamic APIs are kept at Pages Functions, while storage stays in D1 where it fits"
       - "CMS updates, localization, RSS, sitemap, and search share one content model"
       - "The article set becomes a readable index by goal and implementation order"
@@ -101,7 +101,7 @@ faq:
     - question: Where should I start?
       answer: "Start with Astro static pages, blog, RSS, sitemap, and OGP. Then add CMS editing and localization. Add AI chat, service CTAs, and comments only when the contact flow or community workflow needs them."
     - question: Should every feature be Cloudflare-only?
-      answer: "No. The AI contact chat uses the OpenAI API. The point is to keep delivery, API boundaries, storage, and bot protection inside a clear Cloudflare-centered architecture, while being deliberate about outside services."
+      answer: "No. The AI contact chat uses the Workers AI. The point is to keep delivery, API boundaries, storage, and bot protection inside a clear Cloudflare-centered architecture, while being deliberate about outside services."
     - question: Is this necessary for a small site?
       answer: "Not all at once. But if a site may later add CMS editing, localization, contact automation, or comments, it helps to decide URLs, storage, preview behavior, and search indexing early."
 ---
@@ -122,7 +122,7 @@ The important split is this:
 | Cloudflare  | Pages delivery, Pages Functions, D1, Turnstile   |
 | GitHub      | PR review, CMS diffs, translation diffs, history |
 | Sveltia CMS | Japanese source content, authors, tags, images   |
-| OpenAI API  | AI contact chat responses                        |
+| Workers AI  | AI contact chat responses                        |
 | Pagefind    | Search indexing for reviewed static HTML         |
 
 Static content stays static. Dynamic behavior is added only where a request-time boundary is actually useful.
@@ -143,7 +143,7 @@ The AI contact chat and the comment API share the same pattern:
 
 | Feature    | UI    | API Boundary      | Storage or External API |
 | ---------- | ----- | ----------------- | ----------------------- |
-| AI chat    | Astro | `/api/ai-contact` | OpenAI API              |
+| AI chat    | Astro | `/api/ai-contact` | Workers AI              |
 | Comments   | Astro | `/api/comments`   | Cloudflare D1           |
 | Bot checks | UI    | Pages Functions   | Cloudflare Siteverify   |
 
@@ -240,6 +240,6 @@ For a similar site, the practical order is:
 
 Astro + Cloudflare can support much more than a simple company brochure without giving up the strengths of static delivery.
 
-The key is to split responsibilities clearly: Astro builds reviewed public HTML, Cloudflare owns delivery and small API boundaries, Sveltia CMS edits source content, GitHub PRs review changes, OpenAI helps with contact guidance, and comments stay within Cloudflare when that is enough.
+The key is to split responsibilities clearly: Astro builds reviewed public HTML, Cloudflare owns delivery and small API boundaries, Sveltia CMS edits source content, GitHub PRs review changes, Workers AI helps with contact guidance, and comments stay within Cloudflare when that is enough.
 
 Use this page as the entry point, then add only the pieces your site actually needs without weakening the static foundation.

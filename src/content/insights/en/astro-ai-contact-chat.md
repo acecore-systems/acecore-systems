@@ -1,6 +1,6 @@
 ---
 title: "Technical Design for Adding an AI Contact Chat to an Astro Site"
-description: "A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
+description: "A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the Cloudflare Workers AI. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
 date: 2026-06-07T12:00
 author: gui
 tags: ["Technology", "Cloudflare", "Website", "AI", "Services"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: The OpenAI Responses API receives public site context and conversation state, then returns the answer.
+      description: The Cloudflare Workers AI receives public site context and conversation state, then returns the answer.
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: Do I need RAG or a vector database to build an AI contact chat?
       answer: For a small corporate site, structured public site context in the prompt is often enough. Search indexes or vector databases can be added later when page count or update frequency grows.
-    - question: Is the OpenAI API key exposed to the browser?
-      answer: No. The browser only sends the question to /api/ai-contact. The Cloudflare Pages Function calls the OpenAI Responses API and manages the API key.
+    - question: Is the Workers AI key exposed to the browser?
+      answer: No. The browser only sends the question to /api/ai-contact. The Cloudflare Pages Function calls the Cloudflare Workers AI and manages the API key.
     - question: Can the AI output any link it wants?
       answer: No. Links are restricted to internal paths, the current origin, acecore.net, the official LINE URL, and specific mailto or tel links when needed. Markdown URLs are trimmed before safety checks.
 ---
@@ -89,13 +89,13 @@ This article explains the design as a reusable pattern for other static sites. T
 
 The architecture has three simple layers.
 
-| Layer                | Responsibility                                                          |
-| -------------------- | ----------------------------------------------------------------------- |
-| Chat widget          | UI, input, current locale, minimal history, and Markdown rendering      |
-| `/api/ai-contact`    | Validation, Origin checks, rate limiting, prompt construction, AI calls |
-| OpenAI Responses API | Generate an answer from public site context and conversation state      |
+| Layer                 | Responsibility                                                          |
+| --------------------- | ----------------------------------------------------------------------- |
+| Chat widget           | UI, input, current locale, minimal history, and Markdown rendering      |
+| `/api/ai-contact`     | Validation, Origin checks, rate limiting, prompt construction, AI calls |
+| Cloudflare Workers AI | Generate an answer from public site context and conversation state      |
 
-The browser should not call the OpenAI API directly. Keeping the model call behind a server-side endpoint prevents key exposure, lets you update prompts and site context without redeploying the UI, and centralizes input limits and error handling.
+The browser should not call the Workers AI directly. Keeping the model call behind a server-side endpoint prevents key exposure, lets you update prompts and site context without redeploying the UI, and centralizes input limits and error handling.
 
 On Astro + Cloudflare Pages, the API boundary can be a Pages Function at `/api/ai-contact`. In Next.js it could be a Route Handler; in Hono or Express it can be a normal API route.
 
@@ -143,9 +143,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -155,7 +155,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 The important point is to reduce and validate input before calling the AI API. Long messages, unlimited history, and uncontrolled cross-site traffic can make operations unstable before the feature itself becomes useful.
 
-`OPENAI_MODEL` should be configurable through environment variables so the model can be changed in preview or production without touching the frontend. `OPENAI_API_KEY` must stay server-side.
+`WORKERS_AI_CHAT_MODEL` should be configurable through environment variables so the model can be changed in preview or production without touching the frontend. `AI` must stay server-side.
 
 See also [Secure Static Site Delivery with Cloudflare Pages](/insights/cloudflare-pages-security/) for the surrounding delivery and CSP setup.
 
@@ -312,12 +312,12 @@ A small, strict renderer is easier to reason about than a full Markdown implemen
 
 ## Test Local, Preview, and Production Separately
 
-Astro dev or preview is not identical to the Cloudflare Pages Functions environment. Without `OPENAI_API_KEY`, local testing should focus on UI fallback and error states.
+Astro dev or preview is not identical to the Cloudflare Pages Functions environment. Without `AI`, local testing should focus on UI fallback and error states.
 
 In Pages preview or production, check:
 
 - `/api/ai-contact` accepts POST requests
-- `OPENAI_API_KEY` and `OPENAI_MODEL` are configured
+- `AI` and `WORKERS_AI_CHAT_MODEL` are configured
 - Cross-origin requests are rejected
 - Input length and history count are limited
 - Answers match the current locale
@@ -356,7 +356,7 @@ When adding an AI contact chat to a static site, design the API boundary and ans
 
 The key decisions were:
 
-- Call OpenAI from a Cloudflare Pages Function, not the browser
+- Call Workers AI from a Cloudflare Pages Function, not the browser
 - Keep endpoint input small and limit history and message length
 - Build site context and locale-aware URLs on the server side
 - Put clear boundaries in the prompt for what the AI may not assert

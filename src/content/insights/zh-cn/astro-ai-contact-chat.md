@@ -1,6 +1,6 @@
 ---
 title: "在 Astro 网站中加入咨询 AI 聊天的技术设计"
-description: "面向 Astro + Cloudflare Pages 静态网站，使用 OpenAI Responses API 加入咨询 AI 聊天的技术设计。整理 API 边界、站内信息上下文、提示词控制、按 locale 生成 URL、Origin 检查、限流以及安全的 Markdown 链接渲染。"
+description: "面向 Astro + Cloudflare Pages 静态网站，使用 Cloudflare Workers AI 加入咨询 AI 聊天的技术设计。整理 API 边界、站内信息上下文、提示词控制、按 locale 生成 URL、Origin 检查、限流以及安全的 Markdown 链接渲染。"
 date: 2026-06-07T12:00
 author: gui
 tags: ["技术", "Cloudflare", "网站", "AI", "服务"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: OpenAI Responses API 接收公开站点信息和会话上下文，然后返回回答。
+      description: Cloudflare Workers AI 接收公开站点信息和会话上下文，然后返回回答。
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: 没有 RAG 或向量数据库也能做咨询 AI 聊天吗？
       answer: 小型企业网站通常只要把公开页面的要点结构化后放入提示词即可实用。页面数量或更新频率增加后，再考虑搜索索引或向量数据库。
-    - question: OpenAI API key 会暴露在浏览器里吗？
-      answer: 不会。浏览器只向 /api/ai-contact 发送问题，OpenAI Responses API 的调用和 API key 管理都在 Cloudflare Pages Function 中完成。
+    - question: Workers AI key 会暴露在浏览器里吗？
+      answer: 不会。浏览器只向 /api/ai-contact 发送问题，Cloudflare Workers AI 的调用和 API key 管理都在 Cloudflare Pages Function 中完成。
     - question: AI 回答中可以自由输出链接吗？
       answer: 不可以。链接限制为内部路径、当前 origin、acecore.net、官方 LINE，以及必要时的 mailto 和 tel。Markdown URL 会在安全检查前先 trim。
 ---
@@ -89,13 +89,13 @@ Acecore 在 Astro + Cloudflare Pages 的静态网站中加入了咨询 AI 聊天
 
 架构可以分为三层。
 
-| 层                   | 职责                                                     |
-| -------------------- | -------------------------------------------------------- |
-| 聊天 Widget          | UI、输入、当前 locale、必要的最小历史记录、Markdown 渲染 |
-| `/api/ai-contact`    | 输入验证、Origin 检查、限流、提示词生成、OpenAI 调用     |
-| OpenAI Responses API | 基于站内信息和会话上下文生成回答                         |
+| 层                    | 职责                                                     |
+| --------------------- | -------------------------------------------------------- |
+| 聊天 Widget           | UI、输入、当前 locale、必要的最小历史记录、Markdown 渲染 |
+| `/api/ai-contact`     | 输入验证、Origin 检查、限流、提示词生成、Workers AI 调用 |
+| Cloudflare Workers AI | 基于站内信息和会话上下文生成回答                         |
 
-浏览器不直接调用 OpenAI API。这样可以避免 API key 暴露，也能在服务端更新模型、提示词和站点上下文，并把输入限制与错误处理集中在一个位置。
+浏览器不直接调用 Workers AI。这样可以避免 API key 暴露，也能在服务端更新模型、提示词和站点上下文，并把输入限制与错误处理集中在一个位置。
 
 在 Astro + Cloudflare Pages 中，这个 API 边界可以实现为 `/api/ai-contact` 的 Pages Function。Next.js 可以使用 Route Handler，Hono 或 Express 也可以用普通 API route。
 
@@ -143,9 +143,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -155,7 +155,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 
 关键是在调用 AI API 前先缩小并验证输入。长文、无限历史、来自外部网站的连续访问如果直接通过，运营会先于功能本身变得不稳定。
 
-`OPENAI_MODEL` 通过环境变量管理，方便在 preview 或 production 中切换模型。`OPENAI_API_KEY` 只保存在服务端。
+`WORKERS_AI_CHAT_MODEL` 通过环境变量管理，方便在 preview 或 production 中切换模型。`AI` 只保存在服务端。
 
 Cloudflare Pages 的分发和 CSP 可参考[使用 Cloudflare Pages 实现安全的静态站点分发](/insights/cloudflare-pages-security/)。
 
@@ -312,12 +312,12 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
 
 ## 分别确认本地、preview 和生产环境
 
-Astro dev 或 preview 与 Cloudflare Pages Functions 环境并不完全相同。没有 `OPENAI_API_KEY` 时，本地应主要确认 UI 的 fallback 和错误显示。
+Astro dev 或 preview 与 Cloudflare Pages Functions 环境并不完全相同。没有 `AI` 时，本地应主要确认 UI 的 fallback 和错误显示。
 
 Pages preview 或生产环境中，需要确认：
 
 - `/api/ai-contact` 可以通过 POST 调用
-- `OPENAI_API_KEY` 和 `OPENAI_MODEL` 已设置
+- `AI` 和 `WORKERS_AI_CHAT_MODEL` 已设置
 - 不同 Origin 的请求会被拒绝
 - 输入长度和历史件数有限制
 - 回答符合当前 locale
@@ -356,7 +356,7 @@ Pages preview 或生产环境中，需要确认：
 
 关键决策如下：
 
-- 从 Cloudflare Pages Function 调用 OpenAI，而不是从浏览器调用
+- 从 Cloudflare Pages Function 调用 Workers AI，而不是从浏览器调用
 - 缩小 endpoint 输入，并限制历史和消息长度
 - 在服务端组装站点上下文和 locale URL
 - 在提示词中明确 AI 不应断言的范围

@@ -43,7 +43,7 @@ compareTable:
   after:
     label: Añadir por capas
     items:
-      - "Se pueden explicar por separado las funciones de Astro, Cloudflare, GitHub y la API de OpenAI"
+      - "Se pueden explicar por separado las funciones de Astro, Cloudflare, GitHub y la API de Workers AI"
       - "Las API dinámicas se concentran en Pages Functions y el almacenamiento se aproxima a Cloudflare mediante D1"
       - "Las actualizaciones del CMS, las traducciones, la búsqueda, RSS y sitemap comparten la misma estructura de contenido"
       - "La página resulta fácil de recorrer como índice por objetivo y orden de adopción"
@@ -68,7 +68,7 @@ faq:
     - question: ¿Por dónde conviene empezar?
       answer: "Primero consolide las páginas estáticas de Astro, el blog, RSS, sitemap y OGP. Después añada el CMS y los idiomas; cuando necesite un recorrido de consulta, incorpore el chat de IA, las CTA de servicios y los comentarios."
     - question: ¿Todo debería construirse únicamente con Cloudflare?
-      answer: "No. Algunas partes, como la IA de consultas, utilizan la API de OpenAI. La clave es acercar a Cloudflare la distribución, el límite de las API, la base de datos y la protección contra bots, y decidir conscientemente dónde usar servicios externos."
+      answer: "No. Algunas partes, como la IA de consultas, utilizan la API de Workers AI. La clave es acercar a Cloudflare la distribución, el límite de las API, la base de datos y la protección contra bots, y decidir conscientemente dónde usar servicios externos."
     - question: ¿Un sitio pequeño necesita todo esto?
       answer: "No hace falta incorporarlo todo desde el principio. Pero si prevé añadir un CMS, recorridos de consulta, varios idiomas o comentarios, decidir pronto las URL, el almacenamiento, el entorno de vista previa y el índice de búsqueda facilita el trabajo posterior."
 linkCards:
@@ -114,7 +114,7 @@ La arquitectura divide responsabilidades:
 | Cloudflare  | Pages, Pages Functions, D1 y Turnstile           |
 | GitHub      | PRs, diferencias de CMS, traducciones, historial |
 | Sveltia CMS | Fuente japonesa, autores, etiquetas, imágenes    |
-| OpenAI API  | Respuestas del chat de contacto                  |
+| Workers AI  | Respuestas del chat de contacto                  |
 | Pagefind    | Índice de búsqueda para HTML revisado            |
 
 Lo que puede ser estático se mantiene estático. Lo dinámico pasa a APIs pequeñas.

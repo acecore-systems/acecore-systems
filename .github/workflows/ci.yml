@@ -39,7 +39,7 @@ jobs:
       - name: Validate translations
         run: npm run validate:i18n
 
-      - name: Test OpenAI translation automation
+      - name: Test Workers AI translation automation
         run: npm run test:openai-translation
 
       - name: Test CMS proxy

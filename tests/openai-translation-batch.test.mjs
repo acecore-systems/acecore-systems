@@ -4,10 +4,12 @@ import test from "node:test";
 
 import {
   decodeMetadata,
+  findCompletedPendingBatch,
   getSourceHashFromPullRequestBody,
   getSourceMarker,
   hashText,
   isTranslationPullRequestCurrent,
+  parseJsonResponse,
   replaceLocaleObject,
 } from "../scripts/openai-translation-batch.mjs";
 
@@ -66,7 +68,62 @@ test("UIとフォームのlocale objectは対象localeだけを置き換える",
   assert.match(translated, /"zh-cn": \{\n  "label": "新翻译"\n\}/u);
 });
 
-test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", async () => {
+test("queuedの新しいBatchを飛ばして完了済みBatchを回収する", async () => {
+  const requested = [];
+  const completed = await findCompletedPendingBatch(
+    ["new-queued", "old-completed", "already-processed"],
+    new Set(["already-processed"]),
+    async ({ request_id: requestId }) => {
+      requested.push(requestId);
+      return requestId === "old-completed"
+        ? { responses: [], status: "complete" }
+        : { status: "queued" };
+    },
+  );
+
+  assert.deepEqual(requested, ["new-queued", "old-completed"]);
+  assert.equal(completed?.batchId, "old-completed");
+});
+
+test("Batchの部分完了・refusal・複数choiceを翻訳へ適用しない", () => {
+  assert.deepEqual(
+    parseJsonResponse({
+      choices: [
+        {
+          index: 0,
+          finish_reason: "stop",
+          message: { content: '{"translated":true}', refusal: null },
+        },
+      ],
+    }),
+    { translated: true },
+  );
+  for (const response of [
+    {
+      choices: [
+        {
+          index: 0,
+          finish_reason: "length",
+          message: { content: '{"partial":true}' },
+        },
+      ],
+    },
+    {
+      choices: [
+        {
+          index: 0,
+          finish_reason: "stop",
+          message: { content: "{}", refusal: "blocked" },
+        },
+      ],
+    },
+    { choices: [] },
+  ]) {
+    assert.throws(() => parseJsonResponse(response));
+  }
+});
+
+test("WorkflowはGLM 5.3 Flash/highをWorkers AI Batchへ投入し、回収後にBot PRを作る", async () => {
   const [submit, collect, script] = await Promise.all([
     readFile(".github/workflows/submit-openai-translation-batch.yml", "utf8"),
     readFile(".github/workflows/collect-openai-translation-batch.yml", "utf8"),
@@ -74,9 +131,12 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   ]);
 
   assert.match(submit, /sleep 900/u);
-  assert.match(submit, /OPENAI_TRANSLATION_API_KEY/u);
+  assert.match(submit, /CLOUDFLARE_WORKERS_AI_API_TOKEN/u);
+  assert.match(submit, /CLOUDFLARE_ACCOUNT_ID/u);
+  assert.match(submit, /workers-ai-translation-pending-/u);
   assert.match(submit, /openai-translation-batch\.mjs submit/u);
-  assert.match(collect, /translation\/openai\//u);
+  assert.match(collect, /translation\/workers-ai\//u);
+  assert.match(collect, /workers-ai-translation-processed-/u);
   assert.match(collect, /actions\/create-github-app-token@v3/u);
   assert.match(
     collect,
@@ -88,6 +148,8 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(collect, /Format collected translation files/u);
   assert.match(collect, /git diff --name-only --diff-filter=ACMRT -z/u);
   assert.match(collect, /npx prettier --write --/u);
-  assert.match(script, /gpt-5\.6-luna/u);
-  assert.match(script, /reasoning: \{ effort: "max" \}/u);
+  assert.match(script, /@cf\/zai-org\/glm-5\.3-flash/u);
+  assert.match(script, /BATCH_REASONING_EFFORT = "high"/u);
+  assert.match(script, /api\.cloudflare\.com\/client\/v4/u);
+  assert.doesNotMatch(script, /api\.openai\.com/u);
 });

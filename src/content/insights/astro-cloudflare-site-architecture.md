@@ -51,7 +51,7 @@ compareTable:
   after:
     label: レイヤーで足す
     items:
-      - "Astro、Cloudflare、GitHub、OpenAI APIの役割を分けて説明できる"
+      - "Astro、Cloudflare、GitHub、Workers AIの役割を分けて説明できる"
       - "動的APIはPages Functionsに集め、保存先はD1などCloudflare側に寄せられる"
       - "CMS更新、多言語翻訳、検索、RSS、sitemapを同じコンテンツ構造で扱える"
       - "用途別・導入順のインデックスとして読み進めやすい"
@@ -101,7 +101,7 @@ faq:
     - question: どこから導入すべきですか？
       answer: "まずAstroの静的ページ、ブログ、RSS、sitemap、OGPを固めます。次にCMSと多言語を入れ、相談導線が必要になってからAIチャット、サービスCTA、コメント機能を足す順番が扱いやすいです。"
     - question: すべてCloudflareだけで作るべきですか？
-      answer: "いいえ。問い合わせAIのようにOpenAI APIを使う部分もあります。ポイントは、配信、API境界、DB、bot対策をCloudflareへ寄せ、外部サービスを入れる場所と入れない場所を意識して分けることです。"
+      answer: "いいえ。問い合わせAIのようにWorkers AIを使う部分もあります。ポイントは、配信、API境界、DB、bot対策をCloudflareへ寄せ、外部サービスを入れる場所と入れない場所を意識して分けることです。"
     - question: 小規模サイトでもここまで必要ですか？
       answer: "最初から全部は不要です。ただ、CMS、問い合わせ導線、多言語、コメントのどれかを足す予定があるなら、URL、データ保存先、preview環境、検索indexの扱いを早めに決めると後から楽になります。"
 ---
@@ -124,7 +124,7 @@ Acecoreでは、次のように分担しました。
 | Cloudflare  | Pages配信、Pages Functions、D1、Turnstile  |
 | GitHub      | PRレビュー、CMS編集差分、翻訳差分、履歴    |
 | Sveltia CMS | 日本語source、著者、タグ、画像、ページ文言 |
-| OpenAI API  | 問い合わせAIの回答生成                     |
+| Workers AI  | 問い合わせAIの回答生成                     |
 | Pagefind    | 静的HTMLに含める検索対象の索引             |
 
 この分け方にすると、機能を増やしても「全部をCMSに入れる」「全部を外部SaaSに投げる」「全部をクライアント側で頑張る」状態になりません。
@@ -172,7 +172,7 @@ Astro側に置くのはUIです。APIキー、D1 binding、Turnstile secret、ha
 
 | 機能         | UI        | API境界               | 保存先・外部API               |
 | ------------ | --------- | --------------------- | ----------------------------- |
-| 問い合わせAI | Astro     | `/api/ai-contact`     | OpenAI API                    |
+| 問い合わせAI | Astro     | `/api/ai-contact`     | Workers AI                    |
 | コメント     | Astro     | `/api/comments`       | Cloudflare D1                 |
 | bot対策      | Turnstile | Pages Functionsで検証 | Cloudflare Siteverify         |
 | rate limit   | なし      | Pages Functionsで判定 | メモリ、D1、必要ならWAF/KV/DO |

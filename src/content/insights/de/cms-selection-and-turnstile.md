@@ -109,7 +109,7 @@ CMS save proxy
   -> validiert Pfade und Inhalte und schreibt einen expected-HEAD cms:-Commit nach main
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> bündelt Aktualisierungen der japanischen Quelle 15 Minuten lang und übergibt sie an OpenAI Batch
+  -> bündelt Aktualisierungen der japanischen Quelle 15 Minuten lang und übergibt sie an Workers AI Batch
 ```
 
 Die Admin-Seite ist nur der Anfang. Authentifizierung, Medienpfade, Preview-Branches, Übersetzungen und Merge-Strategie gehören zur CMS-Architektur.

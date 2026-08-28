@@ -47,7 +47,7 @@ compareTable:
   after:
     label: 按层添加
     items:
-      - "能够分别说明Astro、Cloudflare、GitHub和OpenAI API的职责"
+      - "能够分别说明Astro、Cloudflare、GitHub和Workers AI的职责"
       - "动态API集中到Pages Functions，存储位置也可统一到D1等Cloudflare服务"
       - "CMS更新、多语言翻译、搜索、RSS和sitemap可使用同一内容结构处理"
       - "可作为按用途和导入顺序阅读的索引"
@@ -72,7 +72,7 @@ faq:
     - question: 应该从哪里开始导入？
       answer: "首先完善Astro的静态页面、博客、RSS、sitemap和OGP。接着导入CMS与多语言功能，等到需要咨询导流后，再依次加入AI聊天、服务CTA和评论功能，这样最容易管理。"
     - question: 所有功能都应该只用Cloudflare构建吗？
-      answer: "不是。咨询AI等部分也会使用OpenAI API。重点是将分发、API边界、数据库和bot防护集中到Cloudflare，并有意识地区分使用和不使用外部服务的位置。"
+      answer: "不是。咨询AI等部分也会使用Workers AI。重点是将分发、API边界、数据库和bot防护集中到Cloudflare，并有意识地区分使用和不使用外部服务的位置。"
     - question: 小型网站也需要做到这个程度吗？
       answer: "不需要一开始全部导入。但如果计划加入CMS、咨询导流、多语言或评论中的任何一项，尽早确定URL、数据存储位置、预览环境和搜索索引的处理方式，后续会更轻松。"
 linkCards:
@@ -118,7 +118,7 @@ linkCards:
 | Cloudflare  | Pages 发布、Pages Functions、D1、Turnstile |
 | GitHub      | PR 审核、CMS 差异、翻译差异、历史记录      |
 | Sveltia CMS | 日文 source、作者、标签、图片              |
-| OpenAI API  | 咨询 AI 的回答生成                         |
+| Workers AI  | 咨询 AI 的回答生成                         |
 | Pagefind    | 为审核后的静态 HTML 建立站内搜索索引       |
 
 能静态生成的内容保持静态。需要请求时处理的部分才进入 Cloudflare Pages Functions。

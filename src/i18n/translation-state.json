@@ -1,4 +1,13 @@
 {
-  "sourceHash": "b275a93437bfddb5a09cc32693c9a86b8916c9ebc278fa240224a75de331218f",
-  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
+  "sourceHash": "04b98032f5058330eee7a6c24ee7b8b0d1658dbe5726ea0f68082ac05a221064",
+  "locales": [
+    "en",
+    "zh-cn",
+    "es",
+    "pt",
+    "fr",
+    "ko",
+    "de",
+    "ru"
+  ]
 }

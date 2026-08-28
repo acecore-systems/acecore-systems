@@ -12,7 +12,7 @@
     },
     {
       "title": "外部サービス",
-      "body": "フォーム送信と不正利用防止にはAcecore共通窓口およびCloudflare Turnstile、ホスティングにはCloudflare Pagesなどの外部サービスを利用します。サイト内検索では、入力した検索語をOpenAI APIで数値表現へ変換し、Cloudflare Vectorizeに登録した当サイトの公開情報と照合します。必要に応じて、検索語をAcecore共通検索API（acecore.net）へ送り、Acecore関連サイトの公開情報も下部に表示します。検索語はお問い合わせ内容や個人情報の入力を想定していません。Systems AI案内では、入力した質問と直近の会話をAcecore共通AI API（acecore.net）へ送信し、OpenAI APIで回答を生成します。個人情報や機密情報は入力しないでください。"
+      "body": "フォーム送信と不正利用防止にはAcecore共通窓口およびCloudflare Turnstile、ホスティングにはCloudflare Pagesなどの外部サービスを利用します。サイト内検索では、入力した検索語をOpenAI APIで数値表現へ変換し、Cloudflare Vectorizeに登録した当サイトの公開情報と照合します。必要に応じて、検索語をAcecore共通検索API（acecore.net）へ送り、Acecore関連サイトの公開情報も下部に表示します。検索語はお問い合わせ内容や個人情報の入力を想定していません。Systems AI案内では、入力した質問と直近の会話をAcecore共通AI API（acecore.net）へ送信し、Cloudflare Workers AIで回答を生成します。個人情報や機密情報は入力しないでください。"
     },
     {
       "title": "アクセス解析",

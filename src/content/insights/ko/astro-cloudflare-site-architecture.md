@@ -43,7 +43,7 @@ compareTable:
   after:
     label: 레이어별로 추가
     items:
-      - "Astro, Cloudflare, GitHub, OpenAI API의 역할을 나누어 설명할 수 있음"
+      - "Astro, Cloudflare, GitHub, Workers AI의 역할을 나누어 설명할 수 있음"
       - "동적 API를 Pages Functions에 모으고 저장소를 D1 등 Cloudflare 쪽으로 통일할 수 있음"
       - "CMS 업데이트, 다국어 번역, 검색, RSS, sitemap을 같은 콘텐츠 구조로 처리할 수 있음"
       - "용도와 도입 순서별 인덱스로 읽기 쉬움"
@@ -68,7 +68,7 @@ faq:
     - question: 어디부터 도입해야 하나요?
       answer: "먼저 Astro의 정적 페이지, 블로그, RSS, sitemap, OGP를 정비합니다. 그다음 CMS와 다국어를 도입하고 상담 동선이 필요해진 뒤 AI 채팅, 서비스 CTA, 댓글 기능을 추가하는 순서가 관리하기 쉽습니다."
     - question: 모든 것을 Cloudflare만으로 만들어야 하나요?
-      answer: "아닙니다. 문의 AI처럼 OpenAI API를 사용하는 부분도 있습니다. 핵심은 배포, API 경계, DB, bot 방어를 Cloudflare에 모으고 외부 서비스를 사용하는 곳과 사용하지 않는 곳을 의식적으로 나누는 것입니다."
+      answer: "아닙니다. 문의 AI처럼 Workers AI를 사용하는 부분도 있습니다. 핵심은 배포, API 경계, DB, bot 방어를 Cloudflare에 모으고 외부 서비스를 사용하는 곳과 사용하지 않는 곳을 의식적으로 나누는 것입니다."
     - question: 소규모 사이트도 여기까지 필요한가요?
       answer: "처음부터 전부 필요하지는 않습니다. 다만 CMS, 문의 동선, 다국어, 댓글 중 하나라도 추가할 계획이라면 URL, 데이터 저장소, 프리뷰 환경, 검색 인덱스 처리 방식을 일찍 정해 두면 나중이 편해집니다."
 linkCards:
@@ -114,7 +114,7 @@ Astro와 Cloudflare Pages로 정적 사이트를 만들 때는 처음에는 빠�
 | Cloudflare  | Pages, Pages Functions, D1, Turnstile |
 | GitHub      | PR, CMS diff, 번역 diff, 변경 이력    |
 | Sveltia CMS | 일본어 source, 작성자, 태그, 이미지   |
-| OpenAI API  | 문의 AI 응답 생성                     |
+| Workers AI  | 문의 AI 응답 생성                     |
 | Pagefind    | 검토된 정적 HTML의 사이트 검색 인덱스 |
 
 정적으로 만들 수 있는 것은 정적으로 둡니다. 요청 시 처리가 필요한 부분만 작은 API로 보냅니다.

@@ -111,7 +111,7 @@ CMS save proxy
   -> valida rutas y contenido y escribe un commit cms: con expected HEAD en main
 
 .github/workflows/submit-openai-translation-batch.yml
-  -> agrupa durante 15 minutos las actualizaciones de la fuente japonesa y las envía a OpenAI Batch
+  -> agrupa durante 15 minutos las actualizaciones de la fuente japonesa y las envía a Workers AI Batch
 ```
 
 Instalar la pantalla admin es solo el inicio. Autenticación, rutas de imágenes, preview branches, traducciones y estrategia de merge forman parte del diseño.

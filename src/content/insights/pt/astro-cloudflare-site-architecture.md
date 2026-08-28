@@ -43,7 +43,7 @@ compareTable:
   after:
     label: Adicionar por camadas
     items:
-      - "É possível explicar separadamente os papéis de Astro, Cloudflare, GitHub e da API da OpenAI"
+      - "É possível explicar separadamente os papéis de Astro, Cloudflare, GitHub e da API da Workers AI"
       - "As APIs dinâmicas ficam concentradas em Pages Functions, e o armazenamento pode ser aproximado do Cloudflare com D1"
       - "Atualizações do CMS, tradução multilíngue, pesquisa, RSS e sitemap usam a mesma estrutura de conteúdo"
       - "O conteúdo fica fácil de percorrer como índice por finalidade e ordem de adoção"
@@ -68,7 +68,7 @@ faq:
     - question: Por onde devo começar?
       answer: "Primeiro consolide as páginas estáticas do Astro, o blog, RSS, sitemap e OGP. Em seguida adicione CMS e vários idiomas; quando houver necessidade de uma jornada de atendimento, acrescente chat de IA, CTAs de serviços e comentários."
     - question: Tudo deve ser criado somente com Cloudflare?
-      answer: "Não. Algumas partes, como a IA de atendimento, usam a API da OpenAI. O importante é aproximar do Cloudflare a entrega, os limites de API, o banco de dados e a proteção contra bots, decidindo conscientemente onde usar serviços externos."
+      answer: "Não. Algumas partes, como a IA de atendimento, usam a API da Workers AI. O importante é aproximar do Cloudflare a entrega, os limites de API, o banco de dados e a proteção contra bots, decidindo conscientemente onde usar serviços externos."
     - question: Um site pequeno também precisa de tudo isso?
       answer: "Não é necessário começar com tudo. Porém, se houver planos de adicionar CMS, jornada de atendimento, vários idiomas ou comentários, definir cedo URLs, armazenamento, ambiente de preview e índice de pesquisa facilitará o trabalho futuro."
 linkCards:
@@ -114,7 +114,7 @@ A arquitetura separa responsabilidades:
 | Cloudflare  | Pages, Pages Functions, D1 e Turnstile   |
 | GitHub      | PRs, diffs de CMS, traduções e histórico |
 | Sveltia CMS | Fonte japonesa, autores, tags e imagens  |
-| OpenAI API  | Respostas do chat de contato             |
+| Workers AI  | Respostas do chat de contato             |
 | Pagefind    | Índice de busca para HTML revisado       |
 
 O que pode ser estático fica estático. O que precisa de runtime vai para pequenas APIs.

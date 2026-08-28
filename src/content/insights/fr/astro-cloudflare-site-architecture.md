@@ -43,7 +43,7 @@ compareTable:
   after:
     label: Ajouter par couches
     items:
-      - "Les rôles d’Astro, Cloudflare, GitHub et de l’API OpenAI peuvent être expliqués séparément"
+      - "Les rôles d’Astro, Cloudflare, GitHub et de l’API Workers AI peuvent être expliqués séparément"
       - "Les API dynamiques sont regroupées dans Pages Functions et le stockage peut être rapproché de Cloudflare avec D1"
       - "Les mises à jour du CMS, les traductions, la recherche, RSS et sitemap partagent la même structure de contenu"
       - "La page se parcourt facilement comme un index par usage et ordre d’adoption"
@@ -68,7 +68,7 @@ faq:
     - question: Par où faut-il commencer ?
       answer: "Commencez par consolider les pages statiques Astro, le blog, RSS, sitemap et OGP. Ajoutez ensuite le CMS et les langues ; lorsque le parcours de contact devient nécessaire, ajoutez le chat IA, les CTA de services et les commentaires."
     - question: Faut-il tout construire uniquement avec Cloudflare ?
-      answer: "Non. Certaines parties, comme l’IA de contact, utilisent l’API OpenAI. L’essentiel est de rapprocher de Cloudflare la diffusion, la frontière des API, la base de données et la protection antibot, tout en choisissant consciemment où employer des services externes."
+      answer: "Non. Certaines parties, comme l’IA de contact, utilisent l’API Workers AI. L’essentiel est de rapprocher de Cloudflare la diffusion, la frontière des API, la base de données et la protection antibot, tout en choisissant consciemment où employer des services externes."
     - question: Un petit site a-t-il besoin de tout cela ?
       answer: "Il n’est pas nécessaire de tout intégrer dès le départ. Mais si vous prévoyez un CMS, un parcours de contact, plusieurs langues ou des commentaires, décider tôt des URL, du stockage, de l’environnement de prévisualisation et de l’index de recherche facilitera la suite."
 linkCards:
@@ -114,7 +114,7 @@ L'architecture sépare les rôles :
 | Cloudflare  | Pages, Pages Functions, D1 et Turnstile  |
 | GitHub      | PR, diffs CMS, traductions et historique |
 | Sveltia CMS | Source japonaise, auteurs, tags, images  |
-| OpenAI API  | Réponses du chat de contact              |
+| Workers AI  | Réponses du chat de contact              |
 | Pagefind    | Index de recherche pour HTML revu        |
 
 Ce qui peut être statique reste statique. Le dynamique passe par de petites API.

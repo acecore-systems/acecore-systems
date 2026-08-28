@@ -1,6 +1,6 @@
 ---
 title: "Astroサイトに問い合わせAIチャットを組み込む技術設計"
-description: "Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
+description: "Astro + Cloudflare Pages 構成の静的サイトに、Cloudflare Workers AI を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
 date: 2026-06-07T12:00
 author: gui
 tags: ["技術", "Cloudflare", "Webサイト", "AI", "サービス"]
@@ -21,7 +21,7 @@ processFigure:
       icon: i-lucide-shield-check
       accent: amber
     - title: Model
-      description: OpenAI Responses APIへ公開サイト情報と会話文脈を渡し、回答テキストを受け取る。
+      description: Cloudflare Workers AIへ公開サイト情報と会話文脈を渡し、回答テキストを受け取る。
       icon: i-lucide-sparkles
       accent: emerald
     - title: Renderer
@@ -73,8 +73,8 @@ faq:
   items:
     - question: RAGやベクトルDBがないと問い合わせAIチャットは作れませんか？
       answer: 小規模なコーポレートサイトなら、まずは公開済みページの要点を構造化したコンテキストとしてプロンプトに渡すだけでも実用になります。ページ数や更新頻度が増えてから、検索インデックスやベクトルDBを検討すれば十分です。
-    - question: OpenAI APIキーはブラウザに出ますか？
-      answer: 出ません。ブラウザは /api/ai-contact に質問を送るだけで、OpenAI Responses API の呼び出しと API キー管理は Cloudflare Pages Function 側で行います。
+    - question: Workers AI bindingの認証情報はブラウザに出ますか？
+      answer: 出ません。ブラウザは /api/ai-contact に質問を送るだけで、Cloudflare Workers AIのAI bindingはCloudflare Pages Function側だけで利用します。
     - question: AI回答内のリンクは自由に出せますか？
       answer: 自由には出しません。内部パス、同一origin、acecore.net、公式LINE、必要時の mailto と tel だけを許可し、MarkdownリンクのURL前後に空白があってもtrimして安全判定します。
 ---
@@ -89,13 +89,13 @@ Acecoreのサイトでは、Astro + Cloudflare Pages の静的サイトに問い
 
 今回の構成は、シンプルな3層です。
 
-| 層                   | 役割                                                                 |
-| -------------------- | -------------------------------------------------------------------- |
-| チャットWidget       | UI、入力、表示locale、必要最小限の履歴、Markdown描画                 |
-| `/api/ai-contact`    | 入力検証、Originチェック、レート制限、プロンプト生成、OpenAI呼び出し |
-| OpenAI Responses API | サイト内情報と会話文脈に基づいた回答生成                             |
+| 層                    | 役割                                                                     |
+| --------------------- | ------------------------------------------------------------------------ |
+| チャットWidget        | UI、入力、表示locale、必要最小限の履歴、Markdown描画                     |
+| `/api/ai-contact`     | 入力検証、Originチェック、レート制限、プロンプト生成、Workers AI呼び出し |
+| Cloudflare Workers AI | サイト内情報と会話文脈に基づいた回答生成                                 |
 
-ブラウザからOpenAI APIを直接呼ぶ構成にはしません。理由は3つあります。
+ブラウザからWorkers AIを直接呼ぶ構成にはしません。理由は3つあります。
 
 - APIキーをブラウザに出さない
 - モデル、プロンプト、サイト内コンテキストをサーバー側で更新できる
@@ -147,9 +147,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
     siteContext: buildPublicSiteContext(locale),
   });
 
-  const answer = await callOpenAIResponsesApi({
-    apiKey: env.OPENAI_API_KEY,
-    model: env.OPENAI_MODEL,
+  const answer = await callWorkersAi({
+    ai: env.AI,
+    model: "@cf/zai-org/glm-5.3-flash",
     prompt,
   });
 
@@ -157,9 +157,9 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 }
 ```
 
-実装のポイントは、OpenAI呼び出しの前に必ず入力を小さく整えることです。AI APIは、受け取った入力に対してコストが発生します。長文、不要な履歴、外部サイトからの連続アクセスをそのまま通すと、機能面より先に運用面が不安定になります。
+実装のポイントは、Workers AI呼び出しの前に必ず入力を小さく整えることです。AI APIは、受け取った入力に対してコストが発生します。長文、不要な履歴、外部サイトからの連続アクセスをそのまま通すと、機能面より先に運用面が不安定になります。
 
-`OPENAI_MODEL` は環境変数にしておくと、モデル変更やpreview環境での検証が楽です。`OPENAI_API_KEY` は当然サーバー側の環境変数だけで管理します。
+`WORKERS_AI_CHAT_MODEL` は環境変数にしておくと、モデル変更やpreview環境での検証が楽です。`AI` はCloudflare側で設定するserver-side bindingとして管理します。
 
 Cloudflare Pages の配信やCSPの考え方は、[Cloudflare Pagesで実現するセキュアな静的サイト配信](/insights/cloudflare-pages-security/) でも整理しています。
 
@@ -327,12 +327,12 @@ Markdown仕様の完全実装を目指すより、チャットで使う表現に
 
 ## ローカル、preview、本番で確認すること
 
-ローカルのAstro devやpreviewだけでは、Cloudflare Pages Functionsの実行環境と完全には一致しません。`OPENAI_API_KEY` がない環境ではAI回答は使えないので、UI側のフォールバックやエラー表示を確認します。
+ローカルのAstro devやpreviewだけでは、Cloudflare Pages Functionsの実行環境と完全には一致しません。`AI` がない環境ではAI回答は使えないので、UI側のフォールバックやエラー表示を確認します。
 
 Pages previewまたは本番では、次を確認します。
 
 - `/api/ai-contact` がPOSTで呼べる
-- `OPENAI_API_KEY` と `OPENAI_MODEL` が設定されている
+- `AI` と `WORKERS_AI_CHAT_MODEL` が設定されている
 - Originが違うリクエストを拒否できる
 - 入力長と履歴件数が制限されている
 - 回答が表示localeに合っている
@@ -375,7 +375,7 @@ AI連携は、1回質問して返ってくれば完了ではありません。�
 
 今回の実装で特に効いたのは次の点です。
 
-- ブラウザではなくCloudflare Pages FunctionからOpenAI APIを呼ぶ
+- ブラウザではなくCloudflare Pages FunctionからWorkers AIを呼ぶ
 - エンドポイントの入力を小さくし、履歴と文字数を制限する
 - サイト内情報とlocale別URLをサーバー側で組み立てる
 - AIが断定してよいこと、してはいけないことをプロンプトに書く

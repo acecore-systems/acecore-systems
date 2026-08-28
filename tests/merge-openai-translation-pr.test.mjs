@@ -25,12 +25,12 @@ function createPullRequest({
     state: "open",
     base: { ref: "main" },
     head: {
-      ref: "translation/openai/batch_example",
+      ref: "translation/workers-ai/batch_example",
       sha: HEAD_SHA,
       repo: { full_name: headRepository },
     },
     user: { login: authorLogin },
-    title: "[translation] OpenAI Batch batch_example",
+    title: "[translation] Workers AI Batch batch_example",
     body,
     draft,
     mergeable_state: mergeableState,
@@ -196,7 +196,7 @@ test("成功したBuild and Format後に検証済みSHAでsquash Auto-mergeを�
   assert.deepEqual(graphqlCalls[0].variables, {
     pullRequestId: "PR_kwDORlSgas123",
     expectedHeadOid: HEAD_SHA,
-    commitHeadline: "[translation] OpenAI Batch batch_example",
+    commitHeadline: "[translation] Workers AI Batch batch_example",
   });
 });
 
@@ -239,7 +239,7 @@ test("必須checkが揃ったcleanのPRは検証済みSHAでsquash mergeする",
   assert.deepEqual(graphqlCalls[0].variables, {
     pullRequestId: "PR_kwDORlSgas123",
     expectedHeadOid: HEAD_SHA,
-    commitHeadline: "[translation] OpenAI Batch batch_example",
+    commitHeadline: "[translation] Workers AI Batch batch_example",
   });
 });
 
