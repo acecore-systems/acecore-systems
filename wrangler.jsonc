@@ -11,6 +11,10 @@
   },
   "services": [
     {
+      "binding": "CMS_AI",
+      "service": "cms-ai",
+    },
+    {
       "binding": "ACECORE_CHAT",
       "service": "acecore-chat-worker",
     },
@@ -24,6 +28,10 @@
         "SEARCH_EMBEDDING_DIMENSIONS": "1024",
       },
       "services": [
+        {
+          "binding": "CMS_AI",
+          "service": "cms-ai",
+        },
         {
           "binding": "ACECORE_CHAT",
           "service": "acecore-chat-worker-preview",
@@ -49,6 +57,10 @@
         },
       ],
       "services": [
+        {
+          "binding": "CMS_AI",
+          "service": "cms-ai",
+        },
         {
           "binding": "ACECORE_CHAT",
           "service": "acecore-chat-worker",
