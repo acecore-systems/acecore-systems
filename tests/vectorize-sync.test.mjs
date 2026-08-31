@@ -138,7 +138,6 @@ function commonOptions(corpusFile, fetchImpl) {
   return {
     accountId: "account-id",
     apiToken: "token",
-    openAiApiKey: "openai-key",
     indexName: PRODUCTION_INDEX_NAME,
     productionConfirmation: PRODUCTION_INDEX_NAME,
     corpusFile,
@@ -241,7 +240,7 @@ test("requires an exact confirmation before any production API request", async (
       indexName: PRODUCTION_INDEX_NAME,
       productionConfirmation: null,
     }),
-    /--confirm-production acecore-systems-search-openai-1536-production/u,
+    /--confirm-production acecore-systems-search-bge-m3-1024-production-v1/u,
   );
   assert.equal(requested, false);
 });
@@ -279,7 +278,7 @@ test("production workflow passes the exact production confirmation", async () =>
   );
   assert.doesNotMatch(
     workflow,
-    /sync-preview|cloudflare-search-preview|openai-1536-preview|inputs\.target/u,
+    /sync-preview|cloudflare-search-preview|bge-m3-1024-preview|inputs\.target/u,
   );
   assert.doesNotMatch(workflow, /allow[_-]large[_-]delete/u);
   assert.match(workflow, /cloudflare-search-production/u);
@@ -293,13 +292,13 @@ test("keeps Pages Preview free of Vectorize and D1 bindings", async () => {
 
   assert.doesNotMatch(
     config,
-    /acecore-systems-search-openai-1536-preview|acecore-systems-search-preview/u,
+    /acecore-systems-search-bge-m3-1024-preview|acecore-systems-search-preview/u,
   );
   assert.equal(config.match(/"vectorize"\s*:/gu)?.length, 1);
   assert.equal(config.match(/"d1_databases"\s*:/gu)?.length, 1);
   assert.equal(
     config.match(
-      /"index_name": "acecore-systems-search-openai-1536-production"/gu,
+      /"index_name": "acecore-systems-search-bge-m3-1024-production-v1"/gu,
     )?.length,
     1,
   );
@@ -336,21 +335,18 @@ test("upserts missing content, waits, then safely deletes stale content", async 
       events.push("list");
       return listResponse(currentIds);
     }
-    if (url.pathname === "/v1/embeddings") {
+    if (url.pathname.endsWith("/ai/run/@cf/baai/bge-m3")) {
       events.push("embed");
       const request = JSON.parse(init.body);
-      assert.equal(init.headers.get("Authorization"), "Bearer openai-key");
-      assert.equal(request.model, "text-embedding-3-large");
-      assert.equal(request.dimensions, 1536);
-      assert.equal(request.encoding_format, "float");
+      assert.equal(init.headers.get("Authorization"), "Bearer token");
+      assert.equal(request.truncate_inputs, false);
       return jsonResponse({
-        object: "list",
-        model: "text-embedding-3-large",
-        data: request.input.map((_, index) => ({
-          object: "embedding",
-          index,
-          embedding: Array(VECTOR_DIMENSIONS).fill(0.25),
-        })),
+        success: true,
+        result: {
+          data: request.text.map(() => Array(VECTOR_DIMENSIONS).fill(0.25)),
+          shape: [request.text.length, VECTOR_DIMENSIONS],
+          pooling: "cls",
+        },
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -424,18 +420,15 @@ test("refreshes existing vectors only when explicitly requested", async () => {
       events.push("list");
       return listResponse([corpus.vectors[0].id]);
     }
-    if (url.pathname === "/v1/embeddings") {
+    if (url.pathname.endsWith("/ai/run/@cf/baai/bge-m3")) {
       events.push("embed");
       return jsonResponse({
-        object: "list",
-        model: "text-embedding-3-large",
-        data: [
-          {
-            object: "embedding",
-            index: 0,
-            embedding: Array(VECTOR_DIMENSIONS).fill(0.25),
-          },
-        ],
+        success: true,
+        result: {
+          data: [Array(VECTOR_DIMENSIONS).fill(0.25)],
+          shape: [1, VECTOR_DIMENSIONS],
+          pooling: "cls",
+        },
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -614,7 +607,7 @@ test("fails closed on incompatible index configuration", async () => {
 
   await assert.rejects(
     syncVectorize(commonOptions(corpusFile, fetchImpl)),
-    /must use 1536 dimensions and cosine/u,
+    /must use 1024 dimensions and cosine/u,
   );
 });
 
@@ -628,17 +621,14 @@ test("requires a mutation id from every Vectorize write", async () => {
       return indexResponse();
     }
     if (url.pathname.endsWith("/list")) return listResponse([]);
-    if (url.pathname === "/v1/embeddings") {
+    if (url.pathname.endsWith("/ai/run/@cf/baai/bge-m3")) {
       return jsonResponse({
-        object: "list",
-        model: "text-embedding-3-large",
-        data: [
-          {
-            object: "embedding",
-            index: 0,
-            embedding: Array(VECTOR_DIMENSIONS).fill(0),
-          },
-        ],
+        success: true,
+        result: {
+          data: [Array(VECTOR_DIMENSIONS).fill(0)],
+          shape: [1, VECTOR_DIMENSIONS],
+          pooling: "cls",
+        },
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -668,17 +658,14 @@ test("bounds mutation polling and does not delete after an upsert wait timeout",
     if (url.pathname.endsWith("/list")) {
       return listResponse([`v1-${"f".repeat(48)}`]);
     }
-    if (url.pathname === "/v1/embeddings") {
+    if (url.pathname.endsWith("/ai/run/@cf/baai/bge-m3")) {
       return jsonResponse({
-        object: "list",
-        model: "text-embedding-3-large",
-        data: [
-          {
-            object: "embedding",
-            index: 0,
-            embedding: Array(VECTOR_DIMENSIONS).fill(0),
-          },
-        ],
+        success: true,
+        result: {
+          data: [Array(VECTOR_DIMENSIONS).fill(0)],
+          shape: [1, VECTOR_DIMENSIONS],
+          pooling: "cls",
+        },
       });
     }
     if (url.pathname.endsWith("/upsert")) {
@@ -715,10 +702,10 @@ test("bounds mutation polling and does not delete after an upsert wait timeout",
   assert.equal(deleteRequested, false);
 });
 
-test("rejects malformed OpenAI embeddings", () => {
+test("rejects malformed Workers AI embeddings", () => {
   assert.throws(
-    () => extractEmbeddingData({ data: [{ index: 0, embedding: [0, 1] }] }, 1),
-    /must contain a unique valid index and 1536 finite values/u,
+    () => extractEmbeddingData({ data: [[0, 1]] }, 1),
+    /must contain 1024 finite values/u,
   );
   assert.throws(
     () => extractEmbeddingData({ data: [] }, 1),

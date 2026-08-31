@@ -11,7 +11,7 @@
 - Astro v7
 - Cloudflare Pages
 - Pagefind
-- OpenAI Embeddings / Cloudflare Vectorize
+- Cloudflare Workers AI BGE-M3 / Cloudflare Vectorize
 - Sveltia CMS
 
 ## 必要環境
@@ -58,11 +58,11 @@ npm run preview
 
 記事のfrontmatterと著者情報はSystemsの公開情報として管理し、旧 `/blog/` 形式の本文リンクは表示時に各言語の `/insights/` へ解決します。未移管の記事はAcecore公式サイトの同じ言語の絶対URLへ向けます。記事が参照するローカル画像は `public/uploads/` に同じ公開パスで保持し、Acecore公式サイトの配信には依存しません。
 
-日本語ページのサイト内検索は、ブラウザ内で動くPagefindを主検索とし、OpenAI Embeddings / Cloudflare Vectorizeによる「関連する内容」を補助表示します。
+日本語ページのサイト内検索は、ブラウザ内で動くPagefindを主検索とし、Cloudflare Workers AI BGE-M3 / Cloudflare Vectorizeによる「関連する内容」を補助表示します。
 
 PagefindとVectorizeのcorpusは公開後の日本語HTMLから生成します。通常のPages PreviewはVectorize bindingを持たずPagefindだけを使い、VectorizeはProduction indexだけを自動同期します。Vectorizeが未設定または利用できない場合も、Pagefindのキーワード検索は継続します。運用手順は [Vectorize検索運用](docs/04_運用設計/02_Vectorize検索運用.md) を参照してください。
 
-OpenAI用1536次元Production indexは256 vectorsを同期し、`ja` namespaceの既知queryを確認済みです。関連検索はProductionで有効、通常のPages Previewでは無効です。
+BGE-M3用1024次元Production indexを使用し、`ja` namespaceで検索します。関連検索はProductionで有効、通常のPages Previewでは無効です。旧OpenAI用1536次元indexはrollback用に保持します。
 
 サービス詳細は `development`、`it-advisor`、`site-functions`、`site-quality`、`operations` の5ルートを固定で公開しています。追加時はページルート、詳細データ、一覧導線、CMS schema、`scripts/validate-content.mjs` のroute定義を同時に更新します。
 
