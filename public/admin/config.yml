@@ -4,8 +4,6 @@ backend:
   name: github
   repo: acecore-systems/acecore-systems
   branch: main
-  base_url: https://systems.acecore.net/admin/api
-  auth_endpoint: auth
   api_root: /admin/api/github
   graphql_api_root: /admin/api/graphql
   auth_methods: [oauth]
