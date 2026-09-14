@@ -28,10 +28,12 @@ const installationTokenCache = new Map<
 >();
 
 export class GitHubApiError extends Error {
+  code?: string;
   status: number;
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, code?: string) {
     super(message);
+    this.code = code;
     this.status = status;
   }
 }
@@ -114,7 +116,7 @@ export async function getGitHubAppToken(
     !response.ok ||
     !isRecord(data) ||
     typeof data.token !== "string" ||
-    !data.token.startsWith("ghs_") ||
+    !/^ghs_[A-Za-z0-9_.-]{1,4092}$/.test(data.token) ||
     typeof data.expires_at !== "string" ||
     !hasExpectedInstallationScope(data)
   ) {

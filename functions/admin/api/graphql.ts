@@ -19,8 +19,11 @@ import {
   validateSystemsCmsAdditions,
   type ValidatedCmsAddition,
 } from "./_content-validation.ts";
-import { getGitHubInstallationId } from "./_github-app-oauth.ts";
-import { getGitHubEditor, type GitHubEditor } from "./_github-oauth.ts";
+import {
+  getGitHubEditor,
+  type CmsEditorEnv,
+  type GitHubEditor,
+} from "./_github-oauth.ts";
 import {
   type CmsGitHubAppEnv,
   GitHubApiError,
@@ -59,12 +62,12 @@ const MAX_CHANGE_COUNT = 100;
 const MAX_TOTAL_CONTENT_BYTES = 25 * 1024 * 1024;
 const MAX_GRAPHQL_BLOB_SIZE = 10 * 1024 * 1024;
 
-export const onRequestPost: PagesFunction<CmsGitHubAppEnv> = async ({
+export const onRequestPost: PagesFunction<CmsEditorEnv> = async ({
   request,
   env,
 }) => {
   try {
-    const auth = await getGitHubEditor(request);
+    const auth = await getGitHubEditor(request, env);
     const token = auth.token;
     const bodyText = await readRequestText(request);
 
@@ -89,9 +92,8 @@ export const onRequestPost: PagesFunction<CmsGitHubAppEnv> = async ({
     }
 
     if (operation.operation === "mutation") {
-      const freshAuth = await getGitHubEditor(request, {
-        fresh: true,
-        installationId: getGitHubInstallationId(env),
+      const freshAuth = await getGitHubEditor(request, env, {
+        forceRefresh: true,
       });
 
       return await handleCommitMutation({
