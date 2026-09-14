@@ -6,9 +6,11 @@
 
 ## 認証と認可
 
+2026-09-14追補: Portalの復旧結果を横展開。連携数値IDから現在のGitHubユーザーを解決し、個別のrepository permission応答のID・login一致とwrite/adminを検証する。古いAccess情報は同一サイト限定の「ログイン情報を更新」で再取得でき、未連携時は本人のAcecoreID設定への導線を示す。欠落claimのfull identity補完は同一Access主体・account・IdPを検証し、不正値や不一致を救済しない。GitHub新形式tokenのdotを許容するが、個人token・改行・過大値は拒否する。
+
 - ログインはAcecoreIDのみ。Access JWTのRS256署名・issuer・audience・期限・app種別・AcecoreID subject・GitHub数値IDを検証する。
 - メール、表示名、Hatt entitlement、共通CMS AI membershipで編集権限を追加しない。
-- GitHubの対象repository collaboratorsを全affiliationでページングし、連携済みの不変IDに現在push権限があるか毎回確認する。保存直前も再確認し、障害・連携なし・権限剥奪は拒否する。
+- GitHubの連携済み不変IDから現在のloginを解決し、対象repositoryの個別permissionで現在push権限があるか毎回確認する。保存直前も再確認し、障害・連携なし・権限剥奪は拒否する。
 - ブラウザへGitHub tokenを渡さず、旧Authorization bearerだけではアクセス不可。旧auth/callbackは410でOAuth codeを交換しない。
 - 同一origin POSTのみ許可。CMS対象path・容量・削除制限・expected main HEAD・曖昧応答の復旧検証は従来のまま。
 - `CMS_ACCESS_AUD`、`CMS_ACCESS_TEAM_DOMAIN`（HTTPSのチームorigin）、`CMS_ACCESS_HOSTNAMES`（本番host）は本番設定が必要。未設定では503。本番以外のhostは設定によらず拒否する。

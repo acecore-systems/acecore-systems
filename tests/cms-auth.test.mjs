@@ -24,8 +24,6 @@ test("valid signed AcecoreID linked immutable GitHub ID", async () => {
   assert.equal(await getAcecoreGitHubId(request(), accessEnv), "1");
 });
 for (const custom of [
-  undefined,
-  {},
   [],
   {
     "https://acecore.net/claims/subject": "invalid",

@@ -557,6 +557,43 @@ test("GitHub配布形式の秘密鍵からrepository限定installation tokenを�
   );
 });
 
+test("旧形式とdotを含む新形式のinstallation tokenを受け入れる", async () => {
+  for (const token of [
+    "ghs_opaque_legacy",
+    "ghs_4419780_" + "a".repeat(260) + "." + "b".repeat(260) + ".signature",
+  ]) {
+    globalThis.fetch = async () =>
+      jsonResponse({
+        token,
+        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+        ...installationTokenScope,
+      });
+    assert.equal(
+      await getGitHubAppToken(cmsEnv, { forceRefresh: true }),
+      token,
+    );
+  }
+});
+
+test("個人token・改行・上限超過のinstallation tokenを拒否する", async () => {
+  for (const token of [
+    "ghu_personal",
+    "ghs_x\r\nInjected: true",
+    "ghs_" + "a".repeat(4093),
+  ]) {
+    globalThis.fetch = async () =>
+      jsonResponse({
+        token,
+        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+        ...installationTokenScope,
+      });
+    await assert.rejects(
+      getGitHubAppToken(cmsEnv, { forceRefresh: true }),
+      /installation tokenを発行できません/,
+    );
+  }
+});
+
 test("installation tokenの応答scopeが広い場合は保存actorに使わない", async () => {
   globalThis.fetch = async () =>
     jsonResponse({
@@ -1469,17 +1506,31 @@ function mockGitHub(
 
     const certs = accessCerts(input);
     if (certs) return certs;
-    if (url.startsWith(repositoryApi + "/collaborators?")) {
+    const userMatch = url.match(
+      /^https:\/\/api\.github\.com\/user\/([1-9][0-9]*)$/,
+    );
+    if (userMatch) {
       assert.equal(
         new Headers(init.headers).get("Authorization"),
         `Bearer ${appToken}`,
       );
-      return jsonResponse([
-        {
-          ...editor,
-          permissions: { push: typeof push === "function" ? push() : push },
-        },
-      ]);
+      const id = Number(userMatch[1]);
+      return jsonResponse({
+        ...editor,
+        id,
+        login: id === editor.id ? editor.login : "editor-" + id,
+      });
+    }
+    if (url === repositoryApi + "/collaborators/editor/permission") {
+      const allowed = typeof push === "function" ? push() : push;
+      return jsonResponse({
+        permission: allowed ? "write" : "read",
+        role_name: allowed ? "write" : "read",
+        user: editor,
+      });
+    }
+    if (url.startsWith(repositoryApi + "/collaborators/")) {
+      return jsonResponse({ message: "Not Found" }, 404);
     }
 
     if (url === installationTokenUrl) {
@@ -1614,22 +1665,15 @@ test("GitHubの表示名やメールが同じでも異なる数値IDを拒否す
   assert.equal((await handleGraphql({ request })).status, 403);
 });
 
-test("collaboratorの2ページ目も照合しトークンをブラウザへ返さない", async () => {
+test("数値IDから現在loginとrepository権限を照合しトークンをブラウザへ返さない", async () => {
   mockGitHub(() => assert.fail("Unexpected CMS content request"));
   const upstream = globalThis.fetch;
-  let pages = 0;
+  let userReads = 0;
+  let permissionReads = 0;
   globalThis.fetch = async (input, init) => {
-    if (String(input).includes("/collaborators?")) {
-      pages++;
-      return jsonResponse(
-        pages === 1
-          ? Array.from({ length: 100 }, (_, i) => ({
-              id: i + 100,
-              permissions: { push: true },
-            }))
-          : [{ ...editor, permissions: { push: true } }],
-      );
-    }
+    if (String(input).endsWith("/user/1")) userReads++;
+    if (String(input).endsWith("/collaborators/editor/permission"))
+      permissionReads++;
     return upstream(input, init);
   };
   const response = await handleGithubRest({
@@ -1639,7 +1683,8 @@ test("collaboratorの2ページ目も照合しトークンをブラウザへ返�
     ),
   });
   assert.equal(response.status, 200);
-  assert.equal(pages, 2);
+  assert.equal(userReads, 1);
+  assert.equal(permissionReads, 1);
   const body = await response.text();
   assert.equal(JSON.parse(body).id, 1);
   assert.equal(body.includes(appToken), false);
@@ -1650,10 +1695,12 @@ test("保存直前の権限剥奪を拒否してmutationを送らない", async 
   const upstream = globalThis.fetch;
   let reads = 0;
   globalThis.fetch = async (input, init) => {
-    if (String(input).includes("/collaborators?"))
-      return jsonResponse([
-        { ...editor, permissions: { push: ++reads === 1 } },
-      ]);
+    if (String(input).endsWith("/collaborators/editor/permission"))
+      return jsonResponse({
+        permission: ++reads === 1 ? "write" : "read",
+        role_name: reads === 1 ? "write" : "read",
+        user: editor,
+      });
     return upstream(input, init);
   };
   assert.equal(

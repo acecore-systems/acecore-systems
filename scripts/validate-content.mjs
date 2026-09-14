@@ -169,8 +169,12 @@ function validateCmsConfig() {
     "CMS writes must use a repository-scoped App token, publish one direct commit, and reconcile ambiguous responses by marker, paths, and blobs",
   );
   assert.equal(
-    oauth.includes("user.permissions.push !== true") &&
-      oauth.includes("/collaborators?affiliation=all") &&
+    oauth.includes(
+      'grant.permission !== "admin" && grant.permission !== "write"',
+    ) &&
+      oauth.includes('"/permission"') &&
+      oauth.includes("String(user.id) !== id") &&
+      oauth.includes("String(grant.user.id) !== id") &&
       oauth.includes("getAcecoreGitHubId(request, env)") &&
       access.includes("CMS_PRODUCTION_HOSTNAME") &&
       access.includes("jwtVerify") &&
