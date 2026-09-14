@@ -68,6 +68,9 @@
       ],
       "vars": {
         "SEARCH_ENABLED": "true",
+        "CMS_ACCESS_AUD": "57bc3a48647d76bd098cfa1fd2001711ea9ef7e7d98e0343a7e566d6f3426a15",
+        "CMS_ACCESS_TEAM_DOMAIN": "https://acecore.cloudflareaccess.com",
+        "CMS_ACCESS_HOSTNAMES": "systems.acecore.net",
         "SEARCH_MIN_SCORE": "0.50",
         "SEARCH_EMBEDDING_MODEL": "@cf/baai/bge-m3",
         "SEARCH_EMBEDDING_DIMENSIONS": "1024",
