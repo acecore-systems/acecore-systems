@@ -14,7 +14,7 @@ import {
 
 const API_BASE_URL = "https://api.openai.com/v1";
 const BATCH_ENDPOINT = "/v1/responses";
-const BATCH_MODEL = "gpt-5.6-luna";
+const BATCH_MODEL = "gpt-6-luna";
 const BATCH_METADATA_KEY = "translation_system";
 const BATCH_METADATA_VALUE = "acecore-systems-v1";
 const CUSTOM_ID_PREFIX = "acecore-systems:";
@@ -841,7 +841,7 @@ function makePullRequestBody(batchId, sourceHash) {
     getSourceMarker(sourceHash),
     "",
     "## 概要",
-    "- OpenAI Batch（gpt-5.6-luna / reasoning max）で最新の日本語 source を翻訳しました。",
+    "- OpenAI Batch（gpt-6-luna / reasoning max）で最新の日本語 source を翻訳しました。",
     "- sourceHash が現在の source と一致する結果だけを含めています。",
     "",
     "## 確認",
