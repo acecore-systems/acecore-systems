@@ -20,6 +20,7 @@ export const insightSlugs = Object.freeze([
   "hatt-homepage-launch",
   "homepage-production-cost-guide",
   "service-cta-contact-prefill",
+  "shared-ai-guide-streaming",
   "tax-return-with-copilot",
   "vitepress-to-starlight-migration",
   "website-improvement-batches",
