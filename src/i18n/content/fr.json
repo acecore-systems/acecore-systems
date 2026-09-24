@@ -1,6 +1,6 @@
 {
   "contact": {
-    "title": "Contact",
+    "title": "Nous contacter",
     "description": "Nous vous accompagnons sur vos besoins de conseil IT, d’adoption de l’AI, de déploiement, de systèmes métier, d’applications Web, de design et de création, ainsi que d’automatisation des opérations existantes, même si votre cahier des charges n’est pas encore finalisé.",
     "heroTitle": "Parlons-en, même si votre projet reste encore à définir.",
     "heroLead": "Présentez-nous vos opérations actuelles, vos difficultés, les outils que vous utilisez et le calendrier souhaité.",
@@ -249,7 +249,7 @@
     "ctaLabel": "Choisir un mode de contact"
   },
   "itAdvisor": {
-    "title": "IT Advisor Engineer",
+    "title": "IT Advisor Engineer : conseil IT et déploiement",
     "description": "Acecore Systems accompagne les PME d’environ 5–50 salariés dans l’adoption de l’AI, l’amélioration opérationnelle, le déploiement d’applications Web et les décisions techniques liées à l’infrastructure IT, de l’analyse des processus à la mise en production et à l’amélioration continue.",
     "heroEyebrow": "IT ADVISOR ENGINEER — AI / DÉPLOIEMENT / OPÉRATIONS",
     "heroTitle": "Créé avec l’AI,\nmais bloqué avant le lancement ?",
@@ -1249,7 +1249,7 @@
     }
   },
   "services": {
-    "title": "Services",
+    "title": "Nos services",
     "description": "Acecore Systems propose du conseil IT, l’adoption de l’AI et l’amélioration opérationnelle, l’accompagnement au déploiement, le développement de systèmes métier, des applications Web et interfaces d’administration, du design et de la création, des CMS, la recherche, l’exploitation des données et l’amélioration des systèmes existants.",
     "heroTitle": "De la structuration du problème\nau développement, au design et à l’amélioration opérationnelle.",
     "heroLead": "Au-delà d’une production ou d’un développement ponctuel, nous privilégions une conception et des améliorations qui permettent à la solution de s’inscrire dans les opérations quotidiennes.",
