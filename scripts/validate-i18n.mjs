@@ -53,8 +53,6 @@ const fixedRoutes = [
   "/services/site-quality/",
   "/pricing/",
   "/guide/",
-  "/guide/development/",
-  "/guide/it-advisor/",
   "/works/",
   "/works/acecore-site-platform/",
   "/contact/",

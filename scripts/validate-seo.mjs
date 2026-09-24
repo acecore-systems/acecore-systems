@@ -35,10 +35,6 @@ const focusedServices = [
   },
 ];
 const guideData = readJson("src/data/guide.json");
-const guideRoutePages = guideData.routes.map((route) => ({
-  ...route,
-  pagePath: `dist${route.href}index.html`,
-}));
 const worksData = readJson("src/data/works.json");
 const workDetailData = readJson(
   "src/data/work-details/acecore-site-platform.json",
@@ -59,7 +55,6 @@ for (const pagePath of [
   developmentPagePath,
   ...focusedServices.map((service) => service.pagePath),
   "dist/guide/index.html",
-  ...guideRoutePages.map((route) => route.pagePath),
   "dist/insights/index.html",
   "dist/works/index.html",
   "dist/works/acecore-site-platform/index.html",
@@ -74,10 +69,6 @@ const services = read("dist/services/index.html");
 const pricing = read("dist/pricing/index.html");
 const contact = read("dist/contact/index.html");
 const guidePage = read("dist/guide/index.html");
-const guideRouteHtml = guideRoutePages.map((route) => ({
-  ...route,
-  html: read(route.pagePath),
-}));
 const worksPage = read("dist/works/index.html");
 const workDetailPage = read("dist/works/acecore-site-platform/index.html");
 
@@ -480,7 +471,6 @@ for (const [label, html] of [
   ["pricing", pricing],
   ["contact", contact],
   ["guide", guidePage],
-  ...guideRouteHtml.map((route) => [route.href, route.html]),
   ["works", worksPage],
   ["work detail", workDetailPage],
   ["IT advisor", advisorPage],
@@ -523,33 +513,30 @@ for (const service of focusedServices) {
 }
 
 validateServiceVisual(guidePage, guideData.visual, "guide visual");
-for (const route of guideRouteHtml) {
-  const expectedUrl = `${siteOrigin}${route.href}`;
-  assert.equal(
-    route.html.includes(`<title>${route.title} | Acecore Systems</title>`),
-    true,
-    `${route.href}: title does not match route data`,
-  );
-  assert.equal(
-    route.html.includes(`<meta name="description" content="${route.body}">`),
-    true,
-    `${route.href}: description does not match route data`,
-  );
-  assert.equal(
-    route.html.includes(`<link rel="canonical" href="${expectedUrl}">`),
-    true,
-    `${route.href}: canonical missing`,
-  );
-  assert.equal(
-    (route.html.match(/<h1(?:\s[^>]*)?>/g) || []).length,
-    1,
-    `${route.href}: exactly one h1 is required`,
-  );
+for (const route of guideData.routes) {
   assert.equal(
     guidePage.includes(`href="${route.href}"`),
     true,
-    `guide: route to ${route.href} missing`,
+    `guide: link to canonical service ${route.href} missing`,
   );
+}
+const redirects = read("public/_redirects");
+for (const locale of ["", "en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]) {
+  const prefix = locale ? `/${locale}` : "";
+  for (const route of guideData.routes) {
+    const oldPath = `${prefix}/guide/${route.id}/`;
+    const targetPath = `${prefix}${route.href}`;
+    assert.equal(
+      redirects.includes(`${oldPath} ${targetPath} 301`),
+      true,
+      `${oldPath}: permanent redirect to service missing`,
+    );
+    assert.equal(
+      existsSync(join(root, `dist${oldPath}index.html`)),
+      false,
+      `${oldPath}: duplicate guide page should not be generated`,
+    );
+  }
 }
 assert.equal(
   guideData.journey.length,
@@ -679,6 +666,11 @@ const collectXml = (directory) =>
     return extname(entry.name) === ".xml" ? [readFileSync(path, "utf8")] : [];
   });
 const sitemapXml = collectXml(join(root, "dist")).join("\n");
+assert.doesNotMatch(
+  sitemapXml,
+  /<loc>https:\/\/systems\.acecore\.net\/(?:[a-z]{2}(?:-[a-z]{2})?\/)?guide\/(?:development|it-advisor)\/<\/loc>/u,
+  "duplicate guide detail pages must not be in the sitemap",
+);
 for (const route of [
   advisorRoute,
   developmentRoute,
