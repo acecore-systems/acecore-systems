@@ -88,6 +88,6 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(collect, /Format collected translation files/u);
   assert.match(collect, /git diff --name-only --diff-filter=ACMRT -z/u);
   assert.match(collect, /npx prettier --write --/u);
-  assert.match(script, /gpt-5\.6-luna/u);
+  assert.match(script, /gpt-6-luna/u);
   assert.match(script, /reasoning: \{ effort: "max" \}/u);
 });
