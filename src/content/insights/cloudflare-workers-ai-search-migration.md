@@ -1,7 +1,7 @@
 ---
 title: "複数サイトの意味検索をCloudflare Workers AIへ移行した記録"
 description: "Acecoreの公開サイトで使う意味検索の埋め込みをBGE-M3へ移した際の、切替と評価の進め方を紹介します。"
-date: 2026-09-25T00:00
+date: 2026-09-25T12:00
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "サイト内検索"]
 image: /images/insights/vectorize-rag-hero.webp

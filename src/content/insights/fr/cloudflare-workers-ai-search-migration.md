@@ -1,7 +1,7 @@
 ---
 title: "Comment nous avons migré la recherche sémantique de plusieurs sites vers Cloudflare Workers AI"
 description: "Retour sur la migration des représentations de recherche des sites publics d'Acecore vers BGE-M3, avec déploiement et évaluation."
-date: 2026-09-25T00:00
+date: 2026-09-25T12:00
 author: gui
 tags: ["Technique", "Cloudflare", "Vectorize", "Recherche"]
 image: /images/insights/vectorize-rag-hero.webp

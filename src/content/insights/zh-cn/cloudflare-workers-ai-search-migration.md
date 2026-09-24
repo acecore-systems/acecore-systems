@@ -1,7 +1,7 @@
 ---
 title: "将多个网站的语义搜索迁移到 Cloudflare Workers AI"
 description: "介绍 Acecore 将公开网站搜索所用的嵌入模型迁移至 BGE-M3 时的切换与评估方法。"
-date: 2026-09-25T00:00
+date: 2026-09-25T12:00
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "站内搜索"]
 image: /images/insights/vectorize-rag-hero.webp

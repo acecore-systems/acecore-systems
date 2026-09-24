@@ -1,7 +1,7 @@
 ---
 title: "How We Moved Semantic Search Across Our Sites to Cloudflare Workers AI"
 description: "A practical account of migrating the embeddings used by Acecore's public site search to BGE-M3, including rollout and evaluation."
-date: 2026-09-25T00:00
+date: 2026-09-25T12:00
 author: gui
 tags: ["Technology", "Cloudflare", "Vectorize", "Site search"]
 image: /images/insights/vectorize-rag-hero.webp

@@ -1,7 +1,7 @@
 ---
 title: "여러 사이트의 의미 검색을 Cloudflare Workers AI로 이전한 과정"
 description: "Acecore 공개 사이트 검색의 임베딩을 BGE-M3로 옮기며 적용한 전환 및 평가 방법을 소개합니다."
-date: 2026-09-25T00:00
+date: 2026-09-25T12:00
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "사이트 검색"]
 image: /images/insights/vectorize-rag-hero.webp

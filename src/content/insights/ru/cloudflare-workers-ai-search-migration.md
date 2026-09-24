@@ -1,7 +1,7 @@
 ---
 title: "Как мы перенесли семантический поиск нескольких сайтов на Cloudflare Workers AI"
 description: "Практический опыт переноса поисковых эмбеддингов публичных сайтов Acecore на BGE-M3 с проверкой результатов."
-date: 2026-09-25T00:00
+date: 2026-09-25T12:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Vectorize", "Поиск"]
 image: /images/insights/vectorize-rag-hero.webp
