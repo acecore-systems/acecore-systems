@@ -5,9 +5,32 @@
 # Content that moved to the main Acecore site.
 /about https://acecore.net/about/ 301
 /about/ https://acecore.net/about/ 301
-/blog/tags/* https://acecore.net/blog/ 301
 
 # The article is now an internal Systems insight; keep the legacy URL on the
 # same host so visitors and crawlers reach the current canonical page directly.
 /blog/cloudflare-pages-security /insights/cloudflare-pages-security/ 301
 /blog/cloudflare-pages-security/ /insights/cloudflare-pages-security/ 301
+
+# The guide details repeated the corresponding service pages. Keep old links
+# working while the service pages are the only canonical index targets.
+/guide/development/ /services/development/ 301
+/guide/it-advisor/ /services/it-advisor/ 301
+/en/guide/development/ /en/services/development/ 301
+/en/guide/it-advisor/ /en/services/it-advisor/ 301
+/zh-cn/guide/development/ /zh-cn/services/development/ 301
+/zh-cn/guide/it-advisor/ /zh-cn/services/it-advisor/ 301
+/es/guide/development/ /es/services/development/ 301
+/es/guide/it-advisor/ /es/services/it-advisor/ 301
+/pt/guide/development/ /pt/services/development/ 301
+/pt/guide/it-advisor/ /pt/services/it-advisor/ 301
+/fr/guide/development/ /fr/services/development/ 301
+/fr/guide/it-advisor/ /fr/services/it-advisor/ 301
+/ko/guide/development/ /ko/services/development/ 301
+/ko/guide/it-advisor/ /ko/services/it-advisor/ 301
+/de/guide/development/ /de/services/development/ 301
+/de/guide/it-advisor/ /de/services/it-advisor/ 301
+/ru/guide/development/ /ru/services/development/ 301
+/ru/guide/it-advisor/ /ru/services/it-advisor/ 301
+
+# Dynamic redirects go after exact paths so Pages can check the common paths first.
+/blog/tags/* https://acecore.net/blog/ 301

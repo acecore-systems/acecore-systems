@@ -16,7 +16,7 @@
       "eyebrow": "受託開発 / DEVELOPMENT",
       "title": "構想から、開発・公開まで任せたい",
       "body": "作りたいことや業務課題を整理し、要件、設計、開発、公開、引き継ぎまでを一つのプロジェクトとして進めます。",
-      "href": "/guide/development/",
+      "href": "/services/development/",
       "label": "受託開発の進め方を見る"
     },
     {
@@ -24,7 +24,7 @@
       "eyebrow": "IT顧問エンジニア / ADVISORY",
       "title": "今ある仕組みを、公開・運用まで進めたい",
       "body": "自社やAIで作ったコード、既存サイト、クラウドやIT基盤を確認し、定額またはスポットで必要な範囲から支援します。",
-      "href": "/guide/it-advisor/",
+      "href": "/services/it-advisor/",
       "label": "IT顧問の進め方を見る"
     }
   ],

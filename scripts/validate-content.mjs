@@ -678,8 +678,6 @@ const knownRoutes = new Set([
   advisorSource.route,
   ...serviceSources.map((source) => source.route),
   ...workSources.map((source) => source.route),
-  "/guide/development/",
-  "/guide/it-advisor/",
 ]);
 const services = readJson("src/data/services.json");
 serviceAnchors.set(
@@ -713,8 +711,8 @@ for (const [index, route] of guideRoutes.entries()) {
   }
   assert.equal(
     route.href,
-    `/guide/${route.id}/`,
-    `src/data/guide.json: routes[${index}] must target its guide page`,
+    `/services/${route.id}/`,
+    `src/data/guide.json: routes[${index}] must target its canonical service page`,
   );
 }
 requireText(guide.journeyTitle, "src/data/guide.json: journeyTitle");
