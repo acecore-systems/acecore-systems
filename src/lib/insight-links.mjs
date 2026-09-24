@@ -14,6 +14,7 @@ export const insightSlugs = Object.freeze([
   "cloudflare-ssl-advanced-certificate-manager",
   "cloudflare-vectorize-implementation-guide",
   "cloudflare-vectorize-safe-implementation",
+  "cloudflare-workers-ai-search-migration",
   "cms-selection-and-turnstile",
   "copilot-translation-pipeline",
   "hatt-homepage-launch",
