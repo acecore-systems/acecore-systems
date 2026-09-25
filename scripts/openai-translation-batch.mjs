@@ -386,6 +386,17 @@ function isReusableBatch(batch, sourceHash) {
   );
 }
 
+function areTranslationsCurrent(sourceHash) {
+  const statePath = "src/i18n/translation-state.json";
+  if (!existsSync(statePath)) return false;
+  const state = JSON.parse(readFileSync(statePath, "utf8"));
+  return (
+    state.sourceHash === sourceHash &&
+    Array.isArray(state.locales) &&
+    translatedLocales.every((locale) => state.locales.includes(locale))
+  );
+}
+
 async function uploadBatchInput(input) {
   const form = new FormData();
   form.set("purpose", "batch");
@@ -494,6 +505,10 @@ async function submitBatch(options) {
 
   const sourceHash = calculateTranslationSourceHash(process.cwd());
   await closeStalePullRequests(sourceHash);
+  if (areTranslationsCurrent(sourceHash)) {
+    console.log("Translations are already current; no Batch is needed.");
+    return;
+  }
   const existing = (await listBatches()).find((batch) =>
     isReusableBatch(batch, sourceHash),
   );
@@ -894,6 +909,18 @@ async function collectBatch(options) {
 
   const currentSourceHash = calculateTranslationSourceHash(process.cwd());
   await closeStalePullRequests(currentSourceHash);
+  if (areTranslationsCurrent(currentSourceHash)) {
+    console.log(
+      `Skipped OpenAI translation batch ${batch.id}; translations are already current.`,
+    );
+    writeCollectedOutputs({
+      batchId: batch.id,
+      hasChanges: false,
+      bodyPath: null,
+      processed: true,
+    });
+    return;
+  }
   if (batch.metadata?.source_hash !== currentSourceHash) {
     console.log(`Discarded stale OpenAI translation batch ${batch.id}.`);
     writeCollectedOutputs({
@@ -934,19 +961,6 @@ async function collectBatch(options) {
       throw new Error(`Batch ${batch.id} contains an old sourceHash`);
     }
     const response = parseJsonResponse(output.response.body);
-    if (
-      metadata.kind === "content" &&
-      metadata.sourcePath === "src/data/guide.json"
-    ) {
-      const entry = response.translations?.find(
-        (value) => value.id === "/introTitle",
-      );
-      if (entry) {
-        console.log(
-          `Guide introTitle diagnostic ${metadata.locale}: ${JSON.stringify(entry.text)}`,
-        );
-      }
-    }
     if (metadata.kind === "content") {
       hasChanges = applyContentTranslation(metadata, response) || hasChanges;
     } else if (metadata.kind === "insight") {
