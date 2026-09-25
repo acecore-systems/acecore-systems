@@ -934,6 +934,19 @@ async function collectBatch(options) {
       throw new Error(`Batch ${batch.id} contains an old sourceHash`);
     }
     const response = parseJsonResponse(output.response.body);
+    if (
+      metadata.kind === "content" &&
+      metadata.sourcePath === "src/data/guide.json"
+    ) {
+      const entry = response.translations?.find(
+        (value) => value.id === "/introTitle",
+      );
+      if (entry) {
+        console.log(
+          `Guide introTitle diagnostic ${metadata.locale}: ${JSON.stringify(entry.text)}`,
+        );
+      }
+    }
     if (metadata.kind === "content") {
       hasChanges = applyContentTranslation(metadata, response) || hasChanges;
     } else if (metadata.kind === "insight") {
