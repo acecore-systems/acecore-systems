@@ -4,6 +4,7 @@ description: "结合VS Code的智能体模式（GitHub Copilot）和Playwright�
 date: 2026-03-25T14:00
 author: gui
 tags: ["技术", "GitHub Copilot", "VS Code", "Astro", "网站"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: 常见问题
   items:
     - question: GitHub Copilot的智能体模式可以免费使用吗？
-      answer: "GitHub Copilot Free计划对智能体模式的使用有月度次数限制。Pro或Business计划的限制会放宽。在VS Code Insiders版中可以率先体验最新功能。"
+      answer: "可以使用 Copilot Free。截至2026年9月，可用量取决于套餐、模型和 AI Credits；智能体任务可能涉及多次模型调用。"
     - question: 除了Playwright以外的浏览器工具也能实现同样的效果吗？
       answer: "我们使用的是VS Code内置浏览器工具（Simple Browser + Playwright集成）。Copilot通过run_playwright_code工具直接操作浏览器，因此无需另外安装Playwright。"
     - question: 除了静态网站以外也适用吗？
@@ -52,6 +53,8 @@ faq:
     - question: 测试中发现的Bug也能交给AI修复吗？
       answer: "在智能体模式下可以读写文件，因此从Bug检测到修复、构建确认的整个流程都可以在同一会话内完成。本文中也发现了2个Bug并当场修复。"
 ---
+
+> **2026年9月更新:** Copilot 的用量说明已从本文最初的智能体模式月度次数转为 AI Credits。请查看[GitHub 最新文档](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing)确认当前额度。
 
 ## 前言
 

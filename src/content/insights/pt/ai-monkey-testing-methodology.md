@@ -4,6 +4,7 @@ description: "Registro prático de como testamos sistematicamente um site estát
 date: 2026-03-25T14:00
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "VS Code", "Astro", "Site"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: Perguntas frequentes
   items:
     - question: O modo agente do GitHub Copilot é gratuito?
-      answer: "No plano gratuito do GitHub Copilot, o modo agente tem um limite mensal de uso. Nos planos Pro ou Business, o limite é mais flexível. A versão VS Code Insiders permite acesso antecipado aos recursos mais recentes."
+      answer: "Sim, o Copilot Free está disponível. Em setembro de 2026, o uso depende do plano, do modelo e dos AI Credits; uma tarefa de agente pode fazer várias chamadas ao modelo."
     - question: É possível fazer o mesmo com ferramentas de navegador além do Playwright?
       answer: "Utilizamos a ferramenta de navegador integrada do VS Code (Simple Browser + integração Playwright). Como o Copilot opera o navegador diretamente através da ferramenta run_playwright_code, não é necessário instalar o Playwright separadamente."
     - question: Pode ser aplicado a sites que não são estáticos?
@@ -52,6 +53,8 @@ faq:
     - question: A IA também pode corrigir bugs encontrados nos testes?
       answer: "No modo agente, é possível ler e escrever arquivos, então o fluxo completo de detecção, correção e verificação de build pode ser concluído dentro de uma sessão. Neste artigo, descobrimos 2 bugs e os corrigimos na hora."
 ---
+
+> **Atualização de setembro de 2026:** O uso do Copilot agora é descrito em AI Credits, em vez da contagem mensal de solicitações do modo agente citada originalmente. Consulte a [documentação atual do GitHub](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing).
 
 ## Introdução
 

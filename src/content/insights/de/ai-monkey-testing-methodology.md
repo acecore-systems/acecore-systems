@@ -4,6 +4,7 @@ description: "Ein praxisnaher Leitfaden zum systematischen Monkey-Testing einer 
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code", "Astro", "Website"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: Häufig gestellte Fragen
   items:
     - question: Ist der GitHub Copilot Agent Mode kostenlos nutzbar?
-      answer: "Der kostenlose GitHub Copilot-Plan hat monatliche Nutzungslimits für den Agent Mode. Pro- und Business-Pläne bieten erweiterte Limits. Die neuesten Funktionen sind in VS Code Insiders frühzeitig verfügbar."
+      answer: "Ja, Copilot Free ist verfügbar. Im September 2026 hängt die Nutzung vom Tarif, Modell und den AI Credits ab; Agentenaufgaben können mehrere Modellaufrufe umfassen."
     - question: Kann der gleiche Ansatz mit anderen Browser-Tools als Playwright verwendet werden?
       answer: "Wir verwenden die in VS Code integrierten Browser-Tools (Simple Browser + Playwright-Integration). Da Copilot den Browser direkt über das run_playwright_code-Tool steuert, ist keine separate Playwright-Installation erforderlich."
     - question: Kann dies auch auf nicht-statische Websites angewendet werden?
@@ -52,6 +53,8 @@ faq:
     - question: Kann die KI entdeckte Fehler auch selbst beheben?
       answer: "Im Agent Mode ist das Lesen und Schreiben von Dateien möglich, sodass der gesamte Ablauf von der Fehlererkennung über die Behebung bis zur Build-Überprüfung in einer einzigen Sitzung abgeschlossen werden kann. In diesem Artikel haben wir 2 Fehler entdeckt und sofort behoben."
 ---
+
+> **Aktualisierung vom September 2026:** Die Copilot-Nutzung wird nun in AI Credits statt der ursprünglich genannten monatlichen Agent-Mode-Anfragen beschrieben. Prüfen Sie die [aktuelle GitHub-Dokumentation](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing).
 
 ## Einführung
 
