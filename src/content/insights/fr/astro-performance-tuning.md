@@ -1,15 +1,15 @@
 ---
 title: "Techniques pratiques pour améliorer PageSpeed sur un site Astro"
-description: "Techniques pratiques d'optimisation pour un site Astro, UnoCSS et Cloudflare Pages. Couvre la distribution CSS, les polices, les images responsives, le contrôle de chargement AdSense, le chargement différé de GA4 et le cache."
+description: "Retour sur les optimisations avec Astro 7.1.3 et UnoCSS en juillet 2026, distinct de la configuration actuelle avec Astro et Tailwind CSS."
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Performance"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: Public cible de cet article
-  text: "Cet article s'adresse à ceux qui souhaitent améliorer le score PageSpeed de leur site Astro. Il présente des techniques concrètes et directement applicables pour l'optimisation du CSS, des polices, des images et des scripts publicitaires."
+  text: "Retour sur les optimisations CSS, polices, images et publicités testées avec Astro et UnoCSS en juillet 2026. Vérifiez l’implémentation et les conditions de mesure actuelles avant application."
 processFigure:
   title: Processus d'optimisation
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: Le contrôle de chargement AdSense affecte-t-il les revenus ?
       answer: "L'effet varie selon l'emplacement publicitaire et le comportement des visiteurs. Comparez la visibilité, les requêtes publicitaires et les revenus avant et après, séparément des mesures de performance."
 ---
+
+> **Mise à jour du 26 septembre 2026 :** Sauf indication contraire, « actuel » ci-dessous renvoie au 29 juillet 2026. Les [dépendances actuelles](https://github.com/acecore-systems/acecore-net/blob/main/package.json) utilisent Astro ^7.3.3 et Tailwind CSS 4.3.3. Ne prenez pas les anciens réglages UnoCSS ni les conditions de diffusion pour des instructions actuelles sans vérifier l’implémentation. Basez les décisions sur le résultat réel et des mesures comparables.
 
 ## Introduction
 

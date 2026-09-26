@@ -1,15 +1,15 @@
 ---
 title: "提升Astro网站PageSpeed的实用技巧"
-description: "面向Astro、UnoCSS和Cloudflare Pages网站的实用优化技巧，涵盖CSS分发、字体设置、响应式图片、当前AdSense与GA4加载方式以及缓存配置。"
+description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的优化，并与当前 Astro 和 Tailwind CSS 配置区分。"
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["技术", "Astro", "性能"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: 本文的目标读者
-  text: "适合想要提高Astro网站PageSpeed分数的读者。介绍了CSS、字体、图片、广告脚本优化方面可以直接应用的具体方法。"
+  text: "记录 2026 年 7 月在 Astro 和 UnoCSS 配置中验证的 CSS、字体、图片和广告脚本优化。应用之前请检查当前实现和测量条件。"
 processFigure:
   title: 优化流程
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: AdSense加载控制会影响收入吗？
       answer: "影响会随广告位置和访问行为而变化。请比较更改前后的可见率、广告请求和收入，并与性能指标分开评估。"
 ---
+
+> **2026 年 9 月 26 日更新：** 除非另有说明，下文的“当前”指 2026 年 7 月 29 日。[当前依赖声明](https://github.com/acecore-systems/acecore-net/blob/main/package.json)使用 Astro ^7.3.3 和 Tailwind CSS 4.3.3。未经核对实现，不应把旧 UnoCSS 设置和当时的交付条件当作现行指南。请根据实际输出和可比较的测量结果判断。
 
 ## 前言
 

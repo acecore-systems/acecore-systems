@@ -1,15 +1,15 @@
 ---
 title: "AstroサイトのPageSpeedを改善する実践テクニック"
-description: "Astro + UnoCSS + Cloudflare Pages 構成のサイトで行う最適化を紹介します。CSS配信戦略・フォント設定・レスポンシブ画像・AdSenseの読み込み制御・GA4の遅延読み込み・キャッシュ設定を、現行実装に合わせてまとめました。"
+description: "2026年7月時点のAstro 7.1.3とUnoCSSによる最適化記録です。現行のAstroとTailwind CSS構成との差を明示します。"
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["技術", "Astro", "パフォーマンス"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: この記事の対象読者
-  text: "AstroサイトのPageSpeedスコアを上げたい方向けです。CSS・フォント・画像・広告スクリプトの最適化について、そのまま適用できる具体的な手法を紹介しています。"
+  text: "2026年7月時点のAstro + UnoCSS構成で検証したCSS・フォント・画像・広告スクリプトの最適化記録です。現行サイトへ適用する前に実装と計測条件を確認してください。"
 processFigure:
   title: 最適化の流れ
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: AdSense の読み込み制御は収益に影響しませんか？
       answer: "影響は広告位置や閲覧行動で変わるため一律には判断できません。表示率、広告リクエスト、収益などを変更前後で確認し、パフォーマンス指標とは分けて評価します。"
 ---
+
+> **2026年9月26日追記:** 本文中の「現行」は、特記がない限り2026年7月29日時点を指します。[現在の依存宣言](https://github.com/acecore-systems/acecore-net/blob/main/package.json)はAstro ^7.3.3とTailwind CSS 4.3.3で、以下のUnoCSS設定や当時の配信条件をそのまま現行サイトの手順として扱わないでください。最適化の判断には、実際の出力と同じ条件で測った指標を使います。
 
 ## はじめに
 

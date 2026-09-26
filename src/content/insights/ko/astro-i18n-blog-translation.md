@@ -1,8 +1,8 @@
 ---
 title: "Astro 7 사이트를 9개 언어로 지원하는 방법 ― 블로그 번역과 다국어 아키텍처"
-description: "Astro 7.1.3 + UnoCSS + Cloudflare Pages 사이트를 9개 언어로 대응한 기록. UI 국제화부터 블로그 글 번역, Pages CMS 다국어 설정까지 전체 과정을 다룹니다."
+description: "2026년 7월 Astro 7.1.3과 UnoCSS로 9개 언어를 도입한 기록이며, 현재 의존성과 번역 경로도 안내합니다."
 date: 2026-03-25T10:00
-lastUpdated: "2026-07-29T00:28:02+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["기술", "Astro", "i18n", "웹사이트"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -59,12 +59,16 @@ faq:
     - question: 왜 9개 언어를 선택했나요?
       answer: "글로벌 도달 범위를 극대화하기 위해 주요 언어 시장을 커버했습니다. 영어, 중국어, 스페인어, 포르투갈어가 대부분의 인터넷 사용자를 커버하고, 프랑스어, 독일어, 러시아어, 한국어가 나머지 주요 시장을 보완합니다."
     - question: 번역 품질은 어떻게 보장하나요?
-      answer: "GitHub Copilot을 사용한 AI 번역을 활용합니다. 먼저 영어를 중간 언어로 만든 뒤 각 대상 언어로 번역하여 품질 편차를 줄입니다. frontmatter의 태그 값은 일본어를 유지하고, URL, 코드 블록, 이미지 경로는 변경하지 않습니다."
+      answer: "GitHub Copilot을 사용한 AI 번역을 활용합니다. 먼저 영어를 중간 언어로 만든 뒤 각 대상 언어로 번역하여 품질 편차를 줄입니다. frontmatter의 태그 값은 일본어를 유지하고, URL, 코드 블록, 이미지 경로는 변경하지 않습니다. 이는 2026년 7월의 방식입니다. 현재 번역 생성에는 OpenAI Batch를 사용합니다."
     - question: 번역 글이 없으면 어떻게 되나요?
       answer: "해당 locale의 번역 파일이 없으면 로컬라이즈된 글 URL을 생성하지 않습니다. 일본어 글은 원래 URL에 계속 공개되며, 언어 전환기는 대상 locale의 블로그 목록으로 연결됩니다."
     - question: 새 글을 추가할 때 번역이 필요한가요?
       answer: "일본어 글을 공개하는 데 번역은 필수가 아닙니다. 해당 언어 디렉토리에 같은 이름의 Markdown 파일을 추가하면 그 locale의 글 URL, sitemap 항목, hreflang 관계가 생성 대상이 됩니다."
 ---
+
+> **2026년 9월 26일 추가:** 아래의 Astro 7.1.3, UnoCSS, 기사 수, Copilot 번역은 2026년 7월의 기록입니다. [현재 의존성 선언](https://github.com/acecore-systems/acecore-net/blob/main/package.json)은 Astro ^7.3.3과 Tailwind CSS 4.3.3을 사용하며, [번역 운영 업데이트](/insights/copilot-translation-pipeline/)는 OpenAI Batch를 설명합니다. 아래 코드와 수치를 현재 설정으로 사용하기 전에 최신 소스와 공개 페이지를 확인하세요.
+
+## 2026년 7월 구현 기록
 
 Acecore 공식 웹사이트를 일본어 전용에서 9개 언어 지원으로 업그레이드했습니다. 최초 도입 시 블로그 글 21개를 8개 언어로 번역해 168개 파일을 만들었습니다. 2026년 7월 29일 기준 저장소에는 일본어 글 29개와 번역 208개, 총 237개 글 파일이 있으며 빌드는 652개 페이지를 생성합니다. 번역 파일이 실제로 있는 locale에만 글 URL을 공개합니다.
 
