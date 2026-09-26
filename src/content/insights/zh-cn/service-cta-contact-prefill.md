@@ -2,6 +2,7 @@
 title: "将服务CTA上下文传递到咨询表单的技术设计"
 description: "这是将用户在服务页面中阅读的上下文传递到咨询表单的实现设计。内容涵盖Astro网站中的迷你CTA、URL参数契约、表单类别的初始选择、主题prefill、多语言URL、GA计量和生成HTML检查，可复用于其他网站。"
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["技术", "网站", "服务", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: 常见问题
   items:
     - question: 为什么不通过hidden字段发送目标服务？
-      answer: 这样不会增加接收方需要查看的字段，并可只用现有咨询类别完成分类。表单字段越多，运营和通知模板中的检查点也越多。
+      answer: "2026年6月的方案只使用现有咨询类别分类，避免增加hidden字段。当前Systems表单还通过hidden字段保存service、from和entry用于集成。"
     - question: URL参数被篡改也没关系吗？
       answer: 未知service key会回退到服务综合咨询。发送值从表单侧的option中选择，因此不会把URL值直接当作接收值。
     - question: 多语言网站应如何处理？
       answer: 按locale生成CTA链接，并翻译表单显示标签。另一方面，将接收值统一为稳定的日语分类名称，可减少接收方运营上的偏差。
 ---
+
+> **2026年9月更新:** 下面的 `ServiceSectionActions` 和 `service=web` 示例记录了2026年6月企业网站的方案。现在[Acecore Systems的服务CTA](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro)传递 `category`、`service`、`from` 和 `entry`；[联系表单](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro)验证简短的服务键，并预选类别与主题。当前还使用hidden字段进行统计和集成，因此不要把旧文“不使用hidden字段”的选择当作现行约定。URL参数仍须映射到允许的表单选项。
 
 当阅读服务页面的用户产生“想就这项内容咨询”的想法时，如果只是把他们送到咨询表单，会丢失一部分上下文。
 

@@ -2,6 +2,7 @@
 title: "서비스 CTA의 문맥을 문의 폼으로 이어 주는 기술 설계"
 description: "서비스 페이지에서 읽던 문맥을 문의 폼으로 전달하는 구현 설계입니다. Astro 사이트의 미니 CTA, URL 파라미터 계약, 폼 분류 초기 선택, 제목 prefill, 다국어 URL, GA 측정, 생성 HTML 확인까지 다른 사이트에도 적용할 수 있게 정리합니다."
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["기술", "웹사이트", "서비스", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: 자주 묻는 질문
   items:
     - question: hidden 필드로 상담 대상 서비스를 보내지 않는 이유는 무엇인가요?
-      answer: 수신 측에서 확인할 필드를 늘리지 않고 기존 문의 분류만으로 분류하기 위해서입니다. 폼 필드가 늘수록 운영과 알림 템플릿의 확인 지점도 늘어납니다.
+      answer: "2026년 6월 설계는 기존 문의 분류만 사용하고 hidden 필드를 늘리지 않았습니다. 현재 Systems 양식은 연동을 위해 service, from, entry도 hidden 필드에 저장합니다."
     - question: URL 파라미터가 변조되어도 괜찮나요?
       answer: 알 수 없는 service key는 서비스 일반 문의로 fallback합니다. 전송 값은 폼의 option에서 선택하므로 URL 값을 그대로 수신 값으로 사용하지 않습니다.
     - question: 다국어 사이트에서는 어떻게 처리하나요?
       answer: CTA 링크를 locale별로 생성하고 폼 표시 라벨도 번역합니다. 반면 수신 값은 안정적인 일본어 분류명으로 통일하면 수신 측 운영이 흔들리지 않습니다.
 ---
+
+> **2026년 9월 업데이트:** 아래 `ServiceSectionActions`와 `service=web` 예시는 2026년 6월 회사 사이트의 설계 기록입니다. 현재 [Acecore Systems 서비스 CTA](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro)는 `category`, `service`, `from`, `entry`를 전달하고 [문의 양식](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro)은 짧은 서비스 키를 검증해 분류와 제목을 초기화합니다. 계측과 연동을 위한 hidden 필드도 사용하므로 이전의 “hidden 필드 없음” 선택을 현행 계약으로 복사하지 마세요. URL 값은 허용된 양식 선택지에 매핑해야 합니다.
 
 서비스 페이지를 읽은 사용자가 “이 내용으로 상담하고 싶다”고 생각했을 때 단순히 문의 폼으로 보내기만 하면 문맥이 일부 사라집니다.
 

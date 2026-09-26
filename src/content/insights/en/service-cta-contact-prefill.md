@@ -2,6 +2,7 @@
 title: "Technical design for carrying service CTA context into a contact form"
 description: "An implementation design for carrying the context a visitor was reading on a service page into the contact form. It covers mini CTAs in an Astro site, the URL parameter contract, initial form-category selection, subject prefill, multilingual URLs, GA measurement, and generated-HTML checks in a reusable form."
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["Technology", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: Frequently asked questions
   items:
     - question: Why not send the target service in a hidden field?
-      answer: This avoids increasing the number of fields the receiving team must review and lets the existing inquiry category provide the classification. Every extra form field also adds checks to operations and notification templates.
+      answer: "In June 2026, the design classified inquiries using only the existing category and avoided extra hidden fields. The current Systems form also stores service, from, and entry in hidden fields for integration."
     - question: Is it safe if someone tampers with the URL parameters?
       answer: An unknown service key falls back to general service inquiries. Because the submitted value is selected from the options in the form, the URL value itself is never used directly as a submitted value.
     - question: How should this work on a multilingual site?
       answer: Generate CTA destinations for each locale and translate the labels displayed in the form. Meanwhile, keeping submitted values aligned to stable Japanese classification names helps the receiving operation remain consistent.
 ---
+
+> **September 2026 update:** The `ServiceSectionActions` and `service=web` examples below document the corporate site’s June 2026 design. Today, [Acecore Systems service CTAs](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) pass `category`, `service`, `from`, and `entry`; the [contact form](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) validates short service keys and preselects a category and subject. It also uses hidden fields for measurement and integration, so do not copy the earlier “no hidden fields” choice as the current contract. Mapping untrusted URL values to allowed form options remains important.
 
 When a visitor reading a service page decides, "I want to ask about this," simply sending them to a contact form loses some of the context.
 
