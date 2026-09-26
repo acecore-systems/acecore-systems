@@ -2,6 +2,7 @@
 title: "Astro-Website-Qualitätsverbesserungsleitfaden, Fortsetzung - Letzte Anpassungen für 100 Punkte in allen PageSpeed-Insights-Kategorien"
 description: "Dokumentation der finalen Optimierungsrunde nach dem vorherigen Artikel: Cloudflare Web Analytics deaktivieren, GA4 und die Suche verzögert laden, 100 Punkte in allen vier PageSpeed-Insights-Kategorien auf Mobile und Desktop erreichen, Breadcrumbs und Indexierungsregeln in Search Console bereinigen, auf gemeinsame SVG-Icons umstellen und auch begründen, welche zusätzlichen Optimierungen bewusst nicht übernommen wurden."
 date: 2026-03-29T02:30
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Leistung", "Barrierefreiheit", "SEO", "Website"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -122,6 +123,8 @@ faq:
     - question: Gab es Optimierungen, die geprüft, aber nicht übernommen wurden?
       answer: "Ja. Verglichen wurden unter anderem eine weitere Aufteilung von BaseLayout.css, Anpassungen nur mit dem Ziel, die Anzeige des network dependency tree verschwinden zu lassen, und sogar eine stärkere Reduktion von Drittanbietern bis hin zu GA4. Da Mobile 100 bereits stabil war, hätten diese Varianten mehr Komplexität oder Messverlust als echten Nutzen gebracht und wurden daher verworfen."
 ---
+
+**Aktualisierung vom 26. September 2026:** Die 100 Punkte stammen aus einer PageSpeed-Insights-Messung vom 29. März 2026. Sie garantieren weder den aktuellen Wert noch die Erfahrung aller realen Nutzer. Siehe [Googles Dokumentation](https://developers.google.com/speed/docs/insights/v5/about) zu Labor- und Felddaten sowie Schwankungen.
 
 ## Einleitung
 

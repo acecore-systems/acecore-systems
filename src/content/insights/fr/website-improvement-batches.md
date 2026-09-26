@@ -2,6 +2,7 @@
 title: "Guide d'amélioration de la qualité d'un site Astro — Jusqu'au score PageSpeed mobile de 99"
 description: "Récit complet de l'amélioration d'un site Astro + UnoCSS + Cloudflare Pages sur 4 axes — performance, SEO, accessibilité et UX — aboutissant à un score PageSpeed Insights mobile de 99 et un score parfait sur tous les critères en desktop."
 date: 2026-03-25T15:00
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags:
   ["Technologie", "Astro", "Performance", "Accessibilité", "SEO", "Site web"]
@@ -64,7 +65,7 @@ faq:
   title: Questions fréquentes
   items:
     - question: Est-il possible d'atteindre un score PageSpeed mobile de 100 ?
-      answer: "C'est techniquement possible, mais pour un site intégrant des services externes comme AdSense ou GA4, maintenir un score stable de 100 est extrêmement difficile. Lighthouse simule une connexion slow 4G (environ 1,6 Mbps), ce qui pénalise fortement le chargement de ressources externes. 99 représente un sommet réaliste."
+      answer: "Oui. Cet article relève 99 sur mobile le 25 mars 2026, tandis que le [suivi du 29 mars](/insights/website-improvement-final-batch/) relève 100. Aucun de ces résultats ne garantit le score actuel."
     - question: Dans quel ordre faut-il procéder aux améliorations ?
       answer: "Commencez par analyser l'état actuel avec PageSpeed Insights et traitez les éléments à plus fort impact. En général, l'ordre recommandé est : performance → SEO → accessibilité."
     - question: Ces techniques d'amélioration s'appliquent-elles à d'autres sites Astro ?
@@ -72,6 +73,8 @@ faq:
     - question: Avez-vous utilisé GitHub Copilot pour les améliorations ?
       answer: "Oui. Pratiquement toutes les améliorations ont été réalisées en collaboration avec GitHub Copilot. Les détails seront présentés dans l'article « Flux de développement avec GitHub Copilot »."
 ---
+
+**Mise à jour du 26 septembre 2026 :** Cet article relate les améliorations au 25 mars 2026. L'idée que 99 constituait un plafond pratique a été dépassée par le [suivi du 29 mars](/insights/website-improvement-final-batch/), qui a relevé 100. Ces scores correspondent à leurs mesures, pas au score actuel. [Google explique](https://developers.google.com/speed/docs/insights/v5/about) leurs variations.
 
 ## Introduction
 

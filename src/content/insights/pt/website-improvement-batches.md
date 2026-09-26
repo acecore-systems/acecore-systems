@@ -2,6 +2,7 @@
 title: "Guia de melhoria de qualidade de sites Astro — Caminho até 99 pontos no PageSpeed Mobile"
 description: "Registro completo de como melhoramos um site com Astro + UnoCSS + Cloudflare Pages nos 4 eixos de desempenho, SEO, acessibilidade e UX, alcançando 99 pontos no PageSpeed Insights mobile e 100 em todos os itens no desktop."
 date: 2026-03-25T15:00
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Desempenho", "Acessibilidade", "SEO", "Site"]
 image: /uploads/acecore-generated/blog-website-improvement-batches.webp
@@ -63,7 +64,7 @@ faq:
   title: Perguntas frequentes
   items:
     - question: É possível alcançar 100 pontos no PageSpeed mobile?
-      answer: "Tecnicamente é possível, mas para sites que incluem serviços externos como AdSense ou GA4, é extremamente difícil manter 100 pontos de forma estável. O Lighthouse simula slow 4G (~1.6 Mbps), então recursos externos causam grande penalidade. 99 pontos é o ponto máximo realista."
+      answer: "Sim. Este artigo registra 99 pontos no mobile em 25 de março de 2026, enquanto o [acompanhamento de 29 de março](/insights/website-improvement-final-batch/) registrou 100. Nenhum resultado garante a pontuação atual."
     - question: Em que ordem as melhorias devem ser feitas?
       answer: "Primeiro, entenda a situação atual com o PageSpeed Insights e trate as questões de maior impacto. Em geral, a ordem recomendada é desempenho → SEO → acessibilidade."
     - question: Essa abordagem de melhoria é aplicável a outros sites Astro?
@@ -71,6 +72,8 @@ faq:
     - question: O GitHub Copilot foi usado nas melhorias?
       answer: "Sim. Praticamente todas as melhorias foram realizadas em colaboração com o GitHub Copilot. Os detalhes são apresentados no artigo sobre o fluxo de desenvolvimento com GitHub Copilot."
 ---
+
+**Atualização de 26 de setembro de 2026:** Este artigo registra melhorias até 25 de março de 2026. A avaliação de que 99 era um limite prático foi superada pelo [acompanhamento de 29 de março](/insights/website-improvement-final-batch/), que registrou 100. São resultados daqueles testes, não pontuações atuais. A [documentação do Google](https://developers.google.com/speed/docs/insights/v5/about) explica a variação.
 
 ## Introdução
 

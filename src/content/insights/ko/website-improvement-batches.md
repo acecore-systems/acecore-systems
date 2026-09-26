@@ -2,6 +2,7 @@
 title: "Astro 사이트 품질 개선 가이드 — PageSpeed 모바일 점수 99 달성"
 description: "Astro + UnoCSS + Cloudflare Pages 사이트를 성능, SEO, 접근성, UX의 4가지 축에서 개선하여 PageSpeed Insights 모바일 99점, 데스크톱 전 항목 100점을 달성한 전 과정 기록."
 date: 2026-03-25T15:00
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["기술", "Astro", "성능", "접근성", "SEO", "웹사이트"]
 image: /uploads/acecore-generated/blog-website-improvement-batches.webp
@@ -63,7 +64,7 @@ faq:
   title: 자주 묻는 질문
   items:
     - question: PageSpeed Insights 모바일에서 100점을 받을 수 있나요?
-      answer: "기술적으로는 가능하지만, AdSense나 GA4 같은 외부 서비스를 포함한 사이트에서 안정적인 100점 유지는 매우 어렵습니다. Lighthouse는 느린 4G(~1.6 Mbps)를 시뮬레이션하므로 외부 리소스 로딩에 큰 페널티가 발생합니다. 99점이 현실적인 최고 점수입니다."
+      answer: "가능합니다. 이 글은 2026년 3월 25일 모바일 99점을 기록했지만 [3월 29일 후속 측정](/insights/website-improvement-final-batch/)에서는 100점을 기록했습니다. 두 결과 모두 현재 점수를 보장하지 않습니다."
     - question: 어떤 순서로 개선해야 하나요?
       answer: "먼저 PageSpeed Insights로 현 상태를 파악한 후, 가장 영향이 큰 항목부터 대처합니다. 일반적으로 성능 → SEO → 접근성 순서를 추천합니다."
     - question: 이 개선 기법을 다른 Astro 사이트에도 적용할 수 있나요?
@@ -71,6 +72,8 @@ faq:
     - question: 개선에 GitHub Copilot을 사용했나요?
       answer: '네. 거의 모든 개선은 GitHub Copilot과의 협업으로 수행되었습니다. 자세한 내용은 "GitHub Copilot을 활용한 개발 워크플로우" 기사에서 다루고 있습니다.'
 ---
+
+**2026년 9월 26일 추가:** 이 글은 2026년 3월 25일 당시의 개선 기록입니다. 99점이 현실적인 상한이라는 당시 판단은 [3월 29일 후속 측정](/insights/website-improvement-final-batch/)에서 100점을 기록하면서 바뀌었습니다. 두 점수는 각 측정 시점의 결과이며 현재 점수가 아닙니다. 점수 변동은 [Google 공식 설명](https://developers.google.com/speed/docs/insights/v5/about)을 참고하세요.
 
 ## 소개
 

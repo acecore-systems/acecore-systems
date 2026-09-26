@@ -2,13 +2,14 @@
 title: "Pitfalls and Solutions for Astro View Transitions — A UX and Code Quality Improvement Guide"
 description: "A practical guide covering solutions for scripts breaking with Astro View Transitions, introducing Pagefind full-text search, improving TypeScript type safety, centralizing constants, and more to improve UX and code quality."
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Website"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: Must-Read If You Use View Transitions
-  text: "When you adopt Astro's ClientRouter (View Transitions), page transitions become smoother, but all inline scripts stop re-executing. This article covers the solution patterns and practical techniques for improving UX and code quality."
+  text: "With Astro's ClientRouter, bundled module scripts normally run only once, while inline scripts may run again depending on navigation. Use lifecycle events when an interaction needs to be initialized after navigation."
 processFigure:
   title: UX Improvement Workflow
   steps:
@@ -63,7 +64,7 @@ This article covers the pitfalls of View Transitions and their solutions, along 
 
 ### Why Scripts Stop Working
 
-During normal page navigation, the browser re-parses the HTML and executes all scripts. However, View Transitions updates the page via DOM diffing, so **inline scripts are not re-executed**.
+Normal navigation reloads the HTML. ClientRouter changes script execution: **bundled module scripts run only once**, while inline scripts may re-execute on some navigations.
 
 The following types of processing are affected:
 
@@ -211,7 +212,7 @@ Adding `as const` to constant objects makes properties `readonly` and type infer
 
 ### Migrating Deprecated Imports
 
-Change `import { z } from 'astro:content'` (scheduled for removal in Astro 7) to `import { z } from 'astro/zod'`.
+Astro's current documentation imports `z` for content schemas from `astro/zod`. See the [content collections guide](https://docs.astro.build/en/guides/content-collections/).
 
 ---
 
@@ -259,7 +260,7 @@ Implement automatic pagination every 6 articles, navigation with ellipsis (`1 2 
 
 ### Sticky Header Anchor Links
 
-With a sticky header, anchor link destinations get hidden behind the header. Resolve this with the following UnoCSS preflight settings:
+A sticky header can hide an anchor target. The following UnoCSS preflight example reflects the setup used at the time; in the current Tailwind setup, apply CSS with the same purpose.
 
 ```css
 [id] {

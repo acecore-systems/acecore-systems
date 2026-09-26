@@ -2,6 +2,7 @@
 title: "Guide d'amélioration de la qualité d'un site Astro, suite - Ajustements finaux pour atteindre 100 sur tous les critères de PageSpeed Insights"
 description: "Compte rendu des derniers ajustements effectués après l'article précédent : désactivation de Cloudflare Web Analytics, chargement différé de GA4 et de l'interface de recherche, obtention de 100 sur les quatre critères de PageSpeed Insights en mobile et en desktop, nettoyage des breadcrumbs et des règles d'indexation dans Search Console, migration vers des icônes SVG partagées et explication des optimisations supplémentaires testées mais non retenues."
 date: 2026-03-29T02:30
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags:
   ["Technologie", "Astro", "Performance", "Accessibilité", "SEO", "Site web"]
@@ -123,6 +124,8 @@ faq:
     - question: Y a-t-il eu des optimisations testées mais non retenues ?
       answer: "Oui. J'ai comparé, entre autres, un découpage plus fin de BaseLayout.css, des ajustements visant uniquement à faire disparaître l'affichage du network dependency tree, et même une réduction plus poussée des tiers jusqu'à GA4. Avec un mobile déjà stable à 100, ces variantes auraient apporté plus de complexité ou de perte de mesure que de bénéfice réel, elles ont donc été écartées."
 ---
+
+**Mise à jour du 26 septembre 2026 :** Le score de 100 correspond à une mesure PageSpeed Insights du 29 mars 2026. Il ne garantit ni le score actuel ni l'expérience de tous les utilisateurs réels. Voir la [documentation de Google](https://developers.google.com/speed/docs/insights/v5/about) sur les données de laboratoire, de terrain et leur variabilité.
 
 ## Introduction
 

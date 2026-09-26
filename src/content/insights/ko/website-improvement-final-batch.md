@@ -2,6 +2,7 @@
 title: "Astro 사이트 품질 개선 가이드 속편 - PageSpeed Insights 전 항목 100점을 만든 최종 조정"
 description: "이전 글 이후 마지막으로 진행한 개선을 정리합니다. Cloudflare Web Analytics 중지, GA4와 검색 UI의 지연 로드, PageSpeed Insights 모바일과 데스크톱 4개 항목 모두 100점 달성, Search Console의 빵부스러기와 색인 정리, 공유 SVG 아이콘으로의 이행, 그리고 시도했지만 채택하지 않은 추가 최적화 판단까지 한 번에 정리했습니다."
 date: 2026-03-29T02:30
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["기술", "Astro", "성능", "접근성", "SEO", "웹사이트"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -122,6 +123,8 @@ faq:
     - question: 시도했지만 채택하지 않은 최적화도 있었나요?
       answer: "있었습니다. BaseLayout.css를 더 잘게 나누는 안, network dependency tree 표시 자체를 없애는 안, GA4까지 줄여 third-party를 더 최소화하는 안 등을 비교했습니다. 하지만 모바일 100점이 이미 안정적으로 유지되는 상황에서 복잡성이나 측정 손실이 더 커져 채택하지 않았습니다."
 ---
+
+**2026년 9월 26일 추가:** 100점은 2026년 3월 29일 PageSpeed Insights 측정 결과입니다. 현재 점수나 모든 실제 사용자의 경험을 보장하지 않습니다. 실험실 데이터와 실제 사용자 데이터 및 점수 변동은 [Google 공식 설명](https://developers.google.com/speed/docs/insights/v5/about)을 참고하세요.
 
 ## 소개
 

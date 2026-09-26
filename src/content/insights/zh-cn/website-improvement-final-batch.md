@@ -2,6 +2,7 @@
 title: "Astro 站点品质改善指南 续篇 - 达成 PageSpeed Insights 全项目 100 分的最终调整"
 description: "记录上一篇文章之后完成的最后一轮优化：停用 Cloudflare Web Analytics、延后加载 GA4 与搜索 UI、实现 PageSpeed Insights 移动端与桌面端四项全满分、整理 Search Console 中的面包屑与索引策略、迁移到共享 SVG 图标，以及说明哪些额外优化尝试过但没有采纳。"
 date: 2026-03-29T02:30
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["技术", "Astro", "性能", "无障碍", "SEO", "网站"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -122,6 +123,8 @@ faq:
     - question: 有没有试过但最终没有采纳的优化？
       answer: "有。比如继续拆分 BaseLayout.css、为了让 network dependency tree 的显示本身消失而继续调整，甚至把 third-party 再缩到连 GA4 都要动的程度，这些方案都比较过。但在移动端 100 分已经稳定的前提下，它们带来的复杂度或测量损失大于实际收益，所以没有采纳。"
 ---
+
+**2026年9月26日补充：** 这里的100分是2026年3月29日PageSpeed Insights的测量结果，不保证当前分数或所有真实用户的体验。实验室与真实用户数据的差异及结果波动，请参阅[Google官方说明](https://developers.google.com/speed/docs/insights/v5/about)。
 
 ## 前言
 
