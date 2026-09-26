@@ -42,4 +42,11 @@ const eyebrow: Record<Locale, string> = {
       </div>
     </div>
   </section>
+  <script>
+    try {
+      sessionStorage.removeItem("systems-contact-retry");
+    } catch {
+      // The form also works when session storage is unavailable.
+    }
+  </script>
 </BaseLayout>
