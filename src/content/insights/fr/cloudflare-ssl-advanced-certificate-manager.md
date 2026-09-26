@@ -5,7 +5,7 @@ date: 2026-03-31T00:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Sécurité", "Infrastructure"]
 image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-lastUpdated: "2026-09-26T19:15:00+09:00"
+lastUpdated: "2026-09-26T18:45:00+09:00"
 ---
 
 Cloudflare a fait évoluer **Dedicated SSL Certificates** vers **Advanced Certificate Manager (ACM)** en 2021. Avant de choisir un certificat, vérifiez les noms d’hôte et le type de configuration DNS.

@@ -26,9 +26,11 @@ faq:
       answer: Limitar el número de páginas, preparar sus propios textos y fotos, aprovechar los activos de marca existentes y separar las mejoras post-lanzamiento del alcance inicial son enfoques efectivos.
     - question: ¿Podemos consultar también sobre las operaciones tras el lanzamiento?
       answer: Sí. Acecore puede brindar soporte continuo que cubre no solo la producción del sitio web, sino también analítica web, actualizaciones de contenido, propuestas de mejora y mantenimiento.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Una de las preguntas más frecuentes al consultar sobre producción de sitios web es "¿cuánto costará?" La respuesta corta es: el costo no está determinado solo por el número de páginas. Varía significativamente según el propósito del sitio, la profundidad del diseño, el uso de un CMS, la redacción de contenidos, la fotografía, el SEO y si se incluye el mantenimiento post-lanzamiento.
+> **Actualizado el 26 de septiembre de 2026:** Las cifras siguientes son ejemplos orientativos para comparar alcances, no una encuesta de precios de mercado ni un presupuesto vinculante de Acecore. Define funciones, materiales y mantenimiento; después consulta las [tarifas actuales](/es/pricing/) y solicita un presupuesto específico.
+> Una de las preguntas más frecuentes al consultar sobre producción de sitios web es "¿cuánto costará?" La respuesta corta es: el costo no está determinado solo por el número de páginas. Varía significativamente según el propósito del sitio, la profundidad del diseño, el uso de un CMS, la redacción de contenidos, la fotografía, el SEO y si se incluye el mantenimiento post-lanzamiento.
 
 Acecore Systems ofrece apoyo integral desde la definición de requisitos antes de la producción hasta la operación posterior al lanzamiento. Si está considerando crear o renovar un sitio web, consulte también nuestro [servicio de desarrollo por encargo](/services/development/).
 

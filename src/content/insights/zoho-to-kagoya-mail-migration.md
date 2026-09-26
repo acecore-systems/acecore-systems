@@ -82,9 +82,11 @@ faq:
       answer: 受信側のメールサーバーが迷惑メールと判定する確率が上がります。特にGmailは厳しく、SPF・DKIM 両方の PASS が求められるケースが増えています。
     - question: Zoho Workplace を解約するとデータはどうなる？
       answer: 有料プランの期限が切れると無料プランに移行します。無料プランにもストレージ制限があるため、必要なデータは事前にエクスポートしておくべきです。アカウント自体を削除するとすべてのデータが失われます。
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Zoho Workplace から別のメールサービスへ移行したいけど、DNS やメール認証の設定が不安――そんな方に向けた実践的な移行ガイドです。この記事では Zoho Mail から KAGOYA MAIL への移行を例に、DNS 切り替え・SPF/DKIM 認証・旧サービスのデータ棚卸しまでの手順を解説します。
+> **2026年9月26日追記:** 記載した料金・管理画面・DNS値は移行当時の記録です。別環境への移行時にそのままコピーせず、[KAGOYA MAIL](https://www.kagoya.jp/mail/)と[Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html)の現行案内、契約画面、自分のドメインに表示される認証値を確認してください。
+> Zoho Workplace から別のメールサービスへ移行したいけど、DNS やメール認証の設定が不安――そんな方に向けた実践的な移行ガイドです。この記事では Zoho Mail から KAGOYA MAIL への移行を例に、DNS 切り替え・SPF/DKIM 認証・旧サービスのデータ棚卸しまでの手順を解説します。
 
 DNS や SSL を含めたWebインフラ全体の整理には、[Cloudflare の SSL オプション解説](/blog/cloudflare-ssl-advanced-certificate-manager/)や[運用・保守支援](/services/operations/)もあわせて確認してください。
 
