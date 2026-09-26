@@ -51,9 +51,11 @@ faq:
       answer: El requisito principal es haber acumulado datos de asientos contables de forma rutinaria con servicios de contabilidad en la nube como Money Forward. Copilot se encarga de organizar y verificar los datos acumulados, por lo que sin datos no puede funcionar.
     - question: ¿Cómo se detectaron las inconsistencias en los asientos?
       answer: Se hizo que Copilot cotejara el documento de criterios (reglas de cuentas contables) con el libro contable, detectando mecánicamente los asientos que no cumplían las reglas. Se encontraron 8 inconsistencias entre 837 asientos y se corrigieron.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Delegué prácticamente todo el trabajo operativo de la declaración de impuestos al Agent Mode de GitHub Copilot. Como resultado, desde la clasificación de 837 asientos contables hasta la elaboración y verificación de la declaración se completó dentro de VS Code. Solo la presentación final la hice desde la app del smartphone con autenticación por tarjeta My Number.
+> **Añadido el 26 de septiembre de 2026:** Este texto documenta una declaración personal realizada en marzo de 2026. La clasificación y entrada de datos con IA no garantizan un tratamiento fiscal correcto. La persona declarante debe revisar justificantes, declaración y resultado del envío, y verificar las reglas del año correspondiente en la [Agencia Tributaria de Japón](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
+> Delegué prácticamente todo el trabajo operativo de la declaración de impuestos al Agent Mode de GitHub Copilot. Como resultado, desde la clasificación de 837 asientos contables hasta la elaboración y verificación de la declaración se completó dentro de VS Code. Solo la presentación final la hice desde la app del smartphone con autenticación por tarjeta My Number.
 
 En este artículo registro sin reservas "hasta dónde pude delegar en Copilot" y "qué hizo el humano".
 

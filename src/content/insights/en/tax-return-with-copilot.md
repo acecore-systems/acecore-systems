@@ -51,9 +51,11 @@ faq:
       answer: The biggest prerequisite is having journal data accumulated daily through cloud accounting software like MoneyForward. Copilot handles the organization and verification of accumulated data, so it cannot function without data.
     - question: How were journal inconsistencies detected?
       answer: Copilot was given the policy document (account category rules) and the journal ledger to cross-check, mechanically detecting entries that didn't match the rules. Out of 837 entries, 8 inconsistencies were found and corrected.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-I delegated virtually all the real work of filing a tax return to GitHub Copilot's Agent Mode. The result: everything from classifying 837 journal entries to creating and verifying the tax forms was completed within VS Code. The only thing left was to authenticate with My Number Card through the smartphone app and submit — and the tax return was done.
+> **Added September 26, 2026:** This records one person’s filing work in March 2026. AI classification and form entry do not guarantee correct tax treatment. The filer must review source documents, the return, and the submission result; check the rules and procedure for the relevant year with [Japan’s National Tax Agency](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
+> I delegated virtually all the real work of filing a tax return to GitHub Copilot's Agent Mode. The result: everything from classifying 837 journal entries to creating and verifying the tax forms was completed within VS Code. The only thing left was to authenticate with My Number Card through the smartphone app and submit — and the tax return was done.
 
 This article is a candid record of "how much Copilot could handle" and "what the human actually did."
 

@@ -82,9 +82,11 @@ faq:
       answer: Die Wahrscheinlichkeit steigt, dass empfangende Mailserver Ihre E-Mails als Spam markieren. Gmail ist dabei besonders streng geworden und erfordert in immer mehr Fällen, dass sowohl SPF als auch DKIM PASS erreichen.
     - question: Was passiert mit den Daten, wenn man Zoho Workplace kündigt?
       answer: Nach Ablauf des kostenpflichtigen Plans erfolgt ein Übergang zum kostenlosen Plan. Auch der kostenlose Plan hat Speichergrenzen, daher sollten notwendige Daten vorher exportiert werden. Das Löschen des Kontos selbst entfernt alle Daten dauerhaft.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Sie möchten von Zoho Workplace zu einem anderen E-Mail-Dienst migrieren, machen sich aber Sorgen über DNS- und E-Mail-Authentifizierungseinstellungen? Dieser Praxisleitfaden führt Sie durch den Prozess. Am Beispiel der Migration von Zoho Mail zu KAGOYA MAIL behandeln wir die DNS-Umstellung, SPF/DKIM-Authentifizierung und die Datenprüfung des alten Dienstes.
+> **Ergänzt am 26. September 2026:** Preise, Dashboard-Schritte und DNS-Werte dokumentieren die damalige Migration. Übernehmen Sie sie nicht für eine andere Domain, ohne aktuelle Angaben von [KAGOYA MAIL](https://www.kagoya.jp/mail/) und [Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html), Ihren Vertrag und die Authentifizierungswerte Ihrer Domain zu prüfen.
+> Sie möchten von Zoho Workplace zu einem anderen E-Mail-Dienst migrieren, machen sich aber Sorgen über DNS- und E-Mail-Authentifizierungseinstellungen? Dieser Praxisleitfaden führt Sie durch den Prozess. Am Beispiel der Migration von Zoho Mail zu KAGOYA MAIL behandeln wir die DNS-Umstellung, SPF/DKIM-Authentifizierung und die Datenprüfung des alten Dienstes.
 
 ## Kommt Ihnen das bekannt vor?
 

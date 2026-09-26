@@ -51,9 +51,11 @@ faq:
       answer: Le prérequis principal est d'avoir accumulé des données comptables au quotidien via un logiciel de comptabilité cloud comme Money Forward. Copilot se charge du tri et de la vérification des données accumulées, il ne peut pas fonctionner sans données.
     - question: Comment les incohérences dans les écritures ont-elles été détectées ?
       answer: Copilot a comparé le document de référence (règles des comptes comptables) avec le journal comptable pour détecter mécaniquement les écritures non conformes. Sur 837 écritures, 8 incohérences ont été identifiées et corrigées.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-J'ai confié la totalité du travail pratique de ma déclaration fiscale au Agent Mode de GitHub Copilot. Résultat : de la classification de 837 écritures comptables à la création et vérification de la déclaration, tout s'est fait dans VS Code. La soumission finale a été effectuée depuis l'application smartphone avec authentification par carte My Number, et la déclaration fiscale a été complétée avec succès.
+> **Ajout du 26 septembre 2026 :** Cet article relate une déclaration personnelle effectuée en mars 2026. Le classement et la saisie par IA ne garantissent pas la justesse fiscale. Le déclarant doit vérifier les justificatifs, la déclaration et le résultat de l’envoi, puis consulter les règles de l’année concernée auprès de l’[administration fiscale japonaise](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
+> J'ai confié la totalité du travail pratique de ma déclaration fiscale au Agent Mode de GitHub Copilot. Résultat : de la classification de 837 écritures comptables à la création et vérification de la déclaration, tout s'est fait dans VS Code. La soumission finale a été effectuée depuis l'application smartphone avec authentification par carte My Number, et la déclaration fiscale a été complétée avec succès.
 
 Dans cet article, je documente en toute transparence « jusqu'où Copilot a pu prendre en charge le travail » et « ce que l'humain a fait ».
 

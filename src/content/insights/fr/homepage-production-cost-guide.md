@@ -26,9 +26,11 @@ faq:
       answer: Limiter le nombre de pages, préparer vos propres textes et photos, exploiter les actifs de marque existants et séparer les améliorations post-lancement du périmètre initial sont des approches efficaces.
     - question: Peut-on vous consulter aussi sur les opérations après le lancement ?
       answer: Oui. Acecore peut fournir un support continu couvrant non seulement la production du site web, mais aussi l'analyse d'audience, les mises à jour de contenu, les propositions d'amélioration et la maintenance.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-L'une des questions les plus fréquentes lors d'une consultation sur la création de site web est « combien cela va-t-il coûter ? » La réponse courte est : le coût n'est pas déterminé uniquement par le nombre de pages. Il varie considérablement en fonction de l'objectif du site, de la profondeur du design, de l'utilisation d'un CMS, de la rédaction de contenu, de la photographie, du SEO et de l'inclusion ou non de la maintenance post-lancement.
+> **Mise à jour du 26 septembre 2026 :** Les montants ci-dessous sont des exemples indicatifs pour comparer les périmètres, pas une étude des prix du marché ni un devis ferme d’Acecore. Définissez fonctions, contenus et maintenance, puis consultez les [tarifs actuels](/fr/pricing/) et demandez un devis adapté.
+> L'une des questions les plus fréquentes lors d'une consultation sur la création de site web est « combien cela va-t-il coûter ? » La réponse courte est : le coût n'est pas déterminé uniquement par le nombre de pages. Il varie considérablement en fonction de l'objectif du site, de la profondeur du design, de l'utilisation d'un CMS, de la rédaction de contenu, de la photographie, du SEO et de l'inclusion ou non de la maintenance post-lancement.
 
 Acecore Systems propose un accompagnement complet, de la définition des besoins avant la production jusqu’à l’exploitation après la mise en ligne. Si vous envisagez de créer ou de refondre un site, consultez également notre [service de développement sur mesure](/services/development/).
 

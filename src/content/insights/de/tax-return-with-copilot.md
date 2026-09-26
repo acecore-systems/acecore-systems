@@ -51,9 +51,11 @@ faq:
       answer: Die wichtigste Voraussetzung sind täglich über Cloud-Buchhaltungssoftware wie MoneyForward angesammelte Buchungsdaten. Copilot übernimmt die Organisation und Überprüfung der angesammelten Daten und kann daher ohne Daten nicht funktionieren.
     - question: Wie wurden Buchungsinkonsistenzen erkannt?
       answer: Copilot erhielt das Richtliniendokument (Kontokategorieregeln) und das Buchungsjournal zum Abgleich und erkannte mechanisch Einträge, die nicht den Regeln entsprachen. Von 837 Einträgen wurden 8 Unstimmigkeiten gefunden und korrigiert.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Ich habe praktisch die gesamte eigentliche Arbeit der Steuererklärung an GitHub Copilots Agent Mode delegiert. Das Ergebnis: Alles von der Klassifizierung von 837 Buchungseinträgen bis zur Erstellung und Überprüfung der Steuerformulare wurde innerhalb von VS Code abgeschlossen. Das Einzige, was noch übrig blieb, war die Authentifizierung mit der My Number Card über die Smartphone-App und die Übermittlung — und die Steuererklärung war erledigt.
+> **Ergänzt am 26. September 2026:** Dieser Beitrag dokumentiert eine persönliche Steuererklärung vom März 2026. KI-Klassifizierung und Eingabe gewährleisten keine steuerliche Richtigkeit. Die erklärende Person muss Belege, Erklärung und Übermittlungsergebnis prüfen und die Regeln des betreffenden Jahres bei der [japanischen Steuerbehörde](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm) nachlesen.
+> Ich habe praktisch die gesamte eigentliche Arbeit der Steuererklärung an GitHub Copilots Agent Mode delegiert. Das Ergebnis: Alles von der Klassifizierung von 837 Buchungseinträgen bis zur Erstellung und Überprüfung der Steuerformulare wurde innerhalb von VS Code abgeschlossen. Das Einzige, was noch übrig blieb, war die Authentifizierung mit der My Number Card über die Smartphone-App und die Übermittlung — und die Steuererklärung war erledigt.
 
 Dieser Artikel ist ein ehrlicher Bericht darüber, „wie viel Copilot übernehmen konnte" und „was der Mensch tatsächlich getan hat."
 

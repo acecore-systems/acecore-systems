@@ -82,9 +82,11 @@ faq:
       answer: The probability of receiving mail servers marking your email as spam increases. Gmail in particular has become strict, with more cases requiring both SPF and DKIM to PASS.
     - question: What happens to data when you cancel Zoho Workplace?
       answer: When the paid plan expires, it transitions to a free plan. The free plan also has storage limits, so you should export any necessary data beforehand. Deleting the account itself permanently removes all data.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Want to migrate from Zoho Workplace to another email service but worried about DNS and email authentication settings? This practical guide walks you through the process. Using the migration from Zoho Mail to KAGOYA MAIL as an example, we cover DNS switchover, SPF/DKIM authentication, and data auditing of the old service.
+> **Added September 26, 2026:** Prices, dashboard steps, and DNS values below record the migration at the time. Do not copy them into another domain without checking current [KAGOYA MAIL](https://www.kagoya.jp/mail/) and [Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html) information, your contract, and the authentication values shown for your own domain.
+> Want to migrate from Zoho Workplace to another email service but worried about DNS and email authentication settings? This practical guide walks you through the process. Using the migration from Zoho Mail to KAGOYA MAIL as an example, we cover DNS switchover, SPF/DKIM authentication, and data auditing of the old service.
 
 ## Does This Sound Like Your Situation?
 

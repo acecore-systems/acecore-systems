@@ -51,9 +51,11 @@ faq:
       answer: O maior pré-requisito é acumular dados de lançamentos contábeis no dia a dia usando contabilidade em nuvem como o MoneyForward. O Copilot é responsável por organizar e verificar os dados acumulados, então sem dados ele não funciona.
     - question: Como as inconsistências nos lançamentos foram detectadas?
       answer: O Copilot confrontou o guia de políticas (regras de contas contábeis) com o livro-razão e detectou mecanicamente os lançamentos que não estavam de acordo com as regras. Foram encontradas 8 inconsistências em 837 lançamentos, que foram corrigidas.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Deleguei todo o trabalho operacional da declaração de imposto de renda ao Agent Mode do GitHub Copilot. O resultado: desde a classificação de 837 lançamentos contábeis até a criação e verificação do formulário da declaração, tudo foi concluído dentro do VS Code. Apenas a entrega final foi feita pelo aplicativo de smartphone com autenticação por cartão My Number, completando a declaração.
+> **Adicionado em 26 de setembro de 2026:** Este texto registra uma declaração pessoal realizada em março de 2026. A classificação e o preenchimento por IA não garantem a correção fiscal. A pessoa declarante deve conferir comprovantes, declaração e resultado do envio e verificar as regras do ano aplicável na [Agência Tributária do Japão](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
+> Deleguei todo o trabalho operacional da declaração de imposto de renda ao Agent Mode do GitHub Copilot. O resultado: desde a classificação de 837 lançamentos contábeis até a criação e verificação do formulário da declaração, tudo foi concluído dentro do VS Code. Apenas a entrega final foi feita pelo aplicativo de smartphone com autenticação por cartão My Number, completando a declaração.
 
 Neste artigo, registro sem esconder nada "até onde o Copilot conseguiu fazer" e "o que o humano fez".
 

@@ -26,9 +26,11 @@ faq:
       answer: Die Seitenanzahl begrenzen, eigene Texte und Fotos vorbereiten, bestehende Markenwerte nutzen und Post-Launch-Verbesserungen vom ursprünglichen Umfang trennen sind effektive Ansätze.
     - question: Kann man auch über den Betrieb nach dem Launch beraten?
       answer: Ja. Acecore kann laufende Unterstützung bieten, die nicht nur die Website-Produktion, sondern auch Zugriffsanalyse, Content-Updates, Verbesserungsvorschläge und Wartung umfasst.
+lastUpdated: "2026-09-26T18:55:00+09:00"
 ---
 
-Eine der häufigsten Fragen bei der Beratung zur Website-Erstellung ist „wie viel wird es kosten?" Die kurze Antwort lautet: Die Kosten werden nicht allein durch die Seitenanzahl bestimmt. Sie variieren erheblich je nach Zweck der Website, Tiefe des Designs, Einsatz eines CMS, Texterstellung, Fotografie, SEO und ob Post-Launch-Wartung enthalten ist.
+> **Aktualisiert am 26. September 2026:** Die Beträge unten sind redaktionelle Budgetbeispiele zum Vergleich von Leistungsumfängen, keine Marktpreisstudie und kein verbindliches Angebot von Acecore. Klären Sie Funktionen, Materialien und Wartung und prüfen Sie dann die [aktuellen Preise](/de/pricing/) sowie ein individuelles Angebot.
+> Eine der häufigsten Fragen bei der Beratung zur Website-Erstellung ist „wie viel wird es kosten?" Die kurze Antwort lautet: Die Kosten werden nicht allein durch die Seitenanzahl bestimmt. Sie variieren erheblich je nach Zweck der Website, Tiefe des Designs, Einsatz eines CMS, Texterstellung, Fotografie, SEO und ob Post-Launch-Wartung enthalten ist.
 
 Acecore Systems unterstützt durchgängig von der Anforderungsklärung vor der Umsetzung bis zum Betrieb nach dem Launch. Wenn Sie eine neue Website oder einen Relaunch planen, informieren Sie sich auch über unseren [Auftragsentwicklungsservice](/services/development/).
 
