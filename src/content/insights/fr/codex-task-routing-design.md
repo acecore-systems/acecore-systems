@@ -13,6 +13,8 @@ callout:
 
 Pour mener plusieurs travaux avec Codex, choisir un modèle n'est qu'une partie de la décision. Il faut aussi définir quelle étape peut être isolée, quel contexte transmettre et comment vérifier le résultat. Acecore a publié [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) pour expliciter ces choix.
 
+![Quatre étapes de vérification : version de la politique, critères de transfert, preuves d'exécution et résultats mesurés](/images/insights/codex-task-routing-evidence.webp)
+
 ## Garder le travail courant chez l'agent principal
 
 L'agent principal effectue les recherches, l'implémentation et les vérifications ordinaires. Il ne confie une étape délimitée à un spécialiste que si cela apporte une valeur concrète. Le plugin conserve le modèle et les réglages de raisonnement choisis par l'utilisateur. Il évite un transfert vers une autre instance du même modèle ou une parallélisation sans tâche indépendante pour l'agent principal.

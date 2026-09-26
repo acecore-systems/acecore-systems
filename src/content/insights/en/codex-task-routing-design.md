@@ -13,6 +13,8 @@ callout:
 
 When several jobs run through Codex, choosing a model is only part of the decision. We also need to decide which step can stand alone, what context travels with it, and how its result will be checked. Acecore published [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) to make those decisions explicit.
 
+![Four stages of verification: policy version, handoff criteria, run evidence, and measured outcome](/images/insights/codex-task-routing-evidence.webp)
+
 ## Keep routine work with the parent
 
 The parent handles ordinary research, implementation, and verification. A specialist receives a bounded step only when the handoff adds concrete value. The plugin preserves the model and reasoning settings selected for the parent. It avoids transferring work just to reach another instance of the same model, or starting parallel work when the parent has no independent step.
