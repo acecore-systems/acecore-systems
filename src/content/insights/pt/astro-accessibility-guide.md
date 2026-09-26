@@ -1,7 +1,8 @@
 ---
-title: "Guia prático para tornar seu site Astro compatível com WCAG AA"
-description: "Apresentamos todos os passos de melhoria de acessibilidade realizados em um site com Astro + UnoCSS. Abrangemos atributos aria, contraste, gerenciamento de foco, validação de formulários, suporte a leitores de tela e outras medidas necessárias para conformidade WCAG AA."
+title: "Melhorias práticas de acessibilidade para um site Astro"
+description: "Registro das melhorias de acessibilidade em um site Astro + UnoCSS em março de 2026: ARIA, contraste, foco, formulários e leitores de tela."
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Acessibilidade"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: Confirme pontuação 100 no Accessibility do PageSpeed.
       icon: i-lucide-check-circle
 checklist:
-  title: Checklist de conformidade WCAG AA
+  title: Melhorias de acessibilidade registradas na época
   items:
     - text: Razão de contraste do texto é 4.5:1 ou superior (3:1 para texto grande)
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: Se o Accessibility do PageSpeed está em 100 pontos, o site é compatível com WCAG?
       answer: "Mesmo com 100 pontos, não se pode garantir conformidade total com WCAG. O Lighthouse tem itens de verificação limitados, e existem critérios que só podem ser confirmados manualmente (ordem lógica de leitura, texto alt adequado, etc.). São necessários tanto testes automáticos quanto manuais."
 ---
+
+**Atualização de 26 de setembro de 2026:** O código e a pontuação PageSpeed Accessibility de 100 abaixo registram o site Astro + UnoCSS de março de 2026. O site corporativo atual declara Tailwind CSS 4.3.3. Esses controles selecionados e uma pontuação automatizada não comprovam conformidade WCAG AA em todo o site. A avaliação deve definir páginas e processos completos e verificar todos os critérios dos níveis A e AA com testes automáticos e humanos ([requisitos do W3C](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 
 ## Introdução
 

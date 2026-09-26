@@ -1,7 +1,8 @@
 ---
-title: "AstroサイトのアクセシビリティをWCAG AA準拠にする実践ガイド"
-description: "Astro + UnoCSS 構成のサイトで実施したアクセシビリティ改善の全手順を紹介します。aria属性・コントラスト・フォーカス管理・フォーム検証・スクリーンリーダー対応など、WCAG AA準拠に必要な施策を網羅しています。"
+title: "Astroサイトのアクセシビリティ改善実践ガイド"
+description: "2026年3月のAstro + UnoCSSサイトで行ったアクセシビリティ改善の記録。aria属性、コントラスト、フォーカス、フォーム、スクリーンリーダー対応を例示します。"
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["技術", "Astro", "アクセシビリティ"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: PageSpeed の Accessibility スコアで100点を確認。
       icon: i-lucide-check-circle
 checklist:
-  title: WCAG AA 準拠チェックリスト
+  title: 当時の改善項目
   items:
     - text: テキストのコントラスト比が4.5:1以上（大文字は3:1以上）
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: PageSpeedのAccessibilityが100点ならWCAG準拠ですか？
       answer: "100点でもWCAG完全準拠とは言い切れません。Lighthouseはチェック項目が限られており、手動でしか確認できない基準（論理的な読み上げ順序、適切なalt文言など）があります。自動テスト＋手動テストの両方が必要です。"
 ---
+
+**2026年9月26日追記:** 本文のコードとPageSpeed Accessibility 100点は2026年3月のAstro + UnoCSS構成での記録です。現行の公式サイトの依存宣言はTailwind CSS 4.3.3です。ここに挙げた項目や自動検査の得点だけで、サイト全体のWCAG AA準拠を確認したとは言えません。準拠判定には対象ページと一連の操作を定め、A・AAの達成基準を自動検査と人手による検査の両方で確認する必要があります（[W3Cの適合要件](https://www.w3.org/WAI/WCAG22/Understanding/conformance)）。
 
 ## はじめに
 
@@ -221,7 +224,7 @@ CSSで `list-style: none` を設定すると、Safari のスクリーンリー�
 アクセシビリティ改善は、一つひとつは小さな変更ですが、積み重ねることでサイト全体の品質が大きく向上します。特に効果が大きかったのは以下の3つです。
 
 1. **focus-visibleの全体適用**：キーボード操作でのナビゲーションが劇的に改善
-2. **コントラスト比の修正**：`text-slate-400` → `text-slate-500` だけで WCAG AA クリア
+2. **コントラスト比の修正**：当時の白背景と通常テキストの組み合わせで、`text-slate-400` → `text-slate-500` に変更して4.5:1以上を確保
 3. **外部リンクのSR通知**：`rehype-external-links` と組み合わせて全リンクを自動対応
 
 まずは axe DevTools でサイトをスキャンし、自動検出できる問題から片付けていくのがおすすめです。

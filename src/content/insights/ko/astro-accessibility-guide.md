@@ -1,7 +1,8 @@
 ---
-title: "Astro 사이트를 WCAG AA 준수로 만드는 실전 가이드"
-description: "Astro + UnoCSS 사이트에서 구현한 접근성 개선에 대한 종합 가이드. aria 속성, 명도 대비, 포커스 관리, 폼 유효성 검사, 스크린 리더 지원 등 WCAG AA 준수에 필요한 모든 것을 다룹니다."
+title: "Astro 사이트 접근성 개선 실전 가이드"
+description: "2026년 3월 Astro + UnoCSS 사이트에서 실시한 접근성 개선 기록입니다. ARIA, 명도 대비, 포커스, 폼, 스크린 리더 예시를 다룹니다."
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["기술", "Astro", "접근성"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: PageSpeed 접근성에서 100점을 확인합니다.
       icon: i-lucide-check-circle
 checklist:
-  title: WCAG AA 준수 체크리스트
+  title: 당시의 접근성 개선 항목
   items:
     - text: 텍스트 명도 대비가 4.5:1 이상인지 (큰 텍스트는 3:1)
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: PageSpeed 접근성 점수 100이면 WCAG 준수인가요?
       answer: "100점이라도 완전한 WCAG 준수를 보장하지는 않습니다. Lighthouse의 체크 항목은 제한적이며, 일부 기준은 수동으로만 확인할 수 있습니다 (논리적 읽기 순서, 적절한 alt 텍스트 등). 자동 테스트와 수동 테스트가 모두 필요합니다."
 ---
+
+**2026년 9월 26일 추가:** 아래 코드와 PageSpeed Accessibility 100점은 2026년 3월 Astro + UnoCSS 구성의 기록입니다. 현재 기업 사이트의 의존성 선언은 Tailwind CSS 4.3.3입니다. 여기의 일부 점검 항목과 자동 검사 점수만으로 사이트 전체의 WCAG AA 준수를 입증할 수 없습니다. 평가 대상 페이지와 전체 절차를 정하고 A 및 AA의 모든 성공 기준을 자동 검사와 사람의 검사로 확인해야 합니다([W3C 적합성 요건](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 
 ## 서론
 
