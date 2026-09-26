@@ -1,7 +1,8 @@
 ---
 title: "Sveltia CMSで多言語ブログを運用する方法"
-description: "Sveltia CMSで日本語記事を更新し、GitHub ActionsとGitHub Copilotで翻訳PRを作る運用を、UI翻訳との違い、検索エンジン上のメリット、hreflang、RSS、sitemap、レビュー観点まで含めて整理します。"
+description: "2026年6月のCopilot翻訳PR導入記録と、2026年9月のOpenAI Batchによる現行運用を整理します。"
 date: 2026-06-07T17:00
+lastUpdated: 2026-09-26T17:15
 author: gui
 tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
@@ -11,7 +12,7 @@ callout:
   text: "ブラウザやウィジェットで画面上の文章を翻訳するだけでは、言語別URL、title、description、内部リンク、RSS、sitemap、hreflangまで言語別の資産にはなりません。検索エンジンに各言語ページとして渡すなら、翻訳結果を静的HTMLとして公開する設計が必要です。"
 processFigure:
   eyebrow: Translation Workflow
-  title: Sveltia CMSから翻訳PRまでの流れ
+  title: Sveltia CMSから翻訳PRまでの流れ（2026年6月の方式）
   description: 日本語をsource of truthにして、翻訳はGitHub側のPR運用に分離します。
   variant: inline
   steps:
@@ -83,6 +84,14 @@ faq:
     - question: 翻訳ページは重複コンテンツになりませんか？
       answer: "Googleは、主本文が翻訳されているローカライズページを単なる重複とは扱いません。各言語版を同じslugで対応させ、hreflangやsitemapで関係を示すのが基本です。"
 ---
+
+> **2026年9月26日更新:** 以下のCopilotによる翻訳PR作成手順は、2026年6月時点の導入記録です。現在の翻訳生成はOpenAI Batchへ移行しました。日本語を正本とし、翻訳版を言語別の静的ページとして公開する原則は共通です。
+
+## 現行の翻訳運用（2026年9月）
+
+Acecore公式サイトでは、日本語記事または日本語UI原稿がmainで更新されると、[Batch提出workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)が起動します。続けて入る編集をまとめるため15分待ち、最新のmainを確認してから翻訳を提出します。[回収workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)は結果を現在の日本語原稿のsourceHashと照合し、古い結果を除いて翻訳PRを作ります。[統合workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)は検証条件を満たした翻訳PRの自動統合を有効にします。翻訳後も用語、リンク、事実関係、自然さを確認する必要があります。
+
+## 2026年6月の導入記録
 
 問い合わせAI、Sveltia CMS、サービスCTAの導線まで整えてくると、次に効いてくるのが **多言語ブログの運用** です。
 

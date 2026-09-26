@@ -1,7 +1,8 @@
 ---
 title: "Sveltia CMS로 다국어 블로그를 운영하는 방법"
-description: "Sveltia CMS에서 일본어 원문을 편집하고, GitHub Actions와 GitHub Copilot으로 번역 PR을 만들어 정적 다국어 페이지를 배포하는 운영 방식과 UI 번역과의 차이, 검색 엔진상의 장점을 정리합니다."
+description: "2026년 6월 Copilot 번역 PR 도입 과정과 2026년 9월 OpenAI Batch 운영 방식을 함께 정리합니다."
 date: 2026-06-07T17:00
+lastUpdated: 2026-09-26T17:15
 author: gui
 tags: ["기술", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
@@ -11,7 +12,7 @@ callout:
   text: "브라우저 번역이나 번역 위젯은 독자가 현재 페이지를 읽는 데 도움이 되지만, 언어별 URL, title, description, 내부 링크, RSS, sitemap, hreflang을 자동으로 만들지는 않습니다. 검색 엔진에 각 언어 페이지를 전달하려면 번역된 정적 HTML이 필요합니다."
 processFigure:
   eyebrow: Translation Workflow
-  title: Sveltia CMS에서 번역 PR까지의 흐름
+  title: Sveltia CMS에서 번역 PR까지 (2026년 6월 방식)
   description: 일본어를 source of truth로 두고 번역은 GitHub 측 PR 운영으로 분리합니다.
   variant: inline
   steps:
@@ -79,6 +80,14 @@ faq:
     - question: 번역 페이지는 중복 콘텐츠인가요?
       answer: "Google 문서에 따르면 본문이 번역되어 있다면 현지화 페이지가 단순 중복으로 취급되는 것은 아닙니다. hreflang으로 관계를 명확히 합니다."
 ---
+
+> **2026년 9월 26일 추가:** 아래 Copilot 기반 번역 PR 절차는 2026년 6월 도입 기록입니다. 현재 번역 생성은 OpenAI Batch로 전환되었습니다. 일본어를 원본으로 삼고 번역된 정적 페이지를 언어별로 공개하는 원칙은 그대로입니다.
+
+## 현재 번역 운영 (2026년 9월)
+
+main에서 일본어 기사나 UI 원본이 변경되면 [Batch 제출 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)가 시작됩니다. 연속 편집을 모으기 위해 15분 기다린 뒤 최신 main을 확인하고 번역을 제출합니다. [결과 수집 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)는 현재 원본의 sourceHash와 결과를 비교하고 오래된 결과를 제외한 후 번역 PR을 만듭니다. [통합 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)는 조건을 충족한 PR에만 자동 통합을 활성화합니다. 용어, 링크, 사실관계, 자연스러운 표현은 계속 검토해야 합니다.
+
+## 2026년 6월 도입 기록
 
 Acecore는 주로 일본어로 콘텐츠를 편집하지만, 블로그는 9개 언어로 공개합니다. 여기서 중요한 점은 **화면에서 번역해 보여주는 것**과 **언어별 페이지를 공개하는 것**이 다르다는 점입니다.
 

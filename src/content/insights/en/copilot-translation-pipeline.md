@@ -1,7 +1,8 @@
 ---
 title: "How to Run a Multilingual Blog with Sveltia CMS"
-description: "A practical workflow for editing Japanese source articles in Sveltia CMS, generating translation PRs with GitHub Actions and GitHub Copilot, and publishing localized static pages that work better for search engines than UI-only translation."
+description: "This article records the June 2026 Copilot translation PR workflow and the September 2026 OpenAI Batch workflow."
 date: 2026-06-07T17:00
+lastUpdated: 2026-09-26T17:15
 author: gui
 tags: ["Technology", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
@@ -11,7 +12,7 @@ callout:
   text: "Browser translation and translation widgets can help readers, but they do not automatically create localized URLs, titles, descriptions, internal links, RSS feeds, sitemaps, or hreflang clusters. If search engines need to see each language as a real page, publish translated static HTML."
 processFigure:
   eyebrow: Translation Workflow
-  title: From Sveltia CMS to Translation PRs
+  title: From Sveltia CMS to Translation PRs (June 2026 workflow)
   description: Keep Japanese as the source of truth and move translation work into GitHub pull requests.
   variant: inline
   steps:
@@ -83,6 +84,14 @@ faq:
     - question: Are translated pages duplicate content?
       answer: "Google says localized pages are only duplicates when the main content remains untranslated. Keep each language page translated and connect variants with hreflang."
 ---
+
+> **Update, September 26, 2026:** The Copilot-based translation PR steps below document the June 2026 rollout. Translation generation has since moved to OpenAI Batch. Japanese remains the source of truth, and translated static pages remain the publishing format.
+
+## Current translation workflow (September 2026)
+
+When a Japanese article or UI source changes on main, the [Batch submission workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml) starts. It waits 15 minutes for follow-up edits, checks the current main, then submits the translation. The [collection workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) compares results with the current Japanese sourceHash, discards stale results, and creates a translation PR. The [merge workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) enables automatic merging only for eligible PRs. Terminology, links, facts, and naturalness still need review.
+
+## June 2026 rollout record
 
 Once a site has Sveltia CMS, an AI contact chat, and service-to-contact flows, the next operational question is multilingual publishing.
 

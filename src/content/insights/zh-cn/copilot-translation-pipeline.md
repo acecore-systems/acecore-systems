@@ -1,7 +1,8 @@
 ---
 title: "用 Sveltia CMS 运营多语言博客的方法"
-description: "介绍如何用 Sveltia CMS 编辑日语源文章，再通过 GitHub Actions 和 GitHub Copilot 生成翻译 PR，并说明它与界面翻译的区别、对搜索引擎的好处、hreflang、RSS、sitemap 和审核要点。"
+description: "本文记录 2026 年 6 月的 Copilot 翻译 PR 流程，以及 2026 年 9 月采用 OpenAI Batch 的现行流程。"
 date: 2026-06-07T17:00
+lastUpdated: 2026-09-26T17:15
 author: gui
 tags: ["技术", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
@@ -11,7 +12,7 @@ callout:
   text: "浏览器翻译或翻译插件可以帮助读者阅读当前页面，但不会自动生成语言专用 URL、title、description、内部链接、RSS、sitemap 或 hreflang。若希望搜索引擎把各语言当作独立页面理解，就需要发布翻译后的静态 HTML。"
 processFigure:
   eyebrow: Translation Workflow
-  title: 从Sveltia CMS到翻译PR的流程
+  title: 从 Sveltia CMS 到翻译 PR（2026 年 6 月流程）
   description: 以日语作为source of truth，将翻译分离到GitHub侧的PR流程中。
   variant: inline
   steps:
@@ -79,6 +80,14 @@ faq:
     - question: 翻译页面会被视为重复内容吗？
       answer: "Google 的说明是，主要内容已经翻译的本地化页面不会仅因为内容对应就成为重复页面。应保持 slug 对应，并通过 hreflang 表示关系。"
 ---
+
+> **2026 年 9 月 26 日更新：** 下文的 Copilot 翻译 PR 步骤记录的是 2026 年 6 月的实施方式。翻译生成现已迁移至 OpenAI Batch。日文仍是原文，按语言发布翻译后的静态页面这一原则仍然适用。
+
+## 当前翻译流程（2026 年 9 月）
+
+当 main 上的日文文章或界面原文发生变化时，[Batch 提交工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)启动。它等待 15 分钟以合并后续编辑，检查当前 main 后再提交翻译。[结果收集工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)将结果与当前日文原文的 sourceHash 对照，丢弃过期结果并创建翻译 PR。[合并工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)仅为符合条件的 PR 启用自动合并。术语、链接、事实和语言自然度仍需审核。
+
+## 2026 年 6 月的实施记录
 
 Acecore 的内容编辑以日语为中心，但博客面向9种语言发布。这里最容易混淆的是：**在界面上把文字翻译出来**，和 **把各语言页面作为网站内容发布出来**，是两件事。
 
