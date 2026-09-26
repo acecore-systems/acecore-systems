@@ -2,6 +2,7 @@
 title: "Conception technique pour transmettre le contexte d’un CTA de service au formulaire de contact"
 description: "Conception d’implémentation permettant de transmettre au formulaire le contexte lu sur une page de service. Elle couvre les mini-CTA dans Astro, le contrat de paramètres URL, la sélection initiale de catégorie, le prefill de l’objet, les URL multilingues, la mesure GA et la vérification du HTML généré."
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["Technologie", "Site web", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: Questions fréquentes
   items:
     - question: Pourquoi ne pas envoyer le service ciblé dans un champ hidden ?
-      answer: Pour ne pas augmenter le nombre de champs examinés par l’équipe destinataire et permettre la classification avec la seule catégorie existante. Chaque champ supplémentaire ajoute aussi des contrôles à l’exploitation et aux modèles de notification.
+      answer: "En juin 2026, la classification utilisait seulement la catégorie existante, sans champ masqué supplémentaire. Le formulaire Systems actuel conserve également service, from et entry dans des champs masqués pour l’intégration."
     - question: Est-ce sûr si les paramètres URL sont modifiés ?
       answer: Un service key inconnu revient aux demandes générales. La valeur envoyée est choisie parmi les option du formulaire, de sorte que la valeur URL n’est jamais utilisée directement.
     - question: Comment procéder sur un site multilingue ?
       answer: Générez la destination du CTA pour chaque locale et traduisez les libellés affichés dans le formulaire. Conserver des valeurs envoyées alignées sur des classifications japonaises stables rend l’exploitation destinataire plus cohérente.
 ---
+
+> **Mise à jour de septembre 2026:** Les exemples `ServiceSectionActions` et `service=web` décrivent le site corporate de juin 2026. Aujourd’hui, les [CTA de services Acecore Systems](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) transmettent `category`, `service`, `from` et `entry` ; le [formulaire](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) valide une clé courte et présélectionne catégorie et objet. Il utilise aussi des champs masqués pour la mesure et l’intégration : ne reprenez pas l’ancien choix « sans champs masqués » comme contrat actuel. Les valeurs d’URL doivent toujours être associées à des options autorisées.
 
 Lorsqu’une personne lisant une page de service pense « je veux vous consulter à ce sujet », l’envoyer simplement vers le formulaire fait perdre une partie du contexte.
 

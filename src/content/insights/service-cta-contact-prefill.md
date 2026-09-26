@@ -2,6 +2,7 @@
 title: "サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計"
 description: "サービスページで読んでいた文脈を問い合わせフォームへ引き継ぐための実装設計です。AstroサイトでのミニCTA、URLパラメータ契約、フォーム種別の初期選択、件名prefill、多言語URL、GA計測、生成HTML確認まで、他サイトでも使える形で整理します。"
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["技術", "Webサイト", "サービス", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: よくある質問
   items:
     - question: hidden項目で相談対象サービスを送らないのはなぜですか？
-      answer: 受信側で見る項目を増やさず、既存の問い合わせ種別だけで分類できるようにするためです。フォーム項目が増えるほど運用と通知テンプレートの確認点も増えます。
+      answer: "2026年6月当時は、既存の問い合わせ種別だけで分類し、hidden項目を増やさない設計でした。現在のSystemsフォームは、分類値とは別にservice・from・entryを連携用のhidden項目へ保存します。"
     - question: URLパラメータは改ざんされても大丈夫ですか？
       answer: 未知のservice keyはサービス全般へフォールバックします。送信値はフォーム側のoptionから選ぶため、URL値をそのまま受信値にしない設計にしています。
     - question: 多言語サイトではどう扱いますか？
       answer: CTAのリンク先はlocale別に生成し、フォーム表示ラベルも翻訳します。一方で受信値は日本語の安定した分類名に寄せると、受信側の運用がぶれにくくなります。
 ---
+
+> **2026年9月追記:** 以下の `ServiceSectionActions` と `service=web` の例は、2026年6月のAcecore公式サイトで使った構成の記録です。現在のAcecore Systemsでは、[サービス詳細のCTA](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro)が `category`、`service`、`from`、`entry` を付け、[問い合わせフォーム](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro)が短いservice keyを検証して種別と件名を初期化します。現在は計測・連携用のhidden項目も使うため、以下の「hidden項目を使わない」という設計を現行仕様としてコピーしないでください。URLの値を信頼せず、フォーム側の選択肢へ対応づける原則は引き続き有効です。
 
 サービスページを読んだユーザーが「この内容で相談したい」と思ったとき、単に問い合わせフォームへ送るだけでは、少し文脈が落ちます。
 

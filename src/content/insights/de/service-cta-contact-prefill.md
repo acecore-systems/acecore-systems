@@ -2,6 +2,7 @@
 title: "Technisches Design zur Übergabe des Kontexts eines Service-CTA an das Kontaktformular"
 description: "Implementierungsdesign, das den auf einer Serviceseite gelesenen Kontext an das Kontaktformular übergibt. Behandelt werden Mini-CTAs in Astro, der URL-Parameter-Vertrag, die anfängliche Kategorieauswahl, Subject-Prefill, mehrsprachige URLs, GA-Messung und Prüfung des generierten HTML."
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["Technologie", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: Häufig gestellte Fragen
   items:
     - question: Warum wird der Zielservice nicht in einem hidden-Feld gesendet?
-      answer: So steigt die Zahl der vom empfangenden Team zu prüfenden Felder nicht, und die vorhandene Anfragekategorie genügt zur Klassifizierung. Jedes zusätzliche Formularfeld erzeugt weitere Prüfungen in Betrieb und Benachrichtigungsvorlagen.
+      answer: "Im Juni 2026 wurde nur mit der vorhandenen Kategorie klassifiziert, ohne zusätzliche versteckte Felder. Das aktuelle Systems-Formular speichert service, from und entry zusätzlich in versteckten Feldern für die Integration."
     - question: Ist eine Manipulation der URL-Parameter unproblematisch?
       answer: Ein unbekannter service key fällt auf allgemeine Serviceanfragen zurück. Der gesendete Wert wird aus den option des Formulars gewählt; der URL-Wert selbst wird daher nicht direkt gesendet.
     - question: Wie funktioniert das auf einer mehrsprachigen Website?
       answer: CTA-Ziele werden pro locale erzeugt und sichtbare Formularlabels übersetzt. Stabile japanische Klassifikationswerte als gesendete Werte halten den Empfangsbetrieb konsistent.
 ---
+
+> **Aktualisierung vom September 2026:** Die Beispiele `ServiceSectionActions` und `service=web` dokumentieren das Unternehmenssite-Design vom Juni 2026. Heute übergeben [Acecore-Systems-Service-CTAs](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) `category`, `service`, `from` und `entry`; das [Kontaktformular](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) prüft kurze Service-Keys und belegt Kategorie und Betreff vor. Es nutzt auch versteckte Felder für Messung und Integration. Übernehmen Sie die damalige Entscheidung ohne versteckte Felder nicht als aktuellen Vertrag. URL-Werte müssen weiterhin erlaubten Formularoptionen zugeordnet werden.
 
 Wenn ein Besucher auf einer Serviceseite denkt „dazu möchte ich eine Anfrage stellen“, geht ein Teil des Kontexts verloren, wenn er lediglich zum Kontaktformular weitergeleitet wird.
 

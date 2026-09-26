@@ -2,6 +2,7 @@
 title: "Projeto técnico para levar o contexto de um CTA de serviço ao formulário de contato"
 description: "Projeto de implementação para levar ao formulário o contexto lido em uma página de serviço. Abrange mini CTAs em Astro, contrato de parâmetros de URL, seleção inicial da categoria, prefill do assunto, URLs multilíngues, medição com GA e verificação do HTML gerado."
 date: 2026-06-07T13:00
+lastUpdated: "2026-09-26T19:38:11+09:00"
 author: gui
 tags: ["Tecnologia", "Site", "Serviços", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -72,12 +73,14 @@ faq:
   title: Perguntas frequentes
   items:
     - question: Por que não enviar o serviço-alvo em um campo hidden?
-      answer: Para não aumentar os campos que a equipe receptora precisa verificar e permitir a classificação somente pela categoria existente. Cada campo adicional também aumenta as verificações operacionais e das mensagens de notificação.
+      answer: "Em junho de 2026, a classificação usava apenas a categoria existente e evitava campos ocultos extras. O formulário atual da Systems também guarda service, from e entry em campos ocultos para integração."
     - question: É seguro se os parâmetros da URL forem alterados?
       answer: Um service key desconhecido faz fallback para consultas gerais. O valor enviado é escolhido entre os option do formulário, portanto o valor da URL não é usado diretamente.
     - question: Como tratar isso em um site multilíngue?
       answer: Gere o destino do CTA para cada locale e traduza os rótulos exibidos no formulário. Manter os valores enviados em classificações japonesas estáveis ajuda a evitar variação na operação receptora.
 ---
+
+> **Atualização de setembro de 2026:** Os exemplos `ServiceSectionActions` e `service=web` registram o projeto do site corporativo em junho de 2026. Hoje, os [CTAs de serviço da Acecore Systems](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) passam `category`, `service`, `from` e `entry`; o [formulário](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) valida chaves curtas e pré-seleciona categoria e assunto. Ele também usa campos ocultos para medição e integração; não copie a antiga escolha de dispensá-los como contrato atual. Valores de URL ainda precisam ser mapeados para opções permitidas.
 
 Quando alguém que lê uma página de serviço pensa “quero consultar sobre isto”, apenas enviar essa pessoa ao formulário faz perder parte do contexto.
 
