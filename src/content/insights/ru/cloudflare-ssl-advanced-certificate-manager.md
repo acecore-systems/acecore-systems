@@ -5,143 +5,37 @@ date: 2026-03-31T00:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Безопасность", "Инфраструктура"]
 image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-compareTable:
-  title: Universal SSL vs Advanced Certificate Manager
-  before:
-    label: Universal SSL (бесплатно)
-    items:
-      - Покрывает только корневой домен и поддомены первого уровня
-      - Нельзя выбрать CA, срок действия и наборы шифров
-      - "*.example.com работает, но dev.staging.example.com не покрывается"
-      - В CN сертификата может отображаться брендинг Cloudflare
-  after:
-    label: Advanced Certificate Manager (платно, $10/мес/зона)
-    items:
-      - Поддержка многоуровневых поддоменов, до 50 хостов
-      - Выбор CA (Let's Encrypt / Google Trust Services и др.)
-      - Срок действия сертификата можно задать от 14 до 365 дней
-      - "Ваш домен становится CN, брендинг Cloudflare скрывается"
-callout:
-  type: info
-  title: Причина смены названия
-  text: "Прежнее название «Dedicated SSL Certificates» в 2021 году было переработано в Advanced Certificate Manager (ACM). Это не просто переименование: значительно расширились функции — поддержка многоуровневых поддоменов, выбор CA и настройка срока действия."
-faq:
-  title: Часто задаваемые вопросы
-  items:
-    - question: Можно ли использовать wildcard-сертификат (*.example.com) в Universal SSL?
-      answer: Да, но он покрывает только поддомены первого уровня, например www.example.com. Для поддоменов второго уровня и глубже, таких как dev.staging.example.com, он не действует и вызывает ошибки сертификата. В таком случае нужен ACM.
-    - question: Можно ли использовать Advanced Certificate Manager на бесплатном тарифе?
-      answer: Да. Даже на бесплатном тарифе Cloudflare можно подключить ACM, купив add-on ACM ($10/мес/зона). Переход на более высокий тариф не обязателен.
-    - question: Когда Universal SSL достаточно?
-      answer: Для большинства личных сайтов и сайтов малого бизнеса Universal SSL достаточно. Если используются только корневой домен и поддомены первого уровня вроде www, ACM не нужен.
-    - question: Что будет с Universal SSL после включения ACM?
-      answer: Universal SSL и ACM могут сосуществовать. Для одного и того же поддомена приоритет получает сертификат ACM.
-linkCards:
-  - href: https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/
-    title: Документация Advanced Certificate Manager
-    description: Официальное руководство Cloudflare по настройке ACM
-    icon: i-lucide-file-text
-  - href: https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/
-    title: Ограничения Universal SSL
-    description: Официальная документация по случаям, которые не покрывает Universal SSL
-    icon: i-lucide-alert-circle
-  - href: https://www.cloudflare.com/ja-jp/application-services/products/advanced-certificate-manager/
-    title: Страница продукта Advanced Certificate Manager
-    description: Список возможностей ACM и способ покупки (на японском)
-    icon: i-lucide-shield-check
+lastUpdated: "2026-09-26T19:15:00+09:00"
 ---
 
-«Как называлась прежняя платная SSL-опция Cloudflare?» — этим вопросом задаются многие. В этой статье разберём, что это за опция, как она называется сейчас и какие у неё функции.
+В 2021 году Cloudflare преобразовала прежнюю услугу **Dedicated SSL Certificates** в **Advanced Certificate Manager (ACM)**. Перед выбором сертификата проверьте имена хостов и схему подключения DNS.
 
-## Вывод: «Dedicated SSL» → «Advanced Certificate Manager (ACM)»
+## Когда достаточно Universal SSL
 
-Прежняя платная SSL-опция Cloudflare называлась **Dedicated SSL Certificates**. В **2021 году она была обновлена и переименована в «Advanced Certificate Manager (ACM)»**.
+При **полном подключении DNS** бесплатный Universal SSL обычно покрывает корневой домен и поддомены первого уровня. `*.example.com` покрывает `www.example.com`, но не `api.staging.example.com`. При **частичном подключении через CNAME** Cloudflare выпускает отдельный Universal-сертификат для каждого проксируемого имени независимо от глубины. Поэтому многоуровневый поддомен не всегда требует ACM.
 
-Цена осталась прежней: **$10 в месяц за зону (домен)**.
+Сейчас Cloudflare описывает Universal-сертификаты как бесплатные и не используемые совместно с другими сайтами. Старое утверждение об общих сертификатах устарело.
 
----
+## Когда рассмотреть ACM
 
-## Почему изменили название
+ACM — платное дополнение. Оно позволяет выбрать центр сертификации, метод проверки, срок действия и имена хостов. Один расширенный сертификат охватывает до 50 имён, включая корневой домен. Доступные сроки зависят от центра и тарифа; **один год доступен только клиентам Enterprise с SSL.com**. Не каждый тариф позволяет произвольно выбрать срок от 14 до 365 дней.
 
-Во времена «Dedicated SSL» функция была сосредоточена на выпуске сертификата, выделенного под конкретный домен. Бесплатный Universal SSL использует общий сертификат для разных сайтов, тогда как выделенный сертификат позволял иметь собственный Common Name (CN).
+Для автоматической защиты глубоких проксируемых поддоменов при полном подключении DNS можно использовать **Total TLS**. Для отдельных имён подойдёт расширенный или собственный сертификат. Total TLS требует полного подключения DNS и не выпускает сертификаты для имён некоторых продуктов, включая Cloudflare Tunnel.
 
-При переходе к **Advanced Certificate Manager** были добавлены следующие возможности, а название стало подчёркивать аспект «управления».
+**Расширенные сертификаты не применяются к пользовательским доменам Cloudflare Pages и R2.** Эти продукты используют другой механизм сертификатов. Покупка ACM для сайта Pages не применит такой сертификат к его имени.
 
-- **Поддержка многоуровневых поддоменов**: защита поддоменов второго уровня и глубже, например `dev.staging.example.com`
-- **Выбор CA**: можно выбрать Let's Encrypt, Google Trust Services и др.
-- **Настройка срока действия**: от 14 до 365 дней
-- **До 50 хостов**: один сертификат может покрывать несколько hostnames
-- **Total TLS**: автоматическая защита всех проксируемых поддоменов в зоне
+## Проверка перед покупкой
 
----
+1. Перечислите имена и определите схему подключения: полный DNS или CNAME.
+2. Проверьте фактическое покрытие Universal SSL.
+3. Уточните нужный центр, срок и условия Total TLS.
+4. Проверьте актуальную цену и условия покупки в панели Cloudflare для своего тарифа.
 
-## Отличия от Universal SSL
+Не покупайте ACM только ради отображения общего имени (CN); проверьте, что нужные имена входят в SAN сертификата.
 
-Cloudflare предоставляет бесплатный **Universal SSL**, и для большинства сайтов этого достаточно для HTTPS. Но есть ряд ограничений.
+## Official sources
 
-### Случаи, которые Universal SSL не покрывает
-
-```
-# Покрываются Universal SSL
-example.com
-www.example.com
-blog.example.com
-
-# Не покрываются Universal SSL (нужен ACM)
-dev.staging.example.com
-api.v2.example.com
-deep.sub.domain.example.com
-```
-
-Wildcard `*.example.com` работает, но **только для поддоменов первого уровня**. Многоуровневые шаблоны вроде `*.staging.example.com` не поддерживаются.
-
-### Наличие брендинга Cloudflare
-
-В Universal SSL в CN сертификата может присутствовать домен Cloudflare, например `sni.cloudflaressl.com`. В ACM CN становится вашим доменом, и брендинг Cloudflare скрывается.
-
----
-
-## Когда нужен ACM
-
-Рассмотрите ACM, если выполняется хотя бы один из пунктов:
-
-1. **Вы используете многоуровневые поддомены**
-   Нужно включить SSL для поддоменов второго уровня и глубже, например `api.staging.example.com` или `dev.app.example.com`.
-
-2. **Вы хотите, чтобы CN сертификата был вашим доменом**
-   Нужно убрать брендинг Cloudflare из сертификата (часто актуально для корпоративных сайтов и B2B-сервисов).
-
-3. **Вы хотите выбирать CA или срок действия**
-   Политика безопасности требует конкретный CA, либо нужны короткоживущие сертификаты (например, 14 дней).
-
-4. **Вы хотите защитить все поддомены через Total TLS**
-   Нужна автоматическая сертификационная защита всех проксируемых поддоменов в зоне.
-
----
-
-## Покупка и активация
-
-В Cloudflare Dashboard это включается за несколько шагов:
-
-1. Откройте нужный домен в Cloudflare Dashboard
-2. Перейдите в **SSL/TLS** → **Edge Certificates**
-3. В секции **Advanced Certificate Manager** нажмите **Enable**
-4. Подтвердите и купите подписку ($10/мес)
-5. Создайте сертификат и добавьте хосты, которые нужно защитить
-
-Чтобы включить Total TLS, достаточно переключить в On секцию **Total TLS** на той же странице Edge Certificates.
-
----
-
-## Итоги
-
-| Пункт                    | Universal SSL (бесплатно) | Advanced Certificate Manager ($10/мес/зона)  |
-| ------------------------ | ------------------------- | -------------------------------------------- |
-| Многоуровневые поддомены | ✗                         | ✓                                            |
-| Выбор CA                 | ✗                         | ✓                                            |
-| Настройка срока действия | ✗                         | ✓                                            |
-| CN = ваш домен           | △                         | ✓                                            |
-| Total TLS                | ✗                         | ✓                                            |
-| Сценарий использования   | Личные / обычные сайты    | Корпоративные / сложные структуры поддоменов |
-
-«Прежняя платная SSL-опция» Cloudflare — это **Advanced Certificate Manager (бывший Dedicated SSL Certificates)**. Это полезный выбор, когда бесплатного Universal SSL недостаточно — особенно при защите многоуровневых поддоменов и необходимости тонкой настройки сертификатов.
+- [Universal SSL limitations](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/)
+- [Advanced certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/)
+- [Validity periods and renewal](https://developers.cloudflare.com/ssl/reference/certificate-validity-periods/)
+- [Total TLS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/total-tls/)
