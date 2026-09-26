@@ -1,8 +1,8 @@
 ---
 title: "Guia de instalação do Sveltia CMS"
-description: "Guia prático para adicionar Sveltia CMS a um site Astro ou estático, cobrindo GitHub backend, OAuth Worker, uploads de imagem, operação multilíngue, PRs de CMS e aprendizados reais."
+description: "Registro da implantação do Sveltia CMS na Acecore: autenticação de editores, gravação direta validada por GitHub App, mídia e operação multilíngue."
 date: 2026-06-07T16:00
-lastUpdated: 2026-08-02T18:00
+lastUpdated: "2026-09-26T17:50:00+09:00"
 author: gui
 tags: ["Tecnologia", "CMS", "Astro", "Cloudflare", "Segurança"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -70,9 +70,11 @@ faq:
       answer: Em uma equipe pequena, é mais seguro editar apenas a fonte japonesa e atualizar traduções por PR. Expor todos os idiomas dificulta revisão e detecção de traduções desatualizadas.
 ---
 
+**Atualização de 26 de setembro de 2026:** O login via GitHub OAuth Worker descrito abaixo pertence à configuração inicial. No código integrado em setembro, o site corporativo verifica a identidade AcecoreID / Cloudflare Access, o ID do GitHub vinculado e a permissão de escrita imediatamente antes de salvar. Uma GitHub App específica do site ainda grava no repositório após validar caminhos, conteúdo e HEAD atual, criando um commit diretamente em `main`. OpenAI Batch e PRs de tradução seguem um fluxo separado. Veja a [PR #251 integrada](https://github.com/acecore-systems/acecore-net/pull/251).
+
 Sveltia CMS é útil quando você quer adicionar uma tela de edição a um site estático sem mover conteúdo para um banco externo. Este guia resume como ele foi introduzido no site Astro da Acecore e quais ajustes aprendemos com PRs e commits reais.
 
-> **Atualizado em 28 de julho de 2026:** os salvamentos do CMS agora são validados de forma síncrona e gravados como um único commit `cms:` direto em `main`. GitHub OAuth confirma o editor e sua permissão atual; uma GitHub App exclusiva de `acecore-net` executa as operações do repositório. Schemas JSON/Markdown, assinaturas de imagem, HTML/URLs ativos e o HEAD esperado são verificados antes da gravação.
+> **Atualizado em 28 de julho de 2026:** os salvamentos do CMS eram então validados de forma síncrona e gravados como um único commit `cms:` direto em `main`. GitHub OAuth confirma o editor e sua permissão atual; uma GitHub App exclusiva de `acecore-net` executa as operações do repositório. Schemas JSON/Markdown, assinaturas de imagem, HTML/URLs ativos e o HEAD esperado são verificados antes da gravação.
 
 O título é simples de propósito: **Guia de instalação do Sveltia CMS**. A meta é ajudar quem quer usar o CMS em outro site, não comparar ferramentas de forma abstrata.
 

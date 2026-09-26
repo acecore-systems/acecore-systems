@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS 도입 가이드"
-description: "Astro 같은 정적 사이트에 Sveltia CMS를 도입하는 방법을 GitHub backend, OAuth Worker, 이미지 업로드, 다국어 운영, CMS 전용 PR 흐름, 실제 수정에서 얻은 교훈까지 정리합니다."
+description: "Acecore의 Sveltia CMS 도입과 변경 이력입니다. 편집자 인증, GitHub App의 검증 후 직접 저장, 미디어와 다국어 운영을 시점별로 설명합니다."
 date: 2026-06-07T16:00
-lastUpdated: 2026-08-02T18:00
+lastUpdated: "2026-09-26T17:50:00+09:00"
 author: gui
 tags: ["기술", "CMS", "Astro", "Cloudflare", "보안"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -70,9 +70,11 @@ faq:
       answer: 작은 팀에서는 일본어 source만 CMS에서 편집하고 번역은 PR로 반영하는 편이 안전합니다. 모든 언어를 노출하면 리뷰와 오래된 번역 감지가 어려워집니다.
 ---
 
+**2026년 9월 26일 추가:** 아래의 GitHub OAuth Worker 로그인 절차는 초기 도입 당시의 기록입니다. 9월에 병합된 기업 사이트 코드에서는 로그인한 AcecoreID / Cloudflare Access 신원, 연결된 GitHub ID, 저장 직전 repository 쓰기 권한을 확인합니다. 사이트 전용 GitHub App은 허용 경로·내용·현재 HEAD를 검사한 뒤 계속 repository 쓰기를 담당하며 `main`에 직접 커밋합니다. OpenAI Batch 및 번역 PR은 별도 경로입니다. [병합된 PR #251](https://github.com/acecore-systems/acecore-net/pull/251)을 참고하고 아래의 기존 절차는 당시 기록으로 읽어 주세요.
+
 Sveltia CMS는 정적 사이트에 편집 화면을 추가하고 싶지만 외부 데이터베이스를 늘리고 싶지 않을 때 유용합니다. 이 글은 Acecore의 Astro 사이트에 Sveltia CMS를 도입한 방식과, 이후 PR과 commit을 통해 드러난 문제를 어떻게 고쳤는지 정리합니다.
 
-> **2026년 7월 28일 업데이트:** CMS 저장은 이제 동기 검증 후 하나의 `cms:` commit으로 `main`에 직접 기록됩니다. GitHub OAuth는 편집자와 현재 쓰기 권한을 확인하고, `acecore-net`에만 설치된 GitHub App이 repository 작업을 수행합니다. 저장 전에 JSON/Markdown schema, 이미지 signature, active HTML/URL, expected HEAD를 검사합니다.
+> **2026년 7월 28일 업데이트:** 당시 CMS 저장은 동기 검증 후 하나의 `cms:` commit으로 `main`에 직접 기록됩니다. GitHub OAuth는 편집자와 현재 쓰기 권한을 확인하고, `acecore-net`에만 설치된 GitHub App이 repository 작업을 수행합니다. 저장 전에 JSON/Markdown schema, 이미지 signature, active HTML/URL, expected HEAD를 검사합니다.
 
 제목은 의도적으로 단순하게 **Sveltia CMS 도입 가이드** 로 정했습니다. CMS 비교 글이 아니라, 다른 사이트에 바로 적용할 수 있는 설계 메모입니다.
 

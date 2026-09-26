@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS 导入指南"
-description: "总结在 Astro 等静态网站中导入 Sveltia CMS 的方法，涵盖 GitHub backend、OAuth Worker、图片上传、多语言运维、CMS 专用 PR 流程以及实际修正中得到的经验。"
+description: "按时间梳理Acecore的Sveltia CMS实施：编辑者认证、GitHub App验证后的直接保存、媒体与多语言运营。"
 date: 2026-06-07T16:00
-lastUpdated: 2026-08-02T18:00
+lastUpdated: "2026-09-26T17:50:00+09:00"
 author: gui
 tags: ["技术", "CMS", "Astro", "Cloudflare", "安全"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -70,9 +70,11 @@ faq:
       answer: 小团队更适合只在 CMS 中编辑日语 source，再通过 PR 更新翻译。把所有语言都暴露给 CMS，会让审核和旧翻译检测变难。
 ---
 
+**2026年9月26日补充：** 下文的GitHub OAuth Worker登录步骤属于初期配置。9月合并的公司网站代码会在保存前检查AcecoreID / Cloudflare Access登录身份、关联的GitHub ID及repository写入权限。站点专用GitHub App仍负责写入：先验证允许的路径、内容及当前HEAD，再直接提交到`main`。OpenAI Batch和翻译PR是独立流程。参见[已合并的PR #251](https://github.com/acecore-systems/acecore-net/pull/251)，下文旧步骤应按当时背景阅读。
+
 Sveltia CMS 适合在静态网站上追加一个编辑界面，而不需要把内容迁移到外部数据库。本文基于 Acecore 的 Astro 网站，整理导入步骤，以及在后续 PR 和 commit 中发现并修正的运维问题。
 
-> **2026 年 7 月 28 日更新：** CMS 保存现在会在同步验证后，以一个 `cms:` commit 直接写入 `main`。GitHub OAuth 用于确认编辑者本人及当前写权限，仅安装到 `acecore-net` 的 GitHub App 负责仓库操作。写入前会验证 JSON/Markdown schema、图片 signature、active HTML/URL 和 expected HEAD。
+> **2026 年 7 月 28 日更新：** 当时 CMS 保存会在同步验证后，以一个 `cms:` commit 直接写入 `main`。GitHub OAuth 用于确认编辑者本人及当前写权限，仅安装到 `acecore-net` 的 GitHub App 负责仓库操作。写入前会验证 JSON/Markdown schema、图片 signature、active HTML/URL 和 expected HEAD。
 
 标题故意保持简单：**Sveltia CMS 导入指南**。这不是 CMS 对比文章，而是给想在自己的网站中使用 Sveltia CMS 的人看的实用笔记。
 
