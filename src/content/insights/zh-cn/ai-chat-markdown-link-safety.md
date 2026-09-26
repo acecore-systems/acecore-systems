@@ -2,6 +2,7 @@
 title: "安全渲染 AI 聊天回答中的 Markdown 链接"
 description: "这是一篇关于如何把 AI 聊天回答中的 Markdown 链接安全转换为 HTML 的实现笔记。通过拆分可容忍空白的解析、href trim、允许列表校验、DOM 渲染、fallback 和测试用例，可以把同样的模式复用到其他网站。"
 date: 2026-06-07T14:30
+lastUpdated: "2026-09-26T18:16:00+09:00"
 author: gui
 tags: ["技术", "网站", "AI", "安全", "Astro"]
 image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
@@ -162,19 +163,37 @@ Acecore 的咨询 AI 大致允许以下范围：
 实现可以这样写：
 
 ```js
-function isSafeMarkdownHref(href) {
-  if (href.startsWith("/")) return true;
+function isSafeMarkdownHref(rawHref) {
+  const href = String(rawHref ?? "").trim();
+  if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
+  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+    return true;
+  }
 
   try {
-    const url = new URL(href, window.location.origin);
-    if (url.origin === window.location.origin) return true;
-    if (url.hostname === "acecore.net") return true;
-    if (url.hostname === "lin.ee") return true;
+    if (href.startsWith("/")) {
+      if (href.startsWith("//")) return false;
+      const url = new URL(href, window.location.origin);
+      return (
+        url.origin === window.location.origin && !url.username && !url.password
+      );
+    }
+
+    const url = new URL(href);
+    return (
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      !url.port &&
+      [
+        window.location.origin,
+        "https://acecore.net",
+        "https://lin.ee",
+      ].includes(url.origin)
+    );
   } catch {
     return false;
   }
-
-  return href === "mailto:info@acecore.net" || href === "tel:05088902788";
 }
 ```
 

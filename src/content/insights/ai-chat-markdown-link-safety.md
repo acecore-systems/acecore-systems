@@ -2,6 +2,7 @@
 title: "AIチャット回答のMarkdownリンクを安全に描画する実装設計"
 description: "AIチャットの回答に含まれるMarkdownリンクを、HTMLへ安全に変換するための実装メモです。URL前後の空白を許容しつつ、trim、許可リスト、DOM生成、fallback、テストケースを分けて考えることで、他サイトにも転用しやすいレンダラーになります。"
 date: 2026-06-07T14:30
+lastUpdated: "2026-09-26T18:16:00+09:00"
 author: gui
 tags: ["技術", "Webサイト", "AI", "セキュリティ", "Astro"]
 image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
@@ -162,19 +163,37 @@ Acecoreの問い合わせAIでは、おおむね次のような範囲に絞っ�
 実装例はこうです。
 
 ```js
-function isSafeMarkdownHref(href) {
-  if (href.startsWith("/")) return true;
+function isSafeMarkdownHref(rawHref) {
+  const href = String(rawHref ?? "").trim();
+  if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
+  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+    return true;
+  }
 
   try {
-    const url = new URL(href, window.location.origin);
-    if (url.origin === window.location.origin) return true;
-    if (url.hostname === "acecore.net") return true;
-    if (url.hostname === "lin.ee") return true;
+    if (href.startsWith("/")) {
+      if (href.startsWith("//")) return false;
+      const url = new URL(href, window.location.origin);
+      return (
+        url.origin === window.location.origin && !url.username && !url.password
+      );
+    }
+
+    const url = new URL(href);
+    return (
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      !url.port &&
+      [
+        window.location.origin,
+        "https://acecore.net",
+        "https://lin.ee",
+      ].includes(url.origin)
+    );
   } catch {
     return false;
   }
-
-  return href === "mailto:info@acecore.net" || href === "tel:05088902788";
 }
 ```
 

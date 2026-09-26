@@ -2,6 +2,7 @@
 title: "Безопасный рендеринг Markdown-ссылок в ответах AI-чата"
 description: "Техническая заметка о том, как безопасно превращать Markdown-ссылки из ответов AI-чата в HTML. Парсинг с допуском пробелов, trim для href, allowlist, DOM-рендеринг, fallback и тесты рассматриваются отдельно."
 date: 2026-06-07T14:30
+lastUpdated: "2026-09-26T18:16:00+09:00"
 author: gui
 tags: ["Технологии", "Веб-сайт", "AI", "Безопасность", "Astro"]
 image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
@@ -156,19 +157,37 @@ if (label && isSafeMarkdownHref(href)) {
 | Другие внешние   | Любой URL                 | По умолчанию не ссылать         |
 
 ```js
-function isSafeMarkdownHref(href) {
-  if (href.startsWith("/")) return true;
+function isSafeMarkdownHref(rawHref) {
+  const href = String(rawHref ?? "").trim();
+  if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
+  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+    return true;
+  }
 
   try {
-    const url = new URL(href, window.location.origin);
-    if (url.origin === window.location.origin) return true;
-    if (url.hostname === "acecore.net") return true;
-    if (url.hostname === "lin.ee") return true;
+    if (href.startsWith("/")) {
+      if (href.startsWith("//")) return false;
+      const url = new URL(href, window.location.origin);
+      return (
+        url.origin === window.location.origin && !url.username && !url.password
+      );
+    }
+
+    const url = new URL(href);
+    return (
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      !url.port &&
+      [
+        window.location.origin,
+        "https://acecore.net",
+        "https://lin.ee",
+      ].includes(url.origin)
+    );
   } catch {
     return false;
   }
-
-  return href === "mailto:info@acecore.net" || href === "tel:05088902788";
 }
 ```
 

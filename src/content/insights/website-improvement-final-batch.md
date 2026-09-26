@@ -2,6 +2,7 @@
 title: "Astroサイトの品質改善ガイド 続編 ― PageSpeed Insights 全項目100点を達成した最終調整"
 description: "Cloudflare Web Analytics の停止、GA4 と検索UIの遅延ロード化、PageSpeed Insights のモバイル / デスクトップ全項目100の達成、Search Console のパンくずと索引整理、SVGアイコン移行、そして試したが採用しなかった最適化の判断まで。前回記事の続編として最終改善をまとめます。"
 date: 2026-03-29T02:30
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags:
   ["技術", "Astro", "パフォーマンス", "アクセシビリティ", "SEO", "Webサイト"]
@@ -123,6 +124,8 @@ faq:
     - question: 試したけれど採用しなかったことはありますか？
       answer: "あります。BaseLayout.css のさらなる分割、network dependency tree の表示自体を消すための調整、GA4 まで削って third-party を極小化する案などを比較しました。ただ、モバイル100を維持できている状況では、複雑さや計測損失の方が大きく、採用しませんでした。"
 ---
+
+**2026年9月26日追記：** この100点は2026年3月29日のPageSpeed Insights測定結果です。現在の点数や実利用者すべての体験を保証するものではありません。ラボ計測と実利用者データの違い、測定値の変動は[Googleの公式説明](https://developers.google.com/speed/docs/insights/v5/about)をご覧ください。
 
 ## はじめに
 

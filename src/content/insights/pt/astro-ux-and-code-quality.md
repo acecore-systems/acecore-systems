@@ -2,13 +2,14 @@
 title: "Armadilhas e soluções do Astro View Transitions — Guia de melhoria de UX e qualidade de código"
 description: "Guia prático sobre soluções para scripts que param de funcionar com View Transitions do Astro, introdução de busca full-text com Pagefind, melhoria de segurança de tipos com TypeScript e gerenciamento centralizado de constantes, melhorando UX e qualidade de código."
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Site"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: Leitura obrigatória se usar View Transitions
-  text: "Ao introduzir o ClientRouter (View Transitions) do Astro, as transições de página ficam suaves, mas todos os scripts inline deixam de ser re-executados. Este artigo compila os padrões de solução e técnicas de melhoria de UX e qualidade de código."
+  text: "Com o ClientRouter do Astro, scripts de módulo empacotados normalmente executam apenas uma vez, enquanto scripts inline podem executar novamente conforme a navegação. Use eventos do ciclo de vida para reinicializar interações."
 processFigure:
   title: Como conduzir melhorias de UX
   steps:
@@ -63,7 +64,7 @@ Neste artigo, apresentamos as armadilhas do View Transitions e suas soluções, 
 
 ### Por que os scripts param de funcionar
 
-Em transições de página normais, o navegador re-parseia o HTML e executa todos os scripts. No entanto, o View Transitions atualiza a página por diferencial de DOM, **fazendo com que scripts inline não sejam re-executados**.
+A navegação normal recarrega o HTML. O ClientRouter muda a execução: **scripts de módulo empacotados executam apenas uma vez**, enquanto scripts inline podem executar novamente em algumas navegações.
 
 Os seguintes processos são afetados:
 
@@ -211,7 +212,7 @@ Ao adicionar `as const` a objetos constantes, as propriedades se tornam `readonl
 
 ### Migração de imports descontinuados
 
-Altere `import { z } from 'astro:content'`, que será removido no Astro 7, para `import { z } from 'astro/zod'`.
+A documentação atual do Astro importa `z` para schemas de conteúdo de `astro/zod`. Consulte o [guia de coleções de conteúdo](https://docs.astro.build/en/guides/content-collections/).
 
 ---
 
@@ -259,7 +260,7 @@ Implemente divisão automática de página a cada 6 artigos, navegação com ret
 
 ### Links âncora com cabeçalho sticky
 
-Com cabeçalho sticky, o destino do link âncora fica escondido atrás do cabeçalho. Resolva configurando o seguinte no preflight do UnoCSS.
+Um cabeçalho fixo pode ocultar o destino de uma âncora. O exemplo de preflight do UnoCSS a seguir reflete a configuração usada na época; no ambiente atual com Tailwind, aplique CSS com a mesma finalidade.
 
 ```css
 [id] {

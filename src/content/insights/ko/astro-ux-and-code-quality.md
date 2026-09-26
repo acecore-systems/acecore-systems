@@ -2,13 +2,14 @@
 title: "Astro View Transitions의 함정과 해결책 — UX 및 코드 품질 개선 가이드"
 description: "Astro View Transitions에서 스크립트가 작동하지 않는 문제의 해결 패턴, Pagefind 전문 검색 도입, TypeScript 타입 안전성 강화, 상수 중앙 관리 등 UX와 코드 품질 개선을 위한 실전 가이드."
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["기술", "Astro", "웹사이트"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: View Transitions를 사용한다면 반드시 읽으세요
-  text: "Astro의 ClientRouter(View Transitions)를 도입하면 페이지 전환이 부드러워지지만, 모든 인라인 스크립트가 재실행되지 않게 됩니다. 이 글에서는 해결 패턴과 UX 및 코드 품질 개선을 위한 실전 기법을 다룹니다."
+  text: "Astro ClientRouter에서는 번들된 모듈 스크립트가 보통 한 번만 실행되지만 인라인 스크립트는 탐색 방식에 따라 다시 실행될 수 있습니다. 상호작용을 다시 초기화하려면 수명 주기 이벤트를 사용합니다."
 processFigure:
   title: UX 개선 워크플로우
   steps:
@@ -63,7 +64,7 @@ Astro의 View Transitions(ClientRouter)는 SPA처럼 부드러운 페이지 전�
 
 ### 스크립트가 작동을 멈추는 이유
 
-일반적인 페이지 내비게이션에서는 브라우저가 HTML을 다시 파싱하고 모든 스크립트를 실행합니다. 그러나 View Transitions는 DOM 디핑으로 페이지를 업데이트하므로 **인라인 스크립트가 재실행되지 않습니다**.
+일반 탐색은 HTML을 다시 불러옵니다. ClientRouter에서는 **번들된 모듈 스크립트가 한 번만 실행되며**, 인라인 스크립트는 일부 탐색에서 다시 실행될 수 있습니다.
 
 다음과 같은 처리가 영향을 받습니다:
 
@@ -211,7 +212,7 @@ type: z.enum(["info", "warning", "tip", "note"]).default("info");
 
 ### 비권장 임포트 마이그레이션
 
-`import { z } from 'astro:content'`(Astro 7에서 삭제 예정)를 `import { z } from 'astro/zod'`로 변경합니다.
+현재 Astro 공식 문서는 콘텐츠 스키마의 `z`를 `astro/zod`에서 가져옵니다. [콘텐츠 컬렉션 가이드](https://docs.astro.build/en/guides/content-collections/)를 참고하세요.
 
 ---
 
@@ -259,7 +260,7 @@ export const SITE = {
 
 ### 고정 헤더 앵커 링크
 
-고정 헤더가 있으면 앵커 링크 대상이 헤더에 가려집니다. 다음 UnoCSS preflight 설정으로 해결합니다:
+고정 헤더가 앵커 대상 영역을 가릴 수 있습니다. 아래 UnoCSS preflight 예시는 당시 구성입니다. 현재 Tailwind 환경에서는 같은 목적의 CSS를 적용합니다.
 
 ```css
 [id] {
