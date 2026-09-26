@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS Setup Guide"
-description: "A practical guide to adding Sveltia CMS to an Astro or static site, covering GitHub OAuth, a repository-specific GitHub App, validated direct publishing, media uploads, and multilingual operations."
+description: "A dated record of Sveltia CMS implementation at Acecore, covering editor authentication, validated direct saves through a GitHub App, media, and multilingual operations."
 date: 2026-06-07T16:00
-lastUpdated: 2026-08-02T18:00
+lastUpdated: "2026-09-26T17:50:00+09:00"
 author: gui
 tags: ["Technology", "CMS", "Astro", "Cloudflare", "Security"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -70,9 +70,11 @@ faq:
       answer: For a small team, it is safer to edit only the Japanese source in the CMS and update translations through pull requests. Exposing every locale makes review and stale-translation detection harder.
 ---
 
+**Update, September 26, 2026:** The GitHub OAuth Worker login instructions below describe the original setup. In code merged in September, the company site checks the signed-in AcecoreID / Cloudflare Access identity, its linked GitHub ID, and repository write permission immediately before saving. A site-specific GitHub App still performs repository writes after path, content, and current HEAD checks, then commits directly to `main`. OpenAI Batch and translation PRs remain a separate path. See [merged PR #251](https://github.com/acecore-systems/acecore-net/pull/251) and read the older steps below in their historical context.
+
 Sveltia CMS is a good fit when you want to add an editing screen to a static site without moving content into an external database. This guide explains how we introduced it to the Acecore Astro site and what we fixed later after real pull requests and commits exposed operational gaps.
 
-> **Updated July 28, 2026:** Acecore now publishes CMS saves as validated direct commits to `main`. GitHub OAuth verifies the editor and current write permission, while a repository-specific GitHub App performs repository operations. The proxy synchronously validates JSON and Markdown schemas, image signatures, active HTML and URLs, and the expected HEAD before writing.
+> **Updated July 28, 2026:** Acecore published CMS saves at that time as validated direct commits to `main`. GitHub OAuth verifies the editor and current write permission, while a repository-specific GitHub App performs repository operations. The proxy synchronously validates JSON and Markdown schemas, image signatures, active HTML and URLs, and the expected HEAD before writing.
 
 The title is intentionally simple: **Sveltia CMS Setup Guide**. This is not a CMS comparison article. It is a practical checklist for people who want to add Sveltia CMS to their own site.
 

@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS Einrichtungsleitfaden"
-description: "Praktischer Leitfaden zum Einbau von Sveltia CMS in Astro- und statische Websites: GitHub OAuth, eine Repository-spezifische GitHub App, validierte Direktveröffentlichung, Medien-Uploads und Mehrsprachigkeit."
+description: "Zeitlich eingeordnete Dokumentation der Sveltia-CMS-Einführung bei Acecore: Redakteursanmeldung, geprüfte Direktspeicherung über eine GitHub App, Medien und Mehrsprachigkeit."
 date: 2026-06-07T16:00
-lastUpdated: 2026-08-02T18:00
+lastUpdated: "2026-09-26T17:50:00+09:00"
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sicherheit"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -70,9 +70,11 @@ faq:
       answer: Für kleine Teams ist es sicherer, nur die japanische Source im CMS zu bearbeiten und Übersetzungen per PR zu aktualisieren.
 ---
 
+**Ergänzung vom 26. September 2026:** Die folgende Anmeldung über einen GitHub OAuth Worker beschreibt die ursprüngliche Einrichtung. Im im September zusammengeführten Code prüft die Unternehmenswebsite die AcecoreID-/Cloudflare-Access-Identität, die verknüpfte GitHub-ID und die Schreibberechtigung unmittelbar vor dem Speichern. Eine websiteeigene GitHub App schreibt weiterhin ins Repository, nachdem Pfade, Inhalte und aktueller HEAD geprüft wurden, und erstellt direkt einen Commit auf `main`. OpenAI Batch und Übersetzungs-PRs bleiben ein getrennter Weg. Siehe [zusammengeführtes PR #251](https://github.com/acecore-systems/acecore-net/pull/251).
+
 Sveltia CMS ist nützlich, wenn eine statische Website eine Editieroberfläche erhalten soll, ohne Inhalte in eine externe Datenbank zu verschieben. Dieser Leitfaden beschreibt den Einbau in die Acecore-Astro-Website und die Korrekturen, die sich später aus echten PRs und Commits ergeben haben.
 
-> **Aktualisiert am 28. Juli 2026:** CMS-Saves werden jetzt nach synchroner Prüfung direkt als einzelner `cms:`-Commit nach `main` geschrieben. GitHub OAuth prüft Editor und aktuelle Schreibberechtigung; eine nur für `acecore-net` installierte GitHub App führt Repository-Zugriffe aus. JSON-/Markdown-Schema, Bildsignatur, aktive HTML/URLs und erwarteter HEAD werden vor dem Schreiben geprüft.
+> **Aktualisiert am 28. Juli 2026:** CMS-Saves wurden zu diesem Zeitpunkt nach synchroner Prüfung direkt als einzelner `cms:`-Commit nach `main` geschrieben. GitHub OAuth prüft Editor und aktuelle Schreibberechtigung; eine nur für `acecore-net` installierte GitHub App führt Repository-Zugriffe aus. JSON-/Markdown-Schema, Bildsignatur, aktive HTML/URLs und erwarteter HEAD werden vor dem Schreiben geprüft.
 
 Der Titel ist bewusst schlicht: **Sveltia CMS Einrichtungsleitfaden**. Es geht nicht um einen allgemeinen CMS-Vergleich, sondern um eine übertragbare Umsetzung.
 

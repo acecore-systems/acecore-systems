@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS導入ガイド"
-description: "Astroなどの静的サイトにSveltia CMSを導入し、GitHub OAuth、専用GitHub App、検証付き直接公開、画像アップロード、多言語運用まで整える手順と反省点をまとめます。"
+description: "AcecoreのSveltia CMS導入と運用変更の記録。編集者認証、GitHub Appによる検証付き直接保存、画像・多言語運用を時点別に整理します。"
 date: 2026-06-07T16:00
-lastUpdated: 2026-08-02T18:00
+lastUpdated: "2026-09-26T17:50:00+09:00"
 author: gui
 tags: ["技術", "CMS", "Astro", "Cloudflare", "セキュリティ"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -70,9 +70,11 @@ faq:
       answer: 小規模チームでは日本語sourceだけをCMSで編集し、翻訳はPRで反映するほうが事故が少ないです。全言語をCMSに出すと、翻訳差分、レビュー、古い訳の検知が難しくなります。
 ---
 
+**2026年9月26日追記:** GitHub OAuth Workerを編集者ログインに使う以下の手順は導入当時の記録です。9月に統合された公式サイトのコードでは、AcecoreID / Cloudflare Accessでログインした本人と連携GitHub IDを確認し、repositoryのwrite権限を保存直前に検証します。ファイル操作は引き続きサイト専用GitHub Appが担い、許可path・内容・最新HEADを検証して`main`へ直接保存します。翻訳はOpenAI Batchと翻訳PRを別経路で扱います。実装の[統合PR #251](https://github.com/acecore-systems/acecore-net/pull/251)と以下の旧手順の時点を区別してください。
+
 Sveltia CMSは、静的サイトに「編集画面」を後付けしたいときに使いやすいGitベースCMSです。この記事では、Acecore公式サイトでの導入をもとに、AstroサイトへSveltia CMSを入れる手順と、実際のPRやコミットで後から直した反省点をまとめます。
 
-> **2026年7月28日更新:** Acecoreの現行運用は、CMS保存ごとの短命branchとPRから、同期検証付きの`main`直接commitへ移行しました。GitHub OAuthは編集者本人とwrite権限の確認、サイト専用GitHub Appはrepository操作に分離し、保存前にJSON / Markdown schema、画像の実形式、危険なHTMLやURL、最新HEADを検証します。
+> **2026年7月28日更新:** Acecoreの当時の運用は、CMS保存ごとの短命branchとPRから、同期検証付きの`main`直接commitへ移行しました。GitHub OAuthは編集者本人とwrite権限の確認、サイト専用GitHub Appはrepository操作に分離し、保存前にJSON / Markdown schema、画像の実形式、危険なHTMLやURL、最新HEADを検証します。
 
 タイトルはシンプルに **Sveltia CMS導入ガイド** としました。読み手に伝えたいことも同じで、CMS比較の読み物ではなく、「自分のサイトにも入れるなら何を決めればいいか」が分かる実装メモです。
 
