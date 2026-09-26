@@ -1,7 +1,8 @@
 ---
-title: "A Practical Guide to Making Your Astro Site WCAG AA Compliant"
-description: "A comprehensive guide to accessibility improvements implemented on an Astro + UnoCSS site. Covers aria attributes, contrast, focus management, form validation, screen reader support, and everything needed for WCAG AA compliance."
+title: "Practical Accessibility Improvements for an Astro Site"
+description: "A record of accessibility improvements made to an Astro + UnoCSS site in March 2026, including ARIA, contrast, focus, forms, and screen reader examples."
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Accessibility"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: Confirm a score of 100 on PageSpeed Accessibility.
       icon: i-lucide-check-circle
 checklist:
-  title: WCAG AA Compliance Checklist
+  title: Accessibility improvements recorded at the time
   items:
     - text: Text contrast ratio is 4.5:1 or higher (3:1 for large text)
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: Does a PageSpeed Accessibility score of 100 mean WCAG compliance?
       answer: "Even a score of 100 doesn't guarantee full WCAG compliance. Lighthouse has limited check items, and some criteria can only be verified manually (logical reading order, appropriate alt text, etc.). Both automated and manual testing are necessary."
 ---
+
+**Update, September 26, 2026:** The code and PageSpeed Accessibility score of 100 below record the Astro + UnoCSS site in March 2026. The current company site declares Tailwind CSS 4.3.3. These selected checks and an automated score do not establish site-wide WCAG AA conformance. A conformance assessment must define the pages and complete processes in scope and evaluate all Level A and AA success criteria with automated and human testing ([W3C conformance requirements](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 
 ## Introduction
 

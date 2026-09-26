@@ -1,7 +1,8 @@
 ---
-title: "Guide pratique pour rendre un site Astro conforme au WCAG AA"
-description: "Présentation de toutes les étapes d'amélioration de l'accessibilité réalisées sur un site Astro + UnoCSS. Attributs aria, contraste, gestion du focus, validation de formulaires, compatibilité avec les lecteurs d'écran — toutes les mesures nécessaires pour la conformité WCAG AA."
+title: "Améliorations pratiques de l’accessibilité d’un site Astro"
+description: "Retour sur les améliorations de l’accessibilité d’un site Astro + UnoCSS en mars 2026 : ARIA, contraste, focus, formulaires et lecteurs d’écran."
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Accessibilité"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: Confirmation d'un score de 100 pour l'accessibilité PageSpeed.
       icon: i-lucide-check-circle
 checklist:
-  title: Checklist de conformité WCAG AA
+  title: Améliorations de l’accessibilité réalisées à l’époque
   items:
     - text: Le ratio de contraste du texte est supérieur à 4.5:1 (3:1 pour les grands textes)
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: Un score de 100 en accessibilité PageSpeed signifie-t-il une conformité WCAG ?
       answer: "Un score de 100 ne garantit pas une conformité WCAG complète. Lighthouse a un nombre limité de critères vérifiés, et certains critères ne peuvent être vérifiés que manuellement (ordre logique de lecture, pertinence du texte alternatif, etc.). Les tests automatisés et manuels sont tous deux nécessaires."
 ---
+
+**Mise à jour du 26 septembre 2026 :** Le code et le score PageSpeed Accessibility de 100 ci-dessous décrivent le site Astro + UnoCSS de mars 2026. Le site de l’entreprise déclare désormais Tailwind CSS 4.3.3. Ces vérifications partielles et ce score automatisé ne démontrent pas la conformité WCAG AA de tout le site. L’évaluation doit définir les pages et parcours complets concernés, puis examiner tous les critères A et AA par des tests automatiques et humains ([exigences du W3C](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 
 ## Introduction
 

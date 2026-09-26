@@ -1,7 +1,8 @@
 ---
-title: "将Astro网站的无障碍性提升至WCAG AA标准的实践指南"
-description: "介绍在Astro + UnoCSS构成的网站上实施无障碍改进的全部步骤。涵盖aria属性、对比度、焦点管理、表单验证、屏幕阅读器适配等WCAG AA标准所需的全部措施。"
+title: "Astro网站无障碍改进实践指南"
+description: "记录2026年3月Astro + UnoCSS网站的无障碍改进，包括ARIA、对比度、焦点、表单和屏幕阅读器示例。"
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["技术", "Astro", "无障碍"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: 确认PageSpeed的Accessibility得分达到100分。
       icon: i-lucide-check-circle
 checklist:
-  title: WCAG AA 合规检查清单
+  title: 当时实施的无障碍改进项目
   items:
     - text: 文本对比度达到4.5:1以上（大号文字为3:1以上）
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: PageSpeed的Accessibility达到100分就代表符合WCAG标准吗？
       answer: "即使达到100分也不能完全断言符合WCAG标准。Lighthouse的检查项目有限，有些标准（如逻辑阅读顺序、恰当的alt文案等）只能通过手动检查确认。需要自动测试和手动测试双管齐下。"
 ---
+
+**2026年9月26日补充：** 下文的代码和PageSpeed Accessibility 100分记录的是2026年3月的Astro + UnoCSS网站。当前公司网站的依赖声明为Tailwind CSS 4.3.3。这些局部检查和自动评分不能证明整个网站符合WCAG AA。评估时须确定涵盖的页面与完整流程，并通过自动和人工测试检查所有A级及AA级成功准则（[W3C符合性要求](https://www.w3.org/WAI/WCAG22/Understanding/conformance)）。
 
 ## 前言
 

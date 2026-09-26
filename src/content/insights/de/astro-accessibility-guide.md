@@ -1,7 +1,8 @@
 ---
-title: "Praktischer Leitfaden zur WCAG-AA-Konformität Ihrer Astro-Website"
-description: "Ein umfassender Leitfaden zu Barrierefreiheitsverbesserungen, die auf einer Astro + UnoCSS-Website implementiert wurden. Behandelt aria-Attribute, Kontrast, Fokusverwaltung, Formularvalidierung, Screenreader-Unterstützung und alles Nötige für die WCAG-AA-Konformität."
+title: "Praktische Verbesserungen der Barrierefreiheit für eine Astro-Website"
+description: "Aufzeichnungen zu Verbesserungen der Barrierefreiheit einer Astro + UnoCSS-Website im März 2026: ARIA, Kontrast, Fokus, Formulare und Screenreader."
 date: 2026-03-25T12:00
+lastUpdated: "2026-09-26T17:40:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Barrierefreiheit"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -25,7 +26,7 @@ processFigure:
       description: Eine Punktzahl von 100 bei PageSpeed Accessibility bestätigen.
       icon: i-lucide-check-circle
 checklist:
-  title: WCAG-AA-Konformitäts-Checkliste
+  title: Damals umgesetzte Verbesserungen der Barrierefreiheit
   items:
     - text: Textkontrastverhältnis ist 4,5:1 oder höher (3:1 für großen Text)
       checked: true
@@ -51,6 +52,8 @@ faq:
     - question: Bedeutet ein PageSpeed-Accessibility-Score von 100 WCAG-Konformität?
       answer: "Auch ein Score von 100 garantiert keine vollständige WCAG-Konformität. Lighthouse hat begrenzte Prüfpunkte, und einige Kriterien können nur manuell überprüft werden (logische Lesereihenfolge, angemessener Alt-Text usw.). Sowohl automatisierte als auch manuelle Tests sind notwendig."
 ---
+
+**Ergänzung vom 26. September 2026:** Der folgende Code und der PageSpeed-Accessibility-Wert von 100 dokumentieren die Astro + UnoCSS-Website vom März 2026. Die aktuelle Unternehmenswebsite deklariert Tailwind CSS 4.3.3. Diese ausgewählten Prüfungen und ein automatischer Wert belegen keine WCAG-AA-Konformität der gesamten Website. Eine Bewertung muss Seiten und vollständige Abläufe festlegen und alle Erfolgskriterien der Stufen A und AA mit automatischen und menschlichen Prüfungen untersuchen ([W3C-Anforderungen](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 
 ## Einführung
 
