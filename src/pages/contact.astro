@@ -159,21 +159,40 @@ const formText = getContactFormText(locale);
       const submissionId = form.querySelector<HTMLInputElement>(
         'input[name="submission_id"]',
       );
-      if (submissionId) submissionId.value = crypto.randomUUID();
-      form.addEventListener("input", (event) => {
-        if (submissionId && event.target !== submissionId) {
-          submissionId.value = crypto.randomUUID();
-        }
-      });
+      const retryStorageKey = "systems-contact-retry";
+      const params = new URLSearchParams(window.location.search);
+      const retryId = params.get("submission_id") || "";
+      const validId = (value: string) =>
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+          value,
+        );
+      let previous: { id: string; fingerprint: string } | null = null;
+      try {
+        const saved = JSON.parse(
+          sessionStorage.getItem(retryStorageKey) || "null",
+        );
+        if (saved && validId(saved.id) && typeof saved.fingerprint === "string")
+          previous = saved;
+      } catch {
+        // Private browsing can disable session storage; submission still works.
+      }
+      if (submissionId)
+        submissionId.value = validId(retryId)
+          ? retryId
+          : previous?.id || crypto.randomUUID();
       window.addEventListener("pageshow", (event) => {
-        if (event.persisted && submissionId)
-          submissionId.value = crypto.randomUUID();
+        if (!event.persisted || !submissionId) return;
+        try {
+          if (!sessionStorage.getItem(retryStorageKey))
+            submissionId.value = crypto.randomUUID();
+        } catch {
+          // Without storage, the form keeps the ID already on the page.
+        }
       });
       const status = form.querySelector<HTMLParagraphElement>(
         "#contact-form-status",
       );
       const submit = form.querySelector<HTMLButtonElement>(".contact-submit");
-      const params = new URLSearchParams(window.location.search);
       const readParam = (name: string) =>
         (params.get(name) || "").trim().slice(0, 200);
       const serviceKey = readParam("service").toLowerCase();
@@ -266,6 +285,46 @@ const formText = getContactFormText(locale);
             ?.dispatchEvent(new Event("turnstile-reset"));
           if (status) status.hidden = false;
           return;
+        }
+
+        if (submissionId) {
+          const fields = [
+            "locale",
+            "category",
+            "name",
+            "email",
+            "subject",
+            "message",
+          ];
+          const payload = JSON.stringify(
+            fields.map(
+              (name) =>
+                (
+                  form.elements.namedItem(name) as
+                    | HTMLInputElement
+                    | HTMLTextAreaElement
+                    | HTMLSelectElement
+                    | null
+                )?.value || "",
+            ),
+          );
+          // Store only a change detector, never the form's personal information.
+          let hash = 0xcbf29ce484222325n;
+          for (const byte of new TextEncoder().encode(payload)) {
+            hash = BigInt.asUintN(64, (hash ^ BigInt(byte)) * 0x100000001b3n);
+          }
+          const fingerprint = hash.toString(16).padStart(16, "0");
+          if (
+            previous?.id === submissionId.value &&
+            previous.fingerprint !== fingerprint
+          )
+            submissionId.value = crypto.randomUUID();
+          previous = { id: submissionId.value, fingerprint };
+          try {
+            sessionStorage.setItem(retryStorageKey, JSON.stringify(previous));
+          } catch {
+            // The retry ID remains in the redirect URL when storage is unavailable.
+          }
         }
 
         if (status) status.hidden = true;
