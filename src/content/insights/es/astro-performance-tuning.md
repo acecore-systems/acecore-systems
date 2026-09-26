@@ -1,15 +1,15 @@
 ---
 title: "Técnicas prácticas para mejorar PageSpeed en sitios Astro"
-description: "Técnicas prácticas de optimización para un sitio con Astro, UnoCSS y Cloudflare Pages. Incluye distribución de CSS, fuentes, imágenes responsive, control de carga de AdSense, carga diferida de GA4 y caché."
+description: "Registro de la optimización con Astro 7.1.3 y UnoCSS en julio de 2026, diferenciado de la configuración actual con Astro y Tailwind CSS."
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Rendimiento"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: Público objetivo de este artículo
-  text: "Dirigido a quienes desean mejorar la puntuación de PageSpeed de su sitio Astro. Presentamos técnicas concretas y directamente aplicables sobre optimización de CSS, fuentes, imágenes y scripts de publicidad."
+  text: "Registro de optimizaciones de CSS, fuentes, imágenes y anuncios probadas con Astro y UnoCSS en julio de 2026. Compruebe la implementación y las condiciones de medición actuales antes de aplicarlas."
 processFigure:
   title: Flujo de optimización
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: ¿El control de carga de AdSense afecta los ingresos?
       answer: "El efecto varía según la posición del anuncio y el comportamiento de los visitantes. Compare la visibilidad, las solicitudes de anuncios y los ingresos antes y después, y evalúelos por separado de las métricas de rendimiento."
 ---
+
+> **Actualización del 26 de septiembre de 2026:** Salvo indicación contraria, «actual» en el texto siguiente significa 29 de julio de 2026. Las [dependencias actuales](https://github.com/acecore-systems/acecore-net/blob/main/package.json) usan Astro ^7.3.3 y Tailwind CSS 4.3.3. No use los ajustes antiguos de UnoCSS ni las condiciones de entrega como instrucciones actuales sin revisar la implementación. Decida con la salida real y mediciones comparables.
 
 ## Introducción
 

@@ -1,8 +1,8 @@
 ---
 title: "将 Astro 7 网站扩展至9种语言 ― 博客翻译与多语言架构"
-description: "记录了将 Astro 7.1.3 + UnoCSS + Cloudflare Pages 架构的网站扩展至9种语言的过程。涵盖从UI国际化到博客文章翻译、Pages CMS多语言配置的全部流程。"
+description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的九语言实施，并说明当前依赖与翻译流程的变化。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-07-29T00:28:02+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -59,12 +59,16 @@ faq:
     - question: 为什么选择了9种语言？
       answer: "为了最大化全球覆盖范围，我们选择了全球主要语言市场。英语、中文、西班牙语和葡萄牙语覆盖了大部分互联网用户，法语、德语、俄语和韩语则补充了其余主要市场。"
     - question: 如何保证翻译质量？
-      answer: "我们使用 GitHub Copilot 进行 AI 翻译。先创建英语版作为中间语言，再从英语翻译至各目标语言，以减少质量波动。frontmatter 中的标签值保持日语不变，URL、代码块和图片路径也保持不变。"
+      answer: "我们使用 GitHub Copilot 进行 AI 翻译。先创建英语版作为中间语言，再从英语翻译至各目标语言，以减少质量波动。frontmatter 中的标签值保持日语不变，URL、代码块和图片路径也保持不变。 这是 2026 年 7 月的方式。当前翻译生成使用 OpenAI Batch。"
     - question: 如果翻译文章不存在会怎样？
       answer: "某个 locale 缺少翻译文件时，不会生成该语言的文章 URL。日语文章继续在原 URL 发布，语言切换器会链接到目标 locale 的博客首页。"
     - question: 添加新文章时需要翻译吗？
       answer: "发布日语文章不要求同时翻译。在对应语言目录中添加同名 Markdown 文件后，该 locale 的文章 URL、sitemap 条目和 hreflang 关系才会进入生成范围。"
 ---
+
+> **2026 年 9 月 26 日更新：** 下文的 Astro 7.1.3、UnoCSS、文章数量和 Copilot 翻译属于 2026 年 7 月的记录。[当前依赖声明](https://github.com/acecore-systems/acecore-net/blob/main/package.json)使用 Astro ^7.3.3 和 Tailwind CSS 4.3.3；[翻译流程更新](/insights/copilot-translation-pipeline/)介绍 OpenAI Batch。将下文代码和数字视为当前配置之前，请核对最新源码和已发布页面。
+
+## 2026 年 7 月的实施记录
 
 我们将 Acecore 官方网站从仅支持日语升级为支持9种语言。首次上线时将21篇博客文章翻译为8种语言，共生成168个文件。截至2026年7月29日，仓库包含29篇日语文章和208篇翻译，共237个文章文件，构建会生成652个页面。只有存在翻译文件时才发布对应语言的文章 URL。
 

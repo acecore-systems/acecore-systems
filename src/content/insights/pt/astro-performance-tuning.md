@@ -1,15 +1,15 @@
 ---
 title: "Técnicas práticas para melhorar o PageSpeed em sites Astro"
-description: "Técnicas práticas de otimização para um site com Astro, UnoCSS e Cloudflare Pages. Abrange entrega de CSS, fontes, imagens responsivas, controle de carga do AdSense, carregamento diferido do GA4 e cache."
+description: "Registro das otimizações com Astro 7.1.3 e UnoCSS em julho de 2026, separado da configuração atual com Astro e Tailwind CSS."
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Desempenho"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: Público-alvo deste artigo
-  text: "Para quem deseja melhorar a pontuação do PageSpeed de um site Astro. Apresentamos técnicas concretas e aplicáveis sobre otimização de CSS, fontes, imagens e scripts de anúncios."
+  text: "Registro de otimizações de CSS, fontes, imagens e anúncios testadas com Astro e UnoCSS em julho de 2026. Confira a implementação e as condições de medição atuais antes de aplicar."
 processFigure:
   title: Fluxo de otimização
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: O controle de carga do AdSense afeta a receita?
       answer: "O efeito varia conforme a posição do anúncio e o comportamento dos visitantes. Compare visibilidade, solicitações de anúncio e receita antes e depois, separadamente das métricas de desempenho."
 ---
+
+> **Atualização de 26 de setembro de 2026:** Salvo indicação contrária, 'atual' no texto abaixo significa 29 de julho de 2026. As [dependências atuais](https://github.com/acecore-systems/acecore-net/blob/main/package.json) usam Astro ^7.3.3 e Tailwind CSS 4.3.3. Não use as antigas configurações UnoCSS e condições de entrega como instruções atuais sem verificar a implementação. Decida com a saída real e medições comparáveis.
 
 ## Introdução
 

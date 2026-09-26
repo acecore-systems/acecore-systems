@@ -1,8 +1,8 @@
 ---
 title: "Cómo hacer que un sitio Astro 7 soporte 9 idiomas ― Traducción del blog y arquitectura multilingüe"
-description: "Registro de la internacionalización de un sitio Astro 7.1.3 + UnoCSS + Cloudflare Pages a 9 idiomas. Cubre todo el proceso desde la internacionalización de la UI hasta la traducción del blog y la configuración multilingüe de Pages CMS."
+description: "Registro de la adaptación a nueve idiomas con Astro 7.1.3 y UnoCSS en julio de 2026, con referencias a las dependencias y traducción actuales."
 date: 2026-03-25T10:00
-lastUpdated: "2026-07-29T00:28:02+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "i18n", "Sitio web"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -59,12 +59,16 @@ faq:
     - question: ¿Por qué se eligieron 9 idiomas?
       answer: "Para maximizar el alcance global, cubrimos los principales mercados lingüísticos. Inglés, chino, español y portugués cubren la mayoría de los usuarios de internet, mientras que francés, alemán, ruso y coreano complementan los mercados principales restantes."
     - question: ¿Cómo se garantiza la calidad de la traducción?
-      answer: "Usamos traducción por IA con GitHub Copilot. Primero se crea la versión en inglés como idioma intermedio, luego se traduce desde el inglés a cada idioma destino para reducir la variación de calidad. Los valores de etiquetas en frontmatter se mantienen en japonés, y las URLs, bloques de código y rutas de imágenes no se modifican."
+      answer: "Usamos traducción por IA con GitHub Copilot. Primero se crea la versión en inglés como idioma intermedio, luego se traduce desde el inglés a cada idioma destino para reducir la variación de calidad. Los valores de etiquetas en frontmatter se mantienen en japonés, y las URLs, bloques de código y rutas de imágenes no se modifican. Ese era el flujo de julio de 2026. La generación de traducciones ahora usa OpenAI Batch."
     - question: ¿Qué ocurre cuando no existe un artículo traducido?
       answer: "Si falta el archivo de traducción de un locale, no se genera una URL localizada para el artículo. El artículo japonés sigue disponible en su URL original y el selector de idioma enlaza al índice del blog del locale de destino."
     - question: ¿Es necesario traducir al añadir un nuevo artículo?
       answer: "No es necesario traducir para publicar el artículo japonés. Añadir un archivo Markdown con el mismo nombre al directorio del idioma habilita la URL, la entrada de sitemap y la relación hreflang de ese locale."
 ---
+
+> **Actualización del 26 de septiembre de 2026:** Astro 7.1.3, UnoCSS, las cifras de artículos y la traducción con Copilot que siguen corresponden a julio de 2026. Las [dependencias actuales](https://github.com/acecore-systems/acecore-net/blob/main/package.json) usan Astro ^7.3.3 y Tailwind CSS 4.3.3; la [actualización del flujo de traducción](/insights/copilot-translation-pipeline/) explica OpenAI Batch. Compruebe el código y las páginas publicadas antes de considerar actuales los ejemplos y cifras.
+
+## Registro de implementación de julio de 2026
 
 Actualizamos el sitio web oficial de Acecore de solo japonés a soporte para 9 idiomas. En el despliegue inicial se tradujeron 21 artículos a 8 idiomas, generando 168 archivos. A 29 de julio de 2026, el repositorio contiene 29 artículos en japonés y 208 traducciones, 237 archivos de artículo en total, y el build genera 652 páginas. Solo se publican URLs localizadas cuando existe el archivo de traducción.
 

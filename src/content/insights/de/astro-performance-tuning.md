@@ -1,15 +1,15 @@
 ---
 title: "Praktische Techniken zur Verbesserung von PageSpeed auf einer Astro-Website"
-description: "Praktische Optimierungstechniken für eine Website mit Astro, UnoCSS und Cloudflare Pages. Behandelt CSS-Bereitstellung, Schriftkonfiguration, responsive Bilder, AdSense-Ladesteuerung, verzögertes GA4-Laden und Cache-Einstellungen."
+description: "Dokumentation der Leistungsoptimierung mit Astro 7.1.3 und UnoCSS im Juli 2026, abgegrenzt von der aktuellen Astro- und Tailwind-CSS-Konfiguration."
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Leistung"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: Für wen dieser Artikel gedacht ist
-  text: "Für alle, die den PageSpeed-Score ihrer Astro-Website verbessern möchten. Behandelt praktische, sofort anwendbare Techniken zur Optimierung von CSS, Schriften, Bildern und Werbeskripten."
+  text: "Dokumentation der im Juli 2026 mit Astro und UnoCSS geprüften CSS-, Schrift-, Bild- und Werbeskript-Optimierungen. Vor einer Übernahme die aktuelle Implementierung und Messbedingungen prüfen."
 processFigure:
   title: Optimierungs-Workflow
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: Beeinflusst die AdSense-Ladesteuerung die Einnahmen?
       answer: "Die Auswirkung hängt von Anzeigenposition und Besucherverhalten ab. Sichtbarkeit, Anzeigenanfragen und Einnahmen sollten vor und nach der Änderung verglichen und getrennt von den Leistungswerten bewertet werden."
 ---
+
+> **Ergänzung vom 26. September 2026:** Sofern nicht anders angegeben, bezieht sich „aktuell“ im folgenden Text auf den 29. Juli 2026. Die [aktuelle Abhängigkeitsdatei](https://github.com/acecore-systems/acecore-net/blob/main/package.json) nutzt Astro ^7.3.3 und Tailwind CSS 4.3.3. Die alten UnoCSS-Einstellungen und Auslieferungsbedingungen sollten nicht ungeprüft als heutige Anleitung dienen. Entscheiden Sie anhand des tatsächlichen Outputs und vergleichbarer Messungen.
 
 ## Einführung
 
