@@ -4,6 +4,7 @@ description: "总结了在Astro + Cloudflare Pages构成的网站上正确实现
 date: 2026-03-25T11:00
 author: gui
 tags: ["技术", "Astro", "SEO"]
+lastUpdated: "2026-09-26T19:21:24+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -19,7 +20,7 @@ processFigure:
       description: 通过JSON-LD向Google传达页面的语义。
       icon: i-lucide-braces
     - title: 站点地图
-      description: 按页面类型设置优先级和更新频率。
+      description: "收录规范网址，并核实重大内容更新的日期。"
       icon: i-lucide-map
     - title: RSS
       description: 分发包含作者和分类信息的高质量Feed。
@@ -37,13 +38,13 @@ insightGrid:
       description: 将所有页面的层级结构作为面包屑导航输出。
       icon: i-lucide-chevrons-right
     - title: FAQPage
-      description: 在包含FAQ的文章中启用常见问题的Rich Results。
+      description: "让FAQ内容可被机器读取；普通网站通常不会获得Google FAQ富媒体结果。"
       icon: i-lucide-help-circle
     - title: WebPage / ContactPage
       description: 为首页和联系页面赋予专用类型。
       icon: i-lucide-layout
     - title: SearchAction
-      description: 使从Google搜索结果直接执行站内搜索成为可能。
+      description: "Google于2024年停用站点链接搜索框；站内搜索应在网站内部提供。"
       icon: i-lucide-search
 faq:
   title: 常见问题
@@ -53,8 +54,10 @@ faq:
     - question: OGP图片尺寸多大合适？
       answer: "推荐1200×630px。在X（Twitter）上使用summary_large_image显示时，此比例最优。"
     - question: 站点地图的priority会影响SEO吗？
-      answer: "Google官方表示会忽略priority，但其他搜索引擎可能会参考。设置了不会有坏处。"
+      answer: "Google忽略 `priority` 和 `changefreq`，无需为了SEO虚构这些数值。"
 ---
+
+> 2026年9月更新：Google已于2024年11月停止显示站点链接搜索框。FAQ富媒体搜索结果通常仅面向权威政府和健康网站，Google也不使用站点地图中的 `changefreq` 与 `priority`。阅读本文2026年3月的实现记录时，请参考[搜索框调整](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)、[FAQ调整](https://developers.google.com/search/blog/2023/08/howto-faq-changes)和[站点地图说明](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)。
 
 ## 前言
 
@@ -121,11 +124,11 @@ faq:
 
 ### FAQPage
 
-包含FAQ的文章输出 `FAQPage` 结构化数据。在Astro中，在Front Matter中定义 `faq` 字段，在模板侧进行检测和输出的方式较为方便。
+页面包含FAQ时，可以输出与可见内容一致的 `FAQPage` 数据。但Google的FAQ富媒体结果通常仅面向权威政府和健康网站，普通网站不应期待展示。
 
 ### WebSite + SearchAction
 
-如果有站内搜索功能，设置 `SearchAction` 后Google搜索结果中可能会显示站内搜索框。结合Pagefind等搜索引擎，建立通过 `?q=` 参数自动启动搜索模态框的机制，可以提升用户体验。
+Google于2024年11月停用站点链接搜索框。保留已有 `SearchAction` 标记本身不会造成搜索错误。Pagefind等工具仍可作为网站内部的搜索功能。
 
 ---
 
@@ -135,7 +138,7 @@ faq:
 
 ### 按页面类型设置
 
-使用 `serialize()` 函数，根据页面的URL模式设置 `changefreq` 和 `priority`。
+下方是当时使用 `serialize()` 按网址类型输出 `changefreq` 和 `priority` 的实现记录。Google忽略这两个字段，不应以提高排名为目的设置它们。
 
 | 页面类型 | changefreq | priority |
 | -------- | ---------- | -------- |
@@ -145,7 +148,7 @@ faq:
 
 ### lastmod设置
 
-`lastmod` 设置为构建日期，向搜索引擎传达内容的新鲜度。如果博客文章在Front Matter中有 `lastUpdated` 字段，则优先使用该值。
+`lastmod` 应表示页面真实的重要更新日期。不要把构建时间统一写入未变更的页面；文章应与发布日期或 `lastUpdated` 保持一致。
 
 ---
 
