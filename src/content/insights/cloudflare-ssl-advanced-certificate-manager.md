@@ -5,145 +5,37 @@ date: 2026-03-31T00:00
 author: gui
 tags: ["技術", "Cloudflare", "セキュリティ", "インフラ"]
 image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-compareTable:
-  title: Universal SSL vs Advanced Certificate Manager
-  before:
-    label: Universal SSL（無料）
-    items:
-      - ルートドメイン + 1階層サブドメインのみカバー
-      - CA・有効期限・暗号スイートは選択不可
-      - "*.example.com は機能するが dev.staging.example.com は対象外"
-      - Cloudflare ブランドが証明書の CN に含まれる
-  after:
-    label: Advanced Certificate Manager（有料・$10/月/ゾーン）
-    items:
-      - 多階層サブドメインを最大 50 ホスト名まで指定可能
-      - CA（Let's Encrypt / Google Trust Services 等）を選択可能
-      - 有効期限を 14 日 〜 365 日で設定可能
-      - "独自ドメインが CN になり Cloudflare ブランドが非表示"
-callout:
-  type: info
-  title: 名称変更の背景
-  text: 旧称「Dedicated SSL Certificates（専用SSL証明書）」は 2021 年に Advanced Certificate Manager（ACM）として刷新されました。名前が変わっただけでなく、多階層サブドメイン対応・CA 選択・有効期限指定など機能が大幅に拡張されています。
-faq:
-  title: よくある質問
-  items:
-    - question: Universal SSL で *.example.com のワイルドカード証明書は使えますか？
-      answer: 使えますが、カバーできるのは 1 階層のサブドメイン（www.example.com など）のみです。dev.staging.example.com のような 2 階層以上のサブドメインには適用されず、証明書エラーが発生します。この場合は ACM が必要です。
-    - question: Advanced Certificate Manager は無料プランでも使えますか？
-      answer: はい、Cloudflare の無料プランでも ACM アドオン（$10/月/ゾーン）を追加購入することで利用できます。上位プランへのアップグレードは不要です。
-    - question: Universal SSL で十分なケースはどんなときですか？
-      answer: ほとんどの個人サイトや中小企業サイトでは Universal SSL で十分です。ルートドメインと www などの 1 階層サブドメインのみを使用していれば ACM は不要です。
-    - question: ACM を有効にすると Universal SSL はどうなりますか？
-      answer: Universal SSL と ACM は共存できます。同じサブドメインに対しては ACM の証明書が優先的に使われます。
-linkCards:
-  - href: https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/
-    title: Advanced Certificate Manager ドキュメント
-    description: Cloudflare 公式の ACM 設定ガイド
-    icon: i-lucide-file-text
-  - href: https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/
-    title: Universal SSL の制限事項
-    description: Universal SSL がカバーしないケースの公式ドキュメント
-    icon: i-lucide-alert-circle
-  - href: https://www.cloudflare.com/ja-jp/application-services/products/advanced-certificate-manager/
-    title: Advanced Certificate Manager 製品ページ
-    description: ACM の機能一覧と購入方法（日本語）
-    icon: i-lucide-shield-check
+lastUpdated: "2026-09-26T19:15:00+09:00"
 ---
 
-「Cloudflare に以前あった有料の SSL オプション、なんだっけ？」——そう思ったことがある方は少なくないはずです。この記事では、その正体と現在の名称・機能について整理します。
+Cloudflare の旧「Dedicated SSL Certificates」は、2021年に **Advanced Certificate Manager（ACM）** へ移行しました。現在は、まず対象ホスト名と DNS 構成を確認してから証明書を選ぶのが確実です。
 
-Cloudflare Pages での静的サイト配信や CSP の実装は、[Cloudflare Pages で実現するセキュアな静的サイト配信](/insights/cloudflare-pages-security/)も参考になります。
+## Universal SSL で足りる範囲
 
-## 結論：「Dedicated SSL」→「Advanced Certificate Manager（ACM）」
+Cloudflare の **full DNS setup** では、無料の Universal SSL は通常、ルートドメインと1階層のサブドメインを保護します。`*.example.com` は `www.example.com` を含みますが、`api.staging.example.com` は含みません。一方、**CNAME（partial）setup** では、プロキシされたホスト名ごとに、階層に関係なく Universal 証明書が発行されます。「多階層なら必ず ACM が必要」とは限りません。
 
-Cloudflare で以前有料だった SSL オプションの名称は **Dedicated SSL Certificates（専用 SSL 証明書）** です。これは **2021 年に「Advanced Certificate Manager（ACM）」として刷新・リネーム** されました。
+Universal SSL の証明書は現在、無料で個別に発行されます。以前の「他サイトと共有されるから ACM が必要」という説明は現行仕様に合いません。
 
-価格は当時と同様にゾーン（ドメイン）ごとに **月額 $10** で提供されています。
+## ACM を選ぶとき
 
----
+ACM は有料アドオンです。CA、検証方法、有効期間、対象ホスト名を選べます。高度な証明書1枚には、ルートドメインを含めて最大50ホスト名を指定できます。有効期間の選択肢は CA とプランにより異なり、**1年は SSL.com を使う Enterprise 顧客に限定**されています。全プランで14～365日を自由に選べるわけではありません。
 
-## なぜ名前が変わったのか
+full DNS setup で多階層のプロキシ済みホスト名を自動保護したい場合は、ACM の **Total TLS** が候補です。特定のホスト名だけなら、高度な証明書やカスタム証明書も選択肢です。Total TLS は full DNS setup が条件で、Cloudflare Tunnel など一部製品のホスト名には証明書を発行しません。
 
-「Dedicated SSL」時代は、文字通り「そのドメイン専用の証明書を発行する」という機能に特化していました。無料の Universal SSL が他のサイトと証明書を共有するのに対し、専用証明書は独自のコモンネーム（CN）を持てるのが売りでした。
+**Cloudflare Pages と R2 のカスタムドメインには ACM の高度な証明書は適用されません。** これらは別の証明書経路を使用します。Acecore の Pages サイトのために ACM を購入しても、この証明書を Pages のホスト名へ適用することはできません。
 
-**Advanced Certificate Manager** への移行では以下の機能が加わり、名前も「管理（Manager）」の側面を強調したものに変わりました。
+## 導入前の確認
 
-- **多階層サブドメイン対応**：`dev.staging.example.com` のような 2 階層以上のサブドメインも保護可能
-- **CA の選択**：Let's Encrypt・Google Trust Services などから選択できる
-- **有効期限の指定**：14 日〜 365 日の範囲で設定可能
-- **最大 50 ホスト名**：1 枚の証明書で複数のホスト名をカバー
-- **Total TLS**：ゾーン内のプロキシ済みサブドメインをすべて自動保護
+1. 対象ホスト名と、full DNS setup か CNAME setup かを確認する。
+2. Universal SSL で実際に保護される範囲を確認する。
+3. 必要な CA・有効期間・Total TLS の条件を確認する。
+4. 料金と購入条件は、契約プランの Cloudflare ダッシュボードで確認する。
 
----
+証明書の CN 表示だけを購入理由にせず、必要なホスト名が証明書の SAN に含まれるかを確認してください。
 
-## Universal SSL との違い
+## Official sources
 
-Cloudflare には無料で使える **Universal SSL** があり、ほとんどのサイトはこれだけで HTTPS を実現できます。ただし、いくつかの制限があります。
-
-### Universal SSL がカバーできないケース
-
-```
-# これらは Universal SSL でカバー可能
-example.com
-www.example.com
-blog.example.com
-
-# これらは Universal SSL の対象外（ACM が必要）
-dev.staging.example.com
-api.v2.example.com
-deep.sub.domain.example.com
-```
-
-`*.example.com` のワイルドカードは有効ですが、**ワイルドカードが効くのは 1 階層のサブドメインのみ**です。`*.staging.example.com` のような多階層には対応していません。
-
-### Cloudflare ブランドの有無
-
-Universal SSL では、証明書の CN（コモンネーム）に `sni.cloudflaressl.com` のような Cloudflare のドメインが含まれる場合があります。ACM を使うと、独自ドメインが CN になり Cloudflare ブランドが非表示になります。
-
----
-
-## ACM が必要なケース
-
-以下のいずれかに該当する場合は ACM の導入を検討してください。
-
-1. **多階層サブドメインを使っている**
-   `api.staging.example.com` や `dev.app.example.com` など、2 階層以上のサブドメインを SSL 化したい場合。
-
-2. **証明書の CN を独自ドメインにしたい**
-   Cloudflare ブランドを証明書から除外したい場合（主に企業サイト・B2B サービス）。
-
-3. **CA や有効期限を指定したい**
-   セキュリティポリシーで特定の CA を使う義務がある場合、または短期証明書（14 日など）を使いたい場合。
-
-4. **Total TLS で全サブドメインを一括保護したい**
-   ゾーン内のすべてのプロキシ済みサブドメインを自動で証明書保護したい場合。
-
----
-
-## 購入・有効化の手順
-
-Cloudflare ダッシュボードから数ステップで有効化できます。
-
-1. Cloudflare ダッシュボードの対象ドメインを開く
-2. **SSL/TLS** → **Edge Certificates** を選択
-3. **Advanced Certificate Manager** のセクションで **Enable** をクリック
-4. サブスクリプション（$10/月）を確認して購入
-5. 証明書を作成し、保護したいホスト名を追加
-
-Total TLS を有効にする場合は、同じ Edge Certificates ページの **Total TLS** セクションで On に切り替えるだけです。
-
----
-
-## まとめ
-
-| 項目               | Universal SSL（無料） | Advanced Certificate Manager（$10/月/ゾーン） |
-| ------------------ | --------------------- | --------------------------------------------- |
-| 多階層サブドメイン | ✗                     | ✓                                             |
-| CA の選択          | ✗                     | ✓                                             |
-| 有効期限指定       | ✗                     | ✓                                             |
-| CN が独自ドメイン  | △                     | ✓                                             |
-| Total TLS          | ✗                     | ✓                                             |
-| 用途               | 個人・一般サイト      | 企業・複雑なサブドメイン構成                  |
-
-Cloudflare の「以前有料だった SSL オプション」は **Advanced Certificate Manager（旧 Dedicated SSL Certificates）** です。無料の Universal SSL で足りないケース——特に多階層サブドメインの保護や証明書の細かい制御が必要な場合——に有効な選択肢です。
+- [Universal SSL limitations](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/)
+- [Advanced certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/)
+- [Validity periods and renewal](https://developers.cloudflare.com/ssl/reference/certificate-validity-periods/)
+- [Total TLS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/total-tls/)
