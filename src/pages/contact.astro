@@ -160,6 +160,11 @@ const formText = getContactFormText(locale);
         'input[name="submission_id"]',
       );
       if (submissionId) submissionId.value = crypto.randomUUID();
+      form.addEventListener("input", (event) => {
+        if (submissionId && event.target !== submissionId) {
+          submissionId.value = crypto.randomUUID();
+        }
+      });
       window.addEventListener("pageshow", (event) => {
         if (event.persisted && submissionId)
           submissionId.value = crypto.randomUUID();
