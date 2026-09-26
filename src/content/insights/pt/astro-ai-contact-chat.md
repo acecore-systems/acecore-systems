@@ -1,7 +1,8 @@
 ---
 title: "Design técnico para adicionar um chat de IA de contato a um site Astro"
-description: "Guia prático para adicionar um chat de IA de contato a um site estático Astro + Cloudflare Pages com a OpenAI Responses API. Cobre fronteiras de API, contexto do site, controle de prompt, URLs por locale, verificação de Origin, rate limit e renderização segura de links Markdown."
+description: "Projeto de referência de junho de 2026. Guia prático para adicionar um chat de IA de contato a um site estático Astro + Cloudflare Pages com a OpenAI Responses API. Cobre fronteiras de API, contexto do site, controle de prompt, URLs por locale, verificação de Origin, rate limit e renderização segura de links Markdown."
 date: 2026-06-07T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["Tecnologia", "Cloudflare", "Site", "AI", "Serviços"]
 image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
@@ -78,6 +79,8 @@ faq:
     - question: A IA pode retornar qualquer link?
       answer: Não. Links são limitados a caminhos internos, origin atual, acecore.net, LINE oficial e, quando necessário, mailto ou tel específicos. URLs Markdown são recortadas antes da checagem.
 ---
+
+> **Atualização de 26 de setembro de 2026:** O texto abaixo documenta um projeto de junho de 2026. Hoje, a API de chat da Acecore Systems encaminha solicitações por uma Cloudflare Pages Function e um Service Binding ao acecore-chat-worker compartilhado. A interface recebe JSON e exibe a resposta completa. A chamada direta à OpenAI descrita abaixo já não é a implementação atual.
 
 Adicionar um chat de IA a um site é simples. O que precisa de desenho é a operação: até onde a IA pode responder, para onde deve guiar visitantes, quais URLs podem aparecer e como controlar custo de API.
 

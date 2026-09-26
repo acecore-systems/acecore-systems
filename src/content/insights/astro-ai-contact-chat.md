@@ -1,7 +1,8 @@
 ---
 title: "Astroサイトに問い合わせAIチャットを組み込む技術設計"
-description: "Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
+description: "2026年6月時点の参照設計です。Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
 date: 2026-06-07T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["技術", "Cloudflare", "Webサイト", "AI", "サービス"]
 image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
@@ -78,6 +79,8 @@ faq:
     - question: AI回答内のリンクは自由に出せますか？
       answer: 自由には出しません。内部パス、同一origin、acecore.net、公式LINE、必要時の mailto と tel だけを許可し、MarkdownリンクのURL前後に空白があってもtrimして安全判定します。
 ---
+
+> **2026年9月26日追記:** 以下は2026年6月時点の参照設計です。Acecore Systemsの現在の `/api/ai-chat` は、Cloudflare Pages FunctionからService Binding経由で共通の `acecore-chat-worker` に転送します。画面側はJSON応答を受け取り、完成した回答を表示します。本文のOpenAI Responses APIを直接呼ぶ構成は、現在のSystems実装の説明としては読み替えてください。
 
 問い合わせAIチャットは、サイトにAIを置くだけなら簡単です。しかし実運用で問題になるのは、モデルの性能よりも、どこまで答えさせるか、どの導線へ送るか、どのURLを表示してよいか、APIコストをどう抑えるかです。
 
