@@ -59,6 +59,7 @@ const formText = getContactFormText(locale);
         data-submitting-text={formText.submitting}
       >
         <input type="hidden" name="locale" value={locale} />
+        <input type="hidden" name="submission_id" value="" />
         <input type="hidden" name="source" value="systems.acecore.net" />
         <input id="contact-service" type="hidden" name="service" value="" />
         <input id="contact-from" type="hidden" name="from" value="" />
@@ -155,6 +156,19 @@ const formText = getContactFormText(locale);
     const form = document.querySelector<HTMLFormElement>("#contact-form");
 
     if (form) {
+      const submissionId = form.querySelector<HTMLInputElement>(
+        'input[name="submission_id"]',
+      );
+      if (submissionId) submissionId.value = crypto.randomUUID();
+      form.addEventListener("input", (event) => {
+        if (submissionId && event.target !== submissionId) {
+          submissionId.value = crypto.randomUUID();
+        }
+      });
+      window.addEventListener("pageshow", (event) => {
+        if (event.persisted && submissionId)
+          submissionId.value = crypto.randomUUID();
+      });
       const status = form.querySelector<HTMLParagraphElement>(
         "#contact-form-status",
       );
