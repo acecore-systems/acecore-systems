@@ -4,6 +4,7 @@ description: "Astro + Cloudflare Pages 사이트에서 JSON-LD 구조화 데이�
 date: 2026-03-25T11:00
 author: gui
 tags: ["기술", "Astro", "SEO"]
+lastUpdated: "2026-09-26T19:21:24+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -19,7 +20,7 @@ processFigure:
       description: JSON-LD를 사용하여 페이지의 의미를 Google에 전달합니다.
       icon: i-lucide-braces
     - title: 사이트맵
-      description: 페이지 유형별로 우선순위와 업데이트 빈도를 설정합니다.
+      description: "표준 URL을 포함하고 실제로 중요한 변경이 일어난 날짜를 확인합니다."
       icon: i-lucide-map
     - title: RSS
       description: 저자 및 카테고리 정보가 포함된 고품질 피드를 제공합니다.
@@ -37,13 +38,13 @@ insightGrid:
       description: 모든 페이지의 계층 구조를 브레드크럼 리스트로 출력합니다.
       icon: i-lucide-chevrons-right
     - title: FAQPage
-      description: FAQ 섹션이 포함된 글에 FAQ 리치 결과를 활성화합니다.
+      description: "FAQ를 기계가 읽을 수 있게 표시합니다. 일반 사이트의 Google FAQ 리치 결과는 드뭅니다."
       icon: i-lucide-help-circle
     - title: WebPage / ContactPage
       description: 최상위 페이지와 문의 페이지에 전용 타입을 지정합니다.
       icon: i-lucide-layout
     - title: SearchAction
-      description: Google 검색 결과에서 직접 사이트 검색을 실행할 수 있도록 합니다.
+      description: "Google은 2024년 사이트링크 검색창을 종료했습니다. 검색 기능은 사이트 안에서 제공합니다."
       icon: i-lucide-search
 faq:
   title: 자주 묻는 질문
@@ -53,8 +54,10 @@ faq:
     - question: 권장 OGP 이미지 크기는 어떻게 되나요?
       answer: "1200×630px가 권장됩니다. 이 비율은 summary_large_image 사용 시 X(Twitter)에 최적입니다."
     - question: 사이트맵의 priority가 SEO에 영향을 미치나요?
-      answer: "Google은 공식적으로 priority를 무시한다고 밝혔지만, 다른 검색 엔진은 참조할 수 있습니다. 설정해 두어도 손해는 없습니다."
+      answer: "Google은 `priority`와 `changefreq`를 무시하므로 SEO 효과를 위해 값을 만들어 넣을 필요가 없습니다."
 ---
+
+> 2026년 9월 업데이트: Google은 2024년 11월 검색 결과의 사이트링크 검색창을 종료했습니다. FAQ 리치 결과는 대체로 권위 있는 정부·의료 사이트로 제한되며 Google은 사이트맵의 `changefreq`와 `priority`를 사용하지 않습니다. 이 2026년 3월 구현 기록은 [검색창 변경](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ 변경](https://developers.google.com/search/blog/2023/08/howto-faq-changes), [사이트맵 안내](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)와 함께 읽으세요.
 
 ## 서론
 
@@ -121,11 +124,11 @@ Astro 레이아웃 컴포넌트에서 각 페이지에 다음을 출력합니다
 
 ### FAQPage
 
-FAQ 섹션이 있는 글에는 `FAQPage` 구조화 데이터를 출력합니다. Astro에서는 프론트매터에 `faq` 필드를 정의하고 템플릿 측에서 이를 감지하여 출력하는 방식이 편리합니다.
+페이지에 FAQ가 있다면 보이는 내용과 일치하는 `FAQPage` 데이터를 출력할 수 있습니다. 다만 Google의 FAQ 리치 결과는 대체로 권위 있는 정부·의료 사이트에 제한되므로 일반 사이트는 표시를 기대하지 않아야 합니다.
 
 ### WebSite + SearchAction
 
-사이트 검색이 있다면 `SearchAction`을 설정하면 Google 검색 결과에 사이트 검색 상자가 표시될 수 있습니다. Pagefind 같은 검색 엔진과 결합하여 `?q=` 매개변수를 통한 검색 모달 자동 실행 메커니즘을 구현하면 사용자 경험이 향상됩니다.
+Google은 2024년 11월 사이트링크 검색창을 종료했습니다. 기존 `SearchAction` 마크업이 남아 있어도 그 자체로 검색 오류가 발생하지 않습니다. Pagefind 같은 사이트 내부 검색은 여전히 유용합니다.
 
 ---
 
@@ -135,7 +138,7 @@ Astro의 `@astrojs/sitemap` 플러그인으로 사이트맵을 자동 생성할 
 
 ### 페이지 유형별 설정
 
-`serialize()` 함수를 사용하여 URL 패턴에 따라 `changefreq`와 `priority`를 설정합니다.
+당시 `serialize()` 설정은 URL 종류에 따라 `changefreq`와 `priority`를 출력했습니다. 아래 표는 그 구현 기록입니다. Google은 두 값을 무시하므로 순위 상승을 위해 설정할 필요는 없습니다.
 
 | 페이지 유형 | changefreq | priority |
 | ----------- | ---------- | -------- |
@@ -145,7 +148,7 @@ Astro의 `@astrojs/sitemap` 플러그인으로 사이트맵을 자동 생성할 
 
 ### lastmod 설정
 
-`lastmod`를 빌드 날짜로 설정하여 검색 엔진에 콘텐츠 신선도를 전달합니다. 블로그 글의 프론트매터에 `lastUpdated` 필드가 있으면 그것을 우선합니다.
+`lastmod`는 실제로 중요한 페이지 변경 날짜를 나타낼 때 사용합니다. 바뀌지 않은 모든 페이지에 빌드 날짜를 일괄 입력하지 말고 글의 발행일 또는 `lastUpdated`와 맞추세요.
 
 ---
 

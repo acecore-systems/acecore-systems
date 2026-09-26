@@ -4,6 +4,7 @@ description: "Eine Schritt-für-Schritt-Anleitung zur korrekten Implementierung 
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technologie", "Astro", "SEO"]
+lastUpdated: "2026-09-26T19:21:24+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -19,7 +20,7 @@ processFigure:
       description: Die Seitenbedeutung für Google mit JSON-LD vermitteln.
       icon: i-lucide-braces
     - title: Sitemap
-      description: Priorität und Aktualisierungsfrequenz pro Seitentyp konfigurieren.
+      description: "Kanonische URLs aufnehmen und Daten wesentlicher Änderungen prüfen."
       icon: i-lucide-map
     - title: RSS
       description: Hochwertige Feeds mit Autor- und Kategorieinformationen bereitstellen.
@@ -37,13 +38,13 @@ insightGrid:
       description: Die hierarchische Struktur aller Seiten als Breadcrumb-Listen ausgeben.
       icon: i-lucide-chevrons-right
     - title: FAQPage
-      description: FAQ-Rich-Results für Artikel mit FAQ-Abschnitten aktivieren.
+      description: "FAQ-Inhalte maschinenlesbar machen; Google zeigt FAQ-Rich-Results für allgemeine Seiten kaum an."
       icon: i-lucide-help-circle
     - title: WebPage / ContactPage
       description: Dedizierte Typen für die Startseite und Kontaktseite zuweisen.
       icon: i-lucide-layout
     - title: SearchAction
-      description: Direkte Website-Suche aus den Google-Suchergebnissen ermöglichen.
+      description: "Google stellte das Suchfeld 2024 ein; bieten Sie die Suche auf Ihrer Website an."
       icon: i-lucide-search
 faq:
   title: Häufig gestellte Fragen
@@ -53,8 +54,10 @@ faq:
     - question: Welche OGP-Bildgröße wird empfohlen?
       answer: "1200×630px wird empfohlen. Dieses Verhältnis ist optimal für X (Twitter) bei Verwendung von summary_large_image."
     - question: Beeinflusst die Sitemap-Priorität die SEO?
-      answer: "Google hat offiziell erklärt, dass es die Priorität ignoriert, aber andere Suchmaschinen können sie berücksichtigen. Es schadet nicht, sie zu setzen."
+      answer: "Google ignoriert `priority` und `changefreq`; erfundene Werte bringen keinen SEO-Vorteil."
 ---
+
+> Aktualisierung vom September 2026: Google hat das Sitelinks-Suchfeld im November 2024 eingestellt. FAQ-Rich-Results sind im Allgemeinen auf anerkannte Behörden- und Gesundheitsseiten beschränkt; `changefreq` und `priority` in Sitemaps ignoriert Google. Lesen Sie diesen Implementierungsbericht vom März 2026 zusammen mit den Änderungen zu [Suchfeld](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) und den [Sitemap-Hinweisen](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
 ## Einführung
 
@@ -121,11 +124,11 @@ Strukturierte Breadcrumb-Daten sollten auf allen Seiten gesetzt werden. Ein wich
 
 ### FAQPage
 
-Geben Sie `FAQPage`-strukturierte Daten für Artikel mit FAQ-Abschnitten aus. In Astro ist es ein praktischer Ansatz, ein `faq`-Feld im Frontmatter zu definieren und es auf der Template-Seite zu erkennen und auszugeben.
+Wenn die Seite FAQ enthält, können passende `FAQPage`-Daten ausgegeben werden. Google beschränkt FAQ-Rich-Results im Allgemeinen auf anerkannte Behörden- und Gesundheitsseiten. Andere Seiten sollten diese Darstellung nicht erwarten.
 
 ### WebSite + SearchAction
 
-Wenn Sie eine Website-Suche haben, kann das Setzen von `SearchAction` ein Suchfeld direkt in den Google-Suchergebnissen anzeigen. In Kombination mit einer Suchmaschine wie Pagefind verbessert die Implementierung eines Auto-Start-Mechanismus für das Such-Modal über den `?q=`-Parameter die Benutzererfahrung.
+Google stellte das Sitelinks-Suchfeld im November 2024 ein. Vorhandenes `SearchAction`-Markup verursacht für sich genommen keinen Suchfehler. Pagefind und ähnliche Tools bleiben für die Suche auf der eigenen Website nützlich.
 
 ---
 
@@ -135,7 +138,7 @@ Sie können eine Sitemap automatisch mit Astros `@astrojs/sitemap`-Plugin generi
 
 ### Konfiguration pro Seitentyp
 
-Verwenden Sie die `serialize()`-Funktion, um `changefreq` und `priority` basierend auf URL-Mustern zu setzen.
+Die damalige `serialize()`-Konfiguration gab `changefreq` und `priority` je URL-Typ aus. Die Tabelle dokumentiert diese Implementierung. Google ignoriert beide Werte; ein Rankinggewinn ist nicht zu erwarten.
 
 | Seitentyp     | changefreq | priority |
 | ------------- | ---------- | -------- |
@@ -145,7 +148,7 @@ Verwenden Sie die `serialize()`-Funktion, um `changefreq` und `priority` basiere
 
 ### lastmod setzen
 
-Setzen Sie `lastmod` auf das Build-Datum, um die Aktualität des Inhalts an Suchmaschinen zu kommunizieren. Wenn ein Blog-Beitrag ein `lastUpdated`-Feld in seinem Frontmatter hat, priorisieren Sie dieses.
+`lastmod` sollte das Datum einer tatsächlichen, wesentlichen Seitenänderung angeben. Vermeiden Sie das Build-Datum auf allen unveränderten Seiten; bei Artikeln sollte es zu Veröffentlichung oder `lastUpdated` passen.
 
 ---
 

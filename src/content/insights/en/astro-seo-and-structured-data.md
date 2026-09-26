@@ -4,6 +4,7 @@ description: "A step-by-step guide to properly implementing JSON-LD structured d
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technology", "Astro", "SEO"]
+lastUpdated: "2026-09-26T19:21:24+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -19,7 +20,7 @@ processFigure:
       description: Communicate page meaning to Google using JSON-LD.
       icon: i-lucide-braces
     - title: Sitemap
-      description: Configure priority and update frequency per page type.
+      description: "Include canonical URLs and verify dates of substantial changes."
       icon: i-lucide-map
     - title: RSS
       description: Deliver high-quality feeds with author and category information.
@@ -37,13 +38,13 @@ insightGrid:
       description: Output the hierarchical structure of all pages as breadcrumb lists.
       icon: i-lucide-chevrons-right
     - title: FAQPage
-      description: Enable FAQ rich results for articles that include FAQ sections.
+      description: "Make FAQ content machine readable; Google rarely shows FAQ rich results for general sites."
       icon: i-lucide-help-circle
     - title: WebPage / ContactPage
       description: Assign dedicated types to the top page and contact page.
       icon: i-lucide-layout
     - title: SearchAction
-      description: Enable direct site search execution from Google search results.
+      description: "Google retired the sitelinks search box in 2024; provide site search within your site."
       icon: i-lucide-search
 faq:
   title: Frequently Asked Questions
@@ -53,8 +54,10 @@ faq:
     - question: What is the recommended OGP image size?
       answer: "1200×630px is recommended. This ratio is optimal for X (Twitter) when using summary_large_image."
     - question: Does sitemap priority affect SEO?
-      answer: "Google has officially stated that it ignores priority, but other search engines may reference it. It doesn't hurt to set it."
+      answer: "Google ignores `priority` and `changefreq`. There is no SEO benefit in inventing values for them."
 ---
+
+> September 2026 update: Google ended the sitelinks search box in November 2024. FAQ rich results are generally limited to authoritative government and health sites, and Google ignores sitemap `changefreq` and `priority`. Read this March 2026 implementation record alongside the [search box change](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ change](https://developers.google.com/search/blog/2023/08/howto-faq-changes), and [sitemap guidance](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
 ## Introduction
 
@@ -121,11 +124,11 @@ Breadcrumb structured data should be set on all pages. An important implementati
 
 ### FAQPage
 
-Output `FAQPage` structured data for articles with FAQ sections. In Astro, defining an `faq` field in the frontmatter and detecting/outputting it on the template side is a convenient approach.
+If your page includes FAQs, you can output matching `FAQPage` data. Google generally limits FAQ rich results to authoritative government and health sites, so general sites should not expect that display.
 
 ### WebSite + SearchAction
 
-If you have site search, setting `SearchAction` may display a site search box in Google search results. Combined with a search engine like Pagefind, implementing an auto-launch mechanism for the search modal via `?q=` parameter improves the user experience.
+Google retired the sitelinks search box in November 2024. Existing `SearchAction` markup does not by itself cause a Search error. Search tools such as Pagefind remain useful for visitors within your site.
 
 ---
 
@@ -135,7 +138,7 @@ You can auto-generate a sitemap using Astro's `@astrojs/sitemap` plugin, but the
 
 ### Per-Page-Type Configuration
 
-Use the `serialize()` function to set `changefreq` and `priority` based on URL patterns.
+The `serialize()` setup below emitted `changefreq` and `priority` by URL type at the time. The table is an implementation record. Google ignores both fields, so do not configure them for ranking gains.
 
 | Page Type  | changefreq | priority |
 | ---------- | ---------- | -------- |
@@ -145,7 +148,7 @@ Use the `serialize()` function to set `changefreq` and `priority` based on URL p
 
 ### Setting lastmod
 
-Set `lastmod` to the build date to communicate content freshness to search engines. If a blog post has a `lastUpdated` field in its frontmatter, prioritize that.
+Use `lastmod` for the date of a real, substantial page change. Avoid putting the build timestamp on every unchanged page; for articles, align it with publication or `lastUpdated` dates.
 
 ---
 

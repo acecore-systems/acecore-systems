@@ -4,6 +4,7 @@ description: "Astro + Cloudflare Pages 構成のサイトに JSON-LD 構造化�
 date: 2026-03-25T11:00
 author: gui
 tags: ["技術", "Astro", "SEO"]
+lastUpdated: "2026-09-26T19:21:24+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -19,7 +20,7 @@ processFigure:
       description: JSON-LDでページの意味をGoogleに伝える。
       icon: i-lucide-braces
     - title: サイトマップ
-      description: ページ種別ごとに優先度と更新頻度を設定。
+      description: "サイトマップに正規URLを含め、実際の重要な更新日を確認する。"
       icon: i-lucide-map
     - title: RSS
       description: 著者・カテゴリ情報を含む高品質なフィードを配信。
@@ -37,13 +38,13 @@ insightGrid:
       description: 全ページの階層構造をパンくずリストとして出力。
       icon: i-lucide-chevrons-right
     - title: FAQPage
-      description: FAQ付き記事でよくある質問のリッチリザルトを有効化。
+      description: "FAQの内容を機械可読にする。GoogleのFAQリッチリザルトは一般サイトでは通常表示されない。"
       icon: i-lucide-help-circle
     - title: WebPage / ContactPage
       description: トップページとお問い合わせページに専用の型を付与。
       icon: i-lucide-layout
     - title: SearchAction
-      description: Google検索結果からサイト内検索を直接実行可能に。
+      description: "Googleのサイト内検索ボックスは2024年に終了。サイト内検索の導線はサイト内で提供する。"
       icon: i-lucide-search
 faq:
   title: よくある質問
@@ -53,8 +54,10 @@ faq:
     - question: OGPの画像サイズはどのくらいが適切ですか？
       answer: "1200×630px が推奨です。X（Twitter）は summary_large_image で表示する場合、この比率が最適です。"
     - question: サイトマップの priority は SEO に影響しますか？
-      answer: "Googleは公式に priority を無視すると述べていますが、他の検索エンジンでは参考にされる場合があります。設定しておいて損はありません。"
+      answer: "Googleは `priority` と `changefreq` を使いません。根拠のない値をSEO上の効果として設定する必要はありません。"
 ---
+
+> 2026年9月追記: Googleは2024年11月に検索結果のサイト内検索ボックスを終了しました。FAQリッチリザルトは主に権威ある政府・医療サイトに限定されています。また、Googleはサイトマップの `changefreq` と `priority` を使いません。以下の2026年3月の実装記録は、この[検索ボックス変更](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)、[FAQ変更](https://developers.google.com/search/blog/2023/08/howto-faq-changes)、[サイトマップの説明](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)を踏まえて読んでください。
 
 ## はじめに
 
@@ -123,11 +126,11 @@ Astro のレイアウトコンポーネントで、ページごとに以下を�
 
 ### FAQPage
 
-FAQ付きの記事には `FAQPage` 構造化データを出力します。Astro ではフロントマターに `faq` フィールドを定義し、テンプレート側で検出・出力する方式が便利です。
+FAQをページに掲載する場合、内容と一致する `FAQPage` データを出力できます。ただしGoogleのFAQリッチリザルトは、主に権威ある政府・医療サイトが対象です。一般サイトでの表示を期待する施策として扱わないでください。
 
 ### WebSite + SearchAction
 
-サイト内検索がある場合、`SearchAction` を設定すると Google の検索結果にサイト内検索ボックスが表示されることがあります。Pagefind などの検索エンジンと組み合わせ、`?q=` パラメータで検索モーダルが自動起動する仕組みにしておくと、ユーザー体験も向上します。
+Googleは2024年11月に検索結果のサイト内検索ボックスを終了しました。既存の `SearchAction` マークアップが残っていても、それ自体は検索エラーになりません。Pagefindなどのサイト内検索は、サイト内の導線として使えます。
 
 ---
 
@@ -137,7 +140,7 @@ Astro の `@astrojs/sitemap` プラグインを使えばサイトマップは自
 
 ### ページ種別ごとの設定
 
-`serialize()` 関数を使い、ページのURLパターンに応じて `changefreq` と `priority` を設定します。
+当時の `serialize()` 設定ではURL種別ごとに `changefreq` と `priority` を出力していました。以下の表はその実装記録です。Googleは両値を使わないため、順位向上を目的に設定する必要はありません。
 
 | ページ種別   | changefreq | priority |
 | ------------ | ---------- | -------- |
@@ -147,7 +150,7 @@ Astro の `@astrojs/sitemap` プラグインを使えばサイトマップは自
 
 ### lastmod の設定
 
-`lastmod` にはビルド日時を設定し、検索エンジンにコンテンツの鮮度を伝えます。ブログ記事にフロントマターで `lastUpdated` フィールドがある場合はそちらを優先します。
+`lastmod` はページの実際の重要な更新日を表すときに使います。全ページへビルド日時を一律に入れて更新したように見せるのは避け、記事なら公開日や `lastUpdated` と整合させます。
 
 ---
 

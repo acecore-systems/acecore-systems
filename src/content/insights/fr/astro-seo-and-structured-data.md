@@ -4,6 +4,7 @@ description: "Synthèse des étapes d'implémentation correcte des données stru
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technologie", "Astro", "SEO"]
+lastUpdated: "2026-09-26T19:21:24+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -19,7 +20,7 @@ processFigure:
       description: Transmettre la signification des pages à Google via JSON-LD.
       icon: i-lucide-braces
     - title: Sitemap
-      description: Configuration de la priorité et de la fréquence de mise à jour par type de page.
+      description: "Inclure les URL canoniques et vérifier les dates des modifications importantes."
       icon: i-lucide-map
     - title: RSS
       description: Distribution d'un flux de haute qualité incluant auteur et catégories.
@@ -37,13 +38,13 @@ insightGrid:
       description: Sortie de la structure hiérarchique de toutes les pages sous forme de fil d'Ariane.
       icon: i-lucide-chevrons-right
     - title: FAQPage
-      description: Activation des résultats enrichis pour les questions fréquentes sur les articles avec FAQ.
+      description: "Rendre les FAQ lisibles par machine ; Google affiche rarement ces résultats pour les sites généralistes."
       icon: i-lucide-help-circle
     - title: WebPage / ContactPage
       description: Attribution de types spécifiques pour la page d'accueil et la page de contact.
       icon: i-lucide-layout
     - title: SearchAction
-      description: Possibilité de lancer une recherche interne directement depuis les résultats Google.
+      description: "Google a supprimé ce champ en 2024 ; proposez la recherche dans votre propre site."
       icon: i-lucide-search
 faq:
   title: Questions fréquentes
@@ -53,8 +54,10 @@ faq:
     - question: Quelle taille est appropriée pour les images OGP ?
       answer: "1200×630 px est recommandé. C'est le ratio optimal pour l'affichage summary_large_image sur X (Twitter)."
     - question: La priorité du sitemap influence-t-elle le SEO ?
-      answer: "Google a officiellement déclaré qu'il ignore la priorité, mais d'autres moteurs de recherche peuvent la prendre en compte. Cela ne coûte rien de la configurer."
+      answer: "Google ignore `priority` et `changefreq` ; inventer des valeurs n’apporte aucun avantage SEO."
 ---
+
+> Mise à jour de septembre 2026 : Google a supprimé le champ de recherche des liens annexes en novembre 2024. Les résultats enrichis FAQ sont généralement réservés aux sites gouvernementaux et de santé reconnus, et Google ignore `changefreq` et `priority` des sitemaps. Lisez ce retour de mars 2026 avec les changements du [champ de recherche](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), des [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) et les [consignes sur les sitemaps](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
 ## Introduction
 
@@ -121,11 +124,11 @@ Les données structurées de fil d'Ariane sont configurées sur toutes les pages
 
 ### FAQPage
 
-Les articles avec FAQ génèrent des données structurées `FAQPage`. Avec Astro, il est pratique de définir un champ `faq` dans le frontmatter et de le détecter et générer côté template.
+Si la page affiche des FAQ, vous pouvez produire des données `FAQPage` conformes au contenu visible. Google réserve généralement ces résultats enrichis aux sites gouvernementaux et de santé reconnus ; les autres sites ne doivent pas compter sur cet affichage.
 
 ### WebSite + SearchAction
 
-Si le site dispose d'une recherche interne, la configuration de `SearchAction` peut entraîner l'affichage d'une boîte de recherche interne dans les résultats Google. En combinaison avec un moteur de recherche comme Pagefind, configurez un mécanisme d'ouverture automatique de la modale de recherche via le paramètre `?q=` pour améliorer l'expérience utilisateur.
+Google a supprimé le champ de recherche des liens annexes en novembre 2024. Conserver un balisage `SearchAction` existant ne provoque pas en soi d’erreur de recherche. Pagefind reste utile pour la recherche à l’intérieur du site.
 
 ---
 
@@ -135,7 +138,7 @@ Le plugin `@astrojs/sitemap` d'Astro génère automatiquement le sitemap, mais l
 
 ### Configuration par type de page
 
-Utilisez la fonction `serialize()` pour configurer `changefreq` et `priority` selon le pattern d'URL de chaque page.
+La configuration `serialize()` de l’époque émettait `changefreq` et `priority` selon le type d’URL. Le tableau documente cette implémentation ; Google ignore ces deux champs, sans gain de classement à en attendre.
 
 | Type de page     | changefreq | priority |
 | ---------------- | ---------- | -------- |
@@ -145,7 +148,7 @@ Utilisez la fonction `serialize()` pour configurer `changefreq` et `priority` se
 
 ### Configuration de lastmod
 
-Définissez `lastmod` avec la date/heure du build pour indiquer la fraîcheur du contenu aux moteurs de recherche. Si l'article a un champ `lastUpdated` dans le frontmatter, utilisez-le en priorité.
+Utilisez `lastmod` pour la date d’une modification réelle et importante. Évitez la date du build sur chaque page inchangée ; pour un article, alignez-la sur la publication ou `lastUpdated`.
 
 ---
 
