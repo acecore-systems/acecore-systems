@@ -2,6 +2,7 @@
 title: "用 Astro + Cloudflare 逐步扩展官网功能的整体设计"
 description: "整理 Acecore 官网如何以 Astro 和 Cloudflare Pages 为基础，组合咨询 AI、Sveltia CMS、多语言博客、服务 CTA、Markdown 安全渲染和 Cloudflare 评论功能。"
 date: 2026-06-07T19:00
+lastUpdated: "2026-09-26T17:30:00+09:00"
 author: gui
 tags: ["技术", "Astro", "Cloudflare", "网站", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -101,6 +102,8 @@ linkCards:
     description: 不使用外部评论服务，用 Pages Functions、D1 和 Turnstile 实现评论。
     icon: i-lucide-message-square-text
 ---
+
+**2026年9月26日补充：** 本文记录的是2026年6月的架构。后续源码中，CMS在检查权限、内容和HEAD后通过GitHub App直接提交到`main`；翻译使用OpenAI Batch与翻译PR；咨询AI通过Service Binding调用共享Worker。下文提到的Copilot翻译、CMS通过PR保存以及直接调用AI API，均属于当时的实现。各项代码路径请参阅[CMS指南](/zh-cn/blog/cms-selection-and-turnstile/)、[翻译指南](/zh-cn/blog/copilot-translation-pipeline/)和[AI指南](/zh-cn/blog/astro-ai-contact-chat/)。
 
 使用 Astro 和 Cloudflare Pages 做静态网站时，一开始只要能快速、安全地发布页面就足够了。
 

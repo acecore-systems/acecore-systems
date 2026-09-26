@@ -2,6 +2,7 @@
 title: "Astro + Cloudflare 사이트를 기능별로 확장하는 전체 설계"
 description: "Astro와 Cloudflare Pages를 기반으로 문의 AI, Sveltia CMS, 다국어 블로그, 서비스 CTA, 안전한 Markdown 렌더링, Cloudflare만으로 만든 댓글 기능을 하나의 구조로 정리합니다."
 date: 2026-06-07T19:00
+lastUpdated: "2026-09-26T17:30:00+09:00"
 author: gui
 tags: ["기술", "Astro", "Cloudflare", "웹사이트", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -97,6 +98,8 @@ linkCards:
     description: 외부 댓글 서비스 없이 Pages Functions, D1, Turnstile로 구현합니다.
     icon: i-lucide-message-square-text
 ---
+
+**2026년 9월 26일 추가:** 이 글은 2026년 6월의 아키텍처를 기록합니다. 이후 소스 코드에서는 CMS 저장 시 권한·내용·HEAD를 검사한 뒤 GitHub App을 통해 `main`에 직접 커밋합니다. 번역은 OpenAI Batch와 번역 PR을 사용하고, 문의 AI는 Service Binding으로 공통 Worker를 호출합니다. 아래의 Copilot 번역, CMS의 PR 저장, AI API 직접 호출 설명은 당시 구현입니다. 각 경로는 [CMS 안내](/ko/blog/cms-selection-and-turnstile/), [번역 안내](/ko/blog/copilot-translation-pipeline/), [AI 안내](/ko/blog/astro-ai-contact-chat/)를 참고하세요.
 
 Astro와 Cloudflare Pages로 정적 사이트를 만들 때는 처음에는 빠르고 안전하게 페이지를 배포하는 것만으로 충분합니다.
 

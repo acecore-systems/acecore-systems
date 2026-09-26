@@ -2,6 +2,7 @@
 title: "Designing an Astro + Cloudflare Website That Can Grow Feature by Feature"
 description: "How we combined Astro and Cloudflare Pages with an AI contact chat, Sveltia CMS, multilingual blog publishing, service CTA handoff, safe Markdown rendering, and Cloudflare-only comments as one extensible website architecture."
 date: 2026-06-07T19:00
+lastUpdated: "2026-09-26T17:30:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -105,6 +106,8 @@ faq:
     - question: Is this necessary for a small site?
       answer: "Not all at once. But if a site may later add CMS editing, localization, contact automation, or comments, it helps to decide URLs, storage, preview behavior, and search indexing early."
 ---
+
+**Update, September 26, 2026:** This article records the architecture as it stood in June 2026. Later source code saves CMS edits directly to `main` through a GitHub App after permission, content, and HEAD checks; localization uses OpenAI Batch and translation PRs; and the contact AI calls a shared Worker through a Service Binding. References below to Copilot translation, PR-based CMS saves, and direct AI API calls describe the earlier implementation. See the updated [CMS guide](/en/blog/cms-selection-and-turnstile/), [localization guide](/en/blog/copilot-translation-pipeline/), and [AI guide](/en/blog/astro-ai-contact-chat/) for the individual paths.
 
 When you start with Astro and Cloudflare Pages, fast static delivery is usually enough.
 
