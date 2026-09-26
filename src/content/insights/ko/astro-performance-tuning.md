@@ -1,15 +1,15 @@
 ---
 title: "Astro 사이트의 PageSpeed를 개선하는 실전 기법"
-description: "Astro + UnoCSS + Cloudflare Pages 사이트를 위한 실전 최적화 기법입니다. CSS 전달, 폰트, 반응형 이미지, AdSense 로딩 제어, GA4 지연 로딩, 캐시를 다룹니다."
+description: "2026년 7월 Astro 7.1.3과 UnoCSS의 성능 최적화 기록으로, 현재 Astro 및 Tailwind CSS 구성과 구분합니다."
 date: 2026-03-15T00:00
-lastUpdated: "2026-07-29T00:28:23+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["기술", "Astro", "성능"]
 image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
 callout:
   type: tip
   title: 이 글의 대상 독자
-  text: "Astro 사이트의 PageSpeed 점수를 개선하고 싶은 분들을 위한 글입니다. CSS, 폰트, 이미지, 광고 스크립트 최적화에 대한 바로 적용 가능한 실전 기법을 다룹니다."
+  text: "2026년 7월 Astro 및 UnoCSS 구성에서 검증한 CSS, 폰트, 이미지, 광고 스크립트 최적화 기록입니다. 적용 전 현재 구현과 측정 조건을 확인하세요."
 processFigure:
   title: 최적화 워크플로우
   steps:
@@ -55,6 +55,8 @@ faq:
     - question: AdSense 로딩 제어가 수익에 영향을 주나요?
       answer: "영향은 광고 위치와 방문자 행동에 따라 달라집니다. 변경 전후의 조회 가능성, 광고 요청, 수익을 비교하고 성능 지표와 분리해 평가하세요."
 ---
+
+> **2026년 9월 26일 추가:** 아래의 '현재'는 별도 표기가 없으면 2026년 7월 29일을 뜻합니다. [현재 의존성 선언](https://github.com/acecore-systems/acecore-net/blob/main/package.json)은 Astro ^7.3.3과 Tailwind CSS 4.3.3을 사용합니다. 이전 UnoCSS 설정과 당시 전송 조건을 최신 절차로 간주하기 전에 실제 구현을 확인하세요. 실제 출력과 같은 조건에서 측정한 지표를 기준으로 판단합니다.
 
 ## 서론
 

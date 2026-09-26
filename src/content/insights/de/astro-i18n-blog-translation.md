@@ -1,8 +1,8 @@
 ---
 title: "Astro 7 Website für 9 Sprachen fit machen ― Blogübersetzung und mehrsprachige Architektur"
-description: "Dokumentation der Internationalisierung einer Astro 7.1.3 + UnoCSS + Cloudflare Pages Website auf 9 Sprachen. Vom UI-i18n über die Übersetzung der Blogartikel bis zur mehrsprachigen Pages CMS-Konfiguration."
+description: "Dokumentation der Neun-Sprachen-Einführung mit Astro 7.1.3 und UnoCSS im Juli 2026, ergänzt um Hinweise auf aktuelle Abhängigkeiten und Übersetzungen."
 date: 2026-03-25T10:00
-lastUpdated: "2026-07-29T00:28:02+09:00"
+lastUpdated: "2026-09-26T17:20:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Website"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -59,12 +59,16 @@ faq:
     - question: Warum wurden 9 Sprachen gewählt?
       answer: "Um die globale Reichweite zu maximieren, haben wir die wichtigsten Sprachmärkte abgedeckt. Englisch, Chinesisch, Spanisch und Portugiesisch decken die Mehrheit der Internetnutzer ab, während Französisch, Deutsch, Russisch und Koreanisch die restlichen Hauptmärkte ergänzen."
     - question: Wie wird die Übersetzungsqualität sichergestellt?
-      answer: "Wir nutzen KI-Übersetzung mit GitHub Copilot. Zuerst wird die englische Version als Zwischensprache erstellt, dann vom Englischen in jede Zielsprache übersetzt, um Qualitätsschwankungen zu reduzieren. Tag-Werte im Frontmatter bleiben auf Japanisch, URLs, Codeblöcke und Bildpfade werden nicht verändert."
+      answer: "Wir nutzen KI-Übersetzung mit GitHub Copilot. Zuerst wird die englische Version als Zwischensprache erstellt, dann vom Englischen in jede Zielsprache übersetzt, um Qualitätsschwankungen zu reduzieren. Tag-Werte im Frontmatter bleiben auf Japanisch, URLs, Codeblöcke und Bildpfade werden nicht verändert. Das war der Ablauf im Juli 2026. Die Übersetzungserstellung nutzt inzwischen OpenAI Batch."
     - question: Was passiert, wenn ein übersetzter Artikel nicht existiert?
       answer: "Fehlt die Übersetzungsdatei für ein Locale, wird keine lokalisierte Artikel-URL erzeugt. Der japanische Artikel bleibt unter seiner ursprünglichen URL verfügbar; der Sprachumschalter führt zum Blogindex des Ziel-Locales."
     - question: Muss beim Hinzufügen eines neuen Artikels übersetzt werden?
       answer: "Für die Veröffentlichung des japanischen Artikels ist keine Übersetzung erforderlich. Eine gleichnamige Markdown-Datei im Sprachverzeichnis aktiviert die Artikel-URL, den Sitemap-Eintrag und die hreflang-Beziehung für dieses Locale."
 ---
+
+> **Ergänzung vom 26. September 2026:** Astro 7.1.3, UnoCSS, Artikelzahlen und die Copilot-Übersetzung unten beschreiben Juli 2026. Die [aktuelle Abhängigkeitsdatei](https://github.com/acecore-systems/acecore-net/blob/main/package.json) nutzt Astro ^7.3.3 und Tailwind CSS 4.3.3; der [aktualisierte Übersetzungsablauf](/insights/copilot-translation-pipeline/) beschreibt OpenAI Batch. Prüfen Sie Quellcode und veröffentlichte Seiten, bevor Sie die Beispiele und Zahlen als aktuell übernehmen.
+
+## Implementierung im Juli 2026
 
 Wir haben die offizielle Acecore-Website von reinem Japanisch auf Unterstützung für 9 Sprachen erweitert. Bei der Ersteinführung wurden 21 Blogartikel in 8 Sprachen übersetzt, also 168 Dateien. Am 29. Juli 2026 enthält das Repository 29 japanische Artikel und 208 Übersetzungen, insgesamt 237 Artikeldateien; der Build erzeugt 652 Seiten. Lokalisierte Artikel-URLs werden nur erzeugt, wenn eine Übersetzungsdatei existiert.
 
