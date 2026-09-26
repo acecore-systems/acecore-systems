@@ -1,7 +1,8 @@
 ---
 title: "Как вести многоязычный блог с Sveltia CMS"
-description: "Практический процесс: редактировать японский исходный материал в Sveltia CMS, создавать PR с переводами через GitHub Actions и GitHub Copilot и публиковать локализованные статические страницы, которые понятнее поисковым системам, чем перевод только в интерфейсе."
+description: "Статья описывает переводческие PR с Copilot в июне 2026 года и действующий в сентябре 2026 года процесс на OpenAI Batch."
 date: 2026-06-07T17:00
+lastUpdated: 2026-09-26T17:15
 author: gui
 tags: ["Технологии", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
@@ -11,7 +12,7 @@ callout:
   text: "Перевод браузера или виджета помогает читателю, но не создает отдельные URL, title, description, внутренние ссылки, RSS, sitemap и hreflang для каждого языка. Для поисковых систем лучше публиковать переведенный статический HTML."
 processFigure:
   eyebrow: Translation Workflow
-  title: Поток от Sveltia CMS до PR с переводом
+  title: От Sveltia CMS до PR перевода (процесс июня 2026 года)
   description: Японский остаётся source of truth, а перевод выносится в PR-процесс на стороне GitHub.
   variant: inline
   steps:
@@ -79,6 +80,14 @@ faq:
     - question: Являются ли переводы дублями?
       answer: "Google указывает, что локализованные страницы считаются дубликатами только если основной контент не переведен. Варианты следует связывать через hreflang."
 ---
+
+> **Дополнение от 26 сентября 2026 года:** Описанные ниже шаги с Copilot относятся к внедрению в июне 2026 года. Создание переводов затем перевели на OpenAI Batch. Японский остаётся исходным текстом, а переведённые статические страницы — форматом публикации.
+
+## Текущий процесс перевода (сентябрь 2026 года)
+
+При изменении японской статьи или исходного текста интерфейса в main запускается [workflow отправки Batch](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml). Он ждёт 15 минут для последующих правок, проверяет актуальный main и отправляет перевод. [Workflow получения результатов](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) сравнивает результат с текущим sourceHash, отбрасывает устаревшее и создаёт PR перевода. [Workflow слияния](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) включает автоматическое слияние только для подходящих PR. Термины, ссылки, факты и естественность языка по-прежнему нужно проверять.
+
+## История внедрения в июне 2026 года
 
 Acecore редактирует контент в основном на японском, но публикует блог на 9 языках. Важно различать **перевод текста в интерфейсе** и **публикацию локализованных страниц**.
 
