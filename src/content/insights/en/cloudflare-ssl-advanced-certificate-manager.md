@@ -5,143 +5,37 @@ date: 2026-03-31T00:00
 author: gui
 tags: ["Technology", "Cloudflare", "Security", "Infrastructure"]
 image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-compareTable:
-  title: Universal SSL vs Advanced Certificate Manager
-  before:
-    label: Universal SSL (Free)
-    items:
-      - Covers only the root domain + first-level subdomains
-      - Cannot choose CA, validity period, or cipher suites
-      - "*.example.com works, but dev.staging.example.com is not covered"
-      - Cloudflare branding appears in the certificate CN
-  after:
-    label: Advanced Certificate Manager (Paid, $10/month/zone)
-    items:
-      - Supports multi-level subdomains, up to 50 hostnames
-      - Can choose CA (Let's Encrypt / Google Trust Services, etc.)
-      - Certificate validity can be set from 14 to 365 days
-      - "Your own domain becomes the CN and Cloudflare branding is hidden"
-callout:
-  type: info
-  title: Why the name changed
-  text: The former "Dedicated SSL Certificates" was revamped in 2021 as Advanced Certificate Manager (ACM). It was not just a rename—major capabilities were added, including multi-level subdomain support, CA selection, and validity period control.
-faq:
-  title: Frequently Asked Questions
-  items:
-    - question: Can I use a wildcard certificate (*.example.com) with Universal SSL?
-      answer: Yes, but it only covers first-level subdomains such as www.example.com. It does not apply to second-level or deeper subdomains like dev.staging.example.com, which causes certificate errors. ACM is required in that case.
-    - question: Can I use Advanced Certificate Manager on the free plan?
-      answer: Yes. Even on Cloudflare’s free plan, you can use ACM by purchasing the ACM add-on ($10/month/zone). Upgrading to a higher plan is not required.
-    - question: When is Universal SSL sufficient?
-      answer: For most personal and small business sites, Universal SSL is enough. If you only use the root domain and first-level subdomains like www, ACM is not necessary.
-    - question: What happens to Universal SSL after enabling ACM?
-      answer: Universal SSL and ACM can coexist. For the same subdomain, ACM certificates are used with priority.
-linkCards:
-  - href: https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/
-    title: Advanced Certificate Manager Documentation
-    description: Official Cloudflare guide for ACM configuration
-    icon: i-lucide-file-text
-  - href: https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/
-    title: Universal SSL Limitations
-    description: Official documentation on cases not covered by Universal SSL
-    icon: i-lucide-alert-circle
-  - href: https://www.cloudflare.com/ja-jp/application-services/products/advanced-certificate-manager/
-    title: Advanced Certificate Manager Product Page
-    description: Feature list and purchasing information for ACM (Japanese)
-    icon: i-lucide-shield-check
+lastUpdated: "2026-09-26T19:15:00+09:00"
 ---
 
-“Wait, what was Cloudflare’s paid SSL option called again?” — many people have wondered this. In this article, we’ll clarify what it is and what it’s called today.
+Cloudflare upgraded the former **Dedicated SSL Certificates** offering to **Advanced Certificate Manager (ACM)** in 2021. Choose a certificate after checking the hostnames and DNS setup involved.
 
-## Conclusion: “Dedicated SSL” → “Advanced Certificate Manager (ACM)”
+## Where Universal SSL is enough
 
-Cloudflare’s former paid SSL option was **Dedicated SSL Certificates**. In **2021, it was revamped and renamed as “Advanced Certificate Manager (ACM)”**.
+On a **full DNS setup**, free Universal SSL normally covers the apex and first-level subdomains. `*.example.com` covers `www.example.com`, but not `api.staging.example.com`. On a **CNAME (partial) setup**, Cloudflare provisions a Universal certificate for each proxied hostname regardless of depth. A deep subdomain therefore does not always require ACM.
 
-The price remains the same as before: **$10/month per zone (domain)**.
+Cloudflare now describes Universal certificates as free and unshared. The old claim that they are shared across unrelated sites is outdated.
 
----
+## When to consider ACM
 
-## Why the name changed
+ACM is a paid add-on. It lets you select the CA, validation method, validity period, and covered hostnames. One advanced certificate can contain up to 50 hostnames, including the zone apex. Available validity periods depend on the CA and plan; **one year is limited to Enterprise customers using SSL.com**. Not every plan can freely choose any period from 14 to 365 days.
 
-In the “Dedicated SSL” era, the feature focused on issuing certificates dedicated to a specific domain. While free Universal SSL shared certificates across multiple sites, dedicated certificates offered your own common name (CN).
+For automatic coverage of deeper proxied hostnames on a full DNS setup, consider **Total TLS**. For selected hostnames, an advanced or custom certificate may suffice. Total TLS requires a full DNS setup and excludes hostnames used with some other Cloudflare products, including Tunnel.
 
-With the transition to **Advanced Certificate Manager**, the following capabilities were added, and the name shifted to emphasize certificate “management.”
+**Advanced certificates do not apply to Cloudflare Pages or R2 custom domains.** Those products use a different certificate path. Buying ACM for a Pages website will not apply its advanced certificate to the Pages hostname.
 
-- **Multi-level subdomain support**: Protect deeper subdomains such as `dev.staging.example.com`
-- **CA selection**: Choose from Let's Encrypt, Google Trust Services, and more
-- **Custom validity period**: Configure from 14 to 365 days
-- **Up to 50 hostnames**: Cover multiple hostnames with one certificate
-- **Total TLS**: Automatically protect all proxied subdomains in the zone
+## Check before purchasing
 
----
+1. List the hostnames and identify whether the zone uses full DNS or CNAME setup.
+2. Check actual Universal SSL coverage.
+3. Confirm the CA, validity, and Total TLS conditions you need.
+4. Check current pricing and purchase terms in the Cloudflare dashboard for your plan.
 
-## Differences from Universal SSL
+Do not buy solely for how the certificate common name appears; verify that the required hostnames are covered by its SAN entries.
 
-Cloudflare provides free **Universal SSL**, and for most sites this alone enables HTTPS. However, there are some limitations.
+## Official sources
 
-### Cases Universal SSL cannot cover
-
-```
-# Covered by Universal SSL
-example.com
-www.example.com
-blog.example.com
-
-# Not covered by Universal SSL (ACM required)
-dev.staging.example.com
-api.v2.example.com
-deep.sub.domain.example.com
-```
-
-The wildcard `*.example.com` works, but **it only applies to first-level subdomains**. Multi-level patterns like `*.staging.example.com` are not supported.
-
-### Cloudflare branding in certificates
-
-With Universal SSL, the certificate CN may include a Cloudflare domain such as `sni.cloudflaressl.com`. With ACM, your own domain becomes the CN and Cloudflare branding is hidden.
-
----
-
-## When ACM is needed
-
-Consider ACM if any of the following applies:
-
-1. **You use multi-level subdomains**
-   You need SSL for second-level or deeper subdomains, such as `api.staging.example.com` or `dev.app.example.com`.
-
-2. **You want your own domain as the certificate CN**
-   You want to remove Cloudflare branding from certificates (common for corporate and B2B services).
-
-3. **You want to specify CA or validity period**
-   Your security policy requires a specific CA, or you need short-lived certificates (e.g., 14 days).
-
-4. **You want to protect all subdomains at once with Total TLS**
-   You want automatic certificate coverage for all proxied subdomains in the zone.
-
----
-
-## Purchase and activation steps
-
-You can enable it in a few steps from the Cloudflare dashboard:
-
-1. Open the target domain in the Cloudflare dashboard
-2. Go to **SSL/TLS** → **Edge Certificates**
-3. In the **Advanced Certificate Manager** section, click **Enable**
-4. Confirm and purchase the subscription ($10/month)
-5. Create a certificate and add hostnames you want to protect
-
-If you want to enable Total TLS, simply turn it On in the **Total TLS** section on the same Edge Certificates page.
-
----
-
-## Summary
-
-| Item                    | Universal SSL (Free)     | Advanced Certificate Manager ($10/month/zone) |
-| ----------------------- | ------------------------ | --------------------------------------------- |
-| Multi-level subdomains  | ✗                        | ✓                                             |
-| CA selection            | ✗                        | ✓                                             |
-| Validity period control | ✗                        | ✓                                             |
-| CN as your own domain   | △                        | ✓                                             |
-| Total TLS               | ✗                        | ✓                                             |
-| Best for                | Personal / general sites | Enterprise / complex subdomain setups         |
-
-Cloudflare’s “former paid SSL option” is **Advanced Certificate Manager (formerly Dedicated SSL Certificates)**. It is especially useful when free Universal SSL is not enough—particularly for protecting multi-level subdomains and gaining fine-grained certificate control.
+- [Universal SSL limitations](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/)
+- [Advanced certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/)
+- [Validity periods and renewal](https://developers.cloudflare.com/ssl/reference/certificate-validity-periods/)
+- [Total TLS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/total-tls/)
