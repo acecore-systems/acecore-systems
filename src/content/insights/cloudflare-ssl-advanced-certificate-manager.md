@@ -33,7 +33,7 @@ full DNS setup で多階層のプロキシ済みホスト名を自動保護し�
 
 証明書の CN 表示だけを購入理由にせず、必要なホスト名が証明書の SAN に含まれるかを確認してください。
 
-## Official sources
+## 公式資料
 
 - [Universal SSL limitations](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/)
 - [Advanced certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/)
