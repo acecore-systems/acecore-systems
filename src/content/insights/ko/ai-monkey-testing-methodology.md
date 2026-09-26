@@ -4,6 +4,7 @@ description: "VS Code 에이전트 모드(GitHub Copilot)와 Playwright 브라�
 date: 2026-03-25T14:00
 author: gui
 tags: ["기술", "GitHub Copilot", "VS Code", "Astro", "웹사이트"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: 자주 묻는 질문
   items:
     - question: GitHub Copilot 에이전트 모드는 무료로 사용할 수 있나요?
-      answer: "GitHub Copilot Free 플랜은 에이전트 모드에 월별 사용량 제한이 있습니다. Pro 및 Business 플랜은 제한이 완화됩니다. 최신 기능은 VS Code Insiders에서 먼저 사용할 수 있습니다."
+      answer: "Copilot Free를 사용할 수 있습니다. 2026년 9월 현재 사용량은 요금제, 모델, AI Credits에 따라 달라지며 에이전트 작업은 여러 모델 호출을 포함할 수 있습니다."
     - question: Playwright 외의 다른 브라우저 도구로도 같은 접근 방식을 사용할 수 있나요?
       answer: "VS Code에 내장된 브라우저 도구(Simple Browser + Playwright 통합)를 사용합니다. Copilot이 run_playwright_code 도구를 통해 브라우저를 직접 조작하므로 Playwright를 별도로 설치할 필요가 없습니다."
     - question: 정적 사이트가 아닌 사이트에도 적용할 수 있나요?
@@ -52,6 +53,8 @@ faq:
     - question: AI가 발견한 버그를 직접 수정할 수도 있나요?
       answer: "에이전트 모드에서는 파일 읽기/쓰기가 가능하므로, 버그 탐지부터 수정, 빌드 검증까지 전체 흐름을 단일 세션에서 완료할 수 있습니다. 이 글에서는 2개의 버그를 발견하고 그 자리에서 수정했습니다."
 ---
+
+> **2026년 9월 업데이트:** Copilot 사용량 안내는 이 글이 처음 설명한 에이전트 모드 월간 횟수에서 AI Credits 기준으로 바뀌었습니다. 현재 한도는 [GitHub 공식 문서](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing)를 확인하세요.
 
 ## 서론
 

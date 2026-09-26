@@ -4,6 +4,7 @@ description: "Retour d'expérience sur le monkey testing systématique d'un site
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code", "Astro", "Site web"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: Questions fréquentes
   items:
     - question: Le mode agent de GitHub Copilot est-il gratuit ?
-      answer: "Le plan GitHub Copilot Free impose une limite mensuelle d'utilisation du mode agent. Les plans Pro et Business offrent des limites plus élevées. VS Code Insiders permet d'accéder en avant-première aux dernières fonctionnalités."
+      answer: "Oui, Copilot Free est disponible. En septembre 2026, l’utilisation dépend de l’offre, du modèle et des AI Credits ; une tâche agentique peut entraîner plusieurs appels au modèle."
     - question: Peut-on faire la même chose avec un autre outil de navigation que Playwright ?
       answer: "Nous utilisons l'outil de navigateur intégré à VS Code (Simple Browser + intégration Playwright). Copilot pilote directement le navigateur via l'outil run_playwright_code, il n'est donc pas nécessaire d'installer Playwright séparément."
     - question: Cette méthode est-elle applicable aux sites autres que statiques ?
@@ -52,6 +53,8 @@ faq:
     - question: "Peut-on aussi confier la correction des bugs découverts à l'IA ?"
       answer: "Le mode agent permet la lecture et l'écriture de fichiers, ce qui permet de compléter l'ensemble du processus — de la détection du bug à sa correction et à la vérification du build — au sein d'une même session. Dans cet article, nous avons découvert 2 bugs et les avons corrigés sur-le-champ."
 ---
+
+> **Mise à jour de septembre 2026:** L’utilisation de Copilot est désormais décrite en AI Credits plutôt que par le nombre mensuel de requêtes du mode agent cité à l’origine. Consultez la [documentation actuelle de GitHub](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing).
 
 ## Introduction
 

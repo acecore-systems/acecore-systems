@@ -1,121 +1,29 @@
 ---
-title: "Cloudflare Pages で実現するセキュアな静的サイト配信"
-description: "Cloudflare Pages での静的サイトデプロイと、_headers によるセキュリティヘッダー・CSP 設定の実践ガイドです。Worker から Pages に戻した経緯も紹介します。"
+title: "Cloudflare Pages の静的配信と Functions のセキュリティヘッダー"
+description: "Cloudflare Pages の静的配信と Functions の応答を区別し、_headers、CSP、現行構成の確認方法を整理します。"
 date: 2026-03-15T00:00
 author: gui
 tags: ["技術", "Cloudflare", "セキュリティ"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-processFigure:
-  title: デプロイ構成の変遷
-  steps:
-    - title: 初期構成
-      description: Cloudflare Pages で静的サイトを配信。
-      icon: i-lucide-cloud
-    - title: Worker 移行
-      description: お問い合わせ処理のため Worker に移行。
-      icon: i-lucide-server
-    - title: Pages 回帰
-      description: 外部フォームサービス採用で静的に戻す。
-      icon: i-lucide-rotate-ccw
-    - title: セキュリティ強化
-      description: _headers で CSP・セキュリティヘッダーを設定。
-      icon: i-lucide-shield-check
-callout:
-  type: info
-  title: Worker vs Pages
-  text: Cloudflare Worker は柔軟ですが、静的サイトには Pages の方がキャッシュ効率やデプロイの簡潔さで優れています。サーバーサイド処理が不要なら Pages を選びましょう。
-faq:
-  title: よくある質問
-  items:
-    - question: Cloudflare Pages と Workers のどちらを選ぶべきですか？
-      answer: サーバーサイド処理が不要な静的サイトなら Pages が最適です。CDN との統合がシームレスで、デプロイも簡潔です。フォーム処理などは外部サービスで代替できます。
-    - question: _headers ファイルで設定すべきセキュリティヘッダーは何ですか？
-      answer: Content-Security-Policy、X-Frame-Options、X-Content-Type-Options、Referrer-Policy、Permissions-Policy が基本です。CSP はサイトで使用する外部リソースに合わせて調整してください。
-    - question: CSP の設定で AdSense や Analytics を許可するにはどうしますか？
-      answer: script-src に googletagmanager.com や googlesyndication.com のドメインを追加します。img-src や connect-src にも関連ドメインの許可が必要な場合があります。
+lastUpdated: "2026-09-26T19:12:47+09:00"
 ---
 
-Cloudflare Pages は静的サイトのホスティングに最適なプラットフォームです。この記事では、実際のデプロイ構成と、`_headers` ファイルを使ったセキュリティ設定について紹介します。
+この記事は、2026年3月にお問い合わせを外部フォームへ移して Cloudflare Pages の静的配信へ戻した経緯を記録しています。その後、サイト構成は変わりました。**2026年9月時点の Acecore 公式サイトは、静的ページに加えて Pages Functions を使用**し、お問い合わせ、コメント、検索、AI案内、CMS の API を同じサイトで扱います。以下は当時の選定理由と、現在も使えるヘッダー設計の境界を整理したものです。
 
-SSL 証明書まわりの選定は、[Cloudflare の Advanced Certificate Manager 解説](/blog/cloudflare-ssl-advanced-certificate-manager/)もあわせて確認してください。CMS 管理画面を静的サイトに追加する設計は[Sveltia CMS導入ガイド](/blog/cms-selection-and-turnstile/)にまとめています。外部コメントサービスに頼らず、Cloudflare Pages Functions と D1 でコメント機能を足す設計は [CloudflareだけでAstroブログにコメント機能を作る方法](/blog/cloudflare-only-blog-comments/) に分けました。
+## 静的ページと Functions を分けて考える
 
-## デプロイ構成：Worker をやめて Pages に戻した理由
+`public/_headers` は、Pages が配信する**静的アセットの応答**に適用されます。Cloudflare の公式資料は、URL パターンが一致していても Pages Functions が生成した応答には適用されないと明記しています。API 応答に必要な CORS、キャッシュ、セキュリティヘッダーは、Function 側の `Response` に設定します。
 
-当初、お問い合わせフォームのバックエンド処理を Cloudflare Worker で行う予定でした。Worker であればサーバーサイドでメール送信やバリデーションが可能です。
+このため「`_headers` を一度書けばサイトのすべてのページと API に効く」と考えるのは危険です。静的 HTML と `/api/*` の両方について、実際のレスポンスヘッダーを別々に確認します。
 
-しかし、実際に構成してみると以下の課題がありました：
+## 現在の設定を確認する場所
 
-- **ビルドの複雑化**：Astro のビルド出力を Worker で配信するには追加設定が必要
-- **デバッグの手間**：ローカルでの `wrangler dev` と本番の挙動差異
-- **キャッシュ制御**：Pages のほうが Cloudflare CDN との統合が自然
+[現行の `_headers`](https://github.com/acecore-systems/acecore-net/blob/main/public/_headers)では、HTML は再検証、ハッシュ付き `_astro/` アセットは長期キャッシュに分けています。管理画面には通常ページと別の CSP を指定し、`X-Frame-Options` は `SAMEORIGIN` です。古い記事に載っていた `form-action https://ssgform.com`、HTMLの1時間キャッシュ、`DENY` を、現在の値としてコピーしないでください。
 
-最終的に、お問い合わせフォームは [ssgform.com](https://ssgform.com/) という外部サービスを利用することで、フォーム送信のためだけにWorkerを持つ必要をなくしました。この時点では、純粋な静的サイトとして Pages にデプロイできる状態へ戻せました。現在は、コメント機能のように最小限の動的処理だけを Cloudflare Pages Functions で追加しています。
+現在の動的経路は[Pages Functions のコード](https://github.com/acecore-systems/acecore-net/tree/main/functions)で確認できます。CSP に許可する外部ドメインも、実際に読み込むスクリプト、画像、フレーム、通信先に合わせて検査します。掲載した設定をそのまま別サイトへ移植しないでください。
 
-## \_headers によるセキュリティ設定
+## デプロイと確認
 
-Cloudflare Pages では、`public/_headers` ファイルに HTTP レスポンスヘッダーを記述できます。以下は実際に使用している設定の抜粋です。
+公式サイトは GitHub に連携した Cloudflare Pages で `main` を公開します。[現在の Node バージョン](https://github.com/acecore-systems/acecore-net/blob/main/.node-version)は `.node-version` に、ビルド手順は `package.json` に置き、CI は `npm run build` で検証します。2026年3月当時の「Node.js 22 / npx astro build」という表は、現行の公開手順ではありません。
 
-### Content-Security-Policy（CSP）
-
-CSP はクロスサイトスクリプティング（XSS）攻撃を防ぐための重要なヘッダーです。許可するリソースの取得元をホワイトリスト方式で指定します。
-
-```text
-Content-Security-Policy: default-src 'self';
-  script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://pagead2.googlesyndication.com;
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' https://acecore.net data:;
-  connect-src 'self' https://challenges.cloudflare.com https://pagead2.googlesyndication.com;
-  frame-src https://challenges.cloudflare.com https://googleads.g.doubleclick.net;
-  form-action https://ssgform.com;
-```
-
-ポイントは以下のとおりです：
-
-- **script-src**：Cloudflare Turnstile（`challenges.cloudflare.com`）と AdSense を許可
-- **img-src**：同一オリジンの Cloudflare Images エンドポイントと Unsplash を許可
-- **form-action**：ssgform.com のみにフォーム送信を制限
-- **frame-src**：Turnstile の iframe と AdSense の広告フレームを許可
-
-### その他のセキュリティヘッダー
-
-```text
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: camera=(), microphone=(), geolocation=()
-```
-
-- **X-Content-Type-Options**：MIME スニッフィングを防止
-- **X-Frame-Options**：クリックジャッキング対策として iframe 埋め込みを禁止
-- **Referrer-Policy**：クロスオリジンではオリジンのみ送信
-- **Permissions-Policy**：不要なブラウザ API（カメラ・マイク・位置情報）を無効化
-
-## キャッシュ制御
-
-静的アセットには長期間のキャッシュを設定し、HTML には短めのキャッシュを設定しています。
-
-```text
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.html
-  Cache-Control: public, max-age=3600
-```
-
-Astro が出力する `_astro/` ディレクトリのファイルにはコンテンツハッシュが含まれるため、`immutable` で1年間キャッシュしても安全です。HTML は更新頻度がある程度あるため、1時間のキャッシュに留めています。
-
-## Pages デプロイの設定
-
-Cloudflare Pages のプロジェクト設定はシンプルです：
-
-| 項目               | 設定値            |
-| ------------------ | ----------------- |
-| ビルドコマンド     | `npx astro build` |
-| 出力ディレクトリ   | `dist`            |
-| Node.js バージョン | 22                |
-
-GitHub リポジトリを接続すれば、`main` ブランチへの push で自動デプロイされます。プレビューデプロイも PR ごとに自動生成されるため、レビューが捗ります。
-
-## まとめ
-
-「サーバーサイド処理が本当に必要か？」を見極めることが大切です。外部サービスの活用で Worker を排除でき、結果的にデプロイもセキュリティ管理もシンプルになりました。`_headers` での CSP 設定は最初こそ手間ですが、一度書けばすべてのページに適用されるため、コストパフォーマンスの高いセキュリティ施策です。
+公開を確認するときは、PRのプレビュー、mainのビルド、Pagesの本番デプロイ、公開URLのヘッダーと本文を別々に確認します。Cloudflare の[Pagesヘッダー公式資料](https://developers.cloudflare.com/pages/configuration/headers/)も参照してください。

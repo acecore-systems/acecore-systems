@@ -1,119 +1,29 @@
 ---
-title: "Безопасная доставка статического сайта с помощью Cloudflare Pages"
-description: "Практическое руководство по деплою статического сайта на Cloudflare Pages и настройке заголовков безопасности/CSP через _headers. Также рассматривается, почему мы вернулись с Workers на Pages."
+title: "Заголовки безопасности для статических ресурсов и Functions в Cloudflare Pages"
+description: "Различайте статические ответы Pages и ответы Functions; проверяйте _headers, CSP и текущую конфигурацию."
 date: 2026-03-15T00:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Безопасность"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-processFigure:
-  title: Эволюция архитектуры деплоя
-  steps:
-    - title: Начальная настройка
-      description: Доставка статического сайта на Cloudflare Pages.
-      icon: i-lucide-cloud
-    - title: Миграция на Workers
-      description: Переход на Workers для обработки контактной формы.
-      icon: i-lucide-server
-    - title: Возврат к Pages
-      description: Возврат к статической доставке за счёт внедрения внешнего сервиса форм.
-      icon: i-lucide-rotate-ccw
-    - title: Укрепление безопасности
-      description: Настройка CSP и заголовков безопасности через _headers.
-      icon: i-lucide-shield-check
-callout:
-  type: info
-  title: Workers vs Pages
-  text: Cloudflare Workers гибки, но для статических сайтов Pages превосходит по эффективности кэширования и простоте деплоя. Выбирайте Pages, если серверная обработка не нужна.
-faq:
-  title: Часто задаваемые вопросы
-  items:
-    - question: Стоит ли выбрать Cloudflare Pages или Workers?
-      answer: Для статических сайтов, не требующих серверной обработки, Pages оптимален. Интеграция с CDN безупречна, а деплой прост. Обработку форм можно отдать внешним сервисам.
-    - question: Какие заголовки безопасности следует настроить в файле _headers?
-      answer: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy и Permissions-Policy — обязательный минимум. Настройте CSP в соответствии с внешними ресурсами, используемыми вашим сайтом.
-    - question: Как разрешить AdSense и Analytics в настройках CSP?
-      answer: Добавьте домены googletagmanager.com и googlesyndication.com в script-src. Также может потребоваться разрешить связанные домены в img-src и connect-src.
+lastUpdated: "2026-09-26T19:12:47+09:00"
 ---
 
-Cloudflare Pages — отличная платформа для хостинга статических сайтов. В этой статье рассматривается наша фактическая настройка деплоя и конфигурация безопасности с помощью файла `_headers`.
+Изначально статья описывала переход в марте 2026 года от контактной формы на Worker к внешнему сервису и статической выдаче через Cloudflare Pages. Архитектура с тех пор изменилась. **В сентябре 2026 года корпоративный сайт Acecore использует Pages Functions вместе со статическими страницами** для связи, комментариев, поиска, ИИ-помощника и API CMS. Прежнее решение следует читать как историю.
 
-## Архитектура деплоя: почему мы ушли с Workers и вернулись на Pages
+## Различайте статические ответы и Functions
 
-Изначально мы планировали использовать Cloudflare Workers для серверной обработки контактной формы. Workers позволяют отправлять письма и выполнять валидацию на стороне сервера.
+`public/_headers` применяется к **ответам статических ресурсов**, которые выдаёт Pages. Cloudflare прямо указывает, что правила не действуют на ответы Pages Functions, даже если шаблон URL совпадает. Нужные заголовки CORS, кэша и безопасности задаются в `Response` функции.
 
-Однако в процессе реализации мы столкнулись со следующими проблемами:
+Не считайте, что `_headers` защищает все страницы и API. Проверяйте фактические заголовки статического HTML и `/api/*` отдельно.
 
-- **Сложность сборки**: Для обслуживания выходных данных Astro через Workers требовалась дополнительная конфигурация
-- **Накладные расходы на отладку**: Различия в поведении между локальным `wrangler dev` и продакшеном
-- **Управление кэшем**: Pages естественнее интегрируется с CDN Cloudflare
+## Где смотреть текущие настройки
 
-В итоге мы приняли [ssgform.com](https://ssgform.com/) как внешний сервис для контактной формы, полностью устранив серверную обработку. Это сняло необходимость в Workers, позволив деплоить как чисто статический сайт на Pages.
+[Текущий файл `_headers`](https://github.com/acecore-systems/acecore-net/blob/main/public/_headers) требует повторной проверки HTML и дольше кэширует ресурсы `_astro/` с хешем в имени. Для CMS задана отдельная CSP, а `X-Frame-Options` равен `SAMEORIGIN`. Не копируйте старые значения `form-action https://ssgform.com`, часовой кэш HTML или `DENY` как актуальные.
 
-## Конфигурация безопасности через \_headers
+Динамические маршруты находятся в [коде Pages Functions](https://github.com/acecore-systems/acecore-net/tree/main/functions). Проверяйте источники CSP по реально используемым скриптам, изображениям, фреймам и соединениям своего сайта, не перенося политику Acecore без проверки.
 
-На Cloudflare Pages можно указать HTTP-заголовки ответа в файле `public/_headers`. Ниже приведён фрагмент конфигурации, которую мы фактически используем.
+## Развёртывание и проверка
 
-### Content-Security-Policy (CSP)
+Сайт публикует `main` через Cloudflare Pages с подключением к GitHub. Текущая версия Node указана в [`.node-version`](https://github.com/acecore-systems/acecore-net/blob/main/.node-version); CI выполняет `npm run build` из `package.json`. Таблица марта 2026 года «Node.js 22 / npx astro build» — историческая.
 
-CSP — критически важный заголовок для предотвращения атак межсайтового скриптинга (XSS). Он определяет разрешённые источники ресурсов по принципу белого списка.
-
-```text
-Content-Security-Policy: default-src 'self';
-  script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://pagead2.googlesyndication.com;
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' https://acecore.net data:;
-  connect-src 'self' https://challenges.cloudflare.com https://pagead2.googlesyndication.com;
-  frame-src https://challenges.cloudflare.com https://googleads.g.doubleclick.net;
-  form-action https://ssgform.com;
-```
-
-Ключевые моменты:
-
-- **script-src**: Разрешить Cloudflare Turnstile (`challenges.cloudflare.com`) и AdSense
-- **img-src**: Разрешить same-origin endpoint Cloudflare Images и Unsplash
-- **form-action**: Ограничить отправку форм только на ssgform.com
-- **frame-src**: Разрешить iframe Turnstile и рекламные фреймы AdSense
-
-### Другие заголовки безопасности
-
-```text
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: camera=(), microphone=(), geolocation=()
-```
-
-- **X-Content-Type-Options**: Предотвращение MIME-сниффинга
-- **X-Frame-Options**: Запрет встраивания в iframe как мера против clickjacking
-- **Referrer-Policy**: Отправка только origin для кросс-доменных запросов
-- **Permissions-Policy**: Отключение ненужных API браузера (камера, микрофон, геолокация)
-
-## Управление кэшированием
-
-Мы установили долгосрочное кэширование для статических ресурсов и более короткое — для HTML.
-
-```text
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.html
-  Cache-Control: public, max-age=3600
-```
-
-Файлы в каталоге `_astro/`, генерируемые Astro, содержат хэши контента, что позволяет безопасно кэшировать их на один год с `immutable`. HTML обновляется умеренно часто, поэтому мы ограничиваем кэш одним часом.
-
-## Конфигурация деплоя Pages
-
-Настройки проекта Cloudflare Pages просты:
-
-| Параметр         | Значение          |
-| ---------------- | ----------------- |
-| Команда сборки   | `npx astro build` |
-| Выходной каталог | `dist`            |
-| Версия Node.js   | 22                |
-
-После подключения репозитория GitHub пуши в ветку `main` запускают автоматический деплой. Превью-деплои также генерируются автоматически для каждого PR, облегчая ревью.
-
-## Итоги
-
-Ключ в том, чтобы спросить себя: «Действительно ли мне нужна серверная обработка?» Использование внешних сервисов для устранения Workers упростило и деплой, и управление безопасностью. Настройка CSP через `_headers` требует начальных усилий, но однажды написанная применяется ко всем страницам — это высокоэффективная мера безопасности с точки зрения соотношения затрат и результата.
+Отдельно проверяйте предпросмотр PR, сборку main, производственное развёртывание Pages и публичный URL. См. [документацию Cloudflare по заголовкам Pages](https://developers.cloudflare.com/pages/configuration/headers/).

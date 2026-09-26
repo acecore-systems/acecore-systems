@@ -1,119 +1,29 @@
 ---
-title: "Sichere statische Website-Bereitstellung mit Cloudflare Pages erreichen"
-description: "Ein Praxisleitfaden zum statischen Website-Deployment auf Cloudflare Pages und zur Konfiguration von Sicherheitsheadern/CSP mittels _headers. Behandelt auch, warum wir von Workers zurück zu Pages gewechselt sind."
+title: "Sicherheitsheader für statische Dateien und Functions von Cloudflare Pages"
+description: "Unterscheiden Sie statische Pages-Antworten von Functions und prüfen Sie _headers, CSP und die aktuelle Konfiguration."
 date: 2026-03-15T00:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Sicherheit"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-processFigure:
-  title: Entwicklung der Deployment-Architektur
-  steps:
-    - title: Ersteinrichtung
-      description: Die statische Website auf Cloudflare Pages bereitgestellt.
-      icon: i-lucide-cloud
-    - title: Worker-Migration
-      description: Für die Kontaktformularverarbeitung zu Workers migriert.
-      icon: i-lucide-server
-    - title: Rückkehr zu Pages
-      description: Durch Einführung eines externen Formulardienstes zur statischen Bereitstellung zurückgewechselt.
-      icon: i-lucide-rotate-ccw
-    - title: Sicherheitshärtung
-      description: CSP und Sicherheitsheader über _headers konfiguriert.
-      icon: i-lucide-shield-check
-callout:
-  type: info
-  title: Workers vs. Pages
-  text: Cloudflare Workers sind flexibel, aber für statische Websites überzeugt Pages bei Cache-Effizienz und Deployment-Einfachheit. Wählen Sie Pages, wenn Sie keine serverseitige Verarbeitung benötigen.
-faq:
-  title: Häufig gestellte Fragen
-  items:
-    - question: Sollte ich Cloudflare Pages oder Workers wählen?
-      answer: Für statische Websites ohne serverseitige Verarbeitung ist Pages optimal. Die CDN-Integration ist nahtlos und das Deployment unkompliziert. Formularverarbeitung kann über externe Dienste abgewickelt werden.
-    - question: Welche Sicherheitsheader sollten in der _headers-Datei gesetzt werden?
-      answer: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy und Permissions-Policy sind die wesentlichen. Passen Sie die CSP entsprechend den externen Ressourcen an, die Ihre Website verwendet.
-    - question: Wie erlaubt man AdSense und Analytics in den CSP-Einstellungen?
-      answer: Fügen Sie die Domains googletagmanager.com und googlesyndication.com zu script-src hinzu. Möglicherweise müssen Sie auch verwandte Domains in img-src und connect-src erlauben.
+lastUpdated: "2026-09-26T19:12:47+09:00"
 ---
 
-Cloudflare Pages ist eine hervorragende Plattform für das Hosting statischer Websites. Dieser Artikel behandelt unser tatsächliches Deployment-Setup und die Sicherheitskonfiguration mittels der `_headers`-Datei.
+Dieser Artikel dokumentierte im März 2026 den Wechsel von einem Worker-Kontaktformular zu einem externen Dienst und zurück zur statischen Auslieferung mit Cloudflare Pages. Seitdem hat sich die Architektur geändert. **Im September 2026 nutzt die Unternehmenswebsite von Acecore neben statischen Seiten auch Pages Functions** für Kontakt, Kommentare, Suche, KI-Hilfe und CMS-APIs. Die frühere Entscheidung ist historischer Kontext.
 
-## Deployment-Architektur: Warum wir Workers verlassen und zu Pages zurückgekehrt sind
+## Statische Antworten und Functions unterscheiden
 
-Ursprünglich hatten wir geplant, Cloudflare Workers für die Backend-Verarbeitung des Kontaktformulars zu verwenden. Workers ermöglichen serverseitigen E-Mail-Versand und Validierung.
+`public/_headers` gilt für **Antworten statischer Dateien**, die Pages ausliefert. Cloudflare stellt klar, dass diese Regeln nicht für von Pages Functions erzeugte Antworten gelten, selbst wenn das URL-Muster passt. Nötige CORS-, Cache- und Sicherheitsheader müssen in der `Response` der Function gesetzt werden.
 
-Allerdings stießen wir bei der Implementierung auf folgende Herausforderungen:
+Gehen Sie nicht davon aus, dass `_headers` alle Seiten und APIs schützt. Prüfen Sie die tatsächlichen Header von statischem HTML und `/api/*` getrennt.
 
-- **Build-Komplexität**: Die Bereitstellung von Astros Build-Ausgabe über Workers erforderte zusätzliche Konfiguration
-- **Debugging-Aufwand**: Verhaltensunterschiede zwischen lokalem `wrangler dev` und der Produktionsumgebung
-- **Cache-Kontrolle**: Pages integriert sich natürlicher in Cloudflares CDN
+## Aktuelle Konfiguration prüfen
 
-Letztlich haben wir [ssgform.com](https://ssgform.com/) als externen Dienst für das Kontaktformular eingeführt und damit die serverseitige Verarbeitung vollständig eliminiert. Dadurch entfiel der Bedarf an Workers, und wir konnten als rein statische Website auf Pages deployen.
+Die [aktuelle `_headers`-Datei](https://github.com/acecore-systems/acecore-net/blob/main/public/_headers) lässt HTML neu validieren und speichert gehashte `_astro/`-Dateien länger zwischen. Das CMS hat eine eigene CSP; `X-Frame-Options` ist `SAMEORIGIN`. Übernehmen Sie `form-action https://ssgform.com`, eine Stunde HTML-Cache oder `DENY` aus dem alten Artikel nicht als aktuelle Werte.
 
-## Sicherheitskonfiguration mit \_headers
+Dynamische Routen stehen im [Pages-Functions-Code](https://github.com/acecore-systems/acecore-net/tree/main/functions). Stimmen Sie CSP-Quellen auf tatsächlich genutzte Skripte, Bilder, Frames und Verbindungen Ihrer eigenen Website ab, statt Acecores Richtlinie ungeprüft zu kopieren.
 
-Auf Cloudflare Pages können HTTP-Antwort-Header in der Datei `public/_headers` angegeben werden. Im Folgenden ein Auszug aus der tatsächlich verwendeten Konfiguration.
+## Deployment und Prüfung
 
-### Content-Security-Policy (CSP)
+Die Website veröffentlicht `main` über mit GitHub verbundene Cloudflare Pages. Die aktuelle Node-Version steht in [`.node-version`](https://github.com/acecore-systems/acecore-net/blob/main/.node-version); CI führt `npm run build` aus `package.json` aus. Die Tabelle vom März 2026 mit „Node.js 22 / npx astro build“ ist historisch.
 
-CSP ist ein kritischer Header zur Verhinderung von Cross-Site-Scripting (XSS)-Angriffen. Er spezifiziert erlaubte Ressourcen-Ursprünge nach dem Whitelist-Ansatz.
-
-```text
-Content-Security-Policy: default-src 'self';
-  script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://pagead2.googlesyndication.com;
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' https://acecore.net data:;
-  connect-src 'self' https://challenges.cloudflare.com https://pagead2.googlesyndication.com;
-  frame-src https://challenges.cloudflare.com https://googleads.g.doubleclick.net;
-  form-action https://ssgform.com;
-```
-
-Wichtige Punkte:
-
-- **script-src**: Cloudflare Turnstile (`challenges.cloudflare.com`) und AdSense erlauben
-- **img-src**: Den same-origin-Endpunkt von Cloudflare Images und Unsplash erlauben
-- **form-action**: Formulareinsendungen ausschließlich auf ssgform.com beschränken
-- **frame-src**: Turnstile-Iframes und AdSense-Werbeframes erlauben
-
-### Weitere Sicherheitsheader
-
-```text
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: camera=(), microphone=(), geolocation=()
-```
-
-- **X-Content-Type-Options**: MIME-Sniffing verhindern
-- **X-Frame-Options**: Iframe-Einbettung als Clickjacking-Gegenmaßnahme verhindern
-- **Referrer-Policy**: Bei Cross-Origin-Anfragen nur den Origin senden
-- **Permissions-Policy**: Unnötige Browser-APIs (Kamera, Mikrofon, Geolokalisierung) deaktivieren
-
-## Cache-Steuerung
-
-Wir setzen langfristiges Caching für statische Assets und kürzeres Caching für HTML.
-
-```text
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.html
-  Cache-Control: public, max-age=3600
-```
-
-Die von Astro ausgegebenen Dateien im `_astro/`-Verzeichnis enthalten Content-Hashes, sodass sie sicher für ein Jahr mit `immutable` gecacht werden können. HTML hat eine moderate Aktualisierungshäufigkeit, daher begrenzen wir es auf einen einstündigen Cache.
-
-## Pages Deployment-Konfiguration
-
-Die Cloudflare Pages-Projekteinstellungen sind einfach:
-
-| Einstellung        | Wert              |
-| ------------------ | ----------------- |
-| Build-Befehl       | `npx astro build` |
-| Ausgabeverzeichnis | `dist`            |
-| Node.js-Version    | 22                |
-
-Sobald Sie ein GitHub-Repository verbinden, lösen Pushes auf den `main`-Branch automatische Deployments aus. Preview-Deployments werden ebenfalls automatisch pro PR generiert, was Reviews erleichtert.
-
-## Zusammenfassung
-
-Der Schlüssel liegt in der Frage: „Brauche ich wirklich serverseitige Verarbeitung?" Durch den Einsatz externer Dienste zur Eliminierung von Workers wurden sowohl Deployment als auch Sicherheitsmanagement einfacher. Die CSP-Konfiguration über `_headers` erfordert anfänglich etwas Aufwand, aber einmal geschrieben, gilt sie für alle Seiten — was sie zu einer hocheffizienten Sicherheitsmaßnahme macht.
+Prüfen Sie PR-Vorschau, main-Build, Pages-Produktionsdeployment und öffentliche URL separat. Beachten Sie die [Cloudflare-Dokumentation zu Pages-Headern](https://developers.cloudflare.com/pages/configuration/headers/).

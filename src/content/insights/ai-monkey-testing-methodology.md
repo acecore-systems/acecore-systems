@@ -4,6 +4,7 @@ description: "VS Codeのエージェントモード（GitHub Copilot）とPlaywr
 date: 2026-03-25T14:00
 author: gui
 tags: ["技術", "GitHub Copilot", "VS Code", "Astro", "Webサイト"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: よくある質問
   items:
     - question: GitHub Copilotのエージェントモードは無料で使えますか？
-      answer: "GitHub Copilot Freeプランではエージェントモードの利用に月間の回数制限があります。ProまたはBusinessプランでは制限が緩和されます。VS Code Insiders版で最新機能が先行利用できます。"
+      answer: "GitHub Copilot Freeでも利用できます。2026年9月現在、利用可能量はプラン、モデル、AI Creditsにより変わります。エージェント作業は複数のモデル呼び出しを伴う場合があります。"
     - question: Playwright以外のブラウザツールでも同じことができますか？
       answer: "VS Codeの組み込みブラウザツール（Simple Browser + Playwright統合）を使用しています。Copilotがrun_playwright_codeツールでブラウザを直接操作するため、別途Playwrightをインストールする必要はありません。"
     - question: 静的サイト以外にも適用できますか？
@@ -52,6 +53,8 @@ faq:
     - question: テストで見つかったバグの修正もAIに任せられますか？
       answer: "エージェントモードではファイルの読み書きが可能なため、バグの検出から修正・ビルド確認まで一連の流れをセッション内で完結できます。本記事でも2件のバグを発見し、その場で修正しました。"
 ---
+
+> **2026年9月追記:** Copilot の利用量は、記事公開時の「エージェントモードの月間回数」から AI Credits を基準とする案内に変わっています。具体的な枠は[GitHub の現行資料](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing)で確認してください。
 
 ## はじめに
 

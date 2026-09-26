@@ -4,6 +4,7 @@ description: "A hands-on guide to systematically monkey testing a static site us
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technology", "GitHub Copilot", "VS Code", "Astro", "Website"]
+lastUpdated: "2026-09-26T19:12:52+09:00"
 image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
 callout:
   type: tip
@@ -44,7 +45,7 @@ faq:
   title: Frequently Asked Questions
   items:
     - question: Is GitHub Copilot Agent Mode free to use?
-      answer: "The GitHub Copilot Free plan has monthly usage limits for Agent Mode. Pro and Business plans have relaxed limits. The latest features are available early in VS Code Insiders."
+      answer: "Yes, Copilot Free is available. As of September 2026, usage depends on the plan, model, and AI Credits. Agentic work can involve multiple model calls."
     - question: Can the same approach be used with browser tools other than Playwright?
       answer: "We use VS Code's built-in browser tools (Simple Browser + Playwright integration). Since Copilot directly operates the browser via the run_playwright_code tool, there's no need to install Playwright separately."
     - question: Can this be applied to non-static sites?
@@ -52,6 +53,8 @@ faq:
     - question: Can the AI also fix bugs it discovers?
       answer: "In Agent Mode, file read/write is possible, so the entire flow from bug detection to fixing and build verification can be completed within a single session. In this article, we discovered 2 bugs and fixed them on the spot."
 ---
+
+> **September 2026 update:** Copilot usage is now described using AI Credits rather than the article’s original monthly Agent Mode request count. Check the [current GitHub documentation](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing) for your allowance.
 
 ## Introduction
 
