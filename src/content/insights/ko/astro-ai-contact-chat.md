@@ -1,6 +1,6 @@
 ---
 title: "Astro 사이트에 문의 AI 채팅을 넣기 위한 기술 설계"
-description: "Astro + Cloudflare Pages 정적 사이트에 OpenAI Responses API 기반 문의 AI 채팅을 넣는 기술 설계입니다. API 경계, 사이트 컨텍스트, 프롬프트 제어, locale별 URL, Origin 검사, rate limit, 안전한 Markdown 링크 렌더링을 정리합니다."
+description: "2026년 6월 당시의 참조 설계입니다. Astro + Cloudflare Pages 정적 사이트에 OpenAI Responses API 기반 문의 AI 채팅을 넣는 기술 설계입니다. API 경계, 사이트 컨텍스트, 프롬프트 제어, locale별 URL, Origin 검사, rate limit, 안전한 Markdown 링크 렌더링을 정리합니다."
 date: 2026-06-07T12:00
 lastUpdated: 2026-09-26T16:00
 author: gui

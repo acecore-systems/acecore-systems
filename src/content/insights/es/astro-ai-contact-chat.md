@@ -1,6 +1,6 @@
 ---
 title: "Diseño técnico para añadir un chat de IA de consultas a un sitio Astro"
-description: "Diseño práctico para incorporar un chat de IA de consultas en un sitio estático Astro + Cloudflare Pages con OpenAI Responses API. Cubre límites de API, contexto del sitio, control de prompt, URLs por locale, verificación de Origin, rate limit y renderizado seguro de enlaces Markdown."
+description: "Diseño de referencia de junio de 2026. Diseño práctico para incorporar un chat de IA de consultas en un sitio estático Astro + Cloudflare Pages con OpenAI Responses API. Cubre límites de API, contexto del sitio, control de prompt, URLs por locale, verificación de Origin, rate limit y renderizado seguro de enlaces Markdown."
 date: 2026-06-07T12:00
 lastUpdated: 2026-09-26T16:00
 author: gui

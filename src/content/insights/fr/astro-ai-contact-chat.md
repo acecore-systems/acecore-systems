@@ -1,6 +1,6 @@
 ---
 title: "Conception technique pour ajouter un chat IA de contact à un site Astro"
-description: "Guide de conception pour intégrer un chat IA de contact à un site statique Astro + Cloudflare Pages avec OpenAI Responses API. Il couvre la frontière API, le contexte du site, le contrôle du prompt, les URLs par locale, la vérification Origin, le rate limit et le rendu sécurisé des liens Markdown."
+description: "Conception de référence de juin 2026. Guide de conception pour intégrer un chat IA de contact à un site statique Astro + Cloudflare Pages avec OpenAI Responses API. Il couvre la frontière API, le contexte du site, le contrôle du prompt, les URLs par locale, la vérification Origin, le rate limit et le rendu sécurisé des liens Markdown."
 date: 2026-06-07T12:00
 lastUpdated: 2026-09-26T16:00
 author: gui

@@ -1,6 +1,6 @@
 ---
 title: "Technical Design for Adding an AI Contact Chat to an Astro Site"
-description: "A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
+description: "A June 2026 reference design. A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
 date: 2026-06-07T12:00
 lastUpdated: 2026-09-26T16:00
 author: gui

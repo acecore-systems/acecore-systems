@@ -1,6 +1,6 @@
 ---
 title: "Технический дизайн AI-чата для обращений на сайте Astro"
-description: "Практический дизайн AI-чата для обращений на статическом сайте Astro + Cloudflare Pages с OpenAI Responses API. Рассмотрены граница API, контекст сайта, управление prompt, URL по locale, проверка Origin, rate limit и безопасный рендеринг Markdown-ссылок."
+description: "Эталонная архитектура по состоянию на июнь 2026 года. Практический дизайн AI-чата для обращений на статическом сайте Astro + Cloudflare Pages с OpenAI Responses API. Рассмотрены граница API, контекст сайта, управление prompt, URL по locale, проверка Origin, rate limit и безопасный рендеринг Markdown-ссылок."
 date: 2026-06-07T12:00
 lastUpdated: 2026-09-26T16:00
 author: gui
