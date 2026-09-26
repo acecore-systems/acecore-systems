@@ -13,6 +13,8 @@ callout:
 
 在Codex中并行处理多项工作时，选择模型只是其中一步。还需要确定哪些工作可以独立交付、交接哪些资料，以及如何验收结果。Acecore公开了[Codex Task Routing](https://github.com/acecore-systems/codex-task-routing)，将这些判断写成明确的策略。
 
+![依次核对策略版本、交接条件、运行证据和测量结果的四阶段图](/images/insights/codex-task-routing-evidence.webp)
+
 ## 常规工作由主任务负责
 
 主任务负责通常的调查、实现和验证。只有专业环节的交接确实有价值时，才将有边界的工作交给其他负责人。插件保留用户为主任务选择的模型和推理设置，避免仅为换到同一模型而交接，也避免主任务没有独立工作时仍然并行。

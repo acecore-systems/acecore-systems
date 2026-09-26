@@ -13,6 +13,8 @@ callout:
 
 Wenn Codex mehrere Arbeiten übernimmt, ist die Modellwahl nur ein Teil der Entscheidung. Ebenso wichtig sind die abgrenzbare Aufgabe, der zu übergebende Kontext und die Prüfung des Ergebnisses. Acecore hat [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) veröffentlicht, um diese Entscheidungen ausdrücklich festzuhalten.
 
+![Vier Prüfschritte: Richtlinienversion, Übergabekriterien, Ausführungsnachweis und gemessenes Ergebnis](/images/insights/codex-task-routing-evidence.webp)
+
 ## Routinearbeit bleibt beim übergeordneten Agenten
 
 Der übergeordnete Agent bearbeitet gewöhnliche Recherche, Implementierung und Prüfung. Nur wenn eine Übergabe konkreten Mehrwert bringt, erhält ein Spezialist einen begrenzten Schritt. Das Plugin bewahrt das vom Nutzer gewählte Modell und die Reasoning-Einstellungen des übergeordneten Agenten. Es vermeidet Übergaben nur an eine weitere Instanz desselben Modells und Parallelisierung ohne unabhängige Arbeit für den übergeordneten Agenten.
