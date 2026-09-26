@@ -2,6 +2,7 @@
 title: "Cloudflare Vectorize 实现指南：安全同步已发布 HTML"
 description: "详细说明如何从已发布 HTML 创建 corpus、保留 Pagefind，并安全运行 Vectorize 同步。"
 date: 2026-07-31T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "OpenAI", "站内搜索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -115,6 +116,8 @@ faq:
     - question: 在什么阶段可以判断导入完成？
       answer: "merge 或本地 test 本身不代表完成。在 Preview 中确认 Pagefind 和 UI fallback；在 Production 中确认已发布 commit 与 corpus 一致、index 同步、mutation 收敛、相关搜索、rate limit 和停止步骤后，才记录为正在运行。"
 ---
+
+> **2026 年 9 月 26 日更新：** Acecore Systems 搜索使用 Cloudflare Workers AI BGE-M3 和专门的 1024 维 Vectorize 索引。更换模型时需要重新构建语料和索引。下文以已发布 HTML 为同步依据、保留 Pagefind 的原则仍然适用。
 
 ## 先理解：Cloudflare Vectorize 是什么？
 

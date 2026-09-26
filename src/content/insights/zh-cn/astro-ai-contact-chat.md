@@ -2,6 +2,7 @@
 title: "在 Astro 网站中加入咨询 AI 聊天的技术设计"
 description: "面向 Astro + Cloudflare Pages 静态网站，使用 OpenAI Responses API 加入咨询 AI 聊天的技术设计。整理 API 边界、站内信息上下文、提示词控制、按 locale 生成 URL、Origin 检查、限流以及安全的 Markdown 链接渲染。"
 date: 2026-06-07T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["技术", "Cloudflare", "网站", "AI", "服务"]
 image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
@@ -78,6 +79,8 @@ faq:
     - question: AI 回答中可以自由输出链接吗？
       answer: 不可以。链接限制为内部路径、当前 origin、acecore.net、官方 LINE，以及必要时的 mailto 和 tel。Markdown URL 会在安全检查前先 trim。
 ---
+
+> **2026 年 9 月 26 日更新：** 下文记录的是 2026 年 6 月的参考设计。现在 Acecore Systems 的 AI 聊天 API 通过 Cloudflare Pages Function 和 Service Binding 将请求转发至共用的 acecore-chat-worker。界面接收 JSON 并显示完整答案。下文所述直接调用 OpenAI 的方式已不是当前实现。
 
 把 AI 聊天放到网站上并不难。真正需要设计的是运行方式：AI 可以回答到什么程度、应该把访客引导到哪里、哪些 URL 可以显示，以及如何控制 API 成本。
 

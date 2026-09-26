@@ -2,6 +2,7 @@
 title: "Cloudflare Vectorize 구현 가이드: 공개 HTML을 안전하게 동기화하는 방법"
 description: "공개 HTML에서 corpus를 만들고 Pagefind를 유지하면서 Vectorize 동기화를 안전하게 운영하는 상세 가이드입니다."
 date: 2026-07-31T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "OpenAI", "사이트 검색"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -115,6 +116,8 @@ faq:
     - question: 어느 시점에 도입 완료로 판단하나요?
       answer: "merge나 로컬 test만으로는 완료로 보지 않습니다. Preview에서는 Pagefind와 UI fallback을 확인하고, Production에서는 공개 commit과 corpus 일치, index 동기화, mutation 수렴, 관련 검색, rate limit, 중단 절차를 확인한 뒤 운영으로 기록합니다."
 ---
+
+> **2026년 9월 26일 추가:** Acecore Systems 검색은 Cloudflare Workers AI BGE-M3와 1024차원 전용 Vectorize 인덱스를 사용합니다. 모델을 변경할 때는 코퍼스와 인덱스를 다시 만들어야 합니다. 아래의 공개 HTML 기준 동기화 방식과 Pagefind 유지 원칙은 계속 적용됩니다.
 
 ## 먼저 이해하기: Cloudflare Vectorize란?
 

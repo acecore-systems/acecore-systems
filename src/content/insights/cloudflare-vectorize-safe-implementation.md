@@ -2,6 +2,7 @@
 title: "Cloudflare Vectorize実装ガイド：公開HTMLを安全に同期する"
 description: "公開HTMLからcorpusを作り、Pagefindと併用しながらVectorizeを安全に同期・運用するための実装ガイドです。"
 date: 2026-07-31T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "OpenAI", "サイト内検索"]
 image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
@@ -115,6 +116,8 @@ faq:
     - question: どの時点で導入完了と判断しますか？
       answer: "mergeやローカルtestだけでは完了にしません。PreviewではPagefindとUIのfallbackを確認し、Productionでは公開commitとcorpusの一致、本番index同期、mutation収束、関連検索、rate limit、停止手順まで確認して本番稼働と記録します。"
 ---
+
+> **2026年9月26日追記:** Acecore Systemsの検索実装では、埋め込みモデルにCloudflare Workers AIの `@cf/baai/bge-m3` を使い、1024次元の専用Vectorize indexを参照しています。モデルや次元を変更するときは、corpusとindexを対応させて作り直す必要があります。以下の公開HTMLを基準に同期する設計と、Pagefindを残す方針は引き続き適用します。
 
 ## まず理解したい：Cloudflare Vectorizeとは
 

@@ -2,6 +2,7 @@
 title: "Conception technique pour ajouter un chat IA de contact à un site Astro"
 description: "Guide de conception pour intégrer un chat IA de contact à un site statique Astro + Cloudflare Pages avec OpenAI Responses API. Il couvre la frontière API, le contexte du site, le contrôle du prompt, les URLs par locale, la vérification Origin, le rate limit et le rendu sécurisé des liens Markdown."
 date: 2026-06-07T12:00
+lastUpdated: 2026-09-26T16:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Site web", "AI", "Services"]
 image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
@@ -78,6 +79,8 @@ faq:
     - question: L'IA peut-elle afficher n'importe quel lien ?
       answer: Non. Les liens sont limités aux chemins internes, à l'origin courant, à acecore.net, au LINE officiel et aux mailto ou tel nécessaires. Les URLs Markdown sont nettoyées avant vérification.
 ---
+
+> **Mise à jour du 26 septembre 2026 :** L’article ci-dessous décrit une conception de juin 2026. L’API de chat d’Acecore Systems transmet maintenant les requêtes au service partagé acecore-chat-worker via une Cloudflare Pages Function et un Service Binding. L’interface reçoit du JSON et affiche la réponse complète. L’appel direct à OpenAI décrit plus bas ne correspond plus à l’implémentation actuelle.
 
 Ajouter un chat IA à un site web est simple. Le vrai sujet est l'exploitation : jusqu'où l'IA peut répondre, où elle doit guider le visiteur, quelles URLs elle peut afficher et comment maîtriser le coût API.
 
