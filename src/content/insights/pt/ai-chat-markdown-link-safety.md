@@ -2,6 +2,7 @@
 title: "Renderizar links Markdown com segurança em respostas de chat com IA"
 description: "Nota de implementação sobre converter links Markdown em respostas de IA para HTML seguro. Separar parsing tolerante a espaços, trim de href, allowlist, renderização DOM, fallback e testes torna o padrão reutilizável em outros sites."
 date: 2026-06-07T14:30
+lastUpdated: "2026-09-26T18:16:00+09:00"
 author: gui
 tags: ["Tecnologia", "Site", "AI", "Segurança", "Astro"]
 image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
@@ -156,19 +157,37 @@ Cada produto deve decidir quais URLs a IA pode mostrar.
 | Outros externos | Qualquer URL              | Não linkar por padrão               |
 
 ```js
-function isSafeMarkdownHref(href) {
-  if (href.startsWith("/")) return true;
+function isSafeMarkdownHref(rawHref) {
+  const href = String(rawHref ?? "").trim();
+  if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
+  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+    return true;
+  }
 
   try {
-    const url = new URL(href, window.location.origin);
-    if (url.origin === window.location.origin) return true;
-    if (url.hostname === "acecore.net") return true;
-    if (url.hostname === "lin.ee") return true;
+    if (href.startsWith("/")) {
+      if (href.startsWith("//")) return false;
+      const url = new URL(href, window.location.origin);
+      return (
+        url.origin === window.location.origin && !url.username && !url.password
+      );
+    }
+
+    const url = new URL(href);
+    return (
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      !url.port &&
+      [
+        window.location.origin,
+        "https://acecore.net",
+        "https://lin.ee",
+      ].includes(url.origin)
+    );
   } catch {
     return false;
   }
-
-  return href === "mailto:info@acecore.net" || href === "tel:05088902788";
 }
 ```
 

@@ -2,6 +2,7 @@
 title: "Astro 站点品质改善指南 ― 从 PageSpeed 移动端99分的达成之路"
 description: "将 Astro + UnoCSS + Cloudflare Pages 架构的站点从性能、SEO、无障碍性、UX 四个维度进行优化，达成 PageSpeed Insights 移动端99分、桌面端全项100分的完整记录。"
 date: 2026-03-25T15:00
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["技术", "Astro", "性能", "无障碍", "SEO", "网站"]
 image: /uploads/acecore-generated/blog-website-improvement-batches.webp
@@ -63,7 +64,7 @@ faq:
   title: 常见问题
   items:
     - question: PageSpeed Insights 移动端能打到100分吗？
-      answer: "技术上是可能的，但对于包含 AdSense 或 GA4 等外部服务的站点，稳定维持100分极其困难。Lighthouse 模拟 slow 4G（约1.6 Mbps），外部资源的加载会产生很大的扣分。99分是现实中的最高可达分数。"
+      answer: "可以。本文记录了2026年3月25日移动端99分；[3月29日的后续测量](/insights/website-improvement-final-batch/)记录了100分。两次结果都不能保证今天仍是相同分数。"
     - question: 改善应该按什么顺序进行？
       answer: "首先用 PageSpeed Insights 了解现状，从影响最大的指标开始处理。一般推荐按性能 → SEO → 无障碍性的顺序进行。"
     - question: 这套改善方法适用于其他 Astro 站点吗？
@@ -71,6 +72,8 @@ faq:
     - question: 是否使用了 GitHub Copilot 来推进改善？
       answer: '是的。几乎所有改善都是与 GitHub Copilot 协作完成的。详情请参阅 "使用 GitHub Copilot 的开发流程" 文章。'
 ---
+
+**2026年9月26日补充：** 本文记录的是2026年3月25日的改进。当时认为99分是实际上限，但[3月29日的后续测量](/insights/website-improvement-final-batch/)记录了100分。两者都是各自测量时的结果，并非当前分数。[Google的PageSpeed Insights说明](https://developers.google.com/speed/docs/insights/v5/about)解释了分数为何会波动。
 
 ## 前言
 

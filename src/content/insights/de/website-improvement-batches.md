@@ -2,6 +2,7 @@
 title: "Astro-Website-Qualitätsverbesserungsleitfaden — PageSpeed Mobile Score von 99 erreichen"
 description: "Ein vollständiger Bericht über die Verbesserung einer Astro + UnoCSS + Cloudflare Pages-Website in vier Bereichen — Performance, SEO, Barrierefreiheit und UX — mit Erreichen eines PageSpeed Insights Mobile Scores von 99 und perfekten 100 Punkten bei allen Desktop-Metriken."
 date: 2026-03-25T15:00
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Leistung", "Barrierefreiheit", "SEO", "Website"]
 image: /uploads/acecore-generated/blog-website-improvement-batches.webp
@@ -63,7 +64,7 @@ faq:
   title: FAQ
   items:
     - question: Ist es möglich, 100 Punkte bei PageSpeed Insights Mobile zu erreichen?
-      answer: "Technisch ja, aber für Websites mit externen Diensten wie AdSense oder GA4 ist ein stabiler Wert von 100 extrem schwierig. Lighthouse simuliert langsames 4G (~1,6 Mbit/s), sodass das Laden externer Ressourcen eine erhebliche Strafe nach sich zieht. 99 ist der realistische Bestwert."
+      answer: "Ja. Dieser Artikel dokumentiert 99 Punkte auf Mobilgeräten am 25. März 2026; die [Nachmessung vom 29. März](/insights/website-improvement-final-batch/) dokumentiert 100. Keines der Ergebnisse garantiert den heutigen Wert."
     - question: In welcher Reihenfolge sollten Verbesserungen vorgenommen werden?
       answer: "Beginnen Sie mit der Bewertung des aktuellen Zustands per PageSpeed Insights und beheben Sie dann zuerst die Punkte mit der größten Auswirkung. Generell empfiehlt sich die Reihenfolge Performance → SEO → Barrierefreiheit."
     - question: Können diese Verbesserungstechniken auf andere Astro-Websites angewendet werden?
@@ -71,6 +72,8 @@ faq:
     - question: Wurde GitHub Copilot für die Verbesserungen eingesetzt?
       answer: 'Ja. Nahezu alle Verbesserungen wurden in Zusammenarbeit mit GitHub Copilot durchgeführt. Details finden sich im Artikel „Entwicklungsworkflow mit GitHub Copilot".'
 ---
+
+**Aktualisierung vom 26. September 2026:** Dieser Artikel dokumentiert Verbesserungen bis zum 25. März 2026. Die damalige Einschätzung, 99 sei eine praktische Obergrenze, wurde durch die [Nachmessung vom 29. März](/insights/website-improvement-final-batch/) mit 100 Punkten überholt. Beide Werte gelten nur für ihre Messungen. [Google erläutert](https://developers.google.com/speed/docs/insights/v5/about) mögliche Schwankungen.
 
 ## Einleitung
 

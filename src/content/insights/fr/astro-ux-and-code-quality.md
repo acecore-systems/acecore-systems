@@ -2,13 +2,14 @@
 title: "Pièges et solutions d'Astro View Transitions — Guide d'amélioration UX et qualité du code"
 description: "Solutions aux problèmes de scripts cassés avec les View Transitions d'Astro, introduction de la recherche plein texte Pagefind, amélioration de la sécurité des types TypeScript, gestion centralisée des constantes — un guide pratique pour améliorer l'UX et la qualité du code."
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Site web"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: Lecture indispensable si vous utilisez View Transitions
-  text: "L'introduction du ClientRouter (View Transitions) d'Astro rend les transitions de page fluides, mais en contrepartie, tous les scripts en ligne cessent d'être réexécutés. Cet article résume les patterns de solution ainsi que les méthodes d'amélioration de l'UX et de la qualité du code."
+  text: "Avec le ClientRouter d'Astro, les scripts de module regroupés ne s'exécutent normalement qu'une fois, tandis que les scripts en ligne peuvent être relancés selon la navigation. Utilisez les événements du cycle de vie pour réinitialiser les interactions."
 processFigure:
   title: Démarche d'amélioration UX
   steps:
@@ -63,7 +64,7 @@ Cet article présente les pièges des View Transitions et leurs solutions, ainsi
 
 ### Pourquoi les scripts cessent-ils de fonctionner ?
 
-Lors d'une navigation classique, le navigateur re-parse le HTML et exécute tous les scripts. Cependant, les View Transitions mettent à jour la page par différentiel DOM, ce qui signifie que **les scripts en ligne ne sont pas réexécutés**.
+Une navigation classique recharge le HTML. Le ClientRouter modifie l'exécution : **les scripts de module regroupés ne s'exécutent qu'une fois**, tandis que les scripts en ligne peuvent être relancés lors de certaines navigations.
 
 Les traitements affectés incluent :
 
@@ -211,7 +212,7 @@ L'ajout de `as const` aux objets constants rend les propriétés `readonly` et l
 
 ### Migration des imports dépréciés
 
-Remplacez `import { z } from 'astro:content'`, qui sera supprimé dans Astro 7, par `import { z } from 'astro/zod'`.
+La documentation actuelle d'Astro importe `z` pour les schémas de contenu depuis `astro/zod`. Consultez le [guide des collections de contenu](https://docs.astro.build/en/guides/content-collections/).
 
 ---
 
@@ -259,7 +260,7 @@ Pagination automatique par lots de 6 articles, navigation avec points de suspens
 
 ### Liens d'ancrage avec en-tête sticky
 
-Avec un en-tête sticky, les destinations des liens d'ancrage sont masquées par l'en-tête. Résolvez cela avec les paramètres preflight d'UnoCSS :
+Un en-tête fixe peut masquer la cible d'une ancre. L'exemple de preflight UnoCSS ci-dessous correspond à la configuration utilisée à l'époque ; avec Tailwind aujourd'hui, appliquez une règle CSS équivalente.
 
 ```css
 [id] {

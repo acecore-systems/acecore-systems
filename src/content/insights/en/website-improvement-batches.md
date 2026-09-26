@@ -2,6 +2,7 @@
 title: "Astro Site Quality Improvement Guide — Achieving PageSpeed Mobile Score of 99"
 description: "A complete record of improving an Astro + UnoCSS + Cloudflare Pages site across four axes — performance, SEO, accessibility, and UX — achieving a PageSpeed Insights mobile score of 99 and perfect 100 on all desktop metrics."
 date: 2026-03-25T15:00
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Performance", "Accessibility", "SEO", "Website"]
 image: /uploads/acecore-generated/blog-website-improvement-batches.webp
@@ -63,7 +64,7 @@ faq:
   title: FAQ
   items:
     - question: Is it possible to score 100 on PageSpeed Insights mobile?
-      answer: "Technically yes, but for sites including external services like AdSense or GA4, maintaining a stable 100 is extremely difficult. Lighthouse simulates slow 4G (~1.6 Mbps), so loading external resources incurs a significant penalty. 99 is a realistic best-case score."
+      answer: "Yes. This article records a mobile score of 99 on March 25, 2026, while the [March 29 follow-up](/insights/website-improvement-final-batch/) recorded 100. Neither result guarantees today's score."
     - question: In what order should improvements be made?
       answer: "Start by assessing the current state with PageSpeed Insights, then address the highest-impact findings first. Generally, the recommended order is performance → SEO → accessibility."
     - question: Can these improvement techniques be applied to other Astro sites?
@@ -71,6 +72,8 @@ faq:
     - question: Was GitHub Copilot used for the improvements?
       answer: 'Yes. Almost all improvements were carried out in collaboration with GitHub Copilot. Details are covered in the "Development Workflow with GitHub Copilot" article.'
 ---
+
+**Update, September 26, 2026:** This article records improvements as of March 25, 2026. Its view that 99 was a practical ceiling was superseded by the [March 29 follow-up](/insights/website-improvement-final-batch/), which recorded 100. These are scores from their respective tests, not current scores. [Google's PageSpeed Insights documentation](https://developers.google.com/speed/docs/insights/v5/about) explains why results can vary.
 
 ## Introduction
 

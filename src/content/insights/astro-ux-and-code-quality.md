@@ -2,13 +2,14 @@
 title: "Astro View Transitionsの落とし穴と解決策 ― UX・コード品質改善ガイド"
 description: "AstroのView Transitionsでスクリプトが動かなくなる問題の解決策、Pagefind全文検索の導入、TypeScript型安全性の向上、定数の一元管理など、UXとコード品質を改善した実践ガイドです。"
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["技術", "Astro", "Webサイト"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: View Transitions を使うなら必読
-  text: "AstroのClientRouter（View Transitions）を導入すると、ページ遷移がスムーズになる反面、すべてのインラインスクリプトが再実行されなくなります。この記事ではその解決パターンと、UX・コード品質の改善手法をまとめています。"
+  text: "AstroのClientRouterでは、バンドル済みのモジュールスクリプトは通常初回だけ実行され、インラインスクリプトは遷移の仕方によって再実行されることもあります。再初期化が必要な処理はライフサイクルイベントへ結び付けます。"
 processFigure:
   title: UX改善の進め方
   steps:
@@ -63,7 +64,7 @@ AstroのView Transitions（ClientRouter）は、ページ遷移をSPAのよう�
 
 ### なぜスクリプトが動かなくなるのか
 
-通常のページ遷移では、ブラウザがHTMLを再パースしてすべてのスクリプトを実行します。しかしView TransitionsはページをDOM差分で更新するため、**インラインスクリプトが再実行されません**。
+通常のページ遷移ではブラウザがHTMLを読み直します。ClientRouterではスクリプトの再実行条件が異なり、**バンドル済みのモジュールスクリプトは初回だけ実行されます**。インラインスクリプトは遷移によって再実行される場合があります。
 
 影響を受けるのは以下のような処理です。
 
@@ -211,7 +212,7 @@ type: z.enum(["info", "warning", "tip", "note"]).default("info");
 
 ### 非推奨インポートの移行
 
-Astro 7 で削除予定の `import { z } from 'astro:content'` を `import { z } from 'astro/zod'` に変更しておきます。
+現在のAstro公式ドキュメントでは、コンテンツスキーマの `z` は `astro/zod` から読み込みます。[公式のコンテンツコレクションガイド](https://docs.astro.build/en/guides/content-collections/)も参照してください。
 
 ---
 
@@ -259,7 +260,7 @@ export const SITE = {
 
 ### スティッキーヘッダーのアンカーリンク
 
-スティッキーヘッダーがあると、アンカーリンクで飛んだ先がヘッダーに隠れてしまいます。UnoCSS の preflight で以下を設定して解消します。
+スティッキーヘッダーがあると、アンカーリンク先がヘッダーに隠れることがあります。次は当時使用していたUnoCSSのpreflight設定例です。現在のTailwind環境では同じ目的のCSSを適用します。
 
 ```css
 [id] {

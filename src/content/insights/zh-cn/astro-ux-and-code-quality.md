@@ -2,13 +2,14 @@
 title: "Astro View Transitions的坑与解决方案 ― UX与代码质量改善指南"
 description: "介绍Astro View Transitions中脚本失效问题的解决方案、Pagefind全文搜索的引入、TypeScript类型安全性的提升、常量统一管理等改善UX和代码质量的实践指南。"
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["技术", "Astro", "网站"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: 使用View Transitions必读
-  text: "引入Astro的ClientRouter（View Transitions）后，页面跳转变得流畅，但代价是所有内联脚本不再重新执行。本文总结了该问题的解决模式以及UX和代码质量的改善方法。"
+  text: "使用Astro的ClientRouter时，打包后的模块脚本通常只执行一次，而内联脚本可能随导航再次执行。需要重新初始化的交互应绑定到生命周期事件。"
 processFigure:
   title: UX改善的推进流程
   steps:
@@ -63,7 +64,7 @@ Astro的View Transitions（ClientRouter）是一项强大的功能，可以让�
 
 ### 为什么脚本不工作了
 
-通常的页面跳转中，浏览器会重新解析HTML并执行所有脚本。但View Transitions通过DOM差分更新页面，**内联脚本不会被重新执行**。
+普通导航会重新加载HTML。ClientRouter改变了脚本执行方式：**打包后的模块脚本只执行一次**，内联脚本则可能在某些导航中再次执行。
 
 受影响的处理包括：
 
@@ -211,7 +212,7 @@ type: z.enum(["info", "warning", "tip", "note"]).default("info");
 
 ### 弃用导入的迁移
 
-将Astro 7中将被删除的 `import { z } from 'astro:content'` 改为 `import { z } from 'astro/zod'`。
+Astro当前文档要求从 `astro/zod` 导入内容模式使用的 `z`。参见[内容集合指南](https://docs.astro.build/en/guides/content-collections/)。
 
 ---
 
@@ -259,7 +260,7 @@ export const SITE = {
 
 ### 粘性头部的锚链接
 
-有粘性头部时，点击锚链接跳转的位置会被头部遮挡。在UnoCSS的preflight中设置以下内容来解决：
+粘性头部可能遮挡锚点目标。以下是当时使用的UnoCSS preflight示例；当前Tailwind环境应使用实现相同目的的CSS。
 
 ```css
 [id] {

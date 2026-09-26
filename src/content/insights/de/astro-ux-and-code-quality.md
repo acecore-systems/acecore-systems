@@ -2,13 +2,14 @@
 title: "Fallstricke und Lösungen für Astro View Transitions — Ein Leitfaden zur Verbesserung von UX und Code-Qualität"
 description: "Ein praktischer Leitfaden mit Lösungen für Skriptprobleme bei Astro View Transitions, Einführung der Pagefind-Volltextsuche, Verbesserung der TypeScript-Typsicherheit, Zentralisierung von Konstanten und mehr zur Verbesserung von UX und Code-Qualität."
 date: 2026-03-25T13:00
+lastUpdated: "2026-09-26T18:20:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Website"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
 callout:
   type: warning
   title: Pflichtlektüre bei Verwendung von View Transitions
-  text: "Wenn Sie Astros ClientRouter (View Transitions) einsetzen, werden Seitenübergänge flüssiger, aber alle Inline-Skripte werden nicht mehr erneut ausgeführt. Dieser Artikel behandelt die Lösungsmuster und praktische Techniken zur Verbesserung von UX und Code-Qualität."
+  text: "Mit Astros ClientRouter werden gebündelte Modulskripte normalerweise nur einmal ausgeführt; Inline-Skripte können je nach Navigation erneut laufen. Nutzen Sie Lifecycle-Ereignisse, wenn Interaktionen nach der Navigation neu initialisiert werden müssen."
 processFigure:
   title: UX-Verbesserungs-Workflow
   steps:
@@ -63,7 +64,7 @@ Dieser Artikel behandelt die Fallstricke von View Transitions und deren Lösunge
 
 ### Warum Skripte nicht mehr funktionieren
 
-Bei normaler Seitennavigation parst der Browser das HTML neu und führt alle Skripte aus. View Transitions aktualisiert die Seite jedoch über DOM-Diffing, sodass **Inline-Skripte nicht erneut ausgeführt werden**.
+Bei normaler Navigation wird das HTML neu geladen. Der ClientRouter ändert die Skriptausführung: **Gebündelte Modulskripte laufen nur einmal**, während Inline-Skripte bei manchen Navigationen erneut laufen können.
 
 Folgende Verarbeitungsarten sind betroffen:
 
@@ -211,7 +212,7 @@ Das Hinzufügen von `as const` zu Konstantenobjekten macht Eigenschaften `readon
 
 ### Migration veralteter Importe
 
-Ändern Sie `import { z } from 'astro:content'` (geplant für Entfernung in Astro 7) zu `import { z } from 'astro/zod'`.
+Die aktuelle Astro-Dokumentation importiert `z` für Content-Schemas aus `astro/zod`. Siehe den [Leitfaden zu Content Collections](https://docs.astro.build/en/guides/content-collections/).
 
 ---
 
@@ -259,7 +260,7 @@ Implementieren Sie automatische Paginierung alle 6 Artikel, Navigation mit Ausla
 
 ### Ankerlinks bei Sticky Header
 
-Bei einem Sticky Header werden Ankerlink-Ziele hinter dem Header verborgen. Lösen Sie dies mit folgenden UnoCSS-Preflight-Einstellungen:
+Ein fixierter Header kann ein Ankerziel verdecken. Das folgende UnoCSS-Preflight-Beispiel zeigt die damalige Konfiguration; in der heutigen Tailwind-Umgebung ist entsprechendes CSS anzuwenden.
 
 ```css
 [id] {

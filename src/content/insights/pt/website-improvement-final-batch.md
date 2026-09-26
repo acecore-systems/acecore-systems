@@ -2,6 +2,7 @@
 title: "Guia de melhoria de qualidade de sites Astro, continuação - Ajustes finais para alcançar 100 em todos os itens do PageSpeed Insights"
 description: "Registro do ajuste final feito após o artigo anterior: desativação do Cloudflare Web Analytics, carregamento adiado de GA4 e da interface de busca, conquista de 100 em todos os itens do PageSpeed Insights no mobile e no desktop, organização de breadcrumbs e indexação no Search Console, migração para ícones SVG compartilhados e explicação das otimizações extras que foram testadas, mas não adotadas."
 date: 2026-03-29T02:30
+lastUpdated: "2026-09-26T18:25:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Desempenho", "Acessibilidade", "SEO", "Site"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -122,6 +123,8 @@ faq:
     - question: Houve otimizações testadas, mas não adotadas?
       answer: "Sim. Comparei ideias como dividir ainda mais o BaseLayout.css, tentar fazer desaparecer a própria exibição do network dependency tree e até reduzir terceiros a ponto de afetar o GA4. Com o mobile já estável em 100, essas opções trariam mais complexidade ou perda de medição do que valor prático, então foram descartadas."
 ---
+
+**Atualização de 26 de setembro de 2026:** Os 100 pontos referem-se a uma medição do PageSpeed Insights em 29 de março de 2026. Não garantem a pontuação atual nem a experiência de todos os usuários. Veja a [documentação do Google](https://developers.google.com/speed/docs/insights/v5/about) sobre dados de laboratório, dados reais e variação.
 
 ## Introdução
 
