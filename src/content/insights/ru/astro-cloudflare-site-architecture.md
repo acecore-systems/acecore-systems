@@ -2,6 +2,7 @@
 title: "Как развивать сайт на Astro + Cloudflare по функциям"
 description: "Как мы объединили Astro и Cloudflare Pages с AI-чатом для обращений, Sveltia CMS, многоязычным блогом, CTA услуг, безопасным Markdown-рендерингом и комментариями без внешнего сервиса."
 date: 2026-06-07T19:00
+lastUpdated: "2026-09-26T17:30:00+09:00"
 author: gui
 tags: ["Технологии", "Astro", "Cloudflare", "Веб-сайт", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -97,6 +98,8 @@ linkCards:
     description: Комментарии без внешнего сервиса, с Pages Functions, D1 и Turnstile.
     icon: i-lucide-message-square-text
 ---
+
+**Обновление от 26 сентября 2026 года:** Эта статья описывает архитектуру июня 2026 года. В более позднем исходном коде CMS сохраняет изменения прямо в `main` через GitHub App после проверки прав, содержимого и HEAD; переводы выполняются через OpenAI Batch и PR; контактный ИИ обращается к общему Worker через Service Binding. Упоминания ниже перевода Copilot, сохранения CMS через PR и прямых вызовов API ИИ относятся к прежней реализации. Подробности: [CMS](/ru/blog/cms-selection-and-turnstile/), [переводы](/ru/blog/copilot-translation-pipeline/), [ИИ](/ru/blog/astro-ai-contact-chat/).
 
 Когда сайт начинается с Astro и Cloudflare Pages, обычно достаточно быстрой и безопасной статической публикации.
 
