@@ -2,7 +2,7 @@
 title: "Guía de instalación de Sveltia CMS"
 description: "Registro cronológico de la implantación de Sveltia CMS en Acecore: acceso de editores, guardado directo validado mediante GitHub App, imágenes y operación multilingüe."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-26T17:50:00+09:00"
+lastUpdated: "2026-09-27T22:35:00+09:00"
 author: gui
 tags: ["Tecnología", "CMS", "Astro", "Cloudflare", "Seguridad"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -65,7 +65,7 @@ faq:
     - question: ¿Para qué sitios sirve Sveltia CMS?
       answer: Funciona bien en sitios estáticos donde Markdown o JSON viven en el repositorio, como Astro, Hugo o VitePress. Permite añadir CMS sin una base de datos externa.
     - question: ¿Puedo usar solo un Personal Access Token de GitHub?
-      answer: Sí, pero para varios editores o personas no técnicas, un OAuth Worker es más seguro y fácil de explicar. Acecore lo ejecuta en Cloudflare Workers y lo configura como backend.base_url.
+      answer: Un PAT sirve para pruebas locales, pero no debe compartirse para editar en producción. Actualmente, Acecore comprueba al usuario autenticado con AcecoreID / Cloudflare Access y su identidad de GitHub vinculada; antes de guardar verifica el permiso de escritura del repositorio. Una GitHub App específica del sitio realiza las operaciones de archivos. Los pasos del OAuth Worker más abajo describen la configuración anterior.
     - question: ¿Conviene editar todos los idiomas en el CMS?
       answer: En equipos pequeños es más seguro editar solo la fuente japonesa y actualizar las traducciones mediante PRs. Exponer todos los idiomas complica revisión y detección de traducciones obsoletas.
 ---
