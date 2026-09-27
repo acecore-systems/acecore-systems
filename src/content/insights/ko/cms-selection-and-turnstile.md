@@ -2,7 +2,7 @@
 title: "Sveltia CMS 도입 가이드"
 description: "Acecore의 Sveltia CMS 도입과 변경 이력입니다. 편집자 인증, GitHub App의 검증 후 직접 저장, 미디어와 다국어 운영을 시점별로 설명합니다."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-26T17:50:00+09:00"
+lastUpdated: "2026-09-27T22:35:00+09:00"
 author: gui
 tags: ["기술", "CMS", "Astro", "Cloudflare", "보안"]
 image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
@@ -65,7 +65,7 @@ faq:
     - question: Sveltia CMS는 어떤 사이트에 적합한가요?
       answer: Markdown이나 JSON이 저장소에 있는 정적 사이트에 잘 맞습니다. Astro, Hugo, VitePress처럼 콘텐츠를 Git으로 관리하는 사이트라면 외부 DB 없이 CMS를 추가할 수 있습니다.
     - question: GitHub Personal Access Token만으로도 되나요?
-      answer: 가능합니다. 하지만 여러 명이나 비개발자가 쓴다면 OAuth Worker가 더 안전하고 설명하기 쉽습니다. Acecore는 Cloudflare Worker를 OAuth 클라이언트로 사용합니다.
+      answer: 로컬 테스트에는 사용할 수 있지만 운영 편집용 PAT를 여러 사람과 공유해서는 안 됩니다. 현재 Acecore는 AcecoreID / Cloudflare Access 로그인 사용자와 연결된 GitHub ID를 확인하고, 저장 직전에 저장소 쓰기 권한을 검사합니다. 파일 작업은 사이트 전용 GitHub App이 담당합니다. 아래 OAuth Worker 절차는 이전 구성의 기록입니다.
     - question: 다국어 사이트는 모든 언어를 CMS에서 편집해야 하나요?
       answer: 작은 팀에서는 일본어 source만 CMS에서 편집하고 번역은 PR로 반영하는 편이 안전합니다. 모든 언어를 노출하면 리뷰와 오래된 번역 감지가 어려워집니다.
 ---
