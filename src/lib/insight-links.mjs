@@ -17,6 +17,7 @@ export const insightSlugs = Object.freeze([
   "cms-selection-and-turnstile",
   "codex-task-routing-design",
   "copilot-translation-pipeline",
+  "dynmap-512-migration",
   "hatt-homepage-launch",
   "homepage-production-cost-guide",
   "service-cta-contact-prefill",
