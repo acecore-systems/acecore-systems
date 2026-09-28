@@ -2,10 +2,10 @@
 title: "Cloudflare Vectorize 实现指南：安全同步已发布 HTML"
 description: "详细说明如何从已发布 HTML 创建 corpus、保留 Pagefind，并安全运行 Vectorize 同步。"
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: 2026-09-28T12:00
 author: gui
-tags: ["技术", "Cloudflare", "Vectorize", "OpenAI", "站内搜索"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+tags: ["技术", "Cloudflare", "Vectorize", "Workers AI", "站内搜索"]
+image: /images/insights/vectorize-safe-sync-hero.webp
 callout:
   type: tip
   title: Vectorize 是按“语义”检索的搜索基础，而不只是按词匹配
@@ -25,7 +25,7 @@ processFigure:
       icon: i-lucide-boxes
       accent: brand
     - title: 确认 Preview 界面
-      description: "在那里保持语义搜索关闭，并确认 Pagefind 候选项、fallback 和可见说明。"
+      description: "在那里保持语义搜索关闭，并确认提交后的 Pagefind fallback 和可见说明。"
       icon: i-lucide-flask-conical
       accent: amber
     - title: 将已发布 commit 同步到 Production
@@ -44,7 +44,7 @@ compareTable:
   after:
     label: fail-soft 搜索＋fail-closed 同步
     items:
-      - "普通搜索使用 Pagefind，语义搜索作为由用户明确操作触发的辅助功能"
+      - "提交搜索时先尝试 Vectorize，失败或没有结果时切换到 Pagefind"
       - "从已发布 HTML 生成 corpus，反映 canonical、noindex 和 locale"
       - "在同步前后验证 Production allowlist、删除比例、已发布 commit 和 mutation 完成情况"
       - "将实现、本地验证、Preview 界面确认和 Production 运行记录为不同状态"
@@ -77,7 +77,7 @@ checklist:
       checked: true
     - text: "使用源自 content hash 的 ID，避免对未变化的 chunk 再次 embedding"
       checked: true
-    - text: "让 Preview 只使用 Pagefind，并将 Vectorize、D1 和同步权限限制在 Production"
+    - text: "在 Preview 中关闭本站的语义搜索，并将 Vectorize、D1 和同步权限限制在 Production"
       checked: true
     - text: "确认 upsert 完成后再 delete，并要求明确批准大量删除"
       checked: true
@@ -146,9 +146,9 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 
 这些是导入时应先判断的价值和适用范围。本文其余部分说明可在 Astro／Cloudflare Pages 站点复用的实施与运维方法。
 
-> **实用的第一种配置：** 常规 Pages Preview 通过 `SEARCH_ENABLED=false` 只使用 Pagefind。Vectorize／D1 binding 和自动同步限制在 Production。先在 Preview 确认搜索界面和 fallback；在 Production 只同步从已发布 commit 创建的 corpus。这样，测试中的改动和广泛权限不会进入生产搜索。
+> **实用的第一种配置：** 常规 Pages Preview 通过 `SEARCH_ENABLED=false` 关闭本站的 Vectorize 搜索。Vectorize／D1 binding 和自动同步限制在 Production。先在 Preview 确认搜索界面和 Pagefind fallback；在 Production 只同步从已发布 commit 创建的 corpus。共享网络搜索 API 的请求走独立路径。这样，测试中的改动和广泛权限不会进入生产搜索。
 
-在规划导入时会发现，仅仅“生成 embedding 并调用 `query()`”远远不够。还要决定如何构建搜索 corpus、如何让 Preview 只保留 Pagefind 同时保护 Production、如何防止错误同步导致大量删除，以及已发布页面是否真的与 index 一致。实际运维中，Vectorize API 调用前后的设计比调用本身更重要。
+在规划导入时会发现，仅仅“生成 embedding 并调用 `query()`”远远不够。还要决定如何构建搜索 corpus、如何在 Preview 中关闭本站的 Vectorize 搜索并保护 Production、如何防止错误同步导致大量删除，以及已发布页面是否真的与 index 一致。实际运维中，Vectorize API 调用前后的设计比调用本身更重要。
 
 ## 结论：搜索采用 fail-soft，同步与发布采用 fail-closed
 
@@ -168,12 +168,12 @@ Cloudflare Vectorize 是 Cloudflare 的向量数据库。它保存 **embedding**
 
 选择 provider 或 index 名称之前，先回答这四个问题。这样会更容易判断架构。
 
-| 要决定的事        | 容易开始的选择                                | 原因                                       |
-| ----------------- | --------------------------------------------- | ------------------------------------------ |
-| 读者目标          | “查找关联页面”                                | 不必一开始就生成回答，而是先评估搜索质量。 |
-| 搜索入口          | 输入时使用 Pagefind；明确操作后使用 Vectorize | 速度、成本和数据传输范围更容易理解。       |
-| 作为依据的 corpus | 已发布 HTML                                   | 草稿和管理界面不会意外出现在结果中。       |
-| 发布流程          | 在 Preview 确认 UI；只同步 Production         | 测试数据和权限不会进入生产搜索。           |
+| 要决定的事        | 容易开始的选择                            | 原因                                       |
+| ----------------- | ----------------------------------------- | ------------------------------------------ |
+| 读者目标          | “查找关联页面”                            | 不必一开始就生成回答，而是先评估搜索质量。 |
+| 搜索入口          | 提交时使用 Vectorize；失败时使用 Pagefind | 数据传输和 fallback 行为更容易理解。       |
+| 作为依据的 corpus | 已发布 HTML                               | 草稿和管理界面不会意外出现在结果中。       |
+| 发布流程          | 在 Preview 确认 UI；只同步 Production     | 测试数据和权限不会进入生产搜索。           |
 
 回答这四个问题后，再根据自身需求选择 embedding provider、D1、R2 和未来的回答生成方式。
 
@@ -187,13 +187,13 @@ Vectorize 适合搜索词与正文不完全一致，或需要通过相关概念�
 
 因此，我们也分开设计了 UI。
 
-1. 输入时显示 Pagefind 候选项
-2. 仅在用户明确执行相关搜索时调用 API
+1. 输入时不执行搜索；仅在提交时调用关联搜索 API
+2. 关联搜索失败或没有结果时运行 Pagefind
 3. 为 API 设置较短的 timeout
-4. API 失败时不移除 Pagefind 结果
+4. 通过 Pagefind fallback 处理 API 失败
 5. 使用 kill switch 只停止相关搜索
 
-当前搜索模态框在输入时仅使用浏览器内的 Pagefind 显示候选项。只有读者执行“搜索”时，才会按照界面说明把搜索词发送到 OpenAI Embeddings API，并在 Vectorize 中与本站公开信息进行比对。界面会提醒不要输入个人信息或机密信息，并将这类发送与普通关键词候选项区分开来。
+当前搜索弹窗在输入时不执行搜索。只有读者执行“搜索”时，才会按照界面说明将搜索词发送到本站搜索 API。Cloudflare Workers AI `@cf/baai/bge-m3` 将其转换为向量，再与 Vectorize 中的本站公开信息进行比对。如果关联搜索失败或没有结果，浏览器会运行 Pagefind 作为 fallback。之后搜索词也可能发送到 Acecore 共用搜索 API（acecore.net），用于展示相关网站的公开信息。界面提醒不要输入个人信息或机密信息。
 
 采用这种架构，Vectorize 可以扩展搜索体验，但不会成为整个搜索的单点故障。
 
@@ -255,7 +255,7 @@ const vector = {
 
 ## 将 embedding model 与 index 设置固定为契约
 
-只有在确认实际输出后再选择 embedding provider 和 model。可以使用 Workers AI 的 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) 或 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 等 model，但其 dimensions 与 metric 必须和计划使用的 index 一致。以后需要切换时，请创建独立的目标 index，保留旧 index 用于 rollback，并且绝不要把不同 dimensions 的 vector 混入同一 index。
+应根据目标语言、搜索质量、延迟和费用选择嵌入模型及服务。Acecore Systems 目前使用 [Workers AI `@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) 和专用的 1024 维 cosine 索引。采用其他模型时，先检查实际输出，再迁移到符合新配置的独立索引。不要在同一索引中混用不同维度的向量。
 
 比 model 名称本身更重要的是，让以下四处遵守同一契约。
 
@@ -318,9 +318,9 @@ Cloudflare 的 [Vectorize API](https://developers.cloudflare.com/vectorize/refer
 
 如果删除后出现问题，先设置 `SEARCH_ENABLED=false`，只停止关联搜索并保留普通搜索。随后重新创建并全量同步替换 index，验证 query，再次切换 binding。删除 index 绝不能是第一项 rollback 操作。
 
-## Preview 只使用 Pagefind，Production 才是唯一的高权限同步目标
+## 在 Preview 中关闭本站的语义搜索，Production 才是唯一的高权限同步目标
 
-导入初期分离 Preview 与 Production 有助于识别权限和停止条件。但常规 Pages Preview 并不需要 Vectorize 或 D1 binding。当前配置保持 `SEARCH_ENABLED=false`：Preview 用于确认 Pagefind 候选项、fallback 和布局。Vectorize／D1 binding、同步 token 和 Production Environment 都限制在 Production。
+导入初期分离 Preview 与 Production 有助于识别权限和停止条件。但常规 Pages Preview 并不需要 Vectorize 或 D1 binding。当前配置保持 `SEARCH_ENABLED=false`：Preview 用于确认提交后的 Pagefind fallback 和布局。共享网络搜索 API 的请求不受此设置控制。Vectorize／D1 binding、同步 token 和 Production Environment 都限制在 Production。
 
 需要隔离以下对象。
 
@@ -333,7 +333,7 @@ Cloudflare 的 [Vectorize API](https://developers.cloudflare.com/vectorize/refer
 - 用于启用的 repository variable
 - kill switch
 
-同步 token 仅授予目标 Cloudflare account 的 Vectorize Read / Write，并与 OpenAI API key分离。Production 只能从受保护的 `main` 执行，并通过 GitHub Environment reviewer。
+同步 token 仅授予目标 Cloudflare account 的 Vectorize Read / Write，并与其他用途的 API key 分离。Production 只能从受保护的 `main` 执行，并通过 GitHub Environment reviewer。
 
 这里也存在运维上的 trade-off。如果 Production Environment 设置了 required reviewer，从 schedule 启动的同步也可能等待审批。在添加 cron 前，需要决定只批准首次发布、每次定期同步都批准，还是将定期同步拆分到其他 job。
 
@@ -419,7 +419,7 @@ client 侧 UUID 可以由用户修改，因此不能成为强有力的计费边�
 | -------------------- | --------------------------------------------------------- |
 | 已实现               | API、corpus、同步脚本和 UI 已存在于 branch                |
 | 已本地验证           | build、类型检查、契约 test 和 dry-run 成功                |
-| 已确认 Preview       | 已确认 Pagefind 候选项、相关搜索不可用时的显示和 UI       |
+| 已确认 Preview       | 已确认提交后的 Pagefind fallback 和搜索 UI 显示           |
 | 正在 Production 运行 | 已同步已发布 commit，并确认 mutation 收敛、API 和停止步骤 |
 
 在完成报告和 release notes 中也要分别记录这些状态。这样就不会把“已有代码”和“实际安全地在 Production 运行”混为一谈。
@@ -438,7 +438,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> OpenAI Embeddings API
+  -> Cloudflare Workers AI (@cf/baai/bge-m3)
   -> Vectorize query
   -> 仅返回已发布 URL
 
@@ -451,7 +451,7 @@ GitHub Actions
 
 Pages Preview
   -> SEARCH_ENABLED=false
-  -> 确认 Pagefind 候选项和 UI fallback
+  -> 确认提交后的 Pagefind fallback
 ```
 
 没有必要一开始就加入 LLM 回答生成。首先构建能够安全返回相关页面、并可以进行评估的搜索。以后增加回答生成时，也要把获取的原文、可引用 URL 和不能回答的条件设计为单独契约。
@@ -464,11 +464,11 @@ Pages Preview
 
 本次结论很简单。
 
-- 保留 Pagefind 作为主要搜索
-- 将 Vectorize 作为语义搜索的辅助功能
+- 保留 Pagefind 作为关联搜索的 fallback
+- 提交时使用 Vectorize 进行关联搜索
 - 从已发布 HTML 生成 corpus
 - 根据 content hash 确定性地生成 ID 和 version
-- Preview 只使用 Pagefind，并将 Vectorize、D1 和同步权限限制在 Production
+- 在 Preview 中关闭本站的语义搜索，并将 Vectorize、D1 和同步权限限制在 Production
 - 搜索采用 fail-soft，同步与发布采用 fail-closed
 - 将“实现”“本地验证”“Preview 界面确认”“Production”记录为不同状态
 

@@ -2,10 +2,10 @@
 title: "Cloudflare Vectorize実装ガイド：公開HTMLを安全に同期する"
 description: "公開HTMLからcorpusを作り、Pagefindと併用しながらVectorizeを安全に同期・運用するための実装ガイドです。"
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: 2026-09-28T12:00
 author: gui
-tags: ["技術", "Cloudflare", "Vectorize", "OpenAI", "サイト内検索"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+tags: ["技術", "Cloudflare", "Vectorize", "Workers AI", "サイト内検索"]
+image: /images/insights/vectorize-safe-sync-hero.webp
 callout:
   type: tip
   title: Vectorizeは「意味で探す」ための検索基盤
@@ -25,7 +25,7 @@ processFigure:
       icon: i-lucide-boxes
       accent: brand
     - title: PreviewのUIを確認する
-      description: "意味検索は無効のまま、Pagefind候補、fallback、表示上の送信案内を確認する。"
+      description: "意味検索は無効のまま、送信後のPagefind fallbackと表示上の送信案内を確認する。"
       icon: i-lucide-flask-conical
       accent: amber
     - title: 公開commitを本番へ同期する
@@ -44,7 +44,7 @@ compareTable:
   after:
     label: fail-soft検索＋fail-closed同期
     items:
-      - "通常検索はPagefind、意味検索は明示操作で呼ぶ補助機能にする"
+      - "検索の送信でVectorizeを試し、失敗または結果なしならPagefindへ切り替える"
       - "corpusは公開HTMLから作り、canonical、noindex、localeを反映する"
       - "Production allowlist、削除率、公開commit、mutation完了を同期前後で検証する"
       - "実装、ローカル検証、PreviewのUI確認、本番稼働を別の状態として記録する"
@@ -77,7 +77,7 @@ checklist:
       checked: true
     - text: "content hash由来のIDで変更のないchunkを再embeddingしない"
       checked: true
-    - text: "PreviewはPagefindだけにし、Vectorize／D1と同期権限はProductionへ限定する"
+    - text: "Previewのサイト内意味検索を無効にし、Vectorize／D1と同期権限はProductionへ限定する"
       checked: true
     - text: "upsert完了を確認してからdeleteし、大量削除には明示承認を要求する"
       checked: true
@@ -146,9 +146,9 @@ Cloudflare Vectorizeは、文章・画像などから作った **embedding**（�
 
 ここまでが、導入を検討するときに先に判断したい価値と適用範囲です。以下では、Astro／Cloudflare Pagesをはじめとする静的サイトへ再利用しやすい、実装と運用の設計へ進みます。
 
-> **最初に採用しやすい構成**：通常Pages Previewは `SEARCH_ENABLED=false` としてPagefindだけを使い、Vectorize／D1 bindingと自動同期はProductionだけに限定します。Previewでは検索画面とfallbackを確認し、本番では公開済みcommitから作ったcorpusだけを同期します。これにより、試験中の変更や権限を本番検索へ持ち込まずに済みます。
+> **最初に採用しやすい構成**：通常Pages Previewは `SEARCH_ENABLED=false` としてサイト内のVectorize検索を無効にし、Vectorize／D1 bindingと自動同期はProductionだけに限定します。Previewでは検索画面とPagefind fallbackを確認し、本番では公開済みcommitから作ったcorpusだけを同期します。共有ネットワーク検索APIへの問い合わせは別経路です。これにより、試験中の変更や権限を本番検索へ持ち込まずに済みます。
 
-導入を計画すると、単に「embeddingを作って `query()` する」だけでは足りないことが分かります。検索対象をどう作るか、PreviewをPagefindだけに保ちつつProductionをどう守るか、誤った同期で大量削除しないか、公開中のページとindexが本当に一致しているか。実運用では、VectorizeのAPI呼び出しよりも、その前後の設計が重要です。
+導入を計画すると、単に「embeddingを作って `query()` する」だけでは足りないことが分かります。検索対象をどう作るか、Previewでサイト内のVectorize検索を無効にしつつProductionをどう守るか、誤った同期で大量削除しないか、公開中のページとindexが本当に一致しているか。実運用では、VectorizeのAPI呼び出しよりも、その前後の設計が重要です。
 
 ## 結論：検索はfail-soft、同期と公開はfail-closed
 
@@ -171,7 +171,7 @@ Vectorizeを入れる前に、providerやindex名より先に次の4つを決め
 | 決めること   | はじめやすい選択                      | 理由                                             |
 | ------------ | ------------------------------------- | ------------------------------------------------ |
 | 利用者の目的 | 「関連するページを探す」              | いきなり回答生成まで作らず、検索品質を評価できる |
-| 検索の入口   | 入力中はPagefind、明示操作でVectorize | 速度、費用、送信範囲を分かりやすく保てる         |
+| 検索の入口   | 明示送信でVectorize、失敗時はPagefind | 送信範囲とfallbackを分かりやすく保てる           |
 | corpusの正   | 公開済みHTML                          | 下書きや管理画面を検索結果へ混ぜない             |
 | 公開の流れ   | PreviewでUI確認、Productionだけ同期   | 試験中の権限やデータを本番検索へ持ち込まない     |
 
@@ -187,13 +187,13 @@ Vectorizeは、検索語が本文と完全一致しない場合や、関連す�
 
 そこでUIも分けました。
 
-1. 入力中はPagefindの候補を表示する
-2. 利用者が明示的に関連検索を実行した場合だけAPIを呼ぶ
+1. 入力中は検索APIを呼ばず、送信時にだけ関連検索を実行する
+2. 関連検索で結果がない、または失敗した場合はPagefindで検索する
 3. APIには短いtimeoutを設ける
-4. APIが失敗してもPagefindの結果を消さない
+4. APIの失敗をPagefindのfallbackで吸収する
 5. kill switchで関連検索だけを停止できるようにする
 
-現行の検索モーダルでは、入力中の候補表示はブラウザ内のPagefindだけで行います。「検索する」を実行したときだけ、表示で明記したうえで検索語をOpenAI Embeddings APIへ送り、数値表現をVectorizeの公開情報と照合します。個人情報や機密情報を検索語に入れないよう案内し、この送信は通常のキーワード候補と混同しません。
+現行の検索モーダルは入力中に検索を実行しません。「検索する」を押したとき、表示で明記したうえで検索語を当サイトの検索APIへ送り、Cloudflare Workers AIの `@cf/baai/bge-m3` で数値表現に変換してVectorizeの公開情報と照合します。関連検索で結果がない場合やAPIが失敗した場合は、ブラウザ内のPagefindで検索します。その後、検索語をAcecore共通検索API（acecore.net）へ送り、関連サイトの公開情報も表示する場合があります。個人情報や機密情報は入力しないよう案内しています。
 
 この構成なら、Vectorizeは検索体験を広げますが、検索全体の単一障害点にはなりません。
 
@@ -255,7 +255,7 @@ const vector = {
 
 ## embedding modelとindex設定を契約として固定する
 
-embedding providerやmodelは、対象言語、検索品質、レイテンシ、費用で選びます。たとえば[OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) の `text-embedding-3-large` を使うなら、実際の出力を確認し、1,536 dimensions／cosine用のindexを別名で作ります。modelを変えるときは新しい契約用のindexへ移行し、異なるdimensionsのvectorを同じindexに混在させません。
+embedding providerやmodelは、対象言語、検索品質、レイテンシ、費用で選びます。Acecore Systemsの現行構成は[Workers AIの `@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) と1024 dimensions／cosineの専用indexです。別のmodelを採用するときは実際の出力を確認して新しい契約用のindexへ移行し、異なるdimensionsのvectorを同じindexに混在させません。
 
 重要なのはモデル名そのものより、次の4か所を同じ契約にすることです。
 
@@ -318,9 +318,9 @@ Cloudflareの[Vectorize API](https://developers.cloudflare.com/vectorize/referen
 
 削除後に問題が起きた場合は、まず `SEARCH_ENABLED=false` で関連検索だけを止め、通常検索を残します。その後、replacement indexを再作成して全量同期・query確認・binding切替をやり直します。削除を最初のrollback手段にしないことが重要です。
 
-## PreviewはPagefindだけにし、Productionだけを高権限の同期対象にする
+## Previewのサイト内意味検索を無効にし、Productionだけを高権限の同期対象にする
 
-導入初期にPreviewとProductionを分離して検証したことは、権限と停止条件を洗い出す助けになりました。一方、通常Pages PreviewにVectorize／D1 bindingを持たせる必要はありません。現行では `SEARCH_ENABLED=false` とし、PreviewはPagefindの候補表示、fallback、レイアウトを確認する場所です。Vectorize／D1 binding、同期token、Production Environmentは本番だけへ限定します。
+導入初期にPreviewとProductionを分離して検証したことは、権限と停止条件を洗い出す助けになりました。一方、通常Pages PreviewにVectorize／D1 bindingを持たせる必要はありません。現行では `SEARCH_ENABLED=false` とし、Previewは送信後のPagefind fallbackとレイアウトを確認する場所です。共有ネットワーク検索APIへの問い合わせはこの設定とは別に実行されます。Vectorize／D1 binding、同期token、Production Environmentは本番だけへ限定します。
 
 分ける対象は次の通りです。
 
@@ -333,7 +333,7 @@ Cloudflareの[Vectorize API](https://developers.cloudflare.com/vectorize/referen
 - 有効化用のrepository variable
 - kill switch
 
-同期tokenは、対象Cloudflare accountのVectorize Read / Writeに絞り、OpenAI API keyとは分離しました。Productionは保護された `main` からだけ実行し、GitHub Environmentのreviewerを通します。
+同期tokenは、対象Cloudflare accountのVectorize Read / Writeに絞り、ほかの用途のAPI keyとは分離しました。Productionは保護された `main` からだけ実行し、GitHub Environmentのreviewerを通します。
 
 ここには運用上のtrade-offもあります。Production Environmentにrequired reviewerを付けると、scheduleから起動した同期も承認待ちになる場合があります。初回公開だけ承認するのか、定期同期も毎回承認するのか、別jobへ分けるのかを、cronを追加する前に決める必要があります。
 
@@ -415,12 +415,12 @@ D1はこの構成でrate limitに使っていますが、Vectorize導入の必�
 
 記事や完了報告では、次の状態を分けると誤解が減ります。
 
-| 状態             | 完了条件の例                                               |
-| ---------------- | ---------------------------------------------------------- |
-| 実装済み         | API、corpus、同期スクリプト、UIがbranchにある              |
-| ローカル検証済み | build、型検査、契約test、dry-runが成功した                 |
-| Preview確認済み  | Pagefindの候補、関連検索が使えない場合の表示、UIを確認した |
-| 本番稼働中       | 公開commitを同期し、mutation収束、API、停止手順を確認した  |
+| 状態             | 完了条件の例                                              |
+| ---------------- | --------------------------------------------------------- |
+| 実装済み         | API、corpus、同期スクリプト、UIがbranchにある             |
+| ローカル検証済み | build、型検査、契約test、dry-runが成功した                |
+| Preview確認済み  | 送信後のPagefind fallbackと検索UIの表示を確認した         |
+| 本番稼働中       | 公開commitを同期し、mutation収束、API、停止手順を確認した |
 
 この段階を完了報告やリリースノートでも分けて書けば、コードがあるだけの状態と、実際に安全に公開された状態を混同しません。
 
@@ -438,7 +438,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> OpenAI Embeddings API
+  -> Cloudflare Workers AI (@cf/baai/bge-m3)
   -> Vectorize query
   -> 公開URLだけを返す
 
@@ -451,7 +451,7 @@ GitHub Actions
 
 Pages Preview
   -> SEARCH_ENABLED=false
-  -> Pagefindの候補とUI fallbackを確認
+  -> 送信後のPagefind fallbackを確認
 ```
 
 最初からLLM回答生成まで入れる必要はありません。まず「関連するページを安全に返す」検索を作り、評価できる状態にします。回答生成を加える場合も、取得した原文、引用可能なURL、回答できない条件を別の契約として設計します。
@@ -464,11 +464,11 @@ Cloudflare Vectorizeの導入で難しいのは、nearest-neighbor queryその�
 
 今回の結論はシンプルです。
 
-- Pagefindを主検索として残す
-- Vectorizeは意味検索の補助にする
+- Pagefindを関連検索のfallbackとして残す
+- 送信時の関連検索にVectorizeを使う
 - corpusは公開HTMLから作る
 - IDとversionをcontent hashで決定論的にする
-- PreviewはPagefindだけにし、Vectorize／D1と同期権限はProductionへ限定する
+- Previewのサイト内意味検索を無効にし、Vectorize／D1と同期権限はProductionへ限定する
 - 検索はfail-soft、同期と公開はfail-closedにする
 - 「実装」「ローカル検証」「PreviewのUI確認」「本番」を別の状態として記録する
 

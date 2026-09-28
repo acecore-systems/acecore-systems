@@ -2,10 +2,10 @@
 title: "Cloudflare Vectorize 구현 가이드: 공개 HTML을 안전하게 동기화하는 방법"
 description: "공개 HTML에서 corpus를 만들고 Pagefind를 유지하면서 Vectorize 동기화를 안전하게 운영하는 상세 가이드입니다."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: 2026-09-28T12:00
 author: gui
-tags: ["기술", "Cloudflare", "Vectorize", "OpenAI", "사이트 검색"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+tags: ["기술", "Cloudflare", "Vectorize", "Workers AI", "사이트 검색"]
+image: /images/insights/vectorize-safe-sync-hero.webp
 callout:
   type: tip
   title: Vectorize는 단어가 아니라 의미로 찾기 위한 검색 기반입니다
@@ -25,7 +25,7 @@ processFigure:
       icon: i-lucide-boxes
       accent: brand
     - title: Preview UI를 확인한다
-      description: "그곳에서는 의미 검색을 끄고 Pagefind 후보, fallback, 표시되는 안내를 확인합니다."
+      description: "그곳에서는 의미 검색을 끄고 검색 제출 후 Pagefind fallback과 표시되는 안내를 확인합니다."
       icon: i-lucide-flask-conical
       accent: amber
     - title: 공개 commit을 Production에 동기화한다
@@ -44,7 +44,7 @@ compareTable:
   after:
     label: fail-soft 검색 ＋ fail-closed 동기화
     items:
-      - "일반 검색은 Pagefind가 맡고 의미 검색은 명시적인 조작으로 호출하는 보조 기능으로 구성"
+      - "검색 제출 시 Vectorize를 시도하고 실패하거나 결과가 없으면 Pagefind로 전환"
       - "corpus는 공개 HTML에서 만들고 canonical, noindex, locale을 반영"
       - "Production allowlist, 삭제율, 공개 commit, mutation 완료를 동기화 전후에 검증"
       - "구현, 로컬 검증, Preview UI 확인, Production 운영을 서로 다른 상태로 기록"
@@ -77,7 +77,7 @@ checklist:
       checked: true
     - text: "content hash 기반 ID로 변경되지 않은 chunk를 다시 embedding하지 않는다"
       checked: true
-    - text: "Preview는 Pagefind만 쓰고 Vectorize／D1과 동기화 권한은 Production으로 한정한다"
+    - text: "Preview에서 이 사이트의 의미 검색을 끄고 Vectorize／D1과 동기화 권한은 Production으로 한정한다"
       checked: true
     - text: "upsert 완료를 확인한 뒤 delete하고 대량 삭제에는 명시적 승인을 요구한다"
       checked: true
@@ -146,9 +146,9 @@ Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스
 
 여기까지가 도입을 검토할 때 먼저 판단할 가치와 적용 범위입니다. 이후에는 Astro／Cloudflare Pages 사이트에서 재사용할 수 있는 구현·운영 설계를 설명합니다.
 
-> **실용적인 첫 구성:** 일반 Pages Preview에서는 `SEARCH_ENABLED=false`로 Pagefind만 사용합니다. Vectorize／D1 binding과 자동 동기화는 Production으로 제한합니다. Preview에서 검색 UI와 fallback을 확인하고, Production에는 공개 commit에서 만든 corpus만 동기화합니다. 이렇게 하면 시험 중인 변경과 넓은 권한이 운영 검색에 들어가지 않습니다.
+> **실용적인 첫 구성:** 일반 Pages Preview에서는 `SEARCH_ENABLED=false`로 이 사이트의 Vectorize 검색을 끕니다. Vectorize／D1 binding과 자동 동기화는 Production으로 제한합니다. Preview에서 검색 UI와 Pagefind fallback을 확인하고, Production에는 공개 commit에서 만든 corpus만 동기화합니다. 공유 네트워크 검색 API 요청은 별도 경로로 처리됩니다. 이렇게 하면 시험 중인 변경과 넓은 권한이 운영 검색에 들어가지 않습니다.
 
-도입을 계획해 보면 단순히 “embedding을 만들고 `query()`를 호출하는 것”만으로는 충분하지 않다는 사실을 알게 됩니다. 검색 대상을 어떻게 만들지, Preview는 Pagefind만 유지하면서 Production을 어떻게 보호할지, 잘못된 동기화로 대량 삭제가 일어나지 않게 할지, 공개 중인 페이지와 index가 실제로 일치하는지 등을 고려해야 합니다. 실제 운영에서는 Vectorize API 호출보다 그 전후의 설계가 더 중요합니다.
+도입을 계획해 보면 단순히 “embedding을 만들고 `query()`를 호출하는 것”만으로는 충분하지 않다는 사실을 알게 됩니다. 검색 대상을 어떻게 만들지, Preview에서 이 사이트의 Vectorize 검색을 끄면서 Production을 어떻게 보호할지, 잘못된 동기화로 대량 삭제가 일어나지 않게 할지, 공개 중인 페이지와 index가 실제로 일치하는지 등을 고려해야 합니다. 실제 운영에서는 Vectorize API 호출보다 그 전후의 설계가 더 중요합니다.
 
 ## 결론: 검색은 fail-soft, 동기화와 공개는 fail-closed
 
@@ -168,12 +168,12 @@ Cloudflare Vectorize는 Cloudflare의 벡터 데이터베이스입니다. 텍스
 
 provider나 index 이름을 고르기 전에 다음 네 가지 질문에 답합니다. 그러면 아키텍처를 훨씬 쉽게 판단할 수 있습니다.
 
-| 결정할 것   | 시작하기 쉬운 선택                                 | 이유                                                          |
-| ----------- | -------------------------------------------------- | ------------------------------------------------------------- |
-| 독자의 목적 | “관련 페이지 찾기”                                 | 처음부터 답변을 생성하지 않고 검색 품질을 평가할 수 있습니다. |
-| 검색 진입점 | 입력 중에는 Pagefind, 명시적 실행 뒤에는 Vectorize | 속도, 비용, 데이터 전송 범위를 이해하기 쉽게 유지합니다.      |
-| 기준 corpus | 공개 HTML                                          | 초안과 관리 화면이 검색 결과에 섞이지 않습니다.               |
-| 공개 흐름   | Preview에서 UI 확인, Production만 동기화           | 시험 데이터와 권한이 운영 검색에 들어가지 않습니다.           |
+| 결정할 것   | 시작하기 쉬운 선택                       | 이유                                                          |
+| ----------- | ---------------------------------------- | ------------------------------------------------------------- |
+| 독자의 목적 | “관련 페이지 찾기”                       | 처음부터 답변을 생성하지 않고 검색 품질을 평가할 수 있습니다. |
+| 검색 진입점 | 제출 시 Vectorize, 실패 시 Pagefind      | 데이터 전송과 fallback 동작을 이해하기 쉽게 유지합니다.       |
+| 기준 corpus | 공개 HTML                                | 초안과 관리 화면이 검색 결과에 섞이지 않습니다.               |
+| 공개 흐름   | Preview에서 UI 확인, Production만 동기화 | 시험 데이터와 권한이 운영 검색에 들어가지 않습니다.           |
 
 이 네 가지에 답했다면 embedding provider, D1, R2, 나중의 답변 생성은 각자의 요구에 맞춰 선택할 수 있습니다.
 
@@ -187,13 +187,13 @@ Vectorize는 검색어가 본문과 완전히 일치하지 않거나 관련 개�
 
 그래서 UI도 분리했습니다.
 
-1. 입력 중에는 Pagefind 후보를 표시
-2. 사용자가 관련 검색을 명시적으로 실행할 때만 API 호출
+1. 입력 중에는 검색하지 않고 제출할 때만 관련 검색 API 호출
+2. 관련 검색이 실패하거나 결과가 없으면 Pagefind 실행
 3. API에 짧은 timeout 설정
-4. API가 실패해도 Pagefind 결과를 지우지 않음
+4. API 오류를 Pagefind fallback으로 처리
 5. kill switch로 관련 검색만 중단 가능
 
-현재 검색 모달에서는 입력 중 후보를 브라우저 안의 Pagefind만으로 표시합니다. 이용자가 “검색”을 실행할 때에만 UI에 표시한 안내대로 검색어를 OpenAI Embeddings API로 보내고, 그 수치 표현을 이 사이트의 공개 정보와 Vectorize에서 대조합니다. 개인 정보나 기밀 정보는 입력하지 않도록 안내하며, 이 전송은 일반 키워드 후보와 구분합니다.
+현재 검색 모달은 입력 중에 검색하지 않습니다. 이용자가 “검색”을 실행할 때에만 UI에 표시한 안내대로 검색어를 이 사이트의 검색 API로 보냅니다. Cloudflare Workers AI `@cf/baai/bge-m3`가 임베딩으로 변환한 뒤 Vectorize에 저장된 공개 정보와 대조합니다. 관련 검색이 실패하거나 결과가 없으면 브라우저 안의 Pagefind를 fallback으로 실행합니다. 그 후 관련 사이트의 공개 정보를 표시하기 위해 검색어를 Acecore 공용 검색 API(acecore.net)로 보낼 수도 있습니다. UI는 개인정보나 기밀정보를 입력하지 않도록 안내합니다.
 
 이 구성에서는 Vectorize가 검색 경험을 확장하지만 검색 전체의 단일 장애점이 되지 않습니다.
 
@@ -255,7 +255,7 @@ const vector = {
 
 ## embedding model과 index 설정을 계약으로 고정한다
 
-실제 출력을 확인한 뒤에만 embedding provider와 model을 고릅니다. Workers AI의 [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)나 [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) 같은 model을 쓸 수 있지만 dimensions와 metric은 계획한 index와 일치해야 합니다. 나중에 교체할 때는 별도 대상 index를 만들고 이전 index는 rollback용으로 유지하며, dimensions가 다른 vector를 같은 index에 섞지 않습니다.
+임베딩 제공자와 모델은 대상 언어, 검색 품질, 지연 시간, 비용을 기준으로 선택합니다. Acecore Systems는 현재 [Workers AI `@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/)와 1024차원 cosine 전용 인덱스를 사용합니다. 다른 모델을 도입할 때는 실제 출력을 확인하고 새 구성에 맞는 별도 인덱스로 이전합니다. 차원이 다른 벡터를 같은 인덱스에 섞지 않습니다.
 
 모델 이름 자체보다 중요한 것은 다음 네 곳에 같은 계약을 적용하는 것입니다.
 
@@ -318,9 +318,9 @@ Cloudflare [Vectorize API](https://developers.cloudflare.com/vectorize/reference
 
 삭제 후 문제가 생기면 먼저 `SEARCH_ENABLED=false`로 관련 검색만 멈추고 일반 검색은 유지합니다. 그다음 교체 index를 다시 만들고 전체 동기화, query 검증, binding 전환을 반복합니다. index 삭제가 첫 번째 rollback 수단이 되어서는 안 됩니다.
 
-## Preview는 Pagefind만 사용하고 Production만 고권한 동기화 대상으로 한다
+## Preview에서 이 사이트의 의미 검색을 끄고 Production만 고권한 동기화 대상으로 한다
 
-도입 초기 Preview와 Production을 분리해 검증한 일은 권한과 중단 조건을 정리하는 데 도움이 됐습니다. 하지만 일반 Pages Preview에는 Vectorize／D1 binding이 필요하지 않습니다. 현행 구성은 `SEARCH_ENABLED=false`를 유지하며 Preview에서 Pagefind 후보, fallback, 레이아웃을 확인합니다. Vectorize／D1 binding, 동기화 token, Production Environment는 Production으로 한정합니다.
+도입 초기 Preview와 Production을 분리해 검증한 일은 권한과 중단 조건을 정리하는 데 도움이 됐습니다. 하지만 일반 Pages Preview에는 Vectorize／D1 binding이 필요하지 않습니다. 현행 구성은 `SEARCH_ENABLED=false`를 유지하며 Preview에서 검색 제출 후 Pagefind fallback과 레이아웃을 확인합니다. 공유 네트워크 검색 API 요청은 이 설정과 별개입니다. Vectorize／D1 binding, 동기화 token, Production Environment는 Production으로 한정합니다.
 
 다음 항목을 분리합니다.
 
@@ -333,7 +333,7 @@ Cloudflare [Vectorize API](https://developers.cloudflare.com/vectorize/reference
 - 활성화용 repository variable
 - kill switch
 
-동기화 token은 대상 Cloudflare account의 Vectorize Read / Write로 제한하고 OpenAI API key와 분리했습니다. Production은 보호된 `main`에서만 실행하고 GitHub Environment reviewer를 거칩니다.
+동기화 token은 대상 Cloudflare account의 Vectorize Read / Write로 제한하고 다른 용도의 API key와 분리했습니다. Production은 보호된 `main`에서만 실행하고 GitHub Environment reviewer를 거칩니다.
 
 여기에는 운영상 trade-off도 있습니다. Production Environment에 required reviewer를 설정하면 schedule로 시작한 동기화도 승인 대기 상태가 될 수 있습니다. 첫 공개만 승인할지, 정기 동기화도 매번 승인할지, 별도 job으로 나눌지를 cron 추가 전에 결정해야 합니다.
 
@@ -415,12 +415,12 @@ D1은 이 구성에서 rate limit에 사용하지만 Vectorize 도입의 필수 
 
 글이나 완료 보고에서는 다음 상태를 구분하면 오해가 줄어듭니다.
 
-| 상태               | 완료 조건 예시                                               |
-| ------------------ | ------------------------------------------------------------ |
-| 구현 완료          | API, corpus, 동기화 스크립트, UI가 branch에 있음             |
-| 로컬 검증 완료     | build, typecheck, 계약 test, dry-run 성공                    |
-| Preview 확인 완료  | Pagefind 후보, 관련 검색을 사용할 수 없을 때의 표시, UI 확인 |
-| Production 운영 중 | 공개 commit 동기화, mutation 수렴, API, 중단 절차 확인       |
+| 상태               | 완료 조건 예시                                         |
+| ------------------ | ------------------------------------------------------ |
+| 구현 완료          | API, corpus, 동기화 스크립트, UI가 branch에 있음       |
+| 로컬 검증 완료     | build, typecheck, 계약 test, dry-run 성공              |
+| Preview 확인 완료  | 제출 후 Pagefind fallback과 검색 UI 표시 확인          |
+| Production 운영 중 | 공개 commit 동기화, mutation 수렴, API, 중단 절차 확인 |
 
 이 상태는 완료 보고와 release notes에도 분리해 기록합니다. 그러면 코드가 있는 상태와 실제로 안전한 Production 운영을 혼동하지 않습니다.
 
@@ -438,7 +438,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> OpenAI Embeddings API
+  -> Cloudflare Workers AI (@cf/baai/bge-m3)
   -> Vectorize query
   -> 공개 URL만 반환
 
@@ -451,7 +451,7 @@ GitHub Actions
 
 Pages Preview
   -> SEARCH_ENABLED=false
-  -> Pagefind 후보와 UI fallback 확인
+  -> 제출 후 Pagefind fallback 확인
 ```
 
 처음부터 LLM 답변 생성까지 도입할 필요는 없습니다. 먼저 “관련 페이지를 안전하게 반환하는” 검색을 만들고 평가할 수 있는 상태로 둡니다. 답변 생성을 추가할 때도 가져온 원문, 인용 가능한 URL, 답변하지 않아야 하는 조건을 별도 계약으로 설계합니다.
@@ -464,11 +464,11 @@ Cloudflare Vectorize 도입에서 어려운 부분은 nearest-neighbor query 자
 
 결론은 간단합니다.
 
-- Pagefind를 주 검색으로 유지
-- Vectorize는 의미 검색 보조 기능으로 사용
+- Pagefind를 관련 검색의 fallback으로 유지
+- 제출 시 관련 검색에 Vectorize 사용
 - corpus는 공개 HTML에서 생성
 - ID와 version은 content hash로 결정론적으로 생성
-- Preview는 Pagefind만 사용하고 Vectorize／D1과 동기화 권한은 Production으로 한정
+- Preview에서 이 사이트의 의미 검색을 끄고 Vectorize／D1과 동기화 권한은 Production으로 한정
 - 검색은 fail-soft, 동기화와 공개는 fail-closed로 구성
 - “구현”, “로컬 검증”, “Preview UI 확인”, “Production”을 서로 다른 상태로 기록
 
