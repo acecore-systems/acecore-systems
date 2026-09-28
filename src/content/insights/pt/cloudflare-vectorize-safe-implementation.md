@@ -2,10 +2,11 @@
 title: "Guia de implementação do Cloudflare Vectorize: sincronize HTML público com segurança"
 description: "Um guia detalhado para criar o corpus a partir do HTML público, manter o Pagefind disponível e operar a sincronização do Vectorize com segurança."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: 2026-09-28T12:00
 author: gui
-tags: ["Tecnologia", "Cloudflare", "Vectorize", "OpenAI", "Pesquisa interna"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+tags:
+  ["Tecnologia", "Cloudflare", "Vectorize", "Workers AI", "Pesquisa interna"]
+image: /images/insights/vectorize-safe-sync-hero.webp
 callout:
   type: tip
   title: Vectorize é uma base de pesquisa por significado, não apenas por palavras
@@ -25,7 +26,7 @@ processFigure:
       icon: i-lucide-boxes
       accent: brand
     - title: Verificar a interface em Preview
-      description: "Manter a pesquisa semântica desativada ali e verificar sugestões do Pagefind, fallback e o aviso visível."
+      description: "Manter a pesquisa semântica desativada ali e verificar o fallback do Pagefind após o envio e o aviso visível."
       icon: i-lucide-flask-conical
       accent: amber
     - title: Sincronizar o commit publicado em Production
@@ -44,7 +45,7 @@ compareTable:
   after:
     label: Pesquisa fail-soft ＋ sincronização fail-closed
     items:
-      - "Usar Pagefind para a pesquisa normal e chamar a pesquisa semântica apenas por uma ação explícita"
+      - "Tentar o Vectorize ao enviar a consulta e recorrer ao Pagefind em caso de falha ou ausência de resultados"
       - "Criar o corpus a partir do HTML público, refletindo canonical, noindex e locale"
       - "Validar a allowlist de Production, a taxa de exclusão, o commit publicado e a conclusão das mutations antes e depois da sincronização"
       - "Registrar implementação, validação local, verificação da interface em Preview e operação em Production como estados diferentes"
@@ -77,7 +78,7 @@ checklist:
       checked: true
     - text: "Usar IDs derivados de content hash para não recalcular embeddings de chunks sem alterações"
       checked: true
-    - text: "Manter Preview somente com Pagefind e limitar Vectorize, D1 e permissões de sincronização a Production"
+    - text: "Desativar a pesquisa semântica deste site em Preview e limitar Vectorize, D1 e permissões de sincronização a Production"
       checked: true
     - text: "Confirmar a conclusão do upsert antes do delete e exigir aprovação explícita para exclusões em massa"
       checked: true
@@ -146,9 +147,9 @@ Em uma adoção inicial, o padrão mais acessível é manter a pesquisa atual po
 
 Esse é o valor e o escopo que devem ser avaliados primeiro. O restante deste artigo mostra um procedimento reutilizável para sites Astro／Cloudflare Pages.
 
-> **Uma primeira configuração prática:** a Pages Preview comum usa apenas Pagefind com `SEARCH_ENABLED=false`. Os bindings de Vectorize/D1 e a sincronização automática ficam restritos a Production. Em Preview, confirme a interface de pesquisa e o fallback; em Production, sincronize somente o corpus criado a partir do commit publicado. Assim, mudanças em teste e permissões amplas não chegam à pesquisa em produção.
+> **Uma primeira configuração prática:** a Pages Preview comum desativa a pesquisa Vectorize deste site com `SEARCH_ENABLED=false`. Os bindings de Vectorize/D1 e a sincronização automática ficam restritos a Production. Em Preview, confirme a interface de pesquisa e o fallback do Pagefind; em Production, sincronize somente o corpus criado a partir do commit publicado. As solicitações à API compartilhada de pesquisa em rede seguem um caminho separado. Assim, mudanças em teste e permissões amplas não chegam à pesquisa em produção.
 
-Ao planejar a implementação do Vectorize, fica claro que apenas “criar embeddings e chamar `query()`” não é suficiente. Como criar o conteúdo pesquisável, como manter Preview apenas com Pagefind enquanto se protege Production, como evitar exclusões em massa causadas por uma sincronização incorreta e como confirmar que as páginas publicadas realmente correspondem ao index? Na operação real, o projeto ao redor das chamadas da API do Vectorize é mais importante do que as chamadas em si.
+Ao planejar a implementação do Vectorize, fica claro que apenas “criar embeddings e chamar `query()`” não é suficiente. Como criar o conteúdo pesquisável, como desativar a pesquisa Vectorize deste site em Preview enquanto se protege Production, como evitar exclusões em massa causadas por uma sincronização incorreta e como confirmar que as páginas publicadas realmente correspondem ao index? Na operação real, o projeto ao redor das chamadas da API do Vectorize é mais importante do que as chamadas em si.
 
 ## Conclusão: pesquisa fail-soft; sincronização e publicação fail-closed
 
@@ -171,7 +172,7 @@ Antes de escolher provider ou nome de index, responda a estas quatro perguntas. 
 | Decisão              | Opção simples para começar                                       | Por quê                                                                                      |
 | -------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | Objetivo do leitor   | “Encontrar páginas relacionadas”                                 | Em vez de gerar respostas imediatamente, você pode primeiro avaliar a qualidade da pesquisa. |
-| Entrada da pesquisa  | Pagefind durante a digitação; Vectorize após uma ação explícita  | Velocidade, custo e envio de dados ficam fáceis de entender.                                 |
+| Entrada da pesquisa  | Vectorize no envio; Pagefind em caso de falha                    | Envio de dados e fallback ficam fáceis de entender.                                          |
 | Corpus de referência | HTML publicado                                                   | Rascunhos e telas administrativas não aparecem acidentalmente nos resultados.                |
 | Fluxo de publicação  | Verificar a interface em Preview; sincronizar somente Production | Dados de teste e permissões não entram na pesquisa em produção.                              |
 
@@ -187,13 +188,13 @@ O Vectorize é adequado quando o termo pesquisado não corresponde exatamente ao
 
 Por isso, também separamos a interface.
 
-1. Mostrar sugestões do Pagefind enquanto o usuário digita
-2. Chamar a API somente quando o usuário executar explicitamente a pesquisa relacionada
+1. Não pesquisar durante a digitação; chamar a API somente ao enviar a consulta
+2. Executar o Pagefind se a pesquisa relacionada falhar ou não retornar resultados
 3. Definir um timeout curto na API
-4. Não apagar os resultados do Pagefind se a API falhar
+4. Tratar falhas da API com o fallback do Pagefind
 5. Permitir que apenas a pesquisa relacionada seja interrompida por um kill switch
 
-No modal de pesquisa atual, as sugestões durante a digitação vêm somente do Pagefind no navegador. Somente ao executar «Pesquisar» o termo é enviado à OpenAI Embeddings API, como informa a interface, e comparado com as informações públicas deste site no Vectorize. O aviso pede que não sejam inseridas informações pessoais ou confidenciais e distingue esse envio das sugestões normais por palavras-chave.
+O modal de pesquisa atual não pesquisa durante a digitação. Apenas ao executar «Pesquisar» o termo é enviado à API de pesquisa deste site, como informa a interface. O Cloudflare Workers AI `@cf/baai/bge-m3` converte o termo em embedding para compará-lo com as informações públicas do site no Vectorize. Se a pesquisa relacionada falhar ou não retornar resultados, o Pagefind é executado no navegador como fallback. Depois, o termo também pode ser enviado à API de pesquisa compartilhada da Acecore (acecore.net) para mostrar informações públicas de sites relacionados. A interface pede que não sejam inseridos dados pessoais ou confidenciais.
 
 Com essa estrutura, o Vectorize amplia a experiência de pesquisa sem se tornar um ponto único de falha para toda a função.
 
@@ -255,7 +256,7 @@ Assim, o mesmo conteúdo público produz o mesmo corpus, facilitando a explicaç
 
 ## Fixar o embedding model e as configurações do index como um contrato
 
-Escolha o embedding provider e o model somente depois de verificar a saída real. Um model como o [`@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) do Workers AI ou [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) pode ser adequado, mas dimensions e metric precisam corresponder ao index planejado. Ao mudar depois, crie um index de destino separado, mantenha o anterior para rollback e nunca misture vectors com dimensions diferentes.
+Escolha o provedor e o modelo de embeddings conforme os idiomas, a qualidade da pesquisa, a latência e o custo. A Acecore Systems usa atualmente [Workers AI `@cf/baai/bge-m3`](https://developers.cloudflare.com/workers-ai/models/bge-m3/) com um índice cosine dedicado de 1024 dimensões. Ao adotar outro modelo, verifique a saída real e migre para um índice separado para a nova configuração. Nunca misture vetores de dimensões diferentes no mesmo índice.
 
 Mais importante do que o nome do modelo é manter o mesmo contrato nos quatro pontos abaixo.
 
@@ -318,9 +319,9 @@ Quando um index existente teria 21,3% dos vetores removidos, não apagamos diret
 
 Se houver um problema após a exclusão, defina primeiro `SEARCH_ENABLED=false` para parar apenas a busca relacionada e preservar a busca comum. Em seguida, recrie e sincronize integralmente o index de substituição, verifique as queries e troque o binding de novo. Excluir um index nunca deve ser a primeira ação de rollback.
 
-## Manter Preview somente com Pagefind e fazer de Production o único destino de sincronização com privilégios altos
+## Desativar a pesquisa semântica deste site em Preview e fazer de Production o único destino de sincronização com privilégios altos
 
-Separar Preview e Production na fase inicial ajudou a identificar permissões e condições de parada. Porém, uma Pages Preview normal não precisa de bindings de Vectorize ou D1. A configuração atual mantém `SEARCH_ENABLED=false`: Preview serve para verificar sugestões do Pagefind, fallback e layout. Bindings de Vectorize e D1, tokens de sincronização e o Production Environment ficam limitados a Production.
+Separar Preview e Production na fase inicial ajudou a identificar permissões e condições de parada. Porém, uma Pages Preview normal não precisa de bindings de Vectorize ou D1. A configuração atual mantém `SEARCH_ENABLED=false`: Preview serve para verificar o fallback do Pagefind após o envio e o layout. As solicitações à API compartilhada de pesquisa em rede são independentes dessa configuração. Bindings de Vectorize e D1, tokens de sincronização e o Production Environment ficam limitados a Production.
 
 Separamos os seguintes elementos.
 
@@ -333,7 +334,7 @@ Separamos os seguintes elementos.
 - repository variable de ativação
 - kill switch
 
-Restringimos o token de sincronização a Vectorize Read / Write na conta Cloudflare de destino e o separamos da OpenAI API key. Production só pode ser executado a partir do `main` protegido e passa pelos reviewers do GitHub Environment.
+Restringimos o token de sincronização a Vectorize Read / Write na conta Cloudflare de destino e o separamos das chaves de API usadas para outros fins. Production só pode ser executado a partir do `main` protegido e passa pelos reviewers do GitHub Environment.
 
 Isso também envolve um trade-off operacional. Quando o Production Environment exige reviewer, uma sincronização iniciada por schedule também pode ficar aguardando aprovação. Antes de adicionar o cron, é preciso decidir se apenas a primeira publicação será aprovada, se toda sincronização periódica exigirá aprovação ou se haverá jobs separados.
 
@@ -419,7 +420,7 @@ Em artigos e relatórios de conclusão, separar os estados abaixo reduz mal-ente
 | ------------------------- | -------------------------------------------------------------------------------------------------------- |
 | Implementado              | API, corpus, script de sincronização e UI existem na branch                                              |
 | Validado localmente       | build, typecheck, testes de contrato e dry-run concluídos                                                |
-| Verificado em Preview     | Sugestões do Pagefind, exibição quando a pesquisa relacionada não está disponível e UI verificados       |
+| Verificado em Preview     | Fallback do Pagefind após o envio e UI de pesquisa verificados                                           |
 | Em operação em Production | Commit publicado sincronizado, convergência das mutations, API e procedimento de interrupção confirmados |
 
 Registre esses estados separadamente também em relatórios de conclusão e notas de versão. Assim, código existente e uma operação de produção realmente segura não serão confundidos.
@@ -438,7 +439,7 @@ Astro build
 
 Cloudflare Pages Function
   -> input validation
-  -> OpenAI Embeddings API
+  -> Cloudflare Workers AI (@cf/baai/bge-m3)
   -> Vectorize query
   -> retorna apenas URLs públicas
 
@@ -451,7 +452,7 @@ GitHub Actions
 
 Pages Preview
   -> SEARCH_ENABLED=false
-  -> verifica sugestões do Pagefind e fallback da UI
+  -> verificar o fallback do Pagefind após o envio
 ```
 
 Não é necessário incluir geração de respostas por LLM desde o início. Primeiro, crie uma pesquisa que “retorne páginas relacionadas com segurança” e possa ser avaliada. Mesmo ao acrescentar geração de respostas, trate o texto obtido, as URLs que podem ser citadas e as condições em que não se deve responder como contratos separados.
@@ -464,11 +465,11 @@ O que incluir no index como informação pública, como identificar chunks sem a
 
 Nossa conclusão é simples.
 
-- Manter o Pagefind como pesquisa principal
-- Usar o Vectorize como complemento para pesquisa semântica
+- Manter o Pagefind como fallback da pesquisa relacionada
+- Usar o Vectorize para a pesquisa relacionada após o envio
 - Criar o corpus a partir do HTML público
 - Gerar ID e version de forma determinística com content hash
-- Manter Preview somente com Pagefind e limitar Vectorize, D1 e permissões de sincronização a Production
+- Desativar a pesquisa semântica deste site em Preview e limitar Vectorize, D1 e permissões de sincronização a Production
 - Tornar a pesquisa fail-soft e a sincronização e publicação fail-closed
 - Registrar “implementação”, “validação local”, “verificação da interface em Preview” e “Production” como estados diferentes
 
