@@ -2,7 +2,7 @@
 title: "Eine Astro + Cloudflare Website Schritt für Schritt erweitern"
 description: "Wie wir Astro und Cloudflare Pages mit AI-Kontaktchat, Sveltia CMS, mehrsprachigem Blog, Service-CTA, sicherem Markdown-Rendering und Kommentaren ohne externen Dienst kombiniert haben."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -185,3 +185,13 @@ Für eine ähnliche Website ist diese Reihenfolge praktikabel:
 Astro + Cloudflare kann eine Unternehmenswebsite erweitern, ohne die Vorteile statischer Auslieferung aufzugeben.
 
 Nutzen Sie diese Seite als Einstieg und ergänzen Sie nur die Teile, die Ihre Website wirklich braucht, ohne die statische Grundlage zu schwächen.
+
+## Ergänzung: Worker-Umgebungen und Build-Konfiguration trennen
+
+Ergänzt am 30. September 2026. Wir verallgemeinern Konfigurationsverbesserungen ohne Dienstnamen oder interne Einstellungen. Ordnen Sie bei mehreren Workers je Wrangler-Konfiguration das Quellverzeichnis sowie Build- und Deployment-Ziel zu. Getrennte Dateien beweisen keine Isolation.
+
+Prüfen Sie Variablen, Secrets sowie D1-, R2- und Service-Binding-Ziele für Produktion und Tests. Bindings und Variablen von Worker-Umgebungen werden nicht automatisch geerbt: deklarieren Sie sie je Umgebung. Fehlende Pflichtkonfiguration sollte die Verarbeitung stoppen, statt unbemerkt Produktionsressourcen zu verwenden. Dauerhaftes Staging und branch- oder PR-bezogene Previews sind unterschiedliche Abläufe.
+
+Legen Sie einen Produktionspfad mit vorgeschalteten Prüfungen fest. Builds oder Versions-Uploads außerhalb der Produktion dienen der Validierung; ihr Erfolg allein stellt keine Produktionsfreigabe dar. Prüfen Sie bei Git-Builds Branch, Commit, Quellverzeichnis, gewählte Konfiguration, Umgebung und Deployment-Befehl. Eine erfolgreiche Pages-Veröffentlichung beweist kein separates Worker-Deployment. Prüfen Sie CI, Produktions-Build, aktive Versionen und Bindings sowie das Domain-Verhalten getrennt. Diese Anpassungsprüfungen belegen nicht die Isolation aller Dienste.
+
+Siehe [Worker-Umgebungen](https://developers.cloudflare.com/workers/wrangler/environments/), [Builds für mehrere Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) und [Build-Konfiguration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Unterscheiden Sie die [Pages-Functions-Konfiguration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).

@@ -2,7 +2,7 @@
 title: "用 Astro + Cloudflare 逐步扩展官网功能的整体设计"
 description: "整理 Acecore 官网如何以 Astro 和 Cloudflare Pages 为基础，组合咨询 AI、Sveltia CMS、多语言博客、服务 CTA、Markdown 安全渲染和 Cloudflare 评论功能。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["技术", "Astro", "Cloudflare", "网站", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -201,3 +201,13 @@ Astro + Cloudflare 的官网不必停留在静态公司介绍页。
 只要把职责分清，静态页面、CMS、多语言、咨询 AI、表单导线和评论功能可以在同一个架构里共存。
 
 把这篇作为入口，就可以只选择自己网站需要的功能，同时不破坏静态网站的基础。
+
+## 补充：区分 Worker 的生产、测试环境与构建配置
+
+2026年9月30日补充。将相关构建配置整理为通用原则，不公开服务名或内部设置。同一仓库管理多个 Worker 时，应对应每个 Wrangler 配置、源码根目录、构建和部署目标。仅拆分文件不能证明环境已隔离。
+
+分别核对生产和测试的变量、密钥以及 D1、R2、Service Binding 目标。Worker 环境不会自动继承 bindings 和变量，需逐环境明确声明。缺少必需设置时应停止处理，不能静默使用生产资源。长期 staging 环境与分支、PR Preview 也属于不同流程。
+
+确定单一生产发布路径并执行发布前检查。非生产构建或版本上传用于验证，成功不代表已提升为生产部署。Git 构建需核对分支、commit、根目录、所选配置和环境、部署命令。Pages 发布成功不等于独立 Worker 已部署。CI、生产构建、实际运行版本和连接目标、公开域名行为需分别确认。这些是迁移应用时的检查项，并非所有服务隔离均已验证的声明。
+
+详见 Cloudflare 的 [Worker 环境](https://developers.cloudflare.com/workers/wrangler/environments/)、[多 Worker Builds](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/)和[构建配置](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)。[Pages Functions 配置](https://developers.cloudflare.com/pages/functions/wrangler-configuration/)需单独区分。

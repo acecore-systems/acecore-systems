@@ -2,7 +2,7 @@
 title: "Astro + Cloudflareで公式サイトを機能拡張する全体設計"
 description: "AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["技術", "Astro", "Cloudflare", "Webサイト", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -382,3 +382,13 @@ Astroは公開HTMLを作る。Cloudflareは配信と小さなAPI境界を受け�
 このようにレイヤーを分けると、公式サイトは単なる会社案内ではなく、更新、翻訳、相談、交流まで扱える運用基盤になります。
 
 このページを入口にすると、必要な機能だけを選びながら、静的サイトの土台を崩さずに拡張できます。
+
+## 補足：Workersの本番・検証環境とビルド設定を分ける
+
+2026年9月30日追記。関連するビルド設定の整理を、固有サービス名や内部設定を使わず設計原則として補足します。複数Workerを同じリポジトリで管理する場合、WorkerごとのWrangler設定、ソースのルート、ビルド・デプロイ対象を対応させます。設定ファイルを分けるだけでは環境分離の証明になりません。
+
+本番・検証ごとに変数、秘密情報、D1・R2・Service Bindingなどの接続先を確認します。Workersの環境設定ではbindingsと変数は自動継承されないため、環境ごとに明示します。必要な設定がないときは、本番接続先へ黙って切り替えず処理を止める設計にします。永続的なstaging環境と、ブランチ・PRごとのPreviewも同じものとして扱いません。
+
+本番の反映経路を一つに定め、事前検証後に本番ブランチから反映します。非本番のビルドやversionの作成は確認用とし、成功しただけで本番へ昇格したとは扱いません。Git連携のビルドでは、対象ブランチ・commit、ルート、選択する設定・環境、デプロイコマンドを確認します。Pagesの公開が成功しても、別Workerの反映まで完了したとは限りません。CI、本番ビルド、稼働中のバージョン・接続先、公開ドメインの動作をそれぞれ確認します。これらは転用時の確認項目であり、全サービスの環境分離を実証したという意味ではありません。
+
+詳細はCloudflare公式の[Workers環境設定](https://developers.cloudflare.com/workers/wrangler/environments/)、[Workers Buildsの複数Worker構成](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/)、[ビルド設定](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)を参照してください。Pages Functionsは[Pages用のWrangler設定](https://developers.cloudflare.com/pages/functions/wrangler-configuration/)として区別します。

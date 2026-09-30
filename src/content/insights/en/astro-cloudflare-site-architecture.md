@@ -2,7 +2,7 @@
 title: "Designing an Astro + Cloudflare Website That Can Grow Feature by Feature"
 description: "How we combined Astro and Cloudflare Pages with an AI contact chat, Sveltia CMS, multilingual blog publishing, service CTA handoff, safe Markdown rendering, and Cloudflare-only comments as one extensible website architecture."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["Technology", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -246,3 +246,13 @@ Astro + Cloudflare can support much more than a simple company brochure without 
 The key is to split responsibilities clearly: Astro builds reviewed public HTML, Cloudflare owns delivery and small API boundaries, Sveltia CMS edits source content, GitHub PRs review changes, OpenAI helps with contact guidance, and comments stay within Cloudflare when that is enough.
 
 Use this page as the entry point, then add only the pieces your site actually needs without weakening the static foundation.
+
+## Supplement: separate Worker environments and build configuration
+
+Added September 30, 2026. This generalizes related build-configuration work without service names or internal settings. For multiple Workers in one repository, map each Wrangler configuration to its source root, build and deployment target. Separate files alone do not prove environment isolation.
+
+Check variables, secrets and D1, R2 and Service Binding destinations for production and testing. Worker environment bindings and variables are not inherited automatically; declare them per environment. Missing required configuration should stop processing instead of silently using production resources. Persistent staging and branch or PR Previews are distinct workflows.
+
+Choose one production release path and require pre-release checks. Non-production builds or version uploads are for validation; success alone does not promote them to production. For Git builds, verify the branch, commit, root, selected configuration and environment, and deployment command. A successful Pages release does not establish that a separate Worker was deployed. Check CI, production builds, active versions and bindings, and custom-domain behavior separately. These are adaptation checks, not proof that every service has verified isolation.
+
+See Cloudflare's [Worker environments](https://developers.cloudflare.com/workers/wrangler/environments/), [multi-Worker Builds setups](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) and [build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Treat [Pages Functions configuration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/) separately.

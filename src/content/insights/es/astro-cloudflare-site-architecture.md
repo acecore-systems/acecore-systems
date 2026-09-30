@@ -2,7 +2,7 @@
 title: "Diseñar un sitio Astro + Cloudflare que crece función por función"
 description: "Cómo combinamos Astro y Cloudflare Pages con chat de contacto con IA, Sveltia CMS, blog multilingüe, CTA de servicios, renderizado seguro de Markdown y comentarios sin servicios externos."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["Tecnología", "Astro", "Cloudflare", "Sitio web", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -189,3 +189,13 @@ Para otro sitio con una estructura similar, el orden práctico es:
 Astro + Cloudflare permite ampliar un sitio corporativo sin abandonar las ventajas de la entrega estática.
 
 Usa esta página como entrada y añade solo las piezas que tu sitio necesita, sin debilitar la base estática.
+
+## Ampliación: separar entornos y configuración de compilación de Workers
+
+Añadido el 30 de septiembre de 2026. Generalizamos mejoras de configuración sin nombres de servicios ni ajustes internos. Con varios Workers en un repositorio, relacione cada configuración Wrangler con su raíz de código y sus destinos de compilación y despliegue. Separar archivos no demuestra aislamiento.
+
+Revise variables, secretos y destinos D1, R2 y Service Binding en producción y pruebas. Los bindings y variables de los entornos Worker no se heredan automáticamente: declárelos por entorno. Si falta configuración obligatoria, detenga el proceso en vez de usar recursos de producción silenciosamente. Staging persistente y Previews de ramas o PR son flujos distintos.
+
+Defina una sola vía de publicación en producción y exija controles previos. Los builds o versiones no productivos son para verificar: su éxito no los promueve a producción. En compilaciones Git, verifique rama, commit, raíz, configuración, entorno y comando de despliegue. Publicar Pages no demuestra que otro Worker esté desplegado. Compruebe CI, compilación de producción, versiones y conexiones activas, y comportamiento del dominio por separado. Son comprobaciones para adaptar el diseño, no una prueba de aislamiento de todos los servicios.
+
+Consulte [entornos Worker](https://developers.cloudflare.com/workers/wrangler/environments/), [Builds con varios Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) y [configuración de Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Distinga la [configuración de Pages Functions](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).
