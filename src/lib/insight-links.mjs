@@ -20,6 +20,8 @@ export const insightSlugs = Object.freeze([
   "dynmap-512-migration",
   "hatt-homepage-launch",
   "homepage-production-cost-guide",
+  "openclaw-monitoring-investigation",
+  "restic-r2-backup-verification",
   "service-cta-contact-prefill",
   "tax-return-with-copilot",
   "vitepress-to-starlight-migration",
