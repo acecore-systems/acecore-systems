@@ -2,7 +2,7 @@
 title: "Concevoir un site Astro + Cloudflare qui grandit fonctionnalité par fonctionnalité"
 description: "Comment nous avons combiné Astro et Cloudflare Pages avec un chat IA, Sveltia CMS, un blog multilingue, des CTA de services, un rendu Markdown sécurisé et des commentaires sans service externe."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Site web", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -197,3 +197,9 @@ Vérifiez variables, secrets et destinations D1, R2 et Service Binding en produc
 Définissez une seule voie de publication en production avec des contrôles préalables. Les builds ou versions hors production servent à valider : leur succès ne les promeut pas en production. Pour les builds Git, vérifiez branche, commit, racine, configuration, environnement et commande de déploiement. Une publication Pages réussie ne prouve pas le déploiement d’un Worker distinct. Vérifiez séparément CI, build de production, versions et connexions actives, puis comportement du domaine. Ce sont des contrôles pour adapter le modèle, pas une preuve d’isolation de tous les services.
 
 Consultez les [environnements Worker](https://developers.cloudflare.com/workers/wrangler/environments/), les [Builds multi-Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) et la [configuration Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Distinguez la [configuration Pages Functions](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).
+
+## Complément : borner les tentatives et isoler les échecs par source
+
+Ajout du 30 septembre 2026. Importer des flux publics comme RSS diffère de la publication RSS. Limitez l’attente et le nombre de tentatives afin qu’un échec temporaire ne prolonge pas indéfiniment une tâche.
+
+Traitez les sources séparément. Un échec ne doit pas arrêter les entrées qui peuvent être actualisées indépendamment. Ne présentez pas un succès partiel comme complet : conservez les résultats par source et les échecs restants dans le rapport. Vérifiez séparément récupération, données générées, builds de production et pages publiques. Ce sont des contrôles généraux, pas une preuve de toutes les situations d’échec ou intégrations futures.

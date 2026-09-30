@@ -2,7 +2,7 @@
 title: "用 Astro + Cloudflare 逐步扩展官网功能的整体设计"
 description: "整理 Acecore 官网如何以 Astro 和 Cloudflare Pages 为基础，组合咨询 AI、Sveltia CMS、多语言博客、服务 CTA、Markdown 安全渲染和 Cloudflare 评论功能。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["技术", "Astro", "Cloudflare", "网站", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -211,3 +211,9 @@ Astro + Cloudflare 的官网不必停留在静态公司介绍页。
 确定单一生产发布路径并执行发布前检查。非生产构建或版本上传用于验证，成功不代表已提升为生产部署。Git 构建需核对分支、commit、根目录、所选配置和环境、部署命令。Pages 发布成功不等于独立 Worker 已部署。CI、生产构建、实际运行版本和连接目标、公开域名行为需分别确认。这些是迁移应用时的检查项，并非所有服务隔离均已验证的声明。
 
 详见 Cloudflare 的 [Worker 环境](https://developers.cloudflare.com/workers/wrangler/environments/)、[多 Worker Builds](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/)和[构建配置](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)。[Pages Functions 配置](https://developers.cloudflare.com/pages/functions/wrangler-configuration/)需单独区分。
+
+## 补充：限制外部订阅重试并按来源隔离故障
+
+2026年9月30日补充。导入 RSS 等公开订阅与输出 RSS 是不同的运维流程。限制请求等待时间和重试次数，避免暂时故障让任务无限运行。
+
+各输入来源应分别处理失败。某一来源获取失败，不应停止其他可独立更新的输入。不能把部分成功报告为全部成功，应在任务报告中保留各来源结果和未解决故障。分别确认获取、生成数据、生产构建和公开页面。这些是通用设计检查，并非所有故障条件或未来来源接入均已验证的声明。

@@ -2,7 +2,7 @@
 title: "Практические улучшения доступности сайта на Astro"
 description: "Запись об улучшениях доступности сайта Astro + UnoCSS в марте 2026 года: ARIA, контрастность, фокус, формы и экранные читалки."
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-26T17:40:00+09:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Технологии", "Astro", "Доступность"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -234,3 +234,9 @@ shortcuts: {
 ## Серия статей
 
 Эта статья является частью серии «[Руководство по улучшению качества сайта на Astro](/blog/website-improvement-batches/)». Отдельные статьи также посвящены улучшению производительности, SEO и UX.
+
+## Дополнение: проверка удобства при переходе на Tailwind CSS v4
+
+Добавлено 30 сентября 2026 года. При переходе на Tailwind CSS v4 проверьте в рабочей среде существующие CSS reset и Preflight, значки CMS, видимый фокус и уменьшение движения. Решайте вопрос отключения Preflight с учётом прежних стилей, не рекомендуя его всем сайтам.
+
+[Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)

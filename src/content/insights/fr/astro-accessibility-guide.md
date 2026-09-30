@@ -2,7 +2,7 @@
 title: "Améliorations pratiques de l’accessibilité d’un site Astro"
 description: "Retour sur les améliorations de l’accessibilité d’un site Astro + UnoCSS en mars 2026 : ARIA, contraste, focus, formulaires et lecteurs d’écran."
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-26T17:40:00+09:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Technologie", "Astro", "Accessibilité"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -232,3 +232,9 @@ Nous recommandons de commencer par scanner le site avec axe DevTools et de corri
 ## Série d'articles associée
 
 Cet article fait partie de la série « [Guide d'amélioration de la qualité d'un site Astro](/blog/website-improvement-batches/) ». Les améliorations de performance, SEO et UX sont présentées dans des articles dédiés.
+
+## Complément : vérifier l’usage lors du passage à Tailwind CSS v4
+
+Ajout du 30 septembre 2026. Lors du passage à Tailwind CSS v4, revérifiez en production les resets CSS face à Preflight, les icônes du CMS, le focus visible et la réduction des animations. Décidez de désactiver Preflight selon les styles existants, sans généraliser à tous les sites.
+
+[Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)

@@ -2,7 +2,7 @@
 title: "Praktische Verbesserungen der Barrierefreiheit für eine Astro-Website"
 description: "Aufzeichnungen zu Verbesserungen der Barrierefreiheit einer Astro + UnoCSS-Website im März 2026: ARIA, Kontrast, Fokus, Formulare und Screenreader."
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-26T17:40:00+09:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Technologie", "Astro", "Barrierefreiheit"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -234,3 +234,9 @@ Beginnen Sie damit, Ihre Website mit axe DevTools zu scannen und die automatisch
 ## Teil einer Serie
 
 Dieser Artikel ist Teil der Serie „[Leitfaden zur Qualitätsverbesserung von Astro-Websites](/blog/website-improvement-batches/)". Separate Artikel behandeln Verbesserungen in den Bereichen Performance, SEO und UX.
+
+## Ergänzung: Bedienbarkeit beim Wechsel zu Tailwind CSS v4 prüfen
+
+Ergänzt am 30. September 2026. Prüfen Sie beim Wechsel zu Tailwind CSS v4 auch in Produktion vorhandene CSS-Resets gegenüber Preflight, CMS-Icons, sichtbaren Fokus und reduzierte Bewegung. Entscheiden Sie anhand bestehender Stile über Preflight, statt dessen Deaktivierung allen Websites zu empfehlen.
+
+[Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)

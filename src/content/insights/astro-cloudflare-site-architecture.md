@@ -2,7 +2,7 @@
 title: "Astro + Cloudflareで公式サイトを機能拡張する全体設計"
 description: "AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["技術", "Astro", "Cloudflare", "Webサイト", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -392,3 +392,9 @@ Astroは公開HTMLを作る。Cloudflareは配信と小さなAPI境界を受け�
 本番の反映経路を一つに定め、事前検証後に本番ブランチから反映します。非本番のビルドやversionの作成は確認用とし、成功しただけで本番へ昇格したとは扱いません。Git連携のビルドでは、対象ブランチ・commit、ルート、選択する設定・環境、デプロイコマンドを確認します。Pagesの公開が成功しても、別Workerの反映まで完了したとは限りません。CI、本番ビルド、稼働中のバージョン・接続先、公開ドメインの動作をそれぞれ確認します。これらは転用時の確認項目であり、全サービスの環境分離を実証したという意味ではありません。
 
 詳細はCloudflare公式の[Workers環境設定](https://developers.cloudflare.com/workers/wrangler/environments/)、[Workers Buildsの複数Worker構成](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/)、[ビルド設定](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)を参照してください。Pages Functionsは[Pages用のWrangler設定](https://developers.cloudflare.com/pages/functions/wrangler-configuration/)として区別します。
+
+## 補足：外部フィードの再試行と障害を入力元ごとに分ける
+
+2026年9月30日追記。RSSなどの公開フィードを取り込む処理は、RSSを出力する処理とは別の運用です。取得には待ち時間と再試行回数の上限を設け、一時的な失敗を再確認しても、無期限に処理を続けないようにします。
+
+複数の入力元は失敗を個別に扱います。一つの取得に失敗しても、独立して更新できるほかの入力まで停止させない構成にします。一部成功を全件成功とせず、入力元ごとの結果と残る失敗をジョブの報告へ残します。取得の成功、生成データ、本番ビルド、公開ページの確認も分けます。これは一般的な設計確認であり、すべての障害条件や将来の入力元への適用を実証したという意味ではありません。
