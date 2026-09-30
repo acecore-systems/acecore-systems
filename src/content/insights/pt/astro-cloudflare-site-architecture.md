@@ -2,7 +2,7 @@
 title: "Como projetar um site Astro + Cloudflare que cresce por funcionalidade"
 description: "Como combinamos Astro e Cloudflare Pages com chat de contato com IA, Sveltia CMS, blog multilíngue, CTA de serviços, renderização segura de Markdown e comentários sem serviço externo."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Cloudflare", "Site", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -187,3 +187,13 @@ Para um site parecido, a ordem prática é:
 Astro + Cloudflare permite ampliar um site institucional sem perder as vantagens da entrega estática.
 
 Use esta página como entrada e adicione apenas as partes que seu site precisa, sem enfraquecer a base estática.
+
+## Complemento: separar ambientes e configuração de build dos Workers
+
+Adicionado em 30 de setembro de 2026. Generalizamos melhorias de configuração sem nomes de serviços ou ajustes internos. Com vários Workers no mesmo repositório, relacione cada configuração Wrangler à raiz do código e aos destinos de build e deploy. Arquivos separados não comprovam isolamento.
+
+Confira variáveis, segredos e destinos de D1, R2 e Service Binding em produção e testes. Bindings e variáveis dos ambientes Worker não são herdados automaticamente: declare-os por ambiente. A falta de configuração obrigatória deve interromper o processamento, sem recorrer silenciosamente à produção. Staging persistente e Previews por branch ou PR são fluxos distintos.
+
+Defina um único caminho de publicação em produção e exija verificações prévias. Builds ou versões não produtivos servem para validação; o sucesso não os promove à produção. Nos builds Git, confira branch, commit, raiz, configuração, ambiente e comando de deploy. Uma publicação Pages bem-sucedida não comprova o deploy de outro Worker. Verifique CI, build de produção, versões e conexões ativas e comportamento no domínio separadamente. São verificações para adaptar o projeto, não prova de isolamento de todos os serviços.
+
+Veja [ambientes Worker](https://developers.cloudflare.com/workers/wrangler/environments/), [Builds com vários Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) e [configuração de Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Distinga a [configuração de Pages Functions](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).

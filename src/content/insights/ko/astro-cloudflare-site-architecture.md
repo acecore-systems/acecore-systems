@@ -2,7 +2,7 @@
 title: "Astro + Cloudflare 사이트를 기능별로 확장하는 전체 설계"
 description: "Astro와 Cloudflare Pages를 기반으로 문의 AI, Sveltia CMS, 다국어 블로그, 서비스 CTA, 안전한 Markdown 렌더링, Cloudflare만으로 만든 댓글 기능을 하나의 구조로 정리합니다."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["기술", "Astro", "Cloudflare", "웹사이트", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -185,3 +185,13 @@ Pages Functions가 GET/POST를 받고, D1이 저장하고, Turnstile이 제출�
 Astro + Cloudflare는 정적 배포의 장점을 유지하면서도 공식 사이트를 계속 확장할 수 있습니다.
 
 이 페이지를 입구로 삼으면 정적 사이트의 기반을 유지하면서 필요한 기능만 골라 확장할 수 있습니다.
+
+## 보충: Worker 환경과 빌드 설정 분리
+
+2026년 9월 30일 추가. 관련 빌드 설정 개선을 서비스 이름과 내부 값 없이 일반 원칙으로 정리합니다. 한 저장소의 여러 Worker는 Wrangler 설정, 소스 루트, 빌드·배포 대상을 각각 연결합니다. 파일 분리만으로 환경 격리가 입증되지는 않습니다.
+
+운영과 시험별 변수, 비밀값, D1·R2·Service Binding 연결 대상을 확인합니다. Worker 환경의 bindings와 변수는 자동 상속되지 않으므로 환경별로 선언합니다. 필수 설정이 없으면 운영 자원으로 조용히 전환하지 말고 처리를 중단합니다. 지속적인 staging과 브랜치·PR Preview도 서로 다른 흐름입니다.
+
+운영 반영 경로를 하나로 정하고 사전 검증을 요구합니다. 비운영 빌드나 버전 업로드는 확인용이며 성공만으로 운영에 승격된 것으로 보지 않습니다. Git 빌드는 브랜치, commit, 루트, 선택한 설정·환경, 배포 명령을 확인합니다. Pages 공개 성공이 별도 Worker 배포를 뜻하지는 않습니다. CI, 운영 빌드, 실제 버전·연결 대상, 도메인 동작을 각각 확인합니다. 이는 다른 환경에 적용할 때의 점검 항목이며 모든 서비스의 격리를 입증했다는 뜻이 아닙니다.
+
+Cloudflare의 [Worker 환경](https://developers.cloudflare.com/workers/wrangler/environments/), [다중 Worker Builds](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/), [빌드 설정](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)을 참고하세요. [Pages Functions 설정](https://developers.cloudflare.com/pages/functions/wrangler-configuration/)은 따로 구분합니다.

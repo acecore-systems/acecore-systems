@@ -2,7 +2,7 @@
 title: "Concevoir un site Astro + Cloudflare qui grandit fonctionnalité par fonctionnalité"
 description: "Comment nous avons combiné Astro et Cloudflare Pages avec un chat IA, Sveltia CMS, un blog multilingue, des CTA de services, un rendu Markdown sécurisé et des commentaires sans service externe."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-26T17:30:00+09:00"
+lastUpdated: "2026-09-30T14:17:51+00:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Site web", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -187,3 +187,13 @@ Pour un site similaire, l'ordre pratique est :
 Astro + Cloudflare permet d'étendre un site institutionnel sans perdre les avantages du statique.
 
 Utilisez cette page comme point d'entrée et n'ajoutez que les éléments dont votre site a besoin, sans affaiblir la base statique.
+
+## Complément : séparer les environnements et configurations de build des Workers
+
+Ajout du 30 septembre 2026. Nous généralisons des améliorations de configuration sans noms de services ni réglages internes. Pour plusieurs Workers dans un dépôt, associez chaque configuration Wrangler à sa racine source et à ses cibles de build et de déploiement. Des fichiers séparés ne prouvent pas l’isolation.
+
+Vérifiez variables, secrets et destinations D1, R2 et Service Binding en production et en test. Les bindings et variables des environnements Worker ne sont pas hérités automatiquement : déclarez-les par environnement. Une configuration obligatoire manquante doit arrêter le traitement plutôt que sélectionner silencieusement la production. Staging persistant et Previews de branches ou PR sont des flux distincts.
+
+Définissez une seule voie de publication en production avec des contrôles préalables. Les builds ou versions hors production servent à valider : leur succès ne les promeut pas en production. Pour les builds Git, vérifiez branche, commit, racine, configuration, environnement et commande de déploiement. Une publication Pages réussie ne prouve pas le déploiement d’un Worker distinct. Vérifiez séparément CI, build de production, versions et connexions actives, puis comportement du domaine. Ce sont des contrôles pour adapter le modèle, pas une preuve d’isolation de tous les services.
+
+Consultez les [environnements Worker](https://developers.cloudflare.com/workers/wrangler/environments/), les [Builds multi-Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) et la [configuration Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Distinguez la [configuration Pages Functions](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).
