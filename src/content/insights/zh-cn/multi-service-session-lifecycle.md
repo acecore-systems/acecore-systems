@@ -1,0 +1,38 @@
+---
+title: "统一多个服务的登录期限：会话更新与重新认证的边界"
+description: "区分主动登录、服务器期限、Cookie与认证平台设置，整理多个Web服务的登录期限设计和验证范围。"
+date: "2026-09-30T13:37:47+00:00"
+author: gui
+image: /images/insights/multi-service-session-lifecycle.webp
+tags: ["Authentication", "Session", "Web"]
+callout:
+  type: note
+  title: "内部案例的通用化说明"
+  text: "依据多个服务的规则变更与生产部署记录。省略具体期限和内部设置，不保证所有用户的长期行为或完整安全性。"
+---
+
+使用同一账户，不代表应用会话与认证平台的会话完全相同。本案例将内部的期限统一工作整理为通用设计，不公布部署对象或具体时长。
+
+## 先区分期限
+
+分别盘点认证平台会话、应用会话与浏览器Cookie。绝对期限、空闲期限和标识符轮换是不同控制；更换标识符不一定应延长有效期。
+
+## 区分主动登录与普通访问
+
+本案例在主动登录成功时更新适用期限，浏览、后台通信、自动更新令牌或轮换标识符均保留原期限，不作为续期原因。点击按钮或到达回调不等于认证成功，必须验证结果。需要重新认证时，还应确认复用认证平台已有的登录状态是否满足要求。
+
+## 服务器也必须检查期限
+
+延长Cookie保存时间不能决定服务器接受会话的时间。应一起检查服务器期限、失效状态、Cookie和平台限制。规则一致不代表共享Cookie，也不代表在一个服务退出后所有服务立即退出。
+
+验证认证源的认证时刻与失效时刻，将应用期限限制在其范围内。共用的是会话验证契约，业务权限仍由各应用判断。持有独立Cookie的访问网关也应作为单独的期限边界盘点和审计。
+
+## 配置检查与行为验证分开
+
+代码和配置审计应与登录、期限边界、过期后登录及退出测试区分。确认旧会话何时适用新规则，以及页面和API如何处理过期。日志记录判断和时间，不记录会话值或凭据。
+
+## 已确认范围与后续验证
+
+历史记录确认了规则变更、生产部署和配置差异审计机制。此次验证记录未包含真实用户登录或等到实际期限结束的测试，不能证明每个用户设备都经过真实时间边界测试，或所有失效与重新认证条件均安全。期限及额外验证应按数据和操作的重要性决定。
+
+一般检查可参考[OWASP会话管理](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)与[认证](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)。其他会话层的例子可参见[Cloudflare会话管理](https://developers.cloudflare.com/cloudflare-one/access-controls/access-settings/session-management/)。本文的检查建议不表示本案例全部已执行。
