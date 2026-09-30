@@ -4,7 +4,7 @@ description: "Eine Schritt-für-Schritt-Anleitung zur korrekten Implementierung 
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technologie", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -121,6 +121,12 @@ Setzen Sie `BlogPosting` für Blog-Artikel. Die Angabe von Autor, Veröffentlich
 ### BreadcrumbList
 
 Strukturierte Breadcrumb-Daten sollten auf allen Seiten gesetzt werden. Ein wichtiger Implementierungshinweis: Überprüfen Sie, ob Zwischenpfade (wie Listenseiten, z.B. `/blog/tags/`) tatsächlich existieren, und geben Sie die `item`-Eigenschaft für nicht existierende Pfade nicht aus.
+
+### Product / Offer
+
+Bei neuen Produktseiten trennen Sie den Artikel (`Product`) von Verkaufsbedingungen (`Offer`). Name, Bilder und Beschreibung müssen zur sichtbaren Seite passen, Preis, Währung, Kauf-URL und Verfügbarkeit zu den tatsächlichen Bedingungen. Erfinden Sie keine Preise und ergänzen Sie kein `Offer` bei kostenloser Bereitstellung ohne definierten Verkaufspreis. Bewertungen oder Bestand dürfen nicht erfunden werden.
+
+Dies ist eine zusätzliche Entwurfsüberlegung, kein Beleg für Umsetzung auf allen Seiten im März 2026. Prüfen Sie HTML und [Googles Anforderungen](https://developers.google.com/search/docs/appearance/structured-data/product-snippet). Markup garantiert weder Darstellung noch bessere Rangfolge.
 
 ### FAQPage
 

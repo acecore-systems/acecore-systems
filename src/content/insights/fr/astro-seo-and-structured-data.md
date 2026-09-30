@@ -4,7 +4,7 @@ description: "Synthèse des étapes d'implémentation correcte des données stru
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technologie", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -121,6 +121,12 @@ Configurez `BlogPosting` pour les articles de blog. L'inclusion de l'auteur, la 
 ### BreadcrumbList
 
 Les données structurées de fil d'Ariane sont configurées sur toutes les pages. Point d'attention lors de l'implémentation : vérifiez que les chemins intermédiaires (comme `/blog/tags/` pour les pages de liste) existent réellement, et ne générez pas la propriété `item` pour les chemins inexistants.
+
+### Product / Offer
+
+Pour ajouter des pages produit, séparez l’article (`Product`) des conditions de vente (`Offer`). Nom, images et description doivent correspondre à la page, et prix, devise, URL d’achat et disponibilité aux conditions réelles. N’inventez pas de prix ni d’`Offer` pour une distribution gratuite sans prix de vente défini. Ne fabriquez ni avis ni stock.
+
+C’est un complément de conception, pas une preuve de mise en œuvre sur toutes les pages en mars 2026. Inspectez le HTML et les [exigences de Google](https://developers.google.com/search/docs/appearance/structured-data/product-snippet). Le balisage ne garantit ni affichage ni meilleur classement.
 
 ### FAQPage
 

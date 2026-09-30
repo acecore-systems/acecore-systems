@@ -4,7 +4,7 @@ description: "A step-by-step guide to properly implementing JSON-LD structured d
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technology", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -121,6 +121,12 @@ Set `BlogPosting` for blog articles. Including author, publish date, update date
 ### BreadcrumbList
 
 Breadcrumb structured data should be set on all pages. An important implementation note: verify that intermediate paths (like listing pages such as `/blog/tags/`) actually exist, and don't output the `item` property for non-existent paths.
+
+### Product / Offer
+
+When adding product pages, model the item with `Product` and its sales terms with `Offer`. Match names, images and descriptions to the visible page, and prices, currency, purchase URLs and availability to actual terms. Do not invent prices or attach an `Offer` to a free distribution page without defined sales pricing. Never fabricate ratings or stock for search appearance.
+
+This is an additional design consideration, not a claim that every page implemented it in March 2026. Inspect generated HTML and validate against [Google’s product markup requirements](https://developers.google.com/search/docs/appearance/structured-data/product-snippet). Markup does not guarantee search display or improved rankings.
 
 ### FAQPage
 
