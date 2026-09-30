@@ -4,7 +4,7 @@ description: "Astro + Cloudflare Pages 構成のサイトに JSON-LD 構造化�
 date: 2026-03-25T11:00
 author: gui
 tags: ["技術", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -123,6 +123,12 @@ Astro のレイアウトコンポーネントで、ページごとに以下を�
 ### BreadcrumbList
 
 パンくずリストの構造化データは全ページに設定します。実装時の注意点として、中間パス（`/blog/tags/` のような一覧ページ）が実際に存在するかどうかを確認し、存在しないパスには `item` プロパティを出力しないようにしましょう。
+
+### Product / Offer
+
+商品ページを追加する場合は、商品そのものの `Product` と販売条件の `Offer` を分けて設計します。商品名・画像・説明は公開ページに一致させ、販売する商品は価格・通貨・購入先・在庫状態を実際の条件に揃えます。無料配布など販売価格を定義していないページに、推測した価格や `Offer` を付けません。検索表示のために架空の評価や在庫を作ることも避けます。
+
+この補足は商品ページの追加設計に関するもので、2026年3月の全ページへの実装実績を意味しません。生成HTMLを検査し、[Googleの商品構造化データの要件](https://developers.google.com/search/docs/appearance/structured-data/product-snippet)に沿って検証します。マークアップを追加しても、検索結果への表示や順位向上が保証されるわけではありません。
 
 ### FAQPage
 

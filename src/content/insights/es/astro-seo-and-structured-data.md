@@ -4,7 +4,7 @@ description: "Resumen de los pasos para implementar correctamente datos estructu
 date: 2026-03-25T11:00
 author: gui
 tags: ["Tecnología", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -121,6 +121,12 @@ Se configura `BlogPosting` para artículos de blog. Al incluir autor, fecha de p
 ### BreadcrumbList
 
 Los datos estructurados de breadcrumbs se configuran en todas las páginas. Un punto de atención en la implementación: verificar si las rutas intermedias (como `/blog/tags/`, una página de listado) realmente existen, y no generar la propiedad `item` para rutas que no existen.
+
+### Product / Offer
+
+Al añadir páginas de producto, separe el artículo (`Product`) de las condiciones de venta (`Offer`). Haga coincidir nombre, imágenes y descripción con la página visible, y precio, moneda, URL de compra y disponibilidad con condiciones reales. No invente precios ni añada `Offer` a una distribución gratuita sin precio de venta definido. No fabrique valoraciones o existencias.
+
+Es una consideración adicional, no prueba de implementación en todas las páginas en marzo de 2026. Revise el HTML generado y los [requisitos de Google](https://developers.google.com/search/docs/appearance/structured-data/product-snippet). El marcado no garantiza aparición ni mejora de posición.
 
 ### FAQPage
 

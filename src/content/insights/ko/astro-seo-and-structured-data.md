@@ -4,7 +4,7 @@ description: "Astro + Cloudflare Pages 사이트에서 JSON-LD 구조화 데이�
 date: 2026-03-25T11:00
 author: gui
 tags: ["기술", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -121,6 +121,12 @@ Astro 레이아웃 컴포넌트에서 각 페이지에 다음을 출력합니다
 ### BreadcrumbList
 
 브레드크럼 구조화 데이터는 모든 페이지에 설정해야 합니다. 중요한 구현 참고 사항: 중간 경로(`/blog/tags/` 같은 목록 페이지)가 실제로 존재하는지 확인하고, 존재하지 않는 경로에는 `item` 프로퍼티를 출력하지 마세요.
+
+### Product / Offer
+
+상품 페이지를 추가할 때 상품인 `Product`와 판매 조건인 `Offer`를 구분합니다. 이름·이미지·설명은 공개 페이지에 맞추고 가격·통화·구매 URL·재고는 실제 조건과 일치시킵니다. 판매 가격이 없는 무료 배포 페이지에 추측한 가격이나 `Offer`를 넣지 않으며 평가나 재고도 꾸며내지 않습니다.
+
+이 내용은 추가 설계 참고이며 2026년 3월 모든 페이지에서 구현했다는 실적이 아닙니다. 생성 HTML과 [Google 상품 마크업 요건](https://developers.google.com/search/docs/appearance/structured-data/product-snippet)을 확인합니다. 마크업만으로 검색 표시나 순위 상승이 보장되지 않습니다.
 
 ### FAQPage
 

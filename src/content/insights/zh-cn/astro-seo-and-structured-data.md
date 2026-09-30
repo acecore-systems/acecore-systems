@@ -4,7 +4,7 @@ description: "总结了在Astro + Cloudflare Pages构成的网站上正确实现
 date: 2026-03-25T11:00
 author: gui
 tags: ["技术", "Astro", "SEO"]
-lastUpdated: "2026-09-26T19:21:24+09:00"
+lastUpdated: "2026-09-30T21:30:00+09:00"
 image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
 callout:
   type: tip
@@ -121,6 +121,12 @@ faq:
 ### BreadcrumbList
 
 面包屑导航的结构化数据应在所有页面设置。实现时需注意，要确认中间路径（如 `/blog/tags/` 这样的列表页面）是否实际存在，对不存在的路径不输出 `item` 属性。
+
+### Product / Offer
+
+添加商品页时，用`Product`描述商品，用`Offer`描述销售条件。名称、图片、描述应与公开页面一致，价格、货币、购买链接和库存应符合实际。没有定义销售价格的免费分发页面，不应添加猜测的价格或`Offer`，也不能为搜索展示伪造评价或库存。
+
+这是商品页的补充设计建议，并非2026年3月所有页面都已实现的记录。检查生成HTML并遵循[Google商品标记要求](https://developers.google.com/search/docs/appearance/structured-data/product-snippet)。添加标记不保证搜索展示或排名提升。
 
 ### FAQPage
 
