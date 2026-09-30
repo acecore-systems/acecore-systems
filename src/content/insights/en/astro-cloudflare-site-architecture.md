@@ -2,7 +2,7 @@
 title: "Designing an Astro + Cloudflare Website That Can Grow Feature by Feature"
 description: "How we combined Astro and Cloudflare Pages with an AI contact chat, Sveltia CMS, multilingual blog publishing, service CTA handoff, safe Markdown rendering, and Cloudflare-only comments as one extensible website architecture."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Technology", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -256,3 +256,9 @@ Check variables, secrets and D1, R2 and Service Binding destinations for product
 Choose one production release path and require pre-release checks. Non-production builds or version uploads are for validation; success alone does not promote them to production. For Git builds, verify the branch, commit, root, selected configuration and environment, and deployment command. A successful Pages release does not establish that a separate Worker was deployed. Check CI, production builds, active versions and bindings, and custom-domain behavior separately. These are adaptation checks, not proof that every service has verified isolation.
 
 See Cloudflare's [Worker environments](https://developers.cloudflare.com/workers/wrangler/environments/), [multi-Worker Builds setups](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) and [build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Treat [Pages Functions configuration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/) separately.
+
+## Supplement: bound feed retries and isolate failures by source
+
+Added September 30, 2026. Ingesting public feeds such as RSS is a different operation from publishing RSS. Bound request time and retry attempts so that checking a transient failure does not keep a job running indefinitely.
+
+Handle sources independently. A failed fetch should not stop other inputs that can be updated separately. Do not report partial success as complete success: retain per-source outcomes and unresolved failures in the job report. Check retrieval, generated data, production builds and public pages separately. These are general design checks, not proof of every failure condition or future source integration.

@@ -2,7 +2,7 @@
 title: "Como projetar um site Astro + Cloudflare que cresce por funcionalidade"
 description: "Como combinamos Astro e Cloudflare Pages com chat de contato com IA, Sveltia CMS, blog multilíngue, CTA de serviços, renderização segura de Markdown e comentários sem serviço externo."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Cloudflare", "Site", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -197,3 +197,9 @@ Confira variáveis, segredos e destinos de D1, R2 e Service Binding em produçã
 Defina um único caminho de publicação em produção e exija verificações prévias. Builds ou versões não produtivos servem para validação; o sucesso não os promove à produção. Nos builds Git, confira branch, commit, raiz, configuração, ambiente e comando de deploy. Uma publicação Pages bem-sucedida não comprova o deploy de outro Worker. Verifique CI, build de produção, versões e conexões ativas e comportamento no domínio separadamente. São verificações para adaptar o projeto, não prova de isolamento de todos os serviços.
 
 Veja [ambientes Worker](https://developers.cloudflare.com/workers/wrangler/environments/), [Builds com vários Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) e [configuração de Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Distinga a [configuração de Pages Functions](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).
+
+## Complemento: limitar novas tentativas e isolar falhas por fonte
+
+Adicionado em 30 de setembro de 2026. Importar feeds públicos como RSS é uma operação diferente de publicar RSS. Limite a espera e as tentativas para que uma falha temporária não mantenha o trabalho ativo indefinidamente.
+
+Trate as fontes separadamente. Uma falha não deve interromper entradas que possam ser atualizadas de forma independente. Não apresente sucesso parcial como total: mantenha resultados por fonte e falhas pendentes no relatório. Confira obtenção, dados gerados, builds de produção e páginas públicas separadamente. São verificações gerais, não prova de todas as condições de falha ou de futuras integrações.

@@ -2,7 +2,7 @@
 title: "Eine Astro + Cloudflare Website Schritt für Schritt erweitern"
 description: "Wie wir Astro und Cloudflare Pages mit AI-Kontaktchat, Sveltia CMS, mehrsprachigem Blog, Service-CTA, sicherem Markdown-Rendering und Kommentaren ohne externen Dienst kombiniert haben."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -195,3 +195,9 @@ Prüfen Sie Variablen, Secrets sowie D1-, R2- und Service-Binding-Ziele für Pro
 Legen Sie einen Produktionspfad mit vorgeschalteten Prüfungen fest. Builds oder Versions-Uploads außerhalb der Produktion dienen der Validierung; ihr Erfolg allein stellt keine Produktionsfreigabe dar. Prüfen Sie bei Git-Builds Branch, Commit, Quellverzeichnis, gewählte Konfiguration, Umgebung und Deployment-Befehl. Eine erfolgreiche Pages-Veröffentlichung beweist kein separates Worker-Deployment. Prüfen Sie CI, Produktions-Build, aktive Versionen und Bindings sowie das Domain-Verhalten getrennt. Diese Anpassungsprüfungen belegen nicht die Isolation aller Dienste.
 
 Siehe [Worker-Umgebungen](https://developers.cloudflare.com/workers/wrangler/environments/), [Builds für mehrere Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) und [Build-Konfiguration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Unterscheiden Sie die [Pages-Functions-Konfiguration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).
+
+## Ergänzung: Feed-Wiederholungen begrenzen und Fehler je Quelle isolieren
+
+Ergänzt am 30. September 2026. Öffentliche Feeds wie RSS einzulesen unterscheidet sich von der RSS-Ausgabe. Begrenzen Sie Wartezeit und Wiederholungen, damit vorübergehende Fehler einen Job nicht unbegrenzt laufen lassen.
+
+Behandeln Sie Quellen getrennt. Ein fehlgeschlagener Abruf sollte unabhängig aktualisierbare Eingaben nicht stoppen. Melden Sie Teilerfolg nicht als Gesamterfolg: halten Sie Ergebnisse je Quelle und verbleibende Fehler im Bericht fest. Prüfen Sie Abruf, erzeugte Daten, Produktions-Builds und öffentliche Seiten getrennt. Dies sind allgemeine Prüfungen, kein Nachweis aller Fehlerfälle oder künftiger Integrationen.

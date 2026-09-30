@@ -2,7 +2,7 @@
 title: "Astro网站无障碍改进实践指南"
 description: "记录2026年3月Astro + UnoCSS网站的无障碍改进，包括ARIA、对比度、焦点、表单和屏幕阅读器示例。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-26T17:40:00+09:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["技术", "Astro", "无障碍"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -232,3 +232,9 @@ shortcuts: {
 ## 本文所属系列
 
 本文是"[Astro网站品质改善指南](/blog/website-improvement-batches/)"系列的一部分。也有关于性能、SEO和UX改善的独立文章。
+
+## 补充：迁移到 Tailwind CSS v4 时也要验证操作体验
+
+2026年9月30日补充。 迁移到 Tailwind CSS v4 后，应在生产页面再次确认原有 CSS reset 与 Preflight 的关系、CMS 图标、可见焦点和减少动态效果。是否关闭 Preflight 应结合现有样式决定，而非推荐给所有网站。
+
+[Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)

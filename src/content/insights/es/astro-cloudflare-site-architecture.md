@@ -2,7 +2,7 @@
 title: "Diseñar un sitio Astro + Cloudflare que crece función por función"
 description: "Cómo combinamos Astro y Cloudflare Pages con chat de contacto con IA, Sveltia CMS, blog multilingüe, CTA de servicios, renderizado seguro de Markdown y comentarios sin servicios externos."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["Tecnología", "Astro", "Cloudflare", "Sitio web", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -199,3 +199,9 @@ Revise variables, secretos y destinos D1, R2 y Service Binding en producción y 
 Defina una sola vía de publicación en producción y exija controles previos. Los builds o versiones no productivos son para verificar: su éxito no los promueve a producción. En compilaciones Git, verifique rama, commit, raíz, configuración, entorno y comando de despliegue. Publicar Pages no demuestra que otro Worker esté desplegado. Compruebe CI, compilación de producción, versiones y conexiones activas, y comportamiento del dominio por separado. Son comprobaciones para adaptar el diseño, no una prueba de aislamiento de todos los servicios.
 
 Consulte [entornos Worker](https://developers.cloudflare.com/workers/wrangler/environments/), [Builds con varios Workers](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) y [configuración de Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/). Distinga la [configuración de Pages Functions](https://developers.cloudflare.com/pages/functions/wrangler-configuration/).
+
+## Ampliación: limitar reintentos y aislar fallos por fuente
+
+Añadido el 30 de septiembre de 2026. Importar feeds públicos como RSS es una operación distinta de publicar RSS. Limite el tiempo de espera y los intentos para evitar que un fallo temporal mantenga el trabajo activo indefinidamente.
+
+Trate las fuentes por separado. Un fallo no debe detener otras entradas que puedan actualizarse independientemente. No presente un éxito parcial como total: conserve los resultados por fuente y los fallos pendientes en el informe. Compruebe obtención, datos generados, builds de producción y páginas públicas por separado. Son controles generales, no prueba de todas las condiciones de fallo ni de futuras integraciones.

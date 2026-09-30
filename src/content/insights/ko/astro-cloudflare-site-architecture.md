@@ -2,7 +2,7 @@
 title: "Astro + Cloudflare 사이트를 기능별로 확장하는 전체 설계"
 description: "Astro와 Cloudflare Pages를 기반으로 문의 AI, Sveltia CMS, 다국어 블로그, 서비스 CTA, 안전한 Markdown 렌더링, Cloudflare만으로 만든 댓글 기능을 하나의 구조로 정리합니다."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:17:51+00:00"
+lastUpdated: "2026-09-30T14:39:56+00:00"
 author: gui
 tags: ["기술", "Astro", "Cloudflare", "웹사이트", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -195,3 +195,9 @@ Astro + Cloudflare는 정적 배포의 장점을 유지하면서도 공식 사�
 운영 반영 경로를 하나로 정하고 사전 검증을 요구합니다. 비운영 빌드나 버전 업로드는 확인용이며 성공만으로 운영에 승격된 것으로 보지 않습니다. Git 빌드는 브랜치, commit, 루트, 선택한 설정·환경, 배포 명령을 확인합니다. Pages 공개 성공이 별도 Worker 배포를 뜻하지는 않습니다. CI, 운영 빌드, 실제 버전·연결 대상, 도메인 동작을 각각 확인합니다. 이는 다른 환경에 적용할 때의 점검 항목이며 모든 서비스의 격리를 입증했다는 뜻이 아닙니다.
 
 Cloudflare의 [Worker 환경](https://developers.cloudflare.com/workers/wrangler/environments/), [다중 Worker Builds](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/), [빌드 설정](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)을 참고하세요. [Pages Functions 설정](https://developers.cloudflare.com/pages/functions/wrangler-configuration/)은 따로 구분합니다.
+
+## 보충: 외부 피드 재시도와 장애를 입력원별로 분리
+
+2026년 9월 30일 추가. RSS 등 공개 피드를 가져오는 작업은 RSS를 내보내는 작업과 별개입니다. 대기 시간과 재시도 횟수를 제한해 일시적 실패로 작업이 무한히 이어지지 않게 합니다.
+
+입력원별 실패를 따로 다룹니다. 하나의 가져오기가 실패해도 독립적으로 갱신할 수 있는 다른 입력까지 중단하지 않습니다. 일부 성공을 전체 성공으로 보고하지 말고 입력원별 결과와 남은 실패를 보고서에 남깁니다. 가져오기, 생성 데이터, 운영 빌드, 공개 페이지도 따로 확인합니다. 일반적인 설계 점검이며 모든 장애 조건이나 향후 입력원 적용을 입증한 것은 아닙니다.
