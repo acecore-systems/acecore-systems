@@ -1,44 +1,51 @@
 ---
-title: "Importar dados do perfil como rascunho: revisão, substituição e limites da publicação"
-description: "Uma implementação generalizada para importar dados de perfil de texto, CSV e HTML estático. Explica como comparar valores atuais, selecionar e substituir campos, separar o salvamento da publicação e identificar entradas não compatíveis."
+title: "Importar dados do perfil como rascunho: comparar, escolher e publicar com cuidado"
+description: "Uma implementação geral para importar perfis de texto, CSV, HTML estático e JSON comum. Saiba como comparar valores atuais, escolher campos para substituir ou desfazer alterações e manter o salvamento separado da publicação."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T02:20:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries.webp
+image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
-  title: "Escopo da implementação da etapa 1"
-  text: "A implementação, a integração e o deploy em produção da importação de texto, CSV e HTML estático foram confirmados. A aceitação completa em uma conta real, da importação ao salvamento e à publicação, continua pendente; a busca direta por URL e a migração de imagens ou áudio não fazem parte desta entrega."
+  title: "Implementação confirmada; falta a aceitação em uma conta real"
+  text: "A importação de texto, CSV, HTML estático e JSON comum foi implementada, integrada e publicada em produção. A aceitação completa, da importação ao salvamento e à publicação em uma conta real, continua pendente. A obtenção automática por URLs específicas de serviços e a migração de imagens ou áudio ficam fora do escopo concluído."
 ---
 
-Ao transferir um perfil existente para outro editor, compare primeiro o valor atual com o candidato importado e decida o que será substituído. Este relato generalizado de uma implementação da etapa 1 explica os limites entre importar e publicar.
+Ao transferir um perfil existente para outro editor, compare os valores atuais com os dados candidatos da importação antes de substituir qualquer coisa. Este exemplo anonimizado explica os limites entre importar dados e publicar um perfil.
 
-## Defina primeiro os formatos de entrada aceitos
+## Defina primeiro os formatos de entrada compatíveis
 
-Nesta etapa, são aceitos texto, CSV e HTML estático. Analisar conteúdo colado ou um arquivo é diferente de acessar uma URL para buscar o conteúdo. JSON, imagens, áudio, páginas dinâmicas e APIs de serviços externos não fazem parte da implementação concluída.
+Além das opções iniciais de texto, CSV e HTML estático, o fluxo agora lê um arquivo JSON comum e oferece um modelo para download. Analisar conteúdo colado ou um arquivo é diferente de visitar uma URL para buscar os dados. Formatos de exportação específicos de cada serviço, busca automática por URL, migração de imagens ou áudio, páginas dinâmicas e APIs de serviços externos não foram concluídos.
 
-Trate o HTML apenas como dado de entrada: não execute scripts nem renderize o próprio HTML importado na página pública. Defina limites para o tamanho do texto, campos, links e formatos de entrada; em seguida, transforme a origem em candidatos de texto necessários ao perfil.
+Trate o HTML apenas como dados de entrada. Não execute scripts nem renderize o próprio HTML importado na página pública. Limite o tamanho do texto, os campos, os links e os formatos de entrada; depois transforme a origem em candidatos de texto adequados ao perfil.
 
-## Separe a revisão dos candidatos da edição do perfil
+## Revise os candidatos antes de substituir valores existentes
 
-Não publique os resultados analisados imediatamente; compare primeiro os valores atuais com os candidatos. A pessoa proprietária seleciona os campos individualmente e pode editar os valores candidatos antes de aplicá-los ao editor. Cada campo selecionado substitui o valor atual, portanto confira as diferenças em toda importação. É possível desfazer antes de salvar, mas isso não significa que a proteção automática de edições manuais ou a mesclagem de conflitos esteja concluída.
+Não publique os resultados da análise imediatamente; compare-os primeiro com os valores atuais. A pessoa proprietária escolhe os campos individualmente e pode editar os valores candidatos antes de aplicá-los ao editor. Aplicar um campo escolhido substitui seu valor atual, então revise as diferenças a cada importação. Também é possível desfazer a alteração. Esses controles não garantem a resolução automática de conflitos com edições feitas em outra tela ou por outra pessoa.
 
-## Não deduza qualificações ou direitos do texto importado
+## Separe o JSON comum do suporte específico a cada serviço
 
-Expressões em uma biografia ou página externa não comprovam automaticamente uma qualificação, afiliação, categoria ou licença. Mantenha o texto descritivo que pode ser importado como candidato separado das informações que exigem verificação de identidade ou uma solicitação. Novas informações em outros sites não atualizam nem publicam automaticamente o perfil confirmado pela pessoa proprietária.
+A interface mostra o estado de suporte de 7 serviços de atividade. Conseguir ler dados no formato comum não significa que o fluxo possa buscar um perfil diretamente na URL de cada serviço. Para URLs não compatíveis, ele orienta a importação por meio de conteúdo colado. Exibir o estado dos 7 serviços não significa que exportações próprias ou integrações por API tenham sido implementadas para todos.
 
-## Mantenha salvar e publicar como decisões separadas
+Com dados sintéticos, foram verificados a importação JSON, a comparação com valores existentes, a aplicação de campos selecionados, a reversão e o layout móvel. A aceitação do fluxo completo, da importação ao salvamento e à publicação em uma conta real, ainda precisa ser feita separadamente.
 
-Aplicar candidatos importados, salvar o rascunho e atualizar a versão pública são ações distintas. Os testes de aceitação ainda precisam cobrir conflitos ao salvar; o sucesso do salvamento não significa que o perfil foi publicado. Revise os links, inclusive URLs de calendários públicos, antes de publicar seus valores e não misture notas privadas com os dados públicos.
+## Não deduza qualificações ou direitos a partir do texto importado
 
-## Atualização relacionada: abrir links HTTPS em eventos públicos
+As palavras de uma biografia ou página externa não comprovam, por si só, uma qualificação, vínculo, categoria ou licença. Separe textos descritivos que podem entrar como candidatos das informações que exigem verificação de identidade ou solicitação. Se os dados externos mudarem, o perfil confirmado pelo proprietário não será atualizado nem publicado automaticamente.
 
-Uma melhoria de edição independente da importação permite adicionar links HTTPS aos eventos do calendário público. O evento abre diretamente o destino em outra aba; eventos sem URL aparecem sem um link acionável. Valide o formato, a ausência de credenciais embutidas e o tamanho da URL. Use `noopener noreferrer` e indique a abertura de outra aba no nome acessível.
+## Mantenha o salvamento e a publicação como decisões distintas
 
-Os formulários relacionados também removem um título desnecessário nos horários disponíveis para colaboração e os campos de notas particulares. Foram verificados banco de dados, CI, publicação em produção e telas com dados de verificação; o proprietário entrar, salvar um evento real e publicá-lo ainda não foi validado.
+Aplicar candidatos importados, salvar um rascunho e atualizar a versão pública são ações diferentes. A aceitação também deve cobrir conflitos de salvamento; salvar com sucesso não significa que o perfil foi publicado. Antes de tornar links públicos, incluindo URLs do calendário público, peça ao proprietário que revise os valores; mantenha notas privadas fora dos dados públicos.
 
-## O que foi verificado e o que falta aceitar
+## Atualização relacionada: abrir links HTTPS de eventos do calendário público
 
-A implementação, a integração e o deploy em produção do fluxo de importação da etapa 1 foram confirmados. No entanto, ainda não foi concluído um teste integral com uma pessoa usuária real, desde a importação e edição até o salvamento e a conferência da exibição publicada. A ideia mais ampla de criar automaticamente um perfil completo a partir da URL de uma plataforma de atividade também não está concluída.
+Uma melhoria de edição, independente da importação de perfis, adiciona links HTTPS a eventos do calendário público. O evento abre o destino diretamente em uma nova aba; eventos sem URL continuam visíveis, mas sem um link acionável. Valide o formato da URL, rejeite credenciais embutidas e limite o tamanho da entrada. Inclua **noopener noreferrer** e informe no nome acessível que uma nova aba será aberta.
 
-Para os limites do CSS publicado, consulte [CSS de usuário seguro e temas públicos com versões fixas](/insights/user-css-versioned-theme-safety/). Para os limites de login, consulte [Ciclos de sessão entre serviços](/insights/multi-service-session-lifecycle/).
+Os formulários relacionados também removem o campo de título desnecessário dos horários de disponibilidade para colaboração e os campos de notas privadas. Foram verificados as alterações no banco de dados, o CI, a publicação em produção e as telas com dados de verificação. Ainda não foi confirmada a aceitação com o proprietário entrando na conta, salvando um evento real e publicando-o.
+
+## O que foi confirmado e qual aceitação falta
+
+A implementação, integração e publicação em produção da importação por texto, CSV, HTML estático e JSON comum foram confirmadas. No entanto, ainda não foi concluído um teste completo com uma pessoa real, desde a importação e edição até o salvamento e a conferência do resultado publicado. A ideia mais ampla de criar automaticamente um perfil completo a partir da URL de um serviço de atividade também não está concluída.
+
+Para conhecer os limites do CSS publicado, consulte [CSS de usuário seguro e temas públicos versionados](/insights/user-css-versioned-theme-safety/). Para os limites de login, consulte [Ciclo de vida de sessões entre serviços](/insights/multi-service-session-lifecycle/).

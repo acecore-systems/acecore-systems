@@ -28,6 +28,7 @@ export const insightSlugs = Object.freeze([
   "openclaw-monitoring-investigation",
   "private-dashboard-access-and-aggregation",
   "profile-import-draft-boundaries",
+  "public-image-cache-and-api-rate-limits",
   "restic-r2-backup-verification",
   "service-cta-contact-prefill",
   "tax-return-with-copilot",
