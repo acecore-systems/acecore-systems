@@ -2,7 +2,7 @@
 title: "Fallstricke und Lösungen für Astro View Transitions — Ein Leitfaden zur Verbesserung von UX und Code-Qualität"
 description: "Ein praktischer Leitfaden mit Lösungen für Skriptprobleme bei Astro View Transitions, Einführung der Pagefind-Volltextsuche, Verbesserung der TypeScript-Typsicherheit, Zentralisierung von Konstanten und mehr zur Verbesserung von UX und Code-Qualität."
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Website"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ Auf der Seite der Code-Qualität tragen TypeScript-Typsicherheit und zentralisie
 ## Zugehörige Serie
 
 Dieser Artikel ist Teil der Serie „[Leitfaden zur Qualitätsverbesserung von Astro-Websites](/blog/website-improvement-batches/)". Separate Artikel behandeln Verbesserungen in den Bereichen Performance, SEO und Barrierefreiheit.
+
+## Ergänzung vom 6. Oktober 2026: Anzeige und Aktionsstatus im Editor
+
+In einer anonymisierten Editor-Änderung wurden der Kategorienwechsel auf schmalen Bildschirmen, die fixierte Navigation, Tastaturhinweise, Feldbeschriftungen und der Fokus angepasst. Der öffentliche oder private Status richtet sich außerdem nach dem API-Status und dem öffentlichen Snapshot, nicht nach dem Aussehen der Schaltfläche.
+
+Fehlt der Authentifizierungskontext oder der Vertrag zwischen Frontend und Backend, meldet die Oberfläche keinen erfolgreichen Speichervorgang, sondern weist auf erneutes Laden oder Anmelden hin. Eine gut gestaltete leere Importansicht belegt nicht die Abnahme eines vollständigen Ablaufs mit echten Daten von Import über Speichern bis zur Veröffentlichung. Der Eingabeumfang wird unter [Profilimport](/insights/profile-import-draft-boundaries/) beschrieben, die Grenzen für öffentliches CSS unter [Sichere Themengestaltung](/insights/user-css-versioned-theme-safety/).
+
+Bei einer Neuordnung von Bezeichnungen oder Kategorien müssen bestehende Werte, API, Filter und Datenbankänderungen zusammenpassen. Wenn keine Altdaten vorliegen, darf keine Migration echter Inhalte behauptet werden. Führt ein Status-Badge zu einer Detailansicht, muss das sowohl per Klick als auch mit Enter erreichbar sein. Bei der Inline-Bearbeitung einer öffentlichen URL-Kennung bleiben Prüfungen auf Format, Duplikate und URL-Aktualisierung erhalten. Öffentliche Darstellung, Medienwiedergabe und die Login-Aufforderung für anonyme Personen wurden getrennt von der Abnahme geprüft, die eine Kennung im angemeldeten Editor speichert oder den Veröffentlichungsstatus ändert.
+
+Wird der Bearbeitungsbereich nach neuen Aufgaben der Nutzenden umgestaltet, sind dauerhafte Navigation und Arbeitsbereich zu trennen; bloßes Umbenennen bei unveränderten alten Aktionen reicht nicht. Zusatzwerte wie ein Kontostand dürfen gegenüber Hauptaktionen visuell zurücktreten, müssen aber mit lesbarer Schriftgröße und ausreichendem Kontrast erkennbar bleiben.

@@ -2,7 +2,7 @@
 title: "Astro View Transitions的坑与解决方案 ― UX与代码质量改善指南"
 description: "介绍Astro View Transitions中脚本失效问题的解决方案、Pagefind全文搜索的引入、TypeScript类型安全性的提升、常量统一管理等改善UX和代码质量的实践指南。"
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技术", "Astro", "网站"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ html {
 ## 本文所属系列
 
 本文是"[Astro网站品质改善指南](/blog/website-improvement-batches/)"系列的一部分。也有关于性能、SEO和无障碍性改善的独立文章。
+
+## 2026年10月6日补充：Editor的显示与操作状态
+
+匿名化的Editor改进调整了窄屏分类导航、固定导航、键盘提示、字段标签与focus。公开或私有状态应依据API状态与公开snapshot，不根据按钮外观推断。
+
+认证延续信息或frontend/backend契约缺失时，不显示保存成功，而应说明重新加载或重新认证的必要性。空白导入界面的完善不能证明真实数据的导入、保存、公开流程通过。输入实现范围见[资料导入](/insights/profile-import-draft-boundaries/)，公开CSS见[主题安全设计](/insights/user-css-versioned-theme-safety/)。
+
+调整名称或分类时，要对齐既有值、API、filter与数据库修改。旧数据为0条不代表已迁移实际内容。状态徽章若是详情链接，点击和Enter都应可用。公开URL标识符的行内编辑仍需验证格式、重复及URL更新。公开显示、媒体播放、匿名用户登录跳转的检查，与已登录Editor的标识符保存和公开状态修改分别验证。
+
+按用户新的工作单元重组原编辑区域时，分开持久导航与工作区，避免仅改名称却留下旧操作。余额等辅助数字可弱于主要操作，但须保持可读字号和contrast。

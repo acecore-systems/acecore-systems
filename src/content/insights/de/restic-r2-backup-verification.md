@@ -2,6 +2,7 @@
 title: "restic-Backups auf R2 überwachen: von Speicherung zu geprüfter Wiederherstellung"
 description: "Snapshot-Aktualität, Integrität und Wiederherstellung getrennt prüfen und noch ungeprüfte Anwendungswiederherstellung benennen."
 date: "2026-09-30T20:53:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/restic-r2-backup-verification.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -32,3 +33,11 @@ Wählen Sie Snapshots per Aufbewahrungsrichtlinie und verwenden Sie `forget`, `p
 ## Offene Wiederherstellungsprüfungen
 
 Regelbetrieb, Monitoring/Meldungen, Aufbewahrung und Extraktion/Integrität ausgewählter Daten wurden durchgeführt. Start aller Anwendungen, Konfigurationen und Abhängigkeiten sowie Zugriff auf getrennte Zugangsdaten brauchen noch Ende-zu-Ende-Prüfung. Wiederherstellungszeit und akzeptabler Datenverlust müssen gemessen werden. Vollständige Notfallwiederherstellung oder belegte Einsparungen werden nicht behauptet.
+
+## Ergänzung vom 6. Oktober 2026: Veraltete Sperren und Parallelität bei Wiederherstellungstests
+
+Eine zusätzliche Änderung prüft die Prozessaktivität auf demselben Host, bevor die normale Entsperrung von restic ausgeführt wird, die nur veraltete Sperren behandelt. Die Option, sämtliche Sperren einschließlich derer aktiver Vorgänge zu entfernen, wird nicht verwendet. Bei Konflikten gibt es begrenzte Wiederholungen mit <code>--retry-lock</code>; Wiederherstellungstests und prune starten den Prozess bei Fehlern nicht unbegrenzt neu. Eine Prüfung der Aktivität auf einem Host beweist nicht, dass kein paralleler Vorgang von einem anderen Host aus läuft.
+
+Die Daten werden mit <code>restore --verify</code> in ein isoliertes temporäres Verzeichnis extrahiert. Nach der Prüfung der benötigten Dateien und ihrer Integrität wird die Zuordnung zwischen dem geprüften Snapshot und der Konfiguration dokumentiert. Zuerst wird die Wiederherstellung der Zieldaten bestätigt, danach wird vor prune geprüft, was aufbewahrt werden muss. Die Aktualität des Backups wird anhand eines tatsächlich erfolgreich erstellten Snapshots bewertet, nicht anhand des Prozessstarts oder seiner Wiederholungen.
+
+Die bestätigte Wiederherstellung der Zieldaten ist weiterhin von einer vollständigen Wiederherstellung einschließlich des Starts aller Anwendungen und der Wiederherstellung ihrer Zugangsdaten zu unterscheiden. Zum Umgang mit Wartungsfenstern und Erfassungsfehlern siehe auch [Überwachung und Vorfallanalyse](/insights/openclaw-monitoring-investigation/).

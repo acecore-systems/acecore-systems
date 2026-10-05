@@ -2,6 +2,7 @@
 title: "여러 서비스의 로그인 만료를 맞추기: 세션 갱신과 재인증의 경계"
 description: "명시적 로그인, 서버 만료, 쿠키, 인증 제공자 설정을 구분하는 로그인 기간 설계와 확인 범위."
 date: "2026-09-30T13:37:47+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/multi-service-session-lifecycle.webp
 tags: ["Authentication", "Session", "Web"]
@@ -36,3 +37,13 @@ callout:
 기록에서 정책 변경, 운영 배포, 설정 차이를 감사하는 도구를 확인했습니다. 실제 사용자 로그인이나 실제 만료까지 기다린 시험은 이번 검증 기록에 없습니다. 모든 사용자 기기에서 실제 시간이 지난 뒤의 동작이나 모든 무효화·재인증 조건의 안전성을 입증한 것은 아닙니다. 기간과 추가 확인은 데이터와 작업의 중요도에 맞춰 정합니다.
 
 일반적인 검토에는 [OWASP 세션 관리](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)와 [인증](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)을 참고합니다. 별도 계층의 예는 [Cloudflare 세션 관리](https://developers.cloudflare.com/cloudflare-one/access-controls/access-settings/session-management/)도 참고할 수 있습니다. 위 권고가 이 사례에서 모두 실행되었다는 뜻은 아닙니다.
+
+## 2026년 10월 6일 추가: 인증 흐름의 계속과 앱 권한
+
+익명화한 인증 개선 기록에서는 OIDC callback 도착, token 검증, 원래 인증 요청의 계속, 앱 사용 권한을 구분했습니다. 계속하는 데 필요한 context가 없으면 로그인 성공으로 바꾸지 않고 안전하게 다시 시작할 수 있는 명시적 오류로 처리합니다. 복귀 대상도 검증하며, 공통 계정 로그인만으로 모든 앱의 업무 권한을 부여하지 않습니다.
+
+로그인과 등록, 인증 provider 추가·삭제, 복구 경로에서도 같은 계약을 확인합니다. 변경·배포 기록은 모든 provider와 사용자의 실제 로그인 수용 검사나 마지막 복구 수단 유지에 대한 전체 검증과 다릅니다.
+
+추가 인증 요소, ID 제공자 로그인, 접근 게이트, 보호된 앱 쓰기도 각각 확인합니다. 제한된 쓰기 canary의 성공은 정식 OIDC 전체 경로나 정지 계정 거부 검사를 대신하지 않습니다. 등록·초기 설정·변경 화면·API에서 공통 입력 규칙을 참조하고 경계값의 거부와 허용을 같은 시험으로 확인합니다. 특정 글자 수를 일반 표준으로 제시하지 않습니다.
+
+로그인과 등록의 화면 및 callback 안내도 나눕니다. 표시나 health 확인만으로 실제 외부 계정 생성·동의 완료를 입증하지 않습니다. provider를 제거할 때 버튼·callback·설정·안내·시험을 함께 점검하고 남은 경로를 확인합니다.

@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize 구현 가이드: 공개 HTML을 안전하게 동기화하는 방법"
 description: "공개 HTML에서 corpus를 만들고 Pagefind를 유지하면서 Vectorize 동기화를 안전하게 운영하는 상세 가이드입니다."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "Workers AI", "사이트 검색"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -473,3 +473,11 @@ Cloudflare Vectorize 도입에서 어려운 부분은 nearest-neighbor query 자
 - “구현”, “로컬 검증”, “Preview UI 확인”, “Production”을 서로 다른 상태로 기록
 
 이 경계를 먼저 만들어 두면 Vectorize를 일회성 AI 기능이 아니라 지속적으로 갱신할 수 있는 검색 기반으로 운영하기 쉬워집니다.
+
+## 2026년 10월 6일 추가: 검색 0건과 비정상 응답 구분
+
+검색 일치 없음은 수집 실패·비2xx·잘못된 응답 형식과 다릅니다. 익명화한 답변 개선은 비정상 응답이나 실패를 참고 확인 완료로 바꾸어 공개 답변을 생성하지 않도록 했습니다. 검색 UI의 정적 Pagefind fallback과 참고에 근거한 외부 답변 전송 판정도 나눕니다.
+
+정상적인 0건도 근거 있는 답변이 만들어졌음을 뜻하지 않습니다. 생성 내용·전송 전 검사·운영 승인은 별도 경계입니다. 대화 상태와 실행 가능한 약속은[AI 답변 보호](/insights/ai-reply-capability-guardrails/)에서 다룹니다.
+
+이 수집 실패 중단 조건은 수정 코드와 PR 검토에서 확인했습니다. 해당 경로의 운영 배포·실제 답변 적용은 기록에서 확인되지 않아 가동 중인 기능으로 소개하지 않습니다.

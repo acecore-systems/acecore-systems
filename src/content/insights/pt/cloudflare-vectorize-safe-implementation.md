@@ -2,7 +2,7 @@
 title: "Guia de implementação do Cloudflare Vectorize: sincronize HTML público com segurança"
 description: "Um guia detalhado para criar o corpus a partir do HTML público, manter o Pagefind disponível e operar a sincronização do Vectorize com segurança."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags:
   ["Tecnologia", "Cloudflare", "Vectorize", "Workers AI", "Pesquisa interna"]
@@ -474,3 +474,11 @@ Nossa conclusão é simples.
 - Registrar “implementação”, “validação local”, “verificação da interface em Preview” e “Production” como estados diferentes
 
 Com essas fronteiras definidas desde o início, fica mais fácil operar o Vectorize não como uma função isolada de AI, mas como uma base de pesquisa que pode ser atualizada continuamente.
+
+## Atualização de 6 de outubro de 2026: diferenciar zero resultados de uma resposta inválida
+
+Uma busca sem correspondências é diferente de uma falha na consulta, de uma resposta HTTP que não seja 2xx ou de um formato de resposta inválido. Em uma alteração anonimizada do fluxo de respostas, falhas de consulta e respostas inválidas deixaram de ser tratadas como uma busca confirmada para então gerar uma resposta pública. O fallback da interface de busca para o Pagefind estático também é separado da decisão de enviar externamente uma resposta baseada em fontes.
+
+Mesmo uma busca normal com zero resultados não garante que exista uma resposta fundamentada em evidências. A geração do conteúdo, a verificação antes do envio e a aprovação operacional são limites distintos. A relação entre o estado da conversa e as promessas que podem ser cumpridas é descrita em [Salvaguardas para respostas de IA](/insights/ai-reply-capability-guardrails/).
+
+Essa condição de parada em caso de falha na consulta foi confirmada no código corrigido e na revisão do PR. Os registros não permitem confirmar a implantação em produção desse caminho nem sua aplicação a respostas reais; ele não é apresentado como funcionalidade em operação.

@@ -2,7 +2,7 @@
 title: "Pièges et solutions d'Astro View Transitions — Guide d'amélioration UX et qualité du code"
 description: "Solutions aux problèmes de scripts cassés avec les View Transitions d'Astro, introduction de la recherche plein texte Pagefind, amélioration de la sécurité des types TypeScript, gestion centralisée des constantes — un guide pratique pour améliorer l'UX et la qualité du code."
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Site web"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ Côté qualité du code, la sécurité des types TypeScript et la gestion centra
 ## Série d'articles associée
 
 Cet article fait partie de la série « [Guide d'amélioration de la qualité d'un site Astro](/blog/website-improvement-batches/) ». Les améliorations de performance, SEO et accessibilité sont présentées dans des articles dédiés.
+
+## Ajout du 6 octobre 2026 : affichage et état des actions dans l’éditeur
+
+Dans une modification anonymisée de l’éditeur, la navigation entre catégories sur petit écran, la navigation fixe, les indications au clavier, les libellés des champs et le focus ont été ajustés. L’état public ou privé suit également l’état de l’API et l’instantané public au lieu d’être déduit de l’apparence du bouton.
+
+Si le contexte d’authentification ou le contrat entre le frontend et le backend manque, l’interface n’annonce pas que l’enregistrement a réussi ; elle indique qu’il faut recharger la page ou se réauthentifier. Une interface d’import vide et soignée ne prouve pas la recette complète de l’import de données réelles, de leur enregistrement et de leur publication. Le périmètre d’entrée est décrit dans [Import de profil](/insights/profile-import-draft-boundaries/) et les limites du CSS public dans [Conception sûre des thèmes](/insights/user-css-versioned-theme-safety/).
+
+Lorsqu’on réorganise les noms ou les catégories, il faut aligner les valeurs existantes, l’API, les filtres et les modifications de la base de données. S’il n’existe aucune ancienne donnée, il ne faut pas prétendre qu’un contenu réel a été migré. Si un badge d’état mène à une vue détaillée, cette action doit fonctionner au clic comme avec la touche Entrée. Pour la modification en ligne d’un identifiant d’URL publique, conservez aussi les vérifications du format, des doublons et de la mise à jour de l’URL. L’affichage public, la lecture des médias et l’invitation à se connecter en mode anonyme ont été vérifiés séparément de la recette de l’enregistrement de l’identifiant ou du changement d’état public dans l’éditeur connecté.
+
+Lorsqu’on réorganise l’espace d’édition selon les nouvelles tâches de la personne, on distingue la navigation persistante de l’espace de travail ; renommer les commandes sans retirer les anciennes ne suffit pas. Les valeurs auxiliaires, comme un solde, peuvent être moins visibles que les actions principales, mais leur taille de texte et leur contraste doivent rester lisibles.

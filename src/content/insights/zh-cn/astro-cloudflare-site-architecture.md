@@ -2,7 +2,7 @@
 title: "用 Astro + Cloudflare 逐步扩展官网功能的整体设计"
 description: "整理 Acecore 官网如何以 Astro 和 Cloudflare Pages 为基础，组合咨询 AI、Sveltia CMS、多语言博客、服务 CTA、Markdown 安全渲染和 Cloudflare 评论功能。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技术", "Astro", "Cloudflare", "网站", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -217,3 +217,9 @@ Astro + Cloudflare 的官网不必停留在静态公司介绍页。
 2026年9月30日补充。导入 RSS 等公开订阅与输出 RSS 是不同的运维流程。限制请求等待时间和重试次数，避免暂时故障让任务无限运行。
 
 各输入来源应分别处理失败。某一来源获取失败，不应停止其他可独立更新的输入。不能把部分成功报告为全部成功，应在任务报告中保留各来源结果和未解决故障。分别确认获取、生成数据、生产构建和公开页面。这些是通用设计检查，并非所有故障条件或未来来源接入均已验证的声明。
+
+## 2026年10月6日补充：API契约与附件验证范围
+
+匿名化的改进修复了frontend/backend的session或limit契约不一致时，处理成功后仍把响应变为503的路径。分别照合HTTP结果、保存状态与UI显示，处理客户端重发，避免重复写入。
+
+附件输入栏能显示，与真实文件传输、保存、再次获取已验证不同。仅凭UI或API改进不能认定后者完成。非公开管理边界见[仪表盘认证与聚合](/insights/private-dashboard-access-and-aggregation/)，外部支付状态照合见[Webhook状态管理](/insights/cloudflare-payment-event-boundaries/)。

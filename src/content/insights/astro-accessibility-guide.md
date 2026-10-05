@@ -2,7 +2,7 @@
 title: "Astroサイトのアクセシビリティ改善実践ガイド"
 description: "2026年3月のAstro + UnoCSSサイトで行ったアクセシビリティ改善の記録。aria属性、コントラスト、フォーカス、フォーム、スクリーンリーダー対応を例示します。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技術", "Astro", "アクセシビリティ"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -240,3 +240,9 @@ CSSで `list-style: none` を設定すると、Safari のスクリーンリー�
 2026年9月30日追記。 Tailwind CSS v4へ移す際は、既存CSSリセットとPreflightの関係、CMSのアイコン、フォーカス表示、reduced-motionを移行後の本番でも確認してください。Preflightを無効化するかは既存スタイルに合わせて判断し、全サイト共通の推奨にはしません。
 
 [Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)
+
+## 2026年10月6日追記：認証ボタンと登録後の案内
+
+匿名化した改修では、認証providerの公式アイコンへの差し替えと、本番の表示を確認しました。読み上げで目的が分かる名前の確認は別の検証項目です。アイコンだけに依存せず、ボタンの名前、キーボードfocus、登録完了後に進める場所を確認します。
+
+画面の案内やfocusの実装確認と、利用者が実際に登録を完了する受入は別です。この記録では実登録の通し検証と読み上げ試験は未確認で、全provider・全支援技術への適合を証明するものではありません。

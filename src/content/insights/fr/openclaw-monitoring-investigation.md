@@ -2,6 +2,7 @@
 title: "Relier la supervision aux investigations OpenClaw : détection, preuves et décisions"
 description: "Associer contrôles périodiques et investigations limitées, en distinguant exploitation vérifiée et reprise non démontrée."
 date: "2026-09-30T20:53:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/openclaw-monitoring-investigation.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -32,3 +33,13 @@ Réduisez les alertes répétées et traitez la notification de rétablissement 
 ## Résultats et limites
 
 Exploitation périodique, investigations contrôlées, traitement des alertes répétées/de rétablissement et preuves partielles après expiration ont été vérifiés. Précision en incident réel, couverture de tous les services et reprise automatique restent non démontrées. Il faut encore tester des pannes connues pour mesurer omissions et faux positifs, puis évaluer les rapports en exploitation.
+
+## Ajout du 6 octobre 2026 : nouvelles tentatives limitées et décision pendant la maintenance
+
+Une modification supplémentaire distingue les réponses 429 des exceptions du SDK survenant pendant un flux et gère des délais et nouvelles tentatives limités avec le rétablissement de la connexion. Le début d’une tentative, une réponse partielle et la réponse finale positive sont des résultats différents. Une opération d’investigation refusée n’est pas considérée comme exécutée et aucun parcours ne contourne l’approbation.
+
+Pour la surveillance des sauvegardes, le comportement a été modifié afin qu’un échec temporaire de collecte pendant une fenêtre de maintenance planifiée ne déclenche pas immédiatement une alerte. Cet échec n’est pas assimilé à un résultat normal : le problème précédent et l’heure de la dernière réussite sont conservés. En dehors de la fenêtre, les échecs consécutifs sont évalués sans masquer d’autres problèmes, comme une véritable anomalie de sauvegarde. Les tests, la CI et une exécution planifiée après le déploiement ont été confirmés, mais pas un fonctionnement prolongé incluant le prochain cycle de maintenance du matin.
+
+La mise en file d’une notification, la tentative d’envoi, le résultat de l’API et la réception effective sont également distingués. La réception du test de connexion est décrite dans [l’article sur les alertes Talk](/insights/nextcloud-talk-operations-notifications/) ; la restauration des données visées, dans [l’article sur restic](/insights/restic-r2-backup-verification/) ; et l’analyse de l’attente de stockage, dans [l’enquête sur la latence de Minecraft](/insights/minecraft-latency-investigation/).
+
+Des exemples d’exploitation consignent également les tendances quotidiennes d’échec, les revues périodiques et les essais de restauration de données isolées. Chacun conserve son périmètre et son résultat ; cela ne vaut ni clôture d’un incident, ni recette du produit complet, ni démonstration d’une réparation automatique.

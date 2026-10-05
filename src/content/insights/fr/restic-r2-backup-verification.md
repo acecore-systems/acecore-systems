@@ -2,6 +2,7 @@
 title: "Superviser restic sur R2 : du stockage réussi à la restauration vérifiée"
 description: "Suivre séparément fraîcheur des instantanés, intégrité et restauration, en précisant la reprise applicative restant à vérifier."
 date: "2026-09-30T20:53:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/restic-r2-backup-verification.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -32,3 +33,11 @@ Choisissez les instantanés par sa politique et utilisez `forget`, `prune`, `che
 ## Vérifications restantes
 
 Exploitation périodique, supervision/alertes, rétention et extraction/intégrité de données sélectionnées ont été effectuées. Démarrage de toutes les applications, configurations et dépendances, et accès aux identifiants séparés restent à valider de bout en bout. Délai de reprise et perte acceptable doivent être mesurés. Aucune reprise complète ni économie démontrée n’est revendiquée.
+
+## Ajout du 6 octobre 2026 : verrous obsolètes et concurrence lors des tests de restauration
+
+Une modification supplémentaire vérifie l’activité des processus sur le même hôte avant d’exécuter le déverrouillage standard de restic, qui ne traite que les verrous obsolètes. L’option qui supprimerait tous les verrous, y compris ceux d’opérations actives, n’est pas utilisée. Les conflits donnent lieu à un nombre limité de nouvelles tentatives avec <code>--retry-lock</code> ; les tests de restauration et prune ne relancent pas indéfiniment le processus en cas d’échec. Vérifier l’activité sur un hôte ne prouve pas qu’aucune opération concurrente n’a lieu depuis un autre hôte.
+
+Les données sont extraites avec <code>restore --verify</code> dans un répertoire temporaire isolé. Après vérification des fichiers nécessaires et de leur intégrité, la correspondance entre l’instantané vérifié et la configuration est consignée. La restauration des données visées est confirmée en premier, puis les éléments à conserver sont revus avant prune. La fraîcheur des sauvegardes est évaluée à partir d’un instantané réellement réussi, et non du démarrage du processus ou de ses nouvelles tentatives.
+
+La restauration vérifiée des données visées reste distincte d’une récupération complète incluant le démarrage de toutes les applications et la récupération des identifiants. Pour le traitement des fenêtres de maintenance et des échecs de collecte, consultez aussi [Surveillance et investigation des incidents](/insights/openclaw-monitoring-investigation/).

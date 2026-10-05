@@ -2,7 +2,7 @@
 title: "Guía de implementación de Cloudflare Vectorize: sincroniza HTML público de forma segura"
 description: "Una guía detallada para crear el corpus desde HTML público, mantener Pagefind disponible y operar una sincronización segura con Vectorize."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags:
   ["Tecnología", "Cloudflare", "Vectorize", "Workers AI", "Búsqueda interna"]
@@ -474,3 +474,11 @@ Las conclusiones son sencillas.
 - Registrar implementación, validación local, verificación de UI en Preview y Production como estados diferentes
 
 Establecer primero estos límites facilita operar Vectorize como una base de búsqueda que se actualiza continuamente, y no como una función aislada de AI.
+
+## Actualización del 6 de octubre de 2026: distinguir cero resultados de una respuesta no válida
+
+Que no haya coincidencias en una búsqueda no es lo mismo que un fallo de recuperación, una respuesta HTTP distinta de 2xx o un formato de respuesta no válido. En una mejora anonimizada del proceso de respuestas, los errores de recuperación y las respuestas no válidas ya no se tratan como una búsqueda confirmada para después generar una respuesta pública. La ruta de reserva de la interfaz de búsqueda a Pagefind estático también se mantiene separada de la decisión de enviar externamente una respuesta basada en fuentes.
+
+Incluso una búsqueda normal con cero resultados no garantiza que exista una respuesta respaldada por evidencia. La generación de contenido, la comprobación antes del envío y la aprobación operativa son límites distintos. La relación entre el estado de una conversación y las promesas que se pueden cumplir se explica en [Protecciones para respuestas de IA](/insights/ai-reply-capability-guardrails/).
+
+Esta condición de parada ante fallos de recuperación se confirmó en el código corregido y la revisión de PR. Los registros no permiten confirmar el despliegue en producción de esa ruta ni su aplicación a respuestas reales; no se presenta como una función en servicio.

@@ -2,7 +2,7 @@
 title: "Cómo hacer que un sitio Astro 7 soporte 9 idiomas ― Traducción del blog y arquitectura multilingüe"
 description: "Registro de la adaptación a nueve idiomas con Astro 7.1.3 y UnoCSS en julio de 2026, con referencias a las dependencias y traducción actuales."
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "i18n", "Sitio web"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ El sitio utiliza actualmente las funciones i18n integradas de Astro 7.1.3 para g
 - **Soporte CMS**: Los artículos de cada idioma son editables individualmente en Pages CMS
 
 Los archivos de traducción se seguirán añadiendo de forma incremental. Hasta que exista una traducción, solo se publica el artículo japonés; al añadir el archivo del locale se habilitan su URL, su entrada de sitemap y su relación hreflang.
+
+## Actualización del 6 de octubre de 2026: idioma y errores en las pantallas de autenticación
+
+Además de traducir los artículos públicos, las pantallas de autenticación necesitan una selección de idioma coherente. En una mejora anonimizada, el idioma se eligió, por orden, entre los valores admitidos de ui_locales, Accept-Language y el idioma predeterminado, con una alternativa segura para los valores no admitidos. Los errores OIDC conocidos se transformaron en mensajes comunes para la interfaz; los errores desconocidos no muestran mensajes internos sin procesar.
+
+Se comprueban conjuntamente las etiquetas de la página, los errores devueltos por la API y las indicaciones posteriores al registro. Que el blog esté disponible en nueve idiomas no significa que se haya aceptado cada pantalla de autenticación o el flujo de registro real.
+
+El idioma también se conserva al iniciar sesión, administrar la cuenta, dar consentimiento y usar códigos de un solo uso; locale y state de OIDC se mantienen durante las transiciones. Se revisaron las URL, Content-Language y la visualización en pantallas estrechas dentro del alcance comprobado, por separado de la aceptación por parte de usuarios de todos los idiomas.

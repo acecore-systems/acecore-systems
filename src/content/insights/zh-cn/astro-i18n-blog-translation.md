@@ -2,7 +2,7 @@
 title: "将 Astro 7 网站扩展至9种语言 ― 博客翻译与多语言架构"
 description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的九语言实施，并说明当前依赖与翻译流程的变化。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ export const getStaticPaths = () =>
 - **CMS 支持**：各语言的文章可在 Pages CMS 中独立编辑
 
 翻译文件今后仍会逐步添加。在翻译存在之前只发布日语文章；添加 locale 文件后再启用该语言的文章 URL、sitemap 条目和 hreflang 关系。
+
+## 2026年10月6日补充：认证界面的语言与错误
+
+除了公开文章翻译，认证界面也需要一致的语言选择。匿名化的改进按受支持的 `ui_locales`、`Accept-Language`、默认语言的顺序选择，对不支持的值采用安全fallback。把已知OIDC错误转换为统一的用户提示；未知错误也不显示原始内部消息。
+
+页面标签、API错误、注册完成后的提示要一起检查。博客支持九种语言并不代表所有认证界面或实际注册路径都已完成受验。
+
+登录、账户管理、同意与一次性代码都延续所选语言，在OIDC跳转中保留locale和state。已检查的URL、Content-Language及窄屏显示，与所有语言用户的实际受验分别记录。

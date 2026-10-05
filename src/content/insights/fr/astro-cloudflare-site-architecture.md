@@ -2,7 +2,7 @@
 title: "Concevoir un site Astro + Cloudflare qui grandit fonctionnalité par fonctionnalité"
 description: "Comment nous avons combiné Astro et Cloudflare Pages avec un chat IA, Sveltia CMS, un blog multilingue, des CTA de services, un rendu Markdown sécurisé et des commentaires sans service externe."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Site web", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -203,3 +203,9 @@ Consultez les [environnements Worker](https://developers.cloudflare.com/workers/
 Ajout du 30 septembre 2026. Importer des flux publics comme RSS diffère de la publication RSS. Limitez l’attente et le nombre de tentatives afin qu’un échec temporaire ne prolonge pas indéfiniment une tâche.
 
 Traitez les sources séparément. Un échec ne doit pas arrêter les entrées qui peuvent être actualisées indépendamment. Ne présentez pas un succès partiel comme complet : conservez les résultats par source et les échecs restants dans le rapport. Vérifiez séparément récupération, données générées, builds de production et pages publiques. Ce sont des contrôles généraux, pas une preuve de toutes les situations d’échec ou intégrations futures.
+
+## Ajout du 6 octobre 2026 : contrat d’API et périmètre de vérification des pièces jointes
+
+Dans une modification anonymisée, un parcours a été corrigé : le désaccord entre les contrats de session et de limite du frontend et du backend transformait la réponse en 503 même après la réussite de l’opération. Le résultat HTTP, l’état enregistré et l’affichage dans l’interface sont vérifiés séparément ; les nouvelles tentatives du client sont gérées pour éviter une double écriture.
+
+La présence d’un champ de pièce jointe ne signifie pas non plus que le transfert, le stockage et la récupération du fichier réel ont été vérifiés. Une modification de l’interface ou de l’API ne suffit pas à achever ces contrôles. Les limites entre un site public statique et une interface d’administration privée sont décrites dans [Authentification et agrégation du tableau de bord privé](/insights/private-dashboard-access-and-aggregation/) ; la vérification des états externes de paiement figure dans [Gestion des états des webhooks](/insights/cloudflare-payment-event-boundaries/).

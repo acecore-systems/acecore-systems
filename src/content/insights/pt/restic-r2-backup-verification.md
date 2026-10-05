@@ -2,6 +2,7 @@
 title: "Backups restic no R2: do armazenamento à restauração verificada"
 description: "Acompanhe separadamente a atualidade dos snapshots, integridade e restauração, indicando a recuperação de aplicações ainda não testada."
 date: "2026-09-30T20:53:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/restic-r2-backup-verification.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -32,3 +33,11 @@ Selecione snapshots pela política do restic e use `forget`, `prune` e `check`, 
 ## Verificações pendentes
 
 Foram realizados operação periódica, monitoramento/avisos, retenção e extração/integridade de dados selecionados. Faltam validar todas as aplicações iniciando, recuperação de configuração e dependências e acesso a credenciais separadas. Tempo de recuperação e perda aceitável exigem medição. Não se afirma recuperação completa nem economia comprovada.
+
+## Atualização de 6 de outubro de 2026: locks antigos e concorrência nos testes de restauração
+
+Em uma alteração adicional, verifica-se a atividade dos processos no mesmo host antes de executar o desbloqueio normal do restic, que trata apenas locks antigos. Não se usa a opção que remove todos os locks, inclusive os de operações em andamento. Conflitos usam novas tentativas limitadas com <code>--retry-lock</code>; testes de restauração e prune não reiniciam o processo indefinidamente quando falham. Verificar a atividade em um host não comprova que não exista operação concorrente em outro host.
+
+Os dados são extraídos com <code>restore --verify</code> para um diretório temporário isolado. Depois de verificar os arquivos necessários e sua integridade, registra-se a correspondência entre o snapshot verificado e a configuração. Primeiro confirma-se a restauração dos dados-alvo; em seguida, revisa-se o que deve ser mantido antes do prune. A atualidade do backup é determinada por um snapshot que realmente terminou com sucesso, não pelo início do processo ou por suas novas tentativas.
+
+A restauração confirmada dos dados-alvo continua distinta da recuperação completa, que inclui iniciar todas as aplicações e recuperar suas credenciais. Para o tratamento de janelas de manutenção e falhas de coleta, consulte também [Monitoramento e investigação de incidentes](/insights/openclaw-monitoring-investigation/).

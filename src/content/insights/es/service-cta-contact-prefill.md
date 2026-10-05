@@ -2,7 +2,7 @@
 title: "Diseño técnico para trasladar el contexto de una CTA de servicio al formulario de contacto"
 description: "Diseño de implementación para llevar al formulario el contexto que el usuario estaba leyendo en una página de servicio. Incluye mini CTA en Astro, el contrato de parámetros URL, la selección inicial de categoría, el prefill del asunto, URL multilingües, medición con GA y comprobaciones del HTML generado."
 date: 2026-06-07T13:00
-lastUpdated: "2026-09-26T19:38:11+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnología", "Sitio web", "Servicios", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -405,3 +405,11 @@ Los puntos importantes fueron:
 - Revisar tras el build el número de enlaces, option y la ausencia de campos innecesarios
 
 Mejorar un formulario no consiste solo en reducir campos. Llevar el contexto leído hasta el equipo receptor facilita la atención real.
+
+## Actualización del 6 de octubre de 2026: del formulario de contacto al registro administrativo
+
+En una integración anonimizada, la recepción de una consulta, su incorporación al historial y a las tareas del CRM, y la finalización de la gestión por parte del equipo se trataron como estados distintos. Se validan los valores de URL y la ruta de contacto, y los valores de ruta se asignan a un enum estable. Conocer la URL de la consola administrativa no concede permiso para cambiar el historial o las tareas.
+
+La API también verifica a la persona usuaria y sus permisos, y no incorpora datos de clientes a la búsqueda pública ni a las respuestas de una IA pública. Que la implementación de recepción y registro esté completa no significa que se haya probado de extremo a extremo el contacto con clientes reales hasta finalizar la gestión.
+
+Se distingue el prefill del formulario de lo que introduce la persona. Si la solicitud requiere una devolución de llamada, la vía de contacto preferida se recoge como una opción fija obligatoria y se transfiere a la tarea posterior. Se alinean los requisitos de la interfaz y la API, así como los permisos de consulta y adición del equipo; después de un cambio de base de datos se revisan el esquema y las restricciones. Las comprobaciones necesarias en producción se mantienen separadas de copiar toda la base de datos de clientes reales a un entorno de desarrollo.

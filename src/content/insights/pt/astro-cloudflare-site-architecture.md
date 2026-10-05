@@ -2,7 +2,7 @@
 title: "Como projetar um site Astro + Cloudflare que cresce por funcionalidade"
 description: "Como combinamos Astro e Cloudflare Pages com chat de contato com IA, Sveltia CMS, blog multilíngue, CTA de serviços, renderização segura de Markdown e comentários sem serviço externo."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Cloudflare", "Site", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -203,3 +203,9 @@ Veja [ambientes Worker](https://developers.cloudflare.com/workers/wrangler/envir
 Adicionado em 30 de setembro de 2026. Importar feeds públicos como RSS é uma operação diferente de publicar RSS. Limite a espera e as tentativas para que uma falha temporária não mantenha o trabalho ativo indefinidamente.
 
 Trate as fontes separadamente. Uma falha não deve interromper entradas que possam ser atualizadas de forma independente. Não apresente sucesso parcial como total: mantenha resultados por fonte e falhas pendentes no relatório. Confira obtenção, dados gerados, builds de produção e páginas públicas separadamente. São verificações gerais, não prova de todas as condições de falha ou de futuras integrações.
+
+## Atualização de 6 de outubro de 2026: contrato da API e escopo da verificação de anexos
+
+Em uma alteração anonimizada, foi corrigido um caminho em que a divergência entre os contratos de sessão e limite do frontend e do backend transformava a resposta em 503 mesmo após a operação ter sido concluída com sucesso. O resultado HTTP, o estado salvo e a exibição na interface são conferidos separadamente; novas tentativas do cliente são tratadas para não duplicar uma gravação.
+
+A exibição de um campo de anexo também não significa que a transferência, o armazenamento e a recuperação do arquivo real tenham sido verificados. Uma mudança apenas na interface ou na API não conclui essa verificação. Os limites entre um site público estático e uma interface administrativa privada são descritos em [Autenticação e agregação do painel privado](/insights/private-dashboard-access-and-aggregation/); a conciliação de estados externos de pagamento está em [Gestão de estados de webhook](/insights/cloudflare-payment-event-boundaries/).

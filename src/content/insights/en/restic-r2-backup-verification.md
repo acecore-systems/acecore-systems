@@ -2,6 +2,7 @@
 title: "Monitoring restic backups on R2: from successful storage to verified restoration"
 description: "Track snapshot freshness, repository integrity and restoration separately, and identify the application recovery steps that remain untested."
 date: "2026-09-30T20:53:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/restic-r2-backup-verification.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -32,3 +33,11 @@ Choose snapshots with restic’s retention policy, then use `forget`, `prune` an
 ## Remaining recovery checks
 
 Scheduled operation, monitoring/notifications, retention and selected data extraction/integrity checks were performed. Startup of every application, recovery of configuration and dependencies, and retrieving separately held credentials still need end-to-end validation. Recovery time and acceptable data loss also require measurement. This case does not claim complete disaster recovery or proven cost savings.
+
+## October 6, 2026 update: stale locks and exclusive restore checks
+
+Further changes use ordinary `restic unlock` after obtaining exclusive operation access on the same host, handling stale locks only. They do not use `--remove-all` to remove active locks. A bounded `--retry-lock` handles contention, and restore checks and prune do not restart indefinitely on failure. Host-local exclusivity alone does not prove absence of competing hosts.
+
+Restore with `restore --verify` into an isolated temporary directory, check required target files and consistency, then record the verified snapshot and configuration together. Verify restoration before reviewing retained snapshots and pruning. Judge backup freshness from a successfully created snapshot, not job startup or retries.
+
+Target-data extraction remains distinct from full recovery including application startup and credentials. See [monitoring and investigation](/insights/openclaw-monitoring-investigation/) for maintenance windows and acquisition failures.

@@ -2,7 +2,7 @@
 title: "Practical Accessibility Improvements for an Astro Site"
 description: "A record of accessibility improvements made to an Astro + UnoCSS site in March 2026, including ARIA, contrast, focus, forms, and screen reader examples."
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Accessibility"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -238,3 +238,9 @@ This article is part of the "[Astro Site Quality Improvement Guide](/blog/websit
 Added September 30, 2026. When moving to Tailwind CSS v4, recheck existing CSS resets versus Preflight, CMS icons, visible focus and reduced-motion behavior in production. Decide whether to disable Preflight according to existing styles, rather than recommending that choice for every site.
 
 [Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)
+
+## October 6, 2026 update: authentication buttons and post-registration guidance
+
+The anonymized changes replaced authentication-provider icons with official assets and checked their production display. An accessible name conveying the button’s purpose is a separate verification item. Do not rely on the icon alone; check the button name, keyboard focus, and where to proceed after registration.
+
+Implementation checks of guidance and focus differ from a user actually completing registration. End-to-end registration and screen-reader testing remain unverified in these records; they do not establish conformance across every provider and assistive technology.

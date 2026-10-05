@@ -2,7 +2,7 @@
 title: "Technical design for carrying service CTA context into a contact form"
 description: "An implementation design for carrying the context a visitor was reading on a service page into the contact form. It covers mini CTAs in an Astro site, the URL parameter contract, initial form-category selection, subject prefill, multilingual URLs, GA measurement, and generated-HTML checks in a reusable form."
 date: 2026-06-07T13:00
-lastUpdated: "2026-09-26T19:38:11+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technology", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -405,3 +405,11 @@ The important design points were:
 - Verify the link count, option count, and absence of unnecessary fields in generated HTML after the build
 
 Improving a contact form is not merely about reducing input fields. Carrying the context the visitor was reading all the way to the receiving team makes real inquiry handling easier.
+
+## October 6, 2026 update: from inquiry intake to management records
+
+The anonymized integration treats inquiry receipt, CRM history and tasks, and an operator’s completed response as separate states. Validate URL input and inquiry channels, mapping channel values to a stable enum. Knowing a management URL does not authorize changes to history or tasks.
+
+Verify identity and operation permissions in the API too; do not mix customer information into public search or public AI answers. Completed intake and recording code does not demonstrate the whole real-customer workflow through contact and resolution.
+
+Distinguish form prefill from user input. For inquiries requiring a callback, a required fixed-choice contact preference passes to follow-up tasks. Align required fields and staff read/append permissions in both UI and API; check schema and constraints after database changes. Necessary production verification is distinct from cloning the entire customer database for development.

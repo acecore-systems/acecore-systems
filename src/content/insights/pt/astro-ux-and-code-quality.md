@@ -2,7 +2,7 @@
 title: "Armadilhas e soluções do Astro View Transitions — Guia de melhoria de UX e qualidade de código"
 description: "Guia prático sobre soluções para scripts que param de funcionar com View Transitions do Astro, introdução de busca full-text com Pagefind, melhoria de segurança de tipos com TypeScript e gerenciamento centralizado de constantes, melhorando UX e qualidade de código."
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Site"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ Em termos de qualidade de código, a segurança de tipos TypeScript e o gerencia
 ## Série que inclui este artigo
 
 Este artigo faz parte da série "[Guia de melhoria de qualidade do site Astro](/blog/website-improvement-batches/)". Melhorias de performance, SEO e acessibilidade também são apresentadas em artigos individuais.
+
+## Atualização de 6 de outubro de 2026: apresentação e estado das ações no Editor
+
+Em uma alteração anonimizada do Editor, foram ajustados o deslocamento entre categorias em telas estreitas, a navegação fixa, as instruções para teclado, os rótulos dos campos e o foco. O estado público ou privado também acompanha o estado da API e a versão pública, em vez de ser deduzido pela aparência do botão.
+
+Se faltar o contexto de autenticação ou o contrato entre frontend e backend, a interface não informa que o salvamento foi concluído; ela orienta a recarregar ou autenticar-se novamente. Uma tela vazia de importação bem apresentada não comprova a aceitação completa de importar dados reais, salvar e publicar. O escopo de entrada é descrito em [Importação de perfil](/insights/profile-import-draft-boundaries/) e os limites do CSS público em [Projeto seguro de temas](/insights/user-css-versioned-theme-safety/).
+
+Ao reorganizar nomes ou categorias, alinhe os valores existentes, a API, os filtros e as alterações no banco de dados. Se não houver dados antigos, não declare que houve migração de conteúdo real. Se um selo de estado levar a detalhes, ele deve ser acessível por clique e pela tecla Enter. Ao editar em linha um identificador de URL pública, mantenha também as verificações de formato, duplicidade e atualização da URL. A exibição pública, a reprodução de mídia e o convite para login de usuários anônimos foram verificados separadamente da aceitação de salvar o identificador ou alterar o estado de publicação no Editor autenticado.
+
+Ao reorganizar a área de edição em torno das novas tarefas da pessoa usuária, separe a navegação persistente do espaço de trabalho; apenas renomear e manter as ações antigas não basta. Valores auxiliares, como saldos, podem ter menos destaque visual que as ações principais, mas devem continuar legíveis, com tamanho de texto e contraste adequados.

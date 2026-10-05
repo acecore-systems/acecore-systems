@@ -2,7 +2,7 @@
 title: "Pitfalls and Solutions for Astro View Transitions — A UX and Code Quality Improvement Guide"
 description: "A practical guide covering solutions for scripts breaking with Astro View Transitions, introducing Pagefind full-text search, improving TypeScript type safety, centralizing constants, and more to improve UX and code quality."
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Website"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ On the code quality side, TypeScript type safety and centralized constant manage
 ## Series This Article Belongs To
 
 This article is part of the "[Astro Site Quality Improvement Guide](/blog/website-improvement-batches/)" series. Separate articles cover performance, SEO, and accessibility improvements.
+
+## October 6, 2026 update: Editor display and operation state
+
+The anonymized Editor changes adjust category navigation on narrow screens, persistent navigation, keyboard guidance, field labels, and focus. Derive public/private displays from API state and the published snapshot rather than a button’s appearance.
+
+Missing authentication continuation information or a frontend/backend contract must not appear as a successful save; explain the need to reload or authenticate again. A polished empty import screen is not evidence of an actual import/save/publish journey. The input implementation is covered in [profile import](/insights/profile-import-draft-boundaries/), and public CSS in [theme safety](/insights/user-css-versioned-theme-safety/).
+
+When reorganizing names or classifications, align existing values, APIs, filters, and database changes. Zero old records do not demonstrate migration of real content. A status badge that links to details must work with both click and Enter. Inline editing of public URL identifiers still needs format, uniqueness, and URL-update validation. Public display, media playback, and anonymous sign-in redirects do not establish authenticated identifier saves or publication-state changes.
+
+Reorganize older editing areas around the user’s new work units, separating persistent navigation from the work area and checking that renamed functions do not leave obsolete operations behind. Make supporting figures such as balances visually secondary while preserving readable size and contrast.

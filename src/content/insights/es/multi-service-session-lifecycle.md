@@ -2,6 +2,7 @@
 title: "Unificar la caducidad del acceso entre servicios: renovación y reautenticación"
 description: "Diseño general para alinear la caducidad del acceso, distinguiendo inicio explícito, servidor, cookies y proveedor de identidad."
 date: "2026-09-30T13:37:47+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/multi-service-session-lifecycle.webp
 tags: ["Authentication", "Session", "Web"]
@@ -36,3 +37,13 @@ Auditar código y ajustes por separado de las pruebas de inicio, límites de cad
 El historial registra cambios, despliegues y herramientas para auditar diferencias. No se probaron el acceso de usuarios reales ni la espera hasta la caducidad efectiva en estos registros. No demuestra pruebas con tiempo real en todos los dispositivos ni toda la seguridad de revocación y reautenticación. Elegir plazos y verificaciones según la sensibilidad de datos y operaciones.
 
 Consultar [sesiones de OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) y [autenticación](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html). Para otra capa, ver [sesiones de Cloudflare](https://developers.cloudflare.com/cloudflare-one/access-controls/access-settings/session-management/). Las recomendaciones no afirman que todas las pruebas se completaran en este caso.
+
+## Actualización del 6 de octubre de 2026: continuidad de la autenticación y permisos de la aplicación
+
+En el registro anonimizado de una mejora de autenticación se separaron la llegada al callback de OIDC, la validación del token, la continuación de la solicitud de autenticación original y los permisos para usar la aplicación. Si falta el contexto necesario para continuar, el flujo no lo presenta como un inicio de sesión correcto: devuelve un error seguro desde el que se puede reanudar. También valida el destino de retorno; iniciar sesión en una cuenta compartida no concede por sí solo permisos de negocio en cada aplicación.
+
+El mismo contrato se comprueba al iniciar sesión y registrarse, al añadir o retirar proveedores de autenticación y en los mecanismos de recuperación. Los registros de cambios y despliegue no demuestran que todas las personas usuarias puedan iniciar sesión con todos los proveedores ni que se haya probado de principio a fin la conservación del último método de recuperación.
+
+La activación de un segundo factor, el inicio de sesión en la plataforma de identidad, el paso por la puerta de acceso y una escritura protegida en la aplicación también se verifican por separado. Una prueba de escritura limitada no sustituye la comprobación de todos los flujos formales de OIDC ni demuestra que se rechace una cuenta desactivada. El registro, la configuración inicial, las pantallas de cambio y la API consultan las mismas reglas de entrada; las pruebas comprueban en conjunto los valores límite que se rechazan y los que se permiten. No se presenta una longitud concreta como norma universal.
+
+También se separan las pantallas y las indicaciones del callback para iniciar sesión y registrarse. Ver una pantalla o una comprobación de salud no equivale a aceptar la creación real de una cuenta externa ni la concesión del consentimiento. Al retirar un proveedor se revisan en conjunto el botón, el callback, la configuración, las indicaciones y las pruebas, y después se comprueba si queda alguna ruta residual.

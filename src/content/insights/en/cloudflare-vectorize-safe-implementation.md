@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize Implementation Guide: Safely Sync Public HTML"
 description: "A detailed guide to building a corpus from public HTML, keeping Pagefind available, and operating Vectorize synchronization safely."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technology", "Cloudflare", "Vectorize", "Workers AI", "Site Search"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -473,3 +473,11 @@ Our conclusions are straightforward.
 - Record implementation, local verification, Preview UI verification, and Production as separate states
 
 Establishing these boundaries first makes it easier to operate Vectorize as a continuously updated search foundation rather than a one-off AI feature.
+
+## October 6, 2026 update: distinguish zero matches from invalid responses
+
+No search match differs from a failed fetch, non-2xx response, or malformed result. The anonymized reply changes prevent invalid or failed retrieval from being treated as a completed reference check before generating a public reply. A search UI’s fallback to static Pagefind is distinct from deciding whether to send an external reply grounded in references.
+
+Even a valid zero-result response does not establish a supported answer. Generated content, checks before sending, and operating approval are separate boundaries. See [AI reply guardrails](/insights/ai-reply-capability-guardrails/) for conversation state and promises of executable actions.
+
+This retrieval-failure stop condition was verified in modified code and PR review. The records do not confirm deployment of that path or its application to real replies; it is not presented as a running production feature.

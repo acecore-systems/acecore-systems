@@ -2,7 +2,7 @@
 title: "Guide d'implémentation Cloudflare Vectorize : synchroniser le HTML public en sécurité"
 description: "Un guide détaillé pour créer un corpus depuis le HTML public, conserver Pagefind et exploiter une synchronisation Vectorize sûre."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags:
   ["Technologie", "Cloudflare", "Vectorize", "Workers AI", "Recherche interne"]
@@ -474,3 +474,11 @@ Notre conclusion est simple.
 - Consigner « implémentation », « validation locale », « vérification de l'interface Preview » et « Production » comme des états distincts
 
 En posant ces limites dès le départ, Vectorize devient plus facile à exploiter non comme une fonction d'IA ponctuelle, mais comme une infrastructure de recherche continuellement actualisable.
+
+## Ajout du 6 octobre 2026 : distinguer zéro résultat et réponse invalide
+
+Une recherche sans résultat n’est pas équivalente à un échec de récupération, à une réponse HTTP autre que 2xx ou à un format de réponse invalide. Dans une modification anonymisée du traitement des réponses, les échecs de récupération et les réponses invalides ne sont plus traités comme une recherche confirmée permettant ensuite de générer une réponse publique. Le repli de l’interface de recherche vers Pagefind statique est lui aussi séparé de la décision d’envoyer à l’extérieur une réponse fondée sur des sources.
+
+Même une recherche normale sans résultat ne garantit pas qu’une réponse étayée existe. La génération du contenu, le contrôle avant envoi et l’approbation opérationnelle sont des limites distinctes. Le lien entre l’état d’une conversation et les promesses réalisables est décrit dans [Garde-fous des réponses de l’IA](/insights/ai-reply-capability-guardrails/).
+
+Cette condition d’arrêt en cas d’échec de récupération a été confirmée dans le code corrigé et lors de la revue de la PR. Les traces ne permettent pas de confirmer le déploiement en production de ce parcours ni son application à des réponses réelles ; il n’est pas présenté comme une fonction en service.

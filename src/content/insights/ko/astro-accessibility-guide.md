@@ -2,7 +2,7 @@
 title: "Astro 사이트 접근성 개선 실전 가이드"
 description: "2026년 3월 Astro + UnoCSS 사이트에서 실시한 접근성 개선 기록입니다. ARIA, 명도 대비, 포커스, 폼, 스크린 리더 예시를 다룹니다."
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["기술", "Astro", "접근성"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -238,3 +238,9 @@ CSS `list-style: none`이 적용되면 Safari의 스크린 리더(VoiceOver)가 
 2026년 9월 30일 추가. Tailwind CSS v4로 전환한 후 운영 화면에서도 기존 CSS reset과 Preflight 관계, CMS 아이콘, 포커스 표시, 동작 줄이기를 확인하세요. Preflight 비활성화 여부는 기존 스타일에 따라 판단하며 모든 사이트에 권하지 않습니다.
 
 [Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)
+
+## 2026년 10월 6일 추가: 인증 버튼과 등록 후 안내
+
+익명화한 개선에서 인증 provider의 공식 아이콘으로 교체하고 운영 표시를 확인했습니다. 스크린리더가 목적을 알 수 있는 이름은 별도 검증 항목입니다. 아이콘에만 의존하지 않고 버튼 이름·키보드 focus·등록 후 다음 행동을 확인합니다.
+
+안내·focus 구현 확인과 사용자의 실제 등록 완료 수용은 다릅니다. 이 기록에서 실제 등록 전체 경로와 스크린리더 시험은 미확인이며 모든 provider·보조 기술의 적합성을 증명하지 않습니다.

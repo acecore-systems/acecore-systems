@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize実装ガイド：公開HTMLを安全に同期する"
 description: "公開HTMLからcorpusを作り、Pagefindと併用しながらVectorizeを安全に同期・運用するための実装ガイドです。"
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "Workers AI", "サイト内検索"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -473,3 +473,11 @@ Cloudflare Vectorizeの導入で難しいのは、nearest-neighbor queryその�
 - 「実装」「ローカル検証」「PreviewのUI確認」「本番」を別の状態として記録する
 
 この境界を先に作っておけば、Vectorizeを単発のAI機能ではなく、継続的に更新できる検索基盤として運用しやすくなります。
+
+## 2026年10月6日追記：検索の0件と不正な応答を分ける
+
+検索に一致が無いことと、取得失敗・非2xx・不正な応答形式は異なります。匿名化した返信処理の改修では、不正な応答や取得失敗を『検索を確認済み』へ置き換えて公開返信を生成しないようにしました。検索UIが静的なPagefindへfallbackする経路と、参照を根拠に外部へ送る返信の判定も分けます。
+
+正常な0件でも、根拠がある回答を作れたとは限りません。生成内容、送信前検査、運用上の承認は別の境界です。会話状態と実行できる約束の照合は[AI返信のガード](/insights/ai-reply-capability-guardrails/)にまとめました。
+
+この取得異常時の停止条件は、修正コードとPRレビューで確認した範囲です。当該経路の本番配信・実返信への適用は記録から確認できず、稼働中の機能として紹介するものではありません。
