@@ -1,38 +1,47 @@
 ---
-title: "Benutzer-CSS und öffentliche Themes sicher verwalten"
-description: "Ein allgemeiner Leitfaden zur Profilbearbeitung mit grafischen Steuerelementen und selbst geschriebenem CSS. Behandelt werden erlaubte CSS-Regeln, Entwürfe und veröffentlichte Fassungen, unveränderliche Theme-Versionen sowie Auslistung und betriebliche Sperre."
+title: "Benutzer-CSS und öffentliche Themes sicher verwalten: gemeinsame Quelle, begrenztes Rendering und feste Versionen"
+description: "Ein anonymisiertes Profilbearbeitungskonzept, in dem GUI und direkte Bearbeitung dieselbe CSS-Quelle nutzen. Behandelt werden eine umfangreiche CSS-Syntax innerhalb einer Rendering-Grenze, Entwürfe und veröffentlichte Fassungen, unveränderliche Theme-Versionen, Auslistung und betriebliche Sperre."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T02:20:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety.webp
+image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
   title: "Implementierungsprüfungen sind keine vollständige Abnahme durch Nutzer"
-  text: "Dieser anonymisierte Fall umfasst die Implementierung, eine Datenbankänderung, die Bereitstellung in Produktion und die Darstellung mit Testdaten. Zum Prüfzeitpunkt gab es keine öffentlichen Themes. Ein vollständiger Ablauf mit Einreichung und Anwendung durch echte Nutzer sowie kostenpflichtige Verkäufe wurde nicht nachgewiesen."
+  text: "Die Datenbankänderung, die Bereitstellung in Produktion und die Darstellung mit Testdaten für den Store mit fest versionierten Themes wurden bestätigt. Die Erweiterung, bei der GUI und direkte Bearbeitung dieselbe CSS-Quelle nutzen, wurde als in main integriert und mit erfolgreicher CI bestätigt; innerhalb dieses Prüfbereichs wurden weder ihre Produktionsbereitstellung noch eine Abnahme mit angemeldeten Nutzern bestätigt. Ein vollständiger Ablauf mit Einreichung und Anwendung durch echte Nutzer sowie kostenpflichtige Verkäufe wurde nicht nachgewiesen."
 ---
 
-Ein Profil-Editor, in dem sich Farben und Abstände über eine grafische Oberfläche anpassen und optional begrenzte CSS-Syntax selbst schreiben lassen, muss sowohl die Bedienbarkeit als auch die Sicherheit des auf öffentlichen Seiten angezeigten Codes berücksichtigen. Dieser anonymisierte Implementierungsfall zeigt, wie sich Bearbeitung und Verteilung trennen lassen.
+Ein Profil-Editor, in dem sich Farben und Abstände über eine grafische Oberfläche anpassen und das gesamte Layout mit CSS bearbeiten lassen, muss sowohl die Bedienbarkeit als auch die Sicherheit des auf öffentlichen Seiten angezeigten Codes berücksichtigen. Dieser anonymisierte Implementierungsfall zeigt die Grenzen zwischen Bearbeitung und Verteilung.
 
-## CSS durch eine kleine Grammatik begrenzen
+## Eine gemeinsame CSS-Quelle für GUI und direkte Bearbeitung verwenden
 
-Füge nicht beliebiges CSS direkt in eine öffentliche Seite ein. Analysiere die Syntax und lasse nur unterstützte Komponenten, Eigenschaften und Werte zu. Die aktuelle Implementierung beschränkt sich bewusst auf eine kleine Grammatik; eine freiere CSS-Bearbeitung ist eine noch offene Zusatzanforderung. Dieser Ansatz erlaubt ausgewählte Klassen und eine begrenzte Menge an Pseudoklassen und weist externe URLs, At-Rules, uneingeschränkte Attributselektoren, HTML-Trennzeichen und übermäßig viele Regeln zurück.
+Bei einer späteren Erweiterung wurde das vollständige CSS zur maßgeblichen Theme-Quelle, und die GUI wurde so geändert, dass sie dieselben CSS-Deklarationen bearbeitet. Von Hand geschriebene Kommentare, Deklarationen außerhalb der GUI-Steuerung und responsive Regeln bleiben erhalten. Das ältere Format mit GUI-Einstellungen und zusätzlichem CSS wird ebenfalls in ein vollständig bearbeitbares Stylesheet übernommen. Eine Änderung an Hilfseinstellungen für die Darstellung einer Optionsliste bedeutet nicht, dass sich das gerenderte CSS geändert hat.
 
-Beschränke akzeptiertes CSS auf einen festgelegten Profilbereich, generiere es neu und prüfe es vor der Veröffentlichung erneut. Bewahre GUI-Einstellungen und den handgeschriebenen Quelltext zur Bearbeitung auf, fixiere im öffentlichen Snapshot aber nur geprüftes CSS. Ein begrenzter Geltungsbereich allein macht beliebiges CSS nicht sicher. Die [W3C-Selectors-Spezifikation](https://www.w3.org/TR/selectors-4/) erläutert die Konzepte von Selektoren.
+Die Erweiterungen für Backend und Frontend wurden jeweils in ihren main-Zweig integriert; CI und Implementierungstests wurden geprüft. Innerhalb dieses Prüfbereichs belegt das weder die Bereitstellung in Produktion noch einen durch angemeldete Nutzer getesteten vollständigen Ablauf.
+
+## Umfangreiche CSS-Syntax innerhalb der Rendering-Grenze unterstützen
+
+Die anfängliche Beschränkung durch eine kleine Liste erlaubter Eigenschaften wurde erweitert. Unterstützt werden Grid und Flex, Variablen, Verläufe, Pseudoelemente, Transformationen, Animationen und Regeln wie @media, @supports und @container. Das bedeutet nicht, dass beliebiges CSS ungeprüft eingefügt wird. Der Syntaxbaum wird analysiert, und jeder Selektorzweig wird auf Nachfahren des festgelegten Profilbereichs beschränkt. Dieselbe Grenze gilt innerhalb bedingter Regeln; externe Bedienwege und Lizenzkennzeichnungen gehören nicht zum Theme-Bereich. [W3C Selectors](https://www.w3.org/TR/selectors-4/) ist ein Einstieg in die Selektorspezifikation.
+
+Variablen- und Keyframe-Namen werden im veröffentlichten CSS in eindeutige Namen umgeschrieben, damit sie nicht mit Variablen der äußeren Oberfläche oder Animationen anderer Themes kollidieren. Die ursprünglichen Namen bleiben für die Bearbeitung erhalten. Der äußere Rendering-Wrapper nutzt zusätzlich Containment und Isolation, um die Wirkung weit gefasster Layoutregeln auf den Profilbereich zu begrenzen.
+
+Das Abrufen externer Ressourcen, globale Regeln wie @import und @font-face, nicht analysierbare Syntax, CSS-Nesting, der HTML-Abschluss des style-Elements und Animationsreferenzen mit nicht sicher auflösbaren Namen werden abgewiesen. Auch die Größe der Eingabe und des erzeugten Ergebnisses wird geprüft. Bei der Veröffentlichung und beim Laden eines Snapshots werden Bereich, eindeutige Namen und die validierte kanonische CSS-Zeichenfolge erneut auf Übereinstimmung geprüft. Umfangreiche Syntaxunterstützung garantiert nicht dieselbe Darstellung in jedem Browser.
 
 ## Vorschau, Entwurf und Veröffentlichung trennen
 
-Das Ausprobieren oder Anwenden eines Themes ändert einen Entwurf. Die öffentliche Seite ändert sich erst, wenn die verantwortliche Person sie veröffentlicht. Dass sich handgeschriebenes CSS erneut bearbeiten lässt, bedeutet auch nicht, dass dieser Quelltext an Besucher gesendet wird. Erkenne Speicherkonflikte und gestalte Wiederholungen idempotent, damit derselbe Vorgang eine Version oder einen Entwurf nicht doppelt aktualisiert.
+Das Ausprobieren oder Anwenden eines Themes ändert einen Entwurf. Die öffentliche Seite ändert sich erst, wenn der Eigentümer veröffentlicht. Dass handgeschriebenes CSS erneut bearbeitet werden kann, bedeutet nicht, dass der Originaltext an Besucher weitergegeben wird. Der Speichervertrag erkennt Konflikte und verhindert, dass ein wiederholter Vorgang eine Version oder einen Entwurf doppelt aktualisiert.
 
-## Aktive Designs nicht durch Aktualisierungen anderer Autoren verändern
+## Aktive Designs nicht durch Änderungen anderer Autoren verändern
 
-Trenne veränderliche Einträge im Theme-Verzeichnis von unveränderlichen Versionen. Nutzer importieren eine bestimmte Versions-ID; eine neue Version des Autors ändert daher weder einen bestehenden Entwurf noch ein veröffentlichtes Design stillschweigend. Bewahre Quelle, Version und Lizenzangabe auch nach der Bearbeitung auf. Wird ein öffentliches Profil privat, dürfen Name oder Bild aus dem Entwurf des Autors nicht in das verteilte Theme gelangen.
+Bearbeitbare Angaben im Theme-Eintrag werden von unveränderlichen Versionen getrennt. Ein Nutzer importiert eine bestimmte Versions-ID; eine neue Version des Autors ändert bestehende Entwürfe und veröffentlichte Fassungen nicht automatisch. Herkunft und Version der angewendeten Theme-Fassung sowie die Quelle der Nutzungsbedingungen bleiben auch nach der Bearbeitung erhalten. Wird ein öffentliches Profil wieder privat, dürfen Name und Bild aus dem Autorenentwurf nicht in das verteilte Theme gelangen.
 
 ## Auslistung und betriebliche Sperre unterscheiden
 
-Ein Autor kann ein Theme auslisten und damit neue Auffindbarkeit und Anwendung verhindern, ohne eine bereits fixierte Version zwangsläufig sofort zu widerrufen. Bei der betrieblichen Sperre eines gefährlichen Themes gilt eine andere Grenze: Stelle dessen CSS nicht mehr bereit, auch nicht aus bestehenden Snapshots, und kehre zur Standarddarstellung zurück. Prüfe nach dem Zurücksetzen auf einen älteren Snapshot den aktuellen Sperrstatus, damit CSS von vor der Sperre nicht wieder erscheint.
+Wenn ein Autor ein Theme auslistet, sind neue Entdeckungen und Anwendungen nicht mehr möglich; bestehende Nutzungen einer festgelegten Version werden dadurch nicht zwingend sofort widerrufen. Die betriebliche Sperre eines gefährlichen Themes hat eine andere Grenze: Öffentlicher Abruf und CSS aus bestehenden Snapshots werden gestoppt, und die Standarddarstellung wird wiederhergestellt. Auch bei einem Rollback auf einen älteren Snapshot wird der aktuelle Sperrstatus geprüft, damit CSS von vor der Sperre nicht wieder aktiviert wird.
 
 ## Was vor der Veröffentlichung zu prüfen ist
 
-Prüfe nicht unterstützte Selektoren, externe Anfragen, Eingabegrößen, Speicherkonflikte, Wiederholungen, die Umstellung des Autorenprofils auf privat, Auslistung, betriebliche Sperre und Zurücksetzen. Code, Bereitstellung und Darstellung von Testdaten wurden geprüft. Das ist jedoch kein Ende-zu-Ende-Test, bei dem eine echte Person ein Theme einreicht und eine andere es anwendet. Lizenzbedingungen können außerdem nicht garantieren, dass an den Browser geliefertes CSS niemals kopiert wird.
+Prüfe Selektoren außerhalb des Bereichs, externe Anfragen, Eingabegröße, Speicherkonflikte, Wiederholungen, das Umstellen des Autorenprofils auf privat, Auslistung, betriebliche Sperre und Rollback. Die Produktionsbereitstellung des Stores mit festen Versionen und die Darstellung mit Testdaten wurden bestätigt. Innerhalb dieses Prüfbereichs sind jedoch weder die Produktionsbereitstellung noch die Abnahme mit angemeldeten Nutzern für die CSS-Editor-Erweiterung bestätigt. Bei einer früheren Prüfung gab es null öffentliche Themes; das ist keine Aussage über die aktuelle Zahl. Ein vollständiger Ablauf, in dem echte Nutzer Themes einreichen und anwenden, sowie kostenpflichtige Verkäufe wurden nicht nachgewiesen. Nutzungsbedingungen können nicht garantieren, dass CSS, das einen Browser erreicht, niemals kopiert wird.
 
-Zur Eingabe bei der Bearbeitung siehe [Grenzen von Profilimporten als Entwurf](/de/insights/profile-import-draft-boundaries/); zum CMS-Betrieb siehe den [Sveltia-CMS-Leitfaden](/de/insights/cms-selection-and-turnstile/).
+Zum Eingabeteil der Bearbeitung siehe [Profilinformationen als Entwurf importieren](/insights/profile-import-draft-boundaries/); zu CMS-Abläufen siehe [den Sveltia-CMS-Leitfaden](/insights/cms-selection-and-turnstile/).

@@ -1,44 +1,51 @@
 ---
-title: "Profildaten als Entwurf importieren: prüfen, ersetzen und gezielt veröffentlichen"
-description: "Eine verallgemeinerte Implementierung zum Import von Profildaten aus Text, CSV und statischem HTML. Sie erläutert den Vergleich mit aktuellen Werten, die Auswahl und Ersetzung von Feldern, die Grenzen zwischen Speichern und Veröffentlichen sowie nicht unterstützte Eingaben."
+title: "Profildaten als Entwurf importieren: vergleichen, auswählen, gezielt veröffentlichen"
+description: "Eine verallgemeinerte Umsetzung für Profilimporte aus Text, CSV, statischem HTML und gemeinsamem JSON. Sie behandelt den Vergleich vorhandener Werte, das gezielte Ersetzen oder Zurücknehmen von Änderungen und die Trennung von Speichern und Veröffentlichung."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T02:20:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries.webp
+image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
-  title: "Umfang der Implementierung in Stufe 1"
-  text: "Implementierung, Integration und Produktivsetzung des Imports von Text, CSV und statischem HTML wurden bestätigt. Die vollständige Abnahme in einem echten Konto vom Import bis zum Speichern und Veröffentlichen steht noch aus; direktes Abrufen per URL sowie die Migration von Bildern oder Audio gehören nicht zu dieser Lieferung."
+  title: "Umsetzung bestätigt; Abnahme mit echtem Konto steht aus"
+  text: "Der Import von Text, CSV, statischem HTML und gemeinsamem JSON wurde umgesetzt, integriert und in Produktion bereitgestellt. Die vollständige Abnahme vom Import bis zum Speichern und Veröffentlichen mit einem echten Konto ist noch offen. Automatischer Abruf dienstspezifischer URLs sowie die Übernahme von Bildern oder Audio gehören nicht zum abgeschlossenen Umfang."
 ---
 
-Beim Übertragen eines bestehenden Profils in einen anderen Editor sollten Sie zuerst den aktuellen Wert mit dem Importvorschlag vergleichen und dann über eine Ersetzung entscheiden. Dieser verallgemeinerte Bericht zur Implementierung in Stufe 1 zeigt die Grenzen zwischen Import und Veröffentlichung.
+Wer ein vorhandenes Profil in einen anderen Editor überträgt, sollte die aktuellen Werte zuerst mit den Importvorschlägen vergleichen. Dieses anonymisierte Beispiel beschreibt die Grenzen zwischen Datenimport und Veröffentlichung eines Profils.
 
-## Zuerst die unterstützten Eingabeformate festlegen
+## Unterstützte Eingabeformate zuerst festlegen
 
-Diese Stufe unterstützt Text, CSV und statisches HTML. Eingefügten Inhalt oder eine Datei zu analysieren ist etwas anderes, als eine URL aufzurufen und dort Inhalte abzurufen. JSON, Bilder, Audio, dynamische Seiten und APIs externer Dienste sind nicht Teil der abgeschlossenen Implementierung.
+Neben den ursprünglichen Formaten Text, CSV und statischem HTML liest der Ablauf jetzt auch eine gemeinsame JSON-Datei und bietet eine Vorlage zum Herunterladen. Eingefügte Inhalte oder eine Datei zu analysieren ist etwas anderes, als eine URL aufzurufen und dort Daten abzurufen. Dienstspezifische Exportformate, automatischer URL-Abruf, Bild- und Audioübernahme, dynamische Seiten und APIs externer Dienste sind nicht fertiggestellt.
 
-Behandeln Sie HTML ausschließlich als Eingabedaten: Führen Sie keine Skripte aus und geben Sie das importierte HTML nicht selbst auf der öffentlichen Seite aus. Begrenzen Sie Textlänge, Felder, Links und Eingabeformate und wandeln Sie die Quelle anschließend in die für ein Profil benötigten Textvorschläge um.
+Behandeln Sie HTML ausschließlich als Eingabedaten. Führen Sie keine Skripte aus und rendern Sie das importierte HTML nicht selbst auf der öffentlichen Seite. Begrenzen Sie Textlänge, Felder, Links und Eingabeformate; wandeln Sie die Quelle anschließend in Textvorschläge für das Profil um.
 
-## Prüfung der Vorschläge und Profilbearbeitung trennen
+## Vorschläge prüfen, bevor vorhandene Werte ersetzt werden
 
-Veröffentlichen Sie analysierte Ergebnisse nicht sofort, sondern vergleichen Sie zuerst die aktuellen Werte mit den Vorschlägen. Die profilverantwortliche Person wählt die Felder einzeln aus und kann Vorschlagswerte bearbeiten, bevor sie sie in den Editor übernimmt. Jedes ausgewählte Feld ersetzt den aktuellen Wert; prüfen Sie deshalb bei jedem Import die Unterschiede. Vor dem Speichern lässt sich die Änderung rückgängig machen. Das bedeutet jedoch nicht, dass automatischer Schutz manueller Änderungen oder eine Konfliktzusammenführung fertiggestellt wäre.
+Veröffentlichen Sie Analyseergebnisse nicht sofort, sondern vergleichen Sie sie zuerst mit den aktuellen Werten. Die profilverantwortliche Person wählt Felder einzeln aus und kann Vorschläge bearbeiten, bevor sie im Editor angewendet werden. Ein ausgewähltes Feld ersetzt den aktuellen Wert; prüfen Sie daher bei jedem Import die Unterschiede. Die Änderung lässt sich auch rückgängig machen. Damit ist nicht garantiert, dass Konflikte mit Änderungen auf anderen Seiten oder durch andere Personen automatisch gelöst werden.
+
+## Gemeinsames JSON von der Unterstützung einzelner Dienste unterscheiden
+
+Die Oberfläche zeigt den Unterstützungsstatus für 7 Aktivitätsdienste. Daten im gemeinsamen Format lesen zu können bedeutet nicht, dass ein Profil direkt über die URL jedes Dienstes abgerufen werden kann. Für nicht unterstützte URLs verweist die Oberfläche auf den Import durch Einfügen des Inhalts. Eine Statusanzeige für alle 7 Dienste bedeutet nicht, dass dafür jeweils eigene Exportformate oder API-Integrationen umgesetzt wurden.
+
+Mit synthetischen Daten wurden JSON-Import, Vergleich mit vorhandenen Werten, Anwendung ausgewählter Felder, Rücknahme und die mobile Darstellung geprüft. Die Abnahme vom Import bis zum Speichern und Veröffentlichen mit einem echten Konto muss separat erfolgen.
 
 ## Aus importiertem Text keine Qualifikationen oder Rechte ableiten
 
-Formulierungen in einer Biografie oder auf einer externen Seite belegen nicht automatisch eine Qualifikation, Zugehörigkeit, Kategorie oder Lizenz. Trennen Sie beschreibenden Text, der als Vorschlag importiert werden kann, von Angaben, für die eine Identitätsprüfung oder ein Antrag erforderlich ist. Neue Informationen an anderer Stelle aktualisieren oder veröffentlichen das bestätigte Profil nicht automatisch.
+Formulierungen in einer Biografie oder auf einer externen Seite belegen für sich allein keine Qualifikation, Zugehörigkeit, Kategorie oder Lizenz. Trennen Sie beschreibende Texte, die als Vorschläge importiert werden können, von Informationen, die eine Identitätsprüfung oder einen Antrag erfordern. Änderungen externer Informationen aktualisieren oder veröffentlichen ein vom Inhaber bestätigtes Profil nicht automatisch.
 
 ## Speichern und Veröffentlichen als getrennte Entscheidungen behandeln
 
-Importvorschläge übernehmen, den Entwurf speichern und den öffentlichen Snapshot aktualisieren sind getrennte Aktionen. Speicher-Konflikte müssen noch in der Abnahme geprüft werden; ein erfolgreicher Speichervorgang bedeutet nicht, dass das Profil veröffentlicht wurde. Prüfen Sie Links, auch öffentliche Kalender-URLs, bevor deren Werte veröffentlicht werden, und übernehmen Sie keine privaten Notizen in öffentliche Daten.
+Importvorschläge anzuwenden, den Entwurf zu speichern und die öffentliche Momentaufnahme zu aktualisieren sind getrennte Vorgänge. Auch Speicherkonflikte müssen bei der Abnahme geprüft werden; ein erfolgreicher Speichervorgang bedeutet nicht, dass das Profil veröffentlicht ist. Die profilverantwortliche Person sollte öffentliche Links einschließlich öffentlicher Kalender-URLs vor der Freigabe prüfen. Private Notizen gehören nicht in öffentliche Daten.
 
-## Zugehörige Änderung: HTTPS-Links aus öffentlichen Terminen öffnen
+## Zugehörige Aktualisierung: HTTPS-Links aus öffentlichen Kalenderterminen öffnen
 
-Eine von der Übernahme unabhängige Editor-Änderung ergänzt HTTPS-Links für öffentliche Kalendertermine. Ein Termin öffnet sein Ziel direkt in einem neuen Tab; ohne URL wird er ohne bedienbaren Link angezeigt. Prüfen Sie Format, Länge und das Fehlen eingebetteter Zugangsdaten. Verwenden Sie `noopener noreferrer` und nennen Sie das Öffnen des neuen Tabs im zugänglichen Namen.
+Eine vom Profilimport unabhängige Editor-Erweiterung ergänzt HTTPS-Links für öffentliche Kalendertermine. Ein Termin öffnet sein Ziel direkt in einem neuen Tab; Termine ohne URL bleiben ohne bedienbaren Link sichtbar. Prüfen Sie URL-Format, eingebettete Zugangsdaten und Eingabelänge. Verwenden Sie **noopener noreferrer** und nennen Sie das Öffnen eines neuen Tabs im zugänglichen Namen.
 
-Die zugehörigen Formulare entfernen zudem ein unnötiges Titelfeld für Kooperationszeitfenster sowie private Notizfelder. Datenbankänderungen, CI, Produktionsbereitstellung und Anzeigen mit Prüfdaten wurden kontrolliert. Die Anmeldung eines tatsächlichen Eigentümers mit anschließendem Speichern und Veröffentlichen eines echten Termins bleibt ungeprüft.
+In den zugehörigen Formularen wurden außerdem das unnötige Titelfeld bei Verfügbarkeitszeiten für Zusammenarbeit und Felder für private Notizen entfernt. Datenbankänderungen, CI, Produktionsbereitstellung und Ansichten mit Prüfdaten wurden kontrolliert. Die Abnahme durch eine eingeloggte Person, die einen echten Termin speichert und veröffentlicht, ist noch nicht bestätigt.
 
-## Was geprüft wurde und welche Abnahme noch folgt
+## Was bestätigt wurde und welche Abnahme noch aussteht
 
-Implementierung, Integration und Produktivsetzung des Importablaufs in Stufe 1 wurden bestätigt. Ein vollständiger Test durch reale Nutzende — vom Import über Bearbeitung und Speichern bis zur Kontrolle der öffentlichen Anzeige — wurde jedoch noch nicht abgeschlossen. Auch die weitergehende Idee, aus der URL einer Aktivitätsplattform automatisch ein vollständiges Profil zu erstellen, ist nicht umgesetzt.
+Umsetzung, Integration und Produktionsbereitstellung des Imports aus Text, CSV, statischem HTML und gemeinsamem JSON sind bestätigt. Ein vollständiger Ablauf mit einer realen Person – vom Import über Bearbeitung und Speichern bis zur Kontrolle der veröffentlichten Ansicht – wurde jedoch noch nicht getestet. Auch die weitergehende Idee, ein komplettes Profil automatisch aus einer URL eines Aktivitätsdienstes zu erstellen, ist nicht fertig.
 
 Zu den Grenzen veröffentlichten CSS siehe [Sicheres Benutzer-CSS und versionierte öffentliche Designs](/insights/user-css-versioned-theme-safety/). Zu Login-Grenzen siehe [Sitzungslebenszyklen über mehrere Dienste hinweg](/insights/multi-service-session-lifecycle/).

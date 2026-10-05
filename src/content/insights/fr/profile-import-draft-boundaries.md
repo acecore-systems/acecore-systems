@@ -1,44 +1,51 @@
 ---
-title: "Importer un profil comme brouillon : examen, remplacement et limites de publication"
-description: "Une implémentation généralisée de l’import de profil depuis du texte, un fichier CSV ou du HTML statique. Elle explique la comparaison avec les valeurs actuelles, la sélection et le remplacement des champs, la séparation entre enregistrement et publication, ainsi que les entrées non prises en charge."
+title: "Importer un profil comme brouillon : comparer, choisir et publier avec discernement"
+description: "Une mise en œuvre générique pour importer un profil depuis du texte, un CSV, du HTML statique ou un JSON commun. Elle explique la comparaison des valeurs actuelles, le remplacement sélectif ou l’annulation, et la séparation entre enregistrement et publication."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T02:20:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries.webp
+image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
-  title: "Périmètre de l’implémentation de l’étape 1"
-  text: "L’implémentation, l’intégration et le déploiement en production de l’import depuis du texte, un fichier CSV et du HTML statique ont été confirmés. La recette complète dans un compte réel, de l’import à l’enregistrement et à la publication, reste à effectuer ; la récupération directe par URL et la migration d’images ou d’audio ne font pas partie de cette livraison."
+  title: "Mise en œuvre vérifiée ; réception sur un compte réel en attente"
+  text: "L’importation de texte, CSV, HTML statique et JSON commun a été mise en œuvre, intégrée et déployée en production. La réception complète, de l’importation à l’enregistrement et à la publication sur un compte réel, reste à faire. La récupération automatique depuis les URL propres aux services et la migration d’images ou d’audio ne font pas partie du périmètre achevé."
 ---
 
-Lorsqu’on transfère un profil existant vers un autre éditeur, il faut comparer la valeur actuelle au candidat importé avant de décider d’un remplacement. Ce retour généralisé sur une implémentation de l’étape 1 présente les limites entre import et publication.
+Lorsqu’on transfère un profil existant vers un autre éditeur, il faut comparer les valeurs actuelles aux données candidates avant tout remplacement. Cet exemple anonymisé décrit les limites entre l’importation et la publication d’un profil.
 
 ## Définir d’abord les formats d’entrée pris en charge
 
-Cette étape prend en charge le texte, les fichiers CSV et le HTML statique. Analyser du contenu collé ou un fichier n’équivaut pas à consulter une URL pour en récupérer le contenu. JSON, images, audio, pages dynamiques et API de services externes ne font pas partie de l’implémentation achevée.
+En plus des formats initiaux — texte, CSV et HTML statique — le parcours lit maintenant un fichier JSON commun et propose un modèle à télécharger. Analyser un texte collé ou un fichier ne revient pas à visiter une URL pour en récupérer le contenu. Les formats d’export propres aux services, la récupération automatique par URL, la migration d’images ou d’audio, les pages dynamiques et les API de services externes ne sont pas terminés.
 
-Traitez le HTML uniquement comme une donnée d’entrée : n’exécutez pas ses scripts et ne rendez pas le HTML importé lui-même sur la page publique. Définissez des limites pour la longueur du texte, les champs, les liens et les formats, puis convertissez la source en propositions textuelles utiles au profil.
+Traitez le HTML comme une donnée d’entrée : n’exécutez pas ses scripts et ne rendez pas le HTML importé lui-même sur la page publique. Limitez la longueur du texte, les champs, les liens et les formats d’entrée, puis convertissez la source en propositions textuelles adaptées au profil.
 
-## Distinguer l’examen des propositions de la modification du profil
+## Examiner les propositions avant de remplacer les valeurs existantes
 
-Ne publiez pas immédiatement les résultats de l’analyse ; comparez d’abord les valeurs actuelles aux propositions. La personne propriétaire sélectionne les champs individuellement et peut modifier les valeurs proposées avant de les appliquer à l’éditeur. Chaque champ sélectionné remplace sa valeur actuelle ; il faut donc examiner les différences à chaque import. L’action peut être annulée avant l’enregistrement, mais cela ne signifie pas qu’une protection automatique des modifications manuelles ou une fusion des conflits est achevée.
+Ne publiez pas immédiatement le résultat de l’analyse ; comparez-le d’abord aux valeurs actuelles. La personne propriétaire choisit les champs un par un et peut modifier les propositions avant de les appliquer à l’éditeur. Un champ choisi remplace sa valeur actuelle : il faut donc vérifier les différences à chaque importation. La modification peut aussi être annulée. Ces commandes ne garantissent pas la résolution automatique des conflits avec des modifications faites sur un autre écran ou par une autre personne.
 
-## Ne pas déduire de qualifications ni de droits du texte importé
+## Distinguer le JSON commun de la prise en charge de chaque service
 
-Une formulation dans une biographie ou sur une page externe ne prouve pas automatiquement une qualification, une affiliation, une catégorie ou une licence. Séparez les descriptions pouvant être importées comme propositions des informations qui nécessitent une vérification d’identité ou une demande. De nouvelles informations externes ne mettent pas automatiquement à jour ni ne publient le profil confirmé par sa personne propriétaire.
+L’interface affiche l’état de prise en charge de 7 services d’activité. La lecture de données au format commun ne signifie pas que le profil peut être récupéré directement depuis l’URL de chaque service. Pour les URL non prises en charge, elle propose de coller le contenu. L’affichage de l’état des 7 services ne signifie pas que des exports dédiés ou des intégrations API existent pour chacun.
+
+Des données synthétiques ont servi à vérifier l’import JSON, la comparaison avec les valeurs existantes, l’application des champs choisis, l’annulation et l’affichage sur mobile. La réception complète, de l’importation à l’enregistrement et à la publication sur un compte réel, doit être vérifiée séparément.
+
+## Ne pas déduire des qualifications ou des droits du texte importé
+
+Les formulations d’une biographie ou d’une page externe ne prouvent pas à elles seules une qualification, une affiliation, une catégorie ou une licence. Distinguez les textes descriptifs importables comme propositions des informations qui exigent une vérification d’identité ou une demande. Si les informations externes changent, le profil confirmé par son propriétaire n’est ni modifié ni publié automatiquement.
 
 ## Garder l’enregistrement et la publication comme deux décisions
 
-Appliquer les propositions importées, enregistrer le brouillon et actualiser l’instantané public sont des actions distinctes. Les conflits d’enregistrement doivent encore être couverts par la recette ; un enregistrement réussi ne signifie pas que le profil est publié. Vérifiez les liens, y compris les URL de calendrier public, avant de publier leurs valeurs et ne mélangez pas de notes privées aux données publiques.
+Appliquer les propositions importées, enregistrer le brouillon et mettre à jour la version publique sont des actions distinctes. La réception doit aussi couvrir les conflits d’enregistrement ; une sauvegarde réussie ne signifie pas que le profil est publié. Avant de rendre publics des liens, y compris les URL du calendrier public, demandez au propriétaire de vérifier les valeurs exposées et gardez les notes privées hors des données publiques.
 
-## Mise à jour associée : ouvrir des liens HTTPS depuis les événements publics
+## Mise à jour associée : ouvrir les liens HTTPS des événements du calendrier public
 
-Une amélioration de l’édition distincte de l’importation permet d’ajouter des liens HTTPS aux événements du calendrier public. L’événement ouvre directement sa destination dans un nouvel onglet ; sans URL, il est affiché sans lien actif. Validez le format, l’absence d’identifiants intégrés et la longueur de l’URL. Ajoutez `noopener noreferrer` et annoncez l’ouverture du nouvel onglet dans le nom accessible.
+Une évolution distincte de l’importation ajoute des liens HTTPS aux événements du calendrier public. Un événement ouvre directement sa destination dans un nouvel onglet ; sans URL, il reste affiché sans lien actionnable. Validez le format de l’URL, refusez les identifiants intégrés et limitez la longueur de l’entrée. Ajoutez **noopener noreferrer** et indiquez l’ouverture d’un nouvel onglet dans le nom accessible.
 
-Les formulaires associés retirent aussi un titre inutile des créneaux disponibles pour collaborer et les champs de notes privées. Les modifications de base de données, la CI, le déploiement en production et l’affichage de données de vérification ont été contrôlés. La connexion du propriétaire, l’enregistrement d’un événement réel et sa publication restent non vérifiés.
+Les formulaires associés suppriment aussi le champ de titre superflu des créneaux de disponibilité pour collaborer et les champs de notes privées. Les changements de base de données, la CI, le déploiement en production et les écrans utilisant des données de vérification ont été contrôlés. La réception par une personne propriétaire qui se connecte, enregistre un événement réel et le publie reste non vérifiée.
 
-## Ce qui a été vérifié et les prochaines étapes de recette
+## Éléments vérifiés et prochaine réception
 
-L’implémentation, l’intégration et le déploiement en production du flux d’import de l’étape 1 ont été confirmés. En revanche, le test complet par une personne utilisant réellement le service — import, modification, enregistrement et vérification de l’affichage public — n’a pas été effectué. Le projet plus large de création automatique d’un profil entier depuis l’URL d’une plateforme d’activité n’est pas achevé non plus.
+La mise en œuvre, l’intégration et le déploiement en production de l’importation depuis du texte, un CSV, du HTML statique et un JSON commun sont confirmés. Toutefois, un parcours complet réalisé par une personne réelle, de l’importation et de la modification jusqu’à l’enregistrement et au contrôle du résultat publié, n’a pas été testé. Le projet plus vaste de générer automatiquement un profil complet à partir de l’URL d’un service d’activité n’est pas terminé non plus.
 
-Pour les limites du CSS publié, consultez [CSS utilisateur sûr et thèmes publics versionnés](/insights/user-css-versioned-theme-safety/). Pour celles de la connexion, consultez [Cycle de vie des sessions entre services](/insights/multi-service-session-lifecycle/).
+Pour les limites du CSS publié, consultez [CSS utilisateur sûr et thèmes publics versionnés](/insights/user-css-versioned-theme-safety/). Pour les limites de connexion, consultez [Cycle de vie des sessions entre services](/insights/multi-service-session-lifecycle/).
