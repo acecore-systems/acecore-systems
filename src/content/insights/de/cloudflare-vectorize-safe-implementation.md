@@ -2,7 +2,7 @@
 title: "Cloudflare-Vectorize-Implementierungsleitfaden: Öffentliches HTML sicher synchronisieren"
 description: "Ein ausführlicher Leitfaden, um einen Corpus aus öffentlichem HTML zu erstellen, Pagefind verfügbar zu halten und Vectorize sicher zu synchronisieren."
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Cloudflare", "Vectorize", "Workers AI", "Website-Suche"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -473,3 +473,11 @@ Das Ergebnis lässt sich knapp zusammenfassen:
 - „Implementierung“, „lokale Prüfung“, „Prüfung der Preview-Oberfläche“ und „Production“ als getrennte Zustände dokumentieren
 
 Mit diesen Grenzen lässt sich Vectorize nicht nur als einmalige AI-Funktion, sondern als kontinuierlich aktualisierbare Suchinfrastruktur betreiben.
+
+## Ergänzung vom 6. Oktober 2026: Keine Treffer von ungültigen Antworten unterscheiden
+
+Eine Suche ohne Treffer ist etwas anderes als ein Abruffehler, eine HTTP-Antwort außerhalb des 2xx-Bereichs oder ein ungültiges Antwortformat. In einer anonymisierten Änderung der Antwortverarbeitung werden Abruffehler und ungültige Antworten nicht mehr als bestätigte Suche behandelt, aus der anschließend eine öffentliche Antwort erzeugt werden könnte. Der Rückfall der Suchoberfläche auf statisches Pagefind bleibt außerdem von der Entscheidung getrennt, eine quellenbasierte Antwort extern zu versenden.
+
+Auch eine reguläre Suche mit null Treffern garantiert keine Antwort, die durch Belege gestützt ist. Inhaltserzeugung, Prüfung vor dem Versand und betriebliche Freigabe bilden getrennte Grenzen. Der Zusammenhang zwischen Gesprächszustand und erfüllbaren Zusagen wird in [Leitplanken für KI-Antworten](/insights/ai-reply-capability-guardrails/) erläutert.
+
+Diese Stoppbedingung bei Abruffehlern wurde im korrigierten Code und bei der PR-Prüfung bestätigt. Aus den Aufzeichnungen geht weder eine Produktivbereitstellung dieses Ablaufs noch seine Anwendung auf echte Antworten hervor; er wird nicht als laufende Funktion dargestellt.

@@ -2,6 +2,7 @@
 title: "统一多个服务的登录期限：会话更新与重新认证的边界"
 description: "区分主动登录、服务器期限、Cookie与认证平台设置，整理多个Web服务的登录期限设计和验证范围。"
 date: "2026-09-30T13:37:47+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/multi-service-session-lifecycle.webp
 tags: ["Authentication", "Session", "Web"]
@@ -36,3 +37,13 @@ callout:
 历史记录确认了规则变更、生产部署和配置差异审计机制。此次验证记录未包含真实用户登录或等到实际期限结束的测试，不能证明每个用户设备都经过真实时间边界测试，或所有失效与重新认证条件均安全。期限及额外验证应按数据和操作的重要性决定。
 
 一般检查可参考[OWASP会话管理](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)与[认证](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)。其他会话层的例子可参见[Cloudflare会话管理](https://developers.cloudflare.com/cloudflare-one/access-controls/access-settings/session-management/)。本文的检查建议不表示本案例全部已执行。
+
+## 2026年10月6日补充：认证流程延续与应用权限
+
+匿名化的认证改进记录把OIDC callback到达、token验证、原认证请求的延续以及应用权限分别处理。延续所需context丢失时，返回可安全重新开始的明确错误，不把它当作登录成功。返回目标也要验证；登录共用账户并不授予所有应用的业务权限。
+
+登录、注册、认证provider的添加与删除、恢复路径都要检查同一契约。修改和部署记录并不能证明所有provider、所有用户的真实登录受验已完成，也不能证明已完整测试最后一种恢复方式不会丢失。
+
+附加认证因素、身份提供方登录、访问网关、应用的受保护写入分别验证。限定的写入canary不能替代所有正式OIDC路径或停用账户的拒绝测试。注册、初始设置、修改界面与API共用输入规则，以相同测试检查边界值的拒绝与接受；不把某个字符数当作普遍标准。
+
+登录与注册的界面及callback提示也要分开。显示和health检查不是外部账户实际创建、同意完成的证据。移除provider时，一起盘点按钮、callback、配置、提示与测试，并检查残留路径。

@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize 实现指南：安全同步已发布 HTML"
 description: "详细说明如何从已发布 HTML 创建 corpus、保留 Pagefind，并安全运行 Vectorize 同步。"
 date: 2026-07-31T12:00
-lastUpdated: 2026-09-28T12:00
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "Workers AI", "站内搜索"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -473,3 +473,11 @@ Pages Preview
 - 将“实现”“本地验证”“Preview 界面确认”“Production”记录为不同状态
 
 如果先建立这些边界，Vectorize 就不再是一次性 AI 功能，而更容易作为可持续更新的搜索基础设施运行。
+
+## 2026年10月6日补充：区分零匹配与异常响应
+
+没有搜索匹配，与获取失败、非2xx或响应格式异常不同。匿名化的回复改进避免把异常或失败获取当作已确认参考资料而继续生成公开回复。搜索UI回退到静态Pagefind，与依据参考资料决定是否发送外部回复，应分别处理。
+
+有效的零条结果也不证明有依据的答案已生成。生成内容、发送前检查、运行批准是不同边界。会话状态与可执行承诺的照合见[AI回复防护](/insights/ai-reply-capability-guardrails/)。
+
+此获取异常停止条件仅在修改代码与PR审查中确认。记录未证明该路径已部署或应用于真实回复，因此不作为正在生产运行的功能介绍。

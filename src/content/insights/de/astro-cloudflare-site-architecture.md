@@ -2,7 +2,7 @@
 title: "Eine Astro + Cloudflare Website Schritt für Schritt erweitern"
 description: "Wie wir Astro und Cloudflare Pages mit AI-Kontaktchat, Sveltia CMS, mehrsprachigem Blog, Service-CTA, sicherem Markdown-Rendering und Kommentaren ohne externen Dienst kombiniert haben."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -201,3 +201,9 @@ Siehe [Worker-Umgebungen](https://developers.cloudflare.com/workers/wrangler/env
 Ergänzt am 30. September 2026. Öffentliche Feeds wie RSS einzulesen unterscheidet sich von der RSS-Ausgabe. Begrenzen Sie Wartezeit und Wiederholungen, damit vorübergehende Fehler einen Job nicht unbegrenzt laufen lassen.
 
 Behandeln Sie Quellen getrennt. Ein fehlgeschlagener Abruf sollte unabhängig aktualisierbare Eingaben nicht stoppen. Melden Sie Teilerfolg nicht als Gesamterfolg: halten Sie Ergebnisse je Quelle und verbleibende Fehler im Bericht fest. Prüfen Sie Abruf, erzeugte Daten, Produktions-Builds und öffentliche Seiten getrennt. Dies sind allgemeine Prüfungen, kein Nachweis aller Fehlerfälle oder künftiger Integrationen.
+
+## Ergänzung vom 6. Oktober 2026: API-Vertrag und Prüfumfang für Anhänge
+
+In einer anonymisierten Änderung wurde ein Ablauf korrigiert, bei dem eine Abweichung zwischen den Session- und Limit-Verträgen von Frontend und Backend die Antwort in einen 503-Fehler verwandelte, obwohl der Vorgang bereits erfolgreich war. HTTP-Ergebnis, gespeicherter Zustand und Anzeige in der Oberfläche werden getrennt abgeglichen; Wiederholungen des Clients werden so behandelt, dass kein doppelter Schreibvorgang entsteht.
+
+Ein angezeigtes Anhangsfeld bedeutet außerdem nicht, dass Übertragung, Speicherung und erneuter Abruf einer echten Datei geprüft wurden. Eine Änderung an Oberfläche oder API allein schließt diese Prüfung nicht ab. Die Grenzen zwischen einer statischen öffentlichen Website und einer privaten Administrationsoberfläche beschreibt [Authentifizierung und Aggregation des privaten Dashboards](/insights/private-dashboard-access-and-aggregation/); der Abgleich externer Zahlungszustände wird unter [Webhook-Statusverwaltung](/insights/cloudflare-payment-event-boundaries/) behandelt.

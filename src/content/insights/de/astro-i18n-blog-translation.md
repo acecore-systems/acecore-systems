@@ -2,7 +2,7 @@
 title: "Astro 7 Website für 9 Sprachen fit machen ― Blogübersetzung und mehrsprachige Architektur"
 description: "Dokumentation der Neun-Sprachen-Einführung mit Astro 7.1.3 und UnoCSS im Juli 2026, ergänzt um Hinweise auf aktuelle Abhängigkeiten und Übersetzungen."
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Website"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ Die Website nutzt derzeit die integrierten i18n-Funktionen von Astro 7.1.3 für 
 - **CMS-Unterstützung**: Artikel jeder Sprache einzeln in Pages CMS bearbeitbar
 
 Übersetzungsdateien werden weiterhin schrittweise ergänzt. Bis eine Übersetzung existiert, wird nur der japanische Artikel veröffentlicht; mit der Locale-Datei werden Artikel-URL, Sitemap-Eintrag und hreflang-Beziehung für diese Sprache aktiviert.
+
+## Ergänzung vom 6. Oktober 2026: Sprache und Fehler auf Authentifizierungsseiten
+
+Neben der Übersetzung öffentlicher Artikel brauchen auch Authentifizierungsseiten eine einheitliche Sprachauswahl. In einer anonymisierten Änderung wurde die Sprache der Reihe nach anhand unterstützter Werte in ui_locales, Accept-Language und der Standardsprache gewählt; für nicht unterstützte Werte gab es einen sicheren Rückfall. Bekannte OIDC-Fehler wurden in gemeinsame Anzeigetexte umgewandelt. Unbekannte Fehler geben keine unbearbeiteten internen Meldungen aus.
+
+Seitenbeschriftungen, API-Fehler und Hinweise nach der Registrierung werden gemeinsam geprüft. Dass das Blog in neun Sprachen verfügbar ist, bedeutet nicht, dass jede Authentifizierungsseite oder der tatsächliche Registrierungsablauf abgenommen wurde.
+
+Die Sprache bleibt auch bei Anmeldung, Kontoverwaltung, Zustimmung und Einmalcodes erhalten; OIDC-Locale und State werden während der Übergänge beibehalten. Die geprüften URL-, Content-Language- und Schmalbildschirm-Ergebnisse sind von einer Abnahme durch Nutzende in allen Sprachen zu unterscheiden.

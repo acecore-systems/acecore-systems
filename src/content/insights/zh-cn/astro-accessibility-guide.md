@@ -2,7 +2,7 @@
 title: "Astro网站无障碍改进实践指南"
 description: "记录2026年3月Astro + UnoCSS网站的无障碍改进，包括ARIA、对比度、焦点、表单和屏幕阅读器示例。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技术", "Astro", "无障碍"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -238,3 +238,9 @@ shortcuts: {
 2026年9月30日补充。 迁移到 Tailwind CSS v4 后，应在生产页面再次确认原有 CSS reset 与 Preflight 的关系、CMS 图标、可见焦点和减少动态效果。是否关闭 Preflight 应结合现有样式决定，而非推荐给所有网站。
 
 [Tailwind v4](https://tailwindcss.com/docs/upgrade-guide) / [Preflight](https://tailwindcss.com/docs/preflight)
+
+## 2026年10月6日补充：认证按钮与注册后的引导
+
+匿名化的改进替换为认证provider的官方图标，并检查了生产显示。可让读屏了解目的的名称是独立验证项。不能只依赖图标，还要检查按钮名称、键盘focus和注册后下一步的入口。
+
+引导与focus实现检查，与用户实际完成注册的受验不同。这些记录尚未确认实际注册全流程或读屏测试，也不证明适配所有provider和辅助技术。

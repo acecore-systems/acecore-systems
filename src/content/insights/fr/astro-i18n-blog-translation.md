@@ -2,7 +2,7 @@
 title: "Comment faire supporter 9 langues à un site Astro 7 ― Traduction du blog et architecture multilingue"
 description: "Retour sur la mise en place de neuf langues avec Astro 7.1.3 et UnoCSS en juillet 2026, avec renvoi aux dépendances et traductions actuelles."
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Site web"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ Le site utilise actuellement les fonctions i18n natives d'Astro 7.1.3 pour produ
 - **Support CMS** : Les articles de chaque langue sont éditables individuellement dans Pages CMS
 
 Les fichiers de traduction continueront d'être ajoutés progressivement. Tant qu'une traduction n'existe pas, seul l'article japonais est publié ; l'ajout du fichier de locale active son URL, son entrée sitemap et sa relation hreflang.
+
+## Ajout du 6 octobre 2026 : langue et erreurs des écrans d’authentification
+
+En plus de la traduction des articles publics, les écrans d’authentification doivent proposer un choix de langue cohérent. Dans une modification anonymisée, la langue a été choisie dans cet ordre parmi les valeurs prises en charge de ui_locales, Accept-Language, puis la langue par défaut ; les valeurs non prises en charge bénéficient d’une solution de repli sûre. Les erreurs OIDC connues ont été converties en messages communs pour l’interface, tandis que les erreurs inconnues n’affichent pas de messages internes bruts.
+
+Les libellés des pages, les erreurs renvoyées par l’API et les indications après l’inscription sont vérifiés ensemble. La disponibilité du blog en neuf langues ne signifie pas que chaque écran d’authentification ni le parcours réel d’inscription ont été validés.
+
+La langue est également conservée pendant la connexion, la gestion du compte, le consentement et l’utilisation des codes à usage unique ; locale et state OIDC sont maintenus pendant les transitions. Les URL, Content-Language et l’affichage sur écran étroit ont été vérifiés dans le périmètre observé, séparément de la recette par des utilisateurs dans toutes les langues.

@@ -2,7 +2,7 @@
 title: "Como fazer um site Astro 7 suportar 9 idiomas ― Tradução do blog e arquitetura multilíngue"
 description: "Registro da adoção de nove idiomas com Astro 7.1.3 e UnoCSS em julho de 2026, com referências às dependências e ao fluxo de tradução atuais."
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "i18n", "Site"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ O site usa atualmente os recursos i18n nativos do Astro 7.1.3 para gerar sua ver
 - **Suporte CMS**: Os artigos de cada idioma são editáveis individualmente no Pages CMS
 
 Os arquivos de tradução continuarão sendo adicionados gradualmente. Até existir uma tradução, apenas o artigo japonês é publicado; adicionar o arquivo do locale ativa sua URL, entrada no sitemap e relação hreflang.
+
+## Atualização de 6 de outubro de 2026: idioma e erros nas telas de autenticação
+
+Além da tradução de artigos públicos, as telas de autenticação precisam oferecer uma seleção de idioma consistente. Em uma alteração anonimizada, o idioma foi escolhido, nesta ordem, entre os valores aceitos de ui_locales, Accept-Language e o idioma padrão; valores não aceitos recebem uma alternativa segura. Erros OIDC conhecidos foram convertidos em mensagens comuns para a interface, enquanto erros desconhecidos não exibem mensagens internas sem tratamento.
+
+São conferidos em conjunto os rótulos da página, os erros retornados pela API e as instruções exibidas após o cadastro. A disponibilidade do blog em nove idiomas não significa que todas as telas de autenticação ou o fluxo real de cadastro tenham sido aceitos.
+
+O idioma também é mantido durante login, gerenciamento da conta, consentimento e uso de códigos de uso único; locale e state do OIDC são preservados durante as transições. As URLs, o Content-Language e a exibição em telas estreitas foram verificados dentro do escopo confirmado, separadamente da aceitação por usuários de todos os idiomas.

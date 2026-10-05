@@ -2,7 +2,7 @@
 title: "Technisches Design zur Übergabe des Kontexts eines Service-CTA an das Kontaktformular"
 description: "Implementierungsdesign, das den auf einer Serviceseite gelesenen Kontext an das Kontaktformular übergibt. Behandelt werden Mini-CTAs in Astro, der URL-Parameter-Vertrag, die anfängliche Kategorieauswahl, Subject-Prefill, mehrsprachige URLs, GA-Messung und Prüfung des generierten HTML."
 date: 2026-06-07T13:00
-lastUpdated: "2026-09-26T19:38:11+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -405,3 +405,11 @@ Wichtige Punkte waren:
 - Nach dem build Link- und option-Anzahl sowie das Fehlen unnötiger Felder prüfen
 
 Formularverbesserung bedeutet nicht nur weniger Eingabefelder. Wird der gelesene Kontext bis zum empfangenden Team übertragen, wird die tatsächliche Bearbeitung einfacher.
+
+## Ergänzung vom 6. Oktober 2026: Vom Kontaktformular zum Verwaltungsdatensatz
+
+In einer anonymisierten Integration wurden der Eingang einer Anfrage, ihre Übernahme in CRM-Verlauf und Aufgaben sowie der Abschluss der Bearbeitung durch das Team als getrennte Zustände behandelt. URL-Werte und Kontaktwege werden geprüft; die Kanalwerte werden einem stabilen Enum zugeordnet. Die URL der Administrationsoberfläche zu kennen, berechtigt nicht dazu, Verlauf oder Aufgaben zu ändern.
+
+Auch die API prüft die nutzende Person und ihre Berechtigungen. Kundendaten werden weder in die öffentliche Suche noch in öffentliche KI-Antworten übernommen. Eine abgeschlossene Implementierung von Annahme und Erfassung bedeutet nicht, dass der vollständige Ablauf vom Kontakt mit echten Kunden bis zum Abschluss der Bearbeitung getestet wurde.
+
+Die Formularvorbelegung wird von den Eingaben der Person getrennt. Ist ein Rückruf erforderlich, wird der bevorzugte Kontaktweg als verpflichtende feste Auswahl erfasst und an die nachfolgende Aufgabe übergeben. Die Pflichtangaben in Oberfläche und API sowie die Lese- und Ergänzungsrechte des Teams werden aufeinander abgestimmt; nach einer Datenbankänderung werden Schema und Constraints geprüft. Notwendige Prüfungen in der Produktion bleiben davon getrennt, die gesamte Datenbank echter Kunden in eine Entwicklungsumgebung zu kopieren.

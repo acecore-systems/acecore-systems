@@ -2,7 +2,7 @@
 title: "Trampas y soluciones de Astro View Transitions — Guía de mejora de UX y calidad de código"
 description: "Soluciones para el problema de scripts que dejan de funcionar con View Transitions de Astro, implementación de búsqueda de texto completo con Pagefind, mejora de seguridad de tipos TypeScript, gestión centralizada de constantes y más. Guía práctica de mejora de UX y calidad de código."
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Sitio web"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ En cuanto a calidad de código, la seguridad de tipos TypeScript y la gestión c
 ## Serie a la que pertenece este artículo
 
 Este artículo es parte de la serie "[Guía de mejora de calidad de sitios Astro](/blog/website-improvement-batches/)". Las mejoras de rendimiento, SEO y accesibilidad también se presentan en artículos individuales.
+
+## Actualización del 6 de octubre de 2026: presentación y estado de las acciones en el Editor
+
+En una mejora anonimizada del Editor se ajustaron el cambio de categoría en pantallas estrechas, la navegación fija, las indicaciones para teclado, las etiquetas de los campos y el foco. El estado público o privado también se sincroniza con el estado de la API y la instantánea pública, en vez de deducirse del aspecto del botón.
+
+Si falta el contexto de autenticación o el contrato entre frontend y backend, la interfaz no indica que el guardado se completó; comunica que hace falta recargar o volver a autenticarse. Que una pantalla vacía de importación esté bien presentada no demuestra la aceptación completa de importar datos reales, guardarlos y publicarlos. El alcance de entrada se describe en [Importación de perfiles](/insights/profile-import-draft-boundaries/) y los límites del CSS público en [Diseño seguro de temas](/insights/user-css-versioned-theme-safety/).
+
+Al reorganizar nombres o categorías, hay que alinear los valores existentes, la API, los filtros y los cambios en la base de datos. Si no hay datos antiguos, no debe afirmarse que se migró contenido real. Si una insignia de estado enlaza con detalles, debe poder activarse tanto con clic como con Enter. Al editar en línea un identificador de URL pública, también se conservan las comprobaciones de formato, duplicados y actualización de la URL. La visualización pública, la reproducción de medios y la invitación a iniciar sesión en modo anónimo se comprobaron por separado de la aceptación de guardar el identificador o cambiar el estado público en el Editor autenticado.
+
+Al reorganizar el área de edición conforme a las nuevas tareas de la persona usuaria, se separan la navegación persistente y el espacio de trabajo; no basta con cambiar los nombres y dejar las acciones antiguas. Los valores auxiliares, como los saldos, pueden tener menos peso visual que las acciones principales, pero deben mantener un tamaño de texto y un contraste legibles.

@@ -2,7 +2,7 @@
 title: "Projeto técnico para levar o contexto de um CTA de serviço ao formulário de contato"
 description: "Projeto de implementação para levar ao formulário o contexto lido em uma página de serviço. Abrange mini CTAs em Astro, contrato de parâmetros de URL, seleção inicial da categoria, prefill do assunto, URLs multilíngues, medição com GA e verificação do HTML gerado."
 date: 2026-06-07T13:00
-lastUpdated: "2026-09-26T19:38:11+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Tecnologia", "Site", "Serviços", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -405,3 +405,11 @@ Os pontos importantes foram:
 - Verificar após o build quantidades de links e option e ausência de campos desnecessários
 
 Melhorar um formulário não é apenas reduzir campos. Levar o contexto que o usuário estava lendo até a equipe receptora facilita o atendimento real.
+
+## Atualização de 6 de outubro de 2026: do formulário de contato ao registro administrativo
+
+Em uma integração anonimizada, o recebimento de uma solicitação, sua inclusão no histórico e nas tarefas do CRM e a conclusão do atendimento pela equipe foram tratados como estados distintos. Os valores de URL e o caminho de contato são validados, e os valores do caminho são associados a um enum estável. Conhecer a URL da interface administrativa não concede permissão para alterar histórico ou tarefas.
+
+A API também verifica a pessoa usuária e suas permissões, e não mistura dados de clientes com a busca pública ou respostas de IA pública. Mesmo com a implementação do recebimento e do registro concluída, não se afirma que o contato com clientes reais até a conclusão do atendimento foi testado de ponta a ponta.
+
+O prefill do formulário é distinguido da informação inserida pela pessoa. Quando a solicitação exige retorno, o canal de contato preferido é obrigatório e escolhido em uma lista fixa, sendo encaminhado à tarefa subsequente. Os requisitos da interface e da API, bem como as permissões da equipe para leitura e acréscimo, são alinhados; após uma alteração no banco de dados, o schema e as constraints são verificados. As verificações necessárias em produção permanecem separadas da cópia de todo o banco de dados de clientes reais para um ambiente de desenvolvimento.

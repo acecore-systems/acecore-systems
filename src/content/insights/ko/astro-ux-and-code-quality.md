@@ -2,7 +2,7 @@
 title: "Astro View Transitions의 함정과 해결책 — UX 및 코드 품질 개선 가이드"
 description: "Astro View Transitions에서 스크립트가 작동하지 않는 문제의 해결 패턴, Pagefind 전문 검색 도입, TypeScript 타입 안전성 강화, 상수 중앙 관리 등 UX와 코드 품질 개선을 위한 실전 가이드."
 date: 2026-03-25T13:00
-lastUpdated: "2026-09-26T18:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["기술", "Astro", "웹사이트"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -284,3 +284,13 @@ View Transitions를 사용한다면, **스크립트 초기화 패턴을 통일�
 ## 시리즈 소개
 
 이 글은 "[Astro 사이트 품질 개선 가이드](/blog/website-improvement-batches/)" 시리즈의 일부입니다. 성능, SEO, 접근성 개선에 대해서는 별도 글에서 다루고 있습니다.
+
+## 2026년 10월 6일 추가: Editor의 표시와 조작 상태
+
+익명화한 Editor 개선에서는 좁은 화면의 분류 이동, 고정 내비게이션, 키보드 안내, 항목 라벨과 focus를 조정했습니다. 공개·비공개 표시는 버튼 외형이 아닌 API 상태와 공개 snapshot에 맞춥니다.
+
+인증 계속 정보나 frontend/backend 계약이 없으면 저장 성공으로 표시하지 않고 새로고침·재인증 필요성을 안내합니다. 빈 가져오기 화면의 정리는 실제 데이터 가져오기·저장·공개의 수용 증거가 아닙니다. 입력 구현 범위는[프로필 가져오기](/insights/profile-import-draft-boundaries/), 공개 CSS는[테마 안전 설계](/insights/user-css-versioned-theme-safety/)에서 설명합니다.
+
+명칭이나 분류를 재편하면 기존 값·API·filter·DB 변경을 맞춥니다. 기존 데이터가 0건이면 실제 콘텐츠를 이전한 실적이 아닙니다. 상세 링크인 상태 배지는 클릭과 Enter로 접근해야 합니다. 공개 URL 식별자의 인라인 편집에도 형식·중복·URL 반영 검증을 유지합니다. 공개 표시·미디어 재생·익명 로그인 이동의 확인과 로그인한 Editor의 식별자 저장·공개 상태 변경 수용은 다릅니다.
+
+기존 편집 영역을 사용자의 새 작업 단위로 재편할 때 지속 내비게이션과 작업 영역을 나누고 이름만 바꾼 채 옛 조작을 남기지 않습니다. 잔액 같은 보조 숫자는 주요 조작보다 약하게 표현해도 읽을 수 있는 크기와 contrast를 유지합니다.

@@ -2,7 +2,7 @@
 title: "Astro + Cloudflare 사이트를 기능별로 확장하는 전체 설계"
 description: "Astro와 Cloudflare Pages를 기반으로 문의 AI, Sveltia CMS, 다국어 블로그, 서비스 CTA, 안전한 Markdown 렌더링, Cloudflare만으로 만든 댓글 기능을 하나의 구조로 정리합니다."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["기술", "Astro", "Cloudflare", "웹사이트", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -201,3 +201,9 @@ Cloudflare의 [Worker 환경](https://developers.cloudflare.com/workers/wrangler
 2026년 9월 30일 추가. RSS 등 공개 피드를 가져오는 작업은 RSS를 내보내는 작업과 별개입니다. 대기 시간과 재시도 횟수를 제한해 일시적 실패로 작업이 무한히 이어지지 않게 합니다.
 
 입력원별 실패를 따로 다룹니다. 하나의 가져오기가 실패해도 독립적으로 갱신할 수 있는 다른 입력까지 중단하지 않습니다. 일부 성공을 전체 성공으로 보고하지 말고 입력원별 결과와 남은 실패를 보고서에 남깁니다. 가져오기, 생성 데이터, 운영 빌드, 공개 페이지도 따로 확인합니다. 일반적인 설계 점검이며 모든 장애 조건이나 향후 입력원 적용을 입증한 것은 아닙니다.
+
+## 2026년 10월 6일 추가: API 계약과 첨부 검증 범위
+
+익명화한 개선은 frontend/backend의 session·limit 계약 불일치로 처리 성공 뒤 응답이 503이 되는 경로를 수정했습니다. HTTP 결과·저장 상태·UI 표시를 별도로 대조하며 클라이언트 재전송으로 쓰기가 중복되지 않게 처리합니다.
+
+첨부 칸 표시와 실제 파일 전송·저장·재조회 검증은 다릅니다. UI·API 수정만으로 후자를 완료로 보지 않습니다. 비공개 관리 경계는[대시보드 인증과 집계](/insights/private-dashboard-access-and-aggregation/), 결제 외부 상태 대조는[Webhook 상태 관리](/insights/cloudflare-payment-event-boundaries/)에서 설명합니다.

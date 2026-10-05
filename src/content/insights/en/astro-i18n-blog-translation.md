@@ -2,7 +2,7 @@
 title: "Making an Astro 7 Site Support 9 Languages — Blog Translation and Multilingual Architecture"
 description: "A record of the July 2026 nine-language Astro 7.1.3 and UnoCSS rollout, with pointers to the current dependencies and translation workflow."
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "i18n", "Website"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ The site currently uses Astro 7.1.3's built-in i18n features to provide multilin
 - **CMS Support**: Each language's articles editable individually in Pages CMS
 
 Translation files will continue to be added incrementally as new articles are published. Until a translation exists, only the Japanese article is published; adding a locale file enables that locale's article URL, sitemap entry, and hreflang relationship.
+
+## October 6, 2026 update: language and errors in authentication screens
+
+Authentication screens need consistent language selection alongside translated articles. The anonymized change selects a supported `ui_locales` value, then `Accept-Language`, then the default language, with a safe fallback for unsupported values. Map known OIDC errors to shared user-facing messages; unknown errors must not expose raw internal messages.
+
+Check page labels, API errors, and post-registration guidance together. Nine-language blog support does not demonstrate acceptance of every authentication screen or actual registration path.
+
+Carry the language through sign-in, account management, consent, and one-time codes, preserving OIDC locale and state during navigation. The verified URL, Content-Language, and narrow-screen displays are distinct from acceptance by users in every language.

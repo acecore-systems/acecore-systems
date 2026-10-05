@@ -2,6 +2,7 @@
 title: "R2与restic备份监控：从保存成功到恢复验证"
 description: "分别检查快照新鲜度、仓库完整性与数据恢复，并说明尚未验证的应用恢复范围。"
 date: "2026-09-30T20:53:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 image: /images/insights/restic-r2-backup-verification.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -32,3 +33,11 @@ callout:
 ## 剩余恢复检查
 
 已进行定期运行、监控通知、保留处理和选定数据的提取及完整性检查。所有应用启动、配置和依赖恢复、独立保管凭据的取回仍需端到端验证；恢复时间和可接受的数据损失也需实测。本文不宣称完整灾难恢复或已证实的费用节省。
+
+## 2026年10月6日补充：过期lock与恢复检查占用
+
+追加改进在同一主机取得操作独占权后使用普通 `restic unlock`，只处理过期lock，不用 `--remove-all` 清除活动lock。用有上限的 `--retry-lock` 处理竞争，恢复检查与prune失败后不无限重启。主机内独占不能单独证明没有其他主机竞争。
+
+以 `restore --verify` 恢复到隔离的临时目录，检查目标所需文件与一致性后，记录验证snapshot及对应配置。先确认恢复，再检查保留目标并prune。备份新鲜度依据实际成功的snapshot，而不是启动或重试。
+
+目标数据取出与包含所有应用启动、凭据恢复的完整恢复仍是不同范围。维护窗口及获取失败的处理见[监控与故障调查](/insights/openclaw-monitoring-investigation/)。

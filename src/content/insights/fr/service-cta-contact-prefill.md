@@ -2,7 +2,7 @@
 title: "Conception technique pour transmettre le contexte d’un CTA de service au formulaire de contact"
 description: "Conception d’implémentation permettant de transmettre au formulaire le contexte lu sur une page de service. Elle couvre les mini-CTA dans Astro, le contrat de paramètres URL, la sélection initiale de catégorie, le prefill de l’objet, les URL multilingues, la mesure GA et la vérification du HTML généré."
 date: 2026-06-07T13:00
-lastUpdated: "2026-09-26T19:38:11+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technologie", "Site web", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -405,3 +405,11 @@ Les points importants étaient :
 - Vérifier après le build le nombre de liens et d’option ainsi que l’absence de champs inutiles
 
 Améliorer un formulaire ne consiste pas seulement à réduire les champs. Transmettre jusqu’à l’équipe destinataire le contexte consulté facilite réellement le traitement des demandes.
+
+## Ajout du 6 octobre 2026 : du formulaire de contact au suivi administratif
+
+Dans une intégration anonymisée, la réception d’une demande, son ajout à l’historique et aux tâches du CRM, puis la fin du traitement par l’équipe ont été gérés comme des états distincts. Les valeurs d’URL et le canal de contact sont validés, et les valeurs de canal sont associées à un enum stable. Connaître l’URL de l’interface d’administration ne donne pas le droit de modifier l’historique ou les tâches.
+
+L’API vérifie également l’identité de la personne et ses autorisations ; les données client ne sont pas intégrées à la recherche publique ni aux réponses d’une IA publique. L’implémentation de la réception et de l’enregistrement peut être achevée sans que le parcours complet, du contact d’un client réel à la fin du traitement, ait été testé.
+
+Le préremplissage du formulaire est distingué des informations saisies par la personne. Si une demande nécessite un rappel, le canal de contact préféré est obligatoire, choisi dans une liste fixe et transmis à la tâche suivante. Les exigences de l’interface et de l’API ainsi que les droits de lecture et d’ajout de l’équipe sont alignés ; après une modification de la base de données, le schéma et les contraintes sont vérifiés. Les contrôles de production nécessaires restent distincts de la copie de toute la base de données de clients réels dans un environnement de développement.

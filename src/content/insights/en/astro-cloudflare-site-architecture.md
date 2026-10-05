@@ -2,7 +2,7 @@
 title: "Designing an Astro + Cloudflare Website That Can Grow Feature by Feature"
 description: "How we combined Astro and Cloudflare Pages with an AI contact chat, Sveltia CMS, multilingual blog publishing, service CTA handoff, safe Markdown rendering, and Cloudflare-only comments as one extensible website architecture."
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -262,3 +262,9 @@ See Cloudflare's [Worker environments](https://developers.cloudflare.com/workers
 Added September 30, 2026. Ingesting public feeds such as RSS is a different operation from publishing RSS. Bound request time and retry attempts so that checking a transient failure does not keep a job running indefinitely.
 
 Handle sources independently. A failed fetch should not stop other inputs that can be updated separately. Do not report partial success as complete success: retain per-source outcomes and unresolved failures in the job report. Check retrieval, generated data, production builds and public pages separately. These are general design checks, not proof of every failure condition or future source integration.
+
+## October 6, 2026 update: API contracts and attachment verification
+
+The anonymized changes fixed paths where frontend/backend session or limit contract mismatches could turn a response into a 503 even after processing succeeded. Reconcile HTTP results, saved state, and UI display separately, handling client retries so they do not duplicate writes.
+
+An attachment field being displayed differs from verifying real file transfer, storage, and retrieval. UI and API changes alone do not establish the latter. See [dashboard access and aggregation](/insights/private-dashboard-access-and-aggregation/) for private management boundaries, and [webhook state management](/insights/cloudflare-payment-event-boundaries/) for current payment-provider state.

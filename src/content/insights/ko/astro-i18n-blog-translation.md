@@ -2,7 +2,7 @@
 title: "Astro 7 사이트를 9개 언어로 지원하는 방법 ― 블로그 번역과 다국어 아키텍처"
 description: "2026년 7월 Astro 7.1.3과 UnoCSS로 9개 언어를 도입한 기록이며, 현재 의존성과 번역 경로도 안내합니다."
 date: 2026-03-25T10:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["기술", "Astro", "i18n", "웹사이트"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -425,3 +425,11 @@ export const getStaticPaths = () =>
 - **CMS 지원**: Pages CMS에서 각 언어의 글을 개별 편집 가능
 
 번역 파일은 앞으로도 점진적으로 추가합니다. 번역이 생기기 전에는 일본어 글만 공개하며, locale 파일을 추가하면 해당 언어의 글 URL, sitemap 항목, hreflang 관계가 활성화됩니다.
+
+## 2026년 10월 6일 추가: 인증 화면의 언어와 오류
+
+공개 글 번역과 함께 인증 화면에도 일관된 언어 선택이 필요합니다. 익명화한 개선에서는 지원되는 `ui_locales`, `Accept-Language`, 기본 언어 순으로 선택하고 미지원 값에는 안전한 fallback을 적용했습니다. 알려진 OIDC 오류를 공통 안내 문구로 바꾸며, 알 수 없는 오류에도 내부 원문을 표시하지 않습니다.
+
+페이지 라벨, API 오류, 등록 후 안내를 함께 확인합니다. 블로그의 9개 언어 지원만으로 모든 인증 화면과 실제 등록 경로의 수용 검사가 완료되지는 않습니다.
+
+로그인·계정 관리·동의·일회용 코드에서도 언어를 이어가고 OIDC 이동 중 locale과 state를 유지합니다. 확인한 URL·Content-Language·좁은 화면 표시와 모든 언어 사용자의 실제 수용 검사는 구분합니다.

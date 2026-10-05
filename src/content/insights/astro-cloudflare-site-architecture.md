@@ -2,7 +2,7 @@
 title: "Astro + Cloudflareで公式サイトを機能拡張する全体設計"
 description: "AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-09-30T14:39:56+00:00"
+lastUpdated: "2026-10-06T01:10:00+09:00"
 author: gui
 tags: ["技術", "Astro", "Cloudflare", "Webサイト", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -398,3 +398,9 @@ Astroは公開HTMLを作る。Cloudflareは配信と小さなAPI境界を受け�
 2026年9月30日追記。RSSなどの公開フィードを取り込む処理は、RSSを出力する処理とは別の運用です。取得には待ち時間と再試行回数の上限を設け、一時的な失敗を再確認しても、無期限に処理を続けないようにします。
 
 複数の入力元は失敗を個別に扱います。一つの取得に失敗しても、独立して更新できるほかの入力まで停止させない構成にします。一部成功を全件成功とせず、入力元ごとの結果と残る失敗をジョブの報告へ残します。取得の成功、生成データ、本番ビルド、公開ページの確認も分けます。これは一般的な設計確認であり、すべての障害条件や将来の入力元への適用を実証したという意味ではありません。
+
+## 2026年10月6日追記：API契約と添付の確認範囲
+
+匿名化した改修では、frontend/backendのsessionやlimitの契約のずれにより、処理が成功した後でも応答を503へ変えてしまう経路を修正しました。HTTP結果、保存された状態、UI表示を分けて照合し、クライアントの再送が二重の書き込みにならないように扱います。
+
+添付欄が表示されることと、実ファイルの転送・保存・再取得まで確認できたことも別です。UIやAPIの改修だけで後者を完了扱いにはしません。静的公開サイトから非公開管理画面への境界は[ダッシュボードの認証と集計](/insights/private-dashboard-access-and-aggregation/)、決済の外部状態照合は[Webhookの状態管理](/insights/cloudflare-payment-event-boundaries/)に分けて記載しています。
