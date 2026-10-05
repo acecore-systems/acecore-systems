@@ -52,6 +52,7 @@ const tocHeadings = headings.filter(
 );
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat(htmlLangMap[locale], {
+    timeZone: "Asia/Tokyo",
     year: "numeric",
     month: "long",
     day: "numeric",

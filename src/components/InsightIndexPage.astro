@@ -26,6 +26,7 @@ const pageUrl = new URL(canonicalPath, site.siteUrl).href;
 const itemListId = `${pageUrl}#item-list`;
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat(htmlLangMap[locale], {
+    timeZone: "Asia/Tokyo",
     year: "numeric",
     month: "long",
     day: "numeric",
