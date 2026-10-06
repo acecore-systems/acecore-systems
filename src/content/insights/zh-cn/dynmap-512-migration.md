@@ -2,6 +2,7 @@
 title: "如何验证 Dynmap 的 512px 迁移并清理 R2 旧图片"
 description: "记录八台服务器、89 张 Dynmap 地图迁移至 512px 图片后，如何检查公开显示和 R2 旧数据清理。"
 date: "2026-09-27T22:40:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["技术", "Cloudflare"]
@@ -18,6 +19,45 @@ callout:
 正式地图统一采用 512px 瓦片。需要补充渲染的 21 张地图，以公开中心为起点限制在半径 2,000 方块内。我们没有等待整个世界渲染完毕，切换期间仍保持日常更新。
 
 同时改进了 R2 通信失败后的重试、写入失败时待更新内容的保留，以及缩放图片“确实不存在”和“读取出错”的区分。[Dynmap fork PR #9](https://github.com/acecore-systems/dynmap/pull/9) 记录了重启后恢复缩放更新的修复。这些改动并不意味着 Cloudflare 自身不会发生故障。
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-dynmap-512-migration">
+  <figcaption>
+    <strong id="diagram-dynmap-512-migration">先验证新图像，再清理旧数据</strong>
+    <span>先审计公开显示与存储位置再清理。旧图像没有备份，正常运行时的费用节省也尚未确认。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 5l9-3 9 3v14l-9 3-9-3z M12 2v20 M3 5l9 3 9-3 M3 12l9 3 9-3"/>
+        </svg>
+      </span>
+      <strong>限定范围并生成新图</strong>
+      <span>确定 512px 范围和渲染区域，在常规更新继续时分阶段生成新图像。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>审计公开图像与存储位置</strong>
+      <span>分别检查普通与缩放图像、Web 资源、实时 JSON 和正式存储前缀。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16 M9 7V4h6v3 M7 7l1 14h8l1-14"/>
+        </svg>
+      </span>
+      <strong>审计后清理旧数据</strong>
+      <span>审计后删除旧图像与 hash。旧图像没有备份，需要时必须从世界重新渲染。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 分别验证公开地图与存储
 

@@ -2,8 +2,9 @@
 title: "公開画像のエッジキャッシュとAPIの閲覧制限を分ける"
 description: "画像付きコンテンツの連続閲覧で、本文APIと画像取得が同じ制限枠を使っていた事例。公開画像の再利用、正常応答の検証、WAFとアプリの境界、本番確認を整理します。"
 date: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/public-image-cache-and-api-rate-limits.webp
+image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
 callout:
   type: note
@@ -38,6 +39,25 @@ callout:
 動的APIの保護は、画像をキャッシュできることとは別の要件です。この事例ではWAFの集計対象から公開画像のGETを外し、対象となる動的API、制限期間、action、有効状態を適用後に読み直しました。変更前の設定も切戻し用に保存しています。
 
 閾値は通常閲覧で発生する取得数と、保護する処理の負荷に合わせて選びます。[Cloudflareのレート制限](https://developers.cloudflare.com/waf/rate-limiting-rules/)のplan別条件も確認が必要です。リポジトリの運用メモに値があるだけで、本番ruleが有効だとは判断できません。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-public-image-cache-and-api-rate-limits">
+  <figcaption>
+    <strong id="diagram-public-image-cache-and-api-rate-limits">公開画像と動的APIの境界</strong>
+    <span>不変の公開画像の再利用と、動的APIの保護を別に設計します。非公開画像は対象外です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg></span>
+      <strong>公開画像GET</strong>
+      <span>入口を確認し、同じ画像をcacheで再利用。保存は検証した200だけ。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <strong>動的API</strong>
+      <span>WAFとアプリquotaで処理を保護。画像cacheとは別に制限する。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 本番では画像の内容まで照合する
 

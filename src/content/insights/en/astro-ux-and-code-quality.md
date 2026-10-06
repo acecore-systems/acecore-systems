@@ -2,7 +2,7 @@
 title: "Pitfalls and Solutions for Astro View Transitions — A UX and Code Quality Improvement Guide"
 description: "A practical guide covering solutions for scripts breaking with Astro View Transitions, introducing Pagefind full-text search, improving TypeScript type safety, centralizing constants, and more to improve UX and code quality."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Website"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ Missing authentication continuation information or a frontend/backend contract m
 When reorganizing names or classifications, align existing values, APIs, filters, and database changes. Zero old records do not demonstrate migration of real content. A status badge that links to details must work with both click and Enter. Inline editing of public URL identifiers still needs format, uniqueness, and URL-update validation. Public display, media playback, and anonymous sign-in redirects do not establish authenticated identifier saves or publication-state changes.
 
 Reorganize older editing areas around the user’s new work units, separating persistent navigation from the work area and checking that renamed functions do not leave obsolete operations behind. Make supporting figures such as balances visually secondary while preserving readable size and contrast.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">Separate editor actions, API results, and displayed state</strong>
+    <span>An on-screen interaction alone does not prove that saving or publishing succeeded.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Editor action</strong>
+      <span>Moving a category or selecting a work unit changes the editing view.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>API and published snapshot</strong>
+      <span>Check the API result and public snapshot. Do not show success when a request fails or authentication context is missing.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>State after reload</strong>
+      <span>Show only confirmed state and request a reload or reauthentication when needed. Logged-in user acceptance of save and publish remains unverified.</span>
+    </li>
+  </ol>
+</figure>

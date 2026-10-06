@@ -2,8 +2,9 @@
 title: "KI-Antworten dürfen keine unerfüllbaren Versprechen machen"
 description: "So lässt sich verhindern, dass ein Informationsassistent eigenmächtig die Teilnahme, Terminplanung oder spätere Kontaktaufnahme durch Mitarbeitende verspricht. Behandelt werden Gesprächsstatus, Abruffehler, veraltete Entwürfe und geschlossene Gespräche."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ Unterscheide einen Beitrag, der Teilnehmende sucht, von der Aussage einer Person
 ## Alte Entwürfe erneut anhand der aktuellen Bedingungen prüfen
 
 Ein beim Erstellen geprüfter Entwurf kann veraltet sein, wenn sich Gespräch oder Richtlinie ändern. Prüfe ihn unmittelbar vor dem Versand erneut anhand des neuesten Status und sende keine Entwürfe für geschlossene Gespräche. Protokolliere einen ausgelassenen Versand und ein geschlossenes Gespräch getrennt von einem erfolgreichen Versand. Eine Antwort kann auch entfallen, wenn eine unnötige Frage den Austausch nur verlängern würde.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">Belege und Fähigkeit vor der Antwort prüfen</strong>
+    <span>Der Gesprächskontext entscheidet zwischen Antworten und Zurückstellen. Der Produktivbetrieb des Abrufstopps ist unbestätigt.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>Sprecher und Anfrage erfassen</strong>
+      <span>Prüfen, ob es eine Einladung oder Interesse ist, welche Ausgabe gemeint ist und wie der Gesprächsstatus lautet.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>Nur belegt antworten</strong>
+      <span>Nur tatsächlich Machbares mitteilen und unmittelbar vor dem Senden erneut prüfen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>Bei Unklarheit zurückstellen</strong>
+      <span>Fehlerhafte oder fehlgeschlagene Abrufe nicht als gelesen behandeln, sondern an eine Person geben. Wartezeiten begrenzen und Duplikate vermeiden.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Was geprüft wurde und was noch nicht belegt ist
 

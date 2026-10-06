@@ -2,8 +2,9 @@
 title: "Как не допустить невыполнимых обещаний в ответах ИИ"
 description: "Как помешать информационному помощнику самовольно обещать участие сотрудника, планирование встречи или последующий контакт. Разбираются состояние беседы, ошибки поиска, повторная проверка старых черновиков и закрытие беседы."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ callout:
 ## Повторно проверяйте старые черновики по текущим условиям
 
 Черновик, прошедший проверку при создании, может устареть после изменения беседы или политики. Непосредственно перед отправкой проверьте его по последнему состоянию и не отправляйте черновики закрытых бесед. Пропуск отправки и закрытие беседы записывайте отдельно от успешной отправки. Ответ можно не отправлять, если ненужный вопрос лишь затянет переписку.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">Проверяйте основания и возможности до ответа</strong>
+    <span>Контекст беседы определяет, отвечать или приостановить ответ. Работа остановки при сбое поиска в production не подтверждена.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>Определите говорящего и запрос</strong>
+      <span>Проверьте, является ли сообщение приглашением или желанием участвовать, нужную редакцию и состояние беседы.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>Отвечайте в пределах подтверждений</strong>
+      <span>Сообщайте только о том, что действительно можно сделать, и перепроверяйте перед отправкой.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>При сомнении приостановите</strong>
+      <span>Не считайте сбой или неверный формат поиска подтверждением; передайте человеку. Ограничивайте ожидание и подавляйте повторы.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Что проверено и что пока не доказано
 

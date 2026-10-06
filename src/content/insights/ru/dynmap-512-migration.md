@@ -2,6 +2,7 @@
 title: "Как мы проверили переход Dynmap на 512px и удалили старые изображения из R2"
 description: "Операционный отчёт о переходе 89 карт на восьми серверах на изображения 512px и проверке публичной карты и старых данных R2."
 date: "2026-09-27T22:40:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Технологии", "Cloudflare"]
@@ -18,6 +19,45 @@ callout:
 Рабочие карты привели к тайлам 512px. Для 21 карты, требовавшей дополнительной прорисовки, область ограничили радиусом 2 000 блоков вокруг публичного центра. Завершения рендеринга всего мира не ждали; обычные обновления продолжались во время перехода.
 
 Мы также улучшили повторные попытки после ошибок связи с R2, сохранение ожидающих обновлений после ошибок записи и различение отсутствующего тайла масштаба и ошибки чтения. Исправление возобновления обновления масштабных тайлов после перезапуска описано в [PR #9 форка Dynmap](https://github.com/acecore-systems/dynmap/pull/9). Эти изменения не исключают сбоев на стороне Cloudflare.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-dynmap-512-migration">
+  <figcaption>
+    <strong id="diagram-dynmap-512-migration">Удалять старые данные только после проверки новых изображений</strong>
+    <span>Сначала проверить публичную выдачу и хранилище. Старые изображения не сохранены; экономия в обычном режиме не подтверждена.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 5l9-3 9 3v14l-9 3-9-3z M12 2v20 M3 5l9 3 9-3 M3 12l9 3 9-3"/>
+        </svg>
+      </span>
+      <strong>Ограничить область и создать новые тайлы</strong>
+      <span>Определить формат 512px и область рендеринга, создавая новые изображения поэтапно при обычном обновлении.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Проверить публичные изображения и хранилище</strong>
+      <span>Отдельно проверить обычные и масштабные изображения, веб-ресурсы, оперативный JSON и заданные префиксы хранения.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16 M9 7V4h6v3 M7 7l1 14h8l1-14"/>
+        </svg>
+      </span>
+      <strong>Удалить старые данные после аудита</strong>
+      <span>Удалять старые изображения и hash после аудита. Резервной копии нет; при необходимости их нужно заново построить из мира.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Проверять публичную карту и хранилище отдельно
 

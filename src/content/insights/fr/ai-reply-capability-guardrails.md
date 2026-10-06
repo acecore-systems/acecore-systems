@@ -2,8 +2,9 @@
 title: "Empêcher l’IA de promettre ce qu’elle ne peut pas tenir"
 description: "Comment éviter qu’un assistant d’information promette de lui-même la participation, la disponibilité ou le suivi d’un membre de l’équipe. L’article traite de l’état de la conversation, des échecs de récupération, des anciens brouillons et des conversations closes."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ Distinguez une publication qui cherche des participants du message d’une perso
 ## Réexaminer les anciens brouillons selon les conditions actuelles
 
 Un brouillon validé à sa création peut devenir obsolète si la conversation ou la politique change. Vérifiez-le à nouveau selon l’état le plus récent juste avant l’envoi et ne transmettez pas les brouillons de conversations closes. Enregistrez séparément l’envoi omis et la clôture, sans les confondre avec un envoi réussi. Il est aussi possible de ne pas répondre lorsqu’une question inutile ne ferait que prolonger l’échange.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">Vérifier les preuves et la capacité avant de répondre</strong>
+    <span>Le contexte de la conversation détermine s’il faut répondre ou suspendre. Le fonctionnement en production de l’arrêt de récupération n’est pas confirmé.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>Lire l’interlocuteur et la demande</strong>
+      <span>Vérifiez s’il s’agit d’une invitation ou d’un intérêt, la version concernée et l’état de la conversation.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>Répondre avec des preuves</strong>
+      <span>Dire uniquement ce qui peut être fait, puis revérifier juste avant l’envoi.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>Mettre en attente en cas de doute</strong>
+      <span>Ne pas considérer une récupération échouée ou invalide comme consultée ; transférer à une personne. Limiter l’attente et éviter les doublons.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Ce qui a été vérifié et ce qui reste à démontrer
 

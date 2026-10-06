@@ -3,12 +3,13 @@ title: "Aufgabenverteilung in Codex gestalten: das öffentliche Task-Routing-Plu
 description: "Codex Task Routing als Beispiel für unveränderte Elterneinstellungen, nachvollziehbare Richtlinienversionen, begrenzte Übergaben und Prüfung der tatsächlichen Ausführung."
 date: "2026-09-26T18:30:00+09:00"
 author: gui
-image: /images/insights/codex-task-routing-design.webp
+image: /images/insights/covers/codex-task-routing-design-cover-v1.webp
 tags: ["Technologie", "KI", "Entwicklung"]
 callout:
   type: note
   title: "Geprüfter Umfang"
   text: "Geprüft wurden öffentlicher Code, zusammengeführte PRs, CI auf drei Betriebssystemen und die Installation in einer isolierten Umgebung. Dieser Artikel behauptet weder gemessene Qualitäts- oder Nutzungsverbesserungen noch einen verifizierten Kindmodell-Lauf mit einem realen Konto."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Wenn Codex mehrere Arbeiten übernimmt, ist die Modellwahl nur ein Teil der Entscheidung. Ebenso wichtig sind die abgrenzbare Aufgabe, der zu übergebende Kontext und die Prüfung des Ergebnisses. Acecore hat [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) veröffentlicht, um diese Entscheidungen ausdrücklich festzuhalten.

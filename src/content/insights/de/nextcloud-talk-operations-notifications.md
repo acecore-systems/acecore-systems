@@ -2,8 +2,9 @@
 title: "Betriebsalarme an Nextcloud Talk anbinden: Erkennung, Zustellung und Behebung trennen"
 description: "Ein verallgemeinertes Konzept, um Ausnahmen bei der Bestellverarbeitung und prüfpflichtige Inhalte an private Talk-Räume und eine Administrationsoberfläche weiterzuleiten. Behandelt werden minimale Benachrichtigungen, Geheimnisverwaltung, Verbindungstests und klare Abnahmegrenzen."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/nextcloud-talk-operations-notifications.webp
+image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
 callout:
   type: note
@@ -24,6 +25,30 @@ Talk bietet eine [offizielle API zum Senden von Nachrichten durch einen Bot](htt
 ## Erkennung, Zustellung und Bearbeitung als getrennte Ergebnisse erfassen
 
 Ein Ereignis zu erkennen, den Versand anzufordern, eine erfolgreiche API-Antwort zu erhalten, die Nachricht zu empfangen und das Problem zu bearbeiten sind verschiedene Schritte. Ein fehlgeschlagener Alarm bedeutet nicht, dass das betriebliche Problem gelöst ist. Ein erneuter Versuch nur für die Benachrichtigung darf auch keinen Bestellvorgang wiederholen. Beschränken Sie Kundendaten in der Nachricht auf das Nötigste und verwenden Sie einen festen Ursprung für Verwaltungslinks.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-nextcloud-talk-operations-notifications">
+  <figcaption>
+    <strong id="diagram-nextcloud-talk-operations-notifications">Benachrichtigungsnachweise stufenweise erfassen</strong>
+    <span>Bestätigt ist nur der Empfang einer Testnachricht. Betriebliche Erledigung und Smartphone-Push sind nicht verifiziert.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+      <strong>Erkennen und senden</strong>
+      <span>Nur Problemtyp und Link zur geschützten Admin-Oberfläche mit minimalen Angaben senden.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m6 8 6 5 6-5M8 15h3"/></svg></span>
+      <strong>Testempfang bestätigen</strong>
+      <span>API-Sendeergebnis und Nachweis des tatsächlichen Testempfangs getrennt prüfen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.5-4 3.3-6 8-6s7.5 2 8 6"/></svg></span>
+      <strong>Eine Person bearbeitet den Fall</strong>
+      <span>Die betriebliche Abnahme vom Vorfall bis zur Lösung und Smartphone-Push sind nicht verifiziert.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Vom Verbindungstest in der Produktion zur betrieblichen Abnahme
 

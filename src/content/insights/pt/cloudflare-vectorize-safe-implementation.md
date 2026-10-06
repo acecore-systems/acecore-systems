@@ -2,7 +2,7 @@
 title: "Guia de implementação do Cloudflare Vectorize: sincronize HTML público com segurança"
 description: "Um guia detalhado para criar o corpus a partir do HTML público, manter o Pagefind disponível e operar a sincronização do Vectorize com segurança."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags:
   ["Tecnologia", "Cloudflare", "Vectorize", "Workers AI", "Pesquisa interna"]
@@ -197,6 +197,45 @@ Por isso, também separamos a interface.
 O modal de pesquisa atual não pesquisa durante a digitação. Apenas ao executar «Pesquisar» o termo é enviado à API de pesquisa deste site, como informa a interface. O Cloudflare Workers AI `@cf/baai/bge-m3` converte o termo em embedding para compará-lo com as informações públicas do site no Vectorize. Se a pesquisa relacionada falhar ou não retornar resultados, o Pagefind é executado no navegador como fallback. Depois, o termo também pode ser enviado à API de pesquisa compartilhada da Acecore (acecore.net) para mostrar informações públicas de sites relacionados. A interface pede que não sejam inseridos dados pessoais ou confidenciais.
 
 Com essa estrutura, o Vectorize amplia a experiência de pesquisa sem se tornar um ponto único de falha para toda a função.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">Separar resultados de pesquisa e falhas de obtenção</strong>
+    <span>O fallback da busca estática não fundamenta uma resposta externa. A condição de parada foi revisada em código/PR; o uso em produção não está confirmado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Classificar a resposta</strong>
+      <span>Distinguir resultados, zero resultado válido, falhas ou respostas não 2xx e dados malformados.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>Interface de busca do site</strong>
+      <span>O fallback estático do Pagefind pertence à busca do site; mantenha-o separado da base de uma resposta externa.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>Decisão sobre resposta externa</strong>
+      <span>Zero resultados não fundamentam a resposta. Em caso de falha ou dados inválidos, suspenda; o uso em produção não foi confirmado.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Criar o corpus a partir do HTML público, não dos rascunhos do CMS
 

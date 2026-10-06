@@ -2,9 +2,9 @@
 title: "使用 Cloudflare Pages 和 D1 构建受保护的运维仪表盘"
 description: "匿名介绍如何通过 Cloudflare Access 保护入口，并由 Pages Functions 读取 D1 运维汇总。区分已验证的生产发布、认证后界面、数据库索引使用，以及尚未测试的项目。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ callout:
 ## 将页面和 API 一并放入访问边界
 
 仅隐藏 Cloudflare Pages 静态页面并不足够，因为数据 API 仍可能被直接调用。应将界面和 API 都纳入 Cloudflare Access 的保护范围，仅允许运维人员读取数据。验收时应分别在认证前后测试页面和数据 API。本案例已在生产环境确认页面的认证边界，以及专用登录后 UI 能显示数据。现有记录未确认对 API 端点直接发起未认证请求的结果，因此这仍是单独的验收项目。不要把认证密钥放进浏览器代码。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">同时保护页面与 API</strong>
+    <span>尚未测试直接以未认证方式访问 API；检查范围为单一运行环境。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>已认证的仪表板</strong>
+      <span>运维人员通过 Access 认证后查看受保护的汇总数据。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>只读 API</strong>
+      <span>在同一边界内读取 D1。尚未确认直接访问 API URL 时会拒绝未认证请求。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 将写入操作与只读汇总分开
 

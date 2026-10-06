@@ -2,7 +2,7 @@
 title: "将服务CTA上下文传递到咨询表单的技术设计"
 description: "这是将用户在服务页面中阅读的上下文传递到咨询表单的实现设计。内容涵盖Astro网站中的迷你CTA、URL参数契约、表单类别的初始选择、主题prefill、多语言URL、GA计量和生成HTML检查，可复用于其他网站。"
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技术", "网站", "服务", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -169,6 +169,45 @@ CTA既是用户的行动点，也是测量点，而不只是UI。保留 `data-ga
 | hash       | 用于滚动到表单位置       |
 
 URL参数可以由用户编辑。因此表单不会直接把URL值作为发送值，而是把它映射到已有option。
+
+<figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
+  <figcaption>
+    <strong id="diagram-service-cta-contact-prefill">从经过验证的咨询上下文到管理记录</strong>
+    <span>此图展示实现阶段；真实客户联系与处理完成情况仍需单独验证。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
+        </svg>
+      </span>
+      <strong>解析 CTA 上下文</strong>
+      <span>将稳定的 service key 映射到本地化 URL 和允许的表单选项。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
+        </svg>
+      </span>
+      <strong>验证输入与权限</strong>
+      <span>仅在主题为空时预填；API 还会验证用户身份和操作权限。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
+        </svg>
+      </span>
+      <strong>写入受理记录</strong>
+      <span>将受理内容写入 CRM 历史并创建后续任务；负责人处理完成属于另一状态。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 在表单侧维护分类表
 

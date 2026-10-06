@@ -2,9 +2,9 @@
 title: "Handling Payment and Refund Webhooks Safely: State Reconciliation in Workers"
 description: "An implementation example that separates signature checks, duplicate and delayed events, refund state, and external API responses. It also explains rechecking authorization before administrative actions."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ It checks amount, currency, PaymentIntent, metadata linking the order and operat
 Check the balance and authorization before requesting a refund, then check authorization and operation expiry again after retrieving external state and immediately before the write. Use an operation-specific idempotency key and claim. If the external result is uncertain, reconcile current state instead of blindly issuing the refund again.
 
 A successful refund and a successful points adjustment are different states. A later failure must not trigger the refund a second time; record any reconciliation or repair needed. Notification configuration, actual receipt, and staff follow-up are separate acceptance items from payment-event processing. This article makes no claim about notification operating status.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">From webhook to separate outcomes</strong>
+    <span>Check current state before recording completion. No customer refund or points operation was performed.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>Verify at entry</strong>
+      <span>Check the raw body, mode, and event ID; identify retries and in-progress work.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>Reconcile current state</strong>
+      <span>Do not roll records back for a stale event; compare amount, currency, and order.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>Record outcomes separately</strong>
+      <span>Refunds, points, and notifications have separate states. Reconcile an unknown result instead of retrying the operation.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Check responses in both Node and the Workers runtime
 

@@ -2,9 +2,9 @@
 title: "여러 서비스의 로그인 만료를 맞추기: 세션 갱신과 재인증의 경계"
 description: "명시적 로그인, 서버 만료, 쿠키, 인증 제공자 설정을 구분하는 로그인 기간 설계와 확인 범위."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ callout:
 쿠키 보관 기간만 늘려서는 서버가 허용하는 기간이 정해지지 않습니다. 서버 만료, 무효화, 쿠키, 제공자 제약을 함께 확인합니다. 규칙 통일이 쿠키 공유나 모든 서비스의 즉시 로그아웃을 뜻하지는 않습니다.
 
 인증 원본의 인증 시각과 만료 시각을 검증하고 앱의 기간을 그 범위 안으로 제한합니다. 공통 계약은 세션 검증이며 업무 권한은 각 앱에서 판정합니다. 별도 쿠키를 가진 접근 게이트웨이도 독립된 만료 경계로 조사하고 따로 점검합니다.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">인증, 세션, 앱 권한을 별도로 다루기</strong>
+    <span>만료 규칙을 통일해도 각 상태가 하나로 합쳐지지 않습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>인증 제공자와 callback</strong>
+      <span>인증 결과와 callback의 context/state를 검증합니다. 로그인만으로 앱 권한이 부여되지는 않습니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>앱, 쿠키, gateway</strong>
+      <span>서버 측 앱 세션, 브라우저 쿠키, gateway 세션의 만료와 폐기를 각각 확인합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>서비스별 권한</strong>
+      <span>각 앱이 자체 업무 권한을 확인합니다. 일반 접근이나 백그라운드 갱신으로 만료가 연장되거나 전체 로그아웃이 보장되지는 않습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 설정과 동작 확인 구분하기
 

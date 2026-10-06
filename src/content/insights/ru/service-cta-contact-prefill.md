@@ -2,7 +2,7 @@
 title: "Техническая схема передачи контекста из CTA услуги в форму обратной связи"
 description: "Схема реализации, которая передаёт в форму контекст, прочитанный на странице услуги. Рассматриваются мини-CTA в Astro, контракт URL-параметров, начальный выбор категории, prefill темы, многоязычные URL, измерение GA и проверка сгенерированного HTML."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Технологии", "Веб-сайт", "Услуги", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -169,6 +169,45 @@ CTA — это точка действия и измерения, а не тол
 | hash       | Используется для прокрутки к форме                    |
 
 Пользователь может редактировать параметры. Поэтому форма не отправляет URL-значение напрямую, а сопоставляет его с существующим option.
+
+<figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
+  <figcaption>
+    <strong id="diagram-service-cta-contact-prefill">От проверенного контекста обращения к административной записи</strong>
+    <span>Показаны этапы реализации; завершённое сопровождение реальных клиентов требует отдельной проверки.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
+        </svg>
+      </span>
+      <strong>Определить контекст CTA</strong>
+      <span>Сопоставить стабильный service key с локализованным URL и разрешённым пунктом формы.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
+        </svg>
+      </span>
+      <strong>Проверить данные и права</strong>
+      <span>Заполнять тему только если поле пусто; API также проверяет личность пользователя и право на действие.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
+        </svg>
+      </span>
+      <strong>Передать в журнал обращений</strong>
+      <span>Записать обращение в историю и последующие задачи; завершение обработки — отдельное состояние.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Хранить таблицу классификации в форме
 

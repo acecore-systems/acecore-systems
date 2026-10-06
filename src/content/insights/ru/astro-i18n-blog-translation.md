@@ -2,7 +2,7 @@
 title: "Как сделать сайт на Astro 7 поддерживающим 9 языков ― Перевод блога и мультиязычная архитектура"
 description: "История внедрения девяти языков на Astro 7.1.3 и UnoCSS в июле 2026 года со ссылками на актуальные зависимости и переводческий процесс."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Технологии", "Astro", "i18n", "Веб-сайт"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -217,6 +217,39 @@ export function localizePost(
 3. **Пакетная обработка**: Обработка 5–6 статей за раз с GitHub Copilot
 
 Двухэтапный перевод (японский → английский → целевые языки) снижает разброс качества. Путь через английский как промежуточный язык даёт более стабильное качество, чем прямой перевод с японского на каждый язык.
+
+<figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
+  <figcaption>
+    <strong id="diagram-astro-i18n-blog-translation">Перед публикацией сверяйте переводы с актуальным японским источником</strong>
+    <span>Публичные URL и поисковые ссылки создаются только для реально существующих файлов перевода.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
+      </span>
+      <strong>Обновить японский источник</strong>
+      <span>Проверьте изменения и определите, какие языковые версии требуют пересмотра.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
+      </span>
+      <strong>Сверить перевод каждой locale</strong>
+      <span>Сопоставьте title, description и текст; создавайте URL locale только при наличии файла перевода.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
+      </span>
+      <strong>Если файла перевода нет</strong>
+      <span>Не создавайте для этой locale URL, запись sitemap или hreflang. Не публикуйте непереведённую страницу автоматически.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Мультиязычные View Components
 

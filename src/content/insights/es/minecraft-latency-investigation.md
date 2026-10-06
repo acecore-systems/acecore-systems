@@ -2,9 +2,9 @@
 title: "Cómo investigar el lag de Minecraft: métricas silenciosas y almacenamiento compartido"
 description: "Desde la recopilación silenciosa de TPS/MSPT hasta la correlación de JFR con observaciones de E/S del sistema operativo. Separa la investigación de causas ya completada de las mejoras de rendimiento aún no probadas."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ Mientras el problema se reproducía, se recopilaron JFR, observaciones de espera
 En una ventana normal de 240 segundos y otra con atascos de 220 segundos, las medianas por segundo de write-await fueron de 1.60 ms y 43.71 ms; los máximos fueron de 6.00 ms y 123.57 ms. Son dos ventanas de observación, no resultados antes y después ni un benchmark general.
 
 Además de las esperas en los guardados síncronos y el journal del sistema de archivos, también se vieron retrasos en solicitudes al dispositivo de varias aplicaciones; así se acotó el candidato a la ruta de almacenamiento compartido. Un evento de finalización de un [tracepoint de bloques de Linux](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) puede representar solo parte de una solicitud; por eso no se mezclaron solicitudes sin correspondencia en una estadística de toda la E/S. Se limitaron el tiempo y el volumen de captura y se tuvo en cuenta la sobrecarga de la medición.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">Separar observaciones de hipótesis</strong>
+    <span>Las métricas continuas y las muestras acotadas corresponden a ventanas distintas. El efecto de migrar el almacenamiento no se ha probado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>Métricas continuas discretas</strong>
+      <span>Registra TPS/MSPT y datos ausentes sin añadir mensajes rutinarios a la consola.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>Investigación acotada</strong>
+      <span>Recopila JFR, SO y block I/O por separado y compáralos. El almacenamiento compartido es una causa candidata, no un fallo confirmado.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Tratar el siguiente paso como una prueba aparte
 

@@ -2,9 +2,9 @@
 title: "Superviser restic sur R2 : du stockage réussi à la restauration vérifiée"
 description: "Suivre séparément fraîcheur des instantanés, intégrité et restauration, en précisant la reprise applicative restant à vérifier."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ Choisissez les instantanés par sa politique et utilisez `forget`, `prune`, `che
 ## Vérifications restantes
 
 Exploitation périodique, supervision/alertes, rétention et extraction/intégrité de données sélectionnées ont été effectuées. Démarrage de toutes les applications, configurations et dépendances, et accès aux identifiants séparés restent à valider de bout en bout. Délai de reprise et perte acceptable doivent être mesurés. Aucune reprise complète ni économie démontrée n’est revendiquée.
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">Vérifier les preuves par étapes, de la fraîcheur du snapshot à la reprise complète</strong>
+    <span>Récupérer des données ne prouve pas que les applications ou les identifiants peuvent aussi être rétablis.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>Snapshot réussi et fraîcheur</strong>
+      <span>Vérifiez l’horodatage d’un snapshot réellement réussi et son retard par rapport au calendrier. Le démarrage du job ne suffit pas à prouver sa réussite.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>Intégrité et restauration isolée</strong>
+      <span>Consignez le périmètre du contrôle, exécutez restore --verify dans un autre emplacement et comparez les fichiers et les empreintes attendus avant d’examiner la rétention et prune.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>Reprise après sinistre complète</strong>
+      <span>Le démarrage de toutes les applications, les données dépendantes et la récupération des identifiants stockés séparément restent non vérifiés. Le délai de reprise et la perte de données admissible ne sont pas mesurés.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Ajout du 6 octobre 2026 : verrous obsolètes et concurrence lors des tests de restauration
 

@@ -2,9 +2,9 @@
 title: "Relier la supervision aux investigations OpenClaw : détection, preuves et décisions"
 description: "Associer contrôles périodiques et investigations limitées, en distinguant exploitation vérifiée et reprise non démontrée."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ Transmettez les résultats à OpenClaw et limitez la collecte supplémentaire au
 ## Conserver les preuves à l’expiration
 
 Conservez observations, heures, résultats et éléments indisponibles avant l’interruption. Une investigation interrompue n’équivaut pas à « tout va bien », et un échec de collecte ne doit pas être présenté comme une vérification réussie.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">Distinguer détection périodique, investigation limitée et décision humaine</strong>
+    <span>Conservez les preuves partielles sans présenter le dispositif comme une réparation automatique démontrée.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>Contrôle périodique</strong>
+      <span>Distinguez état normal, anomalie et échec de collecte. Pendant la maintenance, supprimez uniquement l’alerte temporaire d’échec de collecte du contrôle concerné.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>Enquête dans les limites prévues</strong>
+      <span>Limitez les opérations de lecture, la durée et le volume de sortie ; conservez les preuves partielles en cas d’expiration. Une opération refusée n’est pas déclarée exécutée.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>Rapport et décision</strong>
+      <span>Séparez faits, hypothèses et points non vérifiés ; gérez les alertes dupliquées et de rétablissement. Toute modification ou tout redémarrage exige une autorisation distincte.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Séparer alertes et actions
 

@@ -2,9 +2,9 @@
 title: "安全处理用户 CSS 与公开主题：共享正本、限定渲染和版本固定"
 description: "匿名化介绍一种个人资料编辑设计：GUI 与直接编辑共用同一 CSS 正本。涵盖限定在渲染区域内的丰富 CSS 语法、草稿与已发布版本、不可变主题版本、下架和运营停用。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ backend 与 frontend 扩展分别合并到各自的 main，并已检查 CI 和�
 ## 区分下架与运营停用
 
 作者下架主题会停止新的发现和应用，但不一定立即撤销已固定版本的现有使用。运营方停用危险主题则有不同边界：停止公开获取和现有 snapshot 中的 CSS，并恢复标准外观。回滚到旧 snapshot 时也会检查当前停用状态，避免恢复停用前的 CSS。
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">从编辑 CSS 到发布固定版本</strong>
+    <span>已确认代码集成、CI 和旧版 Store 的生产发布。新版 CSS 扩展的生产/登录验收、用户应用及付费销售尚未确认。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>共用 CSS 正本</strong>
+      <span>GUI 与直接编辑使用同一 CSS 正本，并保留手写规则。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>解析并限定范围</strong>
+      <span>支持 Grid/Flex、变量、伪元素、响应式规则和动画；拒绝外部、全局或无法解析的输入。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>明确发布版本</strong>
+      <span>预览/草稿后发布不可变版本。下架与运营停用是不同操作。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 发布前的检查项目
 

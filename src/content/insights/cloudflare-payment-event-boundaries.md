@@ -2,9 +2,9 @@
 title: "決済・返金Webhookを安全に扱う：Workersでの照合と状態管理"
 description: "署名、重複、遅延したイベント、返金状態と外部APIの応答を分けて扱う実装事例。管理操作の再確認と通知の境界を紹介します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ Webhookはリクエストの未加工の本文と署名を検証し、想定す�
 返金を依頼する前に残高と権限を確認し、外部状態の取得後、実際の書き込み直前にも権限と操作の有効期限を再確認します。操作ごとの冪等性と占有を使い、外部結果が不明な場合は現在の状態の再照合へ進み、無条件に返金を再実行しません。
 
 返金成功とポイント調整成功は異なる状態です。後続処理の失敗を返金の再実行へ変換せず、必要な再照合・修復の記録を残します。通知設定・実受信・担当者の対応完了は、決済イベント処理とは別の受入事項です。本稿では通知の稼働状態を主張しません。
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">Webhookから業務結果まで</strong>
+    <span>現在状態を照合して処理を分けます。実顧客の返金・ポイント操作は行っていません。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>入口を検証</strong>
+      <span>未加工body・mode・event IDを確認し、再送や処理中を識別。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>現在状態を照合</strong>
+      <span>遅延eventで記録を戻さず、金額・通貨・注文と照合。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>結果を分けて記録</strong>
+      <span>返金・ポイント・通知は別状態。外部結果が不明なら再実行せず再照合。</span>
+    </li>
+  </ol>
+</figure>
 
 ## NodeとWorkersの実行環境で応答を確認する
 

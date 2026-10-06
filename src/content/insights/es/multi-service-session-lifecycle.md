@@ -2,9 +2,9 @@
 title: "Unificar la caducidad del acceso entre servicios: renovación y reautenticación"
 description: "Diseño general para alinear la caducidad del acceso, distinguiendo inicio explícito, servidor, cookies y proveedor de identidad."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ El caso renueva el período aplicable tras un inicio explícito correcto, no por
 Una cookie más duradera no define lo que acepta el servidor. Revisar caducidad, revocación, cookie y restricciones del proveedor. Reglas uniformes no significan cookies compartidas ni cierre inmediato en todos los servicios.
 
 Validar el momento de autenticación y la caducidad de la autoridad, limitando a ellos las sesiones de las aplicaciones. El contrato común valida sesiones; cada aplicación conserva sus permisos de negocio. Una pasarela con su propia cookie tiene otro límite que inventariar y auditar.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">Separar autenticación, sesiones y permisos de cada aplicación</strong>
+    <span>Una regla común de caducidad no convierte estos estados en uno solo.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>Proveedor de identidad y callback</strong>
+      <span>Valide el resultado de autenticación y el context/state del callback. Iniciar sesión no concede por sí solo acceso a la aplicación.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>Aplicación, cookie y gateway</strong>
+      <span>Compruebe por separado la caducidad y revocación de la sesión del servidor, la cookie del navegador y la sesión del gateway.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>Permisos de cada servicio</strong>
+      <span>Cada aplicación verifica sus propios permisos. El tráfico normal y la actualización en segundo plano no amplían la caducidad ni implican un cierre de sesión global.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separar configuración y comportamiento
 

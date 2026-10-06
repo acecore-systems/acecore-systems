@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize 구현 가이드: 공개 HTML을 안전하게 동기화하는 방법"
 description: "공개 HTML에서 corpus를 만들고 Pagefind를 유지하면서 Vectorize 동기화를 안전하게 운영하는 상세 가이드입니다."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "Workers AI", "사이트 검색"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -196,6 +196,45 @@ Vectorize는 검색어가 본문과 완전히 일치하지 않거나 관련 개�
 현재 검색 모달은 입력 중에 검색하지 않습니다. 이용자가 “검색”을 실행할 때에만 UI에 표시한 안내대로 검색어를 이 사이트의 검색 API로 보냅니다. Cloudflare Workers AI `@cf/baai/bge-m3`가 임베딩으로 변환한 뒤 Vectorize에 저장된 공개 정보와 대조합니다. 관련 검색이 실패하거나 결과가 없으면 브라우저 안의 Pagefind를 fallback으로 실행합니다. 그 후 관련 사이트의 공개 정보를 표시하기 위해 검색어를 Acecore 공용 검색 API(acecore.net)로 보낼 수도 있습니다. UI는 개인정보나 기밀정보를 입력하지 않도록 안내합니다.
 
 이 구성에서는 Vectorize가 검색 경험을 확장하지만 검색 전체의 단일 장애점이 되지 않습니다.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">검색 결과와 가져오기 오류를 분리</strong>
+    <span>정적 검색 fallback은 외부 답변의 근거가 아닙니다. 중지 조건은 코드/PR 검토까지 확인했으며 운영 적용은 미확인입니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>가져온 결과 분류</strong>
+      <span>결과 있음, 정상 0건, 가져오기 실패·비2xx, 잘못된 형식을 구분합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>사이트 검색 UI</strong>
+      <span>정적 Pagefind fallback은 사이트 검색 UI의 경로이며 외부 답변의 근거와 분리합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>외부 답변 판단</strong>
+      <span>0건은 답변의 근거가 아닙니다. 실패나 잘못된 데이터에서는 보류하며 운영 적용은 확인되지 않았습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## corpus는 CMS 초안이 아니라 공개 HTML에서 만든다
 

@@ -2,9 +2,9 @@
 title: "Резервные копии restic в R2: от сохранения до проверенного восстановления"
 description: "Раздельная проверка свежести снимков, целостности и восстановления с указанием ещё не проверенных этапов запуска приложений."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ callout:
 ## Оставшиеся проверки
 
 Выполнены регулярная работа, мониторинг/уведомления, управление хранением и извлечение/целостность выбранных данных. Запуск всех приложений, восстановление настроек и зависимостей, доступ к отдельно хранимым учётным данным требуют сквозной проверки. Время восстановления и допустимая потеря данных требуют измерения. Полное аварийное восстановление и доказанная экономия не заявляются.
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">Проверяйте доказательства по этапам: от свежести snapshot до полного восстановления</strong>
+    <span>Извлечение данных не доказывает восстановление приложений или учётных данных.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>Успешный snapshot и его свежесть</strong>
+      <span>Проверьте время действительно успешного snapshot и задержку относительно расписания. Сам запуск задания не означает успех.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>Целостность и изолированное восстановление</strong>
+      <span>Зафиксируйте охват проверки, выполните restore --verify в отдельном месте и сравните нужные файлы и hash, затем проверьте хранение и prune.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>Полное аварийное восстановление</strong>
+      <span>Запуск всех приложений, зависимые данные и восстановление отдельно хранимых учётных данных остаются непроверенными. Время восстановления и допустимая потеря данных не измерялись.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Дополнение от 6 октября 2026 года: устаревшие блокировки и конкуренция при проверке восстановления
 

@@ -2,8 +2,9 @@
 title: "AI 답변이 지킬 수 없는 약속을 하지 않게 하기"
 description: "안내용 AI가 직원의 참여, 일정 조율, 후속 연락을 임의로 약속하지 않도록 하는 방법입니다. 대화 상태, 검색 실패, 오래된 초안의 재검사, 대화 종료 처리를 다룹니다."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ callout:
 ## 오래된 초안도 최신 조건으로 다시 검사하기
 
 생성 시점에 검사를 통과한 초안도 대화나 정책이 바뀌면 오래된 내용이 될 수 있습니다. 전송 직전에 최신 상태로 다시 검사하고 종료된 대화의 초안을 보내지 않습니다. 답변 생략과 대화 종료는 전송 성공과 구분해 감사 상태에 기록합니다. 불필요한 질문으로 대화를 늘리기보다 답변을 생략하는 선택도 둡니다.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">답변 전에 근거와 실행 가능성 확인</strong>
+    <span>대화 문맥에 따라 답변하거나 보류합니다. 검색 중단의 프로덕션 운영은 확인되지 않았습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>화자와 요청 확인</strong>
+      <span>모집인지 참여 의향인지, 해당 버전과 대화 상태를 확인합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>근거 범위에서 답변</strong>
+      <span>실제로 할 수 있는 내용만 알리고 전송 직전에 다시 확인합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>불명확하면 보류</strong>
+      <span>검색 실패나 잘못된 응답은 확인 완료로 보지 않고 사람에게 넘깁니다. 대기에는 한도를 두고 중복을 억제합니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 확인한 범위와 입증되지 않은 사항
 

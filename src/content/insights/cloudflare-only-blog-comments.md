@@ -4,7 +4,7 @@ description: "外部コメントサービスに頼らず、Cloudflare Pages Func
 date: 2026-06-07T18:00
 author: gui
 tags: ["技術", "Cloudflare", "Astro", "セキュリティ", "Webサイト"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: 外部コメントサービスなしで完結させる
@@ -82,6 +82,7 @@ faq:
       answer: "記事コメントのように、post_slugで取得し、作成日時順に表示する小規模なリレーショナルデータならD1で扱いやすいです。リアルタイム通知や大規模な権限管理が必要なら別設計を検討します。"
     - question: Turnstileをフロントに置くだけではだめですか？
       answer: "だめです。TurnstileのtokenはPages Function側でSiteverify APIへ送り、成功結果とhostnameを確認してから保存処理へ進めます。"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 静的サイトにコメント欄を付けるとき、まず候補に上がりやすいのは外部コメントサービスやGitHub Discussions連携です。

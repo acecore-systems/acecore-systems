@@ -2,9 +2,9 @@
 title: "Supervisión e investigación con OpenClaw: detección, pruebas y decisiones"
 description: "Cómo combinar comprobaciones periódicas e investigaciones limitadas, distinguiendo la operación verificada de la recuperación aún no probada."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ Entregue los resultados a OpenClaw y permita recoger pruebas solo mediante lectu
 ## Conservar pruebas al agotar el tiempo
 
 Guarde observaciones, fechas, resultados y elementos no obtenidos antes del límite. Una investigación interrumpida no equivale a «todo correcto», ni debe presentar una obtención fallida como verificada.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">Separar la detección periódica, la investigación limitada y el criterio humano</strong>
+    <span>Conserve pruebas parciales y no presente el proceso como reparación automática demostrada.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>Comprobación periódica</strong>
+      <span>Distinga entre estado normal, anómalo y error de obtención. Durante el mantenimiento, suprima solo el aviso temporal de obtención fallida de la comprobación afectada.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>Investigar dentro de límites</strong>
+      <span>Limite las operaciones de lectura, el tiempo y la salida; guarde pruebas parciales si se agota el tiempo. Una operación denegada no se registra como realizada.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>Informar para decidir</strong>
+      <span>Separe hechos, hipótesis y aspectos sin confirmar; gestione avisos duplicados y de recuperación. Los cambios o reinicios requieren otra aprobación.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separar avisos y acciones
 

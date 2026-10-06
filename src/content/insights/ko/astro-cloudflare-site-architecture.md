@@ -2,7 +2,7 @@
 title: "Astro + Cloudflare 사이트를 기능별로 확장하는 전체 설계"
 description: "Astro와 Cloudflare Pages를 기반으로 문의 AI, Sveltia CMS, 다국어 블로그, 서비스 CTA, 안전한 Markdown 렌더링, Cloudflare만으로 만든 댓글 기능을 하나의 구조로 정리합니다."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["기술", "Astro", "Cloudflare", "웹사이트", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -155,6 +155,45 @@ AI가 Markdown 링크를 반환해도 그대로 `innerHTML`에 넣지 않습니�
 댓글은 외부 위젯이 아닙니다.
 
 Pages Functions가 GET/POST를 받고, D1이 저장하고, Turnstile이 제출을 보호합니다.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">콘텐츠·사용자 게시물·관리 화면의 공개 경계</strong>
+    <span>검토된 정적 본문은 검색 대상이고 사용자 게시물·관리 화면은 별도 경계입니다. Preview와 운영은 따로 확인합니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>검토된 정적 본문</strong>
+      <span>검토된 글을 정적 HTML로 제공하고 Pagefind 사이트 검색 색인에 포함합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>방문자 게시물</strong>
+      <span>댓글은 동적 API와 저장소에서 처리하고 폼 등 방문자 입력은 정적 검색에서 제외합니다. 색인에 넣으려면 검토와 재생성이 필요합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>관리 화면과 환경 확인</strong>
+      <span>관리 화면을 공개 검색에서 제외합니다. Preview와 운영을 따로 확인하고 설정 목록만으로 가동을 판단하지 않습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 목적별로 읽기
 

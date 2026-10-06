@@ -2,9 +2,9 @@
 title: "Monitoring mit OpenClaw verbinden: Erkennung, Belege und Entscheidungen"
 description: "Regelmäßige Prüfungen und begrenzte Untersuchungen verbinden und geprüften Betrieb von unbewiesener Wiederherstellung trennen."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ Prüfen Sie Erreichbarkeit und Ressourcen wiederholbar. Verwalten Sie Ziele, Sch
 ## Belege bei Zeitüberschreitung erhalten
 
 Bewahren Sie Beobachtungen, Zeitpunkte, Ergebnisse und nicht erfasste Elemente vor dem Abbruch auf. Ein Abbruch bedeutet keine Entwarnung; fehlgeschlagene Erfassung darf nicht als erfolgreiche Prüfung erscheinen.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">Regelmäßige Erkennung, begrenzte Untersuchung und menschliche Entscheidung trennen</strong>
+    <span>Teilergebnisse bleiben erhalten; eine automatische Reparatur ist damit nicht belegt.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>Regelmäßige Prüfung</strong>
+      <span>Gesunden Zustand, Auffälligkeit und fehlgeschlagenen Abruf unterscheiden. Während eines Wartungsfensters nur den vorübergehenden Abruffehler der betroffenen Prüfung unterdrücken.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>Begrenzt untersuchen</strong>
+      <span>Lesezugriffe, Laufzeit und Ausgabe begrenzen; bei Timeout Teilergebnisse sichern. Ein abgelehnter Vorgang gilt nicht als ausgeführt.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>Berichten und entscheiden</strong>
+      <span>Fakten, Hypothesen und Ungeklärtes trennen sowie doppelte und Wiederherstellungsmeldungen behandeln. Änderungen oder Neustarts benötigen eine separate Freigabe.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Meldung und Eingriff trennen
 

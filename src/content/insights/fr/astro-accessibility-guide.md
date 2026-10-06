@@ -2,7 +2,7 @@
 title: "Améliorations pratiques de l’accessibilité d’un site Astro"
 description: "Retour sur les améliorations de l’accessibilité d’un site Astro + UnoCSS en mars 2026 : ARIA, contraste, focus, formulaires et lecteurs d’écran."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Accessibilité"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -176,6 +176,45 @@ Le marqueur visuel `*` seul est insuffisant. Ajoutez un texte complémentaire po
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">(obligatoire)</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">Relier les libellés, l’opération et les annonces du formulaire</strong>
+    <span>Schéma conceptuel fondé sur les exemples de mars 2026 ; les contrôles automatisés ne prouvent pas une conformité globale aux WCAG.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>Champ et libellé</strong>
+      <span>Associer un libellé visible à chaque champ et signaler l’obligation autrement que par un astérisque.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>Focus au clavier</strong>
+      <span>Utiliser focus-visible pour repérer le champ actif et vérifier l’accès ainsi que la saisie au clavier.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Erreur associée et annonce</strong>
+      <span>aria-invalid et aria-describedby relient champ et message ; role=alert annonce les changements. Ajouter une vérification manuelle.</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

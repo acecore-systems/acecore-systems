@@ -2,9 +2,9 @@
 title: "Como tratar webhooks de pagamento e reembolso com segurança: reconciliação de estado nos Workers"
 description: "Um exemplo de implementação que separa verificação de assinatura, eventos duplicados ou atrasados, estado do reembolso e respostas de APIs externas. Também mostra a revalidação de permissões antes de ações administrativas."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ Confere valor, moeda, PaymentIntent, metadados que vinculam pedido e operação,
 Verifique saldo e permissões antes de solicitar um reembolso; depois de consultar o estado externo e imediatamente antes da gravação, confira novamente as permissões e a validade da operação. Use uma chave de idempotência e uma reserva próprias para cada operação. Se o resultado externo for incerto, reconcilie o estado atual em vez de solicitar o reembolso novamente sem verificação.
 
 Um reembolso bem-sucedido e um ajuste de pontos bem-sucedido são estados diferentes. Uma falha posterior não deve repetir o reembolso; registre qualquer reconciliação ou reparo necessário. A configuração de notificações, o recebimento real e o acompanhamento da equipe são critérios de aceitação separados do processamento de eventos de pagamento. Este artigo não afirma que as notificações estejam operacionais.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">Do webhook a resultados separados</strong>
+    <span>Confira o estado atual antes de registrar a conclusão. Nenhum reembolso nem ajuste de pontos de cliente foi executado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>Validar na entrada</strong>
+      <span>Confira o body original, o mode e o event ID; identifique reenvios e processamento em andamento.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>Conciliar o estado atual</strong>
+      <span>Não reverta registros por causa de um evento atrasado; compare valor, moeda e pedido.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>Registrar resultados separadamente</strong>
+      <span>Reembolso, pontos e notificações têm estados distintos. Se o resultado externo for incerto, reconcilie antes de repetir a operação.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Verifique respostas no Node e no runtime dos Workers
 

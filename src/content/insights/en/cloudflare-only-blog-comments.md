@@ -4,7 +4,7 @@ description: "How we added comments to an Astro blog without an external comment
 date: 2026-06-07T18:00
 author: gui
 tags: ["Technology", "Cloudflare", "Astro", "Security", "Website"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: No external comment service
@@ -82,6 +82,7 @@ faq:
       answer: "For post_slug based reads, created_at ordering, duplicate checks, and soft deletion, D1 is a good fit. Larger community features need a broader design."
     - question: Is client-side Turnstile enough?
       answer: "No. The Pages Function must verify the Turnstile token with Cloudflare Siteverify before writing to D1."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Static sites usually avoid server-side state. Comments are the moment that rule becomes inconvenient.

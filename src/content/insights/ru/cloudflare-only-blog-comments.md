@@ -4,7 +4,7 @@ description: "Как мы добавили комментарии в Astro-бл�
 date: 2026-06-07T18:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Astro", "Безопасность", "Веб-сайт"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: Без внешнего сервиса комментариев
@@ -82,6 +82,7 @@ faq:
       answer: "Для выборки по post_slug, сортировки, soft delete, rate limit и дубликатов D1 хорошо подходит."
     - question: Достаточно ли Turnstile в браузере?
       answer: "Нет. Pages Function должна проверить token через Siteverify перед записью в D1."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Комментарии добавляют состояние в статический сайт.

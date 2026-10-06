@@ -2,9 +2,9 @@
 title: "R2와 restic 백업 모니터링: 저장 성공부터 복원 검증까지"
 description: "스냅샷 최신성, 저장소 무결성, 복원을 따로 점검하고 아직 검증하지 않은 애플리케이션 복구 범위를 설명합니다."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ restic의 암호화·중복 제거와 R2의 S3 호환 API를 사용합니다. �
 ## 남은 복구 검증
 
 정기 운영, 감시·알림, 보존 처리, 선택 데이터 추출·무결성 확인을 수행했습니다. 모든 앱 기동, 설정·의존 데이터 복구, 별도 보관 자격 증명의 회수는 종단 간 검증이 남아 있습니다. 복구 시간과 허용 데이터 손실도 실측해야 합니다. 완전한 재해 복구나 비용 절감 달성을 주장하지 않습니다.
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">snapshot 최신성부터 완전 복구까지 증거를 단계별로 확인하기</strong>
+    <span>데이터를 꺼낼 수 있어도 앱이나 인증 정보까지 복구됐다는 뜻은 아닙니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>성공한 snapshot과 최신성</strong>
+      <span>실제로 성공한 snapshot의 시각과 예정 대비 지연을 확인합니다. 작업이 시작된 것만으로 성공 처리하지 않습니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>무결성과 격리 복원</strong>
+      <span>검사 범위를 기록하고 별도 위치에서 restore --verify를 실행해 대상 파일과 hash를 대조한 뒤 보존 대상과 prune을 확인합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>완전한 재해 복구</strong>
+      <span>모든 앱 실행, 종속 데이터, 별도로 보관한 인증 정보 복구는 아직 검증되지 않았습니다. 복구 시간과 허용 가능한 데이터 손실도 측정하지 않았습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 2026년 10월 6일 추가: 오래된 lock과 복원 검사 점유
 

@@ -2,7 +2,7 @@
 title: "サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計"
 description: "サービスページで読んでいた文脈を問い合わせフォームへ引き継ぐための実装設計です。AstroサイトでのミニCTA、URLパラメータ契約、フォーム種別の初期選択、件名prefill、多言語URL、GA計測、生成HTML確認まで、他サイトでも使える形で整理します。"
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技術", "Webサイト", "サービス", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -169,6 +169,45 @@ CTAから問い合わせフォームへ渡す値は、URLパラメータにし�
 | hash       | フォーム位置へスクロールするために使う |
 
 URLパラメータはユーザーが編集できるものです。だからこそ、フォーム側ではURL値をそのまま送信値にせず、既存のoptionへマッピングします。
+
+<figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
+  <figcaption>
+    <strong id="diagram-service-cta-contact-prefill">問い合わせ受付を管理記録へ渡す流れ</strong>
+    <span>経路の実装段階を示します。実顧客への連絡・対応完了は別途確認が必要です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
+        </svg>
+      </span>
+      <strong>CTAの文脈を読む</strong>
+      <span>安定したservice keyを、多言語の表示URLと許可済みフォーム選択肢のallowlistへ対応付ける。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
+        </svg>
+      </span>
+      <strong>入力と権限を検証</strong>
+      <span>件名は空欄の場合だけprefillし、APIでも利用者の本人確認と操作権限を検証する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
+        </svg>
+      </span>
+      <strong>受付記録へ渡す</strong>
+      <span>受付内容をCRM履歴と後続タスクへ反映し、担当者の実際の対応完了は別の状態として記録する。</span>
+    </li>
+  </ol>
+</figure>
 
 ## フォーム側で分類表を持つ
 

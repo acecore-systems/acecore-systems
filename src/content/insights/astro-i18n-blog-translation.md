@@ -2,7 +2,7 @@
 title: "Astro 7 サイトを9言語対応に ― ブログ翻訳と多言語アーキテクチャ"
 description: "2026年7月時点のAstro 7.1.3とUnoCSSによる9言語化の記録です。現行の依存関係と翻訳経路の変更も案内します。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技術", "Astro", "i18n", "Webサイト"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -219,6 +219,39 @@ export function localizePost(
 3. **一括バッチ処理**：GitHub Copilot で5〜6記事ずつバッチ処理
 
 日本語→英語→各言語の2段階翻訳にすることで、翻訳品質のばらつきを抑えています。直接日本語から各言語に翻訳するよりも、英語という中間言語を挟むほうが安定した品質が得られました。
+
+<figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
+  <figcaption>
+    <strong id="diagram-astro-i18n-blog-translation">翻訳を最新の日本語sourceと照合してから公開</strong>
+    <span>公開URLと検索向け参照は、実在する翻訳ファイルに合わせます。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
+      </span>
+      <strong>日本語sourceを更新</strong>
+      <span>日本語sourceの変更を確認し、影響がある言語版と再確認すべき記事の範囲を先に特定します。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
+      </span>
+      <strong>各localeの翻訳を照合</strong>
+      <span>title・description・本文を確認し、存在する翻訳ファイルに対応するlocale URLだけを生成します。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
+      </span>
+      <strong>翻訳ファイルがない場合</strong>
+      <span>そのlocaleのURL・sitemap・hreflangは作りません。未翻訳ページを自動公開しません。</span>
+    </li>
+  </ol>
+</figure>
 
 ## View コンポーネントの多言語対応
 

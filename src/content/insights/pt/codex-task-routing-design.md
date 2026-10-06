@@ -3,12 +3,13 @@ title: "Como projetar a divisão de tarefas no Codex: o plugin público Task Rou
 description: "As escolhas do Codex Task Routing: preservar a configuração do agente principal, identificar a política efetiva, delimitar a entrega e verificar a execução."
 date: "2026-09-26T18:30:00+09:00"
 author: gui
-image: /images/insights/codex-task-routing-design.webp
+image: /images/insights/covers/codex-task-routing-design-cover-v1.webp
 tags: ["Tecnologia", "IA", "Desenvolvimento"]
 callout:
   type: note
   title: "O que foi verificado"
   text: "Foram conferidos o código público, os PRs incorporados, o CI em três sistemas operacionais e a instalação em ambiente isolado. Este artigo não afirma ganho medido de qualidade ou uso nem execução de um modelo delegado em conta real."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Ao conduzir vários trabalhos no Codex, escolher um modelo é apenas parte da decisão. Também é preciso definir qual etapa pode ser separada, que contexto acompanha a entrega e como verificar o resultado. A Acecore publicou o [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) para tornar essas decisões explícitas.

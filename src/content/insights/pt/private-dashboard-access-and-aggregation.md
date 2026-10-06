@@ -2,9 +2,9 @@
 title: "Criar um painel operacional protegido com Cloudflare Pages e D1"
 description: "Um projeto anonimizado que protege a entrada com Cloudflare Access e consulta agregados operacionais do D1 por meio de Pages Functions. Separa a publicação em produção, a interface autenticada e o uso de índices verificados dos itens que não foram testados."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ Quando as informações operacionais ficam espalhadas entre logs e bancos de dad
 ## Coloque a página e a API atrás do limite de acesso
 
 Ocultar uma página estática do Cloudflare Pages não basta se a API de dados ainda puder ser chamada diretamente. Inclua a interface e a API no limite do Cloudflare Access para que somente a equipe operacional possa ler os dados. Como procedimento de verificação, teste a página e a API antes e depois da autenticação. Neste caso, foram confirmados em produção o limite de autenticação da página e a exibição de dados na interface após o login dedicado. O registro disponível não confirma uma chamada direta sem autenticação ao endpoint da API; essa continua sendo uma verificação de aceitação separada. Não coloque segredos de autenticação no código do navegador.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">Proteger a página e a API</strong>
+    <span>O acesso direto não autenticado à API não foi testado. As verificações cobriram um único ambiente operacional.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>Painel autenticado</strong>
+      <span>Após autenticação no Access, o operador consulta agregados protegidos.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>API somente leitura</strong>
+      <span>Leia o D1 dentro do mesmo limite. O bloqueio de acesso direto não autenticado à URL da API não foi verificado.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separe gravações de agregações somente para leitura
 

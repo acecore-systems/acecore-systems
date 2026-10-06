@@ -2,8 +2,9 @@
 title: "공개 이미지의 엣지 캐시와 API 요청 제한을 분리하기"
 description: "반복해서 탐색할 때 콘텐츠 API와 이미지 요청이 같은 제한을 공유했던 사례입니다. 공개 이미지 재사용, 정상 응답 검증, WAF와 애플리케이션의 경계, 프로덕션 확인을 다룹니다."
 date: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/public-image-cache-and-api-rate-limits.webp
+image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
 callout:
   type: note
@@ -38,6 +39,25 @@ callout:
 동적 API 보호는 이미지 캐시와 별도의 요구사항입니다. 이 사례에서는 공개 이미지 GET을 WAF 집계에서 제외했고, 변경 적용 후 대상 동적 API, 제한 기간, action, 활성 상태를 다시 읽어 확인했습니다. 되돌릴 수 있도록 이전 설정도 저장했습니다.
 
 일반 탐색에서 발생하는 요청 수와 보호할 작업의 부하를 기준으로 임계값을 선택합니다. [Cloudflare 요청 제한](https://developers.cloudflare.com/waf/rate-limiting-rules/)의 plan별 조건도 확인해야 합니다. 저장소 운영 메모에 값이 적혀 있다는 사실만으로 프로덕션 규칙이 활성화됐다고 판단할 수 없습니다.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-public-image-cache-and-api-rate-limits">
+  <figcaption>
+    <strong id="diagram-public-image-cache-and-api-rate-limits">공개 이미지와 동적 API</strong>
+    <span>변하지 않는 공개 이미지의 재사용과 동적 API 보호를 별도로 설계합니다. 비공개 이미지는 대상이 아닙니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg></span>
+      <strong>공개 이미지 GET</strong>
+      <span>요청 경계를 확인한 뒤 같은 이미지를 캐시에서 재사용합니다. 검증된 200 응답만 저장합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <strong>동적 API</strong>
+      <span>WAF와 앱 quota로 API 처리를 보호합니다. 제한은 이미지 캐시와 분리합니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 프로덕션에서 이미지 내용까지 확인하기
 

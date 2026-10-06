@@ -2,9 +2,9 @@
 title: "Безопасная работа с пользовательским CSS и публичными темами: общий источник, границы рендеринга и фиксированные версии"
 description: "Обезличенное описание редактирования профиля, где GUI и прямое редактирование используют один источник CSS. Рассматриваются широкая поддержка CSS-синтаксиса в заданной области рендеринга, черновики и опубликованные версии, неизменяемые версии тем, снятие с публикации и операционная блокировка."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ callout:
 ## Различайте снятие с публикации и операционную блокировку
 
 Снятие темы автором прекращает ее новое обнаружение и применение, но не обязательно сразу отзывает существующее использование закрепленной версии. Операционная блокировка опасной темы имеет другую границу: прекращается публичное получение темы и CSS из существующих snapshot, после чего восстанавливается стандартный вид. Даже при возврате к старому snapshot проверяется текущее состояние блокировки, чтобы CSS, существовавший до нее, не включился снова.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">От редактирования CSS до фиксации версии</strong>
+    <span>Подтверждены интеграция кода, CI и выпуск предыдущей версии Store в production. Приёмка расширения CSS в production/после входа, применение пользователями и платные продажи не подтверждены.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>Общий источник CSS</strong>
+      <span>GUI и прямое редактирование используют один источник CSS и сохраняют написанные вручную правила.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>Разбор и ограничение области</strong>
+      <span>Поддерживаются Grid/Flex, переменные, псевдоэлементы, адаптивные правила и анимация. Внешний, глобальный и неразбираемый ввод отклоняется.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Явно опубликовать версию</strong>
+      <span>После предпросмотра/черновика публикуется неизменяемая версия. Снятие с публикации и операционная блокировка — разные действия.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Что проверить перед публикацией
 

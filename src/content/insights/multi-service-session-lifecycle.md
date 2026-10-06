@@ -2,9 +2,9 @@
 title: "複数サービスのログイン期限を揃える：セッション更新と再認証の境界"
 description: "複数のWebサービスでログイン期限を揃える設計。明示ログイン、サーバー側の期限、Cookie、認証基盤の設定を区別し、反映確認の範囲を整理します。"
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ callout:
 Cookieの保存期限を長くするだけでは、サーバーが受け付ける期間は決まりません。サーバー側の期限、失効状態、Cookie、認証基盤の制約が一致するかを確認します。ルールの統一は、Cookieを全サービスで共有することや、どこかでログアウトすれば全サービスから即時にログアウトできることを意味しません。
 
 認証元の認証時刻・失効時刻を検証し、アプリ側の期限をその範囲内に制限します。共通化するのはセッション検証の契約であり、各サービスの業務権限はサービス側で判定します。独自のCookieを持つアクセスゲートウェイも、別の期限境界として棚卸しと監査の対象にします。
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">認証・セッション・業務権限を別の層として扱う</strong>
+    <span>共通の期限ルールを使っても、各層は別の状態です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>認証基盤とcallback</strong>
+      <span>認証結果とcallbackのcontext/stateを検証します。ログインだけでアプリ権限は付きません。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>アプリ・Cookie・Gateway</strong>
+      <span>サーバー側session、browser cookie、gateway sessionの期限と失効を個別に確認します。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>サービスごとの権限</strong>
+      <span>権限は各アプリで判定します。通常アクセスや背景更新で期限は延びず、一括logoutも意味しません。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 設定の統一と動作の検証を分ける
 

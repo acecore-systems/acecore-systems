@@ -2,9 +2,9 @@
 title: "Единые сроки входа для нескольких сервисов: обновление сессии и повторная аутентификация"
 description: "Обобщённый подход к срокам входа с разделением явного входа, серверной проверки, cookie и поставщика идентификации."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ callout:
 Долговечность cookie не определяет, что принимает сервер. Сопоставить срок, отзыв, cookie и ограничения поставщика. Единые правила не означают общий cookie или мгновенный выход из всех сервисов.
 
 Проверять время аутентификации и истечения у источника идентификации и ограничивать ими сессии приложений. Общий контракт проверяет сессии; бизнес-права остаются у каждого приложения. Шлюз со своим cookie имеет отдельную границу, которую также учитывают и проверяют.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">Разделяйте аутентификацию, сеансы и права приложений</strong>
+    <span>Общее правило срока действия не объединяет эти состояния.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>Провайдер идентификации и callback</strong>
+      <span>Проверьте результат аутентификации и context/state callback. Сам факт входа не выдаёт права в приложении.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>Приложение, cookie и шлюз</strong>
+      <span>Отдельно проверяйте срок действия и отзыв серверного сеанса приложения, cookie браузера и сеанса шлюза.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>Права для каждого сервиса</strong>
+      <span>Каждое приложение проверяет свои права. Обычные запросы и фоновое обновление не продлевают срок и не означают общий выход из всех сервисов.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Разделить настройки и поведение
 

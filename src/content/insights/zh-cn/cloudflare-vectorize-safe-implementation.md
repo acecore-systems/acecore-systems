@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize 实现指南：安全同步已发布 HTML"
 description: "详细说明如何从已发布 HTML 创建 corpus、保留 Pagefind，并安全运行 Vectorize 同步。"
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "Workers AI", "站内搜索"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -196,6 +196,45 @@ Vectorize 适合搜索词与正文不完全一致，或需要通过相关概念�
 当前搜索弹窗在输入时不执行搜索。只有读者执行“搜索”时，才会按照界面说明将搜索词发送到本站搜索 API。Cloudflare Workers AI `@cf/baai/bge-m3` 将其转换为向量，再与 Vectorize 中的本站公开信息进行比对。如果关联搜索失败或没有结果，浏览器会运行 Pagefind 作为 fallback。之后搜索词也可能发送到 Acecore 共用搜索 API（acecore.net），用于展示相关网站的公开信息。界面提醒不要输入个人信息或机密信息。
 
 采用这种架构，Vectorize 可以扩展搜索体验，但不会成为整个搜索的单点故障。
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">区分搜索结果与检索故障</strong>
+    <span>静态搜索 fallback 不能作为回复依据。停止条件仅经代码/PR审查，生产应用尚未确认。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>分类检索结果</strong>
+      <span>区分有结果、有效的零结果、获取失败或非 2xx，以及格式错误的数据。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>站内搜索界面</strong>
+      <span>静态 Pagefind fallback 仅属于站内搜索界面；不要把它当作外部回复依据。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>外部回复判定</strong>
+      <span>零结果不能作为回复依据；获取失败或响应无效时应暂缓。生产环境应用尚未确认。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 从已发布 HTML 而不是 CMS 草稿生成 corpus
 

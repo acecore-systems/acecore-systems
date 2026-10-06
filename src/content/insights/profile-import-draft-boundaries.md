@@ -2,9 +2,9 @@
 title: "プロフィール情報を下書きに取り込む：手編集と公開操作を守る設計"
 description: "テキスト・CSV・静的HTML・共通JSONからプロフィールを取り込む実装を一般化。現在値との比較、項目の選択と置換、取消、保存・公開、未対応の入力を整理します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ HTMLは取込元のデータとして扱い、scriptや入力HTMLそのものを
 取込とは別の編集機能として、公開カレンダーの予定にHTTPSリンクを設定する改修も反映しました。公開側では予定から指定先を新しいタブで直接開き、リンクが無い予定は操作できるリンクを作らず表示します。URLの形式、認証情報を含まないこと、入力長を検証し、リンクには `noopener noreferrer` を付け、新しいタブが開くことを読み上げ名にも含めます。
 
 関連する入力画面では、コラボ可能枠の不要なタイトル欄と自分用メモ欄を整理しました。DB変更・CI・本番配信・検証用データの画面を確認していますが、本人がログインして実際の予定を保存・公開する受入は未確認です。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">取込と予定リンクの境界</strong>
+    <span>別の編集機能を並べています。実利用者の保存・公開受入は未確認です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>プロフィール取込</strong>
+      <span>対応形式を本人が確認・編集。保存と公開は別操作。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>公開予定リンク</strong>
+      <span>HTTPSリンクは安全な新規tabで開く。リンクなしは非操作表示。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 確認できたことと次の受入
 

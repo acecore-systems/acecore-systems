@@ -2,9 +2,9 @@
 title: "Aligner l’expiration des connexions entre services : renouvellement et réauthentification"
 description: "Une conception générale distinguant connexion explicite, expiration côté serveur, cookies et fournisseur d’identité."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ Le cas renouvelle la période applicable après une connexion explicite réussie
 Un cookie plus durable ne fixe pas la durée acceptée par le serveur. Contrôler expiration, révocation, cookie et contraintes du fournisseur. Des règles cohérentes ne signifient ni cookie partagé ni déconnexion immédiate de tous les services.
 
 Vérifier les dates d’authentification et d’expiration de l’autorité, puis limiter les sessions applicatives à cette période. Le contrat commun valide les sessions ; les droits métier restent dans chaque application. Une passerelle avec son propre cookie constitue une autre limite à inventorier et auditer.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">Distinguer authentification, sessions et droits des applications</strong>
+    <span>Une règle d’expiration commune ne fusionne pas ces états.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>Fournisseur d’identité et callback</strong>
+      <span>Vérifiez le résultat d’authentification ainsi que le context/state du callback. Une connexion seule n’accorde pas de droits dans l’application.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>Application, cookie et passerelle</strong>
+      <span>Contrôlez séparément l’expiration et la révocation de la session serveur, du cookie du navigateur et de la session de la passerelle.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>Droits par service</strong>
+      <span>Chaque application vérifie ses propres droits. Le trafic courant et l’actualisation en arrière-plan ne prolongent pas l’expiration et ne garantissent pas une déconnexion globale.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Séparer réglages et comportement
 

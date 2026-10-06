@@ -2,9 +2,9 @@
 title: "Copias con restic en R2: de guardar datos a verificar su restauración"
 description: "Supervise por separado la actualidad de las instantáneas, la integridad y la restauración, indicando qué recuperación de aplicaciones falta probar."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ Seleccione instantáneas mediante su política y use `forget`, `prune` y `check`
 ## Comprobaciones pendientes
 
 Se realizaron operación periódica, supervisión/avisos, retención y extracción/integridad de datos seleccionados. Faltan validar de extremo a extremo el arranque de todas las aplicaciones, configuración y dependencias, y acceso a credenciales independientes. Tiempo de recuperación y pérdida aceptable requieren medición. No se afirma recuperación completa ni ahorro demostrado.
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">Verificar las pruebas por etapas, desde la actualidad del snapshot hasta la recuperación completa</strong>
+    <span>Recuperar datos no demuestra que también puedan recuperarse las aplicaciones o las credenciales.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>Snapshot correcto y actualidad</strong>
+      <span>Compruebe la hora del snapshot que terminó correctamente y su retraso respecto al calendario. Que el trabajo haya empezado no significa que haya tenido éxito.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>Integridad y restauración aislada</strong>
+      <span>Registre el alcance de la comprobación, ejecute restore --verify en otra ubicación y compare los archivos y hashes previstos antes de revisar la retención y prune.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>Recuperación completa</strong>
+      <span>El arranque de todas las aplicaciones, los datos dependientes y la recuperación de credenciales guardadas aparte siguen sin verificarse. El tiempo de recuperación y la pérdida de datos admisible no se han medido.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Actualización del 6 de octubre de 2026: bloqueos obsoletos y control de la concurrencia en las pruebas de restauración
 

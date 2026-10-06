@@ -2,9 +2,9 @@
 title: "统一多个服务的登录期限：会话更新与重新认证的边界"
 description: "区分主动登录、服务器期限、Cookie与认证平台设置，整理多个Web服务的登录期限设计和验证范围。"
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ callout:
 延长Cookie保存时间不能决定服务器接受会话的时间。应一起检查服务器期限、失效状态、Cookie和平台限制。规则一致不代表共享Cookie，也不代表在一个服务退出后所有服务立即退出。
 
 验证认证源的认证时刻与失效时刻，将应用期限限制在其范围内。共用的是会话验证契约，业务权限仍由各应用判断。持有独立Cookie的访问网关也应作为单独的期限边界盘点和审计。
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">分别处理认证状态、会话与应用权限</strong>
+    <span>统一过期规则，不代表这些状态合为一体。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>身份提供方与 callback</strong>
+      <span>验证认证结果及 callback 的 context/state。仅登录成功不会授予应用权限。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>应用、Cookie 与网关</strong>
+      <span>分别校验服务器端应用会话、浏览器 cookie 和网关会话的过期与撤销。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>各服务的权限</strong>
+      <span>由各应用单独检查业务权限。普通访问或后台刷新不会延长期限，也不意味着全局退出。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 配置检查与行为验证分开
 

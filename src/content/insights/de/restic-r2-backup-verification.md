@@ -2,9 +2,9 @@
 title: "restic-Backups auf R2 überwachen: von Speicherung zu geprüfter Wiederherstellung"
 description: "Snapshot-Aktualität, Integrität und Wiederherstellung getrennt prüfen und noch ungeprüfte Anwendungswiederherstellung benennen."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ Wählen Sie Snapshots per Aufbewahrungsrichtlinie und verwenden Sie `forget`, `p
 ## Offene Wiederherstellungsprüfungen
 
 Regelbetrieb, Monitoring/Meldungen, Aufbewahrung und Extraktion/Integrität ausgewählter Daten wurden durchgeführt. Start aller Anwendungen, Konfigurationen und Abhängigkeiten sowie Zugriff auf getrennte Zugangsdaten brauchen noch Ende-zu-Ende-Prüfung. Wiederherstellungszeit und akzeptabler Datenverlust müssen gemessen werden. Vollständige Notfallwiederherstellung oder belegte Einsparungen werden nicht behauptet.
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">Nachweise stufenweise prüfen: von der Snapshot-Aktualität bis zur vollständigen Wiederherstellung</strong>
+    <span>Das Abrufen von Daten beweist nicht die Wiederherstellung von Anwendungen oder Zugangsdaten.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>Erfolgreicher Snapshot und Aktualität</strong>
+      <span>Zeitpunkt eines tatsächlich erfolgreichen Snapshots und Verzögerung gegenüber dem Zeitplan prüfen. Der Start eines Jobs allein ist kein Erfolg.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>Integrität und isolierte Wiederherstellung</strong>
+      <span>Prüfumfang dokumentieren, restore --verify an einem getrennten Ort ausführen und die vorgesehenen Dateien und Hashes vergleichen; danach Aufbewahrung und prune prüfen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>Vollständige Notfallwiederherstellung</strong>
+      <span>Anwendungsstart, abhängige Daten und Wiederherstellung separat verwahrter Zugangsdaten sind nicht verifiziert. Wiederherstellungszeit und tolerierbarer Datenverlust sind nicht gemessen.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Ergänzung vom 6. Oktober 2026: Veraltete Sperren und Parallelität bei Wiederherstellungstests
 

@@ -2,9 +2,9 @@
 title: "Minecraftの遅延をどう調べるか：静かな測定と共有ストレージの切り分け"
 description: "TPS・MSPTの静かな収集からJFRとOSのI/O観測を照合するまで。完了した原因調査と、未実施の性能改善を分けて紹介します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ TPSだけでなく、MSPTの平均・最大・p95、遅いtickの累積回数を
 正常な観測窓240秒と停滞した観測窓220秒では、1秒ごとのwrite awaitの中央値が1.60msと43.71ms、最大値が6.00msと123.57msでした。これは二つの観測窓の比較で、対策前後の改善率や一般的なベンチマークではありません。
 
 同期保存とファイルシステムのjournal待ちに加え、複数アプリケーションのデバイス要求でも遅延を確認し、共有ストレージ経路を対策候補に絞りました。[Linuxのブロックtracepoint](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html)の完了イベントは要求の一部を表す場合もあるため、照合できなかった要求を混ぜて全I/Oの統計とはしません。採取にも時間・容量の上限を設け、計測自身の負荷を考慮します。
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">観測と原因仮説を分ける</strong>
+    <span>常時計測と限定採取は別の観測窓です。ストレージ移行の効果は未検証です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>静かな常時計測</strong>
+      <span>TPS/MSPTと欠測を記録し、通常のconsole logを増やさない。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>限定窓で原因調査</strong>
+      <span>JFR・OS・block I/Oを別々に採取して照合。共有storage経路は候補で、故障確定ではない。</span>
+    </li>
+  </ol>
+</figure>
 
 ## ここから先は別の検証
 

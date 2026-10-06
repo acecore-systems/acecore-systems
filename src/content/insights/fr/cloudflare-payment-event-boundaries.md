@@ -2,9 +2,9 @@
 title: "Traiter les webhooks de paiement et de remboursement en toute sécurité : rapprocher les états dans Workers"
 description: "Un exemple d’implémentation qui distingue signature, événements dupliqués ou tardifs, état du remboursement et réponses des API externes. Il montre aussi la nouvelle vérification des autorisations avant une action d’administration."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ Elle vérifie le montant, la devise, le PaymentIntent, les métadonnées reliant
 Vérifiez le solde et les autorisations avant de demander un remboursement, puis vérifiez de nouveau les autorisations et l’expiration de l’opération après la lecture de l’état externe et juste avant l’écriture. Utilisez une clé d’idempotence et une réservation propres à chaque opération. Si le résultat externe est incertain, rapprochez l’état actuel au lieu de redemander le remboursement sans vérification.
 
 Un remboursement réussi et un ajustement de points réussi sont deux états différents. Un échec ultérieur ne doit pas répéter le remboursement ; consignez tout rapprochement ou correctif nécessaire. La configuration des notifications, leur réception effective et le suivi par l’équipe sont des critères de réception distincts du traitement des événements de paiement. Cet article ne prétend pas que les notifications sont opérationnelles.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">Du webhook à séparation des résultats</strong>
+    <span>Vérifiez l’état actuel avant d’enregistrer une opération comme terminée. Aucun remboursement ni ajustement de points client n’a été effectué.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>Vérifier à l’entrée</strong>
+      <span>Contrôlez le body brut, le mode et l’event ID ; repérez les relances et traitements en cours.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>Rapprocher l’état actuel</strong>
+      <span>Ne revenez pas à un ancien état à cause d’un événement tardif ; comparez montant, devise et commande.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>Enregistrer les résultats séparément</strong>
+      <span>Remboursements, points et notifications ont des états distincts. Si le résultat externe est incertain, rapprochez-le au lieu de répéter l’opération.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Vérifier les réponses dans Node et dans le runtime Workers
 

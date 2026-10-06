@@ -2,9 +2,9 @@
 title: "Alinhar a validade do login entre serviços: renovação e reautenticação"
 description: "Desenho geral de validade de login, separando acesso explícito, servidor, cookies e provedor de identidade."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ O caso renova o período aplicável após um login explícito bem-sucedido, não
 Um cookie mais duradouro não define o período aceito pelo servidor. Confira prazo, revogação, cookie e limites do provedor. Regras iguais não implicam cookie compartilhado ou logout imediato em todos os serviços.
 
 Valide o horário de autenticação e expiração da autoridade e limite a eles as sessões das aplicações. O contrato comum valida sessões; permissões de negócio continuam em cada aplicação. Um gateway com cookie próprio tem outro limite a inventariar e auditar.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">Separar autenticação, sessões e permissões dos aplicativos</strong>
+    <span>Uma regra comum de expiração não transforma esses estados em um só.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>Provedor de identidade e callback</strong>
+      <span>Valide o resultado da autenticação e o context/state do callback. O login, por si só, não concede acesso ao aplicativo.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>Aplicativo, cookie e gateway</strong>
+      <span>Verifique separadamente a expiração e a revogação da sessão no servidor, do cookie do navegador e da sessão do gateway.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>Permissões de cada serviço</strong>
+      <span>Cada aplicativo verifica as próprias permissões. O tráfego normal e a atualização em segundo plano não estendem o prazo nem implicam logout global.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separar configuração e comportamento
 

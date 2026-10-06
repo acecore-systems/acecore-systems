@@ -2,7 +2,7 @@
 title: "Astro 7 사이트를 9개 언어로 지원하는 방법 ― 블로그 번역과 다국어 아키텍처"
 description: "2026년 7월 Astro 7.1.3과 UnoCSS로 9개 언어를 도입한 기록이며, 현재 의존성과 번역 경로도 안내합니다."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["기술", "Astro", "i18n", "웹사이트"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -217,6 +217,39 @@ export function localizePost(
 3. **배치 처리**: GitHub Copilot으로 한 번에 5~6개 글 처리
 
 일본어 → 영어 → 대상 언어의 2단계 번역으로 품질 편차를 줄입니다. 영어를 중간 언어로 경유하면 일본어에서 각 언어로 직접 번역하는 것보다 안정적인 품질을 얻을 수 있습니다.
+
+<figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
+  <figcaption>
+    <strong id="diagram-astro-i18n-blog-translation">최신 일본어 source와 번역을 대조한 뒤 공개</strong>
+    <span>공개 URL과 검색 참조는 실제로 존재하는 번역 파일에 맞춥니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
+      </span>
+      <strong>일본어 source 갱신</strong>
+      <span>변경 사항을 확인하고 검토가 필요한 언어 버전을 찾습니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
+      </span>
+      <strong>각 locale 번역 확인</strong>
+      <span>title, description, 본문을 대조하고 실제 번역 파일이 있을 때만 locale URL을 생성합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
+      </span>
+      <strong>번역 파일이 없는 경우</strong>
+      <span>해당 locale의 URL, sitemap 항목, hreflang을 만들지 않습니다. 미번역 페이지를 자동 공개하지 않습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 다국어 View 컴포넌트
 

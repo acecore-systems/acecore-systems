@@ -2,9 +2,9 @@
 title: "Import Profile Details as a Draft: Compare, Select, and Publish Deliberately"
 description: "A generalized profile-import flow for text, CSV, static HTML, and shared JSON. Learn how it compares current values, lets people replace selected fields or undo changes, and keeps saving separate from publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ Applying import candidates, saving a draft, and updating the public snapshot are
 A separate editing update, independent of profile import, adds HTTPS links to public calendar events. An event opens its destination directly in a new tab. Events without a URL remain visible without an actionable link. Validate the URL format, reject embedded credentials, and limit input length. Add **noopener noreferrer** and include the new-tab behavior in the accessible name.
 
 The related forms also remove an unnecessary title field for collaboration availability slots and fields for private notes. Database changes, CI, production deployment, and screens using verification data were checked. Acceptance by an owner signing in, saving an actual event, and publishing it remains unverified.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">Boundaries for imports and calendar links</strong>
+    <span>These are separate editor functions. Logged-in acceptance of saving and publishing remains unverified.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>Profile import</strong>
+      <span>The user reviews and edits supported formats. Saving and publishing are separate actions.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>Public calendar link</strong>
+      <span>Open an HTTPS link in a safe new tab. Events without a link remain non-interactive.</span>
+    </li>
+  </ol>
+</figure>
 
 ## What was verified and what comes next
 

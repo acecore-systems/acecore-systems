@@ -2,9 +2,9 @@
 title: "Workers에서 결제·환불 Webhook 안전하게 처리하기: 상태 대조와 관리"
 description: "서명 검증, 중복·지연 이벤트, 환불 상태, 외부 API 응답을 구분하는 구현 사례입니다. 관리 작업 직전 권한을 다시 확인하는 방법도 다룹니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ callout:
 환불 요청 전에 잔액과 권한을 확인하고, 외부 상태를 조회한 뒤 실제로 기록하기 직전에도 권한과 작업 만료 여부를 다시 확인합니다. 작업별 멱등성 키와 점유를 사용합니다. 외부 결과가 불확실하면 환불을 무조건 다시 요청하는 대신 현재 상태를 재대조합니다.
 
 환불 성공과 포인트 조정 성공은 서로 다른 상태입니다. 후속 실패 때문에 환불을 다시 실행해서는 안 되며 필요한 재대조나 복구를 기록합니다. 알림 설정, 실제 수신, 담당자 후속 조치는 결제 이벤트 처리와 별도의 수락 항목입니다. 이 글은 알림이 운영 중이라고 주장하지 않습니다.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">Webhook에서 업무 결과까지</strong>
+    <span>완료로 기록하기 전에 현재 상태를 대조합니다. 고객 환불이나 포인트 조정은 실행하지 않았습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>진입점 검증</strong>
+      <span>원본 body, mode, event ID를 확인하고 재전송과 처리 중 상태를 구분합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>현재 상태 대조</strong>
+      <span>지연 event 때문에 기록을 되돌리지 않고 금액·통화·주문을 비교합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>결과를 따로 기록</strong>
+      <span>환불·포인트·알림 상태는 각각 다릅니다. 외부 결과가 불명확하면 재실행하지 말고 다시 대조합니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Node와 Workers 런타임에서 응답을 확인합니다
 

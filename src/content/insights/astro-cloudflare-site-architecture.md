@@ -2,7 +2,7 @@
 title: "Astro + Cloudflareで公式サイトを機能拡張する全体設計"
 description: "AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技術", "Astro", "Cloudflare", "Webサイト", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -301,6 +301,45 @@ AI機能をサイトに入れるときは、モデルの精度だけでなく、
 同じように、AIチャットの会話ログもブログ本文ではありません。問い合わせフォームの入力も公開コンテンツではありません。
 
 サイト内にある情報をすべて検索対象にするのではなく、公開コンテンツ、操作UI、ユーザー投稿、管理画面を分けて扱う必要があります。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">コンテンツ・投稿・管理画面の公開境界</strong>
+    <span>レビュー済み本文は静的検索の対象、訪問者投稿と管理面は別境界です。Previewと本番は別に確認します。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>レビュー済みの静的本文</strong>
+      <span>レビュー済みの本文を静的HTMLとして公開し、サイト内検索Pagefindの対象として索引化する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>訪問者の投稿</strong>
+      <span>コメントは動的APIと保存先で扱い、フォーム等の訪問者入力を静的検索へ混ぜない。対象化には承認と再生成が必要。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>管理面・環境確認</strong>
+      <span>管理画面は公開検索から分離する。Previewと本番を別々に確認し、環境設定の列挙だけで稼働を判断しない。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 9. 目的別に読む
 

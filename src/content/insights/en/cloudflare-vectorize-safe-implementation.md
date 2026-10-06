@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize Implementation Guide: Safely Sync Public HTML"
 description: "A detailed guide to building a corpus from public HTML, keeping Pagefind available, and operating Vectorize synchronization safely."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technology", "Cloudflare", "Vectorize", "Workers AI", "Site Search"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -196,6 +196,45 @@ We therefore separated the UI behavior as well.
 The current search modal does not search while the reader types. Only when the reader runs “Search” is the term sent to this site's search API, as the UI discloses. Cloudflare Workers AI `@cf/baai/bge-m3` converts it to an embedding for comparison with this site's public information in Vectorize. If related search fails or returns no results, in-browser Pagefind runs as the fallback. The term may then be sent to the shared Acecore search API (acecore.net) to show public information from related sites. The UI advises against entering personal or confidential information.
 
 With this architecture, Vectorize broadens the search experience without becoming a single point of failure for all search.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">Keep search outcomes and retrieval failures on separate paths</strong>
+    <span>The static search fallback is not reply evidence. The stop condition is code/PR-reviewed; production use is unverified.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Classify the retrieval</strong>
+      <span>Distinguish matches, a valid zero-result response, failed or non-2xx fetches, and malformed data.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>Site search UI</strong>
+      <span>The static Pagefind fallback belongs to the site search UI; keep it separate from reply evidence.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>External reply decision</strong>
+      <span>Zero results are not evidence. Hold on failures or invalid data; production use of the stop condition is unverified.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Build the corpus from published HTML, not CMS drafts
 

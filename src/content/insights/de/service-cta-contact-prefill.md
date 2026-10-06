@@ -2,7 +2,7 @@
 title: "Technisches Design zur Übergabe des Kontexts eines Service-CTA an das Kontaktformular"
 description: "Implementierungsdesign, das den auf einer Serviceseite gelesenen Kontext an das Kontaktformular übergibt. Behandelt werden Mini-CTAs in Astro, der URL-Parameter-Vertrag, die anfängliche Kategorieauswahl, Subject-Prefill, mehrsprachige URLs, GA-Messung und Prüfung des generierten HTML."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -169,6 +169,45 @@ Ein Label wie `Webサイト制作・運用について` wird von Übersetzung, S
 | hash       | Dient zum Scrollen zum Formular                               |
 
 URL-Parameter können vom Nutzer bearbeitet werden. Das Formular übernimmt den URL-Wert deshalb nicht direkt, sondern ordnet ihn einem vorhandenen option zu.
+
+<figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
+  <figcaption>
+    <strong id="diagram-service-cta-contact-prefill">Vom geprüften Anfragekontext zum Verwaltungsdatensatz</strong>
+    <span>Die Abbildung zeigt Implementierungsschritte; ein abgeschlossener Kontakt mit echten Kunden ist nicht belegt.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
+        </svg>
+      </span>
+      <strong>CTA-Kontext auflösen</strong>
+      <span>Einen stabilen service key der lokalisierten URL und einer erlaubten Formularoption zuordnen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
+        </svg>
+      </span>
+      <strong>Eingaben und Berechtigungen prüfen</strong>
+      <span>Den Betreff nur vorbelegen, wenn er leer ist; die API prüft außerdem die Identität des Nutzers und die Aktionsberechtigung.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
+        </svg>
+      </span>
+      <strong>In die Annahmeakte übernehmen</strong>
+      <span>Anfrage, Verlauf und Folgeaufgaben erfassen; der Abschluss durch das Team bleibt ein eigener Status.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Klassifikationstabelle im Formular
 

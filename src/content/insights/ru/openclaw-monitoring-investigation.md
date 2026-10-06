@@ -2,9 +2,9 @@
 title: "Мониторинг и расследования OpenClaw: обнаружение, доказательства и решения"
 description: "Как совместить регулярные проверки с ограниченными расследованиями и отделить проверенную работу от недоказанного восстановления."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ callout:
 ## Сохранить данные при тайм-ауте
 
 Сохраняйте наблюдения, время, результаты и недоступные пункты до прерывания. Незавершённое расследование не означает «всё исправно»; неудачный сбор нельзя описывать как успешную проверку.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">Разделяйте регулярное обнаружение, ограниченное расследование и решение человека</strong>
+    <span>Сохраняйте частичные доказательства и не выдавайте процесс за подтверждённое автоматическое исправление.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>Регулярная проверка</strong>
+      <span>Различайте норму, отклонение и ошибку получения данных. Во время обслуживания подавляйте только временное уведомление об ошибке затронутой проверки.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>Расследование в разрешённых пределах</strong>
+      <span>Ограничивайте чтение, время и объём вывода; сохраняйте частичные доказательства при тайм-ауте. Отклонённая операция не считается выполненной.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>Отчёт для решения</strong>
+      <span>Отделяйте факты, гипотезы и неизвестное; обрабатывайте повторные и восстановительные уведомления. Для изменений и перезапуска нужно отдельное разрешение.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Разделить уведомления и действия
 

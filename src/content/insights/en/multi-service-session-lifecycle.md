@@ -2,9 +2,9 @@
 title: "Aligning login expiry across services: session renewal and reauthentication"
 description: "A generalized design for consistent login expiry across web services, separating explicit sign-in, server enforcement, cookies and identity-provider settings."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ The case renews the applicable period at successful explicit sign-in, not throug
 A longer-lived cookie does not define what the server accepts. Check server expiry, revocation, cookies and provider constraints together. Consistent rules do not imply a shared cookie or immediate logout from every service.
 
 Validate the authority’s authentication time and expiry, and bound application lifetimes to them. The shared contract concerns session validation; business permissions remain with each application. A gateway with its own cookie is another expiry boundary to inventory and audit.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">Keep authentication, sessions, and app permissions separate</strong>
+    <span>A shared expiry policy does not make these states one.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>Identity provider and callback</strong>
+      <span>Validate the authentication result and callback context/state. A sign-in alone grants no app permissions.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>App, cookie, and gateway</strong>
+      <span>Check expiry and revocation separately for the server-side app session, browser cookie, and gateway session.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>Per-service authorization</strong>
+      <span>Each app checks its own permissions. Ordinary traffic and background refresh do not extend expiry or imply global logout.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separate configuration from behavior
 

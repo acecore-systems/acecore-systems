@@ -2,8 +2,9 @@
 title: "Relier les alertes opérationnelles à Nextcloud Talk : distinguer détection, livraison et résolution"
 description: "Un modèle général pour acheminer les exceptions de traitement des commandes et les contenus à examiner vers des salons Talk privés et une interface d’administration, avec des alertes minimales, une gestion des secrets, des tests de connexion et des limites de recette explicites."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/nextcloud-talk-operations-notifications.webp
+image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
 callout:
   type: note
@@ -24,6 +25,30 @@ Talk propose une [API officielle pour envoyer des messages depuis un bot](https:
 ## Suivre séparément détection, livraison et prise en charge
 
 Détecter un événement, demander l’envoi, recevoir une réponse positive de l’API, recevoir le message et traiter le problème sont des étapes distinctes. Un échec de notification ne signifie pas que le problème opérationnel est résolu, et la nouvelle tentative d’une notification ne doit pas répéter une opération de commande. Limitez les données client du message au strict nécessaire et fixez l’origine des liens d’administration.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-nextcloud-talk-operations-notifications">
+  <figcaption>
+    <strong id="diagram-nextcloud-talk-operations-notifications">Suivre les preuves de notification par étapes</strong>
+    <span>Seule la réception d’un message de test est confirmée. La résolution opérationnelle et le push sur smartphone ne sont pas vérifiés.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+      <strong>Détecter et envoyer</strong>
+      <span>Envoyer uniquement le type de problème et un lien vers l’écran d’administration protégé, avec un minimum de détails.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m6 8 6 5 6-5M8 15h3"/></svg></span>
+      <strong>Confirmer la réception du test</strong>
+      <span>Vérifier séparément le résultat d’envoi de l’API et la preuve de réception du message de test.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.5-4 3.3-6 8-6s7.5 2 8 6"/></svg></span>
+      <strong>Une personne prend en charge le problème</strong>
+      <span>La recette du signalement à la résolution et le push sur smartphone restent non vérifiés.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Passer du test de connexion en production à la recette opérationnelle
 

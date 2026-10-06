@@ -2,7 +2,7 @@
 title: "Cómo hacer que un sitio Astro 7 soporte 9 idiomas ― Traducción del blog y arquitectura multilingüe"
 description: "Registro de la adaptación a nueve idiomas con Astro 7.1.3 y UnoCSS en julio de 2026, con referencias a las dependencias y traducción actuales."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "i18n", "Sitio web"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -217,6 +217,39 @@ El proceso de traducción sigue estos pasos:
 3. **Procesamiento por lotes**: Procesar 5-6 artículos a la vez con GitHub Copilot
 
 La traducción en dos etapas (japonés → inglés → idiomas destino) reduce la variación de calidad. Pasar por el inglés como idioma intermedio produce calidad más estable que traducir directamente del japonés a cada idioma.
+
+<figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
+  <figcaption>
+    <strong id="diagram-astro-i18n-blog-translation">Contrastar las traducciones con la fuente japonesa actual</strong>
+    <span>Las URL públicas y las referencias de búsqueda corresponden solo a archivos de traducción existentes.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
+      </span>
+      <strong>Actualizar la fuente japonesa</strong>
+      <span>Revise los cambios e identifique qué versiones de idioma necesitan revisión.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
+      </span>
+      <strong>Revisar cada traducción</strong>
+      <span>Contraste title, description y cuerpo; genere una URL de locale solo para un archivo de traducción existente.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
+      </span>
+      <strong>Si falta el archivo traducido</strong>
+      <span>No cree una URL, entrada de sitemap ni hreflang para esa locale. No publique automáticamente una página sin traducir.</span>
+    </li>
+  </ol>
+</figure>
 
 ## View Components multilingües
 

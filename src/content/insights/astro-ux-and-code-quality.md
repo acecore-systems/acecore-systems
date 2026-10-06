@@ -2,7 +2,7 @@
 title: "Astro View Transitionsの落とし穴と解決策 ― UX・コード品質改善ガイド"
 description: "AstroのView Transitionsでスクリプトが動かなくなる問題の解決策、Pagefind全文検索の導入、TypeScript型安全性の向上、定数の一元管理など、UXとコード品質を改善した実践ガイドです。"
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技術", "Astro", "Webサイト"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ View Transitionsを使うなら、**スクリプトの初期化パターンを�
 名称や分類を再編する場合は、既存の値、API、filter、DB変更を合わせます。旧データが0件なら、実コンテンツを移行した実績にはしません。状態バッジが詳細へのリンクならクリックとEnterの両方で到達できるようにします。公開URLの識別子をインライン編集する場合も、形式・重複・URL反映の検証を残します。公開表示・メディア再生・匿名時のログイン誘導の確認と、ログイン済みEditorでの識別子保存や公開状態変更の受入は別です。
 
 従来の編集領域を、利用者の新しい作業単位へ組み替えるときは、永続ナビと作業領域を分け、名称だけを変えて旧操作を残さないようにします。残高などの補助数値は主要操作より視覚的に弱くしても、文字サイズとcontrastを保ち、読めなくしない階層にします。
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">操作、APIの結果、表示する状態を分ける</strong>
+    <span>画面上の操作だけでは、保存・公開済みとは判定しません。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Editorでの操作</strong>
+      <span>カテゴリ移動や作業単位の選択は画面上の操作で、保存・公開が済んだことを示すものではありません。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>APIと公開snapshot</strong>
+      <span>APIの結果と公開snapshotを確認します。通信失敗や認証情報の欠落を成功扱いしません。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>再表示後の状態</strong>
+      <span>確認できた状態だけ反映し、必要なら再読込・再認証を案内します。ログイン利用者の保存・公開受入は未確認です。</span>
+    </li>
+  </ol>
+</figure>

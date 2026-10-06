@@ -2,9 +2,9 @@
 title: "R2とresticのバックアップ監視：保存成功から復元確認まで"
 description: "R2を保存先にしたrestic運用で、スナップショットの鮮度・整合性・復元を別々に確かめる設計と、未検証の完全復旧範囲を紹介します。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ resticの暗号化・重複排除を使い、R2のS3互換APIへ保存する構�
 ## 完全復旧に必要な残りの確認
 
 定期運用、監視・通知、保持処理、対象データの取り出しと整合性確認を実施しました。一方、すべてのアプリケーションの起動、設定や依存データを含む復旧手順、認証情報を別に保管して取り出す手順は、全体としての実証が残っています。復旧時間や失えるデータの範囲も実測で定める必要があり、完全な災害復旧や費用削減の達成を主張する記事ではありません。
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">snapshotの鮮度から完全復旧まで、証拠を段階で確認</strong>
+    <span>データを取り出せても、アプリや認証情報の復旧まで証明したことにはなりません。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>成功snapshotと鮮度</strong>
+      <span>実際に成功したsnapshotの時刻と予定からの遅延を確認します。ジョブの起動だけでは成功としません。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>整合性と隔離復元</strong>
+      <span>検査範囲を記録し、別の場所で restore --verify。対象ファイルとhashを照合してからpruneを検討します。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>完全な災害復旧</strong>
+      <span>全アプリの起動、依存データ、別管理の認証情報回復は未実証です。復旧時間や許容データ損失も未測定です。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 2026年10月6日追記：古いlockと復元検査の占有
 

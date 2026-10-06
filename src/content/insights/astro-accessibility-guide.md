@@ -2,7 +2,7 @@
 title: "Astroサイトのアクセシビリティ改善実践ガイド"
 description: "2026年3月のAstro + UnoCSSサイトで行ったアクセシビリティ改善の記録。aria属性、コントラスト、フォーカス、フォーム、スクリーンリーダー対応を例示します。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技術", "Astro", "アクセシビリティ"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -178,6 +178,45 @@ shortcuts: {
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">（必須）</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">フォームの表示・操作・通知を結び付ける</strong>
+    <span>2026年3月時点の例に基づく関係図です。自動検査だけでWCAG全体への適合は示せません。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>入力欄とlabel</strong>
+      <span>入力欄には内容が分かるlabelを付け、必須であることも星印だけでなく読み上げ可能な補足で伝える。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>キーボード操作</strong>
+      <span>focus-visibleで操作中の入力欄を示し、キーボードで到達して入力・修正できることを確認する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>エラーを関連付けて通知</strong>
+      <span>欄と文言をaria-invalid/aria-describedbyで結び、role=alertで通知する。自動・手動で確認する。</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

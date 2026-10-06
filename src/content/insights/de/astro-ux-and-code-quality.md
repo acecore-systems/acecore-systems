@@ -2,7 +2,7 @@
 title: "Fallstricke und Lösungen für Astro View Transitions — Ein Leitfaden zur Verbesserung von UX und Code-Qualität"
 description: "Ein praktischer Leitfaden mit Lösungen für Skriptprobleme bei Astro View Transitions, Einführung der Pagefind-Volltextsuche, Verbesserung der TypeScript-Typsicherheit, Zentralisierung von Konstanten und mehr zur Verbesserung von UX und Code-Qualität."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Website"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ Fehlt der Authentifizierungskontext oder der Vertrag zwischen Frontend und Backe
 Bei einer Neuordnung von Bezeichnungen oder Kategorien müssen bestehende Werte, API, Filter und Datenbankänderungen zusammenpassen. Wenn keine Altdaten vorliegen, darf keine Migration echter Inhalte behauptet werden. Führt ein Status-Badge zu einer Detailansicht, muss das sowohl per Klick als auch mit Enter erreichbar sein. Bei der Inline-Bearbeitung einer öffentlichen URL-Kennung bleiben Prüfungen auf Format, Duplikate und URL-Aktualisierung erhalten. Öffentliche Darstellung, Medienwiedergabe und die Login-Aufforderung für anonyme Personen wurden getrennt von der Abnahme geprüft, die eine Kennung im angemeldeten Editor speichert oder den Veröffentlichungsstatus ändert.
 
 Wird der Bearbeitungsbereich nach neuen Aufgaben der Nutzenden umgestaltet, sind dauerhafte Navigation und Arbeitsbereich zu trennen; bloßes Umbenennen bei unveränderten alten Aktionen reicht nicht. Zusatzwerte wie ein Kontostand dürfen gegenüber Hauptaktionen visuell zurücktreten, müssen aber mit lesbarer Schriftgröße und ausreichendem Kontrast erkennbar bleiben.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">Editor-Aktionen, API-Ergebnis und angezeigten Zustand trennen</strong>
+    <span>Eine Aktion auf dem Bildschirm beweist allein weder erfolgreiches Speichern noch Veröffentlichen.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Aktion im Editor</strong>
+      <span>Das Verschieben einer Kategorie oder die Auswahl einer Arbeitseinheit ändert zunächst den Bearbeitungszustand.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>API und veröffentlichter Snapshot</strong>
+      <span>API-Ergebnis und öffentlichen Snapshot prüfen. Bei fehlgeschlagener Anfrage oder fehlendem Authentifizierungskontext keinen Erfolg anzeigen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>Zustand nach dem Neuladen</strong>
+      <span>Nur bestätigte Zustände anzeigen und bei Bedarf zum Neuladen oder zur erneuten Anmeldung auffordern. Die Abnahme von Speichern und Veröffentlichen durch angemeldete Nutzer ist nicht bestätigt.</span>
+    </li>
+  </ol>
+</figure>

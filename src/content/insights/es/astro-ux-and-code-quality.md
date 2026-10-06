@@ -2,7 +2,7 @@
 title: "Trampas y soluciones de Astro View Transitions — Guía de mejora de UX y calidad de código"
 description: "Soluciones para el problema de scripts que dejan de funcionar con View Transitions de Astro, implementación de búsqueda de texto completo con Pagefind, mejora de seguridad de tipos TypeScript, gestión centralizada de constantes y más. Guía práctica de mejora de UX y calidad de código."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Sitio web"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ Si falta el contexto de autenticación o el contrato entre frontend y backend, l
 Al reorganizar nombres o categorías, hay que alinear los valores existentes, la API, los filtros y los cambios en la base de datos. Si no hay datos antiguos, no debe afirmarse que se migró contenido real. Si una insignia de estado enlaza con detalles, debe poder activarse tanto con clic como con Enter. Al editar en línea un identificador de URL pública, también se conservan las comprobaciones de formato, duplicados y actualización de la URL. La visualización pública, la reproducción de medios y la invitación a iniciar sesión en modo anónimo se comprobaron por separado de la aceptación de guardar el identificador o cambiar el estado público en el Editor autenticado.
 
 Al reorganizar el área de edición conforme a las nuevas tareas de la persona usuaria, se separan la navegación persistente y el espacio de trabajo; no basta con cambiar los nombres y dejar las acciones antiguas. Los valores auxiliares, como los saldos, pueden tener menos peso visual que las acciones principales, pero deben mantener un tamaño de texto y un contraste legibles.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">Separar las acciones del editor, el resultado de la API y el estado mostrado</strong>
+    <span>Una interacción en pantalla no demuestra por sí sola que guardar o publicar haya funcionado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Acción en el Editor</strong>
+      <span>Mover una categoría o elegir una unidad de trabajo cambia el estado de edición en pantalla.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>API y snapshot publicado</strong>
+      <span>Compruebe el resultado de la API y el snapshot público. No muestre éxito si falla la solicitud o falta el contexto de autenticación.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>Estado después de recargar</strong>
+      <span>Muestre solo el estado confirmado y solicite recarga o reautenticación cuando haga falta. La aceptación de guardar y publicar por usuarios con sesión sigue sin verificarse.</span>
+    </li>
+  </ol>
+</figure>

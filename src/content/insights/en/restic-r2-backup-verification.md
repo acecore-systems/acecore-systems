@@ -2,9 +2,9 @@
 title: "Monitoring restic backups on R2: from successful storage to verified restoration"
 description: "Track snapshot freshness, repository integrity and restoration separately, and identify the application recovery steps that remain untested."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ Choose snapshots with restic’s retention policy, then use `forget`, `prune` an
 ## Remaining recovery checks
 
 Scheduled operation, monitoring/notifications, retention and selected data extraction/integrity checks were performed. Startup of every application, recovery of configuration and dependencies, and retrieving separately held credentials still need end-to-end validation. Recovery time and acceptable data loss also require measurement. This case does not claim complete disaster recovery or proven cost savings.
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">Check evidence in stages from snapshot freshness to full recovery</strong>
+    <span>Retrieving data does not prove that applications or credentials can be recovered.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>Successful snapshot and freshness</strong>
+      <span>Check the timestamp of an actually successful snapshot and its delay from schedule. A job starting alone is not success.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>Integrity and isolated restore</strong>
+      <span>Record the check scope, run restore --verify in a separate location, and compare target files and hashes before reviewing retention and prune.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>Full disaster recovery</strong>
+      <span>Application startup, dependent data, and recovery of separately stored credentials remain unverified. Recovery time and acceptable data loss are unmeasured.</span>
+    </li>
+  </ol>
+</figure>
 
 ## October 6, 2026 update: stale locks and exclusive restore checks
 

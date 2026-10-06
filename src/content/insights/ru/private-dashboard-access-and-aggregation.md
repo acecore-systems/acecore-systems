@@ -2,9 +2,9 @@
 title: "Защищённая операционная панель на Cloudflare Pages и D1"
 description: "Анонимизированная схема, которая закрывает вход с помощью Cloudflare Access и читает агрегаты из D1 через Pages Functions. Отдельно показаны подтверждённые production-развёртывание, авторизованный интерфейс и использование индекса, а также непроверенные области."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ callout:
 ## Защитите и страницу, и API
 
 Скрыть статическую страницу Cloudflare Pages недостаточно, если её API данных можно вызвать напрямую. Включите интерфейс и API в область защиты Cloudflare Access, чтобы данные могли читать только операторы. В процедуре проверки тестируйте страницу и API отдельно до и после аутентификации. В этом случае в production подтвердили защиту входа на страницу и отображение данных в интерфейсе после входа по выделенной учётной записи. Доступные записи не подтверждают прямой запрос без аутентификации к API; это остаётся отдельным пунктом приёмки. Не помещайте секреты аутентификации в код браузера.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">Защитите и страницу, и API</strong>
+    <span>Прямой неаутентифицированный доступ к API не проверялся. Проверка охватывала одну рабочую среду.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>Аутентифицированная панель</strong>
+      <span>После входа через Access оператор видит защищённые агрегированные данные.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>API только для чтения</strong>
+      <span>Читает D1 внутри той же границы. Отказ прямому неаутентифицированному запросу к URL API не проверялся.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Отделяйте запись от агрегирования только для чтения
 
