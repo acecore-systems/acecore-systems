@@ -2,9 +2,9 @@
 title: "Безопасная обработка Webhook платежей и возвратов: сверка состояния в Workers"
 description: "Пример реализации, в котором отдельно рассматриваются проверка подписи, повторные и задержанные события, состояние возврата и ответы внешних API. Также показана повторная проверка прав перед административной операцией."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ callout:
 Проверяйте баланс и полномочия до запроса возврата, а затем ещё раз проверяйте полномочия и срок действия операции после чтения внешнего состояния и непосредственно перед записью. Используйте ключ идемпотентности и блокировку для каждой операции. Если внешний результат неизвестен, сверяйте текущее состояние вместо безусловного повторного запроса возврата.
 
 Успешный возврат и успешная корректировка баллов — разные состояния. Последующая ошибка не должна повторно запускать возврат; необходимую сверку или исправление следует записать. Настройка уведомлений, фактическое получение сообщения и последующая работа сотрудника — отдельные критерии приёмки, не относящиеся к обработке платёжных событий. Эта статья не утверждает, что уведомления работают.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">От webhook к раздельным результатам</strong>
+    <span>Перед фиксацией завершения сверяйте текущее состояние. Возврат клиенту и изменение баллов не выполнялись.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>Проверка на входе</strong>
+      <span>Проверьте исходный body, mode и event ID; выявите повторную доставку и обработку в процессе.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>Сверка текущего состояния</strong>
+      <span>Не возвращайте запись к старому состоянию из-за задержанного события; сравните сумму, валюту и заказ.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>Раздельная фиксация результатов</strong>
+      <span>У возврата, баллов и уведомлений разные состояния. При неизвестном результате провайдера сначала сверяйте, а не повторяйте операцию.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Проверяйте ответы и в Node, и в среде Workers
 

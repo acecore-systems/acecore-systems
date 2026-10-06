@@ -2,7 +2,7 @@
 title: "Руководство по реализации Cloudflare Vectorize: безопасная синхронизация опубликованного HTML"
 description: "Подробное руководство по созданию corpus из опубликованного HTML, сохранению Pagefind и безопасной эксплуатации синхронизации Vectorize."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Технологии", "Cloudflare", "Vectorize", "Workers AI", "Поиск по сайту"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -196,6 +196,45 @@ Vectorize полезен, когда поисковая фраза не совп
 Текущее поисковое окно не выполняет поиск во время ввода. Лишь после запуска «Поиск» запрос, как указано в интерфейсе, отправляется в поисковый API этого сайта. Cloudflare Workers AI `@cf/baai/bge-m3` преобразует его в embedding для сопоставления с публичной информацией сайта в Vectorize. Если связанный поиск завершился ошибкой или не дал результатов, в браузере запускается Pagefind как fallback. Затем запрос также может отправляться в общую поисковую API Acecore (acecore.net), чтобы показать публичные материалы связанных сайтов. Интерфейс предупреждает не вводить персональные или конфиденциальные сведения.
 
 В такой конфигурации Vectorize расширяет поиск, но не становится единой точкой отказа всего поиска.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">Разделять результаты поиска и ошибки получения данных</strong>
+    <span>Резервный статический поиск не является основанием для внешнего ответа. Условие остановки проверено по коду/PR; применение в production не подтверждено.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Классифицировать ответ</strong>
+      <span>Различать найденные данные, корректный нулевой результат, сбой или не-2xx и неверный формат.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>Интерфейс поиска по сайту</strong>
+      <span>Статический fallback Pagefind относится к поиску по сайту и не служит основанием для внешнего ответа.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>Решение об отправке внешнего ответа</strong>
+      <span>Нулевой результат не является основанием. При сбое или неверных данных ответ удерживается; применение в production не подтверждено.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Создавать corpus из опубликованного HTML, а не из черновика CMS
 

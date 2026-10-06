@@ -4,7 +4,7 @@ description: "Wie wir Kommentare in einem Astro-Blog ohne externen Kommentardien
 date: 2026-06-07T18:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Astro", "Sicherheit", "Website"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: Kein externer Kommentardienst
@@ -82,6 +82,7 @@ faq:
       answer: "Für post_slug-Abfragen, Sortierung, Soft Delete, Rate Limits und Duplikate passt D1 gut."
     - question: Reicht Turnstile im Browser?
       answer: "Nein. Die Pages Function muss den Token per Siteverify prüfen, bevor sie in D1 schreibt."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Kommentare bringen Zustand in eine statische Website.

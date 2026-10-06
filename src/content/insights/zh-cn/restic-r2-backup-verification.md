@@ -2,9 +2,9 @@
 title: "R2与restic备份监控：从保存成功到恢复验证"
 description: "分别检查快照新鲜度、仓库完整性与数据恢复，并说明尚未验证的应用恢复范围。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/restic-r2-backup-verification.webp
+image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
 callout:
   type: note
@@ -33,6 +33,39 @@ callout:
 ## 剩余恢复检查
 
 已进行定期运行、监控通知、保留处理和选定数据的提取及完整性检查。所有应用启动、配置和依赖恢复、独立保管凭据的取回仍需端到端验证；恢复时间和可接受的数据损失也需实测。本文不宣称完整灾难恢复或已证实的费用节省。
+
+<figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
+  <figcaption>
+    <strong id="diagram-restic-r2-backup-verification">从快照新鲜度到完整恢复，分阶段核对证据</strong>
+    <span>能够取回数据，并不证明应用或凭据也已恢复。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
+      </span>
+      <strong>成功快照与新鲜度</strong>
+      <span>检查实际成功快照的时间及相对计划的延迟。仅启动作业不算成功。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
+      </span>
+      <strong>完整性与隔离恢复</strong>
+      <span>记录检查范围，在独立位置运行 restore --verify，并核对目标文件与 hash，然后再检查保留策略和 prune。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
+      </span>
+      <strong>完整灾难恢复</strong>
+      <span>所有应用启动、依赖数据和单独保存的凭据恢复仍未验证。恢复时间和可接受的数据损失也未测量。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 2026年10月6日补充：过期lock与恢复检查占用
 

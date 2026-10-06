@@ -2,9 +2,9 @@
 title: "Anmeldefristen über Dienste hinweg abstimmen: Erneuerung und erneute Authentifizierung"
 description: "Allgemeiner Entwurf konsistenter Anmeldefristen mit getrennten Regeln für Anmeldung, Server, Cookies und Identitätsanbieter."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/multi-service-session-lifecycle.webp
+image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
 callout:
   type: note
@@ -27,6 +27,39 @@ Im Fall wird der geltende Zeitraum nach erfolgreicher expliziter Anmeldung erneu
 Ein langlebigeres Cookie bestimmt nicht die Akzeptanz des Servers. Ablauf, Widerruf, Cookie und Anbietergrenzen gemeinsam prüfen. Einheitliche Regeln bedeuten weder gemeinsame Cookies noch sofortige Abmeldung von allen Diensten.
 
 Authentifizierungszeit und Ablauf der Instanz prüfen und die Anwendungssitzungen darauf begrenzen. Der gemeinsame Vertrag prüft Sitzungen; Geschäftsberechtigungen bleiben bei jeder Anwendung. Ein Gateway mit eigenem Cookie hat eine weitere zu erfassende und zu prüfende Ablaufgrenze.
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-multi-service-session-lifecycle">
+  <figcaption>
+    <strong id="diagram-multi-service-session-lifecycle">Authentifizierung, Sitzungen und App-Berechtigungen getrennt behandeln</strong>
+    <span>Eine gemeinsame Ablaufregel macht diese Zustände nicht identisch.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg>
+      </span>
+      <strong>Identitätsanbieter und Callback</strong>
+      <span>Prüfen Sie das Authentifizierungsergebnis sowie den Kontext/State des Callbacks. Eine Anmeldung allein erteilt noch keine App-Berechtigung.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16v12H4z M8 10h8 M8 14h5"/></svg>
+      </span>
+      <strong>App, Cookie und Gateway</strong>
+      <span>Ablauf und Widerruf der serverseitigen App-Sitzung, des Browser-Cookies und der Gateway-Sitzung getrennt prüfen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z M9 12l2 2 4-4"/></svg>
+      </span>
+      <strong>Berechtigungen pro Dienst</strong>
+      <span>Jede App prüft ihre eigenen Rechte. Normaler Zugriff und Hintergrundaktualisierung verlängern die Laufzeit nicht und bedeuten keinen globalen Logout.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Konfiguration und Verhalten trennen
 

@@ -2,7 +2,7 @@
 title: "Praktische Verbesserungen der Barrierefreiheit für eine Astro-Website"
 description: "Aufzeichnungen zu Verbesserungen der Barrierefreiheit einer Astro + UnoCSS-Website im März 2026: ARIA, Kontrast, Fokus, Formulare und Screenreader."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Barrierefreiheit"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -178,6 +178,45 @@ Ein visuelles `*`-Zeichen allein ist unzureichend. Ergänzungstext für Screenre
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">(Pflichtfeld)</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">Beschriftung, Bedienung und Meldungen im Formular verbinden</strong>
+    <span>Konzeptionelle Darstellung anhand der Beispiele von März 2026; automatisierte Prüfungen belegen keine vollständige WCAG-Konformität.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>Feld und Beschriftung</strong>
+      <span>Jedes Feld erhält ein sichtbares Label; die Pflichtangabe wird nicht nur durch ein Sternchen vermittelt.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>Tastaturfokus</strong>
+      <span>focus-visible zeigt das aktive Feld; Tastaturzugriff und Bearbeitung werden geprüft.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Verknüpfte Fehlermeldung und Ansage</strong>
+      <span>aria-invalid und aria-describedby verbinden Feld und Meldung; role=alert kündigt Änderungen an. Manuell gegenprüfen.</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

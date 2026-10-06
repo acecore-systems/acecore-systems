@@ -2,9 +2,9 @@
 title: "Benutzer-CSS und öffentliche Themes sicher verwalten: gemeinsame Quelle, begrenztes Rendering und feste Versionen"
 description: "Ein anonymisiertes Profilbearbeitungskonzept, in dem GUI und direkte Bearbeitung dieselbe CSS-Quelle nutzen. Behandelt werden eine umfangreiche CSS-Syntax innerhalb einer Rendering-Grenze, Entwürfe und veröffentlichte Fassungen, unveränderliche Theme-Versionen, Auslistung und betriebliche Sperre."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ Bearbeitbare Angaben im Theme-Eintrag werden von unveränderlichen Versionen get
 ## Auslistung und betriebliche Sperre unterscheiden
 
 Wenn ein Autor ein Theme auslistet, sind neue Entdeckungen und Anwendungen nicht mehr möglich; bestehende Nutzungen einer festgelegten Version werden dadurch nicht zwingend sofort widerrufen. Die betriebliche Sperre eines gefährlichen Themes hat eine andere Grenze: Öffentlicher Abruf und CSS aus bestehenden Snapshots werden gestoppt, und die Standarddarstellung wird wiederhergestellt. Auch bei einem Rollback auf einen älteren Snapshot wird der aktuelle Sperrstatus geprüft, damit CSS von vor der Sperre nicht wieder aktiviert wird.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">Von der CSS-Bearbeitung zur festen Version</strong>
+    <span>Codeintegration, CI und Produktivbereitstellung der früheren Store-Version wurden geprüft. Produktiv-/Login-Abnahme der CSS-Erweiterung, Nutzeranwendung und kostenpflichtige Verkäufe sind unbestätigt.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>Gemeinsame CSS-Quelle</strong>
+      <span>GUI und direkte Bearbeitung nutzen dieselbe CSS-Quelle und erhalten handgeschriebene Regeln.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>Analysieren und begrenzen</strong>
+      <span>Unterstützt Grid/Flex, Variablen, Pseudoelemente, responsive Regeln und Animation. Externe, globale oder nicht analysierbare Eingaben werden abgelehnt.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Version ausdrücklich veröffentlichen</strong>
+      <span>Nach Vorschau/Entwurf eine unveränderliche Version veröffentlichen. Auslistung und betriebliche Sperre sind getrennt.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Was vor der Veröffentlichung zu prüfen ist
 

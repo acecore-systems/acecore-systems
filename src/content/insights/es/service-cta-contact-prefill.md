@@ -2,7 +2,7 @@
 title: "Diseño técnico para trasladar el contexto de una CTA de servicio al formulario de contacto"
 description: "Diseño de implementación para llevar al formulario el contexto que el usuario estaba leyendo en una página de servicio. Incluye mini CTA en Astro, el contrato de parámetros URL, la selección inicial de categoría, el prefill del asunto, URL multilingües, medición con GA y comprobaciones del HTML generado."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Tecnología", "Sitio web", "Servicios", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -169,6 +169,45 @@ Una etiqueta como `Webサイト制作・運用について` puede cambiar por tr
 | hash       | Se usa para desplazarse hasta el formulario            |
 
 El usuario puede editar los parámetros. Por eso el formulario no usa el valor URL directamente como valor enviado, sino que lo mapea a un option existente.
+
+<figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
+  <figcaption>
+    <strong id="diagram-service-cta-contact-prefill">Del contexto de contacto validado al registro administrativo</strong>
+    <span>Muestra las etapas implementadas; el seguimiento completo de clientes reales no está verificado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
+        </svg>
+      </span>
+      <strong>Resolver el contexto del CTA</strong>
+      <span>Asociar una service key estable con la URL localizada y una opción permitida del formulario.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
+        </svg>
+      </span>
+      <strong>Validar datos y permisos</strong>
+      <span>Rellenar el asunto solo cuando esté vacío; la API también verifica la identidad del usuario y los permisos de operación.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
+        </svg>
+      </span>
+      <strong>Crear el registro de recepción</strong>
+      <span>Registrar la solicitud en el historial y las tareas siguientes; la gestión del equipo es un estado distinto.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Mantener una tabla de clasificación en el formulario
 

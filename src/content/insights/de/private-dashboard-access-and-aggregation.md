@@ -2,9 +2,9 @@
 title: "Ein geschütztes Betriebs-Dashboard mit Cloudflare Pages und D1"
 description: "Ein anonymisiertes Design, das den Zugang mit Cloudflare Access schützt und Betriebsaggregate über Pages Functions aus D1 liest. Es trennt geprüfte Produktivbereitstellung, authentifizierte Oberfläche und Indexnutzung von nicht getesteten Punkten."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ Wenn Betriebsinformationen über Protokolle und Datenbanken verteilt sind, kann 
 ## Seite und API in die Zugriffsschranke aufnehmen
 
 Eine statische Cloudflare-Pages-Seite zu verbergen reicht nicht, wenn ihre Daten-API weiterhin direkt aufrufbar ist. Nehmen Sie Oberfläche und API in dieselbe Cloudflare-Access-Schranke auf, sodass nur Betriebspersonal die Daten lesen kann. Als Prüfverfahren sollten Seite und Daten-API vor und nach der Anmeldung separat getestet werden. In diesem Fall wurden in der Produktion die Zugangsschranke der Seite und die Datenanzeige nach der Anmeldung mit einem dedizierten Konto bestätigt. Der vorhandene Nachweis bestätigt keinen direkten unauthentifizierten Aufruf des API-Endpunkts; das bleibt ein eigener Abnahmepunkt. Authentifizierungsgeheimnisse gehören nicht in den Browsercode.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">Seite und API schützen</strong>
+    <span>Ein direkter nicht authentifizierter API-Zugriff wurde nicht getestet. Die Prüfungen umfassten eine Betriebsumgebung.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>Authentifiziertes Dashboard</strong>
+      <span>Nach der Access-Anmeldung zeigt die Oberfläche geschützte Betriebsaggregate.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>Schreibgeschützte API</strong>
+      <span>D1 innerhalb derselben Grenze lesen. Die Zurückweisung eines direkten nicht authentifizierten API-Aufrufs wurde nicht geprüft.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Schreibvorgänge und schreibgeschützte Aggregate trennen
 

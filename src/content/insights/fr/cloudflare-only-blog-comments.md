@@ -4,7 +4,7 @@ description: "Retour d'expérience sur l'ajout de commentaires à un blog Astro 
 date: 2026-06-07T18:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Astro", "Sécurité", "Site web"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: Sans service externe de commentaires
@@ -82,6 +82,7 @@ faq:
       answer: "Pour lire par post_slug, trier par date, masquer avec deleted_at, limiter par client et détecter les doublons, D1 convient bien."
     - question: Turnstile côté client suffit-il ?
       answer: "Non. La Pages Function doit vérifier le token avec Siteverify avant d'écrire dans D1."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Ajouter des commentaires à un site statique revient à ajouter de l'état.

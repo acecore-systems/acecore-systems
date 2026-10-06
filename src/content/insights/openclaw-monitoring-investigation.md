@@ -2,9 +2,9 @@
 title: "OpenClawで監視と障害調査をつなぐ：検知・証拠・判断の境界"
 description: "定期監視にOpenClawの調査を組み合わせる設計。実装・定期実行で確認した範囲と、実障害や自動復旧の未検証範囲を整理します。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ callout:
 ## 時間切れでも証拠を残す
 
 調査が時間切れになっても、それまでの観測結果を保存します。取得時刻、実行結果、取得できなかった項目を報告に含め、途中終了を「異常なし」に置き換えません。失敗した処理の結果まで確認したように書かないことが、次の担当者の判断を助けます。
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">定期検知、上限付き調査、人の判断を分ける</strong>
+    <span>部分的な証拠を残し、自動修復の実績とは区別します。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>定期チェック</strong>
+      <span>正常・異常・取得失敗を区別し、保守中は影響したチェックの取得失敗通知だけを一時抑制します。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>許可範囲で調査</strong>
+      <span>調査範囲・時間・出力を制限し、timeout時も部分証拠を保存します。拒否操作は実行済みにしません。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>報告して判断</strong>
+      <span>調査結果を事実・仮説・未確認に分け、担当者が判断できる形で伝えます。変更や再起動は別承認です。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 通知と判断を分ける
 

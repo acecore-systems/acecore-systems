@@ -2,7 +2,7 @@
 title: "Melhorias práticas de acessibilidade para um site Astro"
 description: "Registro das melhorias de acessibilidade em um site Astro + UnoCSS em março de 2026: ARIA, contraste, foco, formulários e leitores de tela."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Acessibilidade"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -178,6 +178,45 @@ Apenas a marca visual `*` não é suficiente. Adicione texto complementar para l
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">(obrigatório)</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">Relacionar rótulos, operação e avisos do formulário</strong>
+    <span>Relação conceitual com base nos exemplos de março de 2026; testes automatizados não comprovam conformidade geral com WCAG.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>Campo e rótulo</strong>
+      <span>Use um rótulo visível em cada campo e indique a obrigatoriedade além do asterisco.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>Foco do teclado</strong>
+      <span>Use focus-visible para mostrar o campo ativo e verifique o acesso e a edição pelo teclado.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Erro associado e aviso</strong>
+      <span>aria-invalid e aria-describedby associam o campo à mensagem; role=alert anuncia alterações. Inclua revisão manual.</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

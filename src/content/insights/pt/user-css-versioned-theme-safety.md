@@ -2,9 +2,9 @@
 title: "CSS de usuários e temas públicos com segurança: fonte compartilhada, escopo de renderização e versões fixas"
 description: "Um projeto anonimizado de edição de perfil em que a interface gráfica e a edição direta compartilham uma única fonte de CSS. Aborda sintaxe CSS ampla dentro dos limites de renderização, rascunhos e versões publicadas, versões imutáveis de temas, remoção da listagem e suspensão operacional."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ As informações editáveis da listagem do tema são separadas de suas versões 
 ## Diferenciar remoção da listagem e suspensão operacional
 
 Quando o autor remove um tema da listagem, novas descobertas e aplicações são interrompidas, mas isso não revoga necessariamente de imediato os usos existentes de uma versão fixada. A suspensão operacional de um tema perigoso tem outro limite: interromper sua obtenção pública e o CSS de snapshots existentes, além de restaurar a aparência padrão. Mesmo ao voltar a um snapshot antigo, o estado atual de suspensão é verificado para não reativar CSS anterior à suspensão.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">Da edição CSS à versão fixa</strong>
+    <span>Foram confirmados a integração do código, o CI e a publicação em produção da versão anterior da Store. Não foram confirmados a aceitação em produção/login da expansão CSS, o uso por usuários nem vendas pagas.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>Fonte CSS compartilhada</strong>
+      <span>A interface gráfica e a edição direta usam a mesma fonte CSS e preservam regras escritas manualmente.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>Analisar e limitar o escopo</strong>
+      <span>Compatível com Grid/Flex, variáveis, pseudoelementos, regras responsivas e animação. Rejeita entradas externas, globais ou impossíveis de analisar.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Publicar uma versão explícita</strong>
+      <span>Publique uma versão imutável após prévia/rascunho. Remover da listagem e suspender a operação são ações distintas.</span>
+    </li>
+  </ol>
+</figure>
 
 ## O que verificar antes de publicar
 

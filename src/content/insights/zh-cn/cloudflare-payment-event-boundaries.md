@@ -2,9 +2,9 @@
 title: "安全处理支付与退款 Webhook：Workers 中的状态核对"
 description: "通过实现案例介绍如何区分签名校验、重复与延迟事件、退款状态和外部 API 响应，并说明管理操作前的权限复核。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/cloudflare-payment-event-boundaries.webp"
+image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
 callout:
   type: note
@@ -29,6 +29,30 @@ callout:
 请求退款前检查余额和权限；读取外部状态后、写入之前，再次检查权限和操作是否过期。使用与操作对应的幂等键和处理占用。外部结果不确定时，应重新核对当前状态，而不是无条件再次发起退款。
 
 退款成功与积分调整成功是不同状态。后续处理失败不能触发重复退款；需要核对或修复时应留下记录。通知配置、实际接收以及工作人员跟进，是支付事件处理之外的独立验收事项。本文不声称通知当前处于运行状态。
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-cloudflare-payment-event-boundaries">
+  <figcaption>
+    <strong id="diagram-cloudflare-payment-event-boundaries">从 Webhook 到独立结果</strong>
+    <span>先核对当前状态再记录完成。本次没有执行客户退款或积分操作。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 12h5M8 15h3"/></svg></span>
+      <strong>入口验证</strong>
+      <span>检查原始 body、mode 和 event ID，识别重试及处理中状态。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10h5"/></svg></span>
+      <strong>核对当前状态</strong>
+      <span>不因延迟事件回退记录；核对金额、币种和订单。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1"/><rect x="14" y="5" width="6" height="14" rx="1"/><path d="M11 12h2"/></svg></span>
+      <strong>分别记录结果</strong>
+      <span>退款、积分和通知各自记录状态。外部结果未知时先重新核对，不要重试操作。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 同时在 Node 和 Workers 运行环境检查响应
 

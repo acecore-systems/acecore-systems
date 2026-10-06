@@ -2,7 +2,7 @@
 title: "Astro View Transitions의 함정과 해결책 — UX 및 코드 품질 개선 가이드"
 description: "Astro View Transitions에서 스크립트가 작동하지 않는 문제의 해결 패턴, Pagefind 전문 검색 도입, TypeScript 타입 안전성 강화, 상수 중앙 관리 등 UX와 코드 품질 개선을 위한 실전 가이드."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["기술", "Astro", "웹사이트"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ View Transitions를 사용한다면, **스크립트 초기화 패턴을 통일�
 명칭이나 분류를 재편하면 기존 값·API·filter·DB 변경을 맞춥니다. 기존 데이터가 0건이면 실제 콘텐츠를 이전한 실적이 아닙니다. 상세 링크인 상태 배지는 클릭과 Enter로 접근해야 합니다. 공개 URL 식별자의 인라인 편집에도 형식·중복·URL 반영 검증을 유지합니다. 공개 표시·미디어 재생·익명 로그인 이동의 확인과 로그인한 Editor의 식별자 저장·공개 상태 변경 수용은 다릅니다.
 
 기존 편집 영역을 사용자의 새 작업 단위로 재편할 때 지속 내비게이션과 작업 영역을 나누고 이름만 바꾼 채 옛 조작을 남기지 않습니다. 잔액 같은 보조 숫자는 주요 조작보다 약하게 표현해도 읽을 수 있는 크기와 contrast를 유지합니다.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">Editor 조작, API 결과, 표시 상태를 구분하기</strong>
+    <span>화면을 조작했다는 사실만으로 저장이나 공개 성공을 판단하지 않습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Editor 조작</strong>
+      <span>카테고리 이동이나 작업 단위 선택은 편집 화면의 상태를 바꾸는 동작입니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>API와 공개 snapshot</strong>
+      <span>API 결과와 공개 snapshot을 확인합니다. 요청 실패나 인증 context 누락을 성공으로 표시하지 않습니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>다시 불러온 뒤의 상태</strong>
+      <span>확인된 상태만 표시하고 필요하면 새로고침이나 재인증을 안내합니다. 로그인 사용자의 저장·공개 수락 테스트는 아직 확인되지 않았습니다.</span>
+    </li>
+  </ol>
+</figure>

@@ -2,8 +2,9 @@
 title: "Impeça que respostas de IA façam promessas que não podem cumprir"
 description: "Como evitar que um assistente informativo prometa por conta própria a participação, o agendamento ou o contato posterior de alguém da equipe. Aborda o estado da conversa, falhas de recuperação, revisão de rascunhos antigos e encerramento."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ Diferencie uma publicação que procura participantes de uma fala de alguém que
 ## Confira novamente os rascunhos antigos com as condições atuais
 
 Um rascunho aprovado quando foi gerado pode ficar desatualizado se a conversa ou a política mudar. Verifique-o novamente com o estado mais recente imediatamente antes do envio e não envie rascunhos de conversas encerradas. Registre separadamente o envio omitido e a conversa encerrada, sem confundi-los com um envio concluído. Também é válido não responder quando uma pergunta desnecessária apenas prolongaria a conversa.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">Verificar evidências e capacidade antes de responder</strong>
+    <span>O contexto da conversa determina se a resposta será enviada ou pausada. A operação em produção da interrupção de recuperação não foi confirmada.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>Leia quem fala e o pedido</strong>
+      <span>Verifique se é um convite ou interesse em participar, a edição pertinente e o estado da conversa.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>Responda com respaldo</strong>
+      <span>Informe apenas o que pode ser feito e confira novamente antes do envio.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>Pause se houver dúvida</strong>
+      <span>Não trate uma recuperação com falha ou inválida como consulta concluída; encaminhe a uma pessoa. Limite a espera e evite duplicidades.</span>
+    </li>
+  </ol>
+</figure>
 
 ## O que foi verificado e o que ainda não foi comprovado
 

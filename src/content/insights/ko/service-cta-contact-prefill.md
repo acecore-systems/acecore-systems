@@ -2,7 +2,7 @@
 title: "서비스 CTA의 문맥을 문의 폼으로 이어 주는 기술 설계"
 description: "서비스 페이지에서 읽던 문맥을 문의 폼으로 전달하는 구현 설계입니다. Astro 사이트의 미니 CTA, URL 파라미터 계약, 폼 분류 초기 선택, 제목 prefill, 다국어 URL, GA 측정, 생성 HTML 확인까지 다른 사이트에도 적용할 수 있게 정리합니다."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["기술", "웹사이트", "서비스", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -169,6 +169,45 @@ CTA에서 폼으로 전달하는 값은 URL 파라미터입니다.
 | hash       | 폼 위치로 스크롤할 때 사용           |
 
 URL 파라미터는 사용자가 편집할 수 있습니다. 따라서 폼에서는 URL 값을 그대로 전송하지 않고 기존 option으로 매핑합니다.
+
+<figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
+  <figcaption>
+    <strong id="diagram-service-cta-contact-prefill">검증된 문의 맥락에서 관리 기록까지</strong>
+    <span>구현 단계를 나타내며 실제 고객 연락과 처리 완료는 별도로 확인해야 합니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
+        </svg>
+      </span>
+      <strong>CTA 맥락 확인</strong>
+      <span>안정된 service key를 현지화된 URL과 허용된 폼 선택지에 연결합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
+        </svg>
+      </span>
+      <strong>입력과 권한 검증</strong>
+      <span>제목이 비어 있을 때만 미리 입력하고, API에서도 사용자 신원과 작업 권한을 확인합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
+        </svg>
+      </span>
+      <strong>접수 기록으로 전달</strong>
+      <span>접수 내용을 CRM 이력과 후속 작업에 기록합니다. 담당자의 처리 완료는 별도 상태입니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 폼 측에 분류표 두기
 

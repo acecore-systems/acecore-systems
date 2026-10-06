@@ -2,8 +2,9 @@
 title: "Separar o cache de borda para imagens públicas dos limites da API"
 description: "Um caso em que a API de conteúdo e as solicitações de imagens compartilhavam o mesmo limite durante a navegação repetida. Aborda a reutilização de imagens públicas, a validação de respostas bem-sucedidas, os limites entre WAF e aplicação e as verificações em produção."
 date: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/public-image-cache-and-api-rate-limits.webp
+image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
 callout:
   type: note
@@ -38,6 +39,25 @@ A [Cloudflare Cache API](https://developers.cloudflare.com/workers/runtime-apis/
 Proteger a API dinâmica é um requisito diferente de armazenar imagens em cache. Neste caso, excluímos os GETs de imagens públicas da contabilização do WAF e, depois de aplicar a alteração, lemos novamente as APIs dinâmicas visadas, o período do limite, a ação e o estado habilitado. Também salvamos a configuração anterior para reversão.
 
 Escolha os limites com base no número de solicitações geradas pela navegação normal e na carga da operação protegida. Também é preciso verificar as condições por plano da [limitação de taxa da Cloudflare](https://developers.cloudflare.com/waf/rate-limiting-rules/). Um valor em uma nota operacional do repositório não comprova que uma regra esteja habilitada em produção.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-public-image-cache-and-api-rate-limits">
+  <figcaption>
+    <strong id="diagram-public-image-cache-and-api-rate-limits">Imagens públicas e API dinâmica</strong>
+    <span>Projete separadamente a reutilização de imagens públicas imutáveis e a proteção de APIs dinâmicas. Imagens privadas ficam fora do escopo.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg></span>
+      <strong>GET de imagem pública</strong>
+      <span>Verifique o limite da solicitação e reutilize a mesma imagem do cache. Armazene apenas respostas 200 validadas.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <strong>API dinâmica</strong>
+      <span>Proteja o processamento com WAF e a quota da aplicação. Esses limites são separados do cache de imagens.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Verifique o conteúdo das imagens em produção
 

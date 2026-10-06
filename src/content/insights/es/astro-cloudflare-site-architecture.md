@@ -2,7 +2,7 @@
 title: "Diseñar un sitio Astro + Cloudflare que crece función por función"
 description: "Cómo combinamos Astro y Cloudflare Pages con chat de contacto con IA, Sveltia CMS, blog multilingüe, CTA de servicios, renderizado seguro de Markdown y comentarios sin servicios externos."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Cloudflare", "Sitio web", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -159,6 +159,45 @@ Solo se parsean expresiones necesarias, se valida el href con allowlist y se cre
 Los comentarios no usan un widget externo.
 
 Pages Functions recibe GET/POST, D1 guarda comentarios y Turnstile protege envíos. Para un blog corporativo pequeño, ese alcance es suficiente.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">Límites públicos entre contenido, envíos y administración</strong>
+    <span>El contenido estático revisado puede buscarse; los envíos y la administración tienen límites distintos. Preview y producción se verifican por separado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>Contenido estático revisado</strong>
+      <span>Publica los artículos revisados como HTML estático e inclúyelos en el índice Pagefind.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Envíos de visitantes</strong>
+      <span>Los comentarios usan una API y un almacenamiento dinámicos; no mezcles formularios u otros datos en la búsqueda estática. Indexarlos exige moderación y regeneración.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>Administración y entornos</strong>
+      <span>Mantén la administración fuera de la búsqueda pública. Comprueba Preview y producción por separado; la configuración no prueba el funcionamiento.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Leer por objetivo
 

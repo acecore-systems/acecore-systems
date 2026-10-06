@@ -4,7 +4,7 @@ description: "외부 댓글 서비스를 쓰지 않고 Cloudflare Pages Function
 date: 2026-06-07T18:00
 author: gui
 tags: ["기술", "Cloudflare", "Astro", "보안", "웹사이트"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: 외부 댓글 서비스 없이 구현
@@ -82,6 +82,7 @@ faq:
       answer: "post_slug 조회, created_at 정렬, deleted_at soft delete, 중복 검사, rate limit에는 D1이 잘 맞습니다."
     - question: Turnstile을 프런트에만 두면 되나요?
       answer: "아니요. Pages Function에서 Siteverify로 token을 검증한 뒤 D1에 저장해야 합니다."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 정적 사이트에 댓글을 넣으면 상태 저장과 spam 대책이 필요해집니다.

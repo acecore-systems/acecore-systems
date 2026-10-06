@@ -2,9 +2,9 @@
 title: "Enquêter sur les ralentissements de Minecraft : mesures discrètes et stockage partagé"
 description: "De la collecte discrète de TPS/MSPT à la mise en regard de JFR et des observations d’E/S du système d’exploitation. L’article distingue l’enquête sur les causes, achevée, des améliorations de performance qui restent à tester."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ Pendant la reproduction du problème, JFR, les observations d’attente du syst�
 Sur une fenêtre normale de 240 secondes et une fenêtre bloquée de 220 secondes, les médianes par seconde de write-await étaient de 1,60 ms et 43,71 ms ; les maxima étaient de 6,00 ms et 123,57 ms. Il s’agit de deux fenêtres d’observation, et non de résultats avant/après ou d’un benchmark général.
 
 Outre les attentes des sauvegardes synchrones et du journal du système de fichiers, des retards ont aussi été observés dans les demandes au périphérique de plusieurs applications, ce qui a resserré la piste vers le chemin de stockage partagé. Un événement de fin dans un [tracepoint de blocs Linux](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) peut ne représenter qu’une partie d’une requête ; les requêtes sans correspondance n’ont donc pas été mélangées aux statistiques de toutes les E/S. La durée et le volume de capture étaient limités, et la charge induite par la mesure a été prise en compte.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">Distinguer observations et hypothèses</strong>
+    <span>Les métriques continues et les échantillons limités proviennent de fenêtres distinctes. L’effet d’une migration du stockage n’a pas été testé.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>Mesures continues discrètes</strong>
+      <span>Consignez TPS/MSPT et les données manquantes sans ajouter de logs habituels à la console.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>Enquête limitée</strong>
+      <span>Relevez JFR, OS et block I/O séparément, puis comparez-les. Le stockage partagé est une piste, pas une panne confirmée.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Traiter la suite comme un test séparé
 

@@ -2,9 +2,9 @@
 title: "Créer un tableau de bord opérationnel protégé avec Cloudflare Pages et D1"
 description: "Une conception anonymisée qui protège l’entrée avec Cloudflare Access et lit les agrégats opérationnels de D1 via Pages Functions. Elle distingue le déploiement en production, l’interface authentifiée et l’utilisation d’index vérifiée des points non testés."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ Lorsque les informations opérationnelles sont dispersées dans des journaux et 
 ## Inclure la page et l’API dans le périmètre d’accès
 
 Masquer une page statique Cloudflare Pages ne suffit pas si son API de données reste directement appelable. Incluez l’interface et l’API dans le périmètre Cloudflare Access pour que seuls les opérateurs puissent lire les données. Dans la procédure de vérification, testez la page et l’API avant et après authentification. Dans ce cas, les contrôles de production ont confirmé la protection de l’entrée de la page et l’affichage des données dans l’interface après connexion dédiée. Les traces disponibles ne confirment pas une requête directe non authentifiée vers le point de terminaison de l’API ; ce contrôle reste un critère de réception séparé. Ne placez pas de secrets d’authentification dans le code du navigateur.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">Protéger la page et l’API</strong>
+    <span>L’accès direct non authentifié à l’API n’a pas été testé. Les vérifications concernaient un seul environnement opérationnel.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>Tableau de bord authentifié</strong>
+      <span>Après authentification Access, l’opérateur consulte des agrégats protégés.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>API en lecture seule</strong>
+      <span>Lire D1 dans le même périmètre. Le refus d’un accès direct non authentifié à l’URL de l’API n’a pas été vérifié.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Séparer les écritures des agrégations en lecture seule
 

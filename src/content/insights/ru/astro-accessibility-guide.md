@@ -2,7 +2,7 @@
 title: "Практические улучшения доступности сайта на Astro"
 description: "Запись об улучшениях доступности сайта Astro + UnoCSS в марте 2026 года: ARIA, контрастность, фокус, формы и экранные читалки."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Технологии", "Astro", "Доступность"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -178,6 +178,45 @@ shortcuts: {
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">(обязательно)</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">Связать подписи, управление и объявления формы</strong>
+    <span>Концептуальная схема по примерам марта 2026 года; автоматические проверки не подтверждают полное соответствие WCAG.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>Поле и подпись</strong>
+      <span>У каждого поля должна быть видимая подпись; обязательность обозначается не только звёздочкой.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>Фокус клавиатуры</strong>
+      <span>focus-visible показывает активное поле; следует проверить переход и редактирование с клавиатуры.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Связанная ошибка и объявление</strong>
+      <span>aria-invalid и aria-describedby связывают поле с сообщением, а role=alert объявляет изменение. Нужна ручная проверка.</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

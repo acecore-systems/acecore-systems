@@ -3,12 +3,13 @@ title: "Codex任务分工如何设计：公开插件Task Routing"
 description: "以Codex Task Routing为例，说明如何保留主任务设置、标识有效策略版本、交接有边界的工作并核实实际执行情况。"
 date: "2026-09-26T18:30:00+09:00"
 author: gui
-image: /images/insights/codex-task-routing-design.webp
+image: /images/insights/covers/codex-task-routing-design-cover-v1.webp
 tags: ["技术", "AI", "开发"]
 callout:
   type: note
   title: "已验证的范围"
   text: "已核对公开代码、合并的PR、三个操作系统上的CI及隔离环境中的安装测试。本文没有声称已量化质量或使用量改善，也没有声称在真实账号中验证过子模型运行。"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 在Codex中并行处理多项工作时，选择模型只是其中一步。还需要确定哪些工作可以独立交付、交接哪些资料，以及如何验收结果。Acecore公开了[Codex Task Routing](https://github.com/acecore-systems/codex-task-routing)，将这些判断写成明确的策略。

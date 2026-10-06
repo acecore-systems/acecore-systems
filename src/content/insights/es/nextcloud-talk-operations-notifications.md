@@ -2,8 +2,9 @@
 title: "Conectar alertas operativas a Nextcloud Talk: separar detección, entrega y resolución"
 description: "Un diseño general para enviar excepciones del procesamiento de pedidos y contenido pendiente de revisión a salas privadas de Talk y a una consola administrativa, con alertas mínimas, gestión de secretos, pruebas de conexión y límites de aceptación claros."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/nextcloud-talk-operations-notifications.webp
+image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
 callout:
   type: note
@@ -24,6 +25,30 @@ Talk ofrece una [API oficial para enviar mensajes desde un bot](https://nextclou
 ## Registrar por separado la detección, la entrega y la atención
 
 Detectar un evento, solicitar el envío, recibir una respuesta satisfactoria de la API, recibir el mensaje y atender el problema son etapas distintas. Un fallo de notificación no significa que el problema operativo se haya resuelto, y reintentar solo la notificación no debe repetir una operación del pedido. Limita los datos del cliente en el mensaje a lo imprescindible y fija el origen de los enlaces administrativos.
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-nextcloud-talk-operations-notifications">
+  <figcaption>
+    <strong id="diagram-nextcloud-talk-operations-notifications">Registrar las pruebas de notificación por etapas</strong>
+    <span>Solo se confirmó la recepción de una notificación de prueba. La resolución operativa y el push al móvil no están verificados.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+      <strong>Detectar y enviar</strong>
+      <span>Envía únicamente el tipo de problema y un enlace a la pantalla de administración protegida, con datos mínimos.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m6 8 6 5 6-5M8 15h3"/></svg></span>
+      <strong>Confirmar la recepción de prueba</strong>
+      <span>Comprueba por separado el resultado de envío de la API y la evidencia de recepción del mensaje de prueba.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.5-4 3.3-6 8-6s7.5 2 8 6"/></svg></span>
+      <strong>Una persona atiende el caso</strong>
+      <span>No se verificaron la aceptación desde el incidente hasta su resolución ni las notificaciones push al móvil.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Pasar de una prueba de conexión en producción a la aceptación operativa
 

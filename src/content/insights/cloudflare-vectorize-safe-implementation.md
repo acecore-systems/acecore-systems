@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize実装ガイド：公開HTMLを安全に同期する"
 description: "公開HTMLからcorpusを作り、Pagefindと併用しながらVectorizeを安全に同期・運用するための実装ガイドです。"
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "Workers AI", "サイト内検索"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -196,6 +196,45 @@ Vectorizeは、検索語が本文と完全一致しない場合や、関連す�
 現行の検索モーダルは入力中に検索を実行しません。「検索する」を押したとき、表示で明記したうえで検索語を当サイトの検索APIへ送り、Cloudflare Workers AIの `@cf/baai/bge-m3` で数値表現に変換してVectorizeの公開情報と照合します。関連検索で結果がない場合やAPIが失敗した場合は、ブラウザ内のPagefindで検索します。その後、検索語をAcecore共通検索API（acecore.net）へ送り、関連サイトの公開情報も表示する場合があります。個人情報や機密情報は入力しないよう案内しています。
 
 この構成なら、Vectorizeは検索体験を広げますが、検索全体の単一障害点にはなりません。
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">検索結果と取得異常を別の経路へ分ける</strong>
+    <span>静的検索のfallbackは返信の根拠ではありません。停止条件はコード/PR確認までで、本番適用は未確認です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>取得結果を分類</strong>
+      <span>取得内容を結果あり・正常な0件・取得失敗や非2xx・不正形式に分類し、状態を明確に区別する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>サイト内検索UI</strong>
+      <span>静的Pagefindへのfallbackはサイト内検索UIの経路に限り、外部返信の参照根拠とは切り離す。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>外部返信の判定</strong>
+      <span>正常な0件は返信の根拠にならず、取得失敗・不正応答は保留する。停止条件の本番適用は未確認。</span>
+    </li>
+  </ol>
+</figure>
 
 ## corpusはCMS原稿ではなく公開HTMLから作る
 

@@ -2,7 +2,7 @@
 title: "Designing an Astro + Cloudflare Website That Can Grow Feature by Feature"
 description: "How we combined Astro and Cloudflare Pages with an AI contact chat, Sveltia CMS, multilingual blog publishing, service CTA handoff, safe Markdown rendering, and Cloudflare-only comments as one extensible website architecture."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Cloudflare", "Website", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -214,6 +214,45 @@ Reviewed article content is indexed. Comments are not included in Pagefind.
 That separation matters. User submissions, AI chat logs, forms, and admin screens are not the same thing as reviewed public content.
 
 The architecture decides what is part of the public knowledge surface and what remains interaction or operation.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">Publication boundaries for content, submissions, and admin</strong>
+    <span>Reviewed static content is searchable; submissions and admin surfaces have different boundaries. Preview and production require separate checks.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>Reviewed static content</strong>
+      <span>Publish reviewed articles as static HTML and include them in the Pagefind site index.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Visitor submissions</strong>
+      <span>Comments use a dynamic API and store; keep form and other visitor input out of static search. Indexing requires moderation and regeneration.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>Admin and environment checks</strong>
+      <span>Keep admin surfaces outside public search. Check Preview and production separately; configuration alone is not runtime evidence.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Start by Goal
 

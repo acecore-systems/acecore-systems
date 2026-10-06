@@ -2,9 +2,9 @@
 title: "Building an Access-Protected Operations Dashboard with Cloudflare Pages and D1"
 description: "An anonymized design for protecting the entry point with Cloudflare Access and reading operational aggregates from D1 through Pages Functions. It separates verified production delivery, authenticated UI, and database-index use from items not tested."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ When operational information is scattered across logs and databases, it can be h
 ## Put the page and API behind the access boundary
 
 Hiding a static Cloudflare Pages screen is not enough if its data API can still be called directly. Include both the interface and API in the Cloudflare Access boundary, so only operators can read the data. As a verification procedure, test the page and data API before and after authentication. In this case, production checks confirmed the page’s authentication boundary and that data appeared in the UI after dedicated sign-in. A direct unauthenticated request to the API endpoint is not confirmed in the available record and remains a separate acceptance check. Do not put authentication secrets in browser code.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">Protect both the page and API</strong>
+    <span>Direct unauthenticated API access was not tested. The checks covered one operational environment.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>Authenticated dashboard</strong>
+      <span>Show protected operational aggregates to an operator after Access authentication.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>Read-only API</strong>
+      <span>Read D1 behind the same boundary. Unauthenticated access to the API URL was not verified.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separate writes from read-only aggregation
 

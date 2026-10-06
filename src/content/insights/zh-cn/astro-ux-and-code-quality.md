@@ -2,7 +2,7 @@
 title: "Astro View Transitions的坑与解决方案 ― UX与代码质量改善指南"
 description: "介绍Astro View Transitions中脚本失效问题的解决方案、Pagefind全文搜索的引入、TypeScript类型安全性的提升、常量统一管理等改善UX和代码质量的实践指南。"
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技术", "Astro", "网站"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ html {
 调整名称或分类时，要对齐既有值、API、filter与数据库修改。旧数据为0条不代表已迁移实际内容。状态徽章若是详情链接，点击和Enter都应可用。公开URL标识符的行内编辑仍需验证格式、重复及URL更新。公开显示、媒体播放、匿名用户登录跳转的检查，与已登录Editor的标识符保存和公开状态修改分别验证。
 
 按用户新的工作单元重组原编辑区域时，分开持久导航与工作区，避免仅改名称却留下旧操作。余额等辅助数字可弱于主要操作，但须保持可读字号和contrast。
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">区分操作、API结果与界面状态</strong>
+    <span>仅完成界面操作，不能证明保存或发布成功。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Editor操作</strong>
+      <span>移动分类或选择工作单元，只表示编辑界面中的状态变化。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>API与公开snapshot</strong>
+      <span>核对API结果和公开snapshot。请求失败或认证上下文缺失时，不显示成功。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>重新加载后的状态</strong>
+      <span>只显示已确认的状态，必要时提示重新加载或重新认证。登录用户的保存与发布验收仍未确认。</span>
+    </li>
+  </ol>
+</figure>

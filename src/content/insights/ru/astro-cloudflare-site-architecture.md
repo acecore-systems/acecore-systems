@@ -2,7 +2,7 @@
 title: "Как развивать сайт на Astro + Cloudflare по функциям"
 description: "Как мы объединили Astro и Cloudflare Pages с AI-чатом для обращений, Sveltia CMS, многоязычным блогом, CTA услуг, безопасным Markdown-рендерингом и комментариями без внешнего сервиса."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Технологии", "Astro", "Cloudflare", "Веб-сайт", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -155,6 +155,45 @@ Markdown-ссылки из AI сначала валидируются.
 Комментарии не используют внешний виджет.
 
 Pages Functions принимает GET/POST, D1 хранит комментарии, Turnstile защищает отправку.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">Границы публикации контента, пользовательских публикаций и администрирования</strong>
+    <span>Проверенный статический текст доступен для поиска; публикации и администрирование относятся к другим границам. Preview и production проверяются отдельно.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>Проверенный статический текст</strong>
+      <span>Публиковать проверенные статьи как статический HTML и включать их в индекс Pagefind.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Публикации посетителей</strong>
+      <span>Комментарии обрабатываются динамическим API и хранилищем; данные форм не включаются в статический поиск. Для индексации нужны модерация и пересборка.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>Администрирование и среды</strong>
+      <span>Не включать администрирование в публичный поиск. Проверять Preview и production отдельно; список настроек не доказывает работу.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Читать по цели
 

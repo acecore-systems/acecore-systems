@@ -2,8 +2,9 @@
 title: "Edge-Caching öffentlicher Bilder von API-Ratenbegrenzungen trennen"
 description: "Ein Fall, in dem Inhalts-API und Bildanfragen beim wiederholten Aufrufen dasselbe Limit teilten. Behandelt werden die Wiederverwendung öffentlicher Bilder, die Prüfung erfolgreicher Antworten, die Grenzen zwischen WAF und Anwendung sowie Produktionsprüfungen."
 date: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/public-image-cache-and-api-rate-limits.webp
+image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
 callout:
   type: note
@@ -38,6 +39,25 @@ Die [Cloudflare Cache API](https://developers.cloudflare.com/workers/runtime-api
 Der Schutz der dynamischen API ist eine andere Anforderung als das Caching von Bildern. In diesem Fall haben wir GET-Anfragen öffentlicher Bilder von der WAF-Zählung ausgenommen und nach der Anwendung die betroffenen dynamischen APIs, den Limitzeitraum, die Aktion und den Aktivierungsstatus erneut ausgelesen. Die vorherige Konfiguration wurde außerdem für einen Rollback gespeichert.
 
 Wähle Grenzwerte anhand der Anfragen, die beim normalen Aufrufen entstehen, und der Last des zu schützenden Vorgangs. Auch die planabhängigen Bedingungen der [Cloudflare-Ratenbegrenzung](https://developers.cloudflare.com/waf/rate-limiting-rules/) müssen geprüft werden. Ein Wert in einer Betriebsnotiz im Repository beweist nicht, dass eine Produktionsregel aktiviert ist.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-public-image-cache-and-api-rate-limits">
+  <figcaption>
+    <strong id="diagram-public-image-cache-and-api-rate-limits">Öffentliche Bilder und dynamische API</strong>
+    <span>Die Wiederverwendung unveränderlicher öffentlicher Bilder und der Schutz dynamischer APIs werden getrennt entworfen. Private Bilder sind nicht umfasst.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg></span>
+      <strong>GET eines öffentlichen Bildes</strong>
+      <span>Anfragegrenze prüfen und danach dasselbe Bild aus dem Cache wiederverwenden. Nur geprüfte 200-Antworten speichern.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <strong>Dynamische API</strong>
+      <span>API-Verarbeitung mit WAF und Anwendungsquota schützen. Die Limits sind vom Bild-Cache getrennt.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Bildinhalte in der Produktion prüfen
 

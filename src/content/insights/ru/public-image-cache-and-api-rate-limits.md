@@ -2,8 +2,9 @@
 title: "Разделите периферийное кэширование публичных изображений и лимиты API"
 description: "Случай, когда API контента и запросы изображений использовали общий лимит при повторном просмотре. Рассматриваются повторное использование публичных изображений, проверка успешных ответов, границы WAF и приложения, а также проверки в production."
 date: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/public-image-cache-and-api-rate-limits.webp
+image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
 callout:
   type: note
@@ -38,6 +39,25 @@ callout:
 Защита динамического API — отдельное требование, не связанное с кэшированием изображений. В этом случае GET-запросы публичных изображений исключили из подсчёта WAF, а после применения изменения повторно прочитали целевые динамические API, период лимита, действие и состояние включения. Предыдущую конфигурацию также сохранили для отката.
 
 Выбирайте пороги с учётом числа запросов при обычном просмотре и нагрузки защищаемой операции. Нужно также проверить условия тарифного плана для [ограничения запросов Cloudflare](https://developers.cloudflare.com/waf/rate-limiting-rules/). Значение в эксплуатационной заметке репозитория не доказывает, что правило включено в production.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-public-image-cache-and-api-rate-limits">
+  <figcaption>
+    <strong id="diagram-public-image-cache-and-api-rate-limits">Публичные изображения и динамический API</strong>
+    <span>Повторное использование неизменяемых публичных изображений и защиту динамических API проектируйте раздельно. Приватные изображения не входят в область.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg></span>
+      <strong>GET публичного изображения</strong>
+      <span>Проверьте границу запроса и повторно используйте то же изображение из кэша. Сохраняйте только проверенные ответы 200.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <strong>Динамический API</strong>
+      <span>Защищайте обработку API с помощью WAF и квоты приложения. Эти ограничения независимы от кэширования изображений.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Проверяйте содержимое изображений в production
 

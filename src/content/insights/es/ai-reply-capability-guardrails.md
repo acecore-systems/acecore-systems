@@ -2,8 +2,9 @@
 title: "Evitar que una respuesta de IA prometa algo que no puede cumplir"
 description: "Cómo impedir que un asistente informativo prometa por su cuenta la participación, la disponibilidad o el seguimiento de una persona del equipo. Trata el estado de la conversación, los fallos de recuperación y la revisión de borradores antiguos."
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ Distingue una publicación que busca participantes de una persona que expresa su
 ## Volver a comprobar los borradores antiguos con las condiciones actuales
 
 Un borrador que pasó las comprobaciones al generarse puede quedar obsoleto si cambia la conversación o la política. Compruébalo de nuevo con el estado más reciente justo antes del envío y no envíes borradores de conversaciones cerradas. Registra por separado la omisión del envío y el cierre de la conversación, sin confundirlos con un envío correcto. También se puede omitir una respuesta cuando una pregunta innecesaria solo alargaría el intercambio.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">Comprobar pruebas y capacidad antes de responder</strong>
+    <span>El contexto determina si se responde o se pone en espera. La operación en producción de la detención de recuperación no está confirmada.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>Leer quién habla y qué pide</strong>
+      <span>Comprueba si es una invitación o interés, la edición pertinente y el estado de la conversación.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>Responder con respaldo</strong>
+      <span>Indica solo lo que se puede hacer y vuelve a comprobar justo antes del envío.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>Poner en espera si hay dudas</strong>
+      <span>No consideres consultada una recuperación fallida o mal formada; devuelve el caso a una persona. Limita la espera y evita duplicados.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Qué se comprobó y qué sigue sin demostrarse
 

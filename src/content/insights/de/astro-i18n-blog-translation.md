@@ -2,7 +2,7 @@
 title: "Astro 7 Website für 9 Sprachen fit machen ― Blogübersetzung und mehrsprachige Architektur"
 description: "Dokumentation der Neun-Sprachen-Einführung mit Astro 7.1.3 und UnoCSS im Juli 2026, ergänzt um Hinweise auf aktuelle Abhängigkeiten und Übersetzungen."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Website"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -217,6 +217,39 @@ Der Übersetzungsprozess folgt diesen Schritten:
 3. **Stapelverarbeitung**: 5–6 Artikel auf einmal mit GitHub Copilot verarbeiten
 
 Die zweistufige Übersetzung (Japanisch → Englisch → Zielsprachen) reduziert Qualitätsschwankungen. Der Umweg über Englisch als Zwischensprache liefert stabilere Qualität als die direkte Übersetzung vom Japanischen in jede Sprache.
+
+<figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
+  <figcaption>
+    <strong id="diagram-astro-i18n-blog-translation">Übersetzungen vor der Veröffentlichung mit der aktuellen japanischen Quelle abgleichen</strong>
+    <span>Öffentliche URLs und Suchverweise richten sich nach tatsächlich vorhandenen Übersetzungsdateien.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
+      </span>
+      <strong>Japanische Quelle aktualisieren</strong>
+      <span>Änderungen prüfen und feststellen, welche Sprachfassungen überarbeitet werden müssen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
+      </span>
+      <strong>Jede Locale-Übersetzung prüfen</strong>
+      <span>Titel, Beschreibung und Text abgleichen; eine Locale-URL nur für eine vorhandene Übersetzungsdatei erzeugen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
+      </span>
+      <strong>Wenn keine Übersetzung vorliegt</strong>
+      <span>Für diese Locale weder URL noch Sitemap-Eintrag oder hreflang erzeugen. Keine unübersetzte Seite automatisch veröffentlichen.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Mehrsprachige View Components
 

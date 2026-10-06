@@ -2,7 +2,7 @@
 title: "Astro 사이트 접근성 개선 실전 가이드"
 description: "2026년 3월 Astro + UnoCSS 사이트에서 실시한 접근성 개선 기록입니다. ARIA, 명도 대비, 포커스, 폼, 스크린 리더 예시를 다룹니다."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["기술", "Astro", "접근성"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -176,6 +176,45 @@ shortcuts: {
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">(필수)</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">폼의 레이블·조작·알림 연결</strong>
+    <span>2026년 3월 예시의 관계를 나타냅니다. 자동 검사만으로 WCAG 전체 적합성을 증명할 수 없습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>입력 항목과 레이블</strong>
+      <span>입력 목적을 알 수 있는 레이블을 붙이고 필수 여부를 별표 외의 방법으로도 전달합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>키보드 포커스</strong>
+      <span>focus-visible로 현재 입력 위치를 표시하고 키보드로 접근·입력·수정할 수 있는지 확인합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>연결된 오류와 알림</strong>
+      <span>aria-invalid와 aria-describedby로 입력과 오류 문구를 연결하고 role=alert로 변경을 알립니다. 수동 확인도 더합니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

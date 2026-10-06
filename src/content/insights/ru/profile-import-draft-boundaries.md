@@ -2,9 +2,9 @@
 title: "Импорт данных профиля в черновик: сравнение, выбор и публикация"
 description: "Обобщённая реализация импорта профиля из текста, CSV, статического HTML и общего JSON. Рассматриваются сравнение с текущими значениями, выбор полей для замены и отмены, а также разделение сохранения и публикации."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ callout:
 Отдельное от импорта профилей обновление редактора добавляет HTTPS-ссылки к событиям публичного календаря. Событие открывает назначение напрямую в новой вкладке; событие без URL отображается без активной ссылки. Проверяйте формат URL, отклоняйте встроенные учётные данные и ограничивайте длину ввода. Добавляйте **noopener noreferrer** и указывайте открытие новой вкладки в доступном имени.
 
 В связанных формах также удалили ненужное поле заголовка у интервалов доступности для сотрудничества и поля личных заметок. Проверены изменения базы данных, CI, production-развёртывание и отображение проверочных данных. Приёмка, при которой владелец входит в учётную запись, сохраняет реальное событие и публикует его, ещё не подтверждена.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">Границы импорта и ссылок календаря</strong>
+    <span>Это отдельные функции редактора. Приёмка сохранения и публикации вошедшим пользователем не подтверждена.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>Импорт профиля</strong>
+      <span>Пользователь проверяет и редактирует поддерживаемые форматы. Сохранение и публикация — разные действия.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>Ссылка в публичном календаре</strong>
+      <span>HTTPS-ссылка открывается в безопасной новой вкладке. События без ссылки не являются интерактивными.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Что подтверждено и какая приёмка предстоит
 

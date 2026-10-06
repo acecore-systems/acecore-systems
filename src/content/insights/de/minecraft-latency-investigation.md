@@ -2,9 +2,9 @@
 title: "Minecraft-Lag untersuchen: unauffällige Messung und gemeinsame Speicherpfade"
 description: "Von der leisen Erfassung von TPS/MSPT bis zum Abgleich von JFR und I/O-Beobachtungen des Betriebssystems. Der Beitrag trennt die abgeschlossene Ursachensuche von noch nicht geprüften Leistungsverbesserungen."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ Während sich das Problem reproduzieren ließ, wurden JFR, Betriebssystem-Wartez
 In einem normalen Beobachtungsfenster von 240 Sekunden und einem stockenden Fenster von 220 Sekunden lagen die sekündlichen write-await-Medianwerte bei 1,60 ms und 43,71 ms; die Maximalwerte bei 6,00 ms und 123,57 ms. Das sind zwei Beobachtungsfenster, keine Vorher-nachher-Ergebnisse und kein allgemeiner Benchmark.
 
 Neben Wartezeiten bei synchronen Speicherungen und im Dateisystem-Journal traten Verzögerungen auch bei Geräteanforderungen mehrerer Anwendungen auf. Damit ließ sich der Kandidat auf den gemeinsamen Speicherpfad eingrenzen. Ein Abschlussereignis eines [Linux-Block-Tracepoints](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) kann nur einen Teil einer Anforderung darstellen. Nicht zugeordnete Anforderungen wurden daher nicht in eine Statistik für sämtliche I/O gemischt. Erfassungsdauer und -umfang waren begrenzt; auch der Messaufwand wurde berücksichtigt.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">Beobachtungen und Hypothesen trennen</strong>
+    <span>Dauerwerte und begrenzte Stichproben stammen aus verschiedenen Zeitfenstern. Die Wirkung einer Speichermigration wurde nicht getestet.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>Leise laufende Messung</strong>
+      <span>TPS/MSPT und fehlende Daten erfassen, ohne die übliche Konsolenausgabe zu erhöhen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>Begrenzte Ursachenanalyse</strong>
+      <span>JFR, Betriebssystem und Block-I/O getrennt erfassen und abgleichen. Gemeinsamer Speicher ist eine mögliche Ursache, kein bestätigter Defekt.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Den nächsten Schritt separat testen
 

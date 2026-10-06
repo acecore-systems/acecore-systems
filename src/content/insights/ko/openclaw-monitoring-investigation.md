@@ -2,9 +2,9 @@
 title: "OpenClaw로 모니터링과 장애 조사를 연결하기: 탐지·증거·판단의 경계"
 description: "정기 점검과 권한을 제한한 OpenClaw 조사를 연결하고, 검증한 운영 범위와 미검증 복구 범위를 설명합니다."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ callout:
 ## 시간 초과에도 증거 보존
 
 중단 전 관측, 시각, 실행 결과, 얻지 못한 항목을 보존합니다. 중단된 조사를 ‘이상 없음’으로 바꾸거나 수집 실패를 확인 완료로 보고하지 않습니다.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">정기 감지, 제한된 조사, 사람의 판단을 분리하기</strong>
+    <span>부분 증거를 보존하고 자동 복구가 입증된 것처럼 표현하지 않습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>정기 점검</strong>
+      <span>정상, 이상, 조회 실패를 구분합니다. 유지보수 시간에는 해당 점검의 일시적인 조회 실패 알림만 억제합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>허용 범위에서 조사</strong>
+      <span>읽기 작업, 시간, 출력량을 제한하고 timeout에도 부분 증거를 저장합니다. 거부된 작업은 실행된 것으로 기록하지 않습니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>보고 후 판단</strong>
+      <span>사실, 가설, 미확인 사항을 구분하고 중복·복구 알림을 처리합니다. 변경이나 재시작에는 별도 승인이 필요합니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 알림과 조치 분리
 

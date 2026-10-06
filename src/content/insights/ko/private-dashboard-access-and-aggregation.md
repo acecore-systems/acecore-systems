@@ -2,9 +2,9 @@
 title: "Cloudflare Pages와 D1로 만드는 인증된 운영 대시보드"
 description: "Cloudflare Access로 진입을 보호하고 Pages Functions를 통해 D1의 운영 집계를 읽는 구성을 익명화해 소개합니다. 확인된 프로덕션 배포, 인증된 화면, DB 인덱스 사용과 미검증 항목을 구분합니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/private-dashboard-access-and-aggregation.webp"
+image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
 callout:
   type: note
@@ -17,6 +17,25 @@ callout:
 ## 페이지와 API 모두 접근 경계에 포함합니다
 
 Cloudflare Pages의 정적 화면만 숨겨서는 데이터 API를 직접 호출할 수 있는 상태를 막지 못합니다. 화면과 API를 모두 Cloudflare Access 경계에 포함해 운영자만 데이터를 읽도록 합니다. 검증 절차로 인증 전후에 페이지와 데이터 API를 각각 시험합니다. 이 사례에서는 프로덕션 화면의 인증 경계와 전용 로그인 후 UI에 데이터가 표시되는 것을 확인했습니다. 현재 기록에서는 API 엔드포인트에 인증 없이 직접 요청한 결과가 확인되지 않아 별도 수락 항목으로 남습니다. 브라우저 코드에 인증 비밀을 넣지 않습니다.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-private-dashboard-access-and-aggregation">
+  <figcaption>
+    <strong id="diagram-private-dashboard-access-and-aggregation">페이지와 API 모두 보호</strong>
+    <span>API 직접 비인증 접근은 시험하지 않았습니다. 확인 범위는 단일 운영 환경입니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4a4 4 0 0 1 8 0v2M9 13h6"/></svg></span>
+      <strong>인증된 대시보드</strong>
+      <span>운영자는 Access 인증 후 보호된 집계 정보를 봅니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3M20 5v5M4 12v7c0 1.7 3.6 3 8 3"/></svg></span>
+      <strong>읽기 전용 API</strong>
+      <span>같은 경계 안에서 D1을 읽습니다. API URL 직접 비인증 요청 차단은 확인되지 않았습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 쓰기 작업과 읽기 전용 집계를 분리합니다
 

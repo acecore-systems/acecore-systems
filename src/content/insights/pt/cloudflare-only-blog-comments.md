@@ -4,7 +4,7 @@ description: "Como implementamos comentários em um blog Astro sem serviço exte
 date: 2026-06-07T18:00
 author: gui
 tags: ["Tecnologia", "Cloudflare", "Astro", "Segurança", "Site"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: Sem serviço externo de comentários
@@ -82,6 +82,7 @@ faq:
       answer: "Para comentários por post_slug, ordenação por data, soft delete, rate limit e duplicados, D1 funciona bem."
     - question: Turnstile só no cliente basta?
       answer: "Não. A Pages Function precisa validar o token no Siteverify antes de gravar no D1."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Comentários adicionam estado a um site estático. Por isso, muita gente usa widgets externos.

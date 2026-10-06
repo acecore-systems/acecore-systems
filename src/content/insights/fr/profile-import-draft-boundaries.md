@@ -2,9 +2,9 @@
 title: "Importer un profil comme brouillon : comparer, choisir et publier avec discernement"
 description: "Une mise en œuvre générique pour importer un profil depuis du texte, un CSV, du HTML statique ou un JSON commun. Elle explique la comparaison des valeurs actuelles, le remplacement sélectif ou l’annulation, et la séparation entre enregistrement et publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ Appliquer les propositions importées, enregistrer le brouillon et mettre à jou
 Une évolution distincte de l’importation ajoute des liens HTTPS aux événements du calendrier public. Un événement ouvre directement sa destination dans un nouvel onglet ; sans URL, il reste affiché sans lien actionnable. Validez le format de l’URL, refusez les identifiants intégrés et limitez la longueur de l’entrée. Ajoutez **noopener noreferrer** et indiquez l’ouverture d’un nouvel onglet dans le nom accessible.
 
 Les formulaires associés suppriment aussi le champ de titre superflu des créneaux de disponibilité pour collaborer et les champs de notes privées. Les changements de base de données, la CI, le déploiement en production et les écrans utilisant des données de vérification ont été contrôlés. La réception par une personne propriétaire qui se connecte, enregistre un événement réel et le publie reste non vérifiée.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">Limites de l’importation et des liens du calendrier</strong>
+    <span>Ce sont des fonctions d’édition distinctes. La validation de l’enregistrement et de la publication par une personne connectée reste non vérifiée.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>Importer le profil</strong>
+      <span>La personne examine et modifie les formats pris en charge. Enregistrer et publier sont deux actions distinctes.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>Lien du calendrier public</strong>
+      <span>Ouvrir les liens HTTPS dans un nouvel onglet sécurisé. Les événements sans lien restent non interactifs.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Éléments vérifiés et prochaine réception
 

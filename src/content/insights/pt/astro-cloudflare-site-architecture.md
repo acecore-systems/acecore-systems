@@ -2,7 +2,7 @@
 title: "Como projetar um site Astro + Cloudflare que cresce por funcionalidade"
 description: "Como combinamos Astro e Cloudflare Pages com chat de contato com IA, Sveltia CMS, blog multilíngue, CTA de serviços, renderização segura de Markdown e comentários sem serviço externo."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Cloudflare", "Site", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -157,6 +157,45 @@ Só links permitidos por allowlist viram nós DOM seguros.
 Os comentários não usam widget externo.
 
 Pages Functions recebe GET/POST, D1 guarda comentários e Turnstile protege envios. Para um blog institucional pequeno, isso é suficiente.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">Limites públicos entre conteúdo, envios e administração</strong>
+    <span>O conteúdo estático revisado pode ser pesquisado; envios e administração têm limites distintos. Preview e produção exigem verificações separadas.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>Conteúdo estático revisado</strong>
+      <span>Publique artigos revisados como HTML estático e inclua-os no índice Pagefind.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Envios de visitantes</strong>
+      <span>Comentários usam uma API dinâmica e armazenamento; não misture formulários ou outros dados na busca estática. Indexar exige moderação e nova geração.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>Administração e ambientes</strong>
+      <span>Mantenha a administração fora da busca pública. Verifique Preview e produção separadamente; configuração não comprova execução.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Ler por objetivo
 

@@ -2,6 +2,7 @@
 title: "Cómo verificamos la migración de Dynmap a 512px y retiramos imágenes antiguas de R2"
 description: "Registro operativo de la migración de 89 mapas en ocho servidores a imágenes de 512px, con revisión pública y limpieza de datos antiguos en R2."
 date: "2026-09-27T22:40:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Tecnología", "Cloudflare"]
@@ -18,6 +19,45 @@ Cambiamos el formato de las imágenes de un Dynmap que distribuye mapas desde Cl
 Unificamos los mapas de producción en imágenes de 512px. Para los 21 mapas que necesitaban renderizado adicional, limitamos el área a un radio de 2.000 bloques alrededor del centro público. No esperamos a renderizar el mundo entero; las actualizaciones normales continuaron durante la transición.
 
 También mejoramos los reintentos tras fallos de comunicación con R2, la conservación de actualizaciones pendientes tras errores de escritura y la distinción entre una imagen de zoom ausente y un error de lectura. El [PR #9 del fork de Dynmap](https://github.com/acecore-systems/dynmap/pull/9) documenta la recuperación de las actualizaciones de zoom tras reiniciar. Estas mejoras no eliminan los posibles fallos internos de Cloudflare.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-dynmap-512-migration">
+  <figcaption>
+    <strong id="diagram-dynmap-512-migration">Retirar los datos antiguos solo tras verificar las imágenes nuevas</strong>
+    <span>Audita la salida pública y el almacenamiento antes de limpiar. Las imágenes antiguas no tienen copia y el ahorro en operación normal no está verificado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 5l9-3 9 3v14l-9 3-9-3z M12 2v20 M3 5l9 3 9-3 M3 12l9 3 9-3"/>
+        </svg>
+      </span>
+      <strong>Limitar el área y generar imágenes nuevas</strong>
+      <span>Define el alcance de 512px y el área de renderizado; genera imágenes nuevas mientras continúan las actualizaciones habituales.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Auditar imágenes públicas y almacenamiento</strong>
+      <span>Comprueba por separado imágenes normales y de zoom, recursos web, JSON en vivo y prefijos de almacenamiento previstos.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16 M9 7V4h6v3 M7 7l1 14h8l1-14"/>
+        </svg>
+      </span>
+      <strong>Limpiar los datos antiguos tras la auditoría</strong>
+      <span>Elimina imágenes y hashes antiguos tras la auditoría. No tienen copia; si se necesitan, hay que volver a renderizarlos desde el mundo.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Verificar por separado el mapa público y el almacenamiento
 

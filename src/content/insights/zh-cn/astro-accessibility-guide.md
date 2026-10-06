@@ -2,7 +2,7 @@
 title: "Astro网站无障碍改进实践指南"
 description: "记录2026年3月Astro + UnoCSS网站的无障碍改进，包括ARIA、对比度、焦点、表单和屏幕阅读器示例。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技术", "Astro", "无障碍"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -176,6 +176,45 @@ shortcuts: {
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">（必填）</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">关联表单标签、操作与提示</strong>
+    <span>此图概括 2026 年 3 月示例中的关系；自动检查不能证明整体符合 WCAG。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>输入项与标签</strong>
+      <span>为输入项提供可见标签，并通过星号以外的方式传达必填状态。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>键盘焦点</strong>
+      <span>通过 focus-visible 标示当前输入项，并检查键盘访问与编辑操作。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>关联错误并播报提示</strong>
+      <span>aria-invalid 与 aria-describedby 关联输入项和错误文案；role=alert 通知更新，并补充人工检查。</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

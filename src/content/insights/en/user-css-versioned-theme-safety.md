@@ -2,9 +2,9 @@
 title: "Safe User CSS and Public Themes: Shared Source, Scoped Rendering, and Versioned Releases"
 description: "An anonymized profile-editing design where a shared CSS source of truth can be edited through both a GUI and direct changes. Covers rich CSS syntax within a rendering boundary, drafts and published versions, immutable theme releases, delisting, and operational suspension."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ A theme's editable listing information is separated from its immutable versions.
 ## Distinguish delisting from operational suspension
 
 An author delisting a theme stops new discovery and application, but does not necessarily revoke existing uses of a pinned version immediately. Suspending a dangerous theme operationally has a different boundary: public retrieval and CSS from existing snapshots are stopped, and the standard appearance is restored. Even when rolling back to an older snapshot, the current suspension state is checked so that CSS from before suspension cannot be revived.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">From CSS editing to a fixed release</strong>
+    <span>Code integration, CI, and production delivery of the earlier Store version were checked. Production/login acceptance of the CSS expansion, user application, and paid sales are unverified.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>Shared CSS source</strong>
+      <span>The GUI and direct editing use the same CSS source and preserve hand-written rules.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>Parse and scope</strong>
+      <span>Support Grid/Flex, variables, pseudo-elements, responsive rules, and animation. Reject external, global, or unparseable input.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Publish an explicit version</strong>
+      <span>Publish an immutable version after preview/draft. Delisting and operational suspension are separate.</span>
+    </li>
+  </ol>
+</figure>
 
 ## What to verify before publication
 

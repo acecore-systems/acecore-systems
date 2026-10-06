@@ -2,9 +2,9 @@
 title: "Investigating Minecraft Lag: Quiet Metrics and Shared-Storage Diagnosis"
 description: "From quiet TPS/MSPT collection to correlating JFR and OS I/O observations. This article separates a completed cause investigation from performance improvements that have not been tested."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ While the issue was reproducible, JFR, OS wait observations, and block I/O were 
 Across a normal 240-second window and a stalled 220-second window, per-second write-await medians were 1.60 ms and 43.71 ms; the maxima were 6.00 ms and 123.57 ms. These are two observation windows, not before-and-after results or a general benchmark.
 
 Along with synchronous saves and filesystem journal waits, delays also appeared in device requests from multiple applications, narrowing the candidate to the shared-storage path. A completion event in a [Linux block tracepoint](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) may represent only part of a request, so unmatched requests were not mixed into a statistic for all I/O. Capture duration and volume were bounded, and measurement overhead was considered.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">Separate observations from hypotheses</strong>
+    <span>Continuous metrics and bounded samples use different observation windows. Storage-migration effects remain untested.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>Quiet continuous metrics</strong>
+      <span>Record TPS/MSPT and missing data without adding routine console output.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>Bounded investigation</strong>
+      <span>Collect JFR, OS, and block I/O separately and correlate them. Shared storage is a candidate cause, not a confirmed fault.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Treat the next step as a separate test
 

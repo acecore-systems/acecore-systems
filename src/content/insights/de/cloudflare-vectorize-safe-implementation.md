@@ -2,7 +2,7 @@
 title: "Cloudflare-Vectorize-Implementierungsleitfaden: Öffentliches HTML sicher synchronisieren"
 description: "Ein ausführlicher Leitfaden, um einen Corpus aus öffentlichem HTML zu erstellen, Pagefind verfügbar zu halten und Vectorize sicher zu synchronisieren."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Cloudflare", "Vectorize", "Workers AI", "Website-Suche"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -196,6 +196,45 @@ Deshalb wurde auch die UI aufgeteilt.
 Der aktuelle Suchdialog sucht nicht während der Eingabe. Erst bei „Suchen“ wird der Begriff wie in der UI erläutert an die Such-API dieser Website gesendet. Cloudflare Workers AI `@cf/baai/bge-m3` erstellt daraus ein Embedding für den Abgleich mit öffentlichen Informationen in Vectorize. Wenn die verwandte Suche fehlschlägt oder keine Ergebnisse liefert, wird Pagefind im Browser als Fallback ausgeführt. Danach kann der Begriff auch an die gemeinsame Acecore-Such-API (acecore.net) gesendet werden, um öffentliche Inhalte verbundener Websites anzuzeigen. Die UI warnt vor persönlichen oder vertraulichen Angaben.
 
 Damit erweitert Vectorize das Sucherlebnis, wird aber nicht zum Single Point of Failure der gesamten Suche.
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-cloudflare-vectorize-safe-implementation">
+  <figcaption>
+    <strong id="diagram-cloudflare-vectorize-safe-implementation">Suchergebnisse und Abruffehler getrennt behandeln</strong>
+    <span>Der statische Such-Fallback belegt keine externe Antwort. Die Abbruchbedingung wurde im Code/PR geprüft; der Einsatz in Produktion ist nicht bestätigt.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Abrufantwort einordnen</strong>
+      <span>Treffer, gültige Nulltreffer, fehlgeschlagene oder nicht-2xx Abrufe und fehlerhafte Daten unterscheiden.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h5"/>
+        </svg>
+      </span>
+      <strong>Suchoberfläche der Website</strong>
+      <span>Der statische Pagefind-Fallback gehört zur Seitensuche und bleibt von Belegen für externe Antworten getrennt.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 5h14v14H5z M9 9v6 M15 9v6"/>
+        </svg>
+      </span>
+      <strong>Entscheidung über externe Antworten</strong>
+      <span>Nulltreffer sind kein Beleg. Bei Fehlern oder ungültigen Daten wird die Antwort zurückgehalten; der Produktionseinsatz ist unbestätigt.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Den Corpus aus veröffentlichtem HTML statt aus CMS-Entwürfen erzeugen
 

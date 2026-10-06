@@ -2,9 +2,9 @@
 title: "사용자 CSS와 공개 테마를 안전하게 다루기: 공유 원본, 렌더링 범위, 버전 고정"
 description: "GUI와 직접 편집이 하나의 CSS 정본을 공유하는 프로필 편집 설계를 익명화해 설명합니다. 렌더링 범위 안의 폭넓은 CSS 문법, 임시 저장과 공개 버전, 불변 테마 버전, 목록에서 내리기와 운영 중지를 다룹니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ backend와 frontend 확장은 각각 main에 병합했고 CI와 구현 테스트
 ## 목록에서 내리기와 운영 중지를 구분하기
 
 작성자가 테마를 목록에서 내리면 새로 찾거나 적용하는 것을 막지만, 기존 고정 버전 사용을 즉시 취소하는 것은 아닐 수 있습니다. 위험한 테마를 운영자가 중지할 때는 공개 조회와 기존 snapshot의 CSS를 차단하고 기본 모양으로 되돌립니다. 이전 snapshot으로 되돌릴 때도 현재 중지 상태를 확인해 중지 전 CSS가 다시 활성화되지 않게 합니다.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">CSS 편집에서 고정 버전 게시까지</strong>
+    <span>코드 통합, CI, 이전 Store 버전의 프로덕션 배포를 확인했습니다. CSS 확장의 프로덕션/로그인 수락, 실제 사용자 적용, 유료 판매는 확인되지 않았습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>공유 CSS 정본</strong>
+      <span>GUI와 직접 편집이 같은 CSS 정본을 사용하고 손으로 쓴 규칙을 유지합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>분석해 범위를 제한</strong>
+      <span>Grid/Flex·변수·가상 요소·반응형 규칙·애니메이션을 지원합니다. 외부·전역·분석 불가 입력은 거부합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>명시적으로 버전 공개</strong>
+      <span>미리보기/임시 저장 후 불변 버전을 공개합니다. 목록에서 내리기와 운영 중지는 별도입니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 공개 전에 확인할 항목
 

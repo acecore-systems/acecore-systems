@@ -2,9 +2,9 @@
 title: "Minecraft 지연 조사: 조용한 지표 수집과 공유 스토리지 원인 분석"
 description: "TPS/MSPT를 조용히 수집하는 단계부터 JFR과 운영체제 I/O 관측을 대조하는 과정까지 소개합니다. 완료된 원인 조사와 아직 시험하지 않은 성능 개선을 구분합니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ TPS, MSPT 평균·최대·p95, 느린 tick의 누적 횟수를 기록합니다. 
 정상적인 240초 관측 창과 정체가 있던 220초 창에서 초당 write-await 중앙값은 각각 1.60ms와 43.71ms였고, 최대값은 6.00ms와 123.57ms였습니다. 이는 두 관측 창의 비교이며, 조치 전후 결과나 일반적인 벤치마크가 아닙니다.
 
 동기 저장과 파일시스템 journal 대기 외에도 여러 애플리케이션의 장치 요청에서 지연이 보여 공유 스토리지 경로를 원인 후보로 좁혔습니다. [Linux 블록 tracepoint](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html)의 완료 이벤트는 요청 일부만 나타낼 수 있으므로, 대응되지 않은 요청을 전체 I/O 통계에 섞지 않았습니다. 수집 시간과 데이터량을 제한하고 계측 부하도 고려했습니다.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">관측과 원인 가설을 구분합니다</strong>
+    <span>상시 지표와 제한된 샘플은 서로 다른 관측 구간입니다. 저장소 이전 효과는 시험하지 않았습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>조용한 상시 측정</strong>
+      <span>일반 콘솔 로그를 늘리지 않고 TPS/MSPT와 누락 데이터를 기록합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>제한된 원인 조사</strong>
+      <span>JFR·OS·block I/O를 따로 수집해 대조합니다. 공유 storage 경로는 후보 원인이지 확정된 장애가 아닙니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 다음 단계는 별도의 시험으로 다룹니다
 

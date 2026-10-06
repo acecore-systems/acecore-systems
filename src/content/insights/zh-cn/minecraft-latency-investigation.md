@@ -2,9 +2,9 @@
 title: "排查 Minecraft 卡顿：静默采集指标与共享存储定位"
 description: "从安静地采集 TPS/MSPT，到对照 JFR 与操作系统 I/O 观测。本文区分已经完成的原因调查与尚未验证的性能改进。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ Minecraft 卡顿可能来自服务器 tick 处理、短暂保存停顿、网络�
 在正常的 240 秒观测窗口与停滞的 220 秒窗口中，逐秒 write-await 中位数分别为 1.60 ms 和 43.71 ms；最大值分别为 6.00 ms 和 123.57 ms。这是两个观测窗口的比较，不是措施实施前后的改善结果，也不是通用基准测试。
 
 除同步保存与文件系统 journal 等待外，多个应用发出的设备请求也出现延迟，因此将原因候选缩小到共享存储路径。[Linux 块 tracepoint](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) 的完成事件可能只代表请求的一部分，因此没有把无法对应的请求混入全部 I/O 的统计。采集时长和数据量均有限，并考虑了测量本身的开销。
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">区分观测结果与原因假设</strong>
+    <span>持续指标和限时采样来自不同观测窗口。存储迁移效果尚未测试。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>安静的持续测量</strong>
+      <span>记录 TPS/MSPT 和缺失数据，不增加常规控制台日志。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>限定窗口内调查</strong>
+      <span>分别采集并对照 JFR、OS 与 block I/O。共享存储路径只是候选原因，并非已确认故障。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 将后续工作作为独立测试
 

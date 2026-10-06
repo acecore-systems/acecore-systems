@@ -2,6 +2,7 @@
 title: "Dynmapの512px移行をどう検証したか：R2の旧画像整理まで"
 description: "8サーバー・89マップのDynmap画像を512pxへ段階移行し、公開表示とR2の旧データ削除を確認した運用記録です。"
 date: "2026-09-27T22:40:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["技術", "Cloudflare"]
@@ -18,6 +19,45 @@ Dynmapの地図画像をCloudflare R2から配信する構成で、画像形式�
 正式マップを512pxタイルに統一しました。追加描画が必要な21件は、公開中心から半径2,000ブロックに範囲を区切りました。世界全域の描画完了を待つ設計にはせず、通常更新を続けながら切り替えています。
 
 R2通信に失敗したときの再試行、書き込み失敗時の更新保持、ズーム画像で「存在しない」と「読み取り障害」を区別する処理も見直しました。再起動後にズーム更新を再開できるようにした修正は、[Dynmap forkのPR #9](https://github.com/acecore-systems/dynmap/pull/9)に記録しています。Cloudflare側の障害そのものがなくなるという意味ではありません。
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-dynmap-512-migration">
+  <figcaption>
+    <strong id="diagram-dynmap-512-migration">新画像の検証が終わってから旧データを整理する</strong>
+    <span>公開表示と保存先を監査してから整理します。旧画像にバックアップはなく、通常運転時の費用削減も未確認です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 5l9-3 9 3v14l-9 3-9-3z M12 2v20 M3 5l9 3 9-3 M3 12l9 3 9-3"/>
+        </svg>
+      </span>
+      <strong>範囲を決め新形式を生成</strong>
+      <span>512px対象と描画範囲を決め、通常の更新を続けながら新形式の画像を段階的に生成して公開する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>公開画像と保存先を監査</strong>
+      <span>通常・ズーム画像、Web資材とlive JSON、正式な保存先prefixをそれぞれ確認して公開と保存を監査する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16 M9 7V4h6v3 M7 7l1 14h8l1-14"/>
+        </svg>
+      </span>
+      <strong>監査後に旧データを整理</strong>
+      <span>監査後に旧画像/hashを整理する。旧画像はbackupに無く、必要ならworldから再描画する必要がある。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 公開表示と保存先を別々に検証する
 

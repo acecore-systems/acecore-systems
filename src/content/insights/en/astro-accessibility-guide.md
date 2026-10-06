@@ -2,7 +2,7 @@
 title: "Practical Accessibility Improvements for an Astro Site"
 description: "A record of accessibility improvements made to an Astro + UnoCSS site in March 2026, including ARIA, contrast, focus, forms, and screen reader examples."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Accessibility"]
 image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
@@ -176,6 +176,45 @@ A visual `*` mark alone is insufficient. Add supplementary text for screen reade
 ```html
 <span aria-hidden="true">*</span> <span class="sr-only">(required)</span>
 ```
+
+<figure class="article-diagram" data-layout="layers" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-accessibility-guide">
+  <figcaption>
+    <strong id="diagram-astro-accessibility-guide">Connect form labels, operation, and announcements</strong>
+    <span>A conceptual reading of the March 2026 examples; automated checks do not establish overall WCAG conformance.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16 M4 10h16 M4 15h10 M4 20h7"/>
+        </svg>
+      </span>
+      <strong>Field and label</strong>
+      <span>Give each field a visible label; communicate required status beyond the asterisk.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 6h18v12H3z M6 9h.01 M9 9h.01 M12 9h.01 M15 9h.01 M18 9h.01 M6 13h.01 M9 13h.01 M12 13h.01 M15 13h.01 M8 16h8"/>
+        </svg>
+      </span>
+      <strong>Keyboard focus</strong>
+      <span>Use focus-visible to show the active field and verify keyboard access and editing.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>Associated error and announcement</strong>
+      <span>aria-invalid and aria-describedby connect field and message; role=alert announces changes. Add manual review.</span>
+    </li>
+  </ol>
+</figure>
 
 ---
 

@@ -2,9 +2,9 @@
 title: "ユーザーCSSと公開テーマを安全に扱う：検証・版固定・停止の設計"
 description: "CSS正本をGUIと直接編集で共有するプロフィール編集を一般化。Grid・Flex・レスポンシブ指定の描画境界、下書きと公開版、不変のテーマ版、掲載終了と運営停止を整理します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ backendとfrontendの拡張は、それぞれのmainへ統合され、CIと実�
 ## 掲載終了と運営停止を分ける
 
 作者による掲載終了は、新しい発見・適用を止めても、既存の固定版利用を直ちに失効させる操作とは限りません。一方、危険なテーマの運営停止では公開取得や既存snapshotのCSSを止め、標準の見た目へ戻す境界が必要です。古いsnapshotへ切り戻しても現在の停止状態を確認し、停止前のCSSを復活させない設計にします。
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">CSS編集から固定版公開まで</strong>
+    <span>コード統合とCI、旧版Storeの本番配信は確認済み。新CSSの本番/ログイン受入、実利用者の適用、有料販売は未確認。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>共有CSS正本</strong>
+      <span>GUIと直接編集が同じCSSを使い、手書きルールを保持。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>解析して領域を限定</strong>
+      <span>Grid/Flex・変数・疑似要素・responsive/animationに対応。外部・global・解析不能な入力は拒否。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>版を明示公開</strong>
+      <span>preview/draft後にimmutable版を公開。掲載終了と運営停止を分ける。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 公開前に確かめること
 

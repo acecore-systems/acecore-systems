@@ -2,9 +2,9 @@
 title: "将个人资料导入草稿：比较、选择与审慎发布"
 description: "介绍从文本、CSV、静态 HTML 和通用 JSON 导入个人资料的实现，以及如何比较现有值、选择并替换字段或撤销更改，并将保存与发布分开处理。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ callout:
 另一项与个人资料导入独立的编辑更新，为公开日历日程增加 HTTPS 链接。点击日程会在新标签页直接打开目标；没有 URL 的日程仍会显示，但不会生成可操作的链接。验证 URL 格式、拒绝嵌入的凭据并限制输入长度。添加 **noopener noreferrer**，并在可访问名称中说明会打开新标签页。
 
 相关表单还移除了协作可用时段中不必要的标题字段，以及私人备注字段。已确认数据库修改、CI、生产部署和使用验证数据的页面显示；本人登录后保存真实日程并发布的验收仍未完成。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">导入与日程链接的边界</strong>
+    <span>这是两项独立的编辑功能。尚未确认登录用户完成保存和发布的验收。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>个人资料导入</strong>
+      <span>由本人检查并编辑支持格式的内容；保存与发布是不同操作。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>公开日程链接</strong>
+      <span>HTTPS 链接在安全的新标签页打开；没有链接的日程不可操作。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 已确认的内容与下一步验收
 

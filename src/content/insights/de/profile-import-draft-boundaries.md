@@ -2,9 +2,9 @@
 title: "Profildaten als Entwurf importieren: vergleichen, auswählen, gezielt veröffentlichen"
 description: "Eine verallgemeinerte Umsetzung für Profilimporte aus Text, CSV, statischem HTML und gemeinsamem JSON. Sie behandelt den Vergleich vorhandener Werte, das gezielte Ersetzen oder Zurücknehmen von Änderungen und die Trennung von Speichern und Veröffentlichung."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ Importvorschläge anzuwenden, den Entwurf zu speichern und die öffentliche Mome
 Eine vom Profilimport unabhängige Editor-Erweiterung ergänzt HTTPS-Links für öffentliche Kalendertermine. Ein Termin öffnet sein Ziel direkt in einem neuen Tab; Termine ohne URL bleiben ohne bedienbaren Link sichtbar. Prüfen Sie URL-Format, eingebettete Zugangsdaten und Eingabelänge. Verwenden Sie **noopener noreferrer** und nennen Sie das Öffnen eines neuen Tabs im zugänglichen Namen.
 
 In den zugehörigen Formularen wurden außerdem das unnötige Titelfeld bei Verfügbarkeitszeiten für Zusammenarbeit und Felder für private Notizen entfernt. Datenbankänderungen, CI, Produktionsbereitstellung und Ansichten mit Prüfdaten wurden kontrolliert. Die Abnahme durch eine eingeloggte Person, die einen echten Termin speichert und veröffentlicht, ist noch nicht bestätigt.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">Grenzen von Import und Kalenderlinks</strong>
+    <span>Dies sind getrennte Editorfunktionen. Die Abnahme von Speichern und Veröffentlichen durch eine eingeloggte Person ist unbestätigt.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>Profil importieren</strong>
+      <span>Die Person prüft und bearbeitet unterstützte Formate. Speichern und Veröffentlichen sind getrennte Aktionen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>Öffentlicher Kalenderlink</strong>
+      <span>HTTPS-Links öffnen in einem sicheren neuen Tab. Termine ohne Link bleiben nicht interaktiv.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Was bestätigt wurde und welche Abnahme noch aussteht
 

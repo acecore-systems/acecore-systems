@@ -2,7 +2,7 @@
 title: "用 Astro + Cloudflare 逐步扩展官网功能的整体设计"
 description: "整理 Acecore 官网如何以 Astro 和 Cloudflare Pages 为基础，组合咨询 AI、Sveltia CMS、多语言博客、服务 CTA、Markdown 安全渲染和 Cloudflare 评论功能。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技术", "Astro", "Cloudflare", "网站", "AI", "CMS"]
 image: /uploads/acecore-generated/work-acecore-net-website.webp
@@ -169,6 +169,45 @@ AI 回答可以包含 Markdown 风格的链接，但不能直接放进 `innerHTM
 Pages Functions 处理 GET/POST，D1 保存评论，Turnstile 验证提交，Origin、hostname、rate limit 和内容过滤决定是否接受。
 
 对小型公司博客来说，这比引入完整社区系统更合适。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-cloudflare-site-architecture">
+  <figcaption>
+    <strong id="diagram-astro-cloudflare-site-architecture">内容、投稿与管理界面的公开边界</strong>
+    <span>已审核的静态正文可搜索；用户投稿和管理界面处于不同边界。Preview 与生产环境需分别检查。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h7 M9 16h7"/>
+        </svg>
+      </span>
+      <strong>已审核的静态正文</strong>
+      <span>将审核后的文章发布为静态 HTML，并纳入 Pagefind 站内索引。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 5h16v12H9l-5 4z M8 9h8 M8 13h5"/>
+        </svg>
+      </span>
+      <strong>访客投稿</strong>
+      <span>评论通过动态 API 和存储处理；表单等访客输入不进入静态搜索。若要纳入，需审核并重新生成。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2l8 4v6c0 5-3 8.5-8 10-5-1.5-8-5-8-10V6z M9 12h6"/>
+        </svg>
+      </span>
+      <strong>管理界面与环境检查</strong>
+      <span>管理界面不进入公开搜索。分别检查 Preview 与生产环境；列出配置不等于证明已运行。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 按目的阅读
 

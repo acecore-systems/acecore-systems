@@ -2,9 +2,9 @@
 title: "Как расследовать задержки Minecraft: тихий сбор метрик и анализ общего хранилища"
 description: "От ненавязчивого сбора TPS/MSPT до сопоставления JFR с наблюдениями за I/O операционной системы. Здесь завершённое исследование причин отделено от ещё не проверенных улучшений производительности."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ callout:
 В нормальном окне наблюдения длительностью 240 секунд и окне с зависаниями длительностью 220 секунд секундные медианы write-await составляли 1,60 мс и 43,71 мс, а максимумы — 6,00 мс и 123,57 мс. Это сравнение двух окон наблюдения, а не результат до и после меры и не общий бенчмарк.
 
 Помимо ожиданий при синхронном сохранении и ожиданий journal файловой системы, задержки обнаружились и в запросах к устройству от нескольких приложений. Круг причин-кандидатов сузился до общего пути хранения. Событие завершения [блочного tracepoint Linux](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) может описывать только часть запроса, поэтому несопоставленные запросы не включались в статистику всего I/O. Длительность и объём сбора ограничили и учли нагрузку от измерений.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">Отделяйте наблюдения от гипотез</strong>
+    <span>Постоянные метрики и ограниченные выборки относятся к разным временным окнам. Эффект переноса хранилища не проверялся.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>Постоянный тихий сбор</strong>
+      <span>Записывайте TPS/MSPT и пропуски данных без увеличения обычного вывода в консоль.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>Ограниченное расследование</strong>
+      <span>Собирайте JFR, ОС и block I/O раздельно и сопоставляйте. Общее хранилище — возможная причина, а не подтверждённая неисправность.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Проверяйте следующий шаг отдельно
 

@@ -2,8 +2,9 @@
 title: "将运维通知接入 Nextcloud Talk：区分发现、送达与处理完成"
 description: "介绍一种将订单处理异常和待审核内容通知发送到私密 Talk 房间及管理界面的通用设计，涵盖最小化通知、密钥管理、连接测试和验收范围。"
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/nextcloud-talk-operations-notifications.webp
+image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
 callout:
   type: note
@@ -24,6 +25,30 @@ Talk 提供了[由 Bot 发送消息的官方 API](https://nextcloud-talk.readthe
 ## 分别记录发现、送达和处理结果
 
 发现通知事件、请求发送、API 返回成功、实际收到消息以及负责人完成处理，是不同阶段。通知失败不能被记成业务问题已经解决，单独重试通知也不应重复执行订单操作。生成通知正文时只使用必要的最少客户数据，并固定管理链接的来源域名。
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-nextcloud-talk-operations-notifications">
+  <figcaption>
+    <strong id="diagram-nextcloud-talk-operations-notifications">分阶段记录通知证据</strong>
+    <span>目前只确认收到测试通知。业务处理完成和手机 push 尚未验证。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+      <strong>发现并发送</strong>
+      <span>仅发送问题类型和受保护管理页面的链接，尽量减少细节。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m6 8 6 5 6-5M8 15h3"/></svg></span>
+      <strong>确认测试通知已收到</strong>
+      <span>分别核对 API 发送结果与测试消息实际到达的记录。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.5-4 3.3-6 8-6s7.5 2 8 6"/></svg></span>
+      <strong>由人员确认和处理</strong>
+      <span>从问题发生到解决的业务验收以及手机 push 均未确认。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 从生产连接测试走向业务验收
 

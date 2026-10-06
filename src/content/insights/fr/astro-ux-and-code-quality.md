@@ -2,7 +2,7 @@
 title: "Pièges et solutions d'Astro View Transitions — Guide d'amélioration UX et qualité du code"
 description: "Solutions aux problèmes de scripts cassés avec les View Transitions d'Astro, introduction de la recherche plein texte Pagefind, amélioration de la sécurité des types TypeScript, gestion centralisée des constantes — un guide pratique pour améliorer l'UX et la qualité du code."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Site web"]
 image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
@@ -294,3 +294,36 @@ Si le contexte d’authentification ou le contrat entre le frontend et le backen
 Lorsqu’on réorganise les noms ou les catégories, il faut aligner les valeurs existantes, l’API, les filtres et les modifications de la base de données. S’il n’existe aucune ancienne donnée, il ne faut pas prétendre qu’un contenu réel a été migré. Si un badge d’état mène à une vue détaillée, cette action doit fonctionner au clic comme avec la touche Entrée. Pour la modification en ligne d’un identifiant d’URL publique, conservez aussi les vérifications du format, des doublons et de la mise à jour de l’URL. L’affichage public, la lecture des médias et l’invitation à se connecter en mode anonyme ont été vérifiés séparément de la recette de l’enregistrement de l’identifiant ou du changement d’état public dans l’éditeur connecté.
 
 Lorsqu’on réorganise l’espace d’édition selon les nouvelles tâches de la personne, on distingue la navigation persistante de l’espace de travail ; renommer les commandes sans retirer les anciennes ne suffit pas. Les valeurs auxiliaires, comme un solde, peuvent être moins visibles que les actions principales, mais leur taille de texte et leur contraste doivent rester lisibles.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-astro-ux-and-code-quality">
+  <figcaption>
+    <strong id="diagram-astro-ux-and-code-quality">Distinguer les actions de l’éditeur, le résultat de l’API et l’état affiché</strong>
+    <span>Une action à l’écran ne prouve pas à elle seule que l’enregistrement ou la publication a réussi.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3l14 12-6 1-2 5-6-18Z"/></svg>
+      </span>
+      <strong>Action dans l’éditeur</strong>
+      <span>Déplacer une catégorie ou choisir une unité de travail modifie l’état de l’espace d’édition.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 9h8 M8 13h4 M15 13l2 2 3-4"/></svg>
+      </span>
+      <strong>API et snapshot publié</strong>
+      <span>Vérifiez le résultat de l’API et le snapshot public. N’affichez pas de succès si la requête échoue ou si le contexte d’authentification manque.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5h16v14H4z M8 12l3 3 5-6"/></svg>
+      </span>
+      <strong>État après rechargement</strong>
+      <span>N’affichez que l’état confirmé et demandez un rechargement ou une nouvelle authentification si nécessaire. L’acceptation de l’enregistrement et de la publication par des utilisateurs connectés reste non vérifiée.</span>
+    </li>
+  </ol>
+</figure>

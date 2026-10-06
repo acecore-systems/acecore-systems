@@ -2,8 +2,9 @@
 title: "運営通知をNextcloud Talkへつなぐ：検知・送信・対応完了を分ける"
 description: "注文処理や要確認コンテンツの通知を、非公開のTalkと管理画面へつなぐ設計。最小限の通知、秘密管理、接続テスト、実業務の受入範囲を紹介します。"
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/nextcloud-talk-operations-notifications.webp
+image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
 callout:
   type: note
@@ -24,6 +25,30 @@ Talkには[Botからメッセージを送る公式API](https://nextcloud-talk.re
 ## 検知・配信・対応を別々の結果にする
 
 通知対象の検知、送信要求、APIの送信結果、実際の受信、担当者の対応は異なる段階です。送信失敗を業務上の問題が解消した結果へ置き換えず、通知だけの再試行で注文処理などを再実行しないようにします。本文の生成でも顧客データを必要最小限にし、管理リンクの公開元を固定します。
+
+<figure class="article-diagram" data-layout="flow" data-tone="amber" data-count="3" aria-labelledby="diagram-nextcloud-talk-operations-notifications">
+  <figcaption>
+    <strong id="diagram-nextcloud-talk-operations-notifications">通知の証拠を段階で分ける</strong>
+    <span>確認済みはテスト通知の実受信まで。業務完了とスマートフォンpushは未確認です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg></span>
+      <strong>検知して送信</strong>
+      <span>問題の種別と管理画面へのlinkを、最小限の情報で通知する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m6 8 6 5 6-5M8 15h3"/></svg></span>
+      <strong>テスト受信を確認</strong>
+      <span>APIの送信結果と、通知を実際に受け取った記録を分けて照合する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.5-4 3.3-6 8-6s7.5 2 8 6"/></svg></span>
+      <strong>人が確認・対応</strong>
+      <span>問題から解決までの業務受入とスマートフォンpushは未確認。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 本番接続テストから業務受入へ進む
 

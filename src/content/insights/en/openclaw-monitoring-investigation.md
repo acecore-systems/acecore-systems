@@ -2,9 +2,9 @@
 title: "Connecting monitoring to OpenClaw investigations: detection, evidence and decisions"
 description: "How scheduled checks and bounded OpenClaw investigations fit together, with a clear distinction between verified operation and untested incident recovery."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/openclaw-monitoring-investigation.webp
+image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
 callout:
   type: note
@@ -25,6 +25,39 @@ Pass collected results to OpenClaw and restrict additional evidence gathering to
 ## Preserve evidence on timeout
 
 Keep observations collected before a timeout, including timestamps, command results and unavailable items. An interrupted investigation must not become an “all clear,” nor should its report imply that failed collection succeeded.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-openclaw-monitoring-investigation">
+  <figcaption>
+    <strong id="diagram-openclaw-monitoring-investigation">Separate scheduled detection, bounded investigation, and human judgment</strong>
+    <span>Keep partial evidence and do not present this as a record of automatic repair.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+      </span>
+      <strong>Scheduled check</strong>
+      <span>Distinguish healthy, abnormal, and failed retrieval. During maintenance, suppress only the temporary retrieval-failure alert for the affected check.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z M16 16l5 5"/></svg>
+      </span>
+      <strong>Investigate within limits</strong>
+      <span>Restrict read operations, time, and output; save partial evidence on timeout. A denied operation is not reported as performed.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 4h8v3h3v14H5V7h3z M8 12h8 M8 16h5"/></svg>
+      </span>
+      <strong>Report for a decision</strong>
+      <span>Separate facts, hypotheses, and unknowns; handle duplicate and recovery notices. Changes or restarts require separate approval.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Separate notification and action
 

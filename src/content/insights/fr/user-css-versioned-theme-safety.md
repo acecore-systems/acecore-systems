@@ -2,9 +2,9 @@
 title: "CSS utilisateur et thèmes publics sûrs : source partagée, rendu cloisonné et versions figées"
 description: "Un modèle anonymisé de modification de profil où l’interface graphique et l’édition directe partagent une même source de CSS. L’article traite d’une syntaxe CSS étendue dans un périmètre de rendu, des brouillons et versions publiées, des versions immuables de thèmes, du retrait et de la suspension opérationnelle."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/user-css-versioned-theme-safety-20261006-v2.webp
+image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
@@ -39,6 +39,30 @@ Les informations modifiables de la fiche du thème sont séparées de ses versio
 ## Distinguer le retrait de la liste d’une suspension opérationnelle
 
 Le retrait d’un thème par son auteur empêche de nouvelles découvertes et applications, mais ne révoque pas nécessairement immédiatement les utilisations existantes d’une version figée. La suspension opérationnelle d’un thème dangereux a une autre portée : elle arrête la récupération publique et le CSS des snapshots existants, puis rétablit l’apparence standard. Même lors d’un retour à un ancien snapshot, l’état actuel de suspension est vérifié pour ne pas réactiver le CSS antérieur à la suspension.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">De l’édition CSS à une version figée</strong>
+    <span>L’intégration du code, la CI et le déploiement en production de l’ancienne version du Store ont été vérifiés. La recette en production/login de l’extension CSS, son application par des utilisateurs et les ventes payantes restent non vérifiées.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
+      <strong>Source CSS partagée</strong>
+      <span>L’interface graphique et l’édition directe utilisent la même source CSS et préservent les règles écrites à la main.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
+      <strong>Analyser et limiter la portée</strong>
+      <span>Prend en charge Grid/Flex, variables, pseudo-éléments, règles responsives et animations. Refuse les entrées externes, globales ou impossibles à analyser.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Publier une version explicite</strong>
+      <span>Publier une version immuable après aperçu/brouillon. Le retrait de la liste et la suspension opérationnelle sont distincts.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Vérifications avant publication
 

@@ -3,12 +3,13 @@ title: "Codexの作業分担をどう設計したか：公開プラグイン Tas
 description: "公開プラグインCodex Task Routingを題材に、親の設定を維持した役割分担、版を識別できる有効方針、引継ぎと検証の境界を整理します。"
 date: "2026-09-26T18:30:00+09:00"
 author: gui
-image: /images/insights/codex-task-routing-design.webp
+image: /images/insights/covers/codex-task-routing-design-cover-v1.webp
 tags: ["技術", "AI", "開発"]
 callout:
   type: note
   title: "確認できた範囲"
   text: "公開コード、統合済みPR、3 OSのCIと隔離環境での導入検査を確認しています。作業品質や利用量の改善率、実アカウントでの子モデル起動はこの記事の実証結果ではありません。"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Codexで複数の仕事を進めるとき、分担先のモデルを先に決めるより、どの工程を切り出せるか、何を引き継ぐか、結果をどう検収するかを決める必要があります。この課題を扱うために、Acecoreは[Codex Task Routing](https://github.com/acecore-systems/codex-task-routing)を公開しました。

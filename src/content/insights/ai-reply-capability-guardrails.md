@@ -2,8 +2,9 @@
 title: "AI返信で果たせない約束を防ぐ：会話の文脈と送信前検査"
 description: "案内用AIが担当者の参加・予定調整・連絡を勝手に約束しない設計。会話状態、参照取得失敗、古い下書きの再検査、終了時の扱いを整理します。"
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ callout:
 ## 古い下書きも最新の条件で再検査する
 
 生成時に通った下書きでも、その後に会話や方針が変わることがあります。実際の送信直前にも最新の状態で検査し、終了した会話の下書きを送信しないようにします。見送りや会話終了も監査状態へ反映し、送信成功の記録と区別します。不要な質問を足して会話を引き延ばすより、返信を省略することも扱います。
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">返信前に根拠と能力を確認</strong>
+    <span>会話の文脈で回答と保留を分岐。取得停止の本番稼働は未確認です。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>話者・要求を読む</strong>
+      <span>募集か希望か、対象の版と会話状態を確認する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>根拠ある範囲で回答</strong>
+      <span>実行できる内容だけ伝え、送信直前に再確認する。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>曖昧なら保留</strong>
+      <span>取得失敗や不正応答は参照済みにせず人へ戻す。有限待機と重複抑止を適用する。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 確認した範囲と残る評価
 

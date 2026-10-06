@@ -2,7 +2,7 @@
 title: "将 Astro 7 网站扩展至9种语言 ― 博客翻译与多语言架构"
 description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的九语言实施，并说明当前依赖与翻译流程的变化。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
 image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
@@ -217,6 +217,39 @@ export function localizePost(
 3. **批量处理**：使用 GitHub Copilot 每次处理5-6篇文章
 
 日语→英语→目标语言的两阶段翻译减少了质量波动。通过英语作为中间语言，比直接从日语翻译至各语言能获得更稳定的质量。
+
+<figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
+  <figcaption>
+    <strong id="diagram-astro-i18n-blog-translation">发布前将译文与最新日文 source 对照</strong>
+    <span>公开 URL 和搜索引擎引用仅对应实际存在的译文文件。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
+      </span>
+      <strong>更新日文 source</strong>
+      <span>检查改动，找出需要复核的语言版本。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
+      </span>
+      <strong>核对各语言译文</strong>
+      <span>对照 title、description 与正文；仅为实际存在的译文文件生成 locale URL。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
+      </span>
+      <strong>没有译文文件</strong>
+      <span>不创建该语言的 URL、sitemap 条目或 hreflang；不自动发布未翻译页面。</span>
+    </li>
+  </ol>
+</figure>
 
 ## View 组件的多语言支持
 

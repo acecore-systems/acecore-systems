@@ -2,8 +2,9 @@
 title: "将公开图片的边缘缓存与 API 速率限制分开"
 description: "一个在连续浏览时，内容 API 与图片请求共用同一限制额度的案例。介绍公开图片的复用、成功响应的验证、WAF 与应用的边界，以及生产环境检查。"
 date: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/public-image-cache-and-api-rate-limits.webp
+image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
 callout:
   type: note
@@ -38,6 +39,25 @@ callout:
 保护动态 API 与缓存图片是不同的要求。在本案例中，公开图片的 GET 请求被排除在 WAF 统计之外；变更生效后，我们重新读取并核对目标动态 API、限制周期、action 和启用状态。旧配置也已保存，以便回滚。
 
 阈值应根据正常浏览产生的请求数量和受保护操作的负载来选择。还需要核对[Cloudflare 速率限制](https://developers.cloudflare.com/waf/rate-limiting-rules/)按 plan 适用的条件。仓库运维记录中写有某个值，并不能证明生产规则已经启用。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-public-image-cache-and-api-rate-limits">
+  <figcaption>
+    <strong id="diagram-public-image-cache-and-api-rate-limits">公开图片与动态 API</strong>
+    <span>不可变公开图片的复用与动态 API 的保护应分别设计。私有图片不在范围内。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg></span>
+      <strong>公开图片 GET</strong>
+      <span>先检查请求边界，再从缓存复用同一图片。只保存通过验证的 200 响应。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <strong>动态 API</strong>
+      <span>通过 WAF 和应用 quota 保护 API 处理。其限制与图片缓存分开。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 在生产环境核对图片内容
 

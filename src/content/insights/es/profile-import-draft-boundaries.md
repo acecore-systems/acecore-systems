@@ -2,9 +2,9 @@
 title: "Importar datos del perfil como borrador: comparar, elegir y publicar con criterio"
 description: "Una implementación general para importar perfiles desde texto, CSV, HTML estático y JSON común. Explica cómo comparar valores actuales, elegir campos para sustituirlos o deshacer cambios, y separar el guardado de la publicación."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T02:20:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/profile-import-draft-boundaries-20261006-v2.webp
+image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
@@ -43,6 +43,25 @@ Aplicar candidatos importados, guardar el borrador y actualizar la versión púb
 Una mejora del editor independiente de la importación añade enlaces HTTPS a los eventos del calendario público. El evento abre su destino directamente en una pestaña nueva; los eventos sin URL se muestran sin un enlace accionable. Valida el formato de la URL, rechaza credenciales incrustadas y limita la longitud de entrada. Añade **noopener noreferrer** e indica en el nombre accesible que se abrirá una pestaña nueva.
 
 Los formularios relacionados también eliminan el campo de título innecesario en las franjas de disponibilidad para colaborar y los campos de notas privadas. Se comprobaron los cambios de base de datos, CI, el despliegue en producción y las pantallas con datos de verificación. Sigue sin verificarse que una persona propietaria inicie sesión, guarde un evento real y lo publique.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">Límites de la importación y los enlaces del calendario</strong>
+    <span>Son funciones de edición distintas. Sigue sin verificarse la aceptación del guardado y la publicación por una persona conectada.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
+      <strong>Importar perfil</strong>
+      <span>La persona revisa y edita los formatos admitidos. Guardar y publicar son acciones distintas.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
+      <strong>Enlace del calendario público</strong>
+      <span>Abre enlaces HTTPS en una pestaña nueva segura. Los eventos sin enlace no son interactivos.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Qué se verificó y qué aceptación queda pendiente
 

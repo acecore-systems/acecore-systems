@@ -2,9 +2,9 @@
 title: "Como investigar o lag no Minecraft: métricas silenciosas e armazenamento compartilhado"
 description: "Da coleta discreta de TPS/MSPT à correlação de JFR com observações de E/S do sistema operacional. Separa a investigação de causa já concluída das melhorias de desempenho ainda não testadas."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: "/images/insights/minecraft-latency-investigation.webp"
+image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
 callout:
   type: note
@@ -31,6 +31,25 @@ Enquanto o problema era reproduzível, JFR, observações de espera do SO e E/S 
 Em uma janela normal de 240 segundos e outra com travamento de 220 segundos, as medianas por segundo de write-await foram 1.60 ms e 43.71 ms; os máximos foram 6.00 ms e 123.57 ms. São duas janelas de observação, não resultados de antes e depois nem um benchmark geral.
 
 Além de esperas em salvamentos síncronos e no journal do sistema de arquivos, também houve atrasos em solicitações ao dispositivo feitas por vários aplicativos, restringindo o candidato à rota de armazenamento compartilhado. Um evento de conclusão de um [tracepoint de blocos do Linux](https://www.kernel.org/doc/html/latest/core-api/tracepoint.html) pode representar apenas parte de uma solicitação; por isso, solicitações sem correspondência não foram misturadas a uma estatística de toda a E/S. O tempo e o volume da coleta foram limitados, e seu custo foi considerado.
+
+<figure class="article-diagram" data-layout="compare" data-tone="green" data-count="2" aria-labelledby="diagram-minecraft-latency-investigation">
+  <figcaption>
+    <strong id="diagram-minecraft-latency-investigation">Separar observações de hipóteses</strong>
+    <span>Métricas contínuas e amostras limitadas usam janelas diferentes. O efeito da migração do armazenamento não foi testado.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 2 5-7"/></svg></span>
+      <strong>Métricas contínuas sem ruído</strong>
+      <span>Registre TPS/MSPT e dados ausentes sem aumentar o log normal do console.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M6 8h.01M18 16h.01"/></svg></span>
+      <strong>Investigação limitada</strong>
+      <span>Colete JFR, SO e block I/O separadamente e compare. O caminho de armazenamento compartilhado é uma hipótese, não uma falha confirmada.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Trate a próxima etapa como um teste separado
 

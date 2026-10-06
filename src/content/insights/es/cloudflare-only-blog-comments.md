@@ -4,7 +4,7 @@ description: "Implementación de comentarios en un blog Astro sin servicio exter
 date: 2026-06-07T18:00
 author: gui
 tags: ["Tecnología", "Cloudflare", "Astro", "Seguridad", "Sitio web"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: Sin servicio externo de comentarios
@@ -82,6 +82,7 @@ faq:
       answer: "Para leer por post_slug, ordenar por created_at, ocultar con deleted_at, limitar por cliente y detectar duplicados, D1 encaja bien."
     - question: ¿Turnstile en el cliente es suficiente?
       answer: "No. La Function debe validar el token con Siteverify antes de escribir en D1."
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 Los sitios estáticos son sencillos hasta que necesitan guardar estado. Un sistema de comentarios es un buen ejemplo.

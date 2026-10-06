@@ -2,8 +2,9 @@
 title: "避免 AI 回复做出无法兑现的承诺"
 description: "防止信息助手擅自承诺工作人员参与、安排时间或后续联系。介绍会话状态、检索失败、旧草稿复检和会话结束时的处理。"
 date: "2026-10-06T01:10:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
-image: /images/insights/ai-reply-capability-guardrails.webp
+image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
 callout:
   type: note
@@ -32,6 +33,30 @@ callout:
 ## 根据最新条件重新检查旧草稿
 
 生成时通过检查的草稿，可能会因会话或策略变化而过时。发送前应按最新状态再次检查，不要发送已结束会话的草稿。将跳过发送和会话结束分别记录在审计状态中，与发送成功区分。若提问只会无谓延长对话，也可以选择不回复。
+
+<figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
+  <figcaption>
+    <strong id="diagram-ai-reply-capability-guardrails">回复前检查依据与能力</strong>
+    <span>根据会话语境选择答复或暂缓。检索停止条件在生产环境的运行尚未确认。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
+      <strong>识别说话者与请求</strong>
+      <span>确认是招募还是参与意愿、对应版本以及会话状态。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+      <strong>只回答有依据的内容</strong>
+      <span>只说明确实能够执行的事项，并在发送前重新检查。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+      <strong>不明确时暂缓</strong>
+      <span>检索失败或格式错误不视为已查阅，应转交人工。等待有上限，并抑制重复发送。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 已检查的范围与尚未证明的事项
 

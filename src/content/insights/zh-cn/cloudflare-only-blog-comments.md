@@ -4,7 +4,7 @@ description: "不依赖外部评论服务，只使用 Cloudflare Pages Functions
 date: 2026-06-07T18:00
 author: gui
 tags: ["技术", "Cloudflare", "Astro", "安全", "网站"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
+image: /images/insights/covers/cloudflare-only-blog-comments-cover-v1.webp
 callout:
   type: tip
   title: 不使用外部评论服务
@@ -82,6 +82,7 @@ faq:
       answer: "按 post_slug 查询、按 created_at 排序、soft delete、重复检测和速率限制都很适合用 D1 处理。"
     - question: 只在前端放 Turnstile 可以吗？
       answer: "不可以。Pages Function 必须把 token 发送到 Cloudflare Siteverify，并在验证成功后再写入 D1。"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 ---
 
 静态网站一旦需要评论功能，就会遇到状态保存和防 spam 的问题。

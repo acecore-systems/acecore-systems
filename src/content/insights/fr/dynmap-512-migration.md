@@ -2,6 +2,7 @@
 title: "Comment nous avons vérifié la migration Dynmap en 512px et retiré les anciennes images R2"
 description: "Retour d'exploitation sur 89 cartes réparties entre huit serveurs, migrées en images de 512px, puis vérifiées en public et dans R2."
 date: "2026-09-27T22:40:00+09:00"
+lastUpdated: "2026-10-06T08:52:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Technologie", "Cloudflare"]
@@ -18,6 +19,45 @@ Nous avons changé le format des images d'un Dynmap distribué depuis Cloudflare
 Les cartes de production ont été uniformisées en tuiles de 512px. Pour les 21 cartes qui nécessitaient un rendu supplémentaire, nous avons limité la zone à un rayon de 2 000 blocs autour du centre public. Nous n'avons pas attendu la fin du rendu du monde entier ; les mises à jour ordinaires ont continué pendant la transition.
 
 Nous avons également amélioré les nouvelles tentatives après une erreur de communication avec R2, la conservation des mises à jour en attente après un échec d'écriture, ainsi que la distinction entre une tuile de zoom absente et une erreur de lecture. La [PR #9 du fork Dynmap](https://github.com/acecore-systems/dynmap/pull/9) décrit la reprise des mises à jour de zoom après redémarrage. Ces corrections ne suppriment pas les pannes possibles du côté de Cloudflare.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-dynmap-512-migration">
+  <figcaption>
+    <strong id="diagram-dynmap-512-migration">Supprimer les anciennes données après vérification des nouvelles images</strong>
+    <span>Auditer l’affichage public et le stockage avant le nettoyage. Les anciennes images ne sont pas sauvegardées et les économies en régime normal ne sont pas vérifiées.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">1</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 5l9-3 9 3v14l-9 3-9-3z M12 2v20 M3 5l9 3 9-3 M3 12l9 3 9-3"/>
+        </svg>
+      </span>
+      <strong>Limiter la zone et produire de nouvelles tuiles</strong>
+      <span>Définir le périmètre 512px et la zone de rendu, puis produire les nouvelles images tout en poursuivant les mises à jour habituelles.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M10.5 3a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15z M16 16l5 5"/>
+        </svg>
+      </span>
+      <strong>Auditer les images publiques et le stockage</strong>
+      <span>Vérifier séparément les tuiles normales et zoomées, les ressources Web, le JSON en direct et les préfixes de stockage prévus.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol">
+        <span aria-hidden="true">3</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16 M9 7V4h6v3 M7 7l1 14h8l1-14"/>
+        </svg>
+      </span>
+      <strong>Nettoyer les anciennes données après audit</strong>
+      <span>Supprimer les anciennes images et leurs hash après audit. Sans sauvegarde, elles devront être rendues à nouveau depuis le monde si nécessaire.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Vérifier séparément l'affichage public et le stockage
 
