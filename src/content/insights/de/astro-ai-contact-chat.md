@@ -2,10 +2,10 @@
 title: "Technisches Design für einen KI-Kontaktchat in einer Astro-Website"
 description: "Referenzdesign vom Juni 2026. Ein praktischer Leitfaden für einen KI-Kontaktchat in einer statischen Astro + Cloudflare Pages Website mit der OpenAI Responses API. Behandelt werden API-Grenzen, Website-Kontext, Prompt-Steuerung, locale-bezogene URLs, Origin-Prüfung, Rate Limiting und sicheres Rendern von Markdown-Links."
 date: 2026-06-07T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "Cloudflare", "Website", "AI", "Services"]
-image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
 callout:
   type: info
   title: Kernpunkt

@@ -2,10 +2,10 @@
 title: "Making an Astro 7 Site Support 9 Languages — Blog Translation and Multilingual Architecture"
 description: "A record of the July 2026 nine-language Astro 7.1.3 and UnoCSS rollout, with pointers to the current dependencies and translation workflow."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technology", "Astro", "i18n", "Website"]
-image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
+image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: Multilingual Workflow
   steps:

@@ -2,10 +2,10 @@
 title: "Astro 사이트의 PageSpeed를 개선하는 실전 기법"
 description: "2026년 7월 Astro 7.1.3과 UnoCSS의 성능 최적화 기록으로, 현재 Astro 및 Tailwind CSS 구성과 구분합니다."
 date: 2026-03-15T00:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "Astro", "성능"]
-image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
+image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
 callout:
   type: tip
   title: 이 글의 대상 독자

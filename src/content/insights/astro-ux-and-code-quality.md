@@ -2,10 +2,10 @@
 title: "Astro View Transitionsの落とし穴と解決策 ― UX・コード品質改善ガイド"
 description: "AstroのView Transitionsでスクリプトが動かなくなる問題の解決策、Pagefind全文検索の導入、TypeScript型安全性の向上、定数の一元管理など、UXとコード品質を改善した実践ガイドです。"
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技術", "Astro", "Webサイト"]
-image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
+image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
 callout:
   type: warning
   title: View Transitions を使うなら必読

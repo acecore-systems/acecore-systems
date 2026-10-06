@@ -2,10 +2,10 @@
 title: "Rendre en sécurité les liens Markdown dans les réponses de chat IA"
 description: "Note technique sur la conversion sécurisée des liens Markdown dans les réponses IA. En séparant parsing tolérant aux espaces, trim de href, allowlist, rendu DOM, fallback et tests, le même modèle devient réutilisable."
 date: 2026-06-07T14:30
-lastUpdated: "2026-09-26T18:16:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "Site web", "AI", "Sécurité", "Astro"]
-image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
   title: Point clé

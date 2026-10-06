@@ -4,7 +4,7 @@ description: "Explicación basada en la práctica del proceso de migración de Z
 date: 2026-03-16T00:00
 author: gui
 tags: ["Tecnología", "Correo electrónico", "DNS", "Infraestructura"]
-image: /uploads/acecore-generated/blog-zoho-to-kagoya-mail-migration.webp
+image: "/images/insights/covers/zoho-to-kagoya-mail-migration-cover-v2.webp"
 processFigure:
   title: Flujo completo de la migración
   steps:
@@ -82,7 +82,7 @@ faq:
       answer: Aumenta la probabilidad de que el servidor de correo receptor clasifique el mensaje como spam. Especialmente Gmail es estricto, y cada vez son más los casos en que se requiere PASS en ambos, SPF y DKIM.
     - question: ¿Qué sucede con los datos al cancelar Zoho Workplace?
       answer: Cuando expira el plan de pago, se pasa automáticamente al plan gratuito. El plan gratuito también tiene límites de almacenamiento, por lo que es recomendable exportar los datos necesarios con anterioridad. Si se elimina la cuenta, se pierden todos los datos.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Añadido el 26 de septiembre de 2026:** Los precios, pasos del panel y valores DNS documentan la migración de aquel momento. No los copies a otro dominio sin comprobar la información actual de [KAGOYA MAIL](https://www.kagoya.jp/mail/) y [Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html), tu contrato y los valores de autenticación de tu propio dominio.

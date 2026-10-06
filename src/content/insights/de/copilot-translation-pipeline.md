@@ -2,10 +2,10 @@
 title: "Mehrsprachige Blogs mit Sveltia CMS betreiben"
 description: "Dieser Artikel dokumentiert den Copilot-Übersetzungsablauf vom Juni 2026 und den OpenAI-Batch-Ablauf vom September 2026."
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: UI-Übersetzung ist keine mehrsprachige Veröffentlichung
@@ -86,6 +86,30 @@ faq:
 ## Aktueller Übersetzungsablauf (September 2026)
 
 Wenn ein japanischer Artikel oder UI-Quelltext auf main geändert wird, startet der [Workflow zur Batch-Einreichung](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml). Er wartet 15 Minuten auf weitere Änderungen, prüft den aktuellen main-Stand und reicht dann die Übersetzung ein. Der [Abhol-Workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) gleicht die Ergebnisse mit dem aktuellen sourceHash ab, verwirft veraltete Ergebnisse und erstellt einen Übersetzungs-PR. Der [Merge-Workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) aktiviert die automatische Zusammenführung nur für geeignete PRs. Begriffe, Links, Fakten und Sprachqualität müssen weiterhin geprüft werden.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">Übersetzungsergebnisse mit der aktuellen japanischen Quelle abgleichen</strong>
+    <span>Batch-Ergebnisse veralteter Quellen werden ausgeschlossen. Auch passende PRs müssen auf Begriffe, Links, Fakten und Natürlichkeit geprüft werden.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Japanische Quelle aktualisieren</strong>
+      <span>Eine Source-Änderung auf main löst einen Übersetzungs-Batch aus.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>sourceHash vergleichen</strong>
+      <span>Bei der Abholung Ergebnisse ausschließen, die nicht mehr zur aktuellen Quelle passen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Übersetzungs-PR integrieren</strong>
+      <span>Die Validierung kann Auto-Merge ermöglichen; der Inhalt braucht eine separate Prüfung.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Einführung im Juni 2026
 

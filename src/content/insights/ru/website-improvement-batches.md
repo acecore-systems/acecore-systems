@@ -2,7 +2,7 @@
 title: "Руководство по повышению качества сайта на Astro — достижение оценки PageSpeed Mobile 99"
 description: "Полная запись улучшения сайта на Astro + UnoCSS + Cloudflare Pages по четырём направлениям — производительность, SEO, доступность и UX — с достижением оценки PageSpeed Insights Mobile 99 и идеальных 100 баллов по всем метрикам на десктопе."
 date: 2026-03-25T15:00
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags:
   [
@@ -13,7 +13,7 @@ tags:
     "SEO",
     "Веб-сайт",
   ]
-image: /uploads/acecore-generated/blog-website-improvement-batches.webp
+image: "/images/insights/covers/website-improvement-batches-cover-v2.webp"
 callout:
   type: tip
   title: Целевая аудитория

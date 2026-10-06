@@ -4,7 +4,7 @@ description: "ホームページ制作の費用相場を目的別に整理し、
 date: 2026-04-01T10:00
 author: gui
 tags: ["Web制作", "Webサイト", "SEO", "サービス"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: 費用は「ページ数」より「目的」と「運用範囲」で変わります
@@ -26,7 +26,7 @@ faq:
       answer: ページ数を絞る、自社で原稿や写真を用意する、既存ブランド資産を活用する、初期公開後に改善する範囲を分けることが効果的です。
     - question: 公開後の運用も相談できますか？
       answer: はい。AcecoreではWebサイト制作だけでなく、アクセス解析、コンテンツ更新、改善提案、保守まで継続的にサポートできます。
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026年9月26日更新:** 下の金額は、掲載した構成を比較するための編集上の概算例です。市場調査による価格統計でも、Acecoreの確定見積もりでもありません。機能・素材・保守範囲を決めたうえで、現在の[料金案内](/pricing/)と個別見積もりを確認してください。

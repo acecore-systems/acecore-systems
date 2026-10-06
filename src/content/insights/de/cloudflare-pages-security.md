@@ -4,8 +4,8 @@ description: "Unterscheiden Sie statische Pages-Antworten von Functions und prü
 date: 2026-03-15T00:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Sicherheit"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-lastUpdated: "2026-09-26T19:12:47+09:00"
+image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Dieser Artikel dokumentierte im März 2026 den Wechsel von einem Worker-Kontaktformular zu einem externen Dienst und zurück zur statischen Auslieferung mit Cloudflare Pages. Seitdem hat sich die Architektur geändert. **Im September 2026 nutzt die Unternehmenswebsite von Acecore neben statischen Seiten auch Pages Functions** für Kontakt, Kommentare, Suche, KI-Hilfe und CMS-APIs. Die frühere Entscheidung ist historischer Kontext.
@@ -15,6 +15,25 @@ Dieser Artikel dokumentierte im März 2026 den Wechsel von einem Worker-Kontaktf
 `public/_headers` gilt für **Antworten statischer Dateien**, die Pages ausliefert. Cloudflare stellt klar, dass diese Regeln nicht für von Pages Functions erzeugte Antworten gelten, selbst wenn das URL-Muster passt. Nötige CORS-, Cache- und Sicherheitsheader müssen in der `Response` der Function gesetzt werden.
 
 Gehen Sie nicht davon aus, dass `_headers` alle Seiten und APIs schützt. Prüfen Sie die tatsächlichen Header von statischem HTML und `/api/*` getrennt.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-cloudflare-pages-security">
+  <figcaption>
+    <strong id="diagram-cloudflare-pages-security">Header für statische und Function-Antworten getrennt konfigurieren</strong>
+    <span>Statische Dateien und APIs erhalten Header an unterschiedlichen Stellen. Prüfen Sie beide Antworten nach dem Deployment.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/></svg></span>
+      <strong>Statische Dateiantwort</strong>
+      <span>Mit _headers konfigurieren und die von Pages gelieferte Antwort prüfen.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h4M8 16h8"/></svg></span>
+      <strong>Function-API-Antwort</strong>
+      <span>Header in der Response der Function setzen und die API separat prüfen.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Aktuelle Konfiguration prüfen
 

@@ -2,10 +2,10 @@
 title: "Как развивать сайт на Astro + Cloudflare по функциям"
 description: "Как мы объединили Astro и Cloudflare Pages с AI-чатом для обращений, Sveltia CMS, многоязычным блогом, CTA услуг, безопасным Markdown-рендерингом и комментариями без внешнего сервиса."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Технологии", "Astro", "Cloudflare", "Веб-сайт", "AI", "CMS"]
-image: /uploads/acecore-generated/work-acecore-net-website.webp
+image: "/images/insights/covers/astro-cloudflare-site-architecture-cover-v2.webp"
 callout:
   type: tip
   title: Сначала определить границы

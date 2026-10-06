@@ -2,10 +2,10 @@
 title: "Sveltia CMS Setup Guide"
 description: "A dated record of Sveltia CMS implementation at Acecore, covering editor authentication, validated direct saves through a GitHub App, media, and multilingual operations."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technology", "CMS", "Astro", "Cloudflare", "Security"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Sveltia CMS setup flow
   description: Treat the admin app, editor authentication, repository actor, editable content, media, and publication flow as separate design decisions.
@@ -325,6 +325,25 @@ The proxy does not blindly forward GraphQL `createCommitOnBranch`. GitHub OAuth 
 The save uses the editor's starting HEAD as `expectedHeadOid`, so a concurrent update returns 409 instead of being overwritten. If GitHub's response is lost, recovery succeeds only when the request marker, parent SHA, complete path set, and blob SHAs all match.
 
 Direct commits keep subjects such as `cms: create ...` and `cms: update ...`. The GitHub App push starts Cloudflare Pages deployment and the translation workflow in parallel. Code, schemas, workflows, CMS configuration, and translation files remain outside the CMS allowlist and still require pull requests and CI.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">CMS saves and code changes use separate release paths</strong>
+    <span>Validate allowlisted content and images before saving; keep code and configuration changes on the normal PR/CI path.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>CMS save proxy</strong>
+      <span>Validate allowed content and images before commit; conflicts require a reload.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Normal PR/CI path</strong>
+      <span>Code, schema, workflows, and translations stay outside the CMS path.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. Trigger Translation Only for CMS Commits
 

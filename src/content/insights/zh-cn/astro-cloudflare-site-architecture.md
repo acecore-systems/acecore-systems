@@ -2,10 +2,10 @@
 title: "用 Astro + Cloudflare 逐步扩展官网功能的整体设计"
 description: "整理 Acecore 官网如何以 Astro 和 Cloudflare Pages 为基础，组合咨询 AI、Sveltia CMS、多语言博客、服务 CTA、Markdown 安全渲染和 Cloudflare 评论功能。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "Astro", "Cloudflare", "网站", "AI", "CMS"]
-image: /uploads/acecore-generated/work-acecore-net-website.webp
+image: "/images/insights/covers/astro-cloudflare-site-architecture-cover-v2.webp"
 callout:
   type: tip
   title: 添加功能前先划清边界

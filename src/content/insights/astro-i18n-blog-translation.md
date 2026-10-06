@@ -2,10 +2,10 @@
 title: "Astro 7 サイトを9言語対応に ― ブログ翻訳と多言語アーキテクチャ"
 description: "2026年7月時点のAstro 7.1.3とUnoCSSによる9言語化の記録です。現行の依存関係と翻訳経路の変更も案内します。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技術", "Astro", "i18n", "Webサイト"]
-image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
+image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: 多言語化の流れ
   steps:

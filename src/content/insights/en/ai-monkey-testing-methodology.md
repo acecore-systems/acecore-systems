@@ -4,8 +4,8 @@ description: "A hands-on guide to systematically monkey testing a static site us
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technology", "GitHub Copilot", "VS Code", "Astro", "Website"]
-lastUpdated: "2026-09-26T19:12:52+09:00"
-image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
+lastUpdated: "2026-10-06T13:58:01+09:00"
+image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
   title: Who This Article Is For

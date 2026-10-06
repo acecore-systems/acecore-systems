@@ -4,8 +4,8 @@ description: "Cloudflare Pages の静的配信と Functions の応答を区別�
 date: 2026-03-15T00:00
 author: gui
 tags: ["技術", "Cloudflare", "セキュリティ"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-lastUpdated: "2026-09-26T19:12:47+09:00"
+image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 この記事は、2026年3月にお問い合わせを外部フォームへ移して Cloudflare Pages の静的配信へ戻した経緯を記録しています。その後、サイト構成は変わりました。**2026年9月時点の Acecore 公式サイトは、静的ページに加えて Pages Functions を使用**し、お問い合わせ、コメント、検索、AI案内、CMS の API を同じサイトで扱います。以下は当時の選定理由と、現在も使えるヘッダー設計の境界を整理したものです。
@@ -15,6 +15,25 @@ lastUpdated: "2026-09-26T19:12:47+09:00"
 `public/_headers` は、Pages が配信する**静的アセットの応答**に適用されます。Cloudflare の公式資料は、URL パターンが一致していても Pages Functions が生成した応答には適用されないと明記しています。API 応答に必要な CORS、キャッシュ、セキュリティヘッダーは、Function 側の `Response` に設定します。
 
 このため「`_headers` を一度書けばサイトのすべてのページと API に効く」と考えるのは危険です。静的 HTML と `/api/*` の両方について、実際のレスポンスヘッダーを別々に確認します。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-cloudflare-pages-security">
+  <figcaption>
+    <strong id="diagram-cloudflare-pages-security">静的応答とFunctions応答の設定境界</strong>
+    <span>静的ファイルとAPIではヘッダーの設定場所が異なります。公開後は両方を個別に確認します。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/></svg></span>
+      <strong>静的ファイル応答</strong>
+      <span>_headersで設定し、Pagesが返す応答を確認。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h4M8 16h8"/></svg></span>
+      <strong>FunctionのAPI応答</strong>
+      <span>FunctionのResponseに設定し、API応答を別に確認。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 現在の設定を確認する場所
 

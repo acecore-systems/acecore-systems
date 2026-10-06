@@ -2,10 +2,10 @@
 title: "Sveltia CMS 도입 가이드"
 description: "Acecore의 Sveltia CMS 도입과 변경 이력입니다. 편집자 인증, GitHub App의 검증 후 직접 저장, 미디어와 다국어 운영을 시점별로 설명합니다."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "CMS", "Astro", "Cloudflare", "보안"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Sveltia CMS 도입 흐름
   description: 관리 화면, 인증, 편집 대상, 미디어, PR 운영을 각각 분리해 설계합니다.
@@ -262,6 +262,25 @@ GitHub OAuth는 저장 직전에 편집자와 쓰기 권한을 다시 확인합�
 저장은 편집 시작 HEAD를 `expectedHeadOid`로 사용하며 경쟁 업데이트에는 409를 반환합니다. GitHub 응답이 유실되면 request marker, parent SHA, 전체 path, blob SHA가 모두 일치할 때만 성공으로 복구합니다.
 
 direct commit은 `cms: create ...`, `cms: update ...` 같은 subject를 유지합니다. 같은 GitHub App push가 Pages deploy와 번역 task를 시작합니다. 코드, schema, workflow, CMS 설정, 번역 파일은 계속 PR과 CI를 거칩니다.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">CMS 저장과 코드 변경은 서로 다른 배포 경로를 사용합니다</strong>
+    <span>CMS에서 허용한 본문과 이미지는 저장 전에 검증하고, 코드와 설정은 일반 PR/CI 경로로 보냅니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>CMS 저장 proxy</strong>
+      <span>허용된 본문과 이미지를 commit 전에 검증하고 충돌 시 다시 불러오도록 합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>일반 PR/CI 경로</strong>
+      <span>코드, schema, workflow, 번역은 CMS 경로에서 처리하지 않습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. CMS commit만 번역 트리거
 

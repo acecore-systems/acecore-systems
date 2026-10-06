@@ -4,8 +4,8 @@ description: "Astro + Cloudflare Pages 사이트에서 JSON-LD 구조화 데이�
 date: 2026-03-25T11:00
 author: gui
 tags: ["기술", "Astro", "SEO"]
-lastUpdated: "2026-09-30T21:30:00+09:00"
-image: /uploads/acecore-generated/blog-astro-seo-and-structured-data.webp
+lastUpdated: "2026-10-06T13:58:01+09:00"
+image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
   title: 이 글의 대상 독자

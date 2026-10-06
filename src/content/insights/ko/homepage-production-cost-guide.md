@@ -4,7 +4,7 @@ description: "홈페이지 제작 비용 시세를 목적별로 정리하고, �
 date: 2026-04-01T10:00
 author: gui
 tags: ["웹 제작", "웹사이트", "SEO", "서비스"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: 비용은 페이지 수보다 '목적'과 '운영 범위'에 따라 달라집니다
@@ -26,7 +26,7 @@ faq:
       answer: 페이지 수를 줄이고, 자사에서 원고와 사진을 준비하며, 기존 브랜드 자산을 활용하고, 초기 공개 후 개선 범위를 단계적으로 나누는 것이 효과적입니다.
     - question: 공개 후 운영도 상담할 수 있나요?
       answer: 네. Acecore에서는 웹사이트 제작뿐만 아니라 접속 분석, 콘텐츠 업데이트, 개선 제안, 유지보수까지 지속적으로 지원할 수 있습니다.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026년 9월 26일 업데이트:** 아래 금액은 작업 범위를 비교하기 위한 편집상 예산 예시이며 시장 가격 통계나 Acecore의 확정 견적이 아닙니다. 기능, 자료, 유지보수 범위를 정한 뒤 [현재 요금 안내](/ko/pricing/)와 개별 견적을 확인하세요.

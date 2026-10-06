@@ -4,8 +4,8 @@ description: "Cloudflare 过去的付费选项“Dedicated SSL Certificates（�
 date: 2026-03-31T00:00
 author: gui
 tags: ["技术", "Cloudflare", "安全", "基础设施"]
-image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-lastUpdated: "2026-09-26T18:45:00+09:00"
+image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Cloudflare 于 2021 年将原 **Dedicated SSL Certificates** 升级为 **Advanced Certificate Manager（ACM）**。选择证书前，应先确认主机名和 DNS 接入方式。
@@ -15,6 +15,25 @@ Cloudflare 于 2021 年将原 **Dedicated SSL Certificates** 升级为 **Advance
 在 **完整 DNS 接入**中，免费的 Universal SSL 通常覆盖根域名和一级子域名。`*.example.com` 包含 `www.example.com`，但不包含 `api.staging.example.com`。在 **CNAME（部分）接入**中，Cloudflare 会为每个经代理的主机名签发 Universal 证书，不受子域名层级限制。因此，多级子域名并非一定需要 ACM。
 
 Cloudflare 现在将 Universal 证书描述为免费且不共享；“与其他网站共用证书”的旧说法已不适用。
+
+<figure class="article-diagram" data-layout="compare" data-tone="amber" data-count="2" aria-labelledby="diagram-cloudflare-ssl-advanced-certificate-manager">
+  <figcaption>
+    <strong id="diagram-cloudflare-ssl-advanced-certificate-manager">Universal SSL 的覆盖范围取决于 DNS 方式</strong>
+    <span>覆盖范围因 DNS 方式而异；不能只凭子域名层级判断是否需要 ACM。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6z"/><path d="M9 12h6"/></svg></span>
+      <strong>Full DNS setup</strong>
+      <span>通常覆盖根域名和一层子域名；更深层名称不在该 wildcard 范围内。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+      <strong>CNAME / partial setup</strong>
+      <span>按每个已代理的主机名签发，不受子域名层级限制。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 何时考虑 ACM
 

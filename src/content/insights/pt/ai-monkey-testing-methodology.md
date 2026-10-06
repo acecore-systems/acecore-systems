@@ -4,8 +4,8 @@ description: "Registro prático de como testamos sistematicamente um site estát
 date: 2026-03-25T14:00
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "VS Code", "Astro", "Site"]
-lastUpdated: "2026-09-26T19:12:52+09:00"
-image: /uploads/acecore-generated/blog-ai-monkey-testing-methodology-1600.webp
+lastUpdated: "2026-10-06T13:58:01+09:00"
+image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
   title: Público-alvo deste artigo

@@ -2,10 +2,10 @@
 title: "Safely Rendering Markdown Links in AI Chat Answers"
 description: "An implementation note on converting Markdown links in AI chat answers into safe HTML. By separating whitespace-tolerant parsing, href trimming, allowlist validation, DOM rendering, fallbacks, and test cases, the same pattern can be reused on other sites."
 date: 2026-06-07T14:30
-lastUpdated: "2026-09-26T18:16:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technology", "Website", "AI", "Security", "Astro"]
-image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
   title: Key Point

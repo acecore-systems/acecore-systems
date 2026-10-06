@@ -4,8 +4,8 @@ description: "Distinguez les réponses statiques de Pages et celles de Functions
 date: 2026-03-15T00:00
 author: gui
 tags: ["Technologie", "Cloudflare", "Sécurité"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-lastUpdated: "2026-09-26T19:12:47+09:00"
+image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Cet article retraçait le passage, en mars 2026, d’un formulaire géré par Worker à un service externe et à une diffusion statique sur Cloudflare Pages. L’architecture a changé depuis. **En septembre 2026, le site d’Acecore utilise aussi Pages Functions** pour le contact, les commentaires, la recherche, l’aide par IA et les API du CMS. L’ancienne décision reste un contexte historique.
@@ -15,6 +15,25 @@ Cet article retraçait le passage, en mars 2026, d’un formulaire géré par Wo
 `public/_headers` s’applique aux **réponses des ressources statiques** servies par Pages. Cloudflare précise que ces règles ne s’appliquent pas aux réponses produites par Pages Functions, même si l’URL correspond. Définissez les en-têtes CORS, de cache et de sécurité nécessaires dans le `Response` de la Function.
 
 Ne supposez pas que `_headers` protège toutes les pages et API. Vérifiez séparément les en-têtes du HTML statique et de `/api/*`.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-cloudflare-pages-security">
+  <figcaption>
+    <strong id="diagram-cloudflare-pages-security">Les en-têtes se configurent à des endroits différents</strong>
+    <span>Les fichiers statiques et les API ont des points de configuration distincts. Vérifiez les deux réponses après le déploiement.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/></svg></span>
+      <strong>Réponse d’un fichier statique</strong>
+      <span>Configurez avec _headers ; vérifiez la réponse servie par Pages.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h4M8 16h8"/></svg></span>
+      <strong>Réponse API d’une Function</strong>
+      <span>Définissez les en-têtes sur la Response de la Function ; vérifiez l’API séparément.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Où lire la configuration actuelle
 

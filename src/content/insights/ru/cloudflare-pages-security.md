@@ -4,8 +4,8 @@ description: "Различайте статические ответы Pages и 
 date: 2026-03-15T00:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Безопасность"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-lastUpdated: "2026-09-26T19:12:47+09:00"
+image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Изначально статья описывала переход в марте 2026 года от контактной формы на Worker к внешнему сервису и статической выдаче через Cloudflare Pages. Архитектура с тех пор изменилась. **В сентябре 2026 года корпоративный сайт Acecore использует Pages Functions вместе со статическими страницами** для связи, комментариев, поиска, ИИ-помощника и API CMS. Прежнее решение следует читать как историю.
@@ -15,6 +15,25 @@ lastUpdated: "2026-09-26T19:12:47+09:00"
 `public/_headers` применяется к **ответам статических ресурсов**, которые выдаёт Pages. Cloudflare прямо указывает, что правила не действуют на ответы Pages Functions, даже если шаблон URL совпадает. Нужные заголовки CORS, кэша и безопасности задаются в `Response` функции.
 
 Не считайте, что `_headers` защищает все страницы и API. Проверяйте фактические заголовки статического HTML и `/api/*` отдельно.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-cloudflare-pages-security">
+  <figcaption>
+    <strong id="diagram-cloudflare-pages-security">Заголовки для статики и Functions задаются по-разному</strong>
+    <span>Для статики и API заголовки настраиваются в разных местах. После публикации проверьте оба ответа отдельно.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/></svg></span>
+      <strong>Ответ статического файла</strong>
+      <span>Настройте через _headers и проверьте ответ, который отдает Pages.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h4M8 16h8"/></svg></span>
+      <strong>Ответ API в Function</strong>
+      <span>Задайте заголовки в Response функции и отдельно проверьте ответ API.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Где смотреть текущие настройки
 

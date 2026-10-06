@@ -2,10 +2,10 @@
 title: "AI 채팅 답변의 Markdown 링크를 안전하게 렌더링하는 구현 설계"
 description: "AI 채팅 답변에 포함된 Markdown 링크를 안전한 HTML로 바꾸는 구현 메모입니다. 공백을 허용하는 파싱, href trim, 허용 목록 검증, DOM 렌더링, fallback, 테스트 케이스를 나누면 다른 사이트에도 재사용하기 쉽습니다."
 date: 2026-06-07T14:30
-lastUpdated: "2026-09-26T18:16:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "웹사이트", "AI", "보안", "Astro"]
-image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
   title: 핵심

@@ -2,10 +2,10 @@
 title: "Astro 사이트 접근성 개선 실전 가이드"
 description: "2026년 3월 Astro + UnoCSS 사이트에서 실시한 접근성 개선 기록입니다. ARIA, 명도 대비, 포커스, 폼, 스크린 리더 예시를 다룹니다."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "Astro", "접근성"]
-image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
+image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
 callout:
   type: info
   title: 접근성은 모든 사용자를 위한 UX 개선입니다

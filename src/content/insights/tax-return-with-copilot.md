@@ -4,7 +4,7 @@ description: "クラウド会計のデータ連携で蓄積した仕訳837件の
 date: 2026-03-17T00:00
 author: gui
 tags: ["技術", "GitHub Copilot", "VS Code"]
-image: /uploads/acecore-generated/blog-tax-return-with-copilot.webp
+image: "/images/insights/covers/tax-return-with-copilot-cover-v2.webp"
 processFigure:
   title: Copilot 確定申告の全体フロー
   steps:
@@ -51,7 +51,7 @@ faq:
       answer: マネーフォワードなどのクラウド会計で日常的に仕訳データを蓄積していることが最大の前提です。Copilot は蓄積データの整理・検証を担当するため、データがないと機能しません。
     - question: 仕訳の不整合はどのように検出しましたか？
       answer: Copilot に方針書（勘定科目のルール）と仕訳帳を突合させ、ルールに合わない仕訳を機械的に検出しました。837件中8件の不整合が見つかり、修正されました。
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026年9月26日追記:** これは筆者が2026年3月に行った個人の申告作業の記録です。AIによる分類・入力は税務判断の正しさを保証しません。証憑、申告書、送信結果を本人が確認し、対象年の要件と提出方法は[国税庁の確定申告案内](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm)で確認してください。

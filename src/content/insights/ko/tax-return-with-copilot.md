@@ -4,7 +4,7 @@ description: "클라우드 회계의 데이터 연동으로 축적된 837건의 
 date: 2026-03-17T00:00
 author: gui
 tags: ["기술", "GitHub Copilot", "VS Code"]
-image: /uploads/acecore-generated/blog-tax-return-with-copilot.webp
+image: "/images/insights/covers/tax-return-with-copilot-cover-v2.webp"
 processFigure:
   title: Copilot 확정신고 전체 플로우
   steps:
@@ -51,7 +51,7 @@ faq:
       answer: 가장 중요한 전제는 MoneyForward와 같은 클라우드 회계 소프트웨어를 통해 분개 데이터를 일상적으로 축적해 두는 것입니다. Copilot은 축적된 데이터의 정리와 검증을 담당하므로, 데이터 없이는 기능하지 못합니다.
     - question: 분개의 불일치는 어떻게 검출했나요?
       answer: Copilot에게 정책 문서(계정 과목 규칙)와 분개 장부를 대조하도록 지시하여 규칙에 맞지 않는 항목을 기계적으로 검출했습니다. 837건 중 8건의 불일치가 발견되어 수정되었습니다.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026년 9월 26일 추가:** 이 글은 필자가 2026년 3월에 진행한 개인 신고 사례입니다. AI의 분류와 입력이 세무 판단의 정확성을 보장하지는 않습니다. 신고자는 증빙, 신고서, 제출 결과를 직접 확인하고 해당 연도의 규정과 절차를 [일본 국세청](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm)에서 확인해야 합니다.

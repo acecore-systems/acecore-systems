@@ -2,10 +2,10 @@
 title: "Astroサイトに問い合わせAIチャットを組み込む技術設計"
 description: "2026年6月時点の参照設計です。Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
 date: 2026-06-07T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技術", "Cloudflare", "Webサイト", "AI", "サービス"]
-image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
 callout:
   type: info
   title: この記事のポイント

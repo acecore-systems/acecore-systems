@@ -2,10 +2,10 @@
 title: "Concevoir un site Astro + Cloudflare qui grandit fonctionnalité par fonctionnalité"
 description: "Comment nous avons combiné Astro et Cloudflare Pages avec un chat IA, Sveltia CMS, un blog multilingue, des CTA de services, un rendu Markdown sécurisé et des commentaires sans service externe."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Cloudflare", "Site web", "AI", "CMS"]
-image: /uploads/acecore-generated/work-acecore-net-website.webp
+image: "/images/insights/covers/astro-cloudflare-site-architecture-cover-v2.webp"
 callout:
   type: tip
   title: Définir les limites avant d'ajouter des fonctions

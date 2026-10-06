@@ -2,10 +2,10 @@
 title: "Praktische Verbesserungen der Barrierefreiheit für eine Astro-Website"
 description: "Aufzeichnungen zu Verbesserungen der Barrierefreiheit einer Astro + UnoCSS-Website im März 2026: ARIA, Kontrast, Fokus, Formulare und Screenreader."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Barrierefreiheit"]
-image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
+image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
 callout:
   type: info
   title: Barrierefreiheit verbessert die UX für alle

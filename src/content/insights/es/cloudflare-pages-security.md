@@ -4,8 +4,8 @@ description: "Distingue las respuestas estáticas de Pages y las de Functions y 
 date: 2026-03-15T00:00
 author: gui
 tags: ["Tecnología", "Cloudflare", "Seguridad"]
-image: /uploads/acecore-generated/blog-cloudflare-pages-security.webp
-lastUpdated: "2026-09-26T19:12:47+09:00"
+image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Este artículo documentaba el cambio de marzo de 2026 de un formulario con Worker a un servicio externo y a la entrega estática con Cloudflare Pages. La arquitectura ha cambiado. **En septiembre de 2026, el sitio corporativo de Acecore usa Pages Functions junto a páginas estáticas** para contacto, comentarios, búsqueda, asistencia de IA y API del CMS. La decisión anterior es contexto histórico.
@@ -15,6 +15,25 @@ Este artículo documentaba el cambio de marzo de 2026 de un formulario con Worke
 `public/_headers` se aplica a las **respuestas de recursos estáticos** de Pages. Cloudflare indica expresamente que no se aplica a respuestas generadas por Pages Functions, aunque coincida el patrón de URL. Configura los encabezados CORS, de caché y de seguridad necesarios en el `Response` de cada Function.
 
 No supongas que `_headers` protege todas las páginas y API. Comprueba por separado los encabezados reales del HTML estático y de `/api/*`.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-cloudflare-pages-security">
+  <figcaption>
+    <strong id="diagram-cloudflare-pages-security">Los headers tienen distintos puntos de configuración</strong>
+    <span>Los archivos estáticos y las API configuran los headers en lugares distintos. Verifica ambas respuestas tras publicar.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/></svg></span>
+      <strong>Respuesta de archivo estático</strong>
+      <span>Se configura con _headers; comprueba la respuesta que entrega Pages.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h4M8 16h8"/></svg></span>
+      <strong>Respuesta de API de Function</strong>
+      <span>Configura los headers en la Response de Function; comprueba la API por separado.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Consulta la configuración actual
 

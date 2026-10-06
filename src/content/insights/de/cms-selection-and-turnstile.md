@@ -2,10 +2,10 @@
 title: "Sveltia CMS Einrichtungsleitfaden"
 description: "Zeitlich eingeordnete Dokumentation der Sveltia-CMS-Einführung bei Acecore: Redakteursanmeldung, geprüfte Direktspeicherung über eine GitHub App, Medien und Mehrsprachigkeit."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sicherheit"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Ablauf der Sveltia-CMS-Einrichtung
   description: Admin-App, Authentifizierung, editierbare Inhalte, Medien und PR-Prozess sollten getrennt entworfen werden.
@@ -262,6 +262,25 @@ GitHub OAuth prüft direkt vor dem Save den Editor und dessen Schreibberechtigun
 Der Save verwendet den Start-HEAD als `expectedHeadOid`; konkurrierende Änderungen liefern 409. Bei verlorener GitHub-Antwort gilt der Save nur dann als erfolgreich, wenn Request-Marker, Parent-SHA, alle Pfade und Blob-SHAs übereinstimmen.
 
 Der direkte Commit behält ein Subject wie `cms: create ...` oder `cms: update ...`. Derselbe GitHub-App-Push startet Pages Deployment und Übersetzungs-Task. Code, Schema, Workflows, CMS-Konfiguration und Übersetzungsdateien bleiben PR- und CI-pflichtig.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">CMS-Speicherungen und Codeänderungen nutzen getrennte Wege</strong>
+    <span>Zulässige Inhalte und Bilder werden vor dem Speichern geprüft; Code und Konfiguration laufen über den üblichen PR/CI-Weg.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>CMS-Save-Proxy</strong>
+      <span>Prüft erlaubte Inhalte und Bilder vor dem Commit; Konflikte erfordern ein erneutes Laden.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Üblicher PR/CI-Weg</strong>
+      <span>Code, Schema, Workflows und Übersetzungen bleiben außerhalb des CMS-Pfads.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. Übersetzung nur durch CMS-Commits auslösen
 

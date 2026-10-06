@@ -2,10 +2,10 @@
 title: "Renderizar links Markdown com segurança em respostas de chat com IA"
 description: "Nota de implementação sobre converter links Markdown em respostas de IA para HTML seguro. Separar parsing tolerante a espaços, trim de href, allowlist, renderização DOM, fallback e testes torna o padrão reutilizável em outros sites."
 date: 2026-06-07T14:30
-lastUpdated: "2026-09-26T18:16:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Tecnologia", "Site", "AI", "Segurança", "Astro"]
-image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
   title: Ponto principal

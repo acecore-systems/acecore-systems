@@ -4,7 +4,7 @@ description: "An overview of website production costs by purpose, key items to c
 date: 2026-04-01T10:00
 author: gui
 tags: ["Web Development", "Website", "SEO", "Services"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: Costs vary by "purpose" and "operational scope" — not just by page count
@@ -26,7 +26,7 @@ faq:
       answer: Limiting the number of pages, preparing your own copy and photos, leveraging existing brand assets, and separating post-launch improvements from the initial scope are all effective approaches.
     - question: Can we consult you about operations after launch?
       answer: Yes. Acecore can provide ongoing support covering not just website production but also access analytics, content updates, improvement proposals, and maintenance.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Updated September 26, 2026:** The figures below are editorial budget examples for comparing scopes, not a market-price survey or a binding Acecore quote. Define the features, assets, and maintenance scope, then check [current pricing](/en/pricing/) and request a tailored estimate.

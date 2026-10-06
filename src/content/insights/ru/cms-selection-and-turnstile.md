@@ -2,10 +2,10 @@
 title: "Руководство по внедрению Sveltia CMS"
 description: "История внедрения Sveltia CMS в Acecore: вход редакторов, проверенная прямая запись через GitHub App, медиафайлы и многоязычная работа."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Технологии", "CMS", "Astro", "Cloudflare", "Безопасность"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Поток внедрения Sveltia CMS
   description: Админку, аутентификацию, редактируемый контент, медиа и PR-процесс стоит проектировать отдельно.
@@ -262,6 +262,25 @@ GitHub OAuth непосредственно перед сохранением п
 Сохранение использует начальный HEAD как `expectedHeadOid`; конкурентное изменение возвращает 409. При потере ответа GitHub операция считается успешной только при совпадении marker запроса, parent SHA, всех путей и blob SHA.
 
 Прямой commit сохраняет subject вида `cms: create ...` или `cms: update ...`. Тот же push GitHub App запускает Pages deploy и задачу перевода. Код, schema, workflows, конфигурация CMS и переводы по-прежнему проходят через PR и CI.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">Сохранение CMS и изменения кода проходят по разным путям</strong>
+    <span>Разрешенные материалы и изображения проверяются до сохранения; код и конфигурация идут по обычному пути PR/CI.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>Прокси сохранения CMS</strong>
+      <span>Проверяет разрешенные материалы и изображения до commit; при конфликте требуется перезагрузка.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Обычный путь PR/CI</strong>
+      <span>Код, schema, workflow и переводы не проходят через CMS.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. Перевод только для CMS commits
 

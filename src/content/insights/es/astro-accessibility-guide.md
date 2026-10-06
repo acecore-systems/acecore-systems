@@ -2,10 +2,10 @@
 title: "Mejoras prácticas de accesibilidad para un sitio Astro"
 description: "Registro de mejoras de accesibilidad realizadas en un sitio Astro + UnoCSS en marzo de 2026: ARIA, contraste, foco, formularios y lectores de pantalla."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Accesibilidad"]
-image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
+image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
 callout:
   type: info
   title: La accesibilidad es "mejora de UX para todos"

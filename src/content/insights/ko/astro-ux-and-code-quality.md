@@ -2,10 +2,10 @@
 title: "Astro View Transitions의 함정과 해결책 — UX 및 코드 품질 개선 가이드"
 description: "Astro View Transitions에서 스크립트가 작동하지 않는 문제의 해결 패턴, Pagefind 전문 검색 도입, TypeScript 타입 안전성 강화, 상수 중앙 관리 등 UX와 코드 품질 개선을 위한 실전 가이드."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "Astro", "웹사이트"]
-image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
+image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
 callout:
   type: warning
   title: View Transitions를 사용한다면 반드시 읽으세요
