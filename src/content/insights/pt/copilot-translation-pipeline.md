@@ -2,10 +2,10 @@
 title: "Como operar um blog multilíngue com Sveltia CMS"
 description: "Este artigo registra o fluxo de PR de tradução com Copilot de junho de 2026 e o fluxo atual com OpenAI Batch de setembro de 2026."
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: Tradução na UI não é publicação multilíngue
@@ -86,6 +86,30 @@ faq:
 ## Fluxo atual de tradução (setembro de 2026)
 
 Quando um artigo ou texto de interface em japonês muda na main, o [workflow de envio do Batch](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml) é iniciado. Ele espera 15 minutos por edições adicionais, verifica a main atual e envia a tradução. O [workflow de coleta](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) compara os resultados com o sourceHash atual, descarta resultados antigos e cria um PR de tradução. O [workflow de integração](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) habilita a integração automática apenas para PRs elegíveis. Terminologia, links, fatos e naturalidade ainda precisam de revisão.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">Comparar o resultado com a fonte japonesa atual</strong>
+    <span>Resultados Batch de fontes antigas são excluídos. Mesmo um PR aprovado pelas condições precisa de revisão de termos, links, fatos e naturalidade.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Atualizar a fonte japonesa</strong>
+      <span>Uma mudança de source em main inicia um Batch de tradução.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Comparar sourceHash</strong>
+      <span>Na coleta, excluir resultados que já não correspondem à fonte atual.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Integrar o PR de tradução</strong>
+      <span>A validação pode permitir integração automática; o conteúdo ainda precisa de revisão.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Registro da implantação de junho de 2026
 

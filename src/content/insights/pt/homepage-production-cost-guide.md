@@ -4,7 +4,7 @@ description: "Organização dos custos de produção de sites por objetivo, iten
 date: 2026-04-01T10:00
 author: gui
 tags: ["Desenvolvimento web", "Site", "SEO", "Serviços"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: Os custos variam conforme o "objetivo" e o "escopo operacional", não apenas pelo número de páginas
@@ -26,7 +26,7 @@ faq:
       answer: Limitar o número de páginas, preparar seus próprios textos e fotos, aproveitar os ativos de marca existentes e separar as melhorias pós-lançamento do escopo inicial são abordagens eficazes.
     - question: Podemos consultar também sobre as operações após o lançamento?
       answer: Sim. A Acecore pode fornecer suporte contínuo cobrindo não apenas a produção do site, mas também análise de acesso, atualizações de conteúdo, propostas de melhoria e manutenção.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Atualizado em 26 de setembro de 2026:** Os valores abaixo são exemplos editoriais para comparar escopos, não uma pesquisa de preços de mercado nem um orçamento vinculativo da Acecore. Defina funções, materiais e manutenção; depois consulte os [preços atuais](/pt/pricing/) e peça um orçamento específico.

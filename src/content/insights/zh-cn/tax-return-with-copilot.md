@@ -4,7 +4,7 @@ description: "利用云会计数据对接积累的837条记账分录的分类验
 date: 2026-03-17T00:00
 author: gui
 tags: ["技术", "GitHub Copilot", "VS Code"]
-image: /uploads/acecore-generated/blog-tax-return-with-copilot.webp
+image: "/images/insights/covers/tax-return-with-copilot-cover-v2.webp"
 processFigure:
   title: Copilot 报税的整体流程
   steps:
@@ -51,7 +51,7 @@ faq:
       answer: 最大的前提是通过 Money Forward 等云会计软件日常积累记账数据。Copilot 负责整理和验证已积累的数据，没有数据就无法发挥作用。
     - question: 分录的不一致是如何检出的？
       answer: 让 Copilot 将方针文档（会计科目规则）与记账簿进行核对，机械化检出不符合规则的分录。在837条中发现了8处不一致并进行了修正。
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026年9月26日补充：** 本文记录作者在2026年3月进行的一次个人申报。AI分类和表单输入不能保证税务判断正确。申报人应核对原始凭证、申报书及提交结果，并通过[日本国税厅](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm)确认适用年度的规定和流程。

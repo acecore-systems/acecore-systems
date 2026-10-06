@@ -2,10 +2,10 @@
 title: "Sveltia CMS導入ガイド"
 description: "AcecoreのSveltia CMS導入と運用変更の記録。編集者認証、GitHub Appによる検証付き直接保存、画像・多言語運用を時点別に整理します。"
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技術", "CMS", "Astro", "Cloudflare", "セキュリティ"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Sveltia CMS導入の流れ
   description: 静的サイトにCMSを足すときは、管理画面、編集者認証、保存actor、編集対象、画像、公開方法を分けて設計します。
@@ -339,6 +339,25 @@ proxyはGraphQLの`createCommitOnBranch`をそのまま中継しません。GitH
 保存には編集開始時のHEADを`expectedHeadOid`として指定し、先に別更新が入れば409で再読み込みを求めます。GitHub応答が失われた場合も、request固有marker、親SHA、全path、blob SHAが完全一致するときだけ成功として復旧します。
 
 direct commitのsubjectは`cms: create ...`や`cms: update ...`を維持します。GitHub Appによる`main` pushをCloudflare Pagesと翻訳workflowが受け、サイト公開と翻訳PR taskを並行して始めます。コード、schema、workflow、翻訳ファイルはCMS経路のallowlist外で、従来どおりPRとCIを通します。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">CMS保存とコード変更は別の公開経路</strong>
+    <span>CMSで許可した本文・画像は保存前に検証し、コードや設定変更は通常のPR/CI経路へ分けます。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>CMS保存proxy</strong>
+      <span>許可した本文・画像を検証してcommit。競合時は再読込を求める。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>通常のPR/CI経路</strong>
+      <span>コード・schema・workflow・翻訳はCMS経路外で扱う。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. 翻訳ワークフローはCMS commitだけに絞る
 

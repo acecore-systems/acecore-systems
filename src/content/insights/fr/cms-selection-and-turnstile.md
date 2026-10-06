@@ -2,10 +2,10 @@
 title: "Guide d'installation de Sveltia CMS"
 description: "Historique de l’intégration de Sveltia CMS chez Acecore : authentification des éditeurs, enregistrement direct contrôlé via GitHub App, médias et multilingue."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sécurité"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Flux d'installation de Sveltia CMS
   description: L'admin, l'authentification, les contenus modifiables, les médias et le flux de PR doivent être conçus séparément.
@@ -262,6 +262,25 @@ GitHub OAuth revérifie l'éditeur et son droit d'écriture avant chaque sauvega
 La sauvegarde utilise le HEAD de départ comme `expectedHeadOid` ; une mise à jour concurrente renvoie 409. Si la réponse GitHub se perd, la réussite n'est reconnue que si marker de requête, SHA parent, tous les chemins et SHA des blobs correspondent.
 
 Le commit direct conserve un subject tel que `cms: create ...` ou `cms: update ...`. Le même push de la GitHub App lance Pages et la tâche de traduction. Code, schémas, workflows, configuration CMS et traductions restent soumis aux PRs et à la CI.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">Les sauvegardes CMS et les changements de code suivent des voies distinctes</strong>
+    <span>Le contenu et les images autorisés sont vérifiés avant l’enregistrement ; le code et la configuration passent par le flux PR/CI habituel.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>Proxy de sauvegarde CMS</strong>
+      <span>Vérifie le contenu et les images autorisés avant le commit ; un conflit impose de recharger.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Flux PR/CI habituel</strong>
+      <span>Le code, les schémas, les workflows et les traductions restent hors du flux CMS.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. Déclencher la traduction seulement pour les commits CMS
 

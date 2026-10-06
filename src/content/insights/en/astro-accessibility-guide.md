@@ -2,10 +2,10 @@
 title: "Practical Accessibility Improvements for an Astro Site"
 description: "A record of accessibility improvements made to an Astro + UnoCSS site in March 2026, including ARIA, contrast, focus, forms, and screen reader examples."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technology", "Astro", "Accessibility"]
-image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
+image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
 callout:
   type: info
   title: Accessibility Is UX Improvement for Everyone

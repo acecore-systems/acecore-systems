@@ -2,10 +2,10 @@
 title: "Pitfalls and Solutions for Astro View Transitions — A UX and Code Quality Improvement Guide"
 description: "A practical guide covering solutions for scripts breaking with Astro View Transitions, introducing Pagefind full-text search, improving TypeScript type safety, centralizing constants, and more to improve UX and code quality."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technology", "Astro", "Website"]
-image: /uploads/acecore-generated/blog-astro-ux-and-code-quality.webp
+image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
 callout:
   type: warning
   title: Must-Read If You Use View Transitions

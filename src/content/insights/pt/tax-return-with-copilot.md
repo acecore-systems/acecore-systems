@@ -4,7 +4,7 @@ description: "Da classificação e verificação de 837 lançamentos contábeis 
 date: 2026-03-17T00:00
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "VS Code"]
-image: /uploads/acecore-generated/blog-tax-return-with-copilot.webp
+image: "/images/insights/covers/tax-return-with-copilot-cover-v2.webp"
 processFigure:
   title: Fluxo geral da declaração com Copilot
   steps:
@@ -51,7 +51,7 @@ faq:
       answer: O maior pré-requisito é acumular dados de lançamentos contábeis no dia a dia usando contabilidade em nuvem como o MoneyForward. O Copilot é responsável por organizar e verificar os dados acumulados, então sem dados ele não funciona.
     - question: Como as inconsistências nos lançamentos foram detectadas?
       answer: O Copilot confrontou o guia de políticas (regras de contas contábeis) com o livro-razão e detectou mecanicamente os lançamentos que não estavam de acordo com as regras. Foram encontradas 8 inconsistências em 837 lançamentos, que foram corrigidas.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Adicionado em 26 de setembro de 2026:** Este texto registra uma declaração pessoal realizada em março de 2026. A classificação e o preenchimento por IA não garantem a correção fiscal. A pessoa declarante deve conferir comprovantes, declaração e resultado do envio e verificar as regras do ano aplicável na [Agência Tributária do Japão](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).

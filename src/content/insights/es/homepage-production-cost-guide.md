@@ -4,7 +4,7 @@ description: "Resumen de los costos de producción web por objetivo, los element
 date: 2026-04-01T10:00
 author: gui
 tags: ["Desarrollo web", "Sitio web", "SEO", "Servicios"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: El costo varía según el "objetivo" y el "alcance operativo", no solo por el número de páginas
@@ -26,7 +26,7 @@ faq:
       answer: Limitar el número de páginas, preparar sus propios textos y fotos, aprovechar los activos de marca existentes y separar las mejoras post-lanzamiento del alcance inicial son enfoques efectivos.
     - question: ¿Podemos consultar también sobre las operaciones tras el lanzamiento?
       answer: Sí. Acecore puede brindar soporte continuo que cubre no solo la producción del sitio web, sino también analítica web, actualizaciones de contenido, propuestas de mejora y mantenimiento.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Actualizado el 26 de septiembre de 2026:** Las cifras siguientes son ejemplos orientativos para comparar alcances, no una encuesta de precios de mercado ni un presupuesto vinculante de Acecore. Define funciones, materiales y mantenimiento; después consulta las [tarifas actuales](/es/pricing/) y solicita un presupuesto específico.

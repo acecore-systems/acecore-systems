@@ -2,10 +2,10 @@
 title: "Astro + Cloudflare 사이트를 기능별로 확장하는 전체 설계"
 description: "Astro와 Cloudflare Pages를 기반으로 문의 AI, Sveltia CMS, 다국어 블로그, 서비스 CTA, 안전한 Markdown 렌더링, Cloudflare만으로 만든 댓글 기능을 하나의 구조로 정리합니다."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "Astro", "Cloudflare", "웹사이트", "AI", "CMS"]
-image: /uploads/acecore-generated/work-acecore-net-website.webp
+image: "/images/insights/covers/astro-cloudflare-site-architecture-cover-v2.webp"
 callout:
   type: tip
   title: 기능을 넣기 전에 경계를 정한다

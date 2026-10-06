@@ -4,7 +4,7 @@ description: "将使用 VitePress + UnoCSS 构建的事业计划文档迁移到 
 date: 2026-03-15T00:00
 author: gui
 tags: ["技术", "Astro", "Starlight"]
-image: /uploads/acecore-generated/blog-vitepress-to-starlight-migration.webp
+image: "/images/insights/covers/vitepress-to-starlight-migration-cover-v2.webp"
 processFigure:
   title: 迁移流程
   steps:
@@ -45,6 +45,7 @@ faq:
       answer: 我们放弃了插件依赖，改为通过 CDN（jsdelivr）加载 Mermaid。构建依赖降为零，图表渲染也更加稳定。
     - question: 迁移工作需要多少工作量？
       answer: 主要工作是目录结构的转换（docs/ → src/content/docs/）和 frontmatter 的调整。由于内容本身是 Markdown，可以直接使用，因此迁移可以在较短时间内完成。
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 本文总结了将使用 VitePress 创建的文档站点迁移到 Astro + Starlight 的步骤。如果主站使用 Astro，将文档也统一到 Starlight 可以简化运维。同时也介绍了 Mermaid 图表的 CDN 迁移。

@@ -4,8 +4,8 @@ description: 'Cloudflare’s former paid option "Dedicated SSL Certificates" was
 date: 2026-03-31T00:00
 author: gui
 tags: ["Technology", "Cloudflare", "Security", "Infrastructure"]
-image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-lastUpdated: "2026-09-26T18:45:00+09:00"
+image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Cloudflare upgraded the former **Dedicated SSL Certificates** offering to **Advanced Certificate Manager (ACM)** in 2021. Choose a certificate after checking the hostnames and DNS setup involved.
@@ -15,6 +15,25 @@ Cloudflare upgraded the former **Dedicated SSL Certificates** offering to **Adva
 On a **full DNS setup**, free Universal SSL normally covers the apex and first-level subdomains. `*.example.com` covers `www.example.com`, but not `api.staging.example.com`. On a **CNAME (partial) setup**, Cloudflare provisions a Universal certificate for each proxied hostname regardless of depth. A deep subdomain therefore does not always require ACM.
 
 Cloudflare now describes Universal certificates as free and unshared. The old claim that they are shared across unrelated sites is outdated.
+
+<figure class="article-diagram" data-layout="compare" data-tone="amber" data-count="2" aria-labelledby="diagram-cloudflare-ssl-advanced-certificate-manager">
+  <figcaption>
+    <strong id="diagram-cloudflare-ssl-advanced-certificate-manager">Universal SSL coverage depends on the DNS setup</strong>
+    <span>Coverage differs by DNS mode; subdomain depth alone does not determine whether ACM is needed.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6z"/><path d="M9 12h6"/></svg></span>
+      <strong>Full DNS setup</strong>
+      <span>Typically covers the apex and one subdomain level; deeper names fall outside that wildcard.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+      <strong>CNAME / partial setup</strong>
+      <span>Issued per proxied hostname, regardless of subdomain depth.</span>
+    </li>
+  </ol>
+</figure>
 
 ## When to consider ACM
 

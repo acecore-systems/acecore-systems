@@ -4,7 +4,7 @@ description: "Procédure pratique de migration de Zoho Workplace vers KAGOYA MAI
 date: 2026-03-16T00:00
 author: gui
 tags: ["Technologie", "E-mail", "DNS", "Infrastructure"]
-image: /uploads/acecore-generated/blog-zoho-to-kagoya-mail-migration.webp
+image: "/images/insights/covers/zoho-to-kagoya-mail-migration-cover-v2.webp"
 processFigure:
   title: Flux global de la migration
   steps:
@@ -82,7 +82,7 @@ faq:
       answer: La probabilité que le serveur de réception classe le message comme spam augmente. Gmail en particulier est strict et exige de plus en plus le PASS des deux, SPF et DKIM.
     - question: Que deviennent les données si l'on résilie Zoho Workplace ?
       answer: À l'expiration du forfait payant, le compte passe au forfait gratuit. Le forfait gratuit a aussi des limites de stockage, il est donc recommandé d'exporter les données nécessaires au préalable. La suppression du compte entraîne la perte définitive de toutes les données.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Ajout du 26 septembre 2026 :** Les prix, étapes du tableau de bord et valeurs DNS décrivent la migration de l’époque. Ne les recopiez pas pour un autre domaine sans consulter les informations actuelles de [KAGOYA MAIL](https://www.kagoya.jp/mail/) et [Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html), votre contrat et les valeurs d’authentification propres à votre domaine.

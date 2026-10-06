@@ -4,7 +4,7 @@ description: "Überblick über Website-Produktionskosten nach Zweck, wesentliche
 date: 2026-04-01T10:00
 author: gui
 tags: ["Webentwicklung", "Website", "SEO", "Services"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: Die Kosten hängen vom „Zweck" und dem „Betriebsumfang" ab – nicht nur von der Seitenanzahl
@@ -26,7 +26,7 @@ faq:
       answer: Die Seitenanzahl begrenzen, eigene Texte und Fotos vorbereiten, bestehende Markenwerte nutzen und Post-Launch-Verbesserungen vom ursprünglichen Umfang trennen sind effektive Ansätze.
     - question: Kann man auch über den Betrieb nach dem Launch beraten?
       answer: Ja. Acecore kann laufende Unterstützung bieten, die nicht nur die Website-Produktion, sondern auch Zugriffsanalyse, Content-Updates, Verbesserungsvorschläge und Wartung umfasst.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Aktualisiert am 26. September 2026:** Die Beträge unten sind redaktionelle Budgetbeispiele zum Vergleich von Leistungsumfängen, keine Marktpreisstudie und kein verbindliches Angebot von Acecore. Klären Sie Funktionen, Materialien und Wartung und prüfen Sie dann die [aktuellen Preise](/de/pricing/) sowie ein individuelles Angebot.

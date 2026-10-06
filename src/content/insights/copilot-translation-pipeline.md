@@ -2,10 +2,10 @@
 title: "Sveltia CMSで多言語ブログを運用する方法"
 description: "2026年6月のCopilot翻訳PR導入記録と、2026年9月のOpenAI Batchによる現行運用を整理します。"
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: UI翻訳と多言語コンテンツ運用は別物
@@ -90,6 +90,30 @@ faq:
 ## 現行の翻訳運用（2026年9月）
 
 Acecore公式サイトでは、日本語記事または日本語UI原稿がmainで更新されると、[Batch提出workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)が起動します。続けて入る編集をまとめるため15分待ち、最新のmainを確認してから翻訳を提出します。[回収workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)は結果を現在の日本語原稿のsourceHashと照合し、古い結果を除いて翻訳PRを作ります。[統合workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)は検証条件を満たした翻訳PRの自動統合を有効にします。翻訳後も用語、リンク、事実関係、自然さを確認する必要があります。
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">翻訳結果を現在の日本語原稿と照合</strong>
+    <span>古い日本語原稿から生成された翻訳結果は除外します。条件を満たしたPRも、用語・リンク・事実・自然さを確認します。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>日本語原稿を更新</strong>
+      <span>mainの日本語原稿の変更を受けて翻訳Batchを提出。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>sourceHashを照合</strong>
+      <span>回収時に現在の原稿と一致しない結果を除外。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>翻訳PRを統合</strong>
+      <span>検証条件で自動統合。内容の確認は別途必要。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 2026年6月の導入記録
 

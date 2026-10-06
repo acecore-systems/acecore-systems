@@ -4,7 +4,7 @@ description: "Von der Klassifizierung und Überprüfung von 837 Buchungseinträg
 date: 2026-03-17T00:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code"]
-image: /uploads/acecore-generated/blog-tax-return-with-copilot.webp
+image: "/images/insights/covers/tax-return-with-copilot-cover-v2.webp"
 processFigure:
   title: Gesamtablauf der Copilot-Steuererklärung
   steps:
@@ -51,7 +51,7 @@ faq:
       answer: Die wichtigste Voraussetzung sind täglich über Cloud-Buchhaltungssoftware wie MoneyForward angesammelte Buchungsdaten. Copilot übernimmt die Organisation und Überprüfung der angesammelten Daten und kann daher ohne Daten nicht funktionieren.
     - question: Wie wurden Buchungsinkonsistenzen erkannt?
       answer: Copilot erhielt das Richtliniendokument (Kontokategorieregeln) und das Buchungsjournal zum Abgleich und erkannte mechanisch Einträge, die nicht den Regeln entsprachen. Von 837 Einträgen wurden 8 Unstimmigkeiten gefunden und korrigiert.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Ergänzt am 26. September 2026:** Dieser Beitrag dokumentiert eine persönliche Steuererklärung vom März 2026. KI-Klassifizierung und Eingabe gewährleisten keine steuerliche Richtigkeit. Die erklärende Person muss Belege, Erklärung und Übermittlungsergebnis prüfen und die Regeln des betreffenden Jahres bei der [japanischen Steuerbehörde](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm) nachlesen.

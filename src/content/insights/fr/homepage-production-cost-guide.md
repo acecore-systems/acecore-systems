@@ -4,7 +4,7 @@ description: "Présentation des coûts de création de site par objectif, des é
 date: 2026-04-01T10:00
 author: gui
 tags: ["Création web", "Site web", "SEO", "Services"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: Le coût varie selon l'« objectif » et la « portée opérationnelle », pas seulement le nombre de pages
@@ -26,7 +26,7 @@ faq:
       answer: Limiter le nombre de pages, préparer vos propres textes et photos, exploiter les actifs de marque existants et séparer les améliorations post-lancement du périmètre initial sont des approches efficaces.
     - question: Peut-on vous consulter aussi sur les opérations après le lancement ?
       answer: Oui. Acecore peut fournir un support continu couvrant non seulement la production du site web, mais aussi l'analyse d'audience, les mises à jour de contenu, les propositions d'amélioration et la maintenance.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Mise à jour du 26 septembre 2026 :** Les montants ci-dessous sont des exemples indicatifs pour comparer les périmètres, pas une étude des prix du marché ni un devis ferme d’Acecore. Définissez fonctions, contenus et maintenance, puis consultez les [tarifs actuels](/fr/pricing/) et demandez un devis adapté.

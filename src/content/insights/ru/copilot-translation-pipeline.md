@@ -2,10 +2,10 @@
 title: "Как вести многоязычный блог с Sveltia CMS"
 description: "Статья описывает переводческие PR с Copilot в июне 2026 года и действующий в сентябре 2026 года процесс на OpenAI Batch."
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Технологии", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: Перевод интерфейса и многоязычная публикация различаются
@@ -86,6 +86,30 @@ faq:
 ## Текущий процесс перевода (сентябрь 2026 года)
 
 При изменении японской статьи или исходного текста интерфейса в main запускается [workflow отправки Batch](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml). Он ждёт 15 минут для последующих правок, проверяет актуальный main и отправляет перевод. [Workflow получения результатов](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) сравнивает результат с текущим sourceHash, отбрасывает устаревшее и создаёт PR перевода. [Workflow слияния](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) включает автоматическое слияние только для подходящих PR. Термины, ссылки, факты и естественность языка по-прежнему нужно проверять.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">Сверяйте перевод с текущим японским оригиналом</strong>
+    <span>Результаты Batch для устаревшего оригинала исключаются. Даже прошедший условия PR требует проверки терминов, ссылок, фактов и естественности.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Обновить японский оригинал</strong>
+      <span>Изменение source в main запускает Batch перевода.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Сверить sourceHash</strong>
+      <span>При сборе исключаются результаты, не совпадающие с текущим оригиналом.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Интегрировать PR перевода</strong>
+      <span>Проверки могут разрешить автоинтеграцию; содержимое проверяется отдельно.</span>
+    </li>
+  </ol>
+</figure>
 
 ## История внедрения в июне 2026 года
 

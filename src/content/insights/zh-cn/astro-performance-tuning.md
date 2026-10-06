@@ -2,10 +2,10 @@
 title: "提升Astro网站PageSpeed的实用技巧"
 description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的优化，并与当前 Astro 和 Tailwind CSS 配置区分。"
 date: 2026-03-15T00:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "Astro", "性能"]
-image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
+image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
 callout:
   type: tip
   title: 本文的目标读者

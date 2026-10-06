@@ -2,10 +2,10 @@
 title: "将 Astro 7 网站扩展至9种语言 ― 博客翻译与多语言架构"
 description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的九语言实施，并说明当前依赖与翻译流程的变化。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
-image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
+image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: 多语言化流程
   steps:

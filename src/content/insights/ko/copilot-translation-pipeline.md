@@ -2,10 +2,10 @@
 title: "Sveltia CMS로 다국어 블로그를 운영하는 방법"
 description: "2026년 6월 Copilot 번역 PR 도입 과정과 2026년 9월 OpenAI Batch 운영 방식을 함께 정리합니다."
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: UI 번역과 다국어 공개는 다릅니다
@@ -86,6 +86,30 @@ faq:
 ## 현재 번역 운영 (2026년 9월)
 
 main에서 일본어 기사나 UI 원본이 변경되면 [Batch 제출 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)가 시작됩니다. 연속 편집을 모으기 위해 15분 기다린 뒤 최신 main을 확인하고 번역을 제출합니다. [결과 수집 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)는 현재 원본의 sourceHash와 결과를 비교하고 오래된 결과를 제외한 후 번역 PR을 만듭니다. [통합 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)는 조건을 충족한 PR에만 자동 통합을 활성화합니다. 용어, 링크, 사실관계, 자연스러운 표현은 계속 검토해야 합니다.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">번역 결과를 현재 일본어 원고와 대조합니다</strong>
+    <span>오래된 source의 Batch 결과는 제외합니다. 조건을 만족한 PR도 용어, 링크, 사실, 자연스러움을 확인해야 합니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>일본어 원고 갱신</strong>
+      <span>main의 source 변경으로 번역 Batch를 시작합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>sourceHash 대조</strong>
+      <span>회수할 때 현재 원고와 일치하지 않는 결과를 제외합니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>번역 PR 통합</strong>
+      <span>검증 조건을 만족하면 자동 통합할 수 있으며 내용은 별도로 검토합니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 2026년 6월 도입 기록
 

@@ -4,7 +4,7 @@ description: "Zoho Workplace から KAGOYA MAIL へメールサービスを移�
 date: 2026-03-16T00:00
 author: gui
 tags: ["技術", "メール", "DNS", "インフラ"]
-image: /uploads/acecore-generated/blog-zoho-to-kagoya-mail-migration.webp
+image: "/images/insights/covers/zoho-to-kagoya-mail-migration-cover-v2.webp"
 processFigure:
   title: 移行作業の全体フロー
   steps:
@@ -82,7 +82,7 @@ faq:
       answer: 受信側のメールサーバーが迷惑メールと判定する確率が上がります。特にGmailは厳しく、SPF・DKIM 両方の PASS が求められるケースが増えています。
     - question: Zoho Workplace を解約するとデータはどうなる？
       answer: 有料プランの期限が切れると無料プランに移行します。無料プランにもストレージ制限があるため、必要なデータは事前にエクスポートしておくべきです。アカウント自体を削除するとすべてのデータが失われます。
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026年9月26日追記:** 記載した料金・管理画面・DNS値は移行当時の記録です。別環境への移行時にそのままコピーせず、[KAGOYA MAIL](https://www.kagoya.jp/mail/)と[Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html)の現行案内、契約画面、自分のドメインに表示される認証値を確認してください。

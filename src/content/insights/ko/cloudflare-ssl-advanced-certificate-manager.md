@@ -4,8 +4,8 @@ description: 'Cloudflare에서 과거 유료 옵션이었던 "Dedicated SSL Cert
 date: 2026-03-31T00:00
 author: gui
 tags: ["기술", "Cloudflare", "보안", "인프라"]
-image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-lastUpdated: "2026-09-26T18:45:00+09:00"
+image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Cloudflare는 2021년에 기존 **Dedicated SSL Certificates**를 **Advanced Certificate Manager(ACM)**로 발전시켰습니다. 인증서를 선택하기 전에 호스트 이름과 DNS 설정 방식을 확인하세요.
@@ -15,6 +15,25 @@ Cloudflare는 2021년에 기존 **Dedicated SSL Certificates**를 **Advanced Cer
 **전체 DNS 설정**에서 무료 Universal SSL은 일반적으로 루트 도메인과 한 단계 하위 도메인을 보호합니다. `*.example.com`은 `www.example.com`을 포함하지만 `api.staging.example.com`은 포함하지 않습니다. **CNAME(부분) 설정**에서는 프록시된 각 호스트 이름에 대해 깊이와 관계없이 Universal 인증서가 발급됩니다. 따라서 다단계 하위 도메인에 ACM이 항상 필요한 것은 아닙니다.
 
 Cloudflare는 현재 Universal 인증서를 무료이며 공유되지 않는 인증서로 설명합니다. 여러 사이트가 인증서를 공유한다는 이전 설명은 오래되었습니다.
+
+<figure class="article-diagram" data-layout="compare" data-tone="amber" data-count="2" aria-labelledby="diagram-cloudflare-ssl-advanced-certificate-manager">
+  <figcaption>
+    <strong id="diagram-cloudflare-ssl-advanced-certificate-manager">Universal SSL 적용 범위는 DNS 방식에 따라 달라집니다</strong>
+    <span>적용 범위는 DNS 방식에 따라 다릅니다. 하위 도메인 단계만으로 ACM 필요 여부를 판단할 수 없습니다.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6z"/><path d="M9 12h6"/></svg></span>
+      <strong>Full DNS setup</strong>
+      <span>일반적으로 루트와 한 단계 하위 도메인을 포함하며, 더 깊은 이름은 wildcard 범위 밖입니다.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+      <strong>CNAME / partial setup</strong>
+      <span>프록시된 호스트명마다 발급하며 하위 도메인 단계와 관계없습니다.</span>
+    </li>
+  </ol>
+</figure>
 
 ## ACM을 고려할 때
 

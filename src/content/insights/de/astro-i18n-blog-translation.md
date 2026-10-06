@@ -2,10 +2,10 @@
 title: "Astro 7 Website für 9 Sprachen fit machen ― Blogübersetzung und mehrsprachige Architektur"
 description: "Dokumentation der Neun-Sprachen-Einführung mit Astro 7.1.3 und UnoCSS im Juli 2026, ergänzt um Hinweise auf aktuelle Abhängigkeiten und Übersetzungen."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Website"]
-image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
+image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: Mehrsprachiger Workflow
   steps:

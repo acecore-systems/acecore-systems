@@ -2,10 +2,10 @@
 title: "用 Sveltia CMS 运营多语言博客的方法"
 description: "本文记录 2026 年 6 月的 Copilot 翻译 PR 流程，以及 2026 年 9 月采用 OpenAI Batch 的现行流程。"
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: 界面翻译和多语言发布不是一回事
@@ -86,6 +86,30 @@ faq:
 ## 当前翻译流程（2026 年 9 月）
 
 当 main 上的日文文章或界面原文发生变化时，[Batch 提交工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)启动。它等待 15 分钟以合并后续编辑，检查当前 main 后再提交翻译。[结果收集工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)将结果与当前日文原文的 sourceHash 对照，丢弃过期结果并创建翻译 PR。[合并工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)仅为符合条件的 PR 启用自动合并。术语、链接、事实和语言自然度仍需审核。
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">将翻译结果与当前日语原稿进行比对</strong>
+    <span>排除基于旧 source 的 Batch 结果。即使 PR 满足条件，也要检查术语、链接、事实和表达自然度。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>更新日语原稿</strong>
+      <span>main 上的 source 变更会触发翻译 Batch。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>比对 sourceHash</strong>
+      <span>回收时排除与当前原稿不再匹配的结果。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>合并翻译 PR</strong>
+      <span>满足验证条件时可自动合并；内容仍需另行检查。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 2026 年 6 月的实施记录
 

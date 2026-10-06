@@ -2,10 +2,10 @@
 title: "How to Run a Multilingual Blog with Sveltia CMS"
 description: "This article records the June 2026 Copilot translation PR workflow and the September 2026 OpenAI Batch workflow."
 date: 2026-06-07T17:00
-lastUpdated: 2026-09-26T17:15
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technology", "GitHub Copilot", "i18n", "CMS", "SEO"]
-image: /uploads/acecore-generated/blog-copilot-translation-pipeline.webp
+image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
 callout:
   type: tip
   title: UI translation is not the same as multilingual publishing
@@ -90,6 +90,30 @@ faq:
 ## Current translation workflow (September 2026)
 
 When a Japanese article or UI source changes on main, the [Batch submission workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml) starts. It waits 15 minutes for follow-up edits, checks the current main, then submits the translation. The [collection workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) compares results with the current Japanese sourceHash, discards stale results, and creates a translation PR. The [merge workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) enables automatic merging only for eligible PRs. Terminology, links, facts, and naturalness still need review.
+
+<figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
+  <figcaption>
+    <strong id="diagram-copilot-translation-pipeline">Check translation results against the current Japanese source</strong>
+    <span>Exclude Batch results from stale sources. Even eligible PRs need checks for terminology, links, facts, and fluency.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Japanese source updated</strong>
+      <span>A source change on main triggers a translation Batch.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Compare sourceHash</strong>
+      <span>At collection, exclude results that no longer match the current source.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Integrate the translation PR</strong>
+      <span>Validation can enable auto-merge; content still needs a separate review.</span>
+    </li>
+  </ol>
+</figure>
 
 ## June 2026 rollout record
 

@@ -4,8 +4,8 @@ description: 'La opción antes de pago de Cloudflare, "Dedicated SSL Certificate
 date: 2026-03-31T00:00
 author: gui
 tags: ["Tecnología", "Cloudflare", "Seguridad", "Infraestructura"]
-image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-lastUpdated: "2026-09-26T18:45:00+09:00"
+image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Cloudflare convirtió **Dedicated SSL Certificates** en **Advanced Certificate Manager (ACM)** en 2021. Antes de elegir un certificado, comprueba los nombres de host y el tipo de configuración DNS.
@@ -15,6 +15,25 @@ Cloudflare convirtió **Dedicated SSL Certificates** en **Advanced Certificate M
 En una **configuración DNS completa**, Universal SSL gratuito cubre normalmente el dominio raíz y los subdominios de primer nivel. `*.example.com` cubre `www.example.com`, pero no `api.staging.example.com`. En una **configuración CNAME (parcial)**, Cloudflare emite un certificado Universal para cada nombre de host con proxy, sin importar su profundidad. Un subdominio multinivel no siempre exige ACM.
 
 Cloudflare describe hoy los certificados Universal como gratuitos y no compartidos. La antigua afirmación de que se comparten entre sitios ya no es correcta.
+
+<figure class="article-diagram" data-layout="compare" data-tone="amber" data-count="2" aria-labelledby="diagram-cloudflare-ssl-advanced-certificate-manager">
+  <figcaption>
+    <strong id="diagram-cloudflare-ssl-advanced-certificate-manager">La cobertura de Universal SSL depende del tipo de DNS</strong>
+    <span>La cobertura cambia según el modo DNS; la profundidad no basta para decidir si hace falta ACM.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6z"/><path d="M9 12h6"/></svg></span>
+      <strong>Full DNS setup</strong>
+      <span>Normalmente cubre el dominio raíz y un nivel; los niveles más profundos quedan fuera del wildcard.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+      <strong>CNAME / partial setup</strong>
+      <span>Se emite por cada hostname con proxy, sin importar la profundidad.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Cuándo considerar ACM
 

@@ -4,8 +4,8 @@ description: "Ранее платная опция Cloudflare «Dedicated SSL Ce
 date: 2026-03-31T00:00
 author: gui
 tags: ["Технологии", "Cloudflare", "Безопасность", "Инфраструктура"]
-image: /uploads/acecore-generated/blog-cloudflare-ssl-advanced-certificate-manager.webp
-lastUpdated: "2026-09-26T18:45:00+09:00"
+image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 В 2021 году Cloudflare преобразовала прежнюю услугу **Dedicated SSL Certificates** в **Advanced Certificate Manager (ACM)**. Перед выбором сертификата проверьте имена хостов и схему подключения DNS.
@@ -15,6 +15,25 @@ lastUpdated: "2026-09-26T18:45:00+09:00"
 При **полном подключении DNS** бесплатный Universal SSL обычно покрывает корневой домен и поддомены первого уровня. `*.example.com` покрывает `www.example.com`, но не `api.staging.example.com`. При **частичном подключении через CNAME** Cloudflare выпускает отдельный Universal-сертификат для каждого проксируемого имени независимо от глубины. Поэтому многоуровневый поддомен не всегда требует ACM.
 
 Сейчас Cloudflare описывает Universal-сертификаты как бесплатные и не используемые совместно с другими сайтами. Старое утверждение об общих сертификатах устарело.
+
+<figure class="article-diagram" data-layout="compare" data-tone="amber" data-count="2" aria-labelledby="diagram-cloudflare-ssl-advanced-certificate-manager">
+  <figcaption>
+    <strong id="diagram-cloudflare-ssl-advanced-certificate-manager">Область действия Universal SSL зависит от режима DNS</strong>
+    <span>Область действия различается по режиму DNS; одной глубины поддомена недостаточно, чтобы решить, нужен ли ACM.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6z"/><path d="M9 12h6"/></svg></span>
+      <strong>Full DNS setup</strong>
+      <span>Обычно покрывает корневой домен и один уровень поддоменов; более глубокие имена вне этого wildcard.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+      <strong>CNAME / partial setup</strong>
+      <span>Выпускается для каждого проксируемого hostname независимо от глубины.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Когда рассмотреть ACM
 

@@ -4,7 +4,7 @@ description: "从 Zoho Workplace 迁移到 KAGOYA MAIL 的步骤、DNS 设置、
 date: 2026-03-16T00:00
 author: gui
 tags: ["技术", "邮件", "DNS", "基础设施"]
-image: /uploads/acecore-generated/blog-zoho-to-kagoya-mail-migration.webp
+image: "/images/insights/covers/zoho-to-kagoya-mail-migration-cover-v2.webp"
 processFigure:
   title: 迁移工作的整体流程
   steps:
@@ -82,7 +82,7 @@ faq:
       answer: 收件方邮件服务器将邮件判定为垃圾邮件的概率会增加。特别是 Gmail 越来越严格，越来越多的情况要求 SPF 和 DKIM 都 PASS。
     - question: 取消 Zoho Workplace 后数据会怎样？
       answer: 付费计划到期后会降级为免费计划。免费计划也有存储限制，因此应提前导出必要的数据。如果删除账号本身，所有数据将丢失。
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026年9月26日补充：** 下方价格、控制台步骤和DNS值是迁移当时的记录。不要直接复制到其他域名；请核对[KAGOYA MAIL](https://www.kagoya.jp/mail/)和[Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html)的现行说明、自己的合同及域名显示的认证值。

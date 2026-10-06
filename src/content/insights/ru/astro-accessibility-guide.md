@@ -2,10 +2,10 @@
 title: "Практические улучшения доступности сайта на Astro"
 description: "Запись об улучшениях доступности сайта Astro + UnoCSS в марте 2026 года: ARIA, контрастность, фокус, формы и экранные читалки."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Технологии", "Astro", "Доступность"]
-image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
+image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
 callout:
   type: info
   title: Доступность — это улучшение UX для всех

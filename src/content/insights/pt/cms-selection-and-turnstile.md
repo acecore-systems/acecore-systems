@@ -2,10 +2,10 @@
 title: "Guia de instalação do Sveltia CMS"
 description: "Registro da implantação do Sveltia CMS na Acecore: autenticação de editores, gravação direta validada por GitHub App, mídia e operação multilíngue."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Tecnologia", "CMS", "Astro", "Cloudflare", "Segurança"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Fluxo de instalação do Sveltia CMS
   description: A área administrativa, autenticação, conteúdo editável, mídia e fluxo de PR devem ser pensados separadamente.
@@ -262,6 +262,25 @@ GitHub OAuth verifica novamente o editor e sua permissão de escrita antes do sa
 O save usa o HEAD inicial como `expectedHeadOid`; uma atualização concorrente retorna 409. Se a resposta do GitHub se perder, só há recuperação quando marker da request, SHA pai, todos os paths e SHAs dos blobs coincidem.
 
 O commit direto mantém subjects como `cms: create ...` e `cms: update ...`. O mesmo push da GitHub App inicia Pages e a tarefa de tradução. Código, schemas, workflows, configuração CMS e traduções continuam passando por PR e CI.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">Salvamentos do CMS e mudanças de código seguem rotas distintas</strong>
+    <span>Conteúdo e imagens permitidos são validados antes de salvar; código e configuração seguem o fluxo normal de PR/CI.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>Proxy de salvamento CMS</strong>
+      <span>Valida conteúdo e imagens permitidos antes do commit; conflitos exigem recarregar.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Fluxo normal de PR/CI</strong>
+      <span>Código, schema, workflows e traduções ficam fora do caminho do CMS.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. Tradução só para commits CMS
 

@@ -4,7 +4,7 @@ description: "VitePress + UnoCSS로 구축한 사업계획서를 Astro + Starlig
 date: 2026-03-15T00:00
 author: gui
 tags: ["기술", "Astro", "Starlight"]
-image: /uploads/acecore-generated/blog-vitepress-to-starlight-migration.webp
+image: "/images/insights/covers/vitepress-to-starlight-migration-cover-v2.webp"
 processFigure:
   title: 마이그레이션 플로우
   steps:
@@ -45,6 +45,7 @@ faq:
       answer: 플러그인 의존에서 CDN(jsdelivr)을 통한 Mermaid 로딩으로 전환했습니다. 빌드 의존성이 완전히 해소되며 안정적인 다이어그램 렌더링이 가능합니다.
     - question: 마이그레이션에 얼마나 걸리나요?
       answer: 주요 작업은 디렉토리 구조 변환(docs/ → src/content/docs/)과 프론트매터 조정입니다. 콘텐츠 자체가 Markdown이므로 그대로 재사용할 수 있어 비교적 빠르게 완료됩니다.
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 VitePress 문서 사이트를 Astro + Starlight로 마이그레이션하는 과정을 소개합니다. 메인 사이트가 Astro라면 Starlight로 문서를 통합하면 운용이 간소화됩니다. Mermaid 다이어그램의 CDN 이전도 함께 다룹니다.

@@ -2,10 +2,10 @@
 title: "AstroサイトのPageSpeedを改善する実践テクニック"
 description: "2026年7月時点のAstro 7.1.3とUnoCSSによる最適化記録です。現行のAstroとTailwind CSS構成との差を明示します。"
 date: 2026-03-15T00:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技術", "Astro", "パフォーマンス"]
-image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
+image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
 callout:
   type: tip
   title: この記事の対象読者

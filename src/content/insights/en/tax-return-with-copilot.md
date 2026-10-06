@@ -4,7 +4,7 @@ description: "From classifying and verifying 837 journal entries accumulated thr
 date: 2026-03-17T00:00
 author: gui
 tags: ["Technology", "GitHub Copilot", "VS Code"]
-image: /uploads/acecore-generated/blog-tax-return-with-copilot.webp
+image: "/images/insights/covers/tax-return-with-copilot-cover-v2.webp"
 processFigure:
   title: Overall Copilot Tax Return Flow
   steps:
@@ -51,7 +51,7 @@ faq:
       answer: The biggest prerequisite is having journal data accumulated daily through cloud accounting software like MoneyForward. Copilot handles the organization and verification of accumulated data, so it cannot function without data.
     - question: How were journal inconsistencies detected?
       answer: Copilot was given the policy document (account category rules) and the journal ledger to cross-check, mechanically detecting entries that didn't match the rules. Out of 837 entries, 8 inconsistencies were found and corrected.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **Added September 26, 2026:** This records one person’s filing work in March 2026. AI classification and form entry do not guarantee correct tax treatment. The filer must review source documents, the return, and the submission result; check the rules and procedure for the relevant year with [Japan’s National Tax Agency](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).

@@ -4,7 +4,7 @@ description: "Запись миграции бизнес-плана, созда�
 date: 2026-03-15T00:00
 author: gui
 tags: ["Технологии", "Astro", "Starlight"]
-image: /uploads/acecore-generated/blog-vitepress-to-starlight-migration.webp
+image: "/images/insights/covers/vitepress-to-starlight-migration-cover-v2.webp"
 processFigure:
   title: Процесс миграции
   steps:
@@ -45,6 +45,7 @@ faq:
       answer: Мы перешли от зависимости от плагина к загрузке Mermaid через CDN (jsdelivr). Это полностью устраняет зависимости сборки и обеспечивает стабильный рендеринг диаграмм.
     - question: Сколько усилий требует миграция?
       answer: Основные задачи — преобразование структуры каталогов (docs/ → src/content/docs/) и корректировка frontmatter. Поскольку сам контент в Markdown, его можно использовать как есть, что делает миграцию относительно быстрой.
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Вот пошаговое описание миграции документационного сайта VitePress на Astro + Starlight. Если ваш основной сайт работает на Astro, унификация документации под Starlight упрощает эксплуатацию. Также рассматривается миграция диаграмм Mermaid на CDN.

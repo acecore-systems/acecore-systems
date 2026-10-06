@@ -4,7 +4,7 @@ description: "按目的整理网站制作费用行情，说明报价时应确认
 date: 2026-04-01T10:00
 author: gui
 tags: ["网站制作", "网站", "SEO", "服务"]
-image: /uploads/acecore-generated/blog-homepage-production-cost-guide-1600.webp
+image: "/images/insights/covers/homepage-production-cost-guide-cover-v2.webp"
 callout:
   type: info
   title: 费用取决于“目的”和“运营范围”，而非页面数量
@@ -26,7 +26,7 @@ faq:
       answer: 减少页面数量、自备文案和照片、充分利用现有品牌资产、将初期上线后的改善分阶段进行，都是有效的方法。
     - question: 上线后的运营也可以咨询吗？
       answer: 可以。Acecore不仅提供网站制作，还可以持续支持访问分析、内容更新、改善提案和维护等工作。
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026年9月26日更新：** 下方金额是用于比较不同范围的编辑性预算示例，并非市场价格统计或Acecore的正式报价。请先确定功能、素材及维护范围，再查看[现行价格说明](/zh-cn/pricing/)并获取个别报价。

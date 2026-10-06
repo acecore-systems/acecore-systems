@@ -2,10 +2,10 @@
 title: "Astro 7 사이트를 9개 언어로 지원하는 방법 ― 블로그 번역과 다국어 아키텍처"
 description: "2026년 7월 Astro 7.1.3과 UnoCSS로 9개 언어를 도입한 기록이며, 현재 의존성과 번역 경로도 안내합니다."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["기술", "Astro", "i18n", "웹사이트"]
-image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
+image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: 다국어 워크플로우
   steps:

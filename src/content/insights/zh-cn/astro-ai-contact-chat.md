@@ -2,10 +2,10 @@
 title: "在 Astro 网站中加入咨询 AI 聊天的技术设计"
 description: "这是 2026 年 6 月的参考设计。面向 Astro + Cloudflare Pages 静态网站，使用 OpenAI Responses API 加入咨询 AI 聊天的技术设计。整理 API 边界、站内信息上下文、提示词控制、按 locale 生成 URL、Origin 检查、限流以及安全的 Markdown 链接渲染。"
 date: 2026-06-07T12:00
-lastUpdated: 2026-09-26T16:00
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "Cloudflare", "网站", "AI", "服务"]
-image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&q=80
+image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
 callout:
   type: info
   title: 本文要点

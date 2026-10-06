@@ -2,10 +2,10 @@
 title: "Praktische Techniken zur Verbesserung von PageSpeed auf einer Astro-Website"
 description: "Dokumentation der Leistungsoptimierung mit Astro 7.1.3 und UnoCSS im Juli 2026, abgegrenzt von der aktuellen Astro- und Tailwind-CSS-Konfiguration."
 date: 2026-03-15T00:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Leistung"]
-image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
+image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
 callout:
   type: tip
   title: Für wen dieser Artikel gedacht ist

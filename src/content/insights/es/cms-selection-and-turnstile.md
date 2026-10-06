@@ -2,10 +2,10 @@
 title: "Guía de instalación de Sveltia CMS"
 description: "Registro cronológico de la implantación de Sveltia CMS en Acecore: acceso de editores, guardado directo validado mediante GitHub App, imágenes y operación multilingüe."
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Tecnología", "CMS", "Astro", "Cloudflare", "Seguridad"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Flujo de instalación de Sveltia CMS
   description: La pantalla de administración, autenticación, contenido editable, medios y flujo de PR deben diseñarse por separado.
@@ -264,6 +264,25 @@ GitHub OAuth vuelve a comprobar al editor y su permiso de escritura antes de gua
 El guardado usa el HEAD inicial como `expectedHeadOid`; una actualización concurrente devuelve 409. Si se pierde la respuesta de GitHub, solo se recupera como éxito cuando coinciden marcador de request, SHA padre, todas las rutas y SHA de blobs.
 
 El commit directo conserva subjects como `cms: create ...` o `cms: update ...`. El mismo push de la GitHub App inicia Pages y la tarea de traducción. Código, schemas, workflows, configuración CMS y traducciones siguen pasando por PR y CI.
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">Las ediciones CMS y los cambios de código siguen rutas distintas</strong>
+    <span>El contenido y las imágenes permitidos se validan antes de guardar; el código y la configuración siguen la ruta habitual de PR/CI.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>Proxy de guardado CMS</strong>
+      <span>Valida el contenido y las imágenes permitidos antes del commit; ante conflictos, pide recargar.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Ruta habitual de PR/CI</strong>
+      <span>El código, los esquemas, los workflows y las traducciones quedan fuera de CMS.</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. Activar traducción solo con commits CMS
 

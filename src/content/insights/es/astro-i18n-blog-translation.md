@@ -2,10 +2,10 @@
 title: "Cómo hacer que un sitio Astro 7 soporte 9 idiomas ― Traducción del blog y arquitectura multilingüe"
 description: "Registro de la adaptación a nueve idiomas con Astro 7.1.3 y UnoCSS en julio de 2026, con referencias a las dependencias y traducción actuales."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "i18n", "Sitio web"]
-image: /uploads/acecore-generated/blog-astro-i18n-blog-translation.webp
+image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: Flujo de trabajo multilingüe
   steps:

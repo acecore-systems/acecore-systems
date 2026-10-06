@@ -4,7 +4,7 @@ description: "A record of migrating a business plan document built with VitePres
 date: 2026-03-15T00:00
 author: gui
 tags: ["Technology", "Astro", "Starlight"]
-image: /uploads/acecore-generated/blog-vitepress-to-starlight-migration.webp
+image: "/images/insights/covers/vitepress-to-starlight-migration-cover-v2.webp"
 processFigure:
   title: Migration Flow
   steps:
@@ -45,6 +45,7 @@ faq:
       answer: We switched from plugin dependency to loading Mermaid via CDN (jsdelivr). This eliminates build dependencies entirely and delivers stable diagram rendering.
     - question: How much effort does the migration take?
       answer: The main tasks are converting the directory structure (docs/ → src/content/docs/) and adjusting frontmatter. Since the content itself is Markdown, it can be reused as-is, making the migration relatively quick.
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 Here's a walkthrough of migrating a VitePress documentation site to Astro + Starlight. If your main site runs on Astro, unifying your docs under Starlight simplifies operations. We also cover migrating Mermaid diagrams to CDN.

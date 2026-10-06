@@ -2,11 +2,11 @@
 title: "Guide d'amélioration de la qualité d'un site Astro — Jusqu'au score PageSpeed mobile de 99"
 description: "Récit complet de l'amélioration d'un site Astro + UnoCSS + Cloudflare Pages sur 4 axes — performance, SEO, accessibilité et UX — aboutissant à un score PageSpeed Insights mobile de 99 et un score parfait sur tous les critères en desktop."
 date: 2026-03-25T15:00
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags:
   ["Technologie", "Astro", "Performance", "Accessibilité", "SEO", "Site web"]
-image: /uploads/acecore-generated/blog-website-improvement-batches.webp
+image: "/images/insights/covers/website-improvement-batches-cover-v2.webp"
 callout:
   type: tip
   title: Public cible de cet article

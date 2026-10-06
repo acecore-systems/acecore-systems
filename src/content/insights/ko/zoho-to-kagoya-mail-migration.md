@@ -4,7 +4,7 @@ description: "Zoho Workplace에서 KAGOYA MAIL로의 전체 이전에 대한 실
 date: 2026-03-16T00:00
 author: gui
 tags: ["기술", "이메일", "DNS", "인프라"]
-image: /uploads/acecore-generated/blog-zoho-to-kagoya-mail-migration.webp
+image: "/images/insights/covers/zoho-to-kagoya-mail-migration-cover-v2.webp"
 processFigure:
   title: 전체 이전 플로우
   steps:
@@ -82,7 +82,7 @@ faq:
       answer: 수신 측 메일 서버가 스팸으로 판정할 확률이 높아집니다. 특히 Gmail은 엄격해져서, SPF와 DKIM 모두 PASS해야 하는 경우가 증가하고 있습니다.
     - question: Zoho Workplace를 해약하면 데이터는 어떻게 되나요?
       answer: 유료 플랜이 만료되면 무료 플랜으로 전환됩니다. 무료 플랜에도 용량 제한이 있으므로, 필요한 데이터는 사전에 내보내야 합니다. 계정 자체를 삭제하면 모든 데이터가 영구 삭제됩니다.
-lastUpdated: "2026-09-26T18:55:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 ---
 
 > **2026년 9월 26일 추가:** 아래 요금, 관리 화면 단계, DNS 값은 당시 이전 기록입니다. 다른 도메인에 그대로 복사하지 말고 [KAGOYA MAIL](https://www.kagoya.jp/mail/)과 [Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html)의 현재 안내, 본인의 계약과 도메인별 인증 값을 확인하세요.

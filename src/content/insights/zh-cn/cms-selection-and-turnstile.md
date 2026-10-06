@@ -2,10 +2,10 @@
 title: "Sveltia CMS 导入指南"
 description: "按时间梳理Acecore的Sveltia CMS实施：编辑者认证、GitHub App验证后的直接保存、媒体与多语言运营。"
 date: 2026-06-07T16:00
-lastUpdated: "2026-09-27T22:35:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "CMS", "Astro", "Cloudflare", "安全"]
-image: /uploads/acecore-generated/blog-cms-selection-and-turnstile.webp
+image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
 processFigure:
   title: Sveltia CMS 导入流程
   description: 为静态网站加入 CMS 时，应把管理界面、认证、可编辑内容、媒体文件和 PR 运维分开设计。
@@ -284,6 +284,25 @@ GitHub OAuth 会在保存前重新确认编辑者和写权限。仅安装到 `ac
 保存使用开始编辑时的 HEAD 作为 `expectedHeadOid`；并发更新返回 409。如果 GitHub 响应丢失，只有 request marker、parent SHA、全部 path 和 blob SHA 完全一致时才恢复为成功。
 
 direct commit 保留 `cms: create ...` 或 `cms: update ...` 这样的 subject。同一个 GitHub App push 会启动 Pages deploy 和翻译 task。代码、schema、workflow、CMS 配置和翻译文件仍然必须经过 PR 与 CI。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-cms-selection-and-turnstile">
+  <figcaption>
+    <strong id="diagram-cms-selection-and-turnstile">CMS 保存与代码修改走不同发布路径</strong>
+    <span>CMS 允许的正文和图片先经验证再保存；代码与配置修改走常规 PR/CI 路径。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12l2 2 5-5"/></svg></span>
+      <strong>CMS 保存 proxy</strong>
+      <span>提交前验证允许的正文和图片；发生冲突时要求重新加载。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>常规 PR/CI 路径</strong>
+      <span>代码、schema、workflow 和翻译不走 CMS 保存路径。</span>
+    </li>
+  </ol>
+</figure>
 
 ## 10. 只让 CMS commit 触发翻译
 

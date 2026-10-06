@@ -2,10 +2,10 @@
 title: "Astro网站无障碍改进实践指南"
 description: "记录2026年3月Astro + UnoCSS网站的无障碍改进，包括ARIA、对比度、焦点、表单和屏幕阅读器示例。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["技术", "Astro", "无障碍"]
-image: /uploads/acecore-generated/blog-astro-accessibility-guide.webp
+image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
 callout:
   type: info
   title: 无障碍适配是"面向所有人的UX改善"

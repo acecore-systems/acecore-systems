@@ -2,10 +2,10 @@
 title: "Практические методы улучшения PageSpeed на сайте Astro"
 description: "История оптимизаций с Astro 7.1.3 и UnoCSS в июле 2026 года, отделённая от текущей конфигурации Astro и Tailwind CSS."
 date: 2026-03-15T00:00
-lastUpdated: "2026-09-26T17:20:00+09:00"
+lastUpdated: "2026-10-06T13:58:01+09:00"
 author: gui
 tags: ["Технологии", "Astro", "Производительность"]
-image: /uploads/acecore-generated/blog-astro-performance-tuning.webp
+image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
 callout:
   type: tip
   title: Для кого эта статья
