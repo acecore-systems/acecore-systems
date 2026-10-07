@@ -76,8 +76,4 @@ Sveltia CMS は `/admin/` から利用します。CMS では日本語の固定�
 
 日本語sourceが変わると翻訳source hashの検証が失敗し、古い翻訳のまま新しいdeployが進まない設計です。OpenAI Batchの回収時は変更した翻訳ファイルだけをPrettierで整形し、専用Translation Botが同一repositoryの `translation/openai/` branchからPRを作成します。自動マージ対象は、Bot、source marker、変更path、現在のsource hash、`Build and Format` を再検証します。behindの場合は検証済みHEAD SHAで最新mainへ追従させ、GitHubの必須checkが未完了ならsquash Auto-mergeを予約し、すべて揃ってcleanなら検証済みHEAD SHAを固定してsquash mergeします。
 
-変更したInsights翻訳は、構造・保護トークンの検査後に[Decisions API](https://developers.openai.com/api/docs/guides/decisions)（gpt-6-luna）で意味の忠実性と言語を追加審査します。翻訳本文の生成はResponses Batchのままで、UI・固定ページ翻訳にはこの追加審査を適用しません。不合格、拒否、不正応答、API障害、入力合計48,000文字超過では生成結果をDraft PRに保持し、自動Ready化や自動マージを停止します。PR本文の対象訳文を人が確認・修正し、Ready for reviewへ変更後に `Merge OpenAI Translation PR` をPR番号指定で手動実行すると、既存のCI・source hash・許可パス・HEAD SHA検査へ戻ります。判定は追加呼出しのため、翻訳生成費用の削減を意味しません。
-
-`Check Insight Translation Review` を手動実行すると、既存の翻訳用API keyで8言語・架空40例の意味審査を確認できます。Batch回収、訳文更新、PR作成、公開は行いません。ラベル付き例は `tests/fixtures/insight-translation-review.json`、ローカル実行は `OPENAI_TRANSLATION_API_KEY` を設定して `node scripts/evaluate-insight-translations.mjs` です。キー値はログや評価結果に出力しません。
-
 移行の本番切替条件と旧認証へのロールバックは [AcecoreID管理ログイン移行](docs/acecoreid-admin-migration.md) を参照してください。旧OAuthの説明が残る運用資料より、この移行手順を優先します。
