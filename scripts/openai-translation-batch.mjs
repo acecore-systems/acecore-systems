@@ -11,7 +11,6 @@ import {
   translatedLocales,
   translationSourcePaths,
 } from "./i18n-source-hash.mjs";
-import { reviewInsightTranslation } from "./insight-translation-review.mjs";
 
 const API_BASE_URL = "https://api.openai.com/v1";
 const BATCH_ENDPOINT = "/v1/responses";
@@ -473,16 +472,12 @@ export function isTranslationPullRequestCurrent(body, currentSourceHash) {
   return getSourceHashFromPullRequestBody(body) === currentSourceHash;
 }
 
-export async function closeStalePullRequests(
-  currentSourceHash,
-  request = githubRequest,
-) {
-  const pulls = await request("/pulls?state=open&per_page=100");
+async function closeStalePullRequests(currentSourceHash) {
+  const pulls = await githubRequest("/pulls?state=open&per_page=100");
   if (!Array.isArray(pulls)) return;
   for (const pull of pulls) {
     const marker = getSourceHashFromPullRequestBody(pull.body);
     if (
-      pull.draft ||
       typeof pull?.head?.ref !== "string" ||
       !pull.head.ref.startsWith("translation/openai/") ||
       !marker ||
@@ -490,7 +485,7 @@ export async function closeStalePullRequests(
     ) {
       continue;
     }
-    await request(`/pulls/${pull.number}`, {
+    await githubRequest(`/pulls/${pull.number}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ state: "closed" }),
@@ -812,33 +807,17 @@ function validateInsightTranslation(source, translated) {
   return output.endsWith("\n") ? output : `${output}\n`;
 }
 
-export async function applyInsightTranslation(
-  metadata,
-  response,
-  {
-    readSource = (filePath) => readFileSync(filePath, "utf8"),
-    writeTranslation = writeFileIfChanged,
-    review = reviewInsightTranslation,
-  } = {},
-) {
+function applyInsightTranslation(metadata, response) {
   if (typeof response.markdown !== "string") {
     throw new Error("Insight response.markdown must be a string");
   }
-  const source = readSource(metadata.sourcePath);
+  const source = readFileSync(metadata.sourcePath, "utf8");
   const translated = validateInsightTranslation(source, response.markdown);
   const slug = path.basename(metadata.sourcePath);
-  const targetPath = path.join("src/content/insights", metadata.locale, slug);
-  const changed = writeTranslation(targetPath, translated);
-  if (!changed) return { changed: false, review: null };
-  const result = await review({
-    source,
-    translation: translated,
-    locale: metadata.locale,
-  });
-  return {
-    changed: true,
-    review: { ...result, path: targetPath, locale: metadata.locale },
-  };
+  return writeFileIfChanged(
+    path.join("src/content/insights", metadata.locale, slug),
+    translated,
+  );
 }
 
 function parseOutputLines(value) {
@@ -871,12 +850,7 @@ function selectCompletedBatch(batches, processedBatches) {
   );
 }
 
-export function needsTranslationReview(reviews) {
-  return reviews.some((review) => review.status !== "pass");
-}
-
-export function makePullRequestBody(batchId, sourceHash, reviews = []) {
-  const held = needsTranslationReview(reviews);
+function makePullRequestBody(batchId, sourceHash) {
   return [
     `${BATCH_MARKER_PREFIX}${batchId}${BATCH_MARKER_SUFFIX}`,
     getSourceMarker(sourceHash),
@@ -886,18 +860,7 @@ export function makePullRequestBody(batchId, sourceHash, reviews = []) {
     "- sourceHash が現在の source と一致する結果だけを含めています。",
     "",
     "## 確認",
-    ...(reviews.length
-      ? [
-          "- Insightsの意味・言語をDecisions APIで独立審査しました。本文の生成はResponses Batchのままです。",
-          ...reviews.map(
-            (review) =>
-              `- ${review.locale}: ${review.path} — ${review.status} (${review.reason})`,
-          ),
-        ]
-      : []),
-    held
-      ? "- 要確認または判定不能のためDraftで保留します。訳文と日本語sourceを確認・修正し、Ready for reviewへ変更後にMerge OpenAI Translation PRを手動実行してください。"
-      : "- CI と必須checkが成功すると、squashで自動マージされます。",
+    "- CI と必須checkが成功すると、squashで自動マージされます。",
   ].join("\n");
 }
 
@@ -920,17 +883,10 @@ function writeMarker(batchId) {
   return markerPath;
 }
 
-function writeCollectedOutputs({
-  batchId,
-  hasChanges,
-  bodyPath,
-  processed,
-  needsReview = false,
-}) {
+function writeCollectedOutputs({ batchId, hasChanges, bodyPath, processed }) {
   writeOutput("batch_id", batchId ?? "");
   writeOutput("has_changes", hasChanges ? "true" : "false");
   writeOutput("body_path", bodyPath ?? "");
-  writeOutput("needs_review", needsReview ? "true" : "false");
   writeOutput("processed_batch_id", processed ? batchId : "");
   if (processed && batchId) writeOutput("marker_path", writeMarker(batchId));
 }
@@ -995,7 +951,6 @@ async function collectBatch(options) {
   }
 
   let hasChanges = false;
-  const insightReviews = [];
   const pendingInterfaceFiles = new Map();
   for (const output of outputLines) {
     if (!output.response || output.response.status_code !== 200) {
@@ -1009,9 +964,7 @@ async function collectBatch(options) {
     if (metadata.kind === "content") {
       hasChanges = applyContentTranslation(metadata, response) || hasChanges;
     } else if (metadata.kind === "insight") {
-      const result = await applyInsightTranslation(metadata, response);
-      hasChanges = result.changed || hasChanges;
-      if (result.review) insightReviews.push(result.review);
+      hasChanges = applyInsightTranslation(metadata, response) || hasChanges;
     } else {
       applyInterfaceTranslation(metadata, response, pendingInterfaceFiles);
     }
@@ -1028,17 +981,13 @@ async function collectBatch(options) {
     : null;
   if (bodyPath) {
     mkdirSync(path.dirname(bodyPath), { recursive: true });
-    writeFileSync(
-      bodyPath,
-      makePullRequestBody(batch.id, currentSourceHash, insightReviews),
-    );
+    writeFileSync(bodyPath, makePullRequestBody(batch.id, currentSourceHash));
   }
   writeCollectedOutputs({
     batchId: batch.id,
     hasChanges,
     bodyPath,
     processed: true,
-    needsReview: needsTranslationReview(insightReviews),
   });
   console.log(
     hasChanges

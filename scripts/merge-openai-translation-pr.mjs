@@ -349,12 +349,6 @@ export async function runMergeAutomation(
     console.log(`PR #${prNumber} is not an eligible OpenAI translation PR.`);
     return;
   }
-  if (pullRequest.draft) {
-    console.log(
-      `PR #${prNumber} is Draft and requires human review. Skipping.`,
-    );
-    return;
-  }
   if (expectedSha && pullRequest.head.sha !== expectedSha) {
     console.log(
       `PR #${prNumber} changed after the successful CI run. Skipping.`,
@@ -388,6 +382,7 @@ export async function runMergeAutomation(
     return;
   }
 
+  await markPullRequestReadyForReview(pullRequest, graphql);
   if (pullRequest.mergeable_state === "clean") {
     await mergePullRequest(pullRequest, graphql);
     return;
