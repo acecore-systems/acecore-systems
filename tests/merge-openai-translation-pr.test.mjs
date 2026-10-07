@@ -12,6 +12,26 @@ const REPOSITORY = "acecore-systems/acecore-systems";
 const HEAD_SHA = "a".repeat(40);
 const SOURCE_HASH = "b".repeat(64);
 
+test("Draftの翻訳PRはCIが成功しても自動Ready化・追従・close・mergeしない", async () => {
+  const calls = [];
+  await runMergeAutomation(["--pr=42"], {
+    request: async (pathname, options) => {
+      calls.push({ pathname, options });
+      if (pathname === "/pulls/42" && !options)
+        return createPullRequest({ draft: true });
+      throw new Error("A Draft must not reach any mutating or merge path");
+    },
+    graphql: async () => {
+      throw new Error("Draft must not be changed through GraphQL");
+    },
+    repository: REPOSITORY,
+    getCurrentSourceHash: () => {
+      throw new Error("Draft must stay held even when source changes");
+    },
+  });
+  assert.deepEqual(calls, [{ pathname: "/pulls/42", options: undefined }]);
+});
+
 function createPullRequest({
   authorLogin = "acecore-translation-bot[bot]",
   headRepository = REPOSITORY,
