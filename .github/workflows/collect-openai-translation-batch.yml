@@ -1,72 +1,130 @@
 name: Collect OpenAI Translation Batch
 
 on:
+  schedule:
+    - cron: "2,17,32,47 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  actions: read
+  contents: write
+  pull-requests: write
 
 jobs:
-  inspect:
+  collect:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v7
+      - name: Check out current main
+        uses: actions/checkout@v7
         with:
-          ref: e8fdbb519b9a38ce8d6f32a46e040b90622bd4f6
-          persist-credentials: false
-      - uses: actions/setup-node@v7
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
-      - name: Download only the completed article translations
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Find processed batches
+        id: processed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ids="$(gh api --paginate "/repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false) | .name' | sed -n 's/^openai-translation-processed-//p' | paste -sd, - || true)"
+          echo "ids=${ids}" >> "$GITHUB_OUTPUT"
+
+      - name: Collect one completed batch
+        id: collector
         env:
           OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          node --input-type=module <<'NODE'
-          import assert from 'node:assert/strict';
-          import {createHash} from 'node:crypto';
-          import {mkdirSync,writeFileSync} from 'node:fs';
-          import {decodeMetadata} from './scripts/openai-translation-batch.mjs';
-          const batchId='batch_6ac73291596481908e00d92eeb3451eb';
-          const sourceHash='3c4afe625ac527d3a3008692e4acb9b0f798d60c1cfba668b91110931d0b6e3a';
-          const locales=new Set(['en','zh-cn','es','pt','fr','ko','de','ru']);
-          assert.ok(process.env.OPENAI_TRANSLATION_API_KEY);
-          async function get(path) {
-            const response=await fetch('https://api.openai.com/v1'+path,{headers:{Authorization:'Bearer '+process.env.OPENAI_TRANSLATION_API_KEY},signal:AbortSignal.timeout(30000)});
-            assert.equal(response.status,200,'Batch read failed');
-            return response;
-          }
-          const batch=await (await get('/batches/'+batchId)).json();
-          assert.equal(batch.id,batchId);
-          assert.equal(batch.metadata.repository,process.env.GITHUB_REPOSITORY);
-          assert.equal(batch.metadata.source_hash,sourceHash);
-          assert.equal(batch.status,'completed');
-          assert.deepEqual(batch.request_counts,{total:8,completed:8,failed:0});
-          assert.ok(batch.output_file_id);
-          const lines=(await (await get('/files/'+encodeURIComponent(batch.output_file_id)+'/content')).text()).split(/\r?\n/u).filter(Boolean).map(JSON.parse);
-          assert.equal(lines.length,8);
-          const dir=process.env.RUNNER_TEMP+'/ubuntu26-translations';
-          mkdirSync(dir);
-          const files=[];
-          for (const output of lines) {
-            const metadata=decodeMetadata(output.custom_id);
-            assert.equal(metadata.kind,'insight');
-            assert.equal(metadata.sourcePath,'src/content/insights/ubuntu26-lts-upgrade-recovery.md');
-            assert.equal(metadata.sourceHash,sourceHash);
-            assert.ok(locales.delete(metadata.locale),'Unexpected or duplicate locale');
-            assert.equal(output.response?.status_code,200);
-            const text=output.response.body.output.flatMap(item=>(item.content??[]).filter(content=>typeof content.text==='string').map(content=>content.text)).join('');
-            const translated=JSON.parse(text);
-            assert.equal(typeof translated.markdown,'string');
-            writeFileSync(dir+'/'+metadata.locale+'.md',translated.markdown);
-            files.push({locale:metadata.locale,sha256:createHash('sha256').update(translated.markdown).digest('hex')});
-          }
-          assert.equal(locales.size,0);
-          const manifest={batchId,sourceHash,counts:batch.request_counts,files};
-          writeFileSync(dir+'/manifest.json',JSON.stringify(manifest,null,2)+'\n');
-          console.log(JSON.stringify(manifest));
-          NODE
-      - uses: actions/upload-artifact@v7
+          if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
+            echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was collected."
+            exit 0
+          fi
+          node --experimental-strip-types scripts/openai-translation-batch.mjs collect --processed-batches="${{ steps.processed.outputs.ids }}"
+
+      - name: Update translation state
+        if: steps.collector.outputs.has_changes == 'true'
+        run: npm run update:i18n-state
+
+      - name: Format collected translation files
+        if: steps.collector.outputs.has_changes == 'true'
+        run: |
+          {
+            git diff --name-only --diff-filter=ACMRT -z -- src/i18n/content src/content/insights src/i18n/ui.ts src/i18n/contact-form.ts src/i18n/translation-state.json
+            git ls-files --others --exclude-standard -z -- src/i18n/content src/content/insights src/i18n/ui.ts src/i18n/contact-form.ts src/i18n/translation-state.json
+          } | sort -zu | xargs -0 -r npx prettier --write --
+
+      - name: Check translation Bot configuration
+        id: bot
+        if: steps.collector.outputs.has_changes == 'true'
+        env:
+          CLIENT_ID: ${{ secrets.TRANSLATION_BOT_CLIENT_ID }}
+          PRIVATE_KEY: ${{ secrets.TRANSLATION_BOT_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$CLIENT_ID" ] || [ -z "$PRIVATE_KEY" ]; then
+            echo "::warning::TRANSLATION_BOT_CLIENT_ID and TRANSLATION_BOT_APP_PRIVATE_KEY are required before a translation PR can be created."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create translation Bot token
+        id: app-token
+        if: steps.bot.outputs.ready == 'true'
+        uses: actions/create-github-app-token@v3
         with:
-          name: ubuntu26-completed-translations
-          path: ${{ runner.temp }}/ubuntu26-translations
-          retention-days: 14
+          client-id: ${{ secrets.TRANSLATION_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.TRANSLATION_BOT_APP_PRIVATE_KEY }}
+
+      - name: Commit current translation results
+        id: commit
+        if: steps.bot.outputs.ready == 'true'
+        env:
+          TRANSLATION_BOT_TOKEN: ${{ steps.app-token.outputs.token }}
+          BATCH_ID: ${{ steps.collector.outputs.batch_id }}
+        run: |
+          branch="translation/openai/${BATCH_ID}"
+          git switch -c "$branch"
+          git config user.name "Acecore Translation Bot"
+          git config user.email "translation-bot@users.noreply.github.com"
+          git add src/i18n/content src/content/insights src/i18n/ui.ts src/i18n/contact-form.ts src/i18n/translation-state.json
+          git diff --cached --quiet && exit 1
+          git commit -m "翻訳を更新 (${BATCH_ID})"
+          git remote set-url origin "https://x-access-token:${TRANSLATION_BOT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --set-upstream origin "$branch"
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+
+      - name: Create translation pull request
+        if: steps.commit.outputs.branch != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BODY_PATH: ${{ steps.collector.outputs.body_path }}
+          BRANCH: ${{ steps.commit.outputs.branch }}
+          BATCH_ID: ${{ steps.collector.outputs.batch_id }}
+        run: |
+          gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --head "$BRANCH" \
+            --title "[translation] OpenAI Batch ${BATCH_ID}" \
+            --body-file "$BODY_PATH"
+
+      - name: Mark batch as processed
+        if: >-
+          success() &&
+          steps.collector.outputs.processed_batch_id != '' &&
+          (steps.collector.outputs.has_changes != 'true' || steps.bot.outputs.ready == 'true')
+        uses: actions/upload-artifact@v7
+        with:
+          name: openai-translation-processed-${{ steps.collector.outputs.processed_batch_id }}
+          path: ${{ steps.collector.outputs.marker_path }}
+          retention-days: 30

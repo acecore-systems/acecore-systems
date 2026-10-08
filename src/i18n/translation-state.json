@@ -1,10 +1,4 @@
 {
-  "sourceHash": "12faee55e2315cf6d5ca334a531c359448d206200ace49fef47e80043fb52ec0",
-  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
-  "pendingInsights": {
-    "ubuntu26-lts-upgrade-recovery": {
-      "sourceHash": "505f19c3ad13fde7d40b0fa0cfbb775894b6c9f566f0b921f23f618040e13d40",
-      "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
-    }
-  }
+  "sourceHash": "3c4afe625ac527d3a3008692e4acb9b0f798d60c1cfba668b91110931d0b6e3a",
+  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }
