@@ -241,6 +241,7 @@
     font-weight: 600;
     line-height: 1.5;
     text-wrap: balance;
+    overflow-wrap: anywhere;
   }
 
   .insight-prose h2 {
