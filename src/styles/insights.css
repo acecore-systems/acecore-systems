@@ -1,6 +1,12 @@
 @layer theme, base, components, utilities;
 
 @layer components {
+  .insight-article:lang(ru) {
+    --font-display: Georgia, "Times New Roman", serif;
+    --font-sans: "Segoe UI", system-ui, sans-serif;
+    font-family: var(--font-sans);
+  }
+
   .insights-index-page .page-hero--insights,
   .insight-article__header {
     background:
@@ -125,6 +131,7 @@
     letter-spacing: -0.035em;
     line-height: 1.18;
     text-wrap: balance;
+    overflow-wrap: anywhere;
   }
 
   .insight-article__description {
@@ -241,6 +248,7 @@
     font-weight: 600;
     line-height: 1.5;
     text-wrap: balance;
+    overflow-wrap: anywhere;
   }
 
   .insight-prose h2 {

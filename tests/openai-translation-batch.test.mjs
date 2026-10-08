@@ -10,7 +10,64 @@ import {
   isTranslationPullRequestCurrent,
   replaceLocaleObject,
   selectCompletedBatch,
+  validateInsightTranslation,
 } from "../scripts/openai-translation-batch.mjs";
+
+const insightFixture = [
+  "---",
+  'title: "確認"',
+  'date: "2026-10-08T13:35:00+09:00"',
+  "author: gui",
+  "---",
+  "利用者が0のとき、1台ずつ3つの条件を確認する。",
+  "```bash",
+  "# 改行を出力する",
+  "printf '%s\\n' ok",
+  "```",
+  "",
+].join("\n");
+
+test("Insightの数値は本文でも桁を保ち、単語化や省略を拒否する", () => {
+  const translated = insightFixture.replace(
+    "利用者が0のとき、1台ずつ3つの条件を確認する。",
+    "With 0 users, check 3 conditions on 1 server at a time.",
+  );
+  assert.equal(
+    validateInsightTranslation(insightFixture, translated),
+    translated,
+  );
+  for (const invalid of [
+    translated.replace("0 users", "zero users"),
+    translated.replace("1 server", "one server"),
+    translated.replace("3 conditions", "conditions"),
+    translated.replace("0 users", "2 users"),
+  ]) {
+    assert.throws(
+      () =>
+        validateInsightTranslation(insightFixture, invalid, "en: example.md"),
+      /en: example\.md: numeric value changed/u,
+    );
+  }
+});
+
+test("Insightのコード内のバックスラッシュとコメントの変更を拒否する", () => {
+  for (const invalid of [
+    insightFixture.replace("%s\\n", "%s\\\\n"),
+    insightFixture.replace("# 改行を出力する", "# Print a newline"),
+  ]) {
+    assert.throws(
+      () => validateInsightTranslation(insightFixture, invalid),
+      /fenced code changed/u,
+    );
+  }
+  assert.equal(
+    validateInsightTranslation(
+      insightFixture.replaceAll("\n", "\r\n"),
+      insightFixture,
+    ),
+    insightFixture,
+  );
+});
 
 test("sourceHashは改行コード差を同じ版として扱う", () => {
   assert.equal(hashText("更新\r\n本文\r\n"), hashText("更新\n本文\n"));

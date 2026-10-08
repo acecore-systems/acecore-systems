@@ -325,6 +325,8 @@ function createInsightRequest(metadata, markdown) {
         "Translate this Japanese Acecore Systems Insight article into the requested target locale.",
         "Return the entire Markdown document including YAML frontmatter.",
         "Keep frontmatter keys, author, date, lastUpdated, image, uploadedImage, URLs, image destinations, placeholders, inline code, and fenced code unchanged.",
+        "Preserve every numeric token exactly, including prose and visible frontmatter. Do not spell digits out as words or omit counts when paraphrasing; retain 0 rather than zero or no users.",
+        "After JSON decoding, fenced code must be identical to the source, including comments, indentation, and literal backslashes. Do not escape code a second time.",
         "Translate all user-visible prose, including visible frontmatter strings, headings, labels, lists, tables, callouts, FAQs, and image alt text.",
         "Return only the requested JSON object.",
       ].join("\n"),
@@ -776,7 +778,12 @@ function markdownLinkTargets(markdown) {
   return matches(markdown, /\]\(([^)\s]+)(?:\s+[^)]*)?\)/gu).sort();
 }
 
-function validateInsightTranslation(source, translated) {
+export function validateInsightTranslation(
+  source,
+  translated,
+  label = "Translated Insight",
+) {
+  source = normalizeText(source);
   const output = normalizeText(translated);
   if (!output.startsWith("---\n")) {
     throw new Error("Translated Insight must include YAML frontmatter");
@@ -798,7 +805,14 @@ function validateInsightTranslation(source, translated) {
   ) {
     throw new Error("Translated Insight changed fenced code delimiters");
   }
-  assertProtectedTokens(source, output, "Translated Insight");
+  const fencedCode = (markdown) =>
+    markdown.match(/^```[^\n]*\n[\s\S]*?^```[ \t]*$/gmu) ?? [];
+  if (
+    JSON.stringify(fencedCode(source)) !== JSON.stringify(fencedCode(output))
+  ) {
+    throw new Error(`${label}: fenced code changed`);
+  }
+  assertProtectedTokens(source, output, label);
   if (
     JSON.stringify(markdownLinkTargets(source)) !==
     JSON.stringify(markdownLinkTargets(output))
@@ -813,7 +827,11 @@ function applyInsightTranslation(metadata, response) {
     throw new Error("Insight response.markdown must be a string");
   }
   const source = readFileSync(metadata.sourcePath, "utf8");
-  const translated = validateInsightTranslation(source, response.markdown);
+  const translated = validateInsightTranslation(
+    source,
+    response.markdown,
+    `Translated Insight (${metadata.locale}: ${metadata.sourcePath})`,
+  );
   const slug = path.basename(metadata.sourcePath);
   return writeFileIfChanged(
     path.join("src/content/insights", metadata.locale, slug),
