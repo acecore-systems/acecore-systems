@@ -1,29 +1,25 @@
 name: Submit OpenAI Translation Batch
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - src/data/**/*.json
-      - src/content/insights/*.md
-      - src/i18n/contact-form.ts
-      - src/i18n/ui.ts
   workflow_dispatch:
 
 permissions:
   contents: read
-  pull-requests: write
+  actions: read
+  pull-requests: read
 
 jobs:
   submit:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
         with:
+          ref: 85289f8d16adfcb0f1f4e9c23cd4d167ad653807
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
@@ -34,23 +30,105 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Wait for consecutive source edits
-        run: sleep 900
-
-      - name: Use current main as the source version
+      - name: Verify the pinned reviewed source
+        env:
+          SOURCE_HASH: 3c4afe625ac527d3a3008692e4acb9b0f798d60c1cfba668b91110931d0b6e3a
         run: |
-          git fetch origin main
-          git checkout --detach origin/main
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { calculateTranslationSourceHash } from './scripts/i18n-source-hash.mjs';
+          assert.equal(calculateTranslationSourceHash(process.cwd()), process.env.SOURCE_HASH);
+          NODE
+          test "$(git diff --name-only 0ed15032e7f36aefcdf3efd70b4b90d3a2dda775 HEAD -- 'src/content/insights/*.md' 'src/data' 'src/i18n/ui.ts' 'src/i18n/contact-form.ts')" = 'src/content/insights/ubuntu26-lts-upgrade-recovery.md'
 
       - name: Submit OpenAI Batch
+        id: submit
         env:
           OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
         run: |
-          if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
-            echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was submitted."
-            exit 0
-          fi
-          node --experimental-strip-types scripts/openai-translation-batch.mjs submit --head=HEAD
+          test -n "$OPENAI_TRANSLATION_API_KEY"
+          node --experimental-strip-types scripts/openai-translation-batch.mjs submit --base=0ed15032e7f36aefcdf3efd70b4b90d3a2dda775 --head=HEAD
+
+      - name: Collect only the pinned article result
+        id: collector
+        env:
+          BATCH_ID: ${{ steps.submit.outputs.batch_id }}
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+          import { join } from 'node:path';
+          const target = process.env.BATCH_ID;
+          assert.match(target ?? '', /^batch_[a-zA-Z0-9]+$/);
+          const processed = new Set(execFileSync('gh', ['api', '--paginate', `/repos/${process.env.GITHUB_REPOSITORY}/actions/artifacts?per_page=100`, '--jq', '.artifacts[] | select(.expired == false) | .name'], {encoding:'utf8'}).split(/\r?\n/).filter(x => x.startsWith('openai-translation-processed-')).map(x => x.slice('openai-translation-processed-'.length)).filter(x => x !== target));
+          const outputPath = join(process.env.RUNNER_TEMP, 'ubuntu26-collector-output.txt');
+          const deadline = Date.now() + 100 * 60_000;
+          let collected = false;
+          while (Date.now() < deadline) {
+            writeFileSync(outputPath, '');
+            execFileSync(process.execPath, ['--experimental-strip-types', 'scripts/openai-translation-batch.mjs', 'collect', `--processed-batches=${[...processed].join(',')}`], {stdio:'inherit', env:{...process.env, GITHUB_OUTPUT:outputPath}});
+            const values = Object.fromEntries(readFileSync(outputPath,'utf8').trim().split('\n').filter(Boolean).map(line => {const i=line.indexOf('=');return [line.slice(0,i),line.slice(i+1)];}));
+            if (values.has_changes === 'true') {
+              assert.equal(values.batch_id, target, 'Unexpected Batch results');
+              writeFileSync(process.env.GITHUB_OUTPUT, readFileSync(outputPath), {flag:'a'});
+              collected = true;
+              break;
+            }
+            if (values.processed_batch_id) {
+              assert.notEqual(values.processed_batch_id, target, 'Target Batch did not produce complete translations');
+              processed.add(values.processed_batch_id);
+              continue;
+            }
+            await new Promise(resolve => setTimeout(resolve, 60_000));
+          }
+          assert.ok(collected, 'Batch is still pending; results have not been published');
+          const expected = new Set(['en','zh-cn','es','pt','fr','ko','de','ru'].map(locale => `src/content/insights/${locale}/ubuntu26-lts-upgrade-recovery.md`));
+          const changed = execFileSync('git',['status','--porcelain=v1','-z'],{encoding:'utf8'}).split('\0').filter(Boolean).map(line=>line.slice(3));
+          assert.deepEqual(new Set(changed), expected);
+          for (const file of expected) assert.ok(existsSync(file));
+          NODE
+
+      - name: Update state and validate translations
+        run: |
+          npm run update:i18n-state
+          npx prettier --write src/content/insights/{en,zh-cn,es,pt,fr,ko,de,ru}/ubuntu26-lts-upgrade-recovery.md src/i18n/translation-state.json
+          npm run validate:content
+          npm run validate:i18n
+          git diff --check
+
+      - name: Package only article translations and provenance
+        env:
+          BATCH_ID: ${{ steps.collector.outputs.batch_id }}
+        run: |
+          mkdir -p .tmp
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {writeFileSync,readFileSync} from 'node:fs';
+          import {calculateTranslationSourceHash} from './scripts/i18n-source-hash.mjs';
+          const sourceHash=calculateTranslationSourceHash(process.cwd());
+          assert.equal(sourceHash,'3c4afe625ac527d3a3008692e4acb9b0f798d60c1cfba668b91110931d0b6e3a');
+          assert.equal(JSON.parse(readFileSync('src/i18n/translation-state.json','utf8')).sourceHash,sourceHash);
+          writeFileSync('.tmp/ubuntu26-batch-provenance.json',JSON.stringify({batchId:process.env.BATCH_ID,sourceCommit:'85289f8d16adfcb0f1f4e9c23cd4d167ad653807',sourceHash,model:'gpt-6-luna',reasoning:'max',worker:'scripts/openai-translation-batch.mjs',validated:true},null,2)+'\n');
+          NODE
+          tar -czf "$RUNNER_TEMP/ubuntu26-translations.tar.gz" src/content/insights/{en,zh-cn,es,pt,fr,ko,de,ru}/ubuntu26-lts-upgrade-recovery.md src/i18n/translation-state.json .tmp/ubuntu26-batch-provenance.json
+
+      - name: Save reviewed-source Batch results
+        uses: actions/upload-artifact@v7
+        with:
+          name: ubuntu26-reviewed-source-translations
+          path: ${{ runner.temp }}/ubuntu26-translations.tar.gz
+          retention-days: 30
+
+      - name: Mark this Batch as processed
+        uses: actions/upload-artifact@v7
+        with:
+          name: openai-translation-processed-${{ steps.collector.outputs.processed_batch_id }}
+          path: ${{ steps.collector.outputs.marker_path }}
+          retention-days: 30
