@@ -474,7 +474,7 @@ export function isTranslationPullRequestCurrent(body, currentSourceHash) {
 
 async function closeStalePullRequests(currentSourceHash) {
   const pulls = await githubRequest("/pulls?state=open&per_page=100");
-  if (!Array.isArray(pulls)) return;
+  if (!Array.isArray(pulls)) return [];
   for (const pull of pulls) {
     const marker = getSourceHashFromPullRequestBody(pull.body);
     if (
@@ -492,6 +492,7 @@ async function closeStalePullRequests(currentSourceHash) {
     });
     console.log(`Closed stale OpenAI translation PR #${pull.number}.`);
   }
+  return pulls;
 }
 
 async function submitBatch(options) {
@@ -835,15 +836,32 @@ async function getBatchOutput(batch) {
   return parseOutputLines(await response.text());
 }
 
-function selectCompletedBatch(batches, processedBatches) {
+export function selectCompletedBatch(
+  batches,
+  processedBatches,
+  {
+    currentSourceHash,
+    translationsCurrent = true,
+    publishedBatchIds = new Set(),
+  } = {},
+) {
   return (
     [...batches]
-      .filter(
-        (batch) =>
+      .filter((batch) => {
+        const counts = batch.request_counts;
+        const previouslyStaleResult =
+          !translationsCurrent &&
+          batch.metadata?.source_hash === currentSourceHash &&
+          counts?.total > 0 &&
+          counts.completed === counts.total &&
+          counts.failed === 0;
+        return (
           isOurBatch(batch) &&
           batch.status === "completed" &&
-          !processedBatches.has(batch.id),
-      )
+          !publishedBatchIds.has(batch.id) &&
+          (!processedBatches.has(batch.id) || previouslyStaleResult)
+        );
+      })
       .sort(
         (left, right) => (left.created_at ?? 0) - (right.created_at ?? 0),
       )[0] ?? null
@@ -892,9 +910,23 @@ function writeCollectedOutputs({ batchId, hasChanges, bodyPath, processed }) {
 }
 
 async function collectBatch(options) {
+  const currentSourceHash = calculateTranslationSourceHash(process.cwd());
+  const translationsCurrent = areTranslationsCurrent(currentSourceHash);
+  const pulls = await closeStalePullRequests(currentSourceHash);
+  const publishedBatchIds = new Set(
+    pulls
+      .filter((pull) =>
+        isTranslationPullRequestCurrent(pull.body, currentSourceHash),
+      )
+      .map(
+        (pull) => pull?.head?.ref?.match(/^translation\/openai\/(.+)$/u)?.[1],
+      )
+      .filter(Boolean),
+  );
   const batch = selectCompletedBatch(
     await listBatches(),
     options.processedBatches,
+    { currentSourceHash, translationsCurrent, publishedBatchIds },
   );
   if (!batch) {
     console.log("No unprocessed completed OpenAI translation batches found.");
@@ -907,9 +939,7 @@ async function collectBatch(options) {
     return;
   }
 
-  const currentSourceHash = calculateTranslationSourceHash(process.cwd());
-  await closeStalePullRequests(currentSourceHash);
-  if (areTranslationsCurrent(currentSourceHash)) {
+  if (translationsCurrent) {
     console.log(
       `Skipped OpenAI translation batch ${batch.id}; translations are already current.`,
     );
@@ -930,6 +960,37 @@ async function collectBatch(options) {
       processed: true,
     });
     return;
+  }
+
+  if (options.processedBatches.has(batch.id)) {
+    const owner = (process.env.GITHUB_REPOSITORY ?? "").split("/")[0];
+    const head = encodeURIComponent(`${owner}:translation/openai/${batch.id}`);
+    const previousPulls = await githubRequest(
+      `/pulls?state=all&head=${head}&per_page=100`,
+    );
+    if (!Array.isArray(previousPulls)) {
+      throw new Error(
+        "Cannot verify whether the processed Batch already has a translation PR",
+      );
+    }
+    if (
+      previousPulls.some(
+        (pull) =>
+          pull?.head?.ref === `translation/openai/${batch.id}` &&
+          isTranslationPullRequestCurrent(pull.body, currentSourceHash),
+      )
+    ) {
+      console.log(
+        `Skipped processed Batch ${batch.id}; its translation PR already exists.`,
+      );
+      writeCollectedOutputs({
+        batchId: batch.id,
+        hasChanges: false,
+        bodyPath: null,
+        processed: true,
+      });
+      return;
+    }
   }
 
   const outputLines = await getBatchOutput(batch);

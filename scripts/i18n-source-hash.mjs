@@ -35,9 +35,16 @@ export const translationSourcePaths = [
   ...insightSlugs.map((slug) => `src/content/insights/${slug}.md`),
 ].sort();
 
-export function calculateTranslationSourceHash(repositoryRoot) {
+export function calculateTranslationSourceHash(
+  repositoryRoot,
+  { excludedInsightSlugs = [] } = {},
+) {
+  const excludedPaths = new Set(
+    excludedInsightSlugs.map((slug) => `src/content/insights/${slug}.md`),
+  );
   const hash = createHash("sha256");
   for (const relativePath of translationSourcePaths) {
+    if (excludedPaths.has(relativePath)) continue;
     hash.update(relativePath);
     hash.update("\0");
     hash.update(

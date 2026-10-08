@@ -8,6 +8,7 @@ import {
   type Locale,
 } from "../i18n";
 import { getUi } from "../i18n/ui";
+import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
 
 interface Props {
   locale?: Locale;
@@ -17,6 +18,7 @@ interface Props {
 
 const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
 const currentPath = Astro.props.path ?? Astro.url.pathname;
+const availableLocales = getAvailableRouteLocales(currentPath);
 const compact = Astro.props.compact ?? false;
 const text = getUi(locale);
 ---
@@ -30,18 +32,20 @@ const text = getUi(locale);
   </summary>
   <ul aria-label={text.languageSelector}>
     {
-      locales.map((targetLocale) => (
-        <li>
-          <a
-            href={getLocalizedUrl(currentPath, targetLocale)}
-            lang={htmlLangMap[targetLocale]}
-            hreflang={htmlLangMap[targetLocale]}
-            aria-current={targetLocale === locale ? "page" : undefined}
-          >
-            {localeLabels[targetLocale]}
-          </a>
-        </li>
-      ))
+      locales
+        .filter((targetLocale) => availableLocales.includes(targetLocale))
+        .map((targetLocale) => (
+          <li>
+            <a
+              href={getLocalizedUrl(currentPath, targetLocale)}
+              lang={htmlLangMap[targetLocale]}
+              hreflang={htmlLangMap[targetLocale]}
+              aria-current={targetLocale === locale ? "page" : undefined}
+            >
+              {localeLabels[targetLocale]}
+            </a>
+          </li>
+        ))
     }
   </ul>
 </details>

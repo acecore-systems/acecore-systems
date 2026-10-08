@@ -5,12 +5,15 @@ import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  getAvailableInsightLocales,
+  getAvailableRouteLocales,
   getLocalizedInsightHref,
   insightSlugs,
 } from "../src/lib/insight-links.mjs";
 import { contactFormCopy } from "../src/i18n/contact-form.ts";
 import { ui } from "../src/i18n/ui.ts";
 import { calculateTranslationSourceHash } from "./i18n-source-hash.mjs";
+import { validatePendingInsights } from "./pending-insights.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://systems.acecore.net";
@@ -418,6 +421,8 @@ function validateSourceTranslations({
   onlyLocale = null,
 } = {}) {
   validateLocaleRedirects("public/_redirects");
+  const state = readJson("src/i18n/translation-state.json");
+  const pendingInsights = validatePendingInsights(root, state);
   const localesToValidate = onlyLocale ? [onlyLocale] : translatedLocales;
   const sourceTree = readSourceTree(sourceFiles);
   if (!articlesOnly) {
@@ -471,6 +476,9 @@ function validateSourceTranslations({
   );
 
   for (const locale of localesToValidate) {
+    const availableSlugs = insightSlugs.filter((slug) =>
+      getAvailableInsightLocales(slug, pendingInsights).includes(locale),
+    );
     const translatedNames = readdirSync(
       join(root, "src/content/insights", locale),
       { withFileTypes: true },
@@ -480,11 +488,11 @@ function validateSourceTranslations({
       .sort();
     assert.deepEqual(
       translatedNames,
-      [...insightSlugs].sort(),
-      `${locale}: Insights set differs from Japanese`,
+      [...availableSlugs].sort(),
+      `${locale}: Insights set differs from declared available translations`,
     );
 
-    for (const slug of insightSlugs) {
+    for (const slug of availableSlugs) {
       const sourcePath = `src/content/insights/${slug}.md`;
       const translatedPath = `src/content/insights/${locale}/${slug}.md`;
       const source = read(sourcePath);
@@ -568,7 +576,7 @@ function validateSourceTranslations({
 
   if (articlesOnly) {
     console.log(
-      `i18n article validation passed: ${localesToValidate.length + 1} locales, ${insightSlugs.length} Insights each`,
+      `i18n article validation passed: ${localesToValidate.length + 1} locales, ${insightSlugs.length} Japanese Insights, ${Object.keys(pendingInsights).length} awaiting translation`,
     );
     return;
   }
@@ -580,8 +588,9 @@ function validateSourceTranslations({
     return;
   }
 
-  const state = readJson("src/i18n/translation-state.json");
-  const sourceHash = calculateTranslationSourceHash(root);
+  const sourceHash = calculateTranslationSourceHash(root, {
+    excludedInsightSlugs: Object.keys(pendingInsights),
+  });
   assert.equal(
     state.sourceHash,
     sourceHash,
@@ -615,7 +624,7 @@ function validateSourceTranslations({
   );
 
   console.log(
-    `i18n source validation passed: ${locales.length} locales, ${insightSlugs.length} Insights each`,
+    `i18n source validation passed: ${locales.length} locales, ${insightSlugs.length} Japanese Insights, ${Object.keys(pendingInsights).length} awaiting translation`,
   );
 }
 
@@ -639,12 +648,17 @@ function getJsonLd(html, label) {
 }
 
 function validateAlternateLinks(html, route, locale) {
+  const availableLocales = getAvailableRouteLocales(route);
   const alternates = Array.from(
     html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/gu),
     (match) => ({ language: match[1], href: match[2] }),
   );
-  assert.equal(alternates.length, locales.length + 1, `${route}: hreflang set`);
-  for (const targetLocale of locales) {
+  assert.equal(
+    alternates.length,
+    availableLocales.length + 1,
+    `${route}: hreflang set`,
+  );
+  for (const targetLocale of availableLocales) {
     assert.equal(
       alternates.some(
         (item) =>
@@ -741,9 +755,13 @@ function validateInternalLinks(html, route, locale) {
         `${route}: language alternate points to a different route: ${href}`,
       );
     } else if (locale !== "ja") {
+      const pendingArticleFallback =
+        /^\/insights\/[^/]+\/$/u.test(url.pathname) &&
+        !getAvailableRouteLocales(url.pathname).includes(locale);
       assert.equal(
         url.pathname === `/${locale}/` ||
-          url.pathname.startsWith(`/${locale}/`),
+          url.pathname.startsWith(`/${locale}/`) ||
+          pendingArticleFallback,
         true,
         `${route}: cross-locale internal link: ${href}`,
       );
@@ -799,6 +817,7 @@ function validateLocalReferences(html, route) {
 }
 
 function validateBuiltSite() {
+  validatePendingInsights(root, readJson("src/i18n/translation-state.json"));
   validateLocaleRedirects("dist/_redirects");
   const indexableRoutes = [
     ...fixedRoutes.filter((route) => route !== "/contact/thanks/"),
@@ -814,6 +833,14 @@ function validateBuiltSite() {
     ]) {
       const route = localizedRoute(baseRoute, locale);
       const path = distPath(route);
+      if (!getAvailableRouteLocales(baseRoute).includes(locale)) {
+        assert.equal(
+          existsSync(path),
+          false,
+          `${route}: pending article must not be published`,
+        );
+        continue;
+      }
       assert.equal(existsSync(path), true, `${route}: generated page missing`);
       const html = readFileSync(path, "utf8");
       validateInternalLinks(html, route, locale);
@@ -907,14 +934,28 @@ function validateBuiltSite() {
     assert.equal(existsSync(rssPath), true, `${rssRoute}: RSS missing`);
     const rss = readFileSync(rssPath, "utf8");
     assert.equal(
-      insightSlugs.every((slug) =>
-        rss.includes(
-          new URL(getLocalizedInsightHref(slug, locale), siteOrigin).href,
+      insightSlugs
+        .filter((slug) => getAvailableInsightLocales(slug).includes(locale))
+        .every((slug) =>
+          rss.includes(
+            new URL(getLocalizedInsightHref(slug, locale), siteOrigin).href,
+          ),
         ),
-      ),
       true,
       `${rssRoute}: RSS article set incomplete`,
     );
+    for (const slug of insightSlugs.filter(
+      (slug) => !getAvailableInsightLocales(slug).includes(locale),
+    )) {
+      assert.equal(
+        rss.includes(
+          new URL(localizedRoute(`/insights/${slug}/`, locale), siteOrigin)
+            .href,
+        ),
+        false,
+        `${rssRoute}: pending article must not be advertised`,
+      );
+    }
   }
 
   const sitemap = readdirSync(join(root, "dist"), { withFileTypes: true })
@@ -926,6 +967,15 @@ function validateBuiltSite() {
   );
   assert.ok(sitemapEntries.length > 0, "sitemap URL entries are missing");
   for (const entry of sitemapEntries) {
+    for (const match of entry.matchAll(
+      /<xhtml:link\b[^>]*\bhref="([^"]+)"[^>]*\/>/gu,
+    )) {
+      assert.equal(
+        existsSync(distPath(match[1])),
+        true,
+        `sitemap alternate is missing: ${match[1]}`,
+      );
+    }
     const japaneseAlternate = entry.match(
       /<xhtml:link\b[^>]*\bhreflang="ja"[^>]*\bhref="([^"]+)"[^>]*\/>/u,
     )?.[1];
@@ -944,7 +994,7 @@ function validateBuiltSite() {
       const url = new URL(localizedRoute(route, locale), siteOrigin).href;
       assert.equal(
         occurrences(sitemap, `<loc>${url}</loc>`),
-        1,
+        getAvailableRouteLocales(route).includes(locale) ? 1 : 0,
         `${url}: sitemap entry missing or duplicated`,
       );
     }

@@ -1,4 +1,5 @@
 import { defaultLocale, intlLocaleMap, locales, type Locale } from "./config";
+import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
 
 const localeSet = new Set<string>(locales);
 
@@ -34,10 +35,13 @@ export function getLocalizedUrl(path: string, locale: Locale): string {
 }
 
 export function getAlternateUrls(path: string, siteUrl: string) {
-  return locales.map((locale) => ({
-    locale,
-    url: new URL(getLocalizedUrl(path, locale), siteUrl).href,
-  }));
+  const availableLocales = getAvailableRouteLocales(path);
+  return locales
+    .filter((locale) => availableLocales.includes(locale))
+    .map((locale) => ({
+      locale,
+      url: new URL(getLocalizedUrl(path, locale), siteUrl).href,
+    }));
 }
 
 export function formatDate(date: Date, locale: Locale): string {
