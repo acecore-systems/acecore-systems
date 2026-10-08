@@ -11,7 +11,7 @@ callout:
   text: "Wir prüfen, ob sich Konfigurationen und Daten extrahieren lassen, ob sich der Server auch bei unterbrochener SSH-Verbindung bedienen lässt und ob die Dienste nach einem normalen Neustart automatisch zurückkehren. Der erfolgreiche Abschluss des Update-Befehls allein bestätigt diese 3 Punkte nicht."
 processFigure:
   eyebrow: "Ablauf der Aktualisierung"
-  title: "Von der Wiederherstellungsvorbereitung bis zur Prüfung der Wiederherstellung nach dem Update"
+  title: "Von der Vorbereitung bis zur Prüfung der Wiederherstellung nach dem Update"
   description: "Erst wenn die Prüfungen jeder Phase erfolgreich sind, fahren Sie mit der nächsten fort. Bei einem Fehler halten Sie den Zustand und die bereits ausgeführten Schritte fest."
   variant: inline
   steps:
