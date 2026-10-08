@@ -1,6 +1,6 @@
 ---
 title: "실행 중인 Ubuntu 업데이트하기: 사전 준비·연결 복구·재부팅 후 확인"
-description: "Ubuntu 24.04에서 26.04로의 업그레이드와 일반 업데이트를 예로 들어, 백업의 실제 복원, 설정 보관, 무인 상태에서의 중지 판단, SSH가 돌아오지 않을 때의 원인 분리와 완료 조건을 구체적으로 설명합니다."
+description: "Ubuntu 24.04에서 26.04로의 업그레이드와 일반 업데이트를 예로 들어, 백업의 실제 복원, 설정 보관, 사용자가 없는 상태에서의 중지 판단, SSH가 돌아오지 않을 때의 원인 분리와 완료 조건을 구체적으로 설명합니다."
 date: "2026-10-08T13:35:00+09:00"
 author: gui
 image: /images/insights/covers/ubuntu26-lts-upgrade-recovery-cover-v1.webp

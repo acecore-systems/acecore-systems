@@ -1,6 +1,6 @@
 ---
 title: "Updating a Running Ubuntu Server: Preparation, Connection Recovery, and Post-Reboot Checks"
-description: "Using the migration from Ubuntu 24.04 to 26.04 and routine updates as examples, this article explains in concrete terms how to test an actual backup restore, preserve configuration, decide when to stop services while unattended, troubleshoot SSH that does not return, and define completion criteria."
+description: "Using the migration from Ubuntu 24.04 to 26.04 and routine updates as examples, this article explains in concrete terms how to test an actual backup restore, preserve configuration, decide when services can stop with no active users, troubleshoot SSH that does not return, and define completion criteria."
 date: "2026-10-08T13:35:00+09:00"
 author: gui
 image: /images/insights/covers/ubuntu26-lts-upgrade-recovery-cover-v1.webp
