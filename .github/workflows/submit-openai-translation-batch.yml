@@ -41,15 +41,10 @@ jobs:
           NODE
           test "$(git diff --name-only 0ed15032e7f36aefcdf3efd70b4b90d3a2dda775 HEAD -- 'src/content/insights/*.md' 'src/data' 'src/i18n/ui.ts' 'src/i18n/contact-form.ts')" = 'src/content/insights/ubuntu26-lts-upgrade-recovery.md'
 
-      - name: Submit OpenAI Batch
+      - name: Use the already submitted article Batch
         id: submit
-        env:
-          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          test -n "$OPENAI_TRANSLATION_API_KEY"
-          node --experimental-strip-types scripts/openai-translation-batch.mjs submit --base=0ed15032e7f36aefcdf3efd70b4b90d3a2dda775 --head=HEAD
+          echo "batch_id=batch_6ac73291596481908e00d92eeb3451eb" >> "$GITHUB_OUTPUT"
 
       - name: Collect only the pinned article result
         id: collector
