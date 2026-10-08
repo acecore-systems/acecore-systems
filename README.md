@@ -74,6 +74,10 @@ Sveltia CMS は `/admin/` から利用します。CMS では日本語の固定�
 
 設計文書の入口は [docs/README.md](docs/README.md) です。
 
-日本語sourceが変わると翻訳source hashの検証が失敗し、古い翻訳のまま新しいdeployが進まない設計です。OpenAI Batchの回収時は変更した翻訳ファイルだけをPrettierで整形し、専用Translation Botが同一repositoryの `translation/openai/` branchからPRを作成します。自動マージ対象は、Bot、source marker、変更path、現在のsource hash、`Build and Format` を再検証します。behindの場合は検証済みHEAD SHAで最新mainへ追従させ、GitHubの必須checkが未完了ならsquash Auto-mergeを予約し、すべて揃ってcleanなら検証済みHEAD SHAを固定してsquash mergeします。
+新しい技術記事は、日本語をレビューして先に公開できます。`src/i18n/translation-state.json` の `pendingInsights` に記事slug、日本語MarkdownのSHA-256（改行をLFに正規化）、未完成の翻訳localeを明示します。宣言した翻訳ファイルが既にある、slug・localeが不正、記事hashが古い場合は検証で止まります。宣言していない翻訳欠落も引き続きエラーです。記事一覧、言語切替、hreflang、RSS、サイトマップには実在する言語だけを掲載し、未翻訳記事への本文リンクは日本語へ向けます。
+
+翻訳済み範囲のsource hashは、翻訳待ちの記事だけを除外して検証します。固定ページや既存の翻訳済み記事を変更した場合は、従来どおり古い翻訳のままdeployできません。Batchには翻訳待ちも含めた全日本語sourceのhashを使います。mainへの日本語sourceのpushから15分後にBatchを投入し、結果は毎時2・17・32・47分に回収します。夜間限定の処理ではありません。同じsource hashの既存Batchを再利用します。
+
+OpenAI Batchの回収時は `npm run update:i18n-state` で完成したlocaleを翻訳待ちから外し、全言語が揃った記事の宣言を削除します。変更した翻訳ファイルだけをPrettierで整形し、専用Translation Botが同一repositoryの `translation/openai/` branchからPRを作成します。自動マージ対象は、Bot、source marker、変更path、現在の全source hash、`Build and Format` を再検証します。behindの場合は検証済みHEAD SHAで最新mainへ追従させ、GitHubの必須checkが未完了ならsquash Auto-mergeを予約し、すべて揃ってcleanなら検証済みHEAD SHAを固定してsquash mergeします。
 
 移行の本番切替条件と旧認証へのロールバックは [AcecoreID管理ログイン移行](docs/acecoreid-admin-migration.md) を参照してください。旧OAuthの説明が残る運用資料より、この移行手順を優先します。

@@ -1,3 +1,5 @@
+import translationState from "../i18n/translation-state.json" with { type: "json" };
+
 export const insightSlugs = Object.freeze([
   "acecore-systems-site-renewal",
   "ai-chat-markdown-link-safety",
@@ -32,6 +34,7 @@ export const insightSlugs = Object.freeze([
   "restic-r2-backup-verification",
   "service-cta-contact-prefill",
   "tax-return-with-copilot",
+  "ubuntu26-lts-upgrade-recovery",
   "user-css-versioned-theme-safety",
   "vitepress-to-starlight-migration",
   "website-improvement-batches",
@@ -72,8 +75,37 @@ export function isInsightForLocale(entry, locale) {
   return getInsightLocale(entry.id) === locale;
 }
 
-export function getLocalizedInsightHref(slug, locale, suffix = "") {
-  const prefix = locale === "ja" ? "" : `/${locale}`;
+export function getAvailableInsightLocales(
+  slug,
+  pendingInsights = translationState.pendingInsights ?? {},
+) {
+  const pendingLocales = pendingInsights[slug]?.locales ?? [];
+  return supportedLocales.filter((locale) => !pendingLocales.includes(locale));
+}
+
+export function getAvailableRouteLocales(path, pendingInsights) {
+  const pathname = new URL(path, systemsOrigin).pathname;
+  const segments = pathname.split("/").filter(Boolean);
+  if (supportedLocales.includes(segments[0])) segments.shift();
+  if (segments.length === 2 && segments[0] === "insights") {
+    return getAvailableInsightLocales(segments[1], pendingInsights);
+  }
+  return [...supportedLocales];
+}
+
+export function getLocalizedInsightHref(
+  slug,
+  locale,
+  suffix = "",
+  pendingInsights,
+) {
+  const availableLocale = getAvailableInsightLocales(
+    slug,
+    pendingInsights,
+  ).includes(locale)
+    ? locale
+    : "ja";
+  const prefix = availableLocale === "ja" ? "" : `/${availableLocale}`;
   return `${prefix}/insights/${slug}/${suffix}`;
 }
 

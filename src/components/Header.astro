@@ -10,6 +10,7 @@ import {
 } from "../i18n";
 import { getUi } from "../i18n/ui";
 import { getLocalizedContent } from "../i18n/content";
+import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
 
 interface Props {
   locale: Locale;
@@ -19,6 +20,7 @@ const { locale } = Astro.props;
 const text = getUi(locale);
 const content = getLocalizedContent(locale);
 const currentPath = Astro.url.pathname;
+const availableLocales = getAvailableRouteLocales(currentPath);
 const contactHref = getLocalizedUrl("/contact/", locale);
 const nav = content.site.nav.map((item) => ({
   ...item,
@@ -128,16 +130,18 @@ const isCurrent = (href: string) =>
         </a>
         <div class="mobile-language-links" aria-label={text.languageSelector}>
           {
-            locales.map((targetLocale) => (
-              <a
-                href={getLocalizedUrl(currentPath, targetLocale)}
-                lang={htmlLangMap[targetLocale]}
-                hreflang={htmlLangMap[targetLocale]}
-                aria-current={targetLocale === locale ? "page" : undefined}
-              >
-                {localeLabels[targetLocale]}
-              </a>
-            ))
+            locales
+              .filter((targetLocale) => availableLocales.includes(targetLocale))
+              .map((targetLocale) => (
+                <a
+                  href={getLocalizedUrl(currentPath, targetLocale)}
+                  lang={htmlLangMap[targetLocale]}
+                  hreflang={htmlLangMap[targetLocale]}
+                  aria-current={targetLocale === locale ? "page" : undefined}
+                >
+                  {localeLabels[targetLocale]}
+                </a>
+              ))
           }
         </div>
       </nav>

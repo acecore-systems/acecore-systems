@@ -9,6 +9,7 @@ import {
   hashText,
   isTranslationPullRequestCurrent,
   replaceLocaleObject,
+  selectCompletedBatch,
 } from "../scripts/openai-translation-batch.mjs";
 
 test("sourceHashは改行コード差を同じ版として扱う", () => {
@@ -64,6 +65,46 @@ test("UIとフォームのlocale objectは対象localeだけを置き換える",
 
   assert.match(translated, /ja: \{ label: "日本語" \}/u);
   assert.match(translated, /"zh-cn": \{\n  "label": "新翻译"\n\}/u);
+});
+
+test("feature branchの結果をstaleとして処理した後も、mainが同じsourceになれば再回収できる", () => {
+  const currentSourceHash = "b".repeat(64);
+  const batch = {
+    id: "batch_premerged",
+    status: "completed",
+    metadata: {
+      translation_system: "acecore-systems-v1",
+      source_hash: currentSourceHash,
+    },
+    request_counts: { total: 8, completed: 8, failed: 0 },
+  };
+  const processed = new Set([batch.id]);
+  const options = { currentSourceHash, translationsCurrent: false };
+  assert.equal(selectCompletedBatch([batch], processed, options), batch);
+  for (const rejected of [
+    { ...batch, metadata: { ...batch.metadata, source_hash: "a".repeat(64) } },
+    { ...batch, request_counts: { total: 8, completed: 7, failed: 1 } },
+    { ...batch, request_counts: { total: 8, completed: 7, failed: 0 } },
+    { ...batch, request_counts: { total: 0, completed: 0, failed: 0 } },
+    { ...batch, status: "in_progress" },
+  ]) {
+    assert.equal(selectCompletedBatch([rejected], processed, options), null);
+  }
+  assert.equal(
+    selectCompletedBatch([batch], processed, {
+      ...options,
+      translationsCurrent: true,
+    }),
+    null,
+  );
+  assert.equal(
+    selectCompletedBatch([batch], processed, {
+      ...options,
+      publishedBatchIds: new Set([batch.id]),
+    }),
+    null,
+  );
+  assert.equal(selectCompletedBatch([batch], processed), null);
 });
 
 test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", async () => {
