@@ -66,7 +66,7 @@ processFigure:
 # 既存のリポジトリ接続設定を使う。秘密値をコマンドに直書きしない。
 snapshot_id='確認したスナップショットID'
 umask 077
-restore_dir=$(mktemp -d /var/tmp/restore-check.XXXXXX)
+restore_dir=$(mktemp -d /var/tmp/restore-check.XXXXXX) || exit 1
 restic restore "$snapshot_id" --target "$restore_dir" --verify
 ```
 
@@ -160,8 +160,8 @@ sudo sshd -t
 
 ```bash
 # この段階ではパッケージを更新しない
-sudo apt-get update -o APT::Update::Error-Mode=any
-sudo apt-get -s --no-remove dist-upgrade
+sudo apt-get update -o APT::Update::Error-Mode=any &&
+  sudo apt-get -s --no-remove dist-upgrade
 ```
 
 シミュレーションの終了コードと、更新・追加・削除の予定を確認します。`--no-remove`は、削除が必要な場合に中止するための条件です。カーネルなどでは新規パッケージの追加が必要になるので、「追加0」を通常更新の共通条件にはしません。[APTの仕様](https://manpages.ubuntu.com/manpages/resolute/man8/apt-get.8.html)では、シミュレーション中の状態は固定されません。実行直前にも、別のAPT処理が走っていないことと予定の変化を確認します。
