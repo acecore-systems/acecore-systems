@@ -2,7 +2,7 @@
 title: "安全渲染 AI 聊天回答中的 Markdown 链接"
 description: "这是一篇关于如何把 AI 聊天回答中的 Markdown 链接安全转换为 HTML 的实现笔记。通过拆分可容忍空白的解析、href trim、允许列表校验、DOM 渲染、fallback 和测试用例，可以把同样的模式复用到其他网站。"
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "网站", "AI", "安全", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: 不允许的 URL 应该删除吗？
       answer: 多数情况下保留为文本更便于调试，也能保留回答上下文。如果运营规则要求隐藏可疑字符串，也可以删除整个链接。
 ---
+
+AI回答的链接仍显示为字符串时，将同一输入依次送入解析、URL验证和DOM渲染，定位失败环节。标签使用[MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent)等文本API，让是否生成链接与HTML解释保持分离，便于改造已有聊天界面。
 
 如果 AI 聊天返回 `详见[服务列表]( /services/ )`，链接可能不会被渲染，原始 Markdown 会直接留在界面上。
 

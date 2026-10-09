@@ -1,8 +1,8 @@
 ---
 title: "Making an Astro 7 Site Support 9 Languages — Blog Translation and Multilingual Architecture"
-description: "A record of the July 2026 nine-language Astro 7.1.3 and UnoCSS rollout, with pointers to the current dependencies and translation workflow."
+description: "For a multilingual Astro blog, first align body text, metadata and language switching for a representative article, ensuring missing translations are not linked."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "i18n", "Website"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: Do I need to translate when adding a new article?
       answer: "Translation is not required to publish the Japanese article. Adding a Markdown file with the same name to a locale directory makes that locale's article URL, sitemap entry, and hreflang relationship eligible for generation."
 ---
+
+For a multilingual Astro blog, first align body text, metadata and language switching for a representative article, ensuring missing translations are not linked. Use [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) for URL design and expand UI and article translations separately. Counts and the old CMS setup below describe the original rollout.
 
 > **Update, September 26, 2026:** The Astro 7.1.3, UnoCSS, article counts, and Copilot translation steps below describe July 2026. The [current dependency declaration](https://github.com/acecore-systems/acecore-net/blob/main/package.json) uses Astro ^7.3.3 and Tailwind CSS 4.3.3; the [translation workflow update](/insights/copilot-translation-pipeline/) describes OpenAI Batch. Check the current source and published pages before treating the code and figures below as current.
 

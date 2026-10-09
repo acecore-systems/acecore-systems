@@ -2,7 +2,7 @@
 title: "Supervisión e investigación con OpenClaw: detección, pruebas y decisiones"
 description: "Cómo combinar comprobaciones periódicas e investigaciones limitadas, distinguiendo la operación verificada de la recuperación aún no probada."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 La supervisión necesita responsabilidades claras para detectar problemas e investigar causas. Este caso conecta comprobaciones periódicas con OpenClaw sin publicar la topología interna ni los destinos de avisos.
+
+## Evaluar informes con anomalías conocidas
+
+Prepare en pruebas condiciones conocidas, como recolección fallida o lecturas antiguas. Evalúe si el informe contiene hora, evidencia y datos faltantes, y conserva resultados parciales tras el timeout. Así medirá la calidad de investigación más allá de la naturalidad del texto.
+
+[OpenClaw：Límites de permisos del entorno de investigación](https://docs.openclaw.ai/gateway/security)
 
 ## Definir la detección
 

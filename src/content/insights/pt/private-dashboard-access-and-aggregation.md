@@ -2,7 +2,7 @@
 title: "Criar um painel operacional protegido com Cloudflare Pages e D1"
 description: "Um projeto anonimizado que protege a entrada com Cloudflare Access e consulta agregados operacionais do D1 por meio de Pages Functions. Separa a publicação em produção, a interface autenticada e o uso de índices verificados dos itens que não foram testados."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Quando as informações operacionais ficam espalhadas entre logs e bancos de dados, pode ser difícil para a equipe conferir o estado atual com segurança. Este exemplo anonimizado explica como verificar acesso, agregação e publicação de um painel. Ele não inclui domínios, contas, conteúdo de publicações nem números operacionais reais.
+
+## Validar uma agregação pela interface e API
+
+Comece com uma contagem por período e compare com dados de teste conhecidos. Diferencie períodos vazios de falhas de consulta e teste acesso direto à API antes e depois da autenticação. Amplie as agregações após verificar o plano de consulta desse filtro.
+
+[Cloudflare D1：Verificar índices conforme as condições da consulta](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## Coloque a página e a API atrás do limite de acesso
 

@@ -1,6 +1,6 @@
 ---
-title: "Coûts de création de site web : tarifs de référence et points essentiels dans les devis"
-description: "Présentation des coûts de création de site par objectif, des éléments clés à vérifier dans les devis et des moyens d'atteindre des résultats dans les limites du budget."
+title: "Comparer les coûts d’un site : exemples et vérification des devis"
+description: "Comparez CMS, contenus, formulaires et maintenance à partir d’estimations éditoriales. Ce guide aide à choisir des prestataires sur les mêmes exigences, sans présenter de statistiques des prix du marché."
 date: 2026-04-01T10:00
 author: gui
 tags: ["Création web", "Site web", "SEO", "Services"]
@@ -26,13 +26,19 @@ faq:
       answer: Limiter le nombre de pages, préparer vos propres textes et photos, exploiter les actifs de marque existants et séparer les améliorations post-lancement du périmètre initial sont des approches efficaces.
     - question: Peut-on vous consulter aussi sur les opérations après le lancement ?
       answer: Oui. Acecore peut fournir un support continu couvrant non seulement la production du site web, mais aussi l'analyse d'audience, les mises à jour de contenu, les propositions d'amélioration et la maintenance.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Mise à jour du 26 septembre 2026 :** Les montants ci-dessous sont des exemples indicatifs pour comparer les périmètres, pas une étude des prix du marché ni un devis ferme d’Acecore. Définissez fonctions, contenus et maintenance, puis consultez les [tarifs actuels](/fr/pricing/) et demandez un devis adapté.
 > L'une des questions les plus fréquentes lors d'une consultation sur la création de site web est « combien cela va-t-il coûter ? » La réponse courte est : le coût n'est pas déterminé uniquement par le nombre de pages. Il varie considérablement en fonction de l'objectif du site, de la profondeur du design, de l'utilisation d'un CMS, de la rédaction de contenu, de la photographie, du SEO et de l'inclusion ou non de la maintenance post-lancement.
 
 Acecore Systems propose un accompagnement complet, de la définition des besoins avant la production jusqu’à l’exploitation après la mise en ligne. Si vous envisagez de créer ou de refondre un site, consultez également notre [service de développement sur mesure](/services/development/).
+
+## Comparer deux devis sur les mêmes exigences
+
+Demandez par exemple des pages de services, de réalisations et de contact, avec des actualités modifiables par l’équipe. Fixez les mêmes conditions pour contenus, CMS, corrections et assistance. Précisez les livrables SEO : titres, liens internes ou sitemap, plutôt qu’un forfait indéfini.
+
+[Google Search Central：Définir le périmètre du travail SEO](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
 
 ## Coûts estimés par objectif
 

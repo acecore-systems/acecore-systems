@@ -82,11 +82,17 @@ faq:
       answer: 收件方邮件服务器将邮件判定为垃圾邮件的概率会增加。特别是 Gmail 越来越严格，越来越多的情况要求 SPF 和 DKIM 都 PASS。
     - question: 取消 Zoho Workplace 后数据会怎样？
       answer: 付费计划到期后会降级为免费计划。免费计划也有存储限制，因此应提前导出必要的数据。如果删除账号本身，所有数据将丢失。
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **2026年9月26日补充：** 下方价格、控制台步骤和DNS值是迁移当时的记录。不要直接复制到其他域名；请核对[KAGOYA MAIL](https://www.kagoya.jp/mail/)和[Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html)的现行说明、自己的合同及域名显示的认证值。
 > 想从 Zoho Workplace 迁移到其他邮件服务，但担心 DNS 和邮件认证的设置——本文正是为这样的读者准备的实践迁移指南。以从 Zoho Mail 迁移到 KAGOYA MAIL 为例，解说 DNS 切换、SPF/DKIM 认证、旧服务数据清理的完整步骤。
+
+## 先比较一个邮箱再切换投递
+
+变更DNS前试迁移一个账号，核对文件夹、邮件数量和附件。下方IMAP代码仅将邮件追加到INBOX，并非保留文件夹、已读状态和原始接收时间的迁移工具。验证新旧接收路径与对外发送，确定回滚期间后再整体切换。
+
+[KAGOYA MAIL：现行套餐与邮件认证功能](https://www.kagoya.jp/mail/)
 
 ## 您是否遇到了这样的情况？
 

@@ -2,7 +2,7 @@
 title: "Separar la caché perimetral de imágenes públicas de los límites de la API"
 description: "Un caso en el que la API de contenido y las solicitudes de imágenes compartían el mismo límite durante la navegación repetida. Explica la reutilización de imágenes públicas, la validación de respuestas correctas, los límites entre WAF y aplicación y las comprobaciones en producción."
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 En diarios y catálogos con imágenes, cada cambio de fecha o página genera solicitudes tanto a la API de contenido como a las imágenes. Describimos un caso en el que las imágenes dejaron de cargarse durante la navegación repetida, sin revelar URL operativas, rutas internas ni valores límite.
+
+## Reproducir la navegación consecutiva desde una imagen
+
+Solicite varias veces la misma imagen pública y compare hash del cuerpo, estado HTTP y caché. Después cargue texto y varias imágenes al cambiar de página y compruebe qué solicitudes consumen el límite. Un HIT no basta: verifique contenido correcto y protección de la API.
+
+[Cloudflare Cache API：Lectura condicional y caché por ubicación](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## El contenido y las imágenes compartían el mismo límite
 

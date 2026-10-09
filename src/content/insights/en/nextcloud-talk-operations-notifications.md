@@ -2,7 +2,7 @@
 title: "Routing Operations Alerts to Nextcloud Talk: Separate Detection, Delivery, and Resolution"
 description: "A generalized design for routing order-processing exceptions and content requiring review to private Talk rooms and an admin interface, with minimal alerts, secret handling, connection tests, and clear acceptance limits."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 An order-processing issue or a post that needs review can go unnoticed if the right person does not see it. This generalized case connects internal operations alerts to Nextcloud Talk without disclosing customer information, room URLs, or internal topology.
+
+## Test retries and the admin route with one notification type
+
+Start with one type, such as processing failure. Use a test without personal data to check that an authorized operator can reach the admin screen. Test repeated detection separately from delivery failure, ensuring retries do not duplicate notifications or rerun the business operation.
+
+[Nextcloud Talk：Bot and webhook connection specifications](https://nextcloud-talk.readthedocs.io/en/stable/bots/)
 
 ## Make an alert a prompt to look
 

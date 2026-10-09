@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS로 다국어 블로그를 운영하는 방법"
-description: "2026년 6월 Copilot 번역 PR 도입 과정과 2026년 9월 OpenAI Batch 운영 방식을 함께 정리합니다."
+description: "다국어 블로그 운영은 대표 글의 번역 파일로 언어별 HTML을 생성해 본문, title, description, 내부 링크를 확인하는 것부터 시작하세요."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: 번역 페이지는 중복 콘텐츠인가요?
       answer: "Google 문서에 따르면 본문이 번역되어 있다면 현지화 페이지가 단순 중복으로 취급되는 것은 아닙니다. hreflang으로 관계를 명확히 합니다."
 ---
+
+다국어 블로그 운영은 대표 글의 번역 파일로 언어별 HTML을 생성해 본문, title, description, 내부 링크를 확인하는 것부터 시작하세요. [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)에 따라 실제 있는 언어판만 연결하고 번역 서비스 성공과 공개 페이지 완성을 따로 검수하세요.
 
 > **2026년 9월 26일 추가:** 아래 Copilot 기반 번역 PR 절차는 2026년 6월 도입 기록입니다. 현재 번역 생성은 OpenAI Batch로 전환되었습니다. 일본어를 원본으로 삼고 번역된 정적 페이지를 언어별로 공개하는 원칙은 그대로입니다.
 

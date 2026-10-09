@@ -2,7 +2,7 @@
 title: "Technisches Design für einen KI-Kontaktchat in einer Astro-Website"
 description: "Referenzdesign vom Juni 2026. Ein praktischer Leitfaden für einen KI-Kontaktchat in einer statischen Astro + Cloudflare Pages Website mit der OpenAI Responses API. Behandelt werden API-Grenzen, Website-Kontext, Prompt-Steuerung, locale-bezogene URLs, Origin-Prüfung, Rate Limiting und sicheres Rendern von Markdown-Links."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Cloudflare", "Website", "AI", "Services"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -79,6 +79,8 @@ faq:
     - question: Darf die KI beliebige Links ausgeben?
       answer: Nein. Links sind auf interne Pfade, den aktuellen Origin, acecore.net, die offizielle LINE-URL sowie notwendige mailto- und tel-Links beschränkt. Markdown-URLs werden vor der Prüfung getrimmt.
 ---
+
+Beschränken Sie einen ersten KI-Chat auf öffentliche FAQ und leiten Sie verbindliche Angebote oder Anfragen an das Formular weiter. Prüfen Sie Serververbindungen mit [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/). Die folgende URL-Prüfung ist ein historisches vereinfachtes Beispiel; verwenden Sie URL-Parsing und die Freigabeliste des verlinkten Artikels statt bloßer Präfixvergleiche.
 
 > **Ergänzung vom 26. September 2026:** Der folgende Text beschreibt ein Referenzdesign vom Juni 2026. Das aktuelle API für AI Chat von Acecore Systems leitet Anfragen über eine Cloudflare Pages Function und ein Service Binding an den gemeinsamen acecore-chat-worker weiter. Die Oberfläche empfängt JSON und zeigt die vollständige Antwort an. Der direkte OpenAI-Aufruf unten ist nicht mehr die aktuelle Systems-Implementierung.
 

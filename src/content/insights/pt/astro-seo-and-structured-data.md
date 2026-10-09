@@ -4,7 +4,7 @@ description: "Compilamos os procedimentos para implementar corretamente dados es
 date: 2026-03-25T11:00
 author: gui
 tags: ["Tecnologia", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: A priority do sitemap afeta o SEO?
       answer: "O Google ignora `priority` e `changefreq`; inventar valores não traz benefício de SEO."
 ---
+
+Comece o SEO do Astro conferindo title, description, canonical e JSON-LD no HTML gerado de um artigo representativo com o conteúdo visível. Valide campos obrigatórios com [Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) e confira Search Console após publicar. Sintaxe correta não garante resultados avançados nem posições.
 
 > Atualização de setembro de 2026: o Google encerrou a caixa de pesquisa de sitelinks em novembro de 2024. Resultados avançados de FAQ são geralmente restritos a sites governamentais e de saúde reconhecidos, e o Google ignora `changefreq` e `priority` do sitemap. Leia este registro de março de 2026 junto com as mudanças da [caixa de pesquisa](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) e as [orientações de sitemap](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
@@ -192,7 +194,7 @@ Por fim, compilamos os pontos a verificar para melhoria de SEO de um site Astro.
 6. **O feed RSS inclui autor e categorias?**
 7. **O robots.txt está excluindo do crawl o índice de busca (`/pagefind/` etc.)?**
 
-Uma vez que todas essas configurações estejam feitas, a base do SEO está pronta. A partir daí, a posição nos resultados de busca é determinada pela qualidade e frequência de atualização do conteúdo.
+Essas configurações ajudam a transmitir conteúdo público aos buscadores. As posições não dependem apenas de qualidade e frequência de atualização, e configurar não comprova aumento de tráfego. Use consultas, impressões e taxas de cliques posteriores para melhorar respostas às necessidades do leitor.
 
 ---
 

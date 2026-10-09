@@ -2,7 +2,7 @@
 title: "KI-Antworten dürfen keine unerfüllbaren Versprechen machen"
 description: "So lässt sich verhindern, dass ein Informationsassistent eigenmächtig die Teilnahme, Terminplanung oder spätere Kontaktaufnahme durch Mitarbeitende verspricht. Behandelt werden Gesprächsstatus, Abruffehler, veraltete Entwürfe und geschlossene Gespräche."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Verallgemeinerter Fall; kein konkretes Gespräch wird veröffentlicht"
   text: "Der Fall behandelt Änderungen an Richtlinien und Klassifizierung, Prüfungen vor dem Versand, Tests, Bereitstellung und eine begrenzte betriebliche Beobachtung. Beiträge oder Konten anderer Personen werden nicht einbezogen; außerdem wird nicht belegt, dass sich jede Formulierung eines falschen Versprechens verhindern lässt."
 ---
+
+Definieren Sie öffentliche Auskünfte, Übergaben an Mitarbeitende und tatsächliche Buchungen als getrennte Fähigkeiten. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) unterstützt die Gestaltung erlaubter Aktionen und Freigaben. Der folgende Text behandelt Antwortgrenzen, ohne plattformspezifische Verfahren zum automatisierten Versand.
 
 Auch eine natürlich klingende Informationsantwort darf nicht ohne Beleg versprechen, dass sich eine mitarbeitende Person später meldet oder zu einer bestimmten Zeit teilnimmt. Dieser verallgemeinerte Bericht über einen internen Antwortablauf nennt weder Plattform noch Gespräch.
 

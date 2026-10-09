@@ -2,7 +2,7 @@
 title: "Anmeldefristen über Dienste hinweg abstimmen: Erneuerung und erneute Authentifizierung"
 description: "Allgemeiner Entwurf konsistenter Anmeldefristen mit getrennten Regeln für Anmeldung, Server, Cookies und Identitätsanbieter."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Ein gemeinsames Konto macht die Sitzungen der Anwendungen und des Identitätsanbieters nicht identisch. Der Fall gleicht Regeln ab, ohne Zielsysteme oder Fristen zu veröffentlichen.
+
+## Dieselbe Anfrage vor und nach Ablauf vergleichen
+
+Verwenden Sie im Test eine kurze Laufzeit. Prüfen Sie explizite Anmeldung, Browsen und Hintergrundaktualisierung getrennt auf Änderungen des serverseitigen Ablaufs. Testen Sie danach dieselbe Aktion über Oberfläche und API auf Neuanmeldung und verweigerten Datenzugriff. Halten Sie diesen Test getrennt vom langfristigen Produktionsbetrieb fest.
+
+[OWASP：Sitzungsablauf planen und testen](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## Jede Laufzeit bestimmen
 

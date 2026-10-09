@@ -1,6 +1,6 @@
 ---
-title: "VitePress から Starlight へ ― ドキュメントサイトのフレームワーク統一"
-description: "VitePress + UnoCSS で構築していた事業計画ドキュメントを Astro + Starlight に移行し、2つのプロジェクトでフレームワークを統一した記録です。Mermaid 図表の CDN 移行も紹介します。"
+title: "VitePressからStarlightへ移行する：Markdown・URL・Mermaidの確認手順"
+description: "Astroへドキュメント基盤を揃えるときの判断材料と移行手順を解説。Markdown配置、frontmatter、旧URL、Mermaidの描画処理とCDN依存を、2026年3月の移行例から確認します。"
 date: 2026-03-15T00:00
 author: gui
 tags: ["技術", "Astro", "Starlight"]
@@ -42,15 +42,21 @@ faq:
     - question: VitePress から Starlight に移行するメリットは何ですか？
       answer: メインサイトが Astro の場合、フレームワークを統一できるため学習コスト・依存管理・設定の一貫性が向上します。ビルドパイプラインも一本化できます。
     - question: Mermaid の図表はどうやって表示しますか？
-      answer: プラグイン依存をやめ、CDN（jsdelivr）経由で Mermaid を読み込む方式に切り替えました。ビルド依存がゼロになり、図表のレンダリングも安定します。
+      answer: "今回はMermaidをCDN（jsdelivr）から読み込み、図の定義を対象要素へ渡す描画経路を使いました。Mermaidのnpm依存を外せますが、CDN到達性と導入版の互換性は別に確認します。"
     - question: 移行作業にはどのくらいの手間がかかりますか？
       answer: 主な作業はディレクトリ構造の変換（docs/ → src/content/docs/）とフロントマターの調整です。コンテンツ自体は Markdown なのでそのまま使えるため、比較的短時間で完了します。
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 VitePress で作ったドキュメントサイトを、Astro + Starlight に移行する手順をまとめます。メインサイトが Astro で動いている場合、ドキュメントも Starlight に統一すると運用がシンプルになります。Mermaid 図表の CDN 移行についても紹介します。
 
 Astro 側の多言語化やブログ翻訳の仕組みは、[Astro 6 サイトを9言語対応にした記録](/blog/astro-i18n-blog-translation/)で詳しく紹介しています。
+
+## 移行前に一ページの互換性を確かめる
+
+見出し・内部リンク・コード・Mermaidを含む一ページを先に移し、生成URLと図の表示を比べます。CDNのimportだけではMarkdownのコード枠がMermaid対象になるとは限りません。図の定義をclass="mermaid"の要素へ渡す描画処理も必要で、導入版のHTMLを確認してから全体を移します。
+
+[Starlight：MarkdownとHTMLの記述仕様](https://starlight.astro.build/guides/authoring-content/)
 
 ## なぜフレームワークを統一するのか
 
@@ -126,7 +132,7 @@ VitePress 環境では UnoCSS でカスタムスタイルを適用していま�
 
 ## Mermaid 図表の CDN 移行
 
-事業計画ドキュメントにはフローチャートや組織図を Mermaid で記述しています。VitePress ではプラグイン（`vitepress-plugin-mermaid`）で Mermaid を統合していましたが、Starlight にはそのようなプラグインがありません。
+事業計画の図表ではVitePressの`vitepress-plugin-mermaid`を使っていました。今回は依存管理を揃えるため、StarlightでCDN読込みを選びました。Starlight向けの拡張は[公式のプラグイン一覧](https://starlight.astro.build/resources/plugins/)でも確認でき、CDNだけが選択肢ではありません。
 
 そこで、Mermaid をブラウザサイドで CDN から読み込む方式に切り替えました。
 
@@ -150,7 +156,7 @@ starlight({
 });
 ```
 
-Markdown 内では通常の Mermaid 記法がそのまま使えます：
+下のコード枠は図の定義例です。表示には、[Mermaidが対象にする要素](https://mermaid.js.org/intro/)へ定義を渡す処理も必要です：
 
 ````markdown
 ```mermaid
@@ -164,7 +170,7 @@ graph TD
 ### CDN 方式のメリット
 
 - **ビルド依存ゼロ**：npm パッケージとしての Mermaid が不要
-- **常に最新バージョン**：CDN から最新版を取得
+- **バージョンを固定できる**：例では11.16.0を指定。CDN利用だけで最新版へ自動更新されるわけではない
 - **SSR 不要**：ブラウザで描画するためビルド時間に影響しない
 
 ## 移行結果

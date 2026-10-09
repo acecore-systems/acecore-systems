@@ -1,10 +1,10 @@
 ---
 title: "GitHub Copilot × Playwright로 웹사이트 몽키 테스트하기: 실전 가이드"
-description: "VS Code 에이전트 모드(GitHub Copilot)와 Playwright 브라우저 도구를 결합하여 정적 사이트를 체계적으로 몽키 테스트하는 실전 가이드. 테스트 설계 방법론, 발견된 버그와 수정, 개선 권장 사항을 다룹니다."
+description: "AI와 Playwright로 탐색 테스트를 시작할 때는 허용할 탐색과 폼 입력 범위를 정하고 재현 절차와 기대 결과를 기록하세요."
 date: 2026-03-25T14:00
 author: gui
 tags: ["기술", "GitHub Copilot", "VS Code", "Astro", "웹사이트"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - 모든 라우트를 자동 크롤링하여 HTTP 상태 및 DOM 구조 확인
       - AI가 소스 코드에서 자동으로 테스트 대상 추출
-      - 깨진 이미지, 빈 링크, JS 오류를 빠짐없이 탐지
+      - 정의한 검사 범위에서 깨진 이미지, 빈 링크, JS 오류 탐지
       - 발견 → 원인 분석 → 수정 → 재테스트를 단일 세션에서 완료
 faq:
   title: 자주 묻는 질문
@@ -53,6 +53,8 @@ faq:
     - question: AI가 발견한 버그를 직접 수정할 수도 있나요?
       answer: "에이전트 모드에서는 파일 읽기/쓰기가 가능하므로, 버그 탐지부터 수정, 빌드 검증까지 전체 흐름을 단일 세션에서 완료할 수 있습니다. 이 글에서는 2개의 버그를 발견하고 그 자리에서 수정했습니다."
 ---
+
+AI와 Playwright로 탐색 테스트를 시작할 때는 허용할 탐색과 폼 입력 범위를 정하고 재현 절차와 기대 결과를 기록하세요. [Playwright: Best Practices](https://playwright.dev/docs/best-practices)를 참고해 반복 가능한 회귀 테스트로 만들면 다음 릴리스에도 활용할 수 있습니다. 아래 경로와 위반 건수는 당시 관측이며 완전한 검증 범위를 뜻하지 않습니다.
 
 > **2026년 9월 업데이트:** Copilot 사용량 안내는 이 글이 처음 설명한 에이전트 모드 월간 횟수에서 AI Credits 기준으로 바뀌었습니다. 현재 한도는 [GitHub 공식 문서](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing)를 확인하세요.
 
@@ -124,6 +126,8 @@ src/
 
 결과: 모든 라우트 200 OK (의도적 404 제외)
 ```
+
+당시 기록에는 이 로그의 전체 경로 수, 세부 내역, 글 마지막 집계 사이에 불일치가 있습니다. 따라서 전체 경로 수를 테스트 재현성의 근거로 삼지 말고 실제 빌드에서 대상 URL을 나열해 검사 범위를 확정하세요. 게시된 코드와 수치는 당시 기록으로 유지합니다.
 
 ### DOM 구조 체크
 

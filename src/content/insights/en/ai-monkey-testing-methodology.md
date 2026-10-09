@@ -1,10 +1,10 @@
 ---
 title: "Monkey Testing Your Website with GitHub Copilot × Playwright: A Practical Guide"
-description: "A hands-on guide to systematically monkey testing a static site using VS Code Agent Mode (GitHub Copilot) combined with Playwright browser tools. Covers test design methodology, discovered bugs and their fixes, and improvement recommendations."
+description: "To start exploratory testing with AI and Playwright, define the allowed browsing and form interactions, then record reproduction steps and expected results for each finding."
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technology", "GitHub Copilot", "VS Code", "Astro", "Website"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - Automatically crawl all routes to verify HTTP status and DOM structure
       - AI automatically extracts test targets from source code
-      - Zero-miss detection of broken images, empty links, and JS errors
+      - Detect broken images, empty links and JS errors within the defined test scope
       - Discovery → root cause → fix → retest all completed within a single session
 faq:
   title: Frequently Asked Questions
@@ -53,6 +53,8 @@ faq:
     - question: Can the AI also fix bugs it discovers?
       answer: "In Agent Mode, file read/write is possible, so the entire flow from bug detection to fixing and build verification can be completed within a single session. In this article, we discovered 2 bugs and fixed them on the spot."
 ---
+
+To start exploratory testing with AI and Playwright, define the allowed browsing and form interactions, then record reproduction steps and expected results for each finding. Use [Playwright: Best Practices](https://playwright.dev/docs/best-practices) to turn findings into repeatable regression tests. Route and violation counts below are historical observations, not evidence of complete coverage.
 
 > **September 2026 update:** Copilot usage is now described using AI Credits rather than the article’s original monthly Agent Mode request count. Check the [current GitHub documentation](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing) for your allowance.
 
@@ -124,6 +126,8 @@ Test targets: 38 routes
 
 Result: All routes 200 OK (except intentional 404)
 ```
+
+The historical record contains inconsistencies between the total route count in this log, its breakdown and the summary at the end of the article. Do not use the total count as evidence of test reproducibility; enumerate target URLs from the actual build to establish the test scope. The published code and figures are preserved as historical records.
 
 ### DOM Structure Check
 

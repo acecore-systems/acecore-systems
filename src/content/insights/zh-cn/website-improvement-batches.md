@@ -1,8 +1,8 @@
 ---
-title: "Astro 站点品质改善指南 ― 从 PageSpeed 移动端99分的达成之路"
-description: "将 Astro + UnoCSS + Cloudflare Pages 架构的站点从性能、SEO、无障碍性、UX 四个维度进行优化，达成 PageSpeed Insights 移动端99分、桌面端全项100分的完整记录。"
+title: "Astro网站质量改善步骤：测量并改善速度、SEO与无障碍"
+description: "测量CSS、字体、图像和外部JS，改善SEO与操作体验。以2026年3月25日PageSpeed移动端99分实例说明如何选择措施并复测。"
 date: 2026-03-25T15:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "Astro", "性能", "无障碍", "SEO", "网站"]
 image: "/images/insights/covers/website-improvement-batches-cover-v2.webp"
@@ -40,7 +40,7 @@ compareTable:
     items:
       - 移动端 99 / 100 / 100 / 100（桌面端全项100）
       - 7种结构化数据 + OGP + canonical 完备
-      - WCAG AA 合规（对比度·aria·屏幕阅读器通知·focus-visible）
+      - 改善对比度、aria、读屏通知和focus-visible
       - 全组件适配 View Transitions
       - SITE 常量·社交 URL·广告 ID 集中管理
 linkCards:
@@ -54,7 +54,7 @@ linkCards:
     icon: i-lucide-search
   - href: /blog/astro-accessibility-guide/
     title: 无障碍性篇
-    description: 达成 WCAG AA 合规的 aria 属性、对比度、表单改善指南。
+    description: "aria、对比度与表单改善实例，与完整WCAG符合性验证分开。"
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX·代码质量篇
@@ -74,6 +74,12 @@ faq:
 ---
 
 **2026年9月26日补充：** 本文记录的是2026年3月25日的改进。当时认为99分是实际上限，但[3月29日的后续测量](/insights/website-improvement-final-batch/)记录了100分。两者都是各自测量时的结果，并非当前分数。[Google的PageSpeed Insights说明](https://developers.google.com/speed/docs/insights/v5/about)解释了分数为何会波动。
+
+## 从页面传输量选择第一项改善
+
+在相同条件下测量首页与代表文章页，比较CSS、字体、图像和外部JS传输量。修改一个主要负担后复测，并测试表单与搜索。自动审核100分不能证明满足全部WCAG要求，键盘操作与读屏应另行确认。
+
+[PageSpeed Insights：实验室测量与真实用户数据的区别](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## 前言
 
@@ -181,4 +187,4 @@ PageSpeed Accessibility 100分通过清除 axe DevTools 和 Lighthouse 的自动
 
 同时并行推进 SEO、无障碍性和 UX 的改善，可以在所有4项指标上获得高分。与其执着于100分，不如以稳定达到95分以上为现实目标。
 
-各主题的详细内容请通过上方的链接卡片查看。关于改善的推进方式和代码实现，也请参阅[使用 GitHub Copilot 的开发流程](/blog/tax-return-with-copilot/)。
+各主题的详细内容请通过上方的链接卡片查看。关于改善的推进方式和代码实现，也请参阅[与AI共享判断记录的报税实例](/blog/tax-return-with-copilot/)。

@@ -2,7 +2,7 @@
 title: "将公开图片的边缘缓存与 API 速率限制分开"
 description: "一个在连续浏览时，内容 API 与图片请求共用同一限制额度的案例。介绍公开图片的复用、成功响应的验证、WAF 与应用的边界，以及生产环境检查。"
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 在带图片的日记或目录中，每次切换日期或页面都会同时请求正文 API 和图片。本文介绍连续浏览时图片停止加载的案例，不公开运维 URL、内部路由或限制值。
+
+## 从一张图像复现连续浏览
+
+反复取得同一公开图像，比较首次与后续请求的body哈希、status和缓存状态。再通过正常翻页取得正文和多张图像，检查哪些请求计入限制。不能仅以HIT判定成功，还要同时验证图像内容与API保护。
+
+[Cloudflare Cache API：条件获取与各节点缓存](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## 正文与图片共用同一速率限制额度
 

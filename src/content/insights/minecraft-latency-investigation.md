@@ -2,7 +2,7 @@
 title: "Minecraftの遅延をどう調べるか：静かな測定と共有ストレージの切り分け"
 description: "TPS・MSPTの静かな収集からJFRとOSのI/O観測を照合するまで。完了した原因調査と、未実施の性能改善を分けて紹介します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Minecraftの『重い』には、サーバーのtick処理、短い保存待ち、通信、クライアントの描画など、異なる原因が含まれます。複数のPaperサーバーで行った調査を、内部ホスト名や構成を伏せて紹介します。
+
+## 最初の採取はラグが起きている時間に絞る
+
+プレイヤーが重いと感じた時刻、人数、保存の有無を記録し、同じ時間帯のMSPTとプロファイルを比べます。正常時にも短い比較窓を取り、処理の占有が増えたのか、待機が増えたのかを分けると、プラグイン調整とストレージ調査のどちらへ進むか判断しやすくなります。
+
+[PaperMC：問題発生中のプロファイル採取](https://docs.papermc.io/paper/profiling/)
 
 ## 平均と短い停止を別々に測る
 

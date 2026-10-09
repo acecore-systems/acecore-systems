@@ -2,7 +2,7 @@
 title: "Importar datos del perfil como borrador: comparar, elegir y publicar con criterio"
 description: "Una implementación general para importar perfiles desde texto, CSV, HTML estático y JSON común. Explica cómo comparar valores actuales, elegir campos para sustituirlos o deshacer cambios, y separar el guardado de la publicación."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Al trasladar un perfil existente a otro editor, compara los valores actuales con los candidatos importados antes de sustituir nada. Este caso anonimizado explica los límites entre importar datos y publicar un perfil.
+
+## Probar la conservación de ediciones con una biografía
+
+Edite manualmente la biografía e importe un texto distinto como candidato. Compruebe que los campos no elegidos permanecen, que puede revisar reemplazos y que cancelar restaura el original. Compare después borrador y página pública: importar por sí solo no debe cambiar la publicación.
+
+[OWASP：Validar formato, valores y longitud de entrada](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Define primero los formatos de entrada admitidos
 

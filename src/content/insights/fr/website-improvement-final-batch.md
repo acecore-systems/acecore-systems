@@ -1,8 +1,8 @@
 ---
-title: "Guide d'amélioration de la qualité d'un site Astro, suite - Ajustements finaux pour atteindre 100 sur tous les critères de PageSpeed Insights"
-description: "Compte rendu des derniers ajustements effectués après l'article précédent : désactivation de Cloudflare Web Analytics, chargement différé de GA4 et de l'interface de recherche, obtention de 100 sur les quatre critères de PageSpeed Insights en mobile et en desktop, nettoyage des breadcrumbs et des règles d'indexation dans Search Console, migration vers des icônes SVG partagées et explication des optimisations supplémentaires testées mais non retenues."
+title: "Comparer le chargement différé Astro : GA4, Pagefind et PageSpeed"
+description: "Différer GA4 et Pagefind en préservant les fonctions utiles. Comparaison des scores PageSpeed 100 du 29 mars 2026, de l’indexation et d’un découpage CSS écarté."
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   ["Technologie", "Astro", "Performance", "Accessibilité", "SEO", "Site web"]
@@ -104,7 +104,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: Article sur l'accessibilité
-    description: Rassemble les mesures concrètes utilisées pour atteindre la conformité WCAG AA et Accessibility 100.
+    description: "Exemples pour aria, contraste et formulaires ; distincts de la vérification de toutes les exigences WCAG."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: Article sur l'UX et la qualité du code
@@ -126,6 +126,12 @@ faq:
 ---
 
 **Mise à jour du 26 septembre 2026 :** Le score de 100 correspond à une mesure PageSpeed Insights du 29 mars 2026. Il ne garantit ni le score actuel ni l'expérience de tous les utilisateurs réels. Voir la [documentation de Google](https://developers.google.com/speed/docs/insights/v5/about) sur les données de laboratoire, de terrain et leur variabilité.
+
+## Tester la première interaction avant de différer le chargement
+
+Évaluez GA4 ou recherche différés avec mesures et recette fonctionnelle. Cliquez immédiatement sur un CTA, ouvrez la recherche et changez de page ; vérifiez événements perdus ou doublés et attente initiale. Écartez un changement qui supprime une fonction nécessaire, même si le score augmente.
+
+[PageSpeed Insights：Interpréter les résultats de mesure](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Introduction
 

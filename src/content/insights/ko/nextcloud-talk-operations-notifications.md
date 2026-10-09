@@ -2,7 +2,7 @@
 title: "운영 알림을 Nextcloud Talk에 연결하기: 감지, 전달, 해결을 구분하기"
 description: "주문 처리 예외와 검토가 필요한 콘텐츠를 비공개 Talk 방과 관리 화면으로 전달하는 일반화된 설계를 소개합니다. 최소 알림, 비밀정보 관리, 연결 테스트와 수락 범위를 다룹니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 주문 처리 문제나 검토가 필요한 게시물을 발견해도 담당자가 알아차리지 못하면 대응이 진행되지 않습니다. 이 일반화된 사례는 고객 정보, 대화방 URL, 내부 구성을 드러내지 않고 내부 운영 알림을 Nextcloud Talk에 연결합니다.
+
+## 알림 한 종류로 재전송과 관리 경로 시험하기
+
+먼저 처리 실패 같은 한 종류를 선택하고 개인정보 없는 테스트 알림으로 권한 있는 담당자가 관리 화면에 접근할 수 있는지 확인합니다. 동일 문제의 재탐지와 전송만 실패한 경우를 따로 시험하여 중복 알림이나 업무 처리의 이중 실행 없이 재전송할 수 있는지 확인하세요.
+
+[Nextcloud Talk：Bot과 Webhook 연결 사양](https://nextcloud-talk.readthedocs.io/en/stable/bots/)
 
 ## 알림을 확인을 시작하는 신호로 사용하기
 

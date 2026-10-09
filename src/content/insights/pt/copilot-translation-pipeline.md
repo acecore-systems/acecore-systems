@@ -1,8 +1,8 @@
 ---
 title: "Como operar um blog multilíngue com Sveltia CMS"
-description: "Este artigo registra o fluxo de PR de tradução com Copilot de junho de 2026 e o fluxo atual com OpenAI Batch de setembro de 2026."
+description: "Para iniciar um fluxo multilíngue, gere HTML localizado pelas traduções de um artigo representativo e confira texto, title, description e links internos."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: Páginas traduzidas são duplicadas?
       answer: "Segundo a documentação do Google, páginas localizadas só são duplicadas quando o conteúdo principal não está traduzido. Use hreflang para conectar as variantes."
 ---
+
+Para iniciar um fluxo multilíngue, gere HTML localizado pelas traduções de um artigo representativo e confira texto, title, description e links internos. Relacione somente versões existentes segundo [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions); verifique separadamente o sucesso do serviço e as páginas públicas concluídas.
 
 > **Atualização de 26 de setembro de 2026:** As etapas com Copilot abaixo registram a implantação de junho de 2026. A geração de traduções passou para OpenAI Batch. O japonês continua sendo a fonte principal, e as páginas estáticas traduzidas continuam sendo o formato de publicação.
 

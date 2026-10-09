@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize와 RAG 입문: 검색과 AI 답변의 차이 이해하기"
 description: "Cloudflare Vectorize가 방문자의 자연스러운 질문으로 이미 공개한 정보를 더 쉽게 찾게 하는 방법을, 도입 가치, 일반 검색과의 역할 분담, RAG, 단계적 시작 방법으로 설명합니다."
 date: 2026-07-31T12:00
-lastUpdated: 2026-08-01T17:00
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "Cloudflare", "Vectorize", "RAG", "의미 검색", "사이트 검색"]
 image: /images/insights/vectorize-rag-hero.webp
@@ -58,6 +58,8 @@ linkCards:
     description: "embedding 차원과 거리 지표처럼 index 생성 전에 정해야 하는 항목을 확인합니다."
     icon: i-lucide-settings-2
 ---
+
+의미 검색을 시험할 때는 같은 공개 페이지를 찾는 공식 명칭과 사용자 표현을 짝지어 기대 URL이 후보에 나오는지 비교하세요. 정답 페이지를 정한 뒤 [Cloudflare Vectorize: Create Indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/)에서 인덱스 계약을 확인하면 채팅 답변의 자연스러움과 별도로 검색 품질을 평가할 수 있습니다.
 
 ## 먼저 결론: Vectorize는 질문과 페이지 사이의 거리를 줄입니다
 

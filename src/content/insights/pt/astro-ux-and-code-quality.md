@@ -2,7 +2,7 @@
 title: "Armadilhas e soluções do Astro View Transitions — Guia de melhoria de UX e qualidade de código"
 description: "Guia prático sobre soluções para scripts que param de funcionar com View Transitions do Astro, introdução de busca full-text com Pagefind, melhoria de segurança de tipos com TypeScript e gerenciamento centralizado de constantes, melhorando UX e qualidade de código."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "Site"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: Erros de tipo TypeScript podem ser ignorados e o código funciona?
       answer: "Funciona, mas erros de tipo são indícios de bugs. Especialmente os schemas de conteúdo do Astro, ao serem type-safe, permitem autocompletar do IDE no acesso a propriedades dentro dos templates, melhorando significativamente a eficiência de desenvolvimento."
 ---
+
+Se menu ou busca falharem apenas após navegar, compare carga direta e navegação pelo ClientRouter e examine a inicialização. Siga o ciclo de vida em [Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/) para organizar eventos e verificar execução duplicada, voltar e avançar.
 
 ## Introdução
 
@@ -136,7 +138,7 @@ Implemente um modal de busca que abre com o atalho `Ctrl+K`. Quando não há res
 
 ### Integração SearchAction
 
-Ao definir o parâmetro `?q=` nos dados estruturados `SearchAction` do Google, é possível transitar diretamente dos resultados de busca para a busca interna do site. Adicione processamento para detectar o parâmetro da URL e abrir automaticamente o modal de busca.
+O Google encerrou a caixa de pesquisa de sitelinks em 2024-11 ([anúncio oficial](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)). Trate `SearchAction` existente como implementação histórica, sem esperar essa caixa nos resultados. Abrir o modal por `?q=` continua útil para links compartilhados e busca interna.
 
 ### Configuração de cache
 

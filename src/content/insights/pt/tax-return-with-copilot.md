@@ -1,6 +1,6 @@
 ---
-title: "Deixei o GitHub Copilot fazer toda a minha declaração de imposto de renda — de 837 lançamentos contábeis até a entrega"
-description: "Da classificação e verificação de 837 lançamentos contábeis acumulados via integração de dados de contabilidade em nuvem, passando pela conferência de contribuições previdenciárias, entrada de deduções até a entrega da declaração. O registro completo de uma declaração de imposto de renda onde o trabalho foi quase totalmente delegado ao GitHub Copilot Agent Mode × Simple Browser."
+title: "Organizar uma declaração japonesa com Copilot: 837 lançamentos e revisão humana"
+description: "Um caso pessoal de março de 2026 mostra como Copilot comparou regras, 837 lançamentos, documentos e formulários. Separa tarefas delegadas das decisões sobre rateio, deduções e envio."
 date: 2026-03-17T00:00
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "VS Code"]
@@ -46,18 +46,24 @@ faq:
   title: Perguntas frequentes
   items:
     - question: É realmente possível fazer a declaração de IR com o GitHub Copilot?
-      answer: Sim, combinando o Agent Mode com o Simple Browser, é possível completar desde a classificação de lançamentos, entrada de deduções até a criação do formulário da declaração dentro do VS Code. Porém, a entrega final requer autenticação com cartão My Number, então o humano precisa fazer isso.
+      answer: "Neste caso, Agent Mode e Simple Browser apoiaram comparação, entrada e revisão. As operações dependem do ambiente e permissões. O declarante decide o tratamento fiscal, verifica sua identidade e aprova o envio."
     - question: Quais são os pré-requisitos para usar o Copilot?
       answer: O maior pré-requisito é acumular dados de lançamentos contábeis no dia a dia usando contabilidade em nuvem como o MoneyForward. O Copilot é responsável por organizar e verificar os dados acumulados, então sem dados ele não funciona.
     - question: Como as inconsistências nos lançamentos foram detectadas?
       answer: O Copilot confrontou o guia de políticas (regras de contas contábeis) com o livro-razão e detectou mecanicamente os lançamentos que não estavam de acordo com as regras. Foram encontradas 8 inconsistências em 837 lançamentos, que foram corrigidas.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Adicionado em 26 de setembro de 2026:** Este texto registra uma declaração pessoal realizada em março de 2026. A classificação e o preenchimento por IA não garantem a correção fiscal. A pessoa declarante deve conferir comprovantes, declaração e resultado do envio e verificar as regras do ano aplicável na [Agência Tributária do Japão](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
 > Deleguei todo o trabalho operacional da declaração de imposto de renda ao Agent Mode do GitHub Copilot. O resultado: desde a classificação de 837 lançamentos contábeis até a criação e verificação do formulário da declaração, tudo foi concluído dentro do VS Code. Apenas a entrega final foi feita pelo aplicativo de smartphone com autenticação por cartão My Number, completando a declaração.
 
 Neste artigo, registro sem esconder nada "até onde o Copilot conseguiu fazer" e "o que o humano fez".
+
+## Começar pelas divergências sem alterar o livro
+
+Comece comparando, em modo de leitura, dados minimizados e regras contábeis. Liste documentos, diferenças e estado da revisão; não confirme categorias sem verificar. Decida rateios e deduções conforme o exercício e a situação real, separando sugestões de IA e tratamento aprovado.
+
+[Agência Nacional Tributária do Japão: Verificar despesas de negócio e uso misto](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2210.htm)
 
 ## Premissa: A integração de dados do MF Cloud é a base
 
@@ -95,9 +101,9 @@ Para delegar operações de tela à IA, existem ferramentas baseadas em screensh
 
 Razões para escolher o GitHub Copilot Agent Mode:
 
-- **Divisão de trabalho onde o humano faz login e a IA trabalha** — O humano faz login em bancos e softwares contábeis e deixa as páginas abertas. A partir daí, as operações (busca, entrada, confirmação) são feitas pelo Copilot via Simple Browser. Computer Use é projetado para entregar o desktop inteiro à IA, não permitindo a divisão "apenas login pelo humano, resto pela IA" na mesma tela
+- **Login humano e comparação por IA** — O declarante fez login e autorizou busca, entrada e revisão pelo Copilot em um escopo definido. Outras ferramentas de tela também permitem divisão de tarefas; a escolha refletiu o ambiente disponível e a facilidade de registro.
 - **Edição de arquivos e operação do navegador se completam no mesmo ambiente** — Ler o guia-de-politicas.md, avaliar a correção dos lançamentos, escrever os resultados no verificacao-inconsistencias.md, e em seguida corrigir os registros via Simple Browser. Esse fluxo não se interrompe dentro do VS Code
-- **Arquivos Markdown funcionam como workspace compartilhado entre humano e IA** — Computer Use é baseado em screenshots, então não é adequado para acumular e consultar conhecimento estruturado. Com o Copilot, é possível trocar "com que base e como decidimos" bidireccionalmente através de arquivos .md
+- **Compartilhar decisões em Markdown** — Regras, evidências e pendências ficaram em .md para leitura compartilhada. Isso não significa que outras ferramentas não possam manter registros.
 - **O log de conversa se torna o registro de trabalho** — Trocas como "Coloca essa dedução?" "Não tem comprovante, então vamos deixar de fora" ficam todas registradas no histórico do chat. Poder rastrear o processo decisório depois é especialmente importante na declaração de IR
 
 Em resumo, operar a tela é possível com outras ferramentas, mas **a divisão de trabalho com humano e IA compartilhando a mesma tela e os mesmos arquivos** é o ponto forte do Copilot Agent Mode.
@@ -228,13 +234,15 @@ Passamos então a inserir as demais deduções junto com o Copilot via Simple Br
 
 ### Deduções inseridas
 
-| Tipo de dedução                             | Descrição                                                  | Trabalho do Copilot                                                                            |
-| ------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Dedução de seguro de vida                   | Dados integrados do Myna Portal + entrada manual           | Operou select boxes do formulário e inseriu item por item                                      |
-| Dedução de seguro contra terremotos         | Seguro contra terremoto de cooperativa/seguradora          | Inseriu valores no formulário                                                                  |
-| Dedução de cônjuge                          | Cálculo de renda total do cônjuge                          | Calculou o valor da renda aplicando a dedução de renda salarial e confirmou o valor da dedução |
-| Dedução de contribuição previdenciária      | Previdência + seguro saúde (valores confirmados na Fase 4) | Selecionou tipo na tela de seguridade social da declaração e inseriu valores                   |
-| Dedução de dependentes (menores de 16 anos) | Não afeta o valor da dedução mas impacta imposto municipal | Verificou status de registro na tela Informações básicas → Família e dependentes               |
+| Tipo de dedução                                                          | Descrição                                                  | Trabalho do Copilot                                                                            |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Dedução de seguro de vida                                                | Dados integrados do Myna Portal + entrada manual           | Operou select boxes do formulário e inseriu item por item                                      |
+| Dedução de seguro contra terremotos                                      | Seguro contra terremoto de cooperativa/seguradora          | Inseriu valores no formulário                                                                  |
+| Dedução de cônjuge                                                       | Cálculo de renda total do cônjuge                          | Calculou o valor da renda aplicando a dedução de renda salarial e confirmou o valor da dedução |
+| Dedução de contribuição previdenciária                                   | Previdência + seguro saúde (valores confirmados na Fase 4) | Selecionou tipo na tela de seguridade social da declaração e inseriu valores                   |
+| Dados de dependentes menores de 16 (fora da dedução do imposto de renda) | Não afeta o valor da dedução mas impacta imposto municipal | Verificou status de registro na tela Informações básicas → Família e dependentes               |
+
+[Verificar idades elegíveis com a Agência Tributária japonesa](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm)
 
 ### Itens analisados e recusados
 
@@ -252,7 +260,7 @@ A mensalidade do ISP (internet) estava integralmente classificada como despesa d
 Ao perguntar ao Copilot "como fazer o rateio?", ele apresentou opções e decidimos juntos o método:
 
 1. Buscar todos os lançamentos de ISP no livro-razão → Calcular total anual
-2. Definir a proporção de uso empresarial (50% é uma referência comum para escritório doméstico)
+2. O declarante decidiu a proporção de uso empresarial (50% neste caso, não um padrão para escritório doméstico; deve basear-se no uso real e nos registros)
 3. Em vez de alterar cada lançamento individual, adicionar **um lançamento de ajuste único em 31/12** "Retirada pessoal / Comunicação"
 4. Copilot inseriu o lançamento no livro-razão
 

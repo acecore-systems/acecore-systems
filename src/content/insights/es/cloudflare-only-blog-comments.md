@@ -82,8 +82,10 @@ faq:
       answer: "Para leer por post_slug, ordenar por created_at, ocultar con deleted_at, limitar por cliente y detectar duplicados, D1 encaja bien."
     - question: ¿Turnstile en el cliente es suficiente?
       answer: "No. La Function debe validar el token con Siteverify antes de escribir en D1."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Decide si crear comentarios propios según tu capacidad para aprobar y eliminar, además del almacenamiento. Un servicio externo facilita delegar moderación; D1 permite UI y políticas propias. En la primera prueba, sigue [Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/) y verifica que una validación fallida no escriba en la base de datos.
 
 Los sitios estáticos son sencillos hasta que necesitan guardar estado. Un sistema de comentarios es un buen ejemplo.
 

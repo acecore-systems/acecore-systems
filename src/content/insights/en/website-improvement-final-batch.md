@@ -1,8 +1,8 @@
 ---
-title: "Astro Site Quality Improvement Guide, Part 2 - Final Adjustments That Achieved Perfect 100s Across All PageSpeed Insights Categories"
-description: "A follow-up to the previous article covering the final refinements: disabling Cloudflare Web Analytics, deferring GA4 and search UI loading, reaching perfect 100s across all PageSpeed Insights categories on both mobile and desktop, cleaning up Search Console breadcrumbs and indexing, migrating to shared SVG icons, and documenting the optimizations that were tried but not adopted."
+title: "Compare deferred loading in Astro: GA4, Pagefind, and PageSpeed tuning"
+description: "How to defer GA4 and Pagefind while retaining needed features. Uses March 29, 2026 all-category PageSpeed scores of 100, indexing changes, and rejected CSS splitting as comparison evidence."
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Performance", "Accessibility", "SEO", "Website"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -103,7 +103,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: Accessibility article
-    description: An article that organizes the concrete steps used to achieve WCAG AA compliance and Accessibility 100.
+    description: "Practical improvements to aria, contrast, and forms; separate from verifying every WCAG requirement."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX and code quality article
@@ -125,6 +125,12 @@ faq:
 ---
 
 **Update, September 26, 2026:** The score of 100 refers to a PageSpeed Insights test on March 29, 2026. It does not guarantee today's score or every real user's experience. See [Google's documentation](https://developers.google.com/speed/docs/insights/v5/about) on lab and field data and score variability.
+
+## Test the first interaction before adopting deferred loading
+
+Evaluate deferred GA4 or search with both rendering measurements and functional acceptance. Click a CTA immediately, open search, and navigate away; check lost or duplicate events and first-search latency. Reject a change that removes needed functionality even if its score improves.
+
+[PageSpeed Insights：Interpreting measurement results](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Introduction
 

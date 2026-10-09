@@ -2,7 +2,7 @@
 title: "여러 서비스의 로그인 만료를 맞추기: 세션 갱신과 재인증의 경계"
 description: "명시적 로그인, 서버 만료, 쿠키, 인증 제공자 설정을 구분하는 로그인 기간 설계와 확인 범위."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 같은 계정을 쓰더라도 각 앱의 세션과 인증 제공자의 세션은 같지 않을 수 있습니다. 이 사례는 대상 환경과 기간을 공개하지 않고 규칙을 맞추는 원칙을 설명합니다.
+
+## 만료 직전과 직후를 같은 요청으로 비교하기
+
+검증 환경에 짧은 만료 시간을 두고 명시적 로그인, 일반 열람, 백그라운드 갱신을 각각 실행하여 서버 만료 시간이 어떻게 변하는지 비교합니다. 만료 후에는 화면과 API에서 같은 작업을 실행하여 재인증 안내와 데이터 접근 거부를 확인합니다. 시간을 단축한 시험과 장기간 운영은 구분해 기록하세요.
+
+[OWASP：세션 만료 설계와 검증](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## 각각의 기간을 구분하기
 

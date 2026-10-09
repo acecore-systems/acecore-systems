@@ -1,8 +1,8 @@
 ---
 title: "Mehrsprachige Blogs mit Sveltia CMS betreiben"
-description: "Dieser Artikel dokumentiert den Copilot-Übersetzungsablauf vom Juni 2026 und den OpenAI-Batch-Ablauf vom September 2026."
+description: "Erzeugen Sie zu Beginn eines mehrsprachigen Blog-Ablaufs lokales HTML eines repräsentativen Artikels und prüfen Sie Text, title, description und interne Links."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: Sind übersetzte Seiten Duplicate Content?
       answer: "Google betrachtet lokalisierte Seiten nur dann als Duplikate, wenn der Hauptinhalt nicht übersetzt ist. Varianten sollten mit hreflang verbunden werden."
 ---
+
+Erzeugen Sie zu Beginn eines mehrsprachigen Blog-Ablaufs lokales HTML eines repräsentativen Artikels und prüfen Sie Text, title, description und interne Links. Verknüpfen Sie nach [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions) nur vorhandene Sprachversionen. Nehmen Sie Übersetzungsdienst und fertige öffentliche Seiten getrennt ab.
 
 > **Ergänzung vom 26. September 2026:** Die folgenden Schritte mit Copilot dokumentieren die Einführung vom Juni 2026. Die Übersetzungserstellung wurde inzwischen auf OpenAI Batch umgestellt. Japanisch bleibt die maßgebliche Quelle; übersetzte statische Seiten bleiben das Veröffentlichungsformat.
 

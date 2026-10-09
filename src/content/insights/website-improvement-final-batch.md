@@ -1,8 +1,8 @@
 ---
-title: "Astroサイトの品質改善ガイド 続編 ― PageSpeed Insights 全項目100点を達成した最終調整"
-description: "Cloudflare Web Analytics の停止、GA4 と検索UIの遅延ロード化、PageSpeed Insights のモバイル / デスクトップ全項目100の達成、Search Console のパンくずと索引整理、SVGアイコン移行、そして試したが採用しなかった最適化の判断まで。前回記事の続編として最終改善をまとめます。"
+title: "Astroの遅延ロードを比較する：GA4・PagefindとPageSpeed最終調整"
+description: "GA4とPagefind検索を遅延ロードし、必要な機能を維持する選び方。2026年3月29日のPageSpeed全項目100点、索引整理、採用を見送ったCSS分割を比較材料として解説します。"
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   ["技術", "Astro", "パフォーマンス", "アクセシビリティ", "SEO", "Webサイト"]
@@ -104,7 +104,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: アクセシビリティ編
-    description: WCAG AA 準拠と Accessibility 100 の具体策を整理した記事です。
+    description: "aria属性、コントラスト、フォームを改善する具体例。WCAG全項目の適合確認とは区別します。"
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX・コード品質編
@@ -126,6 +126,12 @@ faq:
 ---
 
 **2026年9月26日追記：** この100点は2026年3月29日のPageSpeed Insights測定結果です。現在の点数や実利用者すべての体験を保証するものではありません。ラボ計測と実利用者データの違い、測定値の変動は[Googleの公式説明](https://developers.google.com/speed/docs/insights/v5/about)をご覧ください。
+
+## 遅延ロードを採用する前に、最初の操作を試す
+
+GA4や検索の遅延ロードは、画面表示の測定と機能の受入を組み合わせて判断します。ページを開いてすぐCTAを押す、検索を開く、別ページへ移動する場合も試し、イベント欠落・二重計測・検索初回の待ち時間を確認してください。点数が上がっても必要な機能を失うなら、その案は見送ります。
+
+[PageSpeed Insights：測定結果の読み方](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## はじめに
 

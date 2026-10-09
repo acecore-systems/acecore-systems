@@ -1,6 +1,6 @@
 ---
-title: "Wir haben Hatts Homepage veröffentlicht"
-description: "Wir haben Hatts Homepage veröffentlicht, eine persönliche Website für Illustrationen, Romane sowie VRChat-Avatare und Gimmicks. Sie wurde mit Astro, Sveltia CMS und Pagefind gebaut und ist darauf ausgelegt, kreative Aktivitäten fortlaufend zu veröffentlichen."
+title: "Kreatives Portfolio mit Astro: CMS, Suche und externe Werke"
+description: "Hatts Website verbindet Zeichnungen, Geschichten und VRChat-3D-Arbeiten. Lernen Sie Aktivitätsgliederung, Sveltia-CMS-Bearbeitung, Pagefind-Suche und Wege zu externen Werken etwa auf BOOTH kennen."
 date: 2026-06-06T10:00
 author: gui
 tags: ["Neuigkeiten", "Webentwicklung", "Website", "CMS", "Astro"]
@@ -61,11 +61,18 @@ faq:
       answer: Sie ist eine statische Website mit Astro, TypeScript, UnoCSS, Sveltia CMS und Pagefind.
     - question: Unterstützt Acecore auch persönliche Websites und Portfolios?
       answer: Ja. Wir unterstützen bei der Organisation der Aktivitäten, Design, CMS, Suche, SEO und Aktualisierungswegen nach dem Launch.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Wir haben die persönliche Website [Hatts Homepage](https://hatt.acecore.net/) veröffentlicht, die Hatts kreative Aktivitäten an einem Ort bündelt.
 
 Die Website dient als Einstiegspunkt für Illustrationen, Romane sowie VRChat-Avatare und Gimmicks. Wir haben sie außerdem auf Acecores [Arbeitsseite](https://systems.acecore.net/works/#case-hatt-homepage) als Beispiel für Website-Produktion und CMS-Aufbau hinzugefügt.
+
+## Ein kreatives Portfolio anhand eines Werks planen
+
+Wählen Sie ein repräsentatives Werk und prüfen Sie den Weg von der Vorstellung zur externen Plattform. Machen Sie Name, Genre und Produktionsnotizen durchsuchbar. Ändern Sie einen Eintrag im CMS und prüfen Sie die Suche; so werden spätere Veröffentlichungsanforderungen konkret.
+
+[Pagefind：Suche für eine statische Website einrichten](https://pagefind.app/docs/)
 
 ## Hintergrund
 

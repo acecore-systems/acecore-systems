@@ -1,10 +1,4 @@
 {
-  "sourceHash": "3c4afe625ac527d3a3008692e4acb9b0f798d60c1cfba668b91110931d0b6e3a",
-  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
-  "pendingInsights": {
-    "openai-decisions-api-adoption": {
-      "sourceHash": "8f33195b78518523d12a493e10a5f85580b834faab59b66c31ce355111df3de2",
-      "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
-    }
-  }
+  "sourceHash": "30b185f3f2211666cec51147409d77a647611f940d191592226bb07363f95425",
+  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }

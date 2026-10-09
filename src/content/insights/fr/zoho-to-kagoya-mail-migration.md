@@ -82,11 +82,17 @@ faq:
       answer: La probabilité que le serveur de réception classe le message comme spam augmente. Gmail en particulier est strict et exige de plus en plus le PASS des deux, SPF et DKIM.
     - question: Que deviennent les données si l'on résilie Zoho Workplace ?
       answer: À l'expiration du forfait payant, le compte passe au forfait gratuit. Le forfait gratuit a aussi des limites de stockage, il est donc recommandé d'exporter les données nécessaires au préalable. La suppression du compte entraîne la perte définitive de toutes les données.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Ajout du 26 septembre 2026 :** Les prix, étapes du tableau de bord et valeurs DNS décrivent la migration de l’époque. Ne les recopiez pas pour un autre domaine sans consulter les informations actuelles de [KAGOYA MAIL](https://www.kagoya.jp/mail/) et [Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html), votre contrat et les valeurs d’authentification propres à votre domaine.
 > Vous souhaitez migrer de Zoho Workplace vers un autre service de messagerie, mais vous êtes inquiet au sujet de la configuration DNS et de l'authentification mail ? Ce guide pratique est fait pour vous. Avec l'exemple de la migration de Zoho Mail vers KAGOYA MAIL, nous détaillons les étapes de basculement DNS, d'authentification SPF/DKIM et d'inventaire des données de l'ancien service.
+
+## Comparer une boîte avant de changer la distribution
+
+Avant le DNS, migrez un compte test et comparez dossiers, messages et pièces jointes. L’exemple IMAP ajoute seulement à INBOX ; il ne préserve pas dossiers, états de lecture ou dates de réception originales. Testez les deux réceptions, l’envoi externe et la période de retour avant la bascule complète.
+
+[KAGOYA MAIL：Offres actuelles et authentification du courrier](https://www.kagoya.jp/mail/)
 
 ## Vous reconnaissez-vous dans cette situation ?
 

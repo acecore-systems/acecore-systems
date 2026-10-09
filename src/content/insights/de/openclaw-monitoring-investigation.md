@@ -2,7 +2,7 @@
 title: "Monitoring mit OpenClaw verbinden: Erkennung, Belege und Entscheidungen"
 description: "Regelmäßige Prüfungen und begrenzte Untersuchungen verbinden und geprüften Betrieb von unbewiesener Wiederherstellung trennen."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Monitoring braucht klare Zuständigkeiten für Erkennung und Ursachenanalyse. Dieser Fall verbindet regelmäßige Prüfungen mit OpenClaw, ohne interne Topologie oder Benachrichtigungsziele zu veröffentlichen.
+
+## Untersuchungsberichte mit bekannten Fehlern bewerten
+
+Erzeugen Sie im Test bekannte Situationen wie fehlgeschlagene Erfassung oder veraltete Werte. Bewerten Sie Beobachtungszeit, Belege, fehlende Daten und erhaltene Teilergebnisse bei Zeitüberschreitung. So beurteilen Sie die Untersuchungsqualität über den natürlichen Schreibstil hinaus.
+
+[OpenClaw：Berechtigungsgrenzen der Untersuchungsumgebung](https://docs.openclaw.ai/gateway/security)
 
 ## Erkennung definieren
 

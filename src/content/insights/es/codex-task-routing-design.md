@@ -1,5 +1,5 @@
 ---
-title: "Cómo diseñar la delegación en Codex: el plugin público Task Routing"
+title: "Delegación de tareas en Codex: traspasos, permisos y revisión de resultados"
 description: "Las decisiones de diseño de Codex Task Routing: conservar la configuración del agente principal, identificar la política vigente y verificar cada entrega."
 date: "2026-09-26T18:30:00+09:00"
 author: gui
@@ -9,8 +9,10 @@ callout:
   type: note
   title: "Alcance de la verificación"
   text: "Se revisaron el código público, los PR integrados, el CI en tres sistemas operativos y la instalación en un entorno aislado. No se afirma una mejora medida de calidad o consumo ni la ejecución de un modelo delegado en una cuenta real."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Prueba la delegación en Codex con investigaciones o revisiones verificables de forma independiente, aclarando la integración del agente principal. Incluye archivos, referencias, evidencias e incógnitas; aplica el mínimo privilegio de [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) a las herramientas. Delegar no demuestra por sí solo mejoras de calidad o coste.
 
 Al realizar varios trabajos con Codex, escoger un modelo es solo una parte de la decisión. También hay que decidir qué etapa puede entregarse por separado, qué contexto debe acompañarla y cómo comprobar su resultado. Acecore publicó [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) para explicitar esas decisiones.
 

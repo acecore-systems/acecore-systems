@@ -2,7 +2,7 @@
 title: "프로필 정보를 초안으로 가져오기: 비교·선택·게시 경계"
 description: "텍스트, CSV, 정적 HTML, 공통 JSON으로 프로필을 가져오는 일반화된 구현을 설명합니다. 현재 값 비교, 선택 항목 교체와 취소, 저장과 게시의 분리 범위를 다룹니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 기존 프로필을 다른 편집기로 옮길 때는 값을 교체하기 전에 현재 값과 가져오기 후보를 비교해야 합니다. 이 익명 사례를 통해 데이터 가져오기와 프로필 게시의 경계를 설명합니다.
+
+## 자기소개 한 항목으로 수동 편집 보존 시험하기
+
+기존 자기소개를 직접 수정한 뒤 다른 문장이 있는 입력에서 후보를 만듭니다. 미선택 항목은 현재 값이 유지되는지, 선택 시 교체 내용을 확인하는지, 취소하면 원래 값으로 돌아오는지 시험합니다. 적용 후 초안과 공개 페이지를 비교해 가져오기만으로 공개 내용이 바뀌지 않는지 확인하세요.
+
+[OWASP：입력 형식, 값, 길이 검증](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## 먼저 지원 입력 형식을 정합니다
 

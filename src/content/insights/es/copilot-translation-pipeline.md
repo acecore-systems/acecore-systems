@@ -1,8 +1,8 @@
 ---
 title: "Cómo gestionar un blog multilingüe con Sveltia CMS"
-description: "Este artículo documenta el flujo de PR de traducción con Copilot de junio de 2026 y el flujo actual con OpenAI Batch de septiembre de 2026."
+description: "Para iniciar un flujo multilingüe, genera HTML localizado desde las traducciones de un artículo representativo y revisa texto, title, description y enlaces internos."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnología", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: ¿Las páginas traducidas son contenido duplicado?
       answer: "Google indica que las versiones localizadas solo son duplicadas si el contenido principal no está traducido. Mantén las variantes conectadas con hreflang."
 ---
+
+Para iniciar un flujo multilingüe, genera HTML localizado desde las traducciones de un artículo representativo y revisa texto, title, description y enlaces internos. Relaciona solo versiones existentes según [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions); verifica por separado el éxito del servicio y las páginas públicas terminadas.
 
 > **Actualización del 26 de septiembre de 2026:** Los pasos con Copilot que siguen documentan la implantación de junio de 2026. La generación de traducciones pasó a OpenAI Batch. El japonés sigue siendo la fuente principal y las páginas estáticas traducidas siguen siendo el formato de publicación.
 

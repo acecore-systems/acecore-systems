@@ -2,7 +2,7 @@
 title: "プロフィール情報を下書きに取り込む：手編集と公開操作を守る設計"
 description: "テキスト・CSV・静的HTML・共通JSONからプロフィールを取り込む実装を一般化。現在値との比較、項目の選択と置換、取消、保存・公開、未対応の入力を整理します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 すでに書いたプロフィールを別の編集画面へ移すとき、現在の値と取込候補を見比べてから置き換える必要があります。匿名化した取込実装をもとに、取込と公開の境界を紹介します。
+
+## 手編集を残せるか、自己紹介の一項目で試す
+
+既存の自己紹介に手編集を加え、異なる文を含む入力から候補を作ります。項目を選ばなければ現値が残ること、選択時は置換を確認できること、取消後に元へ戻ることを順に試してください。適用後は下書きと公開ページを比べ、取込だけで公開が変わらないか確認します。
+
+[OWASP：入力形式・値・長さの検証](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## 対応する入力形式を先に決める
 

@@ -1,8 +1,8 @@
 ---
-title: "Astro 사이트 품질 개선 가이드 — PageSpeed 모바일 점수 99 달성"
-description: "Astro + UnoCSS + Cloudflare Pages 사이트를 성능, SEO, 접근성, UX의 4가지 축에서 개선하여 PageSpeed Insights 모바일 99점, 데스크톱 전 항목 100점을 달성한 전 과정 기록."
+title: "Astro 사이트 품질 개선: 속도·SEO·접근성을 측정하고 수정하기"
+description: "CSS, 폰트, 이미지, 외부 JS를 측정하고 SEO와 사용성을 개선하는 방법입니다. 2026년 3월 25일 PageSpeed 모바일 99점 사례로 대책 선택과 재측정 기준을 설명합니다."
 date: 2026-03-25T15:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "Astro", "성능", "접근성", "SEO", "웹사이트"]
 image: "/images/insights/covers/website-improvement-batches-cover-v2.webp"
@@ -40,7 +40,7 @@ compareTable:
     items:
       - 모바일 99 / 100 / 100 / 100(데스크톱 전 항목 100)
       - 7종 구조화 데이터 + OGP + canonical 완전 구현
-      - WCAG AA 준수(대비, aria, 스크린 리더 알림, focus-visible)
+      - 대비·aria·스크린 리더 알림·focus-visible 개선
       - 전 컴포넌트 View Transitions 호환
       - SITE 상수, 소셜 URL, 광고 ID 일원 관리
 linkCards:
@@ -54,7 +54,7 @@ linkCards:
     icon: i-lucide-search
   - href: /blog/astro-accessibility-guide/
     title: 접근성
-    description: aria 속성, 대비, 폼 개선으로 WCAG AA 준수를 달성하는 가이드.
+    description: "aria, 대비, 폼 개선 사례로 WCAG 전체 적합성 검증과 구분합니다."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX 및 코드 품질
@@ -74,6 +74,12 @@ faq:
 ---
 
 **2026년 9월 26일 추가:** 이 글은 2026년 3월 25일 당시의 개선 기록입니다. 99점이 현실적인 상한이라는 당시 판단은 [3월 29일 후속 측정](/insights/website-improvement-final-batch/)에서 100점을 기록하면서 바뀌었습니다. 두 점수는 각 측정 시점의 결과이며 현재 점수가 아닙니다. 점수 변동은 [Google 공식 설명](https://developers.google.com/speed/docs/insights/v5/about)을 참고하세요.
+
+## 페이지 전송량으로 첫 개선 선택하기
+
+홈과 대표 기사 페이지를 같은 조건으로 측정하고 CSS, 폰트, 이미지, 외부 JS 전송량을 비교합니다. 큰 요소 하나를 변경해 다시 측정하고 폼과 검색도 시험하세요. 자동 감사 100점이 WCAG 전체 준수를 입증하지는 않으므로 키보드 조작과 스크린 리더는 따로 확인합니다.
+
+[PageSpeed Insights：실험실 측정과 실제 사용자 데이터의 차이](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## 소개
 
@@ -181,4 +187,4 @@ PageSpeed Insights 모바일 99 달성의 핵심은 "필요하지 않은 것은 
 
 SEO, 접근성, UX 개선을 병행하면 4개 카테고리 모두에서 높은 점수를 달성할 수 있습니다. 100점에 집착하기보다 안정적인 95점 이상을 목표로 하는 것이 더 현실적인 목표입니다.
 
-각 주제의 상세는 위의 링크 카드를 참조하세요. 개선 워크플로우와 코드에 변경이 반영된 과정에 대해서는 [GitHub Copilot을 활용한 개발 워크플로우](/blog/tax-return-with-copilot/)도 확인해 보세요.
+각 주제의 상세는 위의 링크 카드를 참조하세요. 개선 워크플로우와 코드에 변경이 반영된 과정에 대해서는 [AI와 판단 기록을 공유한 확정신고 사례](/blog/tax-return-with-copilot/)도 확인해 보세요.

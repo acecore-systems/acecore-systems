@@ -2,7 +2,7 @@
 title: "Rendre en sécurité les liens Markdown dans les réponses de chat IA"
 description: "Note technique sur la conversion sécurisée des liens Markdown dans les réponses IA. En séparant parsing tolérant aux espaces, trim de href, allowlist, rendu DOM, fallback et tests, le même modèle devient réutilisable."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Site web", "AI", "Sécurité", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: Faut-il supprimer les URLs refusées ?
       answer: Les garder comme texte facilite souvent le debug et conserve le contexte. Une politique plus stricte peut aussi supprimer tout le lien.
 ---
+
+Si un lien généré par l’IA reste du texte, soumettez la même entrée à l’analyse, à la validation d’URL puis au rendu DOM pour repérer l’échec. Utilisez des API textuelles comme [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) pour les libellés, en séparant l’autorisation du lien de l’interprétation HTML.
 
 Quand un chat IA répond `Voir [Services]( /services/ )`, le lien peut ne pas être rendu et le Markdown brut peut rester visible.
 

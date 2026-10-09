@@ -1,12 +1,14 @@
 ---
-title: "Qué era realmente la opción SSL de pago de Cloudflare: de Dedicated SSL a Advanced Certificate Manager"
+title: "Cloudflare Universal SSL frente a ACM: cuándo necesitas certificados de pago"
 description: 'La opción antes de pago de Cloudflare, "Dedicated SSL Certificates", fue renombrada y ampliada en 2021 como "Advanced Certificate Manager (ACM)". Explicamos las diferencias con Universal SSL gratuito y en qué casos necesitas ACM.'
 date: 2026-03-31T00:00
 author: gui
 tags: ["Tecnología", "Cloudflare", "Seguridad", "Infraestructura"]
 image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Antes de comprar, compara Universal SSL y ACM contrastando los nombres de host necesarios con el certificado servido. Revisa las limitaciones de [Cloudflare: Advanced Certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/); para dominios personalizados de Pages o R2, evalúa la vía de certificados del producto correspondiente.
 
 Cloudflare convirtió **Dedicated SSL Certificates** en **Advanced Certificate Manager (ACM)** en 2021. Antes de elegir un certificado, comprueba los nombres de host y el tipo de configuración DNS.
 

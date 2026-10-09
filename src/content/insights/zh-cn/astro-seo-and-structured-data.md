@@ -4,7 +4,7 @@ description: "总结了在Astro + Cloudflare Pages构成的网站上正确实现
 date: 2026-03-25T11:00
 author: gui
 tags: ["技术", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: 站点地图的priority会影响SEO吗？
       answer: "Google忽略 `priority` 和 `changefreq`，无需为了SEO虚构这些数值。"
 ---
+
+Astro的SEO实现可从代表文章的生成HTML开始，核对title、description、canonical及与可见内容一致的JSON-LD。按[Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)验证必需字段，上线后检查Search Console。语法正确不保证富媒体搜索展示或排名。
 
 > 2026年9月更新：Google已于2024年11月停止显示站点链接搜索框。FAQ富媒体搜索结果通常仅面向权威政府和健康网站，Google也不使用站点地图中的 `changefreq` 与 `priority`。阅读本文2026年3月的实现记录时，请参考[搜索框调整](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)、[FAQ调整](https://developers.google.com/search/blog/2023/08/howto-faq-changes)和[站点地图说明](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)。
 
@@ -192,7 +194,7 @@ items: posts.map((post) => ({
 6. **RSS Feed中是否包含了作者和分类**
 7. **robots.txt中是否排除了搜索索引（如 `/pagefind/` 等）的爬取**
 
-以上项目全部设置完毕后，SEO基础就搭建好了。之后就靠内容的质量和更新频率来决定搜索排名。
+这些设置是向搜索引擎正确传达公开内容的基础。排名并非仅由内容质量和更新频率决定，配置完成也不证明流量增长。上线后参考搜索词、展示次数和点击率，改善回应读者需求的内容。
 
 ---
 

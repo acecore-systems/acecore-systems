@@ -1,6 +1,6 @@
 ---
-title: "Von VitePress zu Starlight — Vereinheitlichung der Dokumentationssite-Frameworks"
-description: "Ein Bericht über die Migration eines mit VitePress + UnoCSS erstellten Geschäftsplan-Dokuments zu Astro + Starlight, mit Vereinheitlichung des Frameworks über zwei Projekte hinweg. Behandelt auch die Migration von Mermaid-Diagrammen zum CDN."
+title: "VitePress zu Starlight migrieren: Markdown, URLs und Mermaid prüfen"
+description: "Astro-Vereinheitlichung abwägen und Markdown-Ablage, Frontmatter, alte URLs, Mermaid-Darstellung und CDN-Abhängigkeiten anhand einer Migration vom März 2026 prüfen."
 date: 2026-03-15T00:00
 author: gui
 tags: ["Technologie", "Astro", "Starlight"]
@@ -42,13 +42,19 @@ faq:
     - question: Welche Vorteile hat die Migration von VitePress zu Starlight?
       answer: Wenn Ihre Hauptseite auf Astro läuft, reduziert die Framework-Vereinheitlichung den Lernaufwand, vereinfacht das Dependency-Management und verbessert die Konfigurationskonsistenz. Auch die Build-Pipelines können konsolidiert werden.
     - question: Wie werden Mermaid-Diagramme gerendert?
-      answer: Wir haben von der Plugin-Abhängigkeit auf das Laden von Mermaid über CDN (jsdelivr) umgestellt. Dies eliminiert Build-Abhängigkeiten vollständig und liefert stabiles Diagramm-Rendering.
+      answer: "Wir luden Mermaid von jsdelivr und übergaben Definitionen an Zielelemente. Das entfernt die npm-Abhängigkeit; CDN-Verfügbarkeit und Versionskompatibilität bleiben zu prüfen."
     - question: Wie viel Aufwand erfordert die Migration?
       answer: Die Hauptaufgaben sind die Konvertierung der Verzeichnisstruktur (docs/ → src/content/docs/) und die Anpassung des Frontmatters. Da der Inhalt selbst Markdown ist, kann er unverändert wiederverwendet werden, was die Migration relativ schnell macht.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Hier ist eine Anleitung zur Migration einer VitePress-Dokumentationssite zu Astro + Starlight. Wenn Ihre Hauptseite auf Astro läuft, vereinfacht die Zusammenführung Ihrer Dokumentation unter Starlight den Betrieb. Wir behandeln auch die Migration von Mermaid-Diagrammen zum CDN.
+
+## Kompatibilität vor der Migration an einer Seite prüfen
+
+Migrieren Sie zunächst eine Seite mit Überschriften, internen Links, Code und Mermaid. Vergleichen Sie URLs und Diagramme. Der CDN-Import macht Markdown-Codeblöcke nicht automatisch zu Mermaid-Zielen. Definitionen müssen an class="mermaid"-Elemente übergeben werden; prüfen Sie das erzeugte HTML vor der vollständigen Migration.
+
+[Starlight：Markdown- und HTML-Spezifikationen](https://starlight.astro.build/guides/authoring-content/)
 
 ## Warum Frameworks vereinheitlichen?
 
@@ -124,7 +130,7 @@ In der VitePress-Umgebung wurde UnoCSS für benutzerdefinierte Styles verwendet,
 
 ## Mermaid-Diagramm CDN-Migration
 
-Die Geschäftsplan-Dokumente verwenden Mermaid für Flussdiagramme und Organigramme. In VitePress wurde Mermaid über ein Plugin (`vitepress-plugin-mermaid`) eingebunden, ein solches Plugin existiert für Starlight jedoch nicht.
+Die Dokumente nutzten `vitepress-plugin-mermaid`. Für einheitliche Abhängigkeiten wählten wir CDN-Laden in Starlight. Die [offizielle Plugin-Liste](https://starlight.astro.build/resources/plugins/) zeigt Erweiterungen; CDN ist nicht die einzige Möglichkeit.
 
 Daher haben wir zum Laden von Mermaid über CDN auf der Browserseite gewechselt.
 
@@ -148,7 +154,7 @@ starlight({
 });
 ```
 
-Standard-Mermaid-Syntax funktioniert unverändert in Markdown:
+Der folgende Block definiert ein Diagramm; zusätzlich muss es an [Mermaid-Zielelemente](https://mermaid.js.org/intro/) übergeben werden:
 
 ````markdown
 ```mermaid
@@ -162,7 +168,7 @@ graph TD
 ### Vorteile des CDN-Ansatzes
 
 - **Null Build-Abhängigkeiten**: Mermaid als npm-Paket wird nicht mehr benötigt
-- **Immer aktuell**: Ruft die neueste Version vom CDN ab
+- **Version festlegen**: Das Beispiel wählt 11.16.0; ein CDN aktualisiert sie nicht automatisch auf die neueste Version
 - **Kein SSR erforderlich**: Wird im Browser gerendert, daher keine Auswirkung auf die Build-Zeit
 
 ## Migrationsergebnisse

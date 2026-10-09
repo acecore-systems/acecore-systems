@@ -2,7 +2,7 @@
 title: "R2与restic备份监控：从保存成功到恢复验证"
 description: "分别检查快照新鲜度、仓库完整性与数据恢复，并说明尚未验证的应用恢复范围。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 备份任务结束不代表所需数据可以恢复。本案例将内部运维经验一般化，分别评价保存、完整性、恢复和服务恢复，并非从另一备份服务完成迁移的案例。
+
+## 固定snapshot ID和一个恢复目标
+
+记录待验证的snapshot ID，将所需文件恢复到空的隔离目录。配置应检查引用位置与权限，数据库应在隔离环境测试加载，并记录用时。定期重复同样的检查，才能比较备份新鲜度与可恢复范围。
+
+[restic：恢复到隔离位置的步骤](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## 定义数据来源和成功
 

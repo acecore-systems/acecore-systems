@@ -2,7 +2,7 @@
 title: "Gestionar webhooks de pago y reembolso con seguridad: reconciliar estados en Workers"
 description: "Un ejemplo de implementación que separa la firma, los eventos duplicados o tardíos, el estado de los reembolsos y las respuestas de API externas. También explica cómo volver a comprobar permisos antes de una acción administrativa."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "Separar la evidencia de implementación de las operaciones reales"
   text: "En este caso anonimizado se verificaron la implementación, las pruebas, el despliegue en producción y la reconciliación de solo lectura con API externas. No se ejecutaron reembolsos, cancelaciones ni ajustes de puntos de clientes como prueba, y no se afirma una verificación integral de todas las rutas de pago."
 ---
+
+Para webhooks de pagos en Workers, prueba entregas duplicadas y eventos fuera de orden en un entorno de prueba, evitando doble actualización del estado. Contrasta redirecciones de API externas con [Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/) y el runtime; registra recepción, confirmación externa y procesamiento posterior por separado.
 
 Recibir un evento del proveedor de pagos no completa por sí solo un pedido o un reembolso. Este ejemplo anonimizado muestra cómo un flujo operativo en Workers concilia el estado del proveedor con los registros locales. Se omiten datos de clientes, identificadores de transacciones reales y destinos internos de notificaciones.
 

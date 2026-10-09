@@ -2,7 +2,7 @@
 title: "Safe User CSS and Public Themes: Shared Source, Scoped Rendering, and Versioned Releases"
 description: "An anonymized profile-editing design where a shared CSS source of truth can be edited through both a GUI and direct changes. Covers rich CSS syntax within a rendering boundary, drafts and published versions, immutable theme releases, delisting, and operational suspension."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 A profile editor that lets people adjust colors and spacing in a GUI and edit the overall layout with CSS needs to address both usability and the safety of code shown on public pages. This anonymized implementation illustrates the boundaries between editing and distribution.
+
+## Choose styling freedom and distribution separately
+
+For personal editing, first test scope containment and save conflicts. Distribution to others also needs fixed version IDs, usage terms, and a default appearance after suspension. Use a small theme with Grid and pseudo-elements to check unchanged outer navigation and stability of applied versions after author updates.
+
+[W3C Selectors：Checking selector scope](https://www.w3.org/TR/selectors-4/)
 
 ## Use one CSS source of truth for the GUI and direct editing
 

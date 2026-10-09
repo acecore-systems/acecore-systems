@@ -2,7 +2,7 @@
 title: "Separar o cache de borda para imagens públicas dos limites da API"
 description: "Um caso em que a API de conteúdo e as solicitações de imagens compartilhavam o mesmo limite durante a navegação repetida. Aborda a reutilização de imagens públicas, a validação de respostas bem-sucedidas, os limites entre WAF e aplicação e as verificações em produção."
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Em diários e catálogos com imagens, cada mudança de data ou página gera solicitações tanto para a API de conteúdo quanto para as imagens. Descrevemos um caso em que as imagens pararam de carregar durante a navegação repetida, sem revelar URLs operacionais, rotas internas ou valores de limite.
+
+## Reproduzir a navegação consecutiva a partir de uma imagem
+
+Busque repetidamente a mesma imagem pública e compare hash do corpo, status e cache. Depois carregue texto e várias imagens ao trocar de página, verificando quais solicitações entram no limite. Um HIT não basta: teste o conteúdo correto e a proteção da API.
+
+[Cloudflare Cache API：Leitura condicional e cache por localização](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## Conteúdo e imagens consumiam o mesmo limite
 

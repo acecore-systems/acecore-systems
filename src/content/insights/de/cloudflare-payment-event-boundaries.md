@@ -2,7 +2,7 @@
 title: "Zahlungs- und Erstattungs-Webhooks sicher verarbeiten: Statusabgleich in Workers"
 description: "Ein Implementierungsbeispiel, das Signaturprüfung, doppelte und verspätete Ereignisse, Erstattungsstatus und Antworten externer APIs trennt. Außerdem wird gezeigt, wie Berechtigungen vor Verwaltungsaktionen erneut geprüft werden."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "Implementierungsnachweise von echten Transaktionen trennen"
   text: "In diesem anonymisierten Fall wurden Implementierung, Tests, Produktivbereitstellung und der schreibgeschützte Abgleich mit externen APIs bestätigt. Für Tests wurden keine Kundenerstattungen, Stornierungen oder Punkteanpassungen ausgeführt. Eine vollständige Ende-zu-Ende-Prüfung aller Zahlungswege wird nicht behauptet."
 ---
+
+Testen Sie Zahlungs-Webhooks auf Workers mit doppelter Zustellung und vertauschter Reihenfolge in einer Testumgebung, ohne doppelte Zustandsänderungen. Prüfen Sie externe API-Weiterleitungen anhand von [Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/) und Runtime. Erfassen Sie Empfang, externe Zustandsbestätigung und Folgeaktionen getrennt.
 
 Der Empfang eines Ereignisses vom Zahlungsanbieter schließt weder eine Bestellung noch eine Erstattung automatisch ab. Dieses anonymisierte Beispiel zeigt, wie ein Verwaltungsablauf auf Workers den Anbieterstatus mit lokalen Datensätzen abgleicht. Kundendaten, echte Transaktionskennungen und interne Benachrichtigungsziele werden nicht veröffentlicht.
 

@@ -2,7 +2,7 @@
 title: "서비스 CTA의 문맥을 문의 폼으로 이어 주는 기술 설계"
 description: "서비스 페이지에서 읽던 문맥을 문의 폼으로 전달하는 구현 설계입니다. Astro 사이트의 미니 CTA, URL 파라미터 계약, 폼 분류 초기 선택, 제목 prefill, 다국어 URL, GA 측정, 생성 HTML 확인까지 다른 사이트에도 적용할 수 있게 정리합니다."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "웹사이트", "서비스", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ faq:
 사용자는 폼에서 서비스 종류를 다시 선택하고 제목도 작성해야 합니다. 수신 측도 본문을 읽기 전에는 웹 제작 상담인지, 서버 운영인지, Aceserver인지 판단하기 어렵습니다.
 
 Acecore 사이트에서는 [서비스 CTA의 상담 대상을 문의 폼으로 전달하는 PR](https://github.com/acecore-systems/acecore-net/pull/100)로 이 동선을 개선했습니다. 이 글은 Astro 구현 기록뿐 아니라 다른 웹사이트에서도 재사용할 수 있는 동선 설계로 정리합니다.
+
+## CTA 하나에서 폼 초기화 검증하기
+
+유효한 service key, 알 수 없는 key, 제목을 입력한 뒤 뒤로 가기를 시험합니다. 허용된 선택지로 매핑되고 입력한 제목을 덮어쓰지 않는지 확인하며 언어별 URL에도 같은 값 계약을 사용합니다. URL에는 개인정보나 자유 서술을 넣지 말고 짧은 식별자로 상담 문맥을 전달하세요.
+
+[MDN URLSearchParams：URL 매개변수 읽기 사양](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## 목적은 폼 입력을 줄이는 것만이 아니다
 

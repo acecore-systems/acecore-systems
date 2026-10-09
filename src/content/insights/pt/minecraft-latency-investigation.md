@@ -2,7 +2,7 @@
 title: "Como investigar o lag no Minecraft: métricas silenciosas e armazenamento compartilhado"
 description: "Da coleta discreta de TPS/MSPT à correlação de JFR com observações de E/S do sistema operacional. Separa a investigação de causa já concluída das melhorias de desempenho ainda não testadas."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 O lag no Minecraft pode ter causas diferentes: processamento de ticks do servidor, breves pausas ao salvar, rede ou renderização no cliente. Apresentamos de forma anônima uma investigação em vários servidores Paper, sem revelar nomes de host ou configurações internas.
+
+## Capturar o primeiro perfil enquanto o lag ocorre
+
+Registre horário do lag, número de jogadores e atividade de salvamento; compare o perfil com o MSPT desse período. Colete também uma amostra breve em condições normais. Separar mais processamento de mais espera ajuda a escolher entre ajustar plugins e investigar o armazenamento.
+
+[PaperMC：Criar um perfil durante o problema](https://docs.papermc.io/paper/profiling/)
 
 ## Meça médias e pausas breves separadamente
 

@@ -2,7 +2,7 @@
 title: "Separate Edge Caching for Public Images from API Rate Limits"
 description: "A case where the content API and image requests shared one rate limit during repeated browsing. Covers reuse of public images, validation of successful responses, the WAF and application boundary, and production checks."
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 In image-heavy journals and catalogs, changing the date or page triggers requests for both the content API and images. We describe a case where images stopped loading during repeated browsing, without exposing operational URLs, internal routes, or limit values.
+
+## Reproduce consecutive viewing starting with one image
+
+Fetch the same public image repeatedly and compare body hash, status, and cache state. Then load text and multiple images through normal page changes and check which requests count toward the limit. A HIT alone is insufficient: test image correctness and API protection together.
+
+[Cloudflare Cache API：Conditional retrieval and cache locality](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## Content and images shared the same rate-limit bucket
 

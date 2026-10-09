@@ -2,7 +2,7 @@
 title: "restic-Backups auf R2 überwachen: von Speicherung zu geprüfter Wiederherstellung"
 description: "Snapshot-Aktualität, Integrität und Wiederherstellung getrennt prüfen und noch ungeprüfte Anwendungswiederherstellung benennen."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Ein beendeter Backup-Job beweist keine Wiederherstellbarkeit. Dieser verallgemeinerte interne Fall bewertet Speicherung, Integrität, Wiederherstellung und Dienstbetrieb getrennt. Er dokumentiert keine abgeschlossene Migration von einem anderen Dienst.
+
+## Snapshot-ID und ein Wiederherstellungsziel festlegen
+
+Notieren Sie die ID und stellen Sie benötigte Dateien in einem leeren, isolierten Ziel wieder her. Prüfen Sie Konfigurationsverweise und Rechte oder laden Sie die Datenbank isoliert. Erfassen Sie die Dauer. Wiederholen Sie dieselben Kontrollen regelmäßig, um Aktualität und Wiederherstellungsumfang zu vergleichen.
+
+[restic：Wiederherstellung in ein isoliertes Ziel](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## Quelle und Erfolg definieren
 

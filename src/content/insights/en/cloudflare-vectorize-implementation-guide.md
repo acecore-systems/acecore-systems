@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize and RAG: Understand Search and AI Answers"
 description: "Learn how Cloudflare Vectorize makes existing public information easier to find from natural-language questions, with practical benefits, its role alongside ordinary search, RAG, and a safe staged adoption path."
 date: 2026-07-31T12:00
-lastUpdated: 2026-08-01T17:00
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   [
@@ -140,6 +140,8 @@ faq:
     - question: "What kind of site is a good first candidate?"
       answer: "Start with a site that already has public guides, FAQs, specifications, or cases, and where people ask for the same information in varied language."
 ---
+
+For a semantic-search trial, pair a formal term and a user paraphrase that should find the same public page, then compare whether the expected URL appears. Define target pages before checking the index contract in [Cloudflare Vectorize: Create Indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/), evaluating retrieval separately from fluent chat answers.
 
 ## First: Vectorize reduces the gap between a question and a page
 

@@ -82,8 +82,10 @@ faq:
       answer: "Für post_slug-Abfragen, Sortierung, Soft Delete, Rate Limits und Duplikate passt D1 gut."
     - question: Reicht Turnstile im Browser?
       answer: "Nein. Die Pages Function muss den Token per Siteverify prüfen, bevor sie in D1 schreibt."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Entscheiden Sie über eigene Kommentare anhand Ihrer Kapazität für Freigabe und Löschung, nicht nur des Speichers. Externe Dienste erlauben delegierte Moderation; D1 eigene UI und Speicherregeln. Prüfen Sie mit [Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), dass fehlgeschlagene Validierung keinen Datenbankeintrag erzeugt.
 
 Kommentare bringen Zustand in eine statische Website.
 

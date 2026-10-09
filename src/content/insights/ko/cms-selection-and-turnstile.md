@@ -1,8 +1,8 @@
 ---
-title: "Sveltia CMS 도입 가이드"
-description: "Acecore의 Sveltia CMS 도입과 변경 이력입니다. 편집자 인증, GitHub App의 검증 후 직접 저장, 미디어와 다국어 운영을 시점별로 설명합니다."
+title: "Astro에 Sveltia CMS 도입하기: 편집·이미지·인증 설계"
+description: "Astro에 Sveltia CMS를 도입할 때는 자주 갱신하는 글부터 collection으로 만들고 이미지 저장 위치, 공개 URL, 충돌 시 재로드를 확인하세요."
 date: 2026-06-07T16:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "CMS", "Astro", "Cloudflare", "보안"]
 image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
@@ -69,6 +69,8 @@ faq:
     - question: 다국어 사이트는 모든 언어를 CMS에서 편집해야 하나요?
       answer: 작은 팀에서는 일본어 source만 CMS에서 편집하고 번역은 PR로 반영하는 편이 안전합니다. 모든 언어를 노출하면 리뷰와 오래된 번역 감지가 어려워집니다.
 ---
+
+Astro에 Sveltia CMS를 도입할 때는 자주 갱신하는 글부터 collection으로 만들고 이미지 저장 위치, 공개 URL, 충돌 시 재로드를 확인하세요. [Sveltia CMS: Getting Started](https://sveltiacms.app/en/docs/start)의 기본 구성과 사이트 고유 인증·저장 proxy를 따로 설계하세요. 아래 이전 OAuth 절차는 현재 로그인 방식과 다릅니다.
 
 **2026년 9월 26일 추가:** 아래의 GitHub OAuth Worker 로그인 절차는 초기 도입 당시의 기록입니다. 9월에 병합된 기업 사이트 코드에서는 로그인한 AcecoreID / Cloudflare Access 신원, 연결된 GitHub ID, 저장 직전 repository 쓰기 권한을 확인합니다. 사이트 전용 GitHub App은 허용 경로·내용·현재 HEAD를 검사한 뒤 계속 repository 쓰기를 담당하며 `main`에 직접 커밋합니다. OpenAI Batch 및 번역 PR은 별도 경로입니다. [병합된 PR #251](https://github.com/acecore-systems/acecore-net/pull/251)을 참고하고 아래의 기존 절차는 당시 기록으로 읽어 주세요.
 

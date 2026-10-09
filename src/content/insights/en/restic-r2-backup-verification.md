@@ -2,7 +2,7 @@
 title: "Monitoring restic backups on R2: from successful storage to verified restoration"
 description: "Track snapshot freshness, repository integrity and restoration separately, and identify the application recovery steps that remain untested."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 A completed backup job does not establish that the required data can be recovered. This generalized internal case evaluates storage, integrity, restoration and service recovery separately. It does not describe a completed migration from another backup service.
+
+## Fix the snapshot ID and one recovery goal
+
+Record the snapshot ID and restore needed files to an empty isolated destination. For settings, check references and permissions; for a database, test loading it in isolation. Record elapsed time. Repeat the same checks periodically to compare freshness and usable recovery scope.
+
+[restic：Restoring to an isolated destination](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## Define the source and success
 

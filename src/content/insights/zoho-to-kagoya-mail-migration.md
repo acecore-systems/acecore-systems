@@ -82,13 +82,19 @@ faq:
       answer: 受信側のメールサーバーが迷惑メールと判定する確率が上がります。特にGmailは厳しく、SPF・DKIM 両方の PASS が求められるケースが増えています。
     - question: Zoho Workplace を解約するとデータはどうなる？
       answer: 有料プランの期限が切れると無料プランに移行します。無料プランにもストレージ制限があるため、必要なデータは事前にエクスポートしておくべきです。アカウント自体を削除するとすべてのデータが失われます。
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **2026年9月26日追記:** 記載した料金・管理画面・DNS値は移行当時の記録です。別環境への移行時にそのままコピーせず、[KAGOYA MAIL](https://www.kagoya.jp/mail/)と[Zoho Workplace](https://www.zoho.com/jp/workplace/pricing.html)の現行案内、契約画面、自分のドメインに表示される認証値を確認してください。
 > Zoho Workplace から別のメールサービスへ移行したいけど、DNS やメール認証の設定が不安――そんな方に向けた実践的な移行ガイドです。この記事では Zoho Mail から KAGOYA MAIL への移行を例に、DNS 切り替え・SPF/DKIM 認証・旧サービスのデータ棚卸しまでの手順を解説します。
 
 DNS や SSL を含めたWebインフラ全体の整理には、[Cloudflare の SSL オプション解説](/blog/cloudflare-ssl-advanced-certificate-manager/)や[運用・保守支援](/services/operations/)もあわせて確認してください。
+
+## 一つのメールボックスで件数と送受信を比較する
+
+DNSを変える前に一アカウントを試験移行し、フォルダー構造・件数・添付ファイルを照合します。本文のIMAP例はINBOXへ追加する最小例で、フォルダーや既読状態、元の受信日時を保存する移行ツールではありません。新旧の受信経路と外部宛送信を確かめ、切戻し期間を決めてから全体を切り替えます。
+
+[KAGOYA MAIL：現在のプランとメール認証機能](https://www.kagoya.jp/mail/)
 
 ## こんなケースに当てはまりませんか？
 

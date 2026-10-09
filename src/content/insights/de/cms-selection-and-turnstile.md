@@ -1,8 +1,8 @@
 ---
-title: "Sveltia CMS Einrichtungsleitfaden"
-description: "Zeitlich eingeordnete Dokumentation der Sveltia-CMS-Einführung bei Acecore: Redakteursanmeldung, geprüfte Direktspeicherung über eine GitHub App, Medien und Mehrsprachigkeit."
+title: "Sveltia CMS in Astro einführen: Bearbeitung, Bilder und Authentifizierung"
+description: "Beginnen Sie Sveltia CMS in Astro mit häufig bearbeiteten Artikeln und prüfen Sie Bildspeicher, öffentliche URLs und Neuladen bei Konflikten."
 date: 2026-06-07T16:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sicherheit"]
 image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
@@ -69,6 +69,8 @@ faq:
     - question: Sollten alle Sprachen im CMS editierbar sein?
       answer: Für kleine Teams ist es sicherer, nur die japanische Source im CMS zu bearbeiten und Übersetzungen per PR zu aktualisieren.
 ---
+
+Beginnen Sie Sveltia CMS in Astro mit häufig bearbeiteten Artikeln und prüfen Sie Bildspeicher, öffentliche URLs und Neuladen bei Konflikten. Trennen Sie die Basis aus [Sveltia CMS: Getting Started](https://sveltiacms.app/en/docs/start) von eigener Authentifizierung und Speicherproxy. Die historischen OAuth-Schritte unterscheiden sich vom heutigen Login.
 
 **Ergänzung vom 26. September 2026:** Die folgende Anmeldung über einen GitHub OAuth Worker beschreibt die ursprüngliche Einrichtung. Im im September zusammengeführten Code prüft die Unternehmenswebsite die AcecoreID-/Cloudflare-Access-Identität, die verknüpfte GitHub-ID und die Schreibberechtigung unmittelbar vor dem Speichern. Eine websiteeigene GitHub App schreibt weiterhin ins Repository, nachdem Pfade, Inhalte und aktueller HEAD geprüft wurden, und erstellt direkt einen Commit auf `main`. OpenAI Batch und Übersetzungs-PRs bleiben ein getrennter Weg. Siehe [zusammengeführtes PR #251](https://github.com/acecore-systems/acecore-net/pull/251).
 

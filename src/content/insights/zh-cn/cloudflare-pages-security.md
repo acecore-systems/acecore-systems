@@ -5,8 +5,10 @@ date: 2026-03-15T00:00
 author: gui
 tags: ["技术", "Cloudflare", "安全"]
 image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Cloudflare Pages的CSP或缓存设置无效时，先确认URL返回静态资源还是Functions响应。根据[Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/)选择配置位置，同时检查成功与错误响应的响应头，有助于发现新增API后的遗漏。
 
 本文最初记录了2026年3月将联系表单交给外部服务、使网站回到 Cloudflare Pages 静态发布的过程。此后架构已有变化。**截至2026年9月，Acecore 官网在静态页面之外也使用 Pages Functions**，处理联系、评论、搜索、AI 辅助及 CMS API。旧方案属于历史记录，下面说明仍然重要的响应头边界。
 

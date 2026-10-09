@@ -1,6 +1,6 @@
 ---
-title: "Key Points for Website Production Costs and Quotes"
-description: "An overview of website production costs by purpose, key items to check in quotes, and how to achieve results within your budget."
+title: "Compare website production costs: example budgets and quote checks"
+description: "Use illustrative editorial budgets to compare CMS, content, forms, and maintenance in website quotes. This is a guide to choosing suppliers against the same requirements, rather than market price statistics."
 date: 2026-04-01T10:00
 author: gui
 tags: ["Web Development", "Website", "SEO", "Services"]
@@ -26,13 +26,19 @@ faq:
       answer: Limiting the number of pages, preparing your own copy and photos, leveraging existing brand assets, and separating post-launch improvements from the initial scope are all effective approaches.
     - question: Can we consult you about operations after launch?
       answer: Yes. Acecore can provide ongoing support covering not just website production but also access analytics, content updates, improvement proposals, and maintenance.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Updated September 26, 2026:** The figures below are editorial budget examples for comparing scopes, not a market-price survey or a binding Acecore quote. Define the features, assets, and maintenance scope, then check [current pricing](/en/pricing/) and request a tailored estimate.
 > One of the most common questions when consulting about website production is "how much will it cost?" The short answer is: cost is not determined by page count alone. It varies significantly depending on the site's purpose, depth of design, use of a CMS, copywriting, photography, SEO, and whether post-launch maintenance is included.
 
 Acecore Systems provides end-to-end support from organizing requirements before production through post-launch operations. If you are considering a new website or redesign, please also see our [Contract Development service](/services/development/).
+
+## Compare two quotes against the same requirements
+
+For example, request service, case-study, and contact pages plus staff-editable news. Give both suppliers identical requirements for content creation, CMS setup, revisions, and support. Ask what SEO delivery includes—titles, internal links, or sitemaps—rather than accepting an undefined SEO package.
+
+[Google Search Central：Define the scope of SEO work](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
 
 ## Estimated Costs by Purpose
 

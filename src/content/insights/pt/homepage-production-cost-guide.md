@@ -1,6 +1,6 @@
 ---
-title: "Custos de produção de sites: referência de preços e pontos-chave nos orçamentos"
-description: "Organização dos custos de produção de sites por objetivo, itens essenciais a verificar nos orçamentos e como alcançar resultados dentro do orçamento."
+title: "Comparar custos de criação de sites: exemplos e revisão de orçamentos"
+description: "Compare CMS, conteúdo, formulários e manutenção com estimativas editoriais ilustrativas. Um guia para escolher fornecedores com os mesmos requisitos, sem apresentar estatísticas de preços de mercado."
 date: 2026-04-01T10:00
 author: gui
 tags: ["Desenvolvimento web", "Site", "SEO", "Serviços"]
@@ -26,13 +26,19 @@ faq:
       answer: Limitar o número de páginas, preparar seus próprios textos e fotos, aproveitar os ativos de marca existentes e separar as melhorias pós-lançamento do escopo inicial são abordagens eficazes.
     - question: Podemos consultar também sobre as operações após o lançamento?
       answer: Sim. A Acecore pode fornecer suporte contínuo cobrindo não apenas a produção do site, mas também análise de acesso, atualizações de conteúdo, propostas de melhoria e manutenção.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Atualizado em 26 de setembro de 2026:** Os valores abaixo são exemplos editoriais para comparar escopos, não uma pesquisa de preços de mercado nem um orçamento vinculativo da Acecore. Defina funções, materiais e manutenção; depois consulte os [preços atuais](/pt/pricing/) e peça um orçamento específico.
 > Uma das perguntas mais frequentes ao consultar sobre produção de sites é "quanto vai custar?" A resposta curta é: o custo não é determinado apenas pelo número de páginas. Varia significativamente dependendo do propósito do site, da profundidade do design, do uso de um CMS, da redação de conteúdo, da fotografia, do SEO e se a manutenção pós-lançamento está incluída.
 
 A Acecore Systems oferece suporte integrado desde a organização dos requisitos antes da produção até a operação após o lançamento. Se você está considerando criar ou renovar um site, consulte também nosso [serviço de desenvolvimento sob encomenda](/services/development/).
+
+## Comparar dois orçamentos com os mesmos requisitos
+
+Peça, por exemplo, páginas de serviços, casos e contato, além de notícias editáveis pela equipe. Use condições iguais para conteúdo, CMS, revisões e suporte. Especifique as entregas de SEO, como títulos, links internos e sitemaps, em vez de aceitar um pacote indefinido.
+
+[Google Search Central：Definir o escopo do trabalho de SEO](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
 
 ## Custos estimados por objetivo
 

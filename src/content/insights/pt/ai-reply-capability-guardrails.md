@@ -2,7 +2,7 @@
 title: "Impeça que respostas de IA façam promessas que não podem cumprir"
 description: "Como evitar que um assistente informativo prometa por conta própria a participação, o agendamento ou o contato posterior de alguém da equipe. Aborda o estado da conversa, falhas de recuperação, revisão de rascunhos antigos e encerramento."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Caso generalizado; nenhuma conversa específica é publicada"
   text: "O caso cobre alterações de política e classificação, verificações antes do envio, testes, entrega e observação operacional limitada. Não inclui publicações nem contas de outras pessoas e não demonstra que toda formulação de promessa incorreta pode ser evitada."
 ---
+
+Para orientação ou suporte, defina como capacidades distintas explicar informações públicas, encaminhar à equipe e realizar uma reserva. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) ajuda a projetar ações permitidas e aprovações. O texto aborda limites das respostas, sem procedimentos de envio automático específicos de plataformas.
 
 Mesmo que uma resposta informativa soe natural, ela não deve prometer que alguém da equipe fará contato depois ou comparecerá em determinado horário sem evidência de que a ação pode ser realizada. Este relato generalizado de um fluxo interno de respostas não identifica uma plataforma nem uma conversa.
 

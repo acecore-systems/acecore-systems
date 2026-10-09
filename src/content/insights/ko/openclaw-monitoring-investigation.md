@@ -2,7 +2,7 @@
 title: "OpenClaw로 모니터링과 장애 조사를 연결하기: 탐지·증거·판단의 경계"
 description: "정기 점검과 권한을 제한한 OpenClaw 조사를 연결하고, 검증한 운영 범위와 미검증 복구 범위를 설명합니다."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 모니터링에는 이상 탐지와 원인 조사 각각의 책임이 필요합니다. 이 사례는 내부 구성과 알림 대상을 공개하지 않고 정기 점검과 OpenClaw 조사를 연결하는 설계를 소개합니다.
+
+## 원인이 알려진 이상으로 조사 보고서 평가하기
+
+도입 전 검증 환경에서 수집 실패나 오래된 관측값처럼 원인이 알려진 상황을 준비합니다. 보고서에 관측 시각, 근거, 미수집 항목이 포함되는지와 시간 초과에도 중간 결과를 남기는지 평가하면 문장의 자연스러움만으로 조사 품질을 판단하지 않아도 됩니다.
+
+[OpenClaw：조사 환경의 권한 경계](https://docs.openclaw.ai/gateway/security)
 
 ## 탐지 조건 정의
 

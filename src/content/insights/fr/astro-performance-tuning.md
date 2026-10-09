@@ -1,8 +1,8 @@
 ---
 title: "Techniques pratiques pour améliorer PageSpeed sur un site Astro"
-description: "Retour sur les optimisations avec Astro 7.1.3 et UnoCSS en juillet 2026, distinct de la configuration actuelle avec Astro et Tailwind CSS."
+description: "Pour améliorer PageSpeed sur Astro, identifiez l’élément LCP et les étapes de chargement de la page lente, puis traitez l’attente dominante : images, CSS ou polices."
 date: 2026-03-15T00:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Performance"]
 image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
@@ -55,6 +55,8 @@ faq:
     - question: Le contrôle de chargement AdSense affecte-t-il les revenus ?
       answer: "L'effet varie selon l'emplacement publicitaire et le comportement des visiteurs. Comparez la visibilité, les requêtes publicitaires et les revenus avant et après, séparément des mesures de performance."
 ---
+
+Pour améliorer PageSpeed sur Astro, identifiez l’élément LCP et les étapes de chargement de la page lente, puis traitez l’attente dominante : images, CSS ou polices. Utilisez [web.dev: Optimize Largest Contentful Paint](https://web.dev/articles/optimize-lcp) pour comparer dans les mêmes conditions et choisir les mesures adaptées à votre site.
 
 > **Mise à jour du 26 septembre 2026 :** Sauf indication contraire, « actuel » ci-dessous renvoie au 29 juillet 2026. Les [dépendances actuelles](https://github.com/acecore-systems/acecore-net/blob/main/package.json) utilisent Astro ^7.3.3 et Tailwind CSS 4.3.3. Ne prenez pas les anciens réglages UnoCSS ni les conditions de diffusion pour des instructions actuelles sans vérifier l’implémentation. Basez les décisions sur le résultat réel et des mesures comparables.
 

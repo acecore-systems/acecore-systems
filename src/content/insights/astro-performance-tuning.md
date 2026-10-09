@@ -1,8 +1,8 @@
 ---
 title: "AstroサイトのPageSpeedを改善する実践テクニック"
-description: "2026年7月時点のAstro 7.1.3とUnoCSSによる最適化記録です。現行のAstroとTailwind CSS構成との差を明示します。"
+description: "AstroのPageSpeed改善では、最初に遅いページのLCP対象と読み込み内訳を確認し、画像・CSS・フォントのうち支配的な待ち時間から着手します。"
 date: 2026-03-15T00:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Astro", "パフォーマンス"]
 image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
@@ -55,6 +55,8 @@ faq:
     - question: AdSense の読み込み制御は収益に影響しませんか？
       answer: "影響は広告位置や閲覧行動で変わるため一律には判断できません。表示率、広告リクエスト、収益などを変更前後で確認し、パフォーマンス指標とは分けて評価します。"
 ---
+
+AstroのPageSpeed改善では、最初に遅いページのLCP対象と読み込み内訳を確認し、画像・CSS・フォントのうち支配的な待ち時間から着手します。[web.dev: Optimize Largest Contentful Paint](https://web.dev/articles/optimize-lcp)を参考に変更前後の条件をそろえれば、設定を丸ごとコピーせず、自分のサイトに効く施策を選べます。
 
 > **2026年9月26日追記:** 本文中の「現行」は、特記がない限り2026年7月29日時点を指します。[現在の依存宣言](https://github.com/acecore-systems/acecore-net/blob/main/package.json)はAstro ^7.3.3とTailwind CSS 4.3.3で、以下のUnoCSS設定や当時の配信条件をそのまま現行サイトの手順として扱わないでください。最適化の判断には、実際の出力と同じ条件で測った指標を使います。
 

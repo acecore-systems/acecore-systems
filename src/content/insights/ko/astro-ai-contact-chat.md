@@ -2,7 +2,7 @@
 title: "Astro 사이트에 문의 AI 채팅을 넣기 위한 기술 설계"
 description: "2026년 6월 당시의 참조 설계입니다. Astro + Cloudflare Pages 정적 사이트에 OpenAI Responses API 기반 문의 AI 채팅을 넣는 기술 설계입니다. API 경계, 사이트 컨텍스트, 프롬프트 제어, locale별 URL, Origin 검사, rate limit, 안전한 Markdown 링크 렌더링을 정리합니다."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "Cloudflare", "웹사이트", "AI", "서비스"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -79,6 +79,8 @@ faq:
     - question: AI 답변 안의 링크는 자유롭게 출력할 수 있나요?
       answer: 아니요. 내부 경로, 현재 origin, acecore.net, 공식 LINE, 필요한 mailto와 tel만 허용합니다. Markdown URL은 안전 검사 전에 trim합니다.
 ---
+
+정적 사이트 AI 채팅을 시험할 때는 공개 FAQ 안내부터 시작하고 공식 견적과 접수는 폼으로 연결하세요. 서버 연결은 [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/)에서 확인할 수 있습니다. 아래 URL 판정은 당시의 간단한 예시이므로 관련 글의 URL 파싱과 허용 목록을 사용하고 문자열 접두사만으로 허용하지 마세요.
 
 > **2026년 9월 26일 추가:** 아래 내용은 2026년 6월의 참조 설계입니다. 현재 Acecore Systems의 AI 채팅 API는 Cloudflare Pages Function과 Service Binding을 거쳐 공통 acecore-chat-worker로 요청을 전달합니다. 화면은 JSON 응답을 받아 완성된 답변을 표시합니다. 본문의 OpenAI 직접 호출은 현재 구현이 아닙니다.
 

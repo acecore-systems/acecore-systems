@@ -4,7 +4,7 @@ description: "Synthèse des étapes d'implémentation correcte des données stru
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technologie", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: La priorité du sitemap influence-t-elle le SEO ?
       answer: "Google ignore `priority` et `changefreq` ; inventer des valeurs n’apporte aucun avantage SEO."
 ---
+
+Commencez le SEO Astro en vérifiant title, description, canonical et JSON-LD dans le HTML généré d’un article représentatif, en les comparant au contenu visible. Validez les champs requis avec [Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data), puis consultez Search Console après publication. Une syntaxe correcte ne garantit ni résultats enrichis ni classement.
 
 > Mise à jour de septembre 2026 : Google a supprimé le champ de recherche des liens annexes en novembre 2024. Les résultats enrichis FAQ sont généralement réservés aux sites gouvernementaux et de santé reconnus, et Google ignore `changefreq` et `priority` des sitemaps. Lisez ce retour de mars 2026 avec les changements du [champ de recherche](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), des [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) et les [consignes sur les sitemaps](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
@@ -192,7 +194,7 @@ Voici les points à vérifier pour l'amélioration SEO d'un site Astro :
 6. **Le flux RSS inclut-il l'auteur et les catégories**
 7. **L'index de recherche (`/pagefind/`, etc.) est-il exclu du crawl dans robots.txt**
 
-Une fois tous ces éléments configurés, les fondations SEO sont en place. Le reste dépend de la qualité du contenu et de la fréquence de mise à jour.
+Ces réglages permettent de transmettre le contenu public aux moteurs. Le classement ne dépend pas seulement de la qualité et de la fréquence des mises à jour ; une configuration achevée ne prouve pas une hausse du trafic. Analysez requêtes, impressions et taux de clic pour mieux répondre aux lecteurs.
 
 ---
 

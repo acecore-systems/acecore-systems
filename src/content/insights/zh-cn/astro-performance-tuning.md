@@ -1,8 +1,8 @@
 ---
 title: "提升Astro网站PageSpeed的实用技巧"
-description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的优化，并与当前 Astro 和 Tailwind CSS 配置区分。"
+description: "改善Astro的PageSpeed时，先找出慢页面的LCP元素与加载耗时构成，再处理图片、CSS或字体中占主导的等待时间。"
 date: 2026-03-15T00:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "Astro", "性能"]
 image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
@@ -55,6 +55,8 @@ faq:
     - question: AdSense加载控制会影响收入吗？
       answer: "影响会随广告位置和访问行为而变化。请比较更改前后的可见率、广告请求和收入，并与性能指标分开评估。"
 ---
+
+改善Astro的PageSpeed时，先找出慢页面的LCP元素与加载耗时构成，再处理图片、CSS或字体中占主导的等待时间。参考[web.dev: Optimize Largest Contentful Paint](https://web.dev/articles/optimize-lcp)保持前后测量条件一致，选择适合自己网站的措施，而非复制全部配置。
 
 > **2026 年 9 月 26 日更新：** 除非另有说明，下文的“当前”指 2026 年 7 月 29 日。[当前依赖声明](https://github.com/acecore-systems/acecore-net/blob/main/package.json)使用 Astro ^7.3.3 和 Tailwind CSS 4.3.3。未经核对实现，不应把旧 UnoCSS 设置和当时的交付条件当作现行指南。请根据实际输出和可比较的测量结果判断。
 

@@ -1,8 +1,8 @@
 ---
 title: "Astroサイトのアクセシビリティ改善実践ガイド"
-description: "2026年3月のAstro + UnoCSSサイトで行ったアクセシビリティ改善の記録。aria属性、コントラスト、フォーカス、フォーム、スクリーンリーダー対応を例示します。"
+description: "Astroのアクセシビリティ改善は、問い合わせフォームなど利用者が完了したい操作から始めると優先順位を付けやすくなります。"
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Astro", "アクセシビリティ"]
 image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
@@ -52,6 +52,8 @@ faq:
     - question: PageSpeedのAccessibilityが100点ならWCAG準拠ですか？
       answer: "100点でもWCAG完全準拠とは言い切れません。Lighthouseはチェック項目が限られており、手動でしか確認できない基準（論理的な読み上げ順序、適切なalt文言など）があります。自動テスト＋手動テストの両方が必要です。"
 ---
+
+Astroのアクセシビリティ改善は、問い合わせフォームなど利用者が完了したい操作から始めると優先順位を付けやすくなります。キーボードで入力、エラー修正、完了まで進み、ラベルと通知を[W3C WAI: Forms Tutorial](https://www.w3.org/WAI/tutorials/forms/)に照らして確認してください。本文の自動検査スコアとは別に、操作を完了できるかを検証します。
 
 **2026年9月26日追記:** 本文のコードとPageSpeed Accessibility 100点は2026年3月のAstro + UnoCSS構成での記録です。現行の公式サイトの依存宣言はTailwind CSS 4.3.3です。ここに挙げた項目や自動検査の得点だけで、サイト全体のWCAG AA準拠を確認したとは言えません。準拠判定には対象ページと一連の操作を定め、A・AAの達成基準を自動検査と人手による検査の両方で確認する必要があります（[W3Cの適合要件](https://www.w3.org/WAI/WCAG22/Understanding/conformance)）。
 

@@ -1,6 +1,6 @@
 ---
-title: "Hatt 홈페이지를 공개했습니다"
-description: "그림, 소설, VRChat용 3D 아바타와 기믹 제작을 한곳에 모은 “Hatt 홈페이지”를 공개했습니다. Astro, Sveltia CMS, Pagefind를 사용해 창작 활동을 계속 발신할 수 있는 개인 사이트로 설계했습니다."
+title: "Astro 창작 포트폴리오 만들기: CMS·검색·외부 작품 경로"
+description: "그림, 소설, VRChat 3D 제작을 모은 Hatt 사이트로 활동 분류, Sveltia CMS 수정, Pagefind 검색과 BOOTH 등 외부 작품으로 연결하는 설계를 설명합니다."
 date: 2026-06-06T10:00
 author: gui
 tags: ["소식", "웹 제작", "웹사이트", "CMS", "Astro"]
@@ -61,11 +61,18 @@ faq:
       answer: Astro, TypeScript, UnoCSS, Sveltia CMS, Pagefind를 사용한 정적 사이트로 구축했습니다.
     - question: Acecore에서는 개인 사이트나 포트폴리오 사이트도 상담할 수 있나요?
       answer: 네. 활동 내용 정리, 디자인, CMS, 검색, SEO, 공개 후 업데이트 동선까지 함께 상담할 수 있습니다.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Hatt의 창작 활동을 모은 개인 사이트 “[Hatt 홈페이지](https://hatt.acecore.net/)”를 공개했습니다.
 
 이 사이트는 그림, 소설, VRChat용 3D 아바타와 기믹 제작을 하나의 입구로 정리한 홈페이지입니다. Acecore의 [실적 페이지](https://systems.acecore.net/works/#case-hatt-homepage)에도 웹 제작 및 CMS 구축 사례로 게재했습니다.
+
+## 작품 한 건으로 창작 포트폴리오 설계하기
+
+대표 작품 하나를 골라 소개 페이지에서 외부 공개 플랫폼까지 쉽게 이동할 수 있는지 시험합니다. 작품명, 장르, 제작 메모를 검색 대상으로 삼고 CMS에서 한 건을 수정한 뒤 검색으로도 찾을 수 있는지 확인하면, 작품이 늘어난 이후의 운영을 구체화할 수 있습니다.
+
+[Pagefind：정적 사이트 검색 도입 절차](https://pagefind.app/docs/)
 
 ## 제작 배경
 

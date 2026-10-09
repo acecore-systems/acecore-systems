@@ -2,7 +2,7 @@
 title: "Diseñar un sitio Astro + Cloudflare que crece función por función"
 description: "Cómo combinamos Astro y Cloudflare Pages con chat de contacto con IA, Sveltia CMS, blog multilingüe, CTA de servicios, renderizado seguro de Markdown y comentarios sin servicios externos."
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Cloudflare", "Sitio web", "AI", "CMS"]
 image: "/images/insights/covers/astro-cloudflare-site-architecture-cover-v2.webp"
@@ -98,6 +98,8 @@ linkCards:
     description: Comentarios sin servicio externo, con Pages Functions, D1 y Turnstile.
     icon: i-lucide-message-square-text
 ---
+
+Antes de añadir CMS o búsqueda a Astro y Cloudflare, distingue editores, datos públicos y procesamiento por usuario. Parte de artículos estáticos y Functions para envíos o API externas; consulta solo las conexiones necesarias en [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/) para acotar el alcance.
 
 **Actualización del 26 de septiembre de 2026:** Este artículo documenta la arquitectura de junio de 2026. En el código posterior, el CMS guarda directamente en `main` mediante una GitHub App tras comprobar permisos, contenido y HEAD; las traducciones usan OpenAI Batch y PR; y la IA de contacto llama a un Worker compartido mediante Service Binding. Las referencias siguientes a traducción con Copilot, guardado del CMS mediante PR y llamadas directas a la API de IA describen la implementación anterior. Consulte las guías de [CMS](/es/blog/cms-selection-and-turnstile/), [traducción](/es/blog/copilot-translation-pipeline/) e [IA](/es/blog/astro-ai-contact-chat/).
 

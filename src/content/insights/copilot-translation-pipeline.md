@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMSで多言語ブログを運用する方法"
-description: "2026年6月のCopilot翻訳PR導入記録と、2026年9月のOpenAI Batchによる現行運用を整理します。"
+description: "多言語ブログ運用を始めるなら、まず代表記事の翻訳ファイルから言語別HTMLを生成し、本文・title・description・内部リンクを確認します。"
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -84,6 +84,8 @@ faq:
     - question: 翻訳ページは重複コンテンツになりませんか？
       answer: "Googleは、主本文が翻訳されているローカライズページを単なる重複とは扱いません。各言語版を同じslugで対応させ、hreflangやsitemapで関係を示すのが基本です。"
 ---
+
+多言語ブログ運用を始めるなら、まず代表記事の翻訳ファイルから言語別HTMLを生成し、本文・title・description・内部リンクを確認します。[Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)に沿って実在する言語版だけを対応付け、翻訳サービスの成功と公開ページの完成を別に検収してください。
 
 > **2026年9月26日更新:** 以下のCopilotによる翻訳PR作成手順は、2026年6月時点の導入記録です。現在の翻訳生成はOpenAI Batchへ移行しました。日本語を正本とし、翻訳版を言語別の静的ページとして公開する原則は共通です。
 

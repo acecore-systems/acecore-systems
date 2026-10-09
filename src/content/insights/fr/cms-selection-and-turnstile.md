@@ -1,8 +1,8 @@
 ---
-title: "Guide d'installation de Sveltia CMS"
-description: "Historique de l’intégration de Sveltia CMS chez Acecore : authentification des éditeurs, enregistrement direct contrôlé via GitHub App, médias et multilingue."
+title: "Ajouter Sveltia CMS à Astro : édition, images et authentification"
+description: "Pour ajouter Sveltia CMS à Astro, commencez par les articles souvent mis à jour, puis vérifiez stockage d’images, URL publiques et rechargement après conflit."
 date: 2026-06-07T16:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "CMS", "Astro", "Cloudflare", "Sécurité"]
 image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
@@ -69,6 +69,8 @@ faq:
     - question: Faut-il éditer toutes les langues dans le CMS ?
       answer: Pour une petite équipe, il est plus sûr d'éditer seulement la source japonaise dans le CMS et de mettre à jour les traductions par PR.
 ---
+
+Pour ajouter Sveltia CMS à Astro, commencez par les articles souvent mis à jour, puis vérifiez stockage d’images, URL publiques et rechargement après conflit. Séparez la base de [Sveltia CMS: Getting Started](https://sveltiacms.app/en/docs/start) de l’authentification et du proxy de sauvegarde propres au site. L’ancien OAuth diffère de la connexion actuelle.
 
 **Mise à jour du 26 septembre 2026 :** La connexion via GitHub OAuth Worker décrite ci-dessous correspond à la configuration initiale. Dans le code fusionné en septembre, le site vérifie l’identité AcecoreID / Cloudflare Access, l’identifiant GitHub associé et le droit d’écriture juste avant l’enregistrement. Une GitHub App propre au site écrit toujours dans le dépôt après contrôle des chemins, du contenu et du HEAD actuel, puis crée directement un commit sur `main`. OpenAI Batch et les PR de traduction restent distincts. Voir la [PR #251 fusionnée](https://github.com/acecore-systems/acecore-net/pull/251).
 

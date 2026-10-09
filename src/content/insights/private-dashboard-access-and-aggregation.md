@@ -2,7 +2,7 @@
 title: "Cloudflare PagesとD1で作る認証付き運営ダッシュボード"
 description: "Cloudflare Accessで入口を保護し、Pages FunctionsからD1の運用集計を読み取る構成を匿名化して紹介。GitHub連携の本番配信、認証済み画面、集計用DB索引の確認範囲を分けて説明します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 運用に必要な情報が複数のログやデータベースに分散すると、担当者は現在の状態を安全に確かめにくくなります。認証付きの運営ダッシュボードを作った事例から、入口、集計、配信の確認方法を一般化します。固有のドメイン、アカウント、投稿内容、実運用数値は掲載しません。
+
+## 一つの集計を画面とAPIで受け入れる
+
+最初は「指定期間の件数」のような一集計に絞り、検証用の既知データと画面の値を照合します。空の期間と取得エラーを区別できるかを試し、認証前・認証後のAPI直接アクセスも確認してから集計を増やします。索引はその絞り込み条件のクエリ計画で検証します。
+
+[Cloudflare D1：集計条件に合う索引の確認](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## 画面とAPIの両方を認証境界に入れる
 

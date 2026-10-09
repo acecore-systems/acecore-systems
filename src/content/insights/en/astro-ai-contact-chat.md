@@ -2,7 +2,7 @@
 title: "Technical Design for Adding an AI Contact Chat to an Astro Site"
 description: "A June 2026 reference design. A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Cloudflare", "Website", "AI", "Services"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -79,6 +79,8 @@ faq:
     - question: Can the AI output any link it wants?
       answer: No. Links are restricted to internal paths, the current origin, acecore.net, the official LINE URL, and specific mailto or tel links when needed. Markdown URLs are trimmed before safety checks.
 ---
+
+For a first AI chat on a static site, limit answers to public FAQs and send formal quotes or requests to a form. Check server connections against [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/). The URL check below is a historical simplified example; use the linked article’s URL parsing and allowlist rather than prefix matching alone.
 
 > **Update, September 26, 2026:** The article below documents a June 2026 reference design. Acecore Systems now forwards its AI chat API through a Cloudflare Pages Function and Service Binding to the shared acecore-chat-worker. The interface receives JSON and displays the completed answer. The direct OpenAI call described below is no longer the current Systems implementation.
 

@@ -2,7 +2,7 @@
 title: "Cloudflare Pages와 D1로 만드는 인증된 운영 대시보드"
 description: "Cloudflare Access로 진입을 보호하고 Pages Functions를 통해 D1의 운영 집계를 읽는 구성을 익명화해 소개합니다. 확인된 프로덕션 배포, 인증된 화면, DB 인덱스 사용과 미검증 항목을 구분합니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 운영 정보가 로그와 데이터베이스에 흩어져 있으면 담당자가 현재 상태를 안전하게 확인하기 어려울 수 있습니다. 이 익명 사례는 대시보드의 접근 경계, 집계, 배포를 확인하는 방법을 설명합니다. 도메인, 계정, 게시물 내용, 실제 운영 수치는 공개하지 않습니다.
+
+## 집계 하나를 화면과 API에서 검증하기
+
+먼저 지정 기간 건수 같은 한 집계로 범위를 좁히고 알려진 검증 데이터와 화면 값을 대조합니다. 빈 기간과 조회 오류를 구별하는지, 인증 전후 API 직접 접근이 어떻게 동작하는지 확인한 뒤 집계를 늘립니다. 인덱스는 해당 필터의 쿼리 계획으로 검증하세요.
+
+[Cloudflare D1：집계 조건에 맞는 인덱스 확인](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## 페이지와 API 모두 접근 경계에 포함합니다
 

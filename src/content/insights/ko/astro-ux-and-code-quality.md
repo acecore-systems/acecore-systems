@@ -2,7 +2,7 @@
 title: "Astro View Transitions의 함정과 해결책 — UX 및 코드 품질 개선 가이드"
 description: "Astro View Transitions에서 스크립트가 작동하지 않는 문제의 해결 패턴, Pagefind 전문 검색 도입, TypeScript 타입 안전성 강화, 상수 중앙 관리 등 UX와 코드 품질 개선을 위한 실전 가이드."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "Astro", "웹사이트"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: TypeScript 타입 오류를 무시해도 코드가 작동하나요?
       answer: "작동은 하지만, 타입 오류는 잠재적 버그의 징후입니다. 특히 Astro의 콘텐츠 스키마를 타입 안전하게 만들면 템플릿 내에서 프로퍼티 접근에 IDE 자동 완성이 활성화되어 개발 효율이 크게 향상됩니다."
 ---
+
+페이지 이동 후에만 메뉴나 검색이 작동하지 않으면 직접 로드와 ClientRouter 이동을 비교해 초기화 시점을 확인하세요. [Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/)의 생명주기에 맞춰 이벤트 등록을 정리하고 뒤로·앞으로 이동과 중복 실행도 확인하세요.
 
 ## 서론
 
@@ -136,7 +138,7 @@ Astro 빌드 후 Pagefind를 실행하여 인덱스를 `dist/pagefind/`에 출�
 
 ### SearchAction 연동
 
-Google의 `SearchAction` 구조화 데이터에 `?q=` 매개변수를 정의하면, 검색 결과에서 직접 사이트 검색으로 이동할 수 있습니다. URL 매개변수를 감지하여 검색 모달을 자동으로 실행하는 로직을 추가합니다.
+Google은 2024-11에 사이트링크 검색창을 종료했습니다([공식 안내](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)). 기존 `SearchAction`은 당시 구현으로 보고 검색 결과의 검색창을 기대하지 마세요. `?q=`로 검색 모달을 여는 처리는 공유 링크와 사이트 내 검색 경로에 활용할 수 있습니다.
 
 ### 캐시 설정
 

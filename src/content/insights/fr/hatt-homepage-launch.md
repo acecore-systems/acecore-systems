@@ -1,6 +1,6 @@
 ---
-title: "Nous avons lancé le site de Hatt"
-description: "Nous avons lancé le site de Hatt, un site personnel qui rassemble illustrations, romans et création d’avatars et de gimmicks pour VRChat. Construit avec Astro, Sveltia CMS et Pagefind, il est conçu pour soutenir une publication créative continue."
+title: "Créer un portfolio avec Astro : CMS, recherche et œuvres externes"
+description: "Le site de Hatt réunit dessins, fiction et créations 3D VRChat. Découvrez organisation des activités, mises à jour Sveltia CMS, recherche Pagefind et parcours vers les œuvres externes, notamment BOOTH."
 date: 2026-06-06T10:00
 author: gui
 tags: ["Actualités", "Création web", "Site web", "CMS", "Astro"]
@@ -61,11 +61,18 @@ faq:
       answer: C’est un site statique construit avec Astro, TypeScript, UnoCSS, Sveltia CMS et Pagefind.
     - question: Acecore peut-il aussi accompagner des sites personnels ou portfolios ?
       answer: Oui. Nous pouvons accompagner l’organisation des activités, le design, le CMS, la recherche, le SEO et les parcours de mise à jour après publication.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Nous avons publié le site personnel [Site de Hatt](https://hatt.acecore.net/), qui rassemble les activités créatives de Hatt en un seul endroit.
 
 Ce site sert de porte d’entrée pour les illustrations, les romans et la création d’avatars et de gimmicks pour VRChat. Nous l’avons également ajouté à la [page travaux](https://systems.acecore.net/works/#case-hatt-homepage) d’Acecore comme cas de création web et de mise en place de CMS.
+
+## Concevoir un portfolio créatif à partir d’une œuvre
+
+Choisissez une œuvre représentative et testez le parcours de sa présentation à la plateforme externe. Rendez son nom, son genre et ses notes de création recherchables. Modifiez une fiche via le CMS, puis vérifiez la recherche pour préciser les besoins futurs de publication.
+
+[Pagefind：Ajouter la recherche à un site statique](https://pagefind.app/docs/)
 
 ## Contexte
 

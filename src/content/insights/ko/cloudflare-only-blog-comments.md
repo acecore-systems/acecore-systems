@@ -82,8 +82,10 @@ faq:
       answer: "post_slug 조회, created_at 정렬, deleted_at soft delete, 중복 검사, rate limit에는 D1이 잘 맞습니다."
     - question: Turnstile을 프런트에만 두면 되나요?
       answer: "아니요. Pages Function에서 Siteverify로 token을 검증한 뒤 D1에 저장해야 합니다."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+블로그 댓글 자체 구축 여부는 저장소뿐 아니라 승인·삭제를 담당할 수 있는지로 판단하세요. 관리를 맡기려면 외부 서비스, 독자 UI와 저장 정책을 원하면 D1을 고려하세요. 첫 게시 테스트에서는 [Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)에 따라 검증 실패 시 DB에 기록되지 않는지 확인하세요.
 
 정적 사이트에 댓글을 넣으면 상태 저장과 spam 대책이 필요해집니다.
 

@@ -1,8 +1,8 @@
 ---
 title: "将 Astro 7 网站扩展至9种语言 ― 博客翻译与多语言架构"
-description: "记录 2026 年 7 月基于 Astro 7.1.3 和 UnoCSS 的九语言实施，并说明当前依赖与翻译流程的变化。"
+description: "为Astro博客增加多语言时，先在代表文章上对齐正文、元信息与语言切换，确认不会链接到未翻译页面。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: 添加新文章时需要翻译吗？
       answer: "发布日语文章不要求同时翻译。在对应语言目录中添加同名 Markdown 文件后，该 locale 的文章 URL、sitemap 条目和 hreflang 关系才会进入生成范围。"
 ---
+
+为Astro博客增加多语言时，先在代表文章上对齐正文、元信息与语言切换，确认不会链接到未翻译页面。以[Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)为URL设计依据，分别扩展UI与文章翻译。下文数量和旧CMS配置属于初次上线案例。
 
 > **2026 年 9 月 26 日更新：** 下文的 Astro 7.1.3、UnoCSS、文章数量和 Copilot 翻译属于 2026 年 7 月的记录。[当前依赖声明](https://github.com/acecore-systems/acecore-net/blob/main/package.json)使用 Astro ^7.3.3 和 Tailwind CSS 4.3.3；[翻译流程更新](/insights/copilot-translation-pipeline/)介绍 OpenAI Batch。将下文代码和数字视为当前配置之前，请核对最新源码和已发布页面。
 

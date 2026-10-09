@@ -1,8 +1,8 @@
 ---
 title: "Practical Techniques for Improving PageSpeed on an Astro Site"
-description: "A July 2026 record of performance work with Astro 7.1.3 and UnoCSS, clearly distinguished from the current Astro and Tailwind CSS setup."
+description: "For Astro PageSpeed work, identify the slow page’s LCP element and loading breakdown, then address the dominant delay among images, CSS and fonts."
 date: 2026-03-15T00:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Performance"]
 image: "/images/insights/covers/astro-performance-tuning-cover-v2.webp"
@@ -55,6 +55,8 @@ faq:
     - question: Does AdSense load control affect revenue?
       answer: "The effect varies with ad placement and visitor behavior. Compare viewability, ad requests, and revenue before and after the change, and evaluate them separately from performance metrics."
 ---
+
+For Astro PageSpeed work, identify the slow page’s LCP element and loading breakdown, then address the dominant delay among images, CSS and fonts. Use [web.dev: Optimize Largest Contentful Paint](https://web.dev/articles/optimize-lcp) to compare changes under matching conditions and select improvements for your site instead of copying every setting.
 
 > **Update, September 26, 2026:** Unless stated otherwise, “current” in the text below refers to July 29, 2026. The [current dependency declaration](https://github.com/acecore-systems/acecore-net/blob/main/package.json) uses Astro ^7.3.3 and Tailwind CSS 4.3.3. Do not treat the old UnoCSS settings or delivery conditions as current instructions without checking the implementation. Base optimization decisions on actual output and comparable measurements.
 

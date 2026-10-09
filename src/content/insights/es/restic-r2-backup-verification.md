@@ -2,7 +2,7 @@
 title: "Copias con restic en R2: de guardar datos a verificar su restauración"
 description: "Supervise por separado la actualidad de las instantáneas, la integridad y la restauración, indicando qué recuperación de aplicaciones falta probar."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Un trabajo terminado no demuestra que los datos necesarios puedan recuperarse. Este caso interno generalizado evalúa almacenamiento, integridad, restauración y recuperación del servicio por separado. No documenta una migración completada desde otro servicio.
+
+## Fijar el ID del snapshot y un objetivo de recuperación
+
+Registre el ID y restaure los archivos necesarios en un destino vacío y aislado. Revise referencias y permisos de configuración, o cargue la base de datos en aislamiento. Anote el tiempo. Repita las mismas comprobaciones periódicamente para comparar actualidad y alcance recuperable.
+
+[restic：Restaurar en un destino aislado](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## Definir origen y éxito
 

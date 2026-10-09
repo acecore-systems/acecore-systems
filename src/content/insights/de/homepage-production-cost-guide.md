@@ -1,6 +1,6 @@
 ---
-title: "Website-Produktionskosten: Marktpreise und wichtige Punkte bei Angeboten"
-description: "Überblick über Website-Produktionskosten nach Zweck, wesentliche Punkte zur Überprüfung von Angeboten und Strategien zur Ergebniserzielung im Budgetrahmen."
+title: "Website-Kosten vergleichen: Beispielbudgets und Angebotsprüfung"
+description: "Vergleichen Sie CMS, Inhalte, Formulare und Wartung anhand redaktioneller Budgetbeispiele. Der Leitfaden hilft bei der Anbieterwahl mit gleichen Anforderungen und enthält keine Marktpreisstatistik."
 date: 2026-04-01T10:00
 author: gui
 tags: ["Webentwicklung", "Website", "SEO", "Services"]
@@ -26,13 +26,19 @@ faq:
       answer: Die Seitenanzahl begrenzen, eigene Texte und Fotos vorbereiten, bestehende Markenwerte nutzen und Post-Launch-Verbesserungen vom ursprünglichen Umfang trennen sind effektive Ansätze.
     - question: Kann man auch über den Betrieb nach dem Launch beraten?
       answer: Ja. Acecore kann laufende Unterstützung bieten, die nicht nur die Website-Produktion, sondern auch Zugriffsanalyse, Content-Updates, Verbesserungsvorschläge und Wartung umfasst.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Aktualisiert am 26. September 2026:** Die Beträge unten sind redaktionelle Budgetbeispiele zum Vergleich von Leistungsumfängen, keine Marktpreisstudie und kein verbindliches Angebot von Acecore. Klären Sie Funktionen, Materialien und Wartung und prüfen Sie dann die [aktuellen Preise](/de/pricing/) sowie ein individuelles Angebot.
 > Eine der häufigsten Fragen bei der Beratung zur Website-Erstellung ist „wie viel wird es kosten?" Die kurze Antwort lautet: Die Kosten werden nicht allein durch die Seitenanzahl bestimmt. Sie variieren erheblich je nach Zweck der Website, Tiefe des Designs, Einsatz eines CMS, Texterstellung, Fotografie, SEO und ob Post-Launch-Wartung enthalten ist.
 
 Acecore Systems unterstützt durchgängig von der Anforderungsklärung vor der Umsetzung bis zum Betrieb nach dem Launch. Wenn Sie eine neue Website oder einen Relaunch planen, informieren Sie sich auch über unseren [Auftragsentwicklungsservice](/services/development/).
+
+## Zwei Angebote mit gleichen Anforderungen vergleichen
+
+Fordern Sie etwa Service-, Referenz- und Kontaktseiten sowie redaktionell bearbeitbare Nachrichten an. Geben Sie identische Bedingungen für Inhalte, CMS, Korrekturen und Betreuung vor. Klären Sie SEO-Lieferumfang wie Titel, interne Links und Sitemap, statt ein undefiniertes Gesamtpaket zu akzeptieren.
+
+[Google Search Central：Den Umfang der SEO-Arbeit bestimmen](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
 
 ## Geschätzte Kosten nach Zweck
 

@@ -2,7 +2,7 @@
 title: "Benutzer-CSS und öffentliche Themes sicher verwalten: gemeinsame Quelle, begrenztes Rendering und feste Versionen"
 description: "Ein anonymisiertes Profilbearbeitungskonzept, in dem GUI und direkte Bearbeitung dieselbe CSS-Quelle nutzen. Behandelt werden eine umfangreiche CSS-Syntax innerhalb einer Rendering-Grenze, Entwürfe und veröffentlichte Fassungen, unveränderliche Theme-Versionen, Auslistung und betriebliche Sperre."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Ein Profil-Editor, in dem sich Farben und Abstände über eine grafische Oberfläche anpassen und das gesamte Layout mit CSS bearbeiten lassen, muss sowohl die Bedienbarkeit als auch die Sicherheit des auf öffentlichen Seiten angezeigten Codes berücksichtigen. Dieser anonymisierte Implementierungsfall zeigt die Grenzen zwischen Bearbeitung und Verteilung.
+
+## Gestaltungsfreiheit und Verteilung getrennt wählen
+
+Prüfen Sie bei persönlicher Bearbeitung zuerst Bereichsbegrenzung und Speicherkonflikte. Verteilung erfordert zusätzlich feste Versions-IDs, Nutzungsbedingungen und Standarddarstellung nach Sperre. Testen Sie mit Grid und Pseudoelementen, dass äußere Navigation unverändert bleibt und Autoren-Updates angewandte Versionen nicht ersetzen.
+
+[W3C Selectors：Geltungsbereich von Selektoren prüfen](https://www.w3.org/TR/selectors-4/)
 
 ## Eine gemeinsame CSS-Quelle für GUI und direkte Bearbeitung verwenden
 

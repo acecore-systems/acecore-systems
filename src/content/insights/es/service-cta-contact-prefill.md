@@ -2,7 +2,7 @@
 title: "Diseño técnico para trasladar el contexto de una CTA de servicio al formulario de contacto"
 description: "Diseño de implementación para llevar al formulario el contexto que el usuario estaba leyendo en una página de servicio. Incluye mini CTA en Astro, el contrato de parámetros URL, la selección inicial de categoría, el prefill del asunto, URL multilingües, medición con GA y comprobaciones del HTML generado."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnología", "Sitio web", "Servicios", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ Cuando un usuario que lee una página de servicio piensa «quiero consultar sobr
 El usuario debe volver a seleccionar el tipo de servicio y escribir el asunto. El equipo receptor tampoco puede saber fácilmente si se trata de producción web, operación de servidores o Aceserver hasta leer el cuerpo.
 
 En el sitio de Acecore mejoramos este recorrido mediante la [PR que traslada el objetivo de la CTA al formulario de contacto](https://github.com/acecore-systems/acecore-net/pull/100). Este artículo lo organiza no solo como registro de implementación en Astro, sino también como diseño reutilizable en otros sitios.
+
+## Validar la inicialización del formulario desde un CTA
+
+Pruebe una clave válida, otra desconocida y volver tras escribir el asunto. Compruebe opciones permitidas y conservación del asunto, manteniendo el mismo contrato en URLs por idioma. No incluya datos personales ni texto libre en URLs; transmita contexto con identificadores breves.
+
+[MDN URLSearchParams：Leer parámetros de URL](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## El objetivo no es solo reducir la entrada en el formulario
 

@@ -1,8 +1,8 @@
 ---
-title: "Astro 사이트 품질 개선 가이드 속편 - PageSpeed Insights 전 항목 100점을 만든 최종 조정"
-description: "이전 글 이후 마지막으로 진행한 개선을 정리합니다. Cloudflare Web Analytics 중지, GA4와 검색 UI의 지연 로드, PageSpeed Insights 모바일과 데스크톱 4개 항목 모두 100점 달성, Search Console의 빵부스러기와 색인 정리, 공유 SVG 아이콘으로의 이행, 그리고 시도했지만 채택하지 않은 추가 최적화 판단까지 한 번에 정리했습니다."
+title: "Astro 지연 로드 비교: GA4·Pagefind와 PageSpeed 최종 조정"
+description: "GA4와 Pagefind 지연 로드에서 필요한 기능을 유지하는 선택 방법입니다. 2026년 3월 29일 PageSpeed 전 항목 100점, 색인 정리, 채택하지 않은 CSS 분할을 비교합니다."
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "Astro", "성능", "접근성", "SEO", "웹사이트"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -103,7 +103,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: 접근성 편
-    description: WCAG AA 준수와 Accessibility 100을 위한 구체적인 방법을 정리한 글입니다.
+    description: "aria, 대비, 폼 개선 사례로 WCAG 전체 적합성 검증과 구분합니다."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX 및 코드 품질 편
@@ -125,6 +125,12 @@ faq:
 ---
 
 **2026년 9월 26일 추가:** 100점은 2026년 3월 29일 PageSpeed Insights 측정 결과입니다. 현재 점수나 모든 실제 사용자의 경험을 보장하지 않습니다. 실험실 데이터와 실제 사용자 데이터 및 점수 변동은 [Google 공식 설명](https://developers.google.com/speed/docs/insights/v5/about)을 참고하세요.
+
+## 지연 로드를 채택하기 전에 첫 조작 시험하기
+
+GA4나 검색 지연 로드는 표시 측정과 기능 검증을 함께 판단합니다. 페이지를 열자마자 CTA 클릭, 검색 열기, 다른 페이지 이동을 시험하여 이벤트 누락, 중복 측정, 첫 검색 대기 시간을 확인하세요. 점수가 올라도 필요한 기능을 잃는다면 채택하지 않습니다.
+
+[PageSpeed Insights：측정 결과 해석](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## 소개
 

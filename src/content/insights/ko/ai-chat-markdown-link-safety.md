@@ -2,7 +2,7 @@
 title: "AI 채팅 답변의 Markdown 링크를 안전하게 렌더링하는 구현 설계"
 description: "AI 채팅 답변에 포함된 Markdown 링크를 안전한 HTML로 바꾸는 구현 메모입니다. 공백을 허용하는 파싱, href trim, 허용 목록 검증, DOM 렌더링, fallback, 테스트 케이스를 나누면 다른 사이트에도 재사용하기 쉽습니다."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "웹사이트", "AI", "보안", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: 허용되지 않는 URL은 삭제해야 하나요?
       answer: 보통은 텍스트로 남기는 편이 디버깅하기 쉽고 사용자에게도 문맥이 남습니다. 의심스러운 문자열을 숨겨야 하는 정책이라면 링크 전체를 제거할 수도 있습니다.
 ---
+
+AI 링크가 문자열로 남으면 같은 입력을 파싱, URL 검증, DOM 렌더링에 차례로 전달해 실패 지점을 찾으세요. 레이블에는 [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) 같은 텍스트 API를 사용하고 링크 허용 여부와 HTML 해석을 분리하면 기존 채팅에도 적용하기 쉽습니다.
 
 AI 채팅이 `자세한 내용은 [서비스 목록]( /services/ )을 확인하세요`라고 답하면, 링크가 렌더링되지 않고 원본 Markdown이 화면에 남을 수 있습니다.
 

@@ -2,7 +2,7 @@
 title: "Conectar alertas operativas a Nextcloud Talk: separar detección, entrega y resolución"
 description: "Un diseño general para enviar excepciones del procesamiento de pedidos y contenido pendiente de revisión a salas privadas de Talk y a una consola administrativa, con alertas mínimas, gestión de secretos, pruebas de conexión y límites de aceptación claros."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Un problema en el procesamiento de un pedido o una publicación que requiere revisión puede pasar desapercibido si la persona responsable no lo ve. Este caso generalizado conecta alertas operativas internas con Nextcloud Talk sin revelar información de clientes, URL de salas ni la topología interna.
+
+## Probar reintentos y acceso administrativo con un tipo de aviso
+
+Empiece con un tipo, como fallo de procesamiento. Use una prueba sin datos personales y compruebe el acceso de un operador autorizado. Pruebe por separado detección repetida y fallo de envío, evitando avisos duplicados o repetir la operación de negocio al reintentar.
+
+[Nextcloud Talk：Especificaciones de conexión de bots y webhooks](https://nextcloud-talk.readthedocs.io/en/stable/bots/)
 
 ## Usar la alerta como punto de partida
 

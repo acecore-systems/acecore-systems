@@ -1,6 +1,6 @@
 ---
-title: "Dar forma a una «infraestructura discreta». Renovamos el sitio de Acecore Systems"
-description: "Renovamos el sitio de Acecore Systems bajo el concepto de una «infraestructura discreta». Presentamos el contexto y los principales cambios de una reorganización que aborda el trabajo en tres capas —el día a día, el sistema y la operación— y conecta nuestro enfoque, servicios, proyectos, precios, guía de implementación y proceso de consulta."
+title: "Rediseño de un sitio corporativo: conectar servicios, precios y contacto"
+description: "Antes de elegir el diseño visual de un sitio corporativo, define quién necesita cada información y qué decisión debe tomar."
 date: 2026-07-30T15:00
 author: gui
 tags: ["Noticias", "Servicios", "Sitio web", "Desarrollo web"]
@@ -87,7 +87,10 @@ faq:
       answer: Puede consultarnos sobre sistemas empresariales, aplicaciones web, paneles de administración, integraciones de datos y servicios externos, y mejoras de sistemas existentes. Actualmente también publicamos información sobre asesoría de TI, adopción de IA, acompañamiento en despliegues y la incorporación de CMS, buscadores y formularios a sitios web.
     - question: ¿Puedo consultar aunque todavía no sepa qué quiero crear?
       answer: Sí. Podemos empezar por ordenar la situación actual, los problemas, los usuarios, las restricciones y las prioridades. También puede consultarnos antes de que los requisitos o el alcance del encargo estén definidos.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Antes de elegir el diseño visual de un sitio corporativo, define quién necesita cada información y qué decisión debe tomar. Revisa el recorrido de una consulta habitual entre servicios, proyectos, precios y contacto. El caso de Acecore Systems ilustra este enfoque; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) también aborda la estructura y la visibilidad en búsquedas.
 
 El 26 de julio de 2026 renovamos el [sitio oficial de Acecore Systems](/es/).
 

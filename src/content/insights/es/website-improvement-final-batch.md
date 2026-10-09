@@ -1,8 +1,8 @@
 ---
-title: "Guía de mejora de calidad del sitio Astro, continuación - Ajustes finales para lograr 100 en todos los apartados de PageSpeed Insights"
-description: "Seguimiento del artículo anterior con el ajuste final: desactivar Cloudflare Web Analytics, diferir la carga de GA4 y de la interfaz de búsqueda, alcanzar 100 en las cuatro métricas de PageSpeed Insights tanto en móvil como en escritorio, ordenar breadcrumbs e indexación en Search Console, migrar a iconos SVG compartidos y explicar qué optimizaciones adicionales se probaron pero no se adoptaron."
+title: "Comparar carga diferida en Astro: GA4, Pagefind y ajustes PageSpeed"
+description: "Cómo diferir GA4 y Pagefind conservando funciones necesarias. Compara resultados PageSpeed de 100 en todas las categorías del 29 de marzo de 2026, indexación y división CSS descartada."
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   ["Tecnología", "Astro", "Rendimiento", "Accesibilidad", "SEO", "Sitio web"]
@@ -104,7 +104,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: Artículo de accesibilidad
-    description: Organiza las medidas concretas para alcanzar conformidad WCAG AA y Accessibility 100.
+    description: "Ejemplos de aria, contraste y formularios; separados de verificar todos los requisitos WCAG."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: Artículo de UX y calidad de código
@@ -126,6 +126,12 @@ faq:
 ---
 
 **Actualización del 26 de septiembre de 2026:** Los 100 puntos corresponden a una medición de PageSpeed Insights del 29 de marzo de 2026. No garantizan la puntuación actual ni la experiencia de todos los usuarios reales. Consulte la [documentación de Google](https://developers.google.com/speed/docs/insights/v5/about) sobre datos de laboratorio, datos reales y variación.
+
+## Probar la primera interacción antes de diferir la carga
+
+Evalúe GA4 o búsqueda diferidos con mediciones y aceptación funcional. Pulse un CTA de inmediato, abra búsqueda y cambie de página; revise eventos perdidos o duplicados y espera inicial. Rechace cambios que eliminen funciones necesarias aunque mejoren la puntuación.
+
+[PageSpeed Insights：Interpretar resultados de medición](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Introducción
 

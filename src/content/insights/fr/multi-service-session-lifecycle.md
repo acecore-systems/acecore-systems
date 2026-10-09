@@ -2,7 +2,7 @@
 title: "Aligner l’expiration des connexions entre services : renouvellement et réauthentification"
 description: "Une conception générale distinguant connexion explicite, expiration côté serveur, cookies et fournisseur d’identité."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Un compte commun ne rend pas identiques les sessions des applications et du fournisseur d’identité. Ce cas aligne les règles sans publier les destinations ni les durées.
+
+## Comparer la même requête avant et après expiration
+
+Utilisez une durée courte en test. Exécutez séparément connexion explicite, navigation et actualisation en arrière-plan, puis comparez l’échéance côté serveur. Après expiration, testez la même opération via interface et API : invitation à se réauthentifier et refus des données. Distinguez ce test du fonctionnement prolongé en production.
+
+[OWASP：Conception et test de l’expiration des sessions](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## Identifier chaque durée
 

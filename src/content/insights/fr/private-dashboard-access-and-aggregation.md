@@ -2,7 +2,7 @@
 title: "Créer un tableau de bord opérationnel protégé avec Cloudflare Pages et D1"
 description: "Une conception anonymisée qui protège l’entrée avec Cloudflare Access et lit les agrégats opérationnels de D1 via Pages Functions. Elle distingue le déploiement en production, l’interface authentifiée et l’utilisation d’index vérifiée des points non testés."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Lorsque les informations opérationnelles sont dispersées dans des journaux et des bases de données, il peut être difficile pour l’équipe de vérifier l’état actuel en toute sécurité. Cet exemple anonymisé explique comment vérifier l’accès, l’agrégation et le déploiement d’un tableau de bord. Il ne révèle aucun domaine, compte, contenu de publication ou chiffre opérationnel réel.
+
+## Valider une agrégation via interface et API
+
+Commencez par un comptage sur une période et comparez-le à des données de test connues. Distinguez période vide et erreur de lecture, puis testez l’accès direct à l’API avant et après authentification. Ajoutez des agrégations après vérification du plan de requête du filtre.
+
+[Cloudflare D1：Vérifier les index selon les conditions de requête](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## Inclure la page et l’API dans le périmètre d’accès
 

@@ -1,8 +1,8 @@
 ---
 title: "Astro 7 Website für 9 Sprachen fit machen ― Blogübersetzung und mehrsprachige Architektur"
-description: "Dokumentation der Neun-Sprachen-Einführung mit Astro 7.1.3 und UnoCSS im Juli 2026, ergänzt um Hinweise auf aktuelle Abhängigkeiten und Übersetzungen."
+description: "Stimmen Sie für einen mehrsprachigen Astro-Blog zunächst Text, Metadaten und Sprachwechsel eines repräsentativen Artikels ab, ohne fehlende Übersetzungen zu verlinken."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Website"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: Muss beim Hinzufügen eines neuen Artikels übersetzt werden?
       answer: "Für die Veröffentlichung des japanischen Artikels ist keine Übersetzung erforderlich. Eine gleichnamige Markdown-Datei im Sprachverzeichnis aktiviert die Artikel-URL, den Sitemap-Eintrag und die hreflang-Beziehung für dieses Locale."
 ---
+
+Stimmen Sie für einen mehrsprachigen Astro-Blog zunächst Text, Metadaten und Sprachwechsel eines repräsentativen Artikels ab, ohne fehlende Übersetzungen zu verlinken. Nutzen Sie [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) für das URL-Design und erweitern Sie UI und Artikel getrennt. Zahlen und altes CMS beschreiben die ursprüngliche Einführung.
 
 > **Ergänzung vom 26. September 2026:** Astro 7.1.3, UnoCSS, Artikelzahlen und die Copilot-Übersetzung unten beschreiben Juli 2026. Die [aktuelle Abhängigkeitsdatei](https://github.com/acecore-systems/acecore-net/blob/main/package.json) nutzt Astro ^7.3.3 und Tailwind CSS 4.3.3; der [aktualisierte Übersetzungsablauf](/insights/copilot-translation-pipeline/) beschreibt OpenAI Batch. Prüfen Sie Quellcode und veröffentlichte Seiten, bevor Sie die Beispiele und Zahlen als aktuell übernehmen.
 

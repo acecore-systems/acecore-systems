@@ -1,6 +1,6 @@
 ---
-title: "De VitePress à Starlight — Unification du framework pour les sites de documentation"
-description: "Récit de la migration d'un site documentaire de plan d'affaires construit avec VitePress + UnoCSS vers Astro + Starlight, unifiant le framework de deux projets. La migration CDN des diagrammes Mermaid est également présentée."
+title: "Migrer VitePress vers Starlight : vérifier Markdown, URLs et Mermaid"
+description: "Décidez de l’unification avec Astro puis vérifiez Markdown, frontmatter, anciennes URLs, rendu Mermaid et dépendance CDN, à partir d’un exemple de mars 2026."
 date: 2026-03-15T00:00
 author: gui
 tags: ["Technologie", "Astro", "Starlight"]
@@ -42,13 +42,19 @@ faq:
     - question: Quel est l'avantage de migrer de VitePress vers Starlight ?
       answer: Si le site principal fonctionne sous Astro, l'unification du framework réduit les coûts d'apprentissage, simplifie la gestion des dépendances et améliore la cohérence de la configuration. Le pipeline de build peut également être consolidé.
     - question: Comment sont affichés les diagrammes Mermaid ?
-      answer: Nous avons abandonné la dépendance au plugin pour charger Mermaid via CDN (jsdelivr). Cela élimine toute dépendance de build et stabilise le rendu des diagrammes.
+      answer: "Nous avons chargé Mermaid depuis jsdelivr et transmis les définitions aux éléments cibles. Cela retire sa dépendance npm, mais disponibilité CDN et compatibilité restent à vérifier."
     - question: Combien de temps demande la migration ?
       answer: Le travail principal consiste en la conversion de la structure de répertoires (docs/ → src/content/docs/) et l'ajustement du frontmatter. Le contenu étant en Markdown, il peut être réutilisé tel quel, ce qui permet de finaliser la migration en un temps relativement court.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Voici les étapes de la migration d'un site documentaire construit avec VitePress vers Astro + Starlight. Lorsque le site principal fonctionne sous Astro, unifier également la documentation sous Starlight simplifie l'exploitation. La migration CDN des diagrammes Mermaid est également abordée.
+
+## Vérifier la compatibilité sur une page avant migration
+
+Migrez d’abord une page avec titres, liens internes, code et Mermaid ; comparez URLs et diagrammes. L’import CDN ne transforme pas forcément un bloc Markdown en cible Mermaid. Le rendu doit transmettre les définitions aux éléments class="mermaid" ; inspectez le HTML avant de tout migrer.
+
+[Starlight：Spécifications de Markdown et HTML](https://starlight.astro.build/guides/authoring-content/)
 
 ## Pourquoi unifier le framework ?
 
@@ -124,7 +130,7 @@ Dans l'environnement VitePress, UnoCSS était utilisé pour les styles personnal
 
 ## Migration CDN des diagrammes Mermaid
 
-Le document de plan d'affaires utilise Mermaid pour les organigrammes et les diagrammes de flux. Sous VitePress, Mermaid était intégré via un plugin (`vitepress-plugin-mermaid`), mais un tel plugin n'existe pas pour Starlight.
+Les documents utilisaient `vitepress-plugin-mermaid`. Nous avons choisi le CDN dans Starlight pour unifier les dépendances. Voir la [liste officielle des plugins](https://starlight.astro.build/resources/plugins/) : le CDN n’est pas la seule option.
 
 La solution adoptée a été de charger Mermaid côté navigateur depuis un CDN.
 
@@ -148,7 +154,7 @@ starlight({
 });
 ```
 
-La syntaxe Mermaid standard dans le Markdown fonctionne telle quelle :
+Le bloc suivant définit un diagramme ; il faut aussi transmettre la définition aux [éléments cibles Mermaid](https://mermaid.js.org/intro/) :
 
 ````markdown
 ```mermaid
@@ -162,7 +168,7 @@ graph TD
 ### Avantages de l'approche CDN
 
 - **Zéro dépendance de build** : Pas besoin de Mermaid en tant que package npm
-- **Toujours à jour** : Récupération de la dernière version via CDN
+- **Fixer la version** : L’exemple choisit 11.16.0 ; un CDN ne la met pas automatiquement à jour
 - **Pas de SSR nécessaire** : Le rendu côté navigateur n'impacte pas le temps de build
 
 ## Résultat de la migration

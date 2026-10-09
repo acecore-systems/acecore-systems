@@ -1,10 +1,10 @@
 ---
 title: "GitHub Copilot × Playwright でWebサイトをモンキーテストする実践手法"
-description: "VS Codeのエージェントモード（GitHub Copilot）とPlaywrightブラウザツールを組み合わせ、静的サイトを体系的にモンキーテストした実践記録です。テスト設計の考え方から、実際に発見・修正したバグ、改善提案までを公開します。"
+description: "AIとPlaywrightで探索テストを始めるなら、閲覧とフォーム入力の範囲を決め、発見した不具合に再現手順と期待結果を付けます。"
 date: 2026-03-25T14:00
 author: gui
 tags: ["技術", "GitHub Copilot", "VS Code", "Astro", "Webサイト"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - 全ルートを自動巡回してHTTPステータス・DOM構造を検証
       - AIがソースコードからテスト対象を自動抽出
-      - 壊れた画像・空リンク・JSエラーをゼロ見落としで検出
+      - 壊れた画像・空リンク・JSエラーを定義した検査範囲で検出
       - 発見→原因特定→修正→再検証までをセッション内で完結
 faq:
   title: よくある質問
@@ -53,6 +53,8 @@ faq:
     - question: テストで見つかったバグの修正もAIに任せられますか？
       answer: "エージェントモードではファイルの読み書きが可能なため、バグの検出から修正・ビルド確認まで一連の流れをセッション内で完結できます。本記事でも2件のバグを発見し、その場で修正しました。"
 ---
+
+AIとPlaywrightで探索テストを始めるなら、閲覧とフォーム入力の範囲を決め、発見した不具合に再現手順と期待結果を付けます。[Playwright: Best Practices](https://playwright.dev/docs/best-practices)を参考に再現可能な回帰テストへ移せば、探索で得た知見を次のリリースにも使えます。本文のルート件数や違反数は当時の記録で、完全な網羅性を示しません。
 
 > **2026年9月追記:** Copilot の利用量は、記事公開時の「エージェントモードの月間回数」から AI Credits を基準とする案内に変わっています。具体的な枠は[GitHub の現行資料](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing)で確認してください。
 
@@ -126,6 +128,8 @@ src/
 
 結果：全ルート200 OK（意図的404を除く）
 ```
+
+当時の記録では、このログの総ルート数、内訳、記事末尾の集計に不一致があります。そのため、総ルート数をテストの再現性の根拠にはせず、実際のビルドから対象URLを列挙して検査範囲を確定してください。掲載したコードと数値は当時の記録として保持しています。
 
 ### DOM構造チェック
 

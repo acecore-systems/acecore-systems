@@ -2,7 +2,7 @@
 title: "AIチャット回答のMarkdownリンクを安全に描画する実装設計"
 description: "AIチャットの回答に含まれるMarkdownリンクを、HTMLへ安全に変換するための実装メモです。URL前後の空白を許容しつつ、trim、許可リスト、DOM生成、fallback、テストケースを分けて考えることで、他サイトにも転用しやすいレンダラーになります。"
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Webサイト", "AI", "セキュリティ", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: 許可できないURLは削除すべきですか？
       answer: 多くの場合は削除よりテキスト表示のほうがデバッグしやすく、ユーザーにも回答の文脈が残ります。ただし不審な文字列を完全に隠したい運用なら、リンク全体を落とす判断もあります。
 ---
+
+AI回答のリンクが文字列のまま残る場合は、まず同じ入力を解析・URL検証・DOM描画へ順に通し、失敗する段階を特定します。表示文字列には[MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent)のようなテキスト用APIを使い、リンク化の可否とHTMLの解釈を混ぜないことが、既存チャットへ適用する出発点です。
 
 AIチャットに「詳しくは[サービス一覧](/services/)をご覧ください」と返させると、リンクとして表示されず、Markdown文字列がそのまま残ることがあります。
 

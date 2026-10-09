@@ -2,7 +2,7 @@
 title: "Trampas y soluciones de Astro View Transitions — Guía de mejora de UX y calidad de código"
 description: "Soluciones para el problema de scripts que dejan de funcionar con View Transitions de Astro, implementación de búsqueda de texto completo con Pagefind, mejora de seguridad de tipos TypeScript, gestión centralizada de constantes y más. Guía práctica de mejora de UX y calidad de código."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnología", "Astro", "Sitio web"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: ¿Los errores de tipo TypeScript funcionan si se ignoran?
       answer: "Funcionan, pero los errores de tipo son señales previas de bugs. Especialmente al hacer type-safe los esquemas de contenido de Astro, se habilita la autocompletación del IDE al acceder a propiedades en las plantillas, mejorando significativamente la eficiencia de desarrollo."
 ---
+
+Si el menú o la búsqueda fallan solo tras navegar, compara carga directa y navegación con ClientRouter y revisa la inicialización. Sigue el ciclo de vida de [Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/) para organizar eventos y comprobar ejecuciones duplicadas, retroceso y avance.
 
 ## Introducción
 
@@ -136,7 +138,7 @@ Se implementa un modal de búsqueda que se abre con el atajo `Ctrl+K`. Cuando no
 
 ### Integración con SearchAction
 
-Al definir el parámetro `?q=` con los datos estructurados `SearchAction` de Google, se puede navegar directamente a la búsqueda del sitio desde los resultados de búsqueda. Se agrega un proceso para detectar el parámetro URL y abrir automáticamente el modal de búsqueda.
+Google retiró el cuadro de búsqueda de enlaces de sitio en 2024-11 ([anuncio oficial](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)). Trata `SearchAction` existente como implementación histórica, sin esperar ese cuadro en resultados. Abrir el modal desde `?q=` sigue siendo útil para enlaces compartidos y búsqueda interna.
 
 ### Configuración de caché
 

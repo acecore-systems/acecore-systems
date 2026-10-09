@@ -2,7 +2,7 @@
 title: "R2とresticのバックアップ監視：保存成功から復元確認まで"
 description: "R2を保存先にしたrestic運用で、スナップショットの鮮度・整合性・復元を別々に確かめる設計と、未検証の完全復旧範囲を紹介します。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 バックアップの定期処理が終わっても、必要なデータを取り戻せるとは限りません。R2とresticを使った社内運用から、保存、整合性確認、復元、サービス復旧を別々に評価する考え方を一般化して紹介します。既存の別サービスからの移行完了を示す事例ではありません。
+
+## 復元試験はsnapshot IDと一つの利用目的を固定する
+
+最初の試験では検証するsnapshot IDを記録し、空の隔離先へ必要なファイルを取り出します。設定なら参照先と権限、DBなら隔離環境への読込みまで確かめ、所要時間を記録してください。定期試験を同じ確認項目で続けると、保存の鮮度と復旧に使える範囲を比べられます。
+
+[restic：隔離した場所への復元手順](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## 保存対象と成功の定義を決める
 

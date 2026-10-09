@@ -5,8 +5,10 @@ date: 2026-03-15T00:00
 author: gui
 tags: ["Technology", "Cloudflare", "Security"]
 image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+If CSP or cache settings appear ineffective on Cloudflare Pages, first identify whether the URL returns a static asset or a Functions response. Select the configuration location using [Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/), then check error responses as well as successful ones to find gaps after adding APIs.
 
 This article originally recorded the March 2026 move from a Worker-based contact form to an external form and static Cloudflare Pages delivery. The site has since changed. **As of September 2026, Acecore’s corporate site uses Pages Functions alongside static pages** for contact, comments, search, AI assistance, and CMS APIs. The earlier choice is historical context; the header boundary below still matters.
 

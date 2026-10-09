@@ -2,7 +2,7 @@
 title: "Pièges et solutions d'Astro View Transitions — Guide d'amélioration UX et qualité du code"
 description: "Solutions aux problèmes de scripts cassés avec les View Transitions d'Astro, introduction de la recherche plein texte Pagefind, amélioration de la sécurité des types TypeScript, gestion centralisée des constantes — un guide pratique pour améliorer l'UX et la qualité du code."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Site web"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: Les erreurs de type TypeScript peuvent-elles être ignorées sans conséquence ?
       answer: "Le code fonctionne, mais les erreurs de type sont des signes avant-coureurs de bugs. En particulier, rendre le schéma de contenu Astro type-safe active l'autocomplétion de l'IDE pour l'accès aux propriétés dans les templates, améliorant considérablement l'efficacité du développement."
 ---
+
+Si menus ou recherche échouent seulement après navigation, comparez chargement direct et navigation ClientRouter, puis inspectez l’initialisation. Suivez le cycle de vie de [Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/) pour organiser les événements et vérifier doublons, retour et avance.
 
 ## Introduction
 
@@ -136,7 +138,7 @@ Implémentez une modale de recherche s'ouvrant avec le raccourci `Ctrl+K`. En ca
 
 ### Intégration SearchAction
 
-En définissant le paramètre `?q=` dans les données structurées `SearchAction` de Google, il est possible de naviguer directement de la recherche Google vers la recherche interne du site. Ajoutez un traitement d'ouverture automatique de la modale de recherche lors de la détection du paramètre URL.
+Google a supprimé le champ de recherche des liens de site en 2024-11 ([annonce officielle](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)). Considérez `SearchAction` comme une ancienne implémentation, sans attendre ce champ dans les résultats. Ouvrir la modale via `?q=` reste utile pour les liens partagés et la recherche interne.
 
 ### Configuration du cache
 

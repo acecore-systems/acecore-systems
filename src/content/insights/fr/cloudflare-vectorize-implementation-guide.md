@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize et RAG : comprendre la différence entre recherche et réponses IA"
 description: "Découvrez comment Cloudflare Vectorize rend l'information déjà publique plus facile à trouver depuis des questions naturelles, avec ses bénéfices, son rôle avec la recherche ordinaire, le RAG et une adoption progressive."
 date: 2026-07-31T12:00
-lastUpdated: 2026-08-01T17:00
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   [
@@ -66,6 +66,8 @@ linkCards:
     description: "Vérifiez les décisions, telles que les dimensions et la métrique de distance, à prendre avant de créer l'index."
     icon: i-lucide-settings-2
 ---
+
+Pour tester la recherche sémantique, associez un terme officiel et une reformulation utilisateur visant la même page, puis comparez la présence de l’URL attendue. Définissez les pages cibles avant le contrat d’index dans [Cloudflare Vectorize: Create Indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/), pour évaluer la recherche séparément de la fluidité des réponses.
 
 ## D'abord, la conclusion : Vectorize réduit la distance entre une question et une page
 

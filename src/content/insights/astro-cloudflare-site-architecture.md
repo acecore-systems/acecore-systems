@@ -2,7 +2,7 @@
 title: "Astro + Cloudflareで公式サイトを機能拡張する全体設計"
 description: "AstroとCloudflare Pagesを土台に、問い合わせAI、Sveltia CMS、多言語ブログ、サービスCTA、Markdown安全描画、Cloudflareだけのコメント機能をどう組み合わせて公式サイトを育てたかを、他サイトにも転用しやすい全体設計として整理します。"
 date: 2026-06-07T19:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Astro", "Cloudflare", "Webサイト", "AI", "CMS"]
 image: "/images/insights/covers/astro-cloudflare-site-architecture-cover-v2.webp"
@@ -106,6 +106,8 @@ faq:
     - question: 小規模サイトでもここまで必要ですか？
       answer: "最初から全部は不要です。ただ、CMS、問い合わせ導線、多言語、コメントのどれかを足す予定があるなら、URL、データ保存先、preview環境、検索indexの扱いを早めに決めると後から楽になります。"
 ---
+
+AstroとCloudflareでCMSや検索を追加するときは、更新担当者、公開データ、利用者ごとの処理を書き分けてから構成を選びます。記事表示は静的生成、投稿や外部API呼び出しはFunctionsという分担を起点に、必要な接続だけを[Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/)で確認すると導入範囲を絞れます。
 
 **2026年9月26日追記:** 以下は2026年6月の構成を記録した記事です。その後のコードでは、CMS保存は権限・内容・HEADを検証したうえでGitHub Appによる`main`直接commitに変わり、翻訳はOpenAI Batchと翻訳PR、問い合わせAIはService Binding先の共通Workerを利用します。図・表・コード中のCopilot翻訳、CMSのPR保存、AIの直接API呼び出しは当時の実装としてお読みください。現在の各方式は[CMS導入記録](/blog/cms-selection-and-turnstile/)、[多言語運用](/blog/copilot-translation-pipeline/)、[問い合わせAI](/blog/astro-ai-contact-chat/)に分けて記載しています。
 

@@ -4,7 +4,7 @@ description: "A step-by-step guide to properly implementing JSON-LD structured d
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technology", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: Does sitemap priority affect SEO?
       answer: "Google ignores `priority` and `changefreq`. There is no SEO benefit in inventing values for them."
 ---
+
+Start Astro SEO implementation by checking a representative article’s generated title, description, canonical and JSON-LD against its visible content. Validate required fields with [Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) and check Search Console after publication. Correct syntax does not guarantee rich results or rankings.
 
 > September 2026 update: Google ended the sitelinks search box in November 2024. FAQ rich results are generally limited to authoritative government and health sites, and Google ignores sitemap `changefreq` and `priority`. Read this March 2026 implementation record alongside the [search box change](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ change](https://developers.google.com/search/blog/2023/08/howto-faq-changes), and [sitemap guidance](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
@@ -192,7 +194,7 @@ Finally, here's a summary of the key points to verify for Astro site SEO improve
 6. **Does the RSS feed include author and categories?**
 7. **Does robots.txt exclude search indexes (like `/pagefind/`) from crawling?**
 
-Once you've configured all these, your SEO foundation is in place. From there, search rankings are determined by content quality and update frequency.
+These settings provide a foundation for conveying public content to search engines. Rankings are not determined by content quality and update frequency alone, and configuration completion does not prove traffic growth. Use post-publication queries, impressions and click-through rates to improve answers to reader needs.
 
 ---
 

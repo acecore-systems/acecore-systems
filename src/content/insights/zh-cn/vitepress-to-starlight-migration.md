@@ -1,6 +1,6 @@
 ---
-title: "从 VitePress 迁移到 Starlight ― 统一文档站点的框架"
-description: "将使用 VitePress + UnoCSS 构建的事业计划文档迁移到 Astro + Starlight，在两个项目间统一框架的记录。同时介绍了 Mermaid 图表的 CDN 迁移。"
+title: "VitePress迁移到Starlight：Markdown、URL与Mermaid检查步骤"
+description: "说明统一Astro文档基础的判断与迁移步骤。通过2026年3月实例核对Markdown位置、frontmatter、旧URL、Mermaid渲染和CDN依赖。"
 date: 2026-03-15T00:00
 author: gui
 tags: ["技术", "Astro", "Starlight"]
@@ -42,13 +42,19 @@ faq:
     - question: 从 VitePress 迁移到 Starlight 有什么好处？
       answer: 如果主站使用 Astro，统一框架可以降低学习成本、简化依赖管理并提高配置的一致性。构建流水线也可以统一。
     - question: Mermaid 图表是如何显示的？
-      answer: 我们放弃了插件依赖，改为通过 CDN（jsdelivr）加载 Mermaid。构建依赖降为零，图表渲染也更加稳定。
+      answer: "此次从jsdelivr加载Mermaid，并向目标元素传递图定义。可移除Mermaid的npm依赖，但CDN可用性与版本兼容性仍需单独确认。"
     - question: 迁移工作需要多少工作量？
       answer: 主要工作是目录结构的转换（docs/ → src/content/docs/）和 frontmatter 的调整。由于内容本身是 Markdown，可以直接使用，因此迁移可以在较短时间内完成。
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 本文总结了将使用 VitePress 创建的文档站点迁移到 Astro + Starlight 的步骤。如果主站使用 Astro，将文档也统一到 Starlight 可以简化运维。同时也介绍了 Mermaid 图表的 CDN 迁移。
+
+## 先用一页验证迁移兼容性
+
+先迁移包含标题、内部链接、代码和Mermaid的一页，比较生成URL与图表显示。仅导入CDN并不一定让Markdown代码块成为Mermaid目标；还需要将图定义传给class="mermaid"元素的渲染处理。确认所用版本生成的HTML后，再迁移全站。
+
+[Starlight：Markdown与HTML编写规范](https://starlight.astro.build/guides/authoring-content/)
 
 ## 为什么要统一框架
 
@@ -124,7 +130,7 @@ VitePress 环境中使用 UnoCSS 应用自定义样式，但 Starlight 内置了
 
 ## Mermaid 图表的 CDN 迁移
 
-事业计划文档中使用 Mermaid 编写了流程图和组织架构图。VitePress 通过插件（`vitepress-plugin-mermaid`）集成 Mermaid，但 Starlight 没有类似的插件。
+文档原先使用VitePress的`vitepress-plugin-mermaid`。为统一依赖管理，此次在Starlight选择CDN加载。扩展可查阅[官方插件列表](https://starlight.astro.build/resources/plugins/)，CDN并非唯一选项。
 
 因此改为在浏览器端通过 CDN 加载 Mermaid。
 
@@ -148,7 +154,7 @@ starlight({
 });
 ```
 
-Markdown 中可以直接使用常规的 Mermaid 语法：
+下面代码块是图定义示例，还需要向[Mermaid目标元素](https://mermaid.js.org/intro/)传递定义的渲染处理：
 
 ````markdown
 ```mermaid
@@ -162,7 +168,7 @@ graph TD
 ### CDN 方式的优势
 
 - **零构建依赖**：不需要将 Mermaid 作为 npm 包安装
-- **始终使用最新版本**：从 CDN 获取最新版
+- **固定版本**：示例指定11.16.0；使用CDN不会自动更新到最新版
 - **无需 SSR**：在浏览器端渲染，不影响构建时间
 
 ## 迁移结果

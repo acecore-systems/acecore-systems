@@ -2,7 +2,7 @@
 title: "Importar dados do perfil como rascunho: comparar, escolher e publicar com cuidado"
 description: "Uma implementação geral para importar perfis de texto, CSV, HTML estático e JSON comum. Saiba como comparar valores atuais, escolher campos para substituir ou desfazer alterações e manter o salvamento separado da publicação."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Ao transferir um perfil existente para outro editor, compare os valores atuais com os dados candidatos da importação antes de substituir qualquer coisa. Este exemplo anonimizado explica os limites entre importar dados e publicar um perfil.
+
+## Testar a preservação de edições com uma biografia
+
+Edite manualmente a biografia e importe um texto diferente como candidato. Confirme que campos não selecionados permanecem, substituições podem ser revisadas e cancelar restaura o original. Compare depois rascunho e página pública: importar sozinho não deve alterar a publicação.
+
+[OWASP：Validar formato, valores e tamanho da entrada](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Defina primeiro os formatos de entrada compatíveis
 

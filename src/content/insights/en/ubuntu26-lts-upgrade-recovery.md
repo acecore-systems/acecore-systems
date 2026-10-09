@@ -27,11 +27,18 @@ processFigure:
       description: "Check external connectivity, automatic startup, restoration of the original configuration, and a new backup."
       icon: i-lucide-shield-check
       accent: emerald
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 When updating an Ubuntu server that is already in service, the work involves more than installing newer packages: you also need a procedure for stopping services and returning the server to operation after reboot. Problems such as SSH becoming unreachable, authentication settings no longer matching the new behavior, or being unable to retrieve a backup can occur even after the update command completes.
 
 This article organizes lessons from an LTS upgrade from Ubuntu 24.04 to 26.04 and routine updates after the upgrade into procedures that can be applied to other servers. It assumes you have administrative privileges and can schedule a maintenance window that includes service downtime. First, it presents the common preparations and procedure; the second half covers troubleshooting connectivity, authentication, and startup problems.
+
+## Choose a 24.04-to-26.04 upgrade or ordinary updates
+
+Decide whether you need a new OS generation or only fixes for the current one. A release upgrade adds compatibility checks for external authentication, VPN, and databases; ordinary updates focus on planned package changes and restart impact. Set a stop condition if console recovery or tested restoration is unavailable.
+
+[Ubuntu Server：LTS upgrade conditions and preparation](https://ubuntu.com/server/docs/how-to/software/upgrade-your-release/)
 
 ## 1. Determine the update type and scope
 

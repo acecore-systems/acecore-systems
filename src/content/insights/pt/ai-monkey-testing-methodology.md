@@ -1,10 +1,10 @@
 ---
 title: "Metodologia prática de Monkey Testing em sites com GitHub Copilot × Playwright"
-description: "Registro prático de como testamos sistematicamente um site estático usando o modo agente do VS Code (GitHub Copilot) combinado com ferramentas de navegador Playwright. Compartilhamos desde o design dos testes até os bugs descobertos, correções aplicadas e propostas de melhorias."
+description: "Para iniciar testes exploratórios com IA e Playwright, delimite a navegação e os formulários permitidos e registre reprodução e resultado esperado."
 date: 2026-03-25T14:00
 author: gui
 tags: ["Tecnologia", "GitHub Copilot", "VS Code", "Astro", "Site"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - Varredura automática de todas as rotas verificando status HTTP e estrutura DOM
       - IA extrai automaticamente os alvos de teste a partir do código-fonte
-      - Detecção de imagens quebradas, links vazios e erros JS sem falhas
+      - Detectar imagens quebradas, links vazios e erros JS no escopo definido
       - Descoberta → identificação da causa → correção → reverificação completados na mesma sessão
 faq:
   title: Perguntas frequentes
@@ -53,6 +53,8 @@ faq:
     - question: A IA também pode corrigir bugs encontrados nos testes?
       answer: "No modo agente, é possível ler e escrever arquivos, então o fluxo completo de detecção, correção e verificação de build pode ser concluído dentro de uma sessão. Neste artigo, descobrimos 2 bugs e os corrigimos na hora."
 ---
+
+Para iniciar testes exploratórios com IA e Playwright, delimite a navegação e os formulários permitidos e registre reprodução e resultado esperado. Use [Playwright: Best Practices](https://playwright.dev/docs/best-practices) para criar testes de regressão repetíveis. As contagens de rotas e violações são observações históricas, sem comprovar cobertura completa.
 
 > **Atualização de setembro de 2026:** O uso do Copilot agora é descrito em AI Credits, em vez da contagem mensal de solicitações do modo agente citada originalmente. Consulte a [documentação atual do GitHub](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing).
 
@@ -124,6 +126,8 @@ Alvos de teste: 38 rotas
 
 Resultado: Todas as rotas 200 OK (exceto 404 intencional)
 ```
+
+O registro histórico apresenta divergências entre o total de rotas deste log, seu detalhamento e o resumo no fim do artigo. Não use o total como prova de reprodutibilidade: enumere as URLs-alvo do build real para definir o escopo. O código e os números publicados são preservados como registros históricos.
 
 ### Verificação da estrutura DOM
 

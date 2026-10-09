@@ -27,11 +27,18 @@ processFigure:
       description: "Vérifier les connexions externes, le démarrage automatique, le rétablissement de la configuration d’origine et la nouvelle sauvegarde."
       icon: i-lucide-shield-check
       accent: emerald
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Mettre à jour un serveur Ubuntu en service ne consiste pas seulement à actualiser les paquets : il faut également arrêter les services, puis suivre une procédure pour remettre le serveur en exploitation après son redémarrage. Des problèmes peuvent survenir même après la fin de la commande de mise à jour : SSH ne se reconnecte pas, les paramètres d’authentification sont incompatibles avec la nouvelle version ou la sauvegarde est impossible à récupérer.
 
 Cet article présente, sous la forme d’une procédure réutilisable sur d’autres serveurs, les enseignements tirés de la migration LTS d’Ubuntu 24.04 vers 26.04 et des mises à jour ordinaires effectuées après cette migration. Il faut disposer des privilèges d’administration et prévoir une plage de maintenance permettant l’interruption du service. Nous présentons d’abord les préparatifs et les étapes communes, puis détaillons, dans la seconde partie, le diagnostic des problèmes de connexion, d’authentification et de démarrage.
+
+## Choisir la migration de 24.04 à 26.04 ou les mises à jour courantes
+
+Déterminez si une nouvelle génération est nécessaire ou si des correctifs suffisent. La migration ajoute des vérifications d’authentification externe, VPN et bases de données ; les mises à jour courantes examinent paquets prévus et redémarrages. Ne commencez pas sans console de secours et restauration testée.
+
+[Ubuntu Server：Conditions et préparation d’une migration LTS](https://ubuntu.com/server/docs/how-to/software/upgrade-your-release/)
 
 ## 1. Déterminer le type de mise à jour et son périmètre
 

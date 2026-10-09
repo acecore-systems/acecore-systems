@@ -1,8 +1,8 @@
 ---
-title: "Comment nous avons vérifié la migration Dynmap en 512px et retiré les anciennes images R2"
-description: "Retour d'exploitation sur 89 cartes réparties entre huit serveurs, migrées en images de 512px, puis vérifiées en public et dans R2."
+title: "Migrer Dynmap vers des tuiles de 512px : contrôles publics et nettoyage R2"
+description: "Comment vérifier zones de rendu, images normales et de zoom et stockage R2. Un exemple de huit serveurs et 89 cartes explique les contrôles avant suppression et les conditions de comparaison des coûts."
 date: "2026-09-27T22:40:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Technologie", "Cloudflare"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Nous avons changé le format des images d'un Dynmap distribué depuis Cloudflare R2, puis nettoyé les anciennes données. Le périmètre couvrait huit serveurs et 89 cartes. L'essentiel était l'ordre des opérations : vérifier publiquement les nouvelles images avant de supprimer les anciennes.
+
+## Que comparer avant de migrer les tuiles Dynmap
+
+Comparez images normales et de zoom sur une même zone avant de choisir des tuiles de 512px. Distinguez requêtes de consultation et écritures de rendu. Inventoriez les anciens préfixes, puis décidez de leur suppression après vérification des images publiques et de leur régénération depuis le monde.
+
+[R2：Mesurer stockage et opérations](https://developers.cloudflare.com/r2/platform/metrics-analytics/)
 
 ## Migrer par étapes avec une zone de rendu limitée
 

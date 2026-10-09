@@ -2,7 +2,7 @@
 title: "Technical design for carrying service CTA context into a contact form"
 description: "An implementation design for carrying the context a visitor was reading on a service page into the contact form. It covers mini CTAs in an Astro site, the URL parameter contract, initial form-category selection, subject prefill, multilingual URLs, GA measurement, and generated-HTML checks in a reusable form."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ When a visitor reading a service page decides, "I want to ask about this," simpl
 The visitor must reselect the service type in the form and write the subject again. The receiving team also cannot easily tell whether the message concerns website production, server operations, or Aceserver until they read the body.
 
 On the Acecore website, we improved this journey in the [PR that carries the target of a service CTA into the contact form](https://github.com/acecore-systems/acecore-net/pull/100). This article presents it not only as an Astro implementation record, but also as a journey design that can be reused on other websites.
+
+## Validate form initialization from one CTA
+
+Test a valid service key, an unknown key, and back navigation after entering a subject. Check mapping to allowed options and preservation of the typed subject, using the same value contract across locale URLs. Keep personal data and free text out of URLs; pass context with short identifiers.
+
+[MDN URLSearchParams：Reading URL parameters](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## The goal is not merely to reduce form entry
 

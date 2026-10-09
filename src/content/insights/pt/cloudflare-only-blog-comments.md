@@ -82,8 +82,10 @@ faq:
       answer: "Para comentários por post_slug, ordenação por data, soft delete, rate limit e duplicados, D1 funciona bem."
     - question: Turnstile só no cliente basta?
       answer: "Não. A Pages Function precisa validar o token no Siteverify antes de gravar no D1."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Decida criar comentários próprios pela capacidade de aprovar e excluir, além do armazenamento. Um serviço externo permite delegar moderação; D1 permite UI e políticas próprias. No primeiro teste, siga [Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/) e confirme que validação falha não grava no banco.
 
 Comentários adicionam estado a um site estático. Por isso, muita gente usa widgets externos.
 

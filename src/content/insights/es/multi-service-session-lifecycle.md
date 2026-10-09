@@ -2,7 +2,7 @@
 title: "Unificar la caducidad del acceso entre servicios: renovación y reautenticación"
 description: "Diseño general para alinear la caducidad del acceso, distinguiendo inicio explícito, servidor, cookies y proveedor de identidad."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Compartir una cuenta no hace idénticas las sesiones de cada aplicación y del proveedor de identidad. Este caso alinea las reglas sin publicar destinos ni duraciones.
+
+## Comparar la misma solicitud antes y después del vencimiento
+
+Use una duración corta en pruebas. Ejecute por separado login explícito, navegación y actualización en segundo plano, y compare el vencimiento del servidor. Tras vencer, pruebe la misma operación en interfaz y API, verificando reautenticación y rechazo del acceso. Separe esta prueba del comportamiento prolongado en producción.
+
+[OWASP：Diseño y pruebas del vencimiento de sesión](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## Identificar cada plazo
 
