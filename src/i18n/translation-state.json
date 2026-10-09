@@ -3,7 +3,7 @@
   "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
   "pendingInsights": {
     "openai-decisions-api-adoption": {
-      "sourceHash": "d88781edfb7de12acf0a9b91ced985a8fb944dd250aebef83dad8e549da37d2e",
+      "sourceHash": "8f33195b78518523d12a493e10a5f85580b834faab59b66c31ce355111df3de2",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     }
   }
