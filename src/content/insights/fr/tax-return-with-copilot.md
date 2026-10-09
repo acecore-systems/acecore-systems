@@ -1,6 +1,6 @@
 ---
-title: "J'ai confié ma déclaration fiscale entièrement à GitHub Copilot — De 837 écritures comptables à la soumission de la déclaration"
-description: "Classification et vérification de 837 écritures comptables accumulées par synchronisation de données avec une comptabilité cloud, rapprochement des cotisations sociales, saisie des déductions, jusqu'à la soumission de la déclaration. Le récit complet d'une déclaration fiscale où GitHub Copilot Agent Mode × Simple Browser a assuré la quasi-totalité du travail."
+title: "Préparer une déclaration japonaise avec Copilot : 837 écritures et contrôle humain"
+description: "Un cas personnel de mars 2026 montre le rapprochement de règles, 837 écritures, justificatifs et formulaires. Distingue tâches confiées à l’IA et décisions sur répartition, déductions et dépôt."
 date: 2026-03-17T00:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code"]
@@ -46,18 +46,24 @@ faq:
   title: Questions fréquentes
   items:
     - question: Peut-on vraiment faire sa déclaration fiscale avec GitHub Copilot ?
-      answer: Oui, en combinant le Agent Mode et Simple Browser, on peut réaliser la classification des écritures, la saisie des déductions et la création de la déclaration entièrement dans VS Code. Toutefois, la soumission finale nécessite une authentification par carte My Number et doit être effectuée par un humain.
+      answer: "Dans ce cas, Agent Mode et Simple Browser ont assisté rapprochement, saisie et vérification. Les opérations dépendent de l’environnement et des permissions. Le déclarant décide du traitement fiscal, vérifie son identité et approuve le dépôt."
     - question: Quels sont les prérequis pour utiliser Copilot ?
       answer: Le prérequis principal est d'avoir accumulé des données comptables au quotidien via un logiciel de comptabilité cloud comme Money Forward. Copilot se charge du tri et de la vérification des données accumulées, il ne peut pas fonctionner sans données.
     - question: Comment les incohérences dans les écritures ont-elles été détectées ?
       answer: Copilot a comparé le document de référence (règles des comptes comptables) avec le journal comptable pour détecter mécaniquement les écritures non conformes. Sur 837 écritures, 8 incohérences ont été identifiées et corrigées.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Ajout du 26 septembre 2026 :** Cet article relate une déclaration personnelle effectuée en mars 2026. Le classement et la saisie par IA ne garantissent pas la justesse fiscale. Le déclarant doit vérifier les justificatifs, la déclaration et le résultat de l’envoi, puis consulter les règles de l’année concernée auprès de l’[administration fiscale japonaise](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
 > J'ai confié la totalité du travail pratique de ma déclaration fiscale au Agent Mode de GitHub Copilot. Résultat : de la classification de 837 écritures comptables à la création et vérification de la déclaration, tout s'est fait dans VS Code. La soumission finale a été effectuée depuis l'application smartphone avec authentification par carte My Number, et la déclaration fiscale a été complétée avec succès.
 
 Dans cet article, je documente en toute transparence « jusqu'où Copilot a pu prendre en charge le travail » et « ce que l'humain a fait ».
+
+## Commencer par les écarts sans modifier le registre
+
+Comparez en lecture seule données minimisées et règles comptables. Listez documents sources, écarts et état de validation ; ne confirmez pas des catégories non vérifiées. Décidez répartition et déductions selon l’année et la situation réelle, en séparant propositions d’IA et traitement approuvé.
+
+[Agence nationale des impôts du Japon: Vérifier dépenses professionnelles et mixtes](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2210.htm)
 
 ## Prérequis : la synchronisation des données MF Cloud comme fondation
 
@@ -95,9 +101,9 @@ Pour confier des interactions d'écran à une IA, il existe des outils basés su
 
 Raisons du choix de GitHub Copilot Agent Mode :
 
-- **Division du travail possible : l'humain se connecte, l'IA travaille** — L'humain se connecte aux banques et logiciels comptables et ouvre les pages. Ensuite, les opérations (recherche, saisie, vérification) sont effectuées par Copilot via Simple Browser. Computer Use est conçu pour confier l'ensemble du bureau à l'IA, rendant impossible cette répartition « connexion humaine, le reste par l'IA » sur le même écran
+- **Connexion humaine et rapprochement par l’IA** — Le déclarant s’est connecté puis a autorisé recherches, saisies et vérifications par Copilot dans un périmètre défini. D’autres outils d’écran permettent aussi cette répartition ; le choix reflétait l’environnement disponible et la facilité de suivi.
 - **Édition de fichiers et navigation Web dans le même environnement** — Lire policy.md pour évaluer la conformité d'une écriture, écrire les résultats dans inconsistency-check.md, puis corriger directement le journal via Simple Browser. Ce flux ne s'interrompt jamais dans VS Code
-- **Les fichiers Markdown comme espace de travail partagé homme-IA** — Computer Use, étant basé sur des captures d'écran, n'est pas adapté pour accumuler et consulter des connaissances structurées. Avec Copilot, on peut communiquer dans les deux sens via des fichiers .md sur « quelle base, quelle décision »
+- **Partager les décisions en Markdown** — Règles, preuves et points en attente étaient enregistrés dans des .md partagés. Cela ne signifie pas que d’autres outils ne peuvent pas garder de traces.
 - **L'historique de conversation devient le journal de travail** — Des échanges comme « On met cette déduction ? » « Non, pas de justificatif, on laisse tomber » restent dans l'historique. Pouvoir retracer les décisions est particulièrement important pour une déclaration fiscale
 
 En résumé, d'autres outils pourraient gérer les interactions écran, mais la force de Copilot Agent Mode est de **permettre à l'humain et à l'IA de partager le même écran et les mêmes fichiers pour se répartir le travail**.
@@ -228,13 +234,15 @@ La classification automatique des applications de finances n'est pas infaillible
 
 ### Déductions saisies
 
-| Type de déduction                                   | Description                                                  | Travail de Copilot                                                   |
-| --------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------- |
-| Déduction assurance vie                             | Données synchronisées MynaPortal + saisie manuelle           | Manipulation des listes déroulantes et saisie élément par élément    |
-| Déduction assurance tremblement de terre            | Assurance mutuelle et dommages sismiques                     | Saisie des montants dans le formulaire                               |
-| Déduction pour conjoint                             | Calcul du revenu total du conjoint                           | Calcul du revenu après déduction salariale, vérification du montant  |
-| Déduction cotisations sociales                      | Retraite + assurance maladie (montants confirmés en Phase 4) | Sélection du type et saisie du montant sur l'écran des cotisations   |
-| Déduction pour personnes à charge (moins de 16 ans) | Sans impact sur la déduction mais lié à l'impôt local        | Vérification de l'enregistrement dans Informations de base → Famille |
+| Type de déduction                                                                             | Description                                                  | Travail de Copilot                                                   |
+| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------- |
+| Déduction assurance vie                                                                       | Données synchronisées MynaPortal + saisie manuelle           | Manipulation des listes déroulantes et saisie élément par élément    |
+| Déduction assurance tremblement de terre                                                      | Assurance mutuelle et dommages sismiques                     | Saisie des montants dans le formulaire                               |
+| Déduction pour conjoint                                                                       | Calcul du revenu total du conjoint                           | Calcul du revenu après déduction salariale, vérification du montant  |
+| Déduction cotisations sociales                                                                | Retraite + assurance maladie (montants confirmés en Phase 4) | Sélection du type et saisie du montant sur l'écran des cotisations   |
+| Informations sur personnes à charge de moins de 16 ans (hors déduction d’impôt sur le revenu) | Sans impact sur la déduction mais lié à l'impôt local        | Vérification de l'enregistrement dans Informations de base → Famille |
+
+[Vérifier les âges éligibles avec l’agence fiscale japonaise](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm)
 
 ### Éléments examinés puis reportés
 
@@ -252,7 +260,7 @@ Les frais mensuels de FAI (connexion Internet) étaient entièrement comptabilis
 En demandant à Copilot « Comment fait-on la répartition ? », il a proposé des options et nous avons décidé ensemble :
 
 1. Rechercher toutes les écritures liées au FAI dans le journal → Calculer le total annuel
-2. Déterminer le taux de répartition professionnelle (50% est une base courante pour un bureau à domicile)
+2. Le déclarant a décidé la part professionnelle (50% dans ce cas, pas une norme de bureau à domicile ; à déterminer selon l’usage réel et les justificatifs)
 3. Ne pas modifier les écritures individuelles, mais ajouter une **écriture d'ajustement globale au 31/12** « Prélèvement personnel / Frais de communication »
 4. Copilot saisit l'écriture dans le journal
 

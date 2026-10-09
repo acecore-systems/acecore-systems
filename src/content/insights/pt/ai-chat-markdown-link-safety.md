@@ -2,7 +2,7 @@
 title: "Renderizar links Markdown com segurança em respostas de chat com IA"
 description: "Nota de implementação sobre converter links Markdown em respostas de IA para HTML seguro. Separar parsing tolerante a espaços, trim de href, allowlist, renderização DOM, fallback e testes torna o padrão reutilizável em outros sites."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnologia", "Site", "AI", "Segurança", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: Links não permitidos devem ser removidos?
       answer: Normalmente deixá-los como texto ajuda a depurar e preserva contexto. Se a política exigir ocultar strings suspeitas, remover o link inteiro também é válido.
 ---
+
+Se um link da IA continuar como texto, passe a mesma entrada pela análise, validação de URL e renderização DOM para localizar a falha. Use APIs de texto como [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) nos rótulos e separe a permissão do link da interpretação de HTML.
 
 Quando um chat com IA responde `Veja [Serviços]( /services/ )`, o link pode não ser renderizado e o Markdown bruto pode permanecer na tela.
 

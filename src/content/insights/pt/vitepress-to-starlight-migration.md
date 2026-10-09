@@ -1,6 +1,6 @@
 ---
-title: "De VitePress para Starlight — Unificação do framework do site de documentação"
-description: "Registro da migração de um documento de plano de negócios construído com VitePress + UnoCSS para Astro + Starlight, unificando o framework em dois projetos. Também apresentamos a migração da Mermaid para CDN."
+title: "Migrar VitePress para Starlight: revisar Markdown, URLs e Mermaid"
+description: "Decida se unifica a documentação com Astro e revise Markdown, frontmatter, URLs antigas, renderização do Mermaid e dependência de CDN usando um exemplo de março de 2026."
 date: 2026-03-15T00:00
 author: gui
 tags: ["Tecnologia", "Astro", "Starlight"]
@@ -42,13 +42,19 @@ faq:
     - question: Quais são os benefícios de migrar do VitePress para o Starlight?
       answer: Quando o site principal usa Astro, unificar o framework reduz o custo de aprendizado, melhora a gestão de dependências e a consistência das configurações. O pipeline de build também pode ser unificado.
     - question: Como os diagramas Mermaid são exibidos?
-      answer: Abandonamos a dependência de plugins e mudamos para carregar a Mermaid via CDN (jsdelivr). As dependências de build ficam zeradas e a renderização dos diagramas fica estável.
+      answer: "Carregamos Mermaid pelo jsdelivr e passamos definições aos elementos alvo. Isso remove sua dependência npm, mas disponibilidade do CDN e compatibilidade exigem verificação."
     - question: Quanto trabalho é necessário para a migração?
       answer: O trabalho principal é a conversão da estrutura de diretórios (docs/ → src/content/docs/) e ajuste do frontmatter. Como o conteúdo é Markdown, pode ser usado como está, então a migração é concluída em relativamente pouco tempo.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Resumimos o procedimento para migrar um site de documentação criado com VitePress para Astro + Starlight. Quando o site principal roda em Astro, unificar a documentação no Starlight simplifica a operação. Também apresentamos a migração dos diagramas Mermaid para CDN.
+
+## Verificar compatibilidade em uma página antes de migrar
+
+Mova primeiro uma página com títulos, links internos, código e Mermaid; compare URLs e diagramas. Importar pelo CDN não transforma necessariamente um bloco Markdown em alvo Mermaid. O renderizador deve passar definições a elementos class="mermaid"; confira o HTML gerado antes de migrar tudo.
+
+[Starlight：Especificações de Markdown e HTML](https://starlight.astro.build/guides/authoring-content/)
 
 ## Por que unificar o framework
 
@@ -124,7 +130,7 @@ No ambiente VitePress, estilos personalizados eram aplicados com UnoCSS, mas o S
 
 ## Migração da Mermaid para CDN
 
-Os documentos do plano de negócios descrevem fluxogramas e organogramas em Mermaid. No VitePress, a Mermaid era integrada via plugin (`vitepress-plugin-mermaid`), mas não existe plugin equivalente para o Starlight.
+Os documentos usavam `vitepress-plugin-mermaid`. Escolhemos CDN no Starlight para unificar dependências. Consulte a [lista oficial de plugins](https://starlight.astro.build/resources/plugins/): CDN não é a única opção.
 
 Assim, mudamos para carregar a Mermaid via CDN no lado do navegador.
 
@@ -148,7 +154,7 @@ starlight({
 });
 ```
 
-No Markdown, a notação padrão da Mermaid funciona normalmente:
+O bloco abaixo define um diagrama; também é necessário passá-lo aos [elementos alvo do Mermaid](https://mermaid.js.org/intro/):
 
 ````markdown
 ```mermaid
@@ -162,7 +168,7 @@ graph TD
 ### Benefícios da abordagem CDN
 
 - **Zero dependências de build**: Mermaid como pacote npm não é necessário
-- **Sempre na versão mais recente**: Obtém a versão mais recente via CDN
+- **Fixar versão**: O exemplo escolhe 11.16.0; usar CDN não atualiza automaticamente para a versão mais recente
 - **SSR desnecessário**: Renderização no navegador, sem impacto no tempo de build
 
 ## Resultado da migração

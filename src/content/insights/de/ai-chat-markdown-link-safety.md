@@ -2,7 +2,7 @@
 title: "Markdown-Links in KI-Chat-Antworten sicher rendern"
 description: "Eine technische Notiz dazu, Markdown-Links aus KI-Chat-Antworten sicher in HTML zu überführen. Parsing mit Leerzeichen-Toleranz, href-trim, Allowlist, DOM-Rendering, Fallback und Tests werden getrennt betrachtet."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Website", "AI", "Sicherheit", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: Sollte man abgelehnte URLs löschen?
       answer: Meist ist Text besser für Debugging und Kontext. Eine strengere Policy kann den gesamten Link entfernen.
 ---
+
+Bleibt ein KI-Link als Text stehen, prüfen Sie dieselbe Eingabe nacheinander beim Parsen, bei der URL-Prüfung und beim DOM-Rendering. Verwenden Sie für Beschriftungen Text-APIs wie [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent), damit Linkfreigabe und HTML-Interpretation getrennt bleiben.
 
 Wenn ein KI-Chat `Siehe [Services]( /services/ )` ausgibt, kann der Link nicht gerendert werden und das rohe Markdown bleibt sichtbar.
 

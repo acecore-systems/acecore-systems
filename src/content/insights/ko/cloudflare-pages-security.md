@@ -5,8 +5,10 @@ date: 2026-03-15T00:00
 author: gui
 tags: ["기술", "Cloudflare", "보안"]
 image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Cloudflare Pages에서 CSP나 캐시 설정이 적용되지 않으면 URL이 정적 자산인지 Functions 응답인지 먼저 확인하세요. [Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/)에 맞춰 설정 위치를 고르고 성공·오류 응답의 헤더를 모두 확인하면 API 추가 후 누락을 찾기 쉽습니다.
 
 이 글은 2026년 3월 연락 양식을 Worker에서 외부 서비스로 옮기고 Cloudflare Pages의 정적 배포로 돌아간 과정을 기록했습니다. 이후 구조가 바뀌었습니다. **2026년 9월 현재 Acecore 회사 사이트는 정적 페이지와 함께 Pages Functions를 사용**해 문의, 댓글, 검색, AI 안내, CMS API를 처리합니다. 당시 결정은 이력으로 읽어야 합니다.
 

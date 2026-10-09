@@ -2,7 +2,7 @@
 title: "Workers에서 결제·환불 Webhook 안전하게 처리하기: 상태 대조와 관리"
 description: "서명 검증, 중복·지연 이벤트, 환불 상태, 외부 API 응답을 구분하는 구현 사례입니다. 관리 작업 직전 권한을 다시 확인하는 방법도 다룹니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "구현 확인과 실제 거래 작업을 구분합니다"
   text: "익명화한 이 사례에서는 구현, 테스트, 프로덕션 배포, 외부 API의 읽기 전용 대조를 확인했습니다. 테스트 목적으로 고객의 환불·취소·포인트 조정은 실행하지 않았으며 모든 결제 경로의 종단 간 검증을 주장하지 않습니다."
 ---
+
+Workers 결제 Webhook은 테스트 환경에서 중복 전송과 순서가 바뀐 이벤트를 시험하고 업무 상태가 이중 갱신되지 않는지 확인하세요. 외부 API 리디렉션은 [Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/)와 실행 환경을 비교하고 수신, 외부 상태 확인, 후속 처리를 따로 기록하세요.
 
 결제 서비스 이벤트를 받았다고 주문이나 환불이 완료되는 것은 아닙니다. 이 익명 사례는 Workers에서 운영 처리가 서비스 측 상태와 내부 기록을 대조하는 방법을 보여줍니다. 고객 정보, 실제 거래 식별자, 내부 알림 대상은 포함하지 않습니다.
 

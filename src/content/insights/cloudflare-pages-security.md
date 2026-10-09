@@ -5,8 +5,10 @@ date: 2026-03-15T00:00
 author: gui
 tags: ["技術", "Cloudflare", "セキュリティ"]
 image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Cloudflare PagesでCSPやキャッシュ設定が効かないときは、対象URLが静的アセットかFunctions応答かを最初に確かめます。[Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/)に合わせて設定場所を選び、成功応答だけでなくエラー応答のヘッダーも確認すれば、API追加後の設定漏れを見つけやすくなります。
 
 この記事は、2026年3月にお問い合わせを外部フォームへ移して Cloudflare Pages の静的配信へ戻した経緯を記録しています。その後、サイト構成は変わりました。**2026年9月時点の Acecore 公式サイトは、静的ページに加えて Pages Functions を使用**し、お問い合わせ、コメント、検索、AI案内、CMS の API を同じサイトで扱います。以下は当時の選定理由と、現在も使えるヘッダー設計の境界を整理したものです。
 

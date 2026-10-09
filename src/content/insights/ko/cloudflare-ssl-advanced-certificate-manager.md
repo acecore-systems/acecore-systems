@@ -1,12 +1,14 @@
 ---
-title: "예전에 유료였던 Cloudflare SSL 옵션의 정체 — Dedicated SSL에서 Advanced Certificate Manager로"
+title: "Cloudflare Universal SSL과 ACM 비교: 유료 인증서가 필요한 경우"
 description: 'Cloudflare에서 과거 유료 옵션이었던 "Dedicated SSL Certificates(전용 SSL 인증서)"는 2021년에 "Advanced Certificate Manager(ACM)"로 기능 확장 및 명칭 변경되었습니다. 무료 Universal SSL과의 차이와 ACM이 필요한 경우를 설명합니다.'
 date: 2026-03-31T00:00
 author: gui
 tags: ["기술", "Cloudflare", "보안", "인프라"]
 image: "/images/insights/covers/cloudflare-ssl-advanced-certificate-manager-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Universal SSL과 ACM 비교는 구매 전에 필요한 호스트명과 실제 제공되는 인증서를 대조하는 것부터 시작하세요. [Cloudflare: Advanced Certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/)의 적용 제한도 확인하고 Pages나 R2 사용자 도메인은 해당 제품의 인증서 경로로 판단하세요.
 
 Cloudflare는 2021년에 기존 **Dedicated SSL Certificates**를 **Advanced Certificate Manager(ACM)**로 발전시켰습니다. 인증서를 선택하기 전에 호스트 이름과 DNS 설정 방식을 확인하세요.
 

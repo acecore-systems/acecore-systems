@@ -5,8 +5,10 @@ date: 2026-03-15T00:00
 author: gui
 tags: ["Tecnologia", "Cloudflare", "Segurança"]
 image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Se CSP ou cache não funcionarem no Cloudflare Pages, identifique se a URL retorna arquivo estático ou resposta de Functions. Use [Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/) para escolher a configuração e confira cabeçalhos de erro e sucesso para detectar lacunas após adicionar APIs.
 
 Este artigo registrava a mudança, em março de 2026, de um formulário com Worker para um serviço externo e para a publicação estática no Cloudflare Pages. A arquitetura mudou desde então. **Em setembro de 2026, o site corporativo da Acecore usa Pages Functions junto com páginas estáticas** para contato, comentários, busca, assistência de IA e APIs do CMS. A decisão anterior é um registro histórico.
 

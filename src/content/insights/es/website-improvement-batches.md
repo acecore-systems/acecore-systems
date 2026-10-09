@@ -1,8 +1,8 @@
 ---
-title: "Guía de mejora de calidad del sitio Astro ― El camino hasta PageSpeed móvil 99 puntos"
-description: "Registro completo de la mejora del sitio con configuración Astro + UnoCSS + Cloudflare Pages en 4 ejes: rendimiento, SEO, accesibilidad y UX, logrando PageSpeed Insights móvil 99 puntos y escritorio 100 en todos los apartados."
+title: "Mejorar un sitio Astro: medir velocidad, SEO y accesibilidad"
+description: "Mida CSS, fuentes, imágenes y scripts externos para mejorar SEO y uso. El 99 móvil de PageSpeed del 25 de marzo de 2026 sirve como ejemplo para elegir cambios y volver a medir."
 date: 2026-03-25T15:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   ["Tecnología", "Astro", "Rendimiento", "Accesibilidad", "SEO", "Sitio web"]
@@ -41,7 +41,7 @@ compareTable:
     items:
       - Móvil 99 / 100 / 100 / 100 (escritorio todo 100)
       - 7 tipos de datos estructurados + OGP + canonical completos
-      - Cumplimiento WCAG AA (contraste, aria, notificación SR, focus-visible)
+      - Mejoras de contraste, aria, avisos de lector de pantalla y focus-visible
       - Todos los componentes compatibles con View Transitions
       - Constantes SITE, URLs sociales e IDs de anuncios centralizados
 linkCards:
@@ -55,7 +55,7 @@ linkCards:
     icon: i-lucide-search
   - href: /blog/astro-accessibility-guide/
     title: Accesibilidad
-    description: Guía para alcanzar WCAG AA con atributos aria, contraste y mejoras de formularios.
+    description: "Ejemplos de aria, contraste y formularios; separados de verificar todos los requisitos WCAG."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX y calidad de código
@@ -75,6 +75,12 @@ faq:
 ---
 
 **Actualización del 26 de septiembre de 2026:** Este artículo documenta las mejoras al 25 de marzo de 2026. La idea de que 99 era un límite práctico quedó superada por el [seguimiento del 29 de marzo](/insights/website-improvement-final-batch/), que registró 100. Son resultados de esas mediciones, no puntuaciones actuales. [Google explica](https://developers.google.com/speed/docs/insights/v5/about) por qué pueden variar.
+
+## Elegir el primer cambio por el tamaño transferido
+
+Mida portada y artículo con iguales condiciones y compare bytes de CSS, fuentes, imágenes y JavaScript externo. Modifique un elemento importante, vuelva a medir y pruebe formularios y búsqueda. Un 100 automático no prueba conformidad completa con WCAG; revise teclado y lectores de pantalla por separado.
+
+[PageSpeed Insights：Medición de laboratorio frente a datos reales](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Introducción
 
@@ -182,4 +188,4 @@ Para alcanzar 99 en móvil en PageSpeed Insights, es crucial seguir el principio
 
 Al mismo tiempo, mejorar en paralelo SEO, accesibilidad y UX permite alcanzar puntuaciones altas en los 4 apartados. En lugar de obsesionarse con 100 puntos, es más realista apuntar a mantener estables 95 puntos o más.
 
-Para los detalles de cada tema, consulte las cards de enlace de arriba. Para conocer el proceso de mejora y su reflejo en el código, consulte también el artículo [Flujo de desarrollo con GitHub Copilot](/blog/tax-return-with-copilot/).
+Para los detalles de cada tema, consulte las cards de enlace de arriba. Para conocer el proceso de mejora y su reflejo en el código, consulte también el artículo [Un caso fiscal de registros de decisiones compartidos con IA](/blog/tax-return-with-copilot/).

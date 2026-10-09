@@ -1,8 +1,8 @@
 ---
-title: "Astroサイトの品質改善ガイド ― PageSpeedモバイル99点達成までの道のり"
-description: "Astro + UnoCSS + Cloudflare Pages 構成のサイトをパフォーマンス・SEO・アクセシビリティ・UXの4軸で改善し、PageSpeed Insights モバイル99点・デスクトップ全項目100点を達成した全記録です。"
+title: "Astroサイトの品質改善手順：速度・SEO・アクセシビリティを測って直す"
+description: "CSS・フォント・画像・外部JSを測り、SEOと操作性を改善する進め方。2026年3月25日のPageSpeedモバイル99点の例を、施策選びと再計測の判断材料として紹介します。"
 date: 2026-03-25T15:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   ["技術", "Astro", "パフォーマンス", "アクセシビリティ", "SEO", "Webサイト"]
@@ -41,7 +41,7 @@ compareTable:
     items:
       - モバイル 99 / 100 / 100 / 100（デスクトップ全項目100）
       - 7種の構造化データ + OGP + canonical 完備
-      - WCAG AA準拠（コントラスト・aria・SR通知・focus-visible）
+      - コントラスト・aria・SR通知・focus-visibleを改善
       - 全コンポーネントがView Transitions対応
       - SITE定数・ソーシャルURL・広告IDを一元管理
 linkCards:
@@ -55,7 +55,7 @@ linkCards:
     icon: i-lucide-search
   - href: /blog/astro-accessibility-guide/
     title: アクセシビリティ編
-    description: WCAG AA準拠を達成するためのaria属性・コントラスト・フォーム改善の手引き。
+    description: "aria属性、コントラスト、フォームを改善する具体例。WCAG全項目の適合確認とは区別します。"
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX・コード品質編
@@ -75,6 +75,12 @@ faq:
 ---
 
 **2026年9月26日追記：** この記事は2026年3月25日時点の改善記録です。「99点が上限」という当時の見立ては、その後の[3月29日の再測定記事](/insights/website-improvement-final-batch/)で100点を確認したため、現在の結論ではありません。数値は各測定時の結果であり、現在のスコアを示すものではありません。[PageSpeed Insightsの公式説明](https://developers.google.com/speed/docs/insights/v5/about)のとおり、測定値には変動があります。
+
+## 最初の改善は同じページの転送量から選ぶ
+
+トップと記事の代表ページを同じ条件で測り、CSS・フォント・画像・外部JSの転送量を並べます。最も重いものを一つ変更して再計測し、フォームと検索も試してください。自動監査の100点はWCAG全項目への適合を証明しないため、キーボード操作や読み上げ確認は別に行います。
+
+[PageSpeed Insights：ラボ測定と実利用データの違い](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## はじめに
 
@@ -184,4 +190,4 @@ PageSpeed Insights でモバイル99点を達成するには、「不要なも�
 
 同時に、SEO・アクセシビリティ・UXの改善を並行して進めることで、4項目すべてで高スコアを達成できます。100点にこだわるよりも、95点以上を安定して出せる状態を目指すのが現実的なゴールです。
 
-各トピックの詳細は上のリンクカードからどうぞ。改善の進め方やコードへの反映については、[GitHub Copilotを使った開発フロー](/blog/tax-return-with-copilot/)も合わせてご覧ください。
+各トピックの詳細は上のリンクカードからどうぞ。改善の進め方やコードへの反映については、[AIと判断記録を共有した確定申告の事例](/blog/tax-return-with-copilot/)も合わせてご覧ください。

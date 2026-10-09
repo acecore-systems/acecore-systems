@@ -2,7 +2,7 @@
 title: "Astro View Transitionsの落とし穴と解決策 ― UX・コード品質改善ガイド"
 description: "AstroのView Transitionsでスクリプトが動かなくなる問題の解決策、Pagefind全文検索の導入、TypeScript型安全性の向上、定数の一元管理など、UXとコード品質を改善した実践ガイドです。"
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Astro", "Webサイト"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: TypeScriptの型エラーは無視しても動きますか？
       answer: "動作はしますが、型エラーはバグの予兆です。特にAstroのコンテンツスキーマは型安全にすることで、テンプレート内のプロパティアクセスでIDEの補完が効くようになり、開発効率が大きく向上します。"
 ---
+
+ページ遷移後だけメニューや検索が動かない場合は、直接表示とClientRouter経由の表示を比べ、初期化するタイミングを調べます。[Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/)のライフサイクルに沿ってイベント登録を整理し、戻る・進むを含めて重複実行も確認してください。
 
 ## はじめに
 
@@ -136,7 +138,7 @@ Astroのビルド後に Pagefind を実行し、`dist/pagefind/` にインデッ
 
 ### SearchAction連携
 
-Google の構造化データ `SearchAction` で `?q=` パラメータを定義しておけば、検索結果からサイト内検索に直接遷移できます。URLパラメータを検知して検索モーダルを自動起動する処理を追加しましょう。
+Googleのサイト内検索ボックスは2024-11に終了しました（[公式の終了案内](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)）。既存の `SearchAction` は当時の実装として扱い、検索結果に検索枠が出るとは期待しません。`?q=` を受けて検索モーダルを開く処理は、共有リンクなどサイト内の検索導線として使えます。
 
 ### キャッシュ設定
 

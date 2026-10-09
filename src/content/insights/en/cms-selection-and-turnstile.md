@@ -1,8 +1,8 @@
 ---
-title: "Sveltia CMS Setup Guide"
-description: "A dated record of Sveltia CMS implementation at Acecore, covering editor authentication, validated direct saves through a GitHub App, media, and multilingual operations."
+title: "How to Add Sveltia CMS to Astro: Editing, Images and Authentication"
+description: "When adding Sveltia CMS to Astro, begin with frequently updated articles, then verify image storage, public URLs and conflict reloads."
 date: 2026-06-07T16:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "CMS", "Astro", "Cloudflare", "Security"]
 image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
@@ -69,6 +69,8 @@ faq:
     - question: Should every locale be editable in the CMS?
       answer: For a small team, it is safer to edit only the Japanese source in the CMS and update translations through pull requests. Exposing every locale makes review and stale-translation detection harder.
 ---
+
+When adding Sveltia CMS to Astro, begin with frequently updated articles, then verify image storage, public URLs and conflict reloads. Separate the baseline in [Sveltia CMS: Getting Started](https://sveltiacms.app/en/docs/start) from your site-specific authentication and save proxy. Historical OAuth instructions below differ from the current login method.
 
 **Update, September 26, 2026:** The GitHub OAuth Worker login instructions below describe the original setup. In code merged in September, the company site checks the signed-in AcecoreID / Cloudflare Access identity, its linked GitHub ID, and repository write permission immediately before saving. A site-specific GitHub App still performs repository writes after path, content, and current HEAD checks, then commits directly to `main`. OpenAI Batch and translation PRs remain a separate path. See [merged PR #251](https://github.com/acecore-systems/acecore-net/pull/251) and read the older steps below in their historical context.
 

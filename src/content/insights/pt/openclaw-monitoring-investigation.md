@@ -2,7 +2,7 @@
 title: "Monitoramento e investigação com OpenClaw: detecção, evidências e decisões"
 description: "Como combinar verificações periódicas e investigações limitadas, separando a operação verificada da recuperação ainda não comprovada."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Monitoramento exige responsabilidades claras para detectar problemas e investigar causas. Este caso conecta verificações periódicas ao OpenClaw sem publicar topologia interna ou destinos de avisos.
+
+## Avaliar relatórios com falhas conhecidas
+
+Prepare em testes condições conhecidas, como coleta com falha ou leituras antigas. Avalie se o relatório contém horário, evidências e itens ausentes, preservando resultados parciais após timeout. Isso mede a qualidade da investigação além da naturalidade do texto.
+
+[OpenClaw：Limites de permissão do ambiente de investigação](https://docs.openclaw.ai/gateway/security)
 
 ## Definir a detecção
 

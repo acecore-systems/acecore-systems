@@ -2,7 +2,7 @@
 title: "避免 AI 回复做出无法兑现的承诺"
 description: "防止信息助手擅自承诺工作人员参与、安排时间或后续联系。介绍会话状态、检索失败、旧草稿复检和会话结束时的处理。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "一般化案例，不公开具体会话"
   text: "本文讨论策略与分类调整、发送前检查、测试、发布及有限的运营观察。不会包含他人的帖子或账号，也不保证能够防止所有形式的错误承诺。"
 ---
+
+用于咨询引导或客服回复时，应将解释公开信息、转交工作人员和实际预约定义为不同能力。允许的操作与审批设计可参考[OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)。下文仅讨论回复边界，不涉及特定平台的自动发送步骤。
 
 即使信息助手的回复很自然，也不能在没有能力执行的证据时承诺工作人员会稍后联系，或会在某个时间参加。本文以一般化方式介绍内部回复流程，不指出具体平台或会话。
 

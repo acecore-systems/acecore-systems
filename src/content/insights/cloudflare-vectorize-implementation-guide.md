@@ -2,7 +2,7 @@
 title: "Cloudflare VectorizeとRAG入門：検索とAI回答の違いを理解する"
 description: "Cloudflare Vectorizeで、公開済みの情報を言い換えた質問でも見つけやすくする方法を、導入メリット、通常検索との違い、RAGの役割、段階的な始め方から説明します。"
 date: 2026-07-31T12:00
-lastUpdated: 2026-08-01T17:00
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "RAG", "意味検索", "サイト内検索"]
 image: /images/insights/vectorize-rag-hero.webp
@@ -132,6 +132,8 @@ faq:
     - question: "どのようなサイトから始めやすいですか？"
       answer: "公開済みのガイド、FAQ、仕様、事例があり、利用者が同じ内容を異なる言葉で探すサイトから始めると、検索品質を評価しやすくなります。"
 ---
+
+意味検索の試用では、同じ公開ページを探す「正式名称」と「利用者の言い換え」を対にして、期待するURLが候補に出るか比較します。正解ページを用意してから[Cloudflare Vectorize: Create Indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/)でindexの契約を確認すると、チャット回答の自然さとは別に検索品質を評価できます。
 
 ## 先に結論：Vectorizeは「探せない」を減らすための検索層
 

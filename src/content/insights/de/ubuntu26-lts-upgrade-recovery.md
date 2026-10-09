@@ -27,11 +27,18 @@ processFigure:
       description: "Verbindungen von außen, automatischen Start, Wiederherstellung der ursprünglichen Einstellungen und ein neues Backup prüfen."
       icon: i-lucide-shield-check
       accent: emerald
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Beim Aktualisieren eines laufenden Ubuntu-Servers müssen Sie neben den Paketen auch Dienste anhalten und die Wiederaufnahme des Betriebs nach dem Neustart vorbereiten. Probleme wie eine nicht mehr erreichbare SSH-Verbindung, Authentifizierungseinstellungen, die nicht zur neuen Spezifikation passen, oder Backups, aus denen sich keine Daten wiederherstellen lassen, können auch nach Abschluss des Update-Befehls auftreten.
 
 Dieser Artikel fasst Erkenntnisse aus der LTS-Migration von Ubuntu 24.04 auf 26.04 und aus regulären Updates danach als auf andere Server übertragbare Vorgehensweise zusammen. Voraussetzung sind administrative Rechte und ein Wartungsfenster, in dem Dienste angehalten werden können. Zunächst stellen wir die gemeinsamen Vorbereitungs- und Arbeitsschritte vor; im hinteren Teil grenzen wir Probleme mit Verbindung, Authentifizierung und Start ein.
+
+## Upgrade von 24.04 auf 26.04 oder normale Updates wählen
+
+Entscheiden Sie, ob eine neue OS-Generation nötig ist oder Korrekturen genügen. Ein Release-Upgrade ergänzt Kompatibilitätsprüfungen für externe Anmeldung, VPN und Datenbanken; normale Updates prüfen geplante Pakete und Neustartfolgen. Beginnen Sie nicht ohne Wiederherstellungskonsole und erprobte Rücksicherung.
+
+[Ubuntu Server：Bedingungen und Vorbereitung für LTS-Upgrades](https://ubuntu.com/server/docs/how-to/software/upgrade-your-release/)
 
 ## 1. Art der Aktualisierung und Arbeitsumfang festlegen
 

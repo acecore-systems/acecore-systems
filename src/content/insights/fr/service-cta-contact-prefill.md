@@ -2,7 +2,7 @@
 title: "Conception technique pour transmettre le contexte d’un CTA de service au formulaire de contact"
 description: "Conception d’implémentation permettant de transmettre au formulaire le contexte lu sur une page de service. Elle couvre les mini-CTA dans Astro, le contrat de paramètres URL, la sélection initiale de catégorie, le prefill de l’objet, les URL multilingues, la mesure GA et la vérification du HTML généré."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Site web", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ Lorsqu’une personne lisant une page de service pense « je veux vous consulter
 Elle doit sélectionner à nouveau le type de service et réécrire l’objet. L’équipe destinataire ne peut pas non plus savoir facilement s’il s’agit de production web, d’exploitation de serveurs ou d’Aceserver avant de lire le message.
 
 Sur le site Acecore, nous avons amélioré ce parcours dans la [PR qui transmet la cible du CTA au formulaire](https://github.com/acecore-systems/acecore-net/pull/100). Cet article présente la solution non seulement comme un relevé d’implémentation Astro, mais aussi comme une conception de parcours réutilisable sur d’autres sites.
+
+## Valider l’initialisation du formulaire depuis un CTA
+
+Testez une clé valide, une clé inconnue et le retour après saisie de l’objet. Vérifiez options autorisées et conservation de l’objet, avec le même contrat dans les URLs locales. Excluez données personnelles et texte libre des URLs ; transmettez le contexte par identifiants courts.
+
+[MDN URLSearchParams：Lire les paramètres d’URL](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## Le but n’est pas seulement de réduire la saisie
 

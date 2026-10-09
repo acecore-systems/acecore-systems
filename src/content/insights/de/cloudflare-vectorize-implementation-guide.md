@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize und RAG: Den Unterschied zwischen Suche und KI-Antworten verstehen"
 description: "Erfahren Sie, wie Cloudflare Vectorize bereits öffentliche Informationen aus natürlich formulierten Fragen leichter auffindbar macht – mit Nutzen, Zusammenspiel mit der normalen Suche, RAG und einem schrittweisen Einstieg."
 date: 2026-07-31T12:00
-lastUpdated: 2026-08-01T17:00
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   [
@@ -66,6 +66,8 @@ linkCards:
     description: "Prüfen Sie Entscheidungen wie Dimensionen und Distanzmetrik, die vor dem Anlegen eines Index feststehen müssen."
     icon: i-lucide-settings-2
 ---
+
+Paaren Sie für einen semantischen Suchtest einen Fachbegriff mit einer Nutzerumschreibung für dieselbe öffentliche Seite. Vergleichen Sie, ob die erwartete URL erscheint. Definieren Sie Zielseiten vor dem Indexvertrag in [Cloudflare Vectorize: Create Indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/), um Suchqualität getrennt von flüssigen Chat-Antworten zu bewerten.
 
 ## Zuerst das Ergebnis: Vectorize verkürzt den Weg von einer Frage zur passenden Seite
 

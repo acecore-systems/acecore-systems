@@ -2,7 +2,7 @@
 title: "Enquêter sur les ralentissements de Minecraft : mesures discrètes et stockage partagé"
 description: "De la collecte discrète de TPS/MSPT à la mise en regard de JFR et des observations d’E/S du système d’exploitation. L’article distingue l’enquête sur les causes, achevée, des améliorations de performance qui restent à tester."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Les ralentissements de Minecraft peuvent avoir des causes différentes : traitement des ticks du serveur, brèves attentes pendant une sauvegarde, réseau ou rendu côté client. Nous présentons de façon anonyme une enquête menée sur plusieurs serveurs Paper, sans révéler les noms d’hôtes ni la configuration internes.
+
+## Capturer le premier profil pendant le lag
+
+Notez l’heure du lag, le nombre de joueurs et les sauvegardes en cours ; comparez le profil au MSPT de cette période. Prenez aussi un court échantillon normal. Distinguer calcul supplémentaire et attente aide à choisir entre réglage des plugins et investigation du stockage.
+
+[PaperMC：Profiler pendant le problème](https://docs.papermc.io/paper/profiling/)
 
 ## Mesurer séparément les moyennes et les pauses brèves
 

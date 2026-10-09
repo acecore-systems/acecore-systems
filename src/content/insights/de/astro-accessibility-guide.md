@@ -1,8 +1,8 @@
 ---
 title: "Praktische Verbesserungen der Barrierefreiheit für eine Astro-Website"
-description: "Aufzeichnungen zu Verbesserungen der Barrierefreiheit einer Astro + UnoCSS-Website im März 2026: ARIA, Kontrast, Fokus, Formulare und Screenreader."
+description: "Priorisieren Sie Barrierefreiheit in Astro anhand einer konkreten Aufgabe, etwa eines Kontaktformulars."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Barrierefreiheit"]
 image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
@@ -52,6 +52,8 @@ faq:
     - question: Bedeutet ein PageSpeed-Accessibility-Score von 100 WCAG-Konformität?
       answer: "Auch ein Score von 100 garantiert keine vollständige WCAG-Konformität. Lighthouse hat begrenzte Prüfpunkte, und einige Kriterien können nur manuell überprüft werden (logische Lesereihenfolge, angemessener Alt-Text usw.). Sowohl automatisierte als auch manuelle Tests sind notwendig."
 ---
+
+Priorisieren Sie Barrierefreiheit in Astro anhand einer konkreten Aufgabe, etwa eines Kontaktformulars. Prüfen Sie Eingabe, Fehlerkorrektur und Abschluss per Tastatur sowie Beschriftungen und Meldungen anhand von [W3C WAI: Forms Tutorial](https://www.w3.org/WAI/tutorials/forms/). Bewerten Sie den Aufgabenabschluss getrennt von automatisierten Punkten.
 
 **Ergänzung vom 26. September 2026:** Der folgende Code und der PageSpeed-Accessibility-Wert von 100 dokumentieren die Astro + UnoCSS-Website vom März 2026. Die aktuelle Unternehmenswebsite deklariert Tailwind CSS 4.3.3. Diese ausgewählten Prüfungen und ein automatischer Wert belegen keine WCAG-AA-Konformität der gesamten Website. Eine Bewertung muss Seiten und vollständige Abläufe festlegen und alle Erfolgskriterien der Stufen A und AA mit automatischen und menschlichen Prüfungen untersuchen ([W3C-Anforderungen](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 

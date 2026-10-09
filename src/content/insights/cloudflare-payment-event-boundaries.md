@@ -2,7 +2,7 @@
 title: "決済・返金Webhookを安全に扱う：Workersでの照合と状態管理"
 description: "署名、重複、遅延したイベント、返金状態と外部APIの応答を分けて扱う実装事例。管理操作の再確認と通知の境界を紹介します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "実装の確認と実取引の操作を区別"
   text: "実装・テスト・本番配信・外部APIの読み取り照合を確認した匿名の事例です。検証のために顧客の返金・取消・ポイント調整を実行したものではなく、あらゆる決済経路の通し検証を主張しません。"
 ---
+
+Workersの決済Webhookを検証するなら、テスト環境で同じイベントの再配信と到着順の入れ替わりを試し、業務状態が重複更新されないことを確認します。外部APIのリダイレクト処理は[Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/)と実行環境を照合し、受信成功・外部状態確認・後続処理を分けて記録してください。
 
 決済サービスのイベントを受信しただけで、注文や返金を完了扱いにはできません。Workers上の管理処理を整えた事例から、外部の状態と自分たちの記録を照合する境界を整理します。顧客情報、実取引の識別子、内部の通知先は掲載しません。
 

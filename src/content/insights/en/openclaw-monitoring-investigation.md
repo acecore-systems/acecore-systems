@@ -2,7 +2,7 @@
 title: "Connecting monitoring to OpenClaw investigations: detection, evidence and decisions"
 description: "How scheduled checks and bounded OpenClaw investigations fit together, with a clear distinction between verified operation and untested incident recovery."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Monitoring needs explicit responsibilities for detecting a problem and investigating its cause. This case connects scheduled checks to OpenClaw investigations without publishing internal topology or notification destinations.
+
+## Evaluate investigation reports using known faults
+
+Before adoption, create known conditions in a test environment, such as failed collection or stale readings. Score whether reports include observation time, evidence, and missing items, and retain partial results after timeout. This evaluates investigation quality beyond how natural the prose sounds.
+
+[OpenClaw：Permission boundaries for investigation environments](https://docs.openclaw.ai/gateway/security)
 
 ## Define detection
 

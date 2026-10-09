@@ -2,7 +2,7 @@
 title: "サービスCTAから問い合わせフォームへ文脈を引き継ぐ技術設計"
 description: "サービスページで読んでいた文脈を問い合わせフォームへ引き継ぐための実装設計です。AstroサイトでのミニCTA、URLパラメータ契約、フォーム種別の初期選択、件名prefill、多言語URL、GA計測、生成HTML確認まで、他サイトでも使える形で整理します。"
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "Webサイト", "サービス", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ faq:
 ユーザーはフォームでサービス種別を選び直し、件名も自分で書き直す必要があります。受信側も、本文を読むまで「Web制作の相談なのか」「サーバー運用なのか」「Aceserverなのか」を判断しにくくなります。
 
 Acecoreのサイトでは、[サービスCTAから問い合わせフォームへ相談対象を引き継ぐPR](https://github.com/acecore-systems/acecore-net/pull/100) でこの導線を改善しました。この記事では、Astroでの実装記録としてだけでなく、他のWebサイトでも使える導線設計として整理します。
+
+## 一つのCTAからフォーム初期化を検証する
+
+有効なservice key、未知のkey、件名を入力済みの状態で戻る操作を試します。種別が許可済み選択肢へ対応し、件名を上書きしないかを確認し、locale別のURLでも同じ値の契約を使います。URLには個人情報や自由記述を入れず、短い識別子だけで相談の文脈を渡します。
+
+[MDN URLSearchParams：URLパラメータの読取り仕様](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## 目的はフォーム入力を減らすことではない
 

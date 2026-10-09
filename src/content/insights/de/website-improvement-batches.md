@@ -1,8 +1,8 @@
 ---
-title: "Astro-Website-Qualitätsverbesserungsleitfaden — PageSpeed Mobile Score von 99 erreichen"
-description: "Ein vollständiger Bericht über die Verbesserung einer Astro + UnoCSS + Cloudflare Pages-Website in vier Bereichen — Performance, SEO, Barrierefreiheit und UX — mit Erreichen eines PageSpeed Insights Mobile Scores von 99 und perfekten 100 Punkten bei allen Desktop-Metriken."
+title: "Astro-Website verbessern: Geschwindigkeit, SEO und Barrierefreiheit messen"
+description: "CSS, Schriften, Bilder und externe Skripte messen sowie SEO und Bedienbarkeit verbessern. Die mobile PageSpeed-Messung mit 99 Punkten vom 25. März 2026 zeigt Auswahl und erneute Prüfung von Änderungen."
 date: 2026-03-25T15:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Leistung", "Barrierefreiheit", "SEO", "Website"]
 image: "/images/insights/covers/website-improvement-batches-cover-v2.webp"
@@ -40,7 +40,7 @@ compareTable:
     items:
       - Mobile 99 / 100 / 100 / 100 (alle Desktop-Metriken bei 100)
       - 7 Typen strukturierter Daten + OGP + canonical vollständig implementiert
-      - WCAG AA-konform (Kontrast, aria, SR-Benachrichtigungen, focus-visible)
+      - Kontrast, aria, Screenreader-Hinweise und focus-visible verbessert
       - Alle Komponenten kompatibel mit View Transitions
       - SITE-Konstanten, Social-URLs und Ad-IDs zentral verwaltet
 linkCards:
@@ -54,7 +54,7 @@ linkCards:
     icon: i-lucide-search
   - href: /blog/astro-accessibility-guide/
     title: Barrierefreiheit
-    description: Ein Leitfaden zur Erreichung der WCAG AA-Konformität durch aria-Attribute, Kontrast und Formularverbesserungen.
+    description: "Beispiele zu aria, Kontrast und Formularen; getrennt von der Prüfung sämtlicher WCAG-Anforderungen."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX & Codequalität
@@ -74,6 +74,12 @@ faq:
 ---
 
 **Aktualisierung vom 26. September 2026:** Dieser Artikel dokumentiert Verbesserungen bis zum 25. März 2026. Die damalige Einschätzung, 99 sei eine praktische Obergrenze, wurde durch die [Nachmessung vom 29. März](/insights/website-improvement-final-batch/) mit 100 Punkten überholt. Beide Werte gelten nur für ihre Messungen. [Google erläutert](https://developers.google.com/speed/docs/insights/v5/about) mögliche Schwankungen.
+
+## Die erste Änderung nach Übertragungsvolumen wählen
+
+Messen Sie Start- und Artikelseite unter gleichen Bedingungen und vergleichen Sie CSS-, Schrift-, Bild- und externe JavaScript-Bytes. Ändern Sie einen großen Anteil, messen Sie erneut und testen Sie Formular und Suche. Automatische 100 Punkte beweisen keine vollständige WCAG-Konformität; prüfen Sie Tastatur und Screenreader separat.
+
+[PageSpeed Insights：Labormessungen und reale Nutzungsdaten](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Einleitung
 
@@ -181,4 +187,4 @@ PageSpeed Insights Mobile 99 zu erreichen, läuft darauf hinaus, das Prinzip „
 
 Durch parallele Verfolgung von SEO-, Barrierefreiheits- und UX-Verbesserungen werden hohe Bewertungen in allen vier Kategorien erreichbar. Statt sich auf 100 zu fixieren, ist ein stabiler Wert von 95+ ein realistischeres Ziel.
 
-Detaillierte Informationen zu den einzelnen Themen finden Sie in den Linkkarten oben. Informationen zum Verbesserungsworkflow und wie Änderungen im Code umgesetzt wurden, finden Sie auch im Artikel [Entwicklungsworkflow mit GitHub Copilot](/blog/tax-return-with-copilot/).
+Detaillierte Informationen zu den einzelnen Themen finden Sie in den Linkkarten oben. Informationen zum Verbesserungsworkflow und wie Änderungen im Code umgesetzt wurden, finden Sie auch im Artikel [Steuerfall mit gemeinsamen KI-Entscheidungsaufzeichnungen](/blog/tax-return-with-copilot/).

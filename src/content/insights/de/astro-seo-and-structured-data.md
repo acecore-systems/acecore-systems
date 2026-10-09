@@ -4,7 +4,7 @@ description: "Eine Schritt-für-Schritt-Anleitung zur korrekten Implementierung 
 date: 2026-03-25T11:00
 author: gui
 tags: ["Technologie", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: Beeinflusst die Sitemap-Priorität die SEO?
       answer: "Google ignoriert `priority` und `changefreq`; erfundene Werte bringen keinen SEO-Vorteil."
 ---
+
+Beginnen Sie Astro-SEO mit title, description, canonical und JSON-LD im generierten HTML eines repräsentativen Artikels und gleichen Sie diese mit sichtbaren Inhalten ab. Prüfen Sie Pflichtfelder anhand von [Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) und nach Veröffentlichung die Search Console. Korrekte Syntax garantiert weder Rich Results noch Rankings.
 
 > Aktualisierung vom September 2026: Google hat das Sitelinks-Suchfeld im November 2024 eingestellt. FAQ-Rich-Results sind im Allgemeinen auf anerkannte Behörden- und Gesundheitsseiten beschränkt; `changefreq` und `priority` in Sitemaps ignoriert Google. Lesen Sie diesen Implementierungsbericht vom März 2026 zusammen mit den Änderungen zu [Suchfeld](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) und den [Sitemap-Hinweisen](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
@@ -192,7 +194,7 @@ Abschließend eine Zusammenfassung der wichtigsten Punkte zur Überprüfung für
 6. **Enthält der RSS-Feed Autor und Kategorien?**
 7. **Schließt robots.txt Suchindizes (wie `/pagefind/`) vom Crawling aus?**
 
-Sobald Sie all dies konfiguriert haben, steht Ihre SEO-Grundlage. Von da an werden Suchrankings durch Inhaltsqualität und Aktualisierungsfrequenz bestimmt.
+Diese Einstellungen vermitteln öffentliche Inhalte an Suchmaschinen. Rankings hängen nicht allein von Qualität und Aktualisierungshäufigkeit ab; fertige Konfiguration beweist keinen Traffic-Zuwachs. Nutzen Sie Suchanfragen, Impressionen und Klickraten nach Veröffentlichung, um Leserfragen besser zu beantworten.
 
 ---
 

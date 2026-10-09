@@ -1,6 +1,6 @@
 ---
-title: "Hatt 的主页已公开"
-description: "我们公开了“Hatt 的主页”，这是一个汇总绘画、小说以及面向 VRChat 的 3D 头像和机关制作的个人网站。网站使用 Astro、Sveltia CMS 和 Pagefind 构建，设计目标是让创作活动能够持续发布和积累。"
+title: "用Astro制作创作作品集：CMS、搜索与外部作品导航"
+description: "以汇集绘画、小说及VRChat 3D制作的Hatt网站为例，介绍活动分类、Sveltia CMS更新、Pagefind搜索和通往BOOTH等外部作品的路径设计。"
 date: 2026-06-06T10:00
 author: gui
 tags: ["公告", "网站制作", "网站", "CMS", "Astro"]
@@ -61,11 +61,18 @@ faq:
       answer: 网站作为静态站点构建，使用 Astro、TypeScript、UnoCSS、Sveltia CMS 和 Pagefind。
     - question: Acecore 也可以咨询个人网站或作品集网站吗？
       answer: 可以。我们可以从活动内容整理、设计、CMS、搜索、SEO 到公开后的更新路径进行整体咨询。
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 我们公开了汇总 Hatt 创作活动的个人网站「[Hatt 的主页](https://hatt.acecore.net/)」。
 
 这个网站是把绘画、小说以及面向 VRChat 的 3D 头像和机关制作整理到一个入口的主页。我们也将它作为网站制作和 CMS 构建案例，刊登在 Acecore 的[实绩页面](https://systems.acecore.net/works/#case-hatt-homepage)。
+
+## 从一件作品开始设计创作作品集
+
+选择一件代表作，测试从介绍页到外部作品发布平台的路径是否清晰。将作品名、类型和制作笔记纳入搜索；通过CMS更新一条记录后，再检查搜索能否找到它，从而明确作品增多后的运营需求。
+
+[Pagefind：静态站点搜索的导入步骤](https://pagefind.app/docs/)
 
 ## 制作背景
 

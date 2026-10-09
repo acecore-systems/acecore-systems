@@ -2,7 +2,7 @@
 title: "Traiter les webhooks de paiement et de remboursement en toute sécurité : rapprocher les états dans Workers"
 description: "Un exemple d’implémentation qui distingue signature, événements dupliqués ou tardifs, état du remboursement et réponses des API externes. Il montre aussi la nouvelle vérification des autorisations avant une action d’administration."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "Distinguer les preuves d’implémentation des opérations réelles"
   text: "Dans ce cas anonymisé, l’implémentation, les tests, le déploiement en production et le rapprochement en lecture seule avec des API externes ont été vérifiés. Aucun remboursement, aucune annulation ni aucun ajustement de points client n’a été effectué pour les tests ; l’article ne prétend pas vérifier de bout en bout tous les parcours de paiement."
 ---
+
+Pour les webhooks de paiement sur Workers, testez doublons et événements désordonnés en environnement de test, sans double mise à jour métier. Vérifiez les redirections d’API externes avec [Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/) et le runtime, puis consignez séparément réception, confirmation externe et traitements suivants.
 
 La réception d’un événement du prestataire de paiement ne suffit pas à terminer une commande ou un remboursement. Cet exemple anonymisé montre comment un flux d’administration sur Workers rapproche l’état du prestataire et les enregistrements locaux. Les données client, identifiants de transactions réelles et destinations de notification internes sont omis.
 

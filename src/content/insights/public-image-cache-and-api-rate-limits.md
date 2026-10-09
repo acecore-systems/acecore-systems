@@ -2,7 +2,7 @@
 title: "公開画像のエッジキャッシュとAPIの閲覧制限を分ける"
 description: "画像付きコンテンツの連続閲覧で、本文APIと画像取得が同じ制限枠を使っていた事例。公開画像の再利用、正常応答の検証、WAFとアプリの境界、本番確認を整理します。"
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 画像付きの日記やカタログでは、日付やページを切り替えるたびに本文APIと画像の取得が発生します。連続閲覧時に画像が止まった事例を、運用URL・内部ルート・制限値を伏せて紹介します。
+
+## 連続閲覧を一枚の画像から再現する
+
+同じ公開画像を繰り返し取得し、初回と再取得でbodyのハッシュ、status、キャッシュ状態を比べます。次に本文と複数画像を通常のページ切替で取得し、どの要求が制限枠へ数えられるか確認します。HITだけを成功基準にせず、画像内容とAPI保護の両方を確認する試験です。
+
+[Cloudflare Cache API：条件付き取得と拠点ごとのキャッシュ](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## 本文と画像が同じ枠を消費していた
 

@@ -27,11 +27,18 @@ processFigure:
       description: "Verifique a conexão externa, a inicialização automática, a restauração das configurações originais e um novo backup."
       icon: i-lucide-shield-check
       accent: emerald
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Ao atualizar um servidor Ubuntu em produção, além de atualizar os pacotes, é preciso interromper os serviços e seguir os procedimentos para voltar à operação após a reinicialização. Problemas como a perda da conexão SSH, configurações de autenticação incompatíveis com a nova versão ou a impossibilidade de restaurar um backup também podem ocorrer depois que o comando de atualização termina.
 
 Neste artigo, organizamos as lições aprendidas com a migração do Ubuntu 24.04 para o 26.04 LTS e com as atualizações regulares posteriores em um procedimento aplicável a outros servidores. A premissa é que você tenha privilégios de administrador e possa reservar uma janela de manutenção que permita interromper os serviços. Primeiro, apresentamos a preparação e o procedimento comuns; na segunda parte, explicamos como diagnosticar problemas de conexão, autenticação e inicialização.
+
+## Escolher a migração de 24.04 para 26.04 ou atualizações comuns
+
+Decida se precisa de uma nova geração do sistema ou apenas correções. A migração acrescenta verificações de autenticação externa, VPN e bancos; atualizações comuns revisam mudanças previstas nos pacotes e reinícios. Não comece sem console de recuperação e restauração comprovada.
+
+[Ubuntu Server：Condições e preparação para migrar LTS](https://ubuntu.com/server/docs/how-to/software/upgrade-your-release/)
 
 ## 1. Defina o tipo de atualização e o escopo do trabalho
 

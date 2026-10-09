@@ -1,5 +1,5 @@
 ---
-title: "Codexの作業分担をどう設計したか：公開プラグイン Task Routing"
+title: "Codexのタスク分担設計：引継ぎ・権限・結果の検収"
 description: "公開プラグインCodex Task Routingを題材に、親の設定を維持した役割分担、版を識別できる有効方針、引継ぎと検証の境界を整理します。"
 date: "2026-09-26T18:30:00+09:00"
 author: gui
@@ -9,8 +9,10 @@ callout:
   type: note
   title: "確認できた範囲"
   text: "公開コード、統合済みPR、3 OSのCIと隔離環境での導入検査を確認しています。作業品質や利用量の改善率、実アカウントでの子モデル起動はこの記事の実証結果ではありません。"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Codexの分担設計は、独立して検収できる調査やレビューから試すと、親が統合すべき責任を明確にできます。引継ぎには対象ファイル、確認資料、返す証拠、未確認事項を含め、ツール権限は[OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)の最小化の考え方も参考にします。分担した事実だけで品質や費用の改善を判断しません。
 
 Codexで複数の仕事を進めるとき、分担先のモデルを先に決めるより、どの工程を切り出せるか、何を引き継ぐか、結果をどう検収するかを決める必要があります。この課題を扱うために、Acecoreは[Codex Task Routing](https://github.com/acecore-systems/codex-task-routing)を公開しました。
 

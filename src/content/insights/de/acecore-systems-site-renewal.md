@@ -1,6 +1,6 @@
 ---
-title: '"Stille Infrastruktur" greifbar machen: Wir haben die Acecore Systems-Website erneuert'
-description: 'Wir haben die Acecore Systems-Website unter dem Leitmotiv "Stille Infrastruktur" erneuert. Dieser Artikel erläutert die Hintergründe und wichtigsten Änderungen: die Betrachtung von Arbeit in den drei Ebenen Arbeitsalltag, System und Betrieb sowie einen klareren Weg durch Arbeitsweise, Services, Referenzen, Preise, Einführungsleitfaden und Kontaktmöglichkeiten.'
+title: "Firmenwebsite neu gestalten: Leistungen, Preise und Kontakt verbinden"
+description: "Klären Sie vor dem visuellen Entwurf einer Firmenwebsite, wer welche Informationen für welche Entscheidung braucht."
 date: 2026-07-30T15:00
 author: gui
 tags: ["Neuigkeiten", "Services", "Website", "Webentwicklung"]
@@ -87,7 +87,10 @@ faq:
       answer: Sie können uns zu Geschäftssystemen, Webanwendungen, Administrationsoberflächen, Datenintegrationen und Integrationen mit externen Diensten sowie zur Verbesserung bestehender Systeme ansprechen. Die Website informiert außerdem über IT-Beratung, KI-Einführung, Begleitung bei Deployments und die Ergänzung von Websites um CMS-, Such- und Formularfunktionen.
     - question: Kann ich Sie auch kontaktieren, wenn noch nicht feststeht, was entwickelt werden soll?
       answer: Ja. Wir können mit Ihren aktuellen Arbeitsabläufen, Herausforderungen, Nutzern, Rahmenbedingungen und Prioritäten beginnen. Eine Beratung ist auch möglich, bevor Anforderungen oder Beschaffungsumfang feststehen.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Klären Sie vor dem visuellen Entwurf einer Firmenwebsite, wer welche Informationen für welche Entscheidung braucht. Prüfen Sie den Weg einer typischen Anfrage durch Leistungen, Referenzen, Preise und Kontakt. Das Beispiel Acecore Systems zeigt diesen Ansatz; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) behandelt außerdem Struktur und Auffindbarkeit.
 
 Am 26. Juli 2026 haben wir die [offizielle Website von Acecore Systems](/de/) erneuert.
 

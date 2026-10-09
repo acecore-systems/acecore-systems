@@ -2,7 +2,7 @@
 title: "Технический дизайн AI-чата для обращений на сайте Astro"
 description: "Эталонная архитектура по состоянию на июнь 2026 года. Практический дизайн AI-чата для обращений на статическом сайте Astro + Cloudflare Pages с OpenAI Responses API. Рассмотрены граница API, контекст сайта, управление prompt, URL по locale, проверка Origin, rate limit и безопасный рендеринг Markdown-ссылок."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Технологии", "Cloudflare", "Веб-сайт", "AI", "Услуги"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -79,6 +79,8 @@ faq:
     - question: Может ли AI выводить любые ссылки?
       answer: Нет. Разрешены внутренние пути, текущий origin, acecore.net, официальный LINE и необходимые mailto или tel. Markdown URL очищаются через trim перед проверкой.
 ---
+
+Для первого ИИ-чата на статическом сайте ограничьтесь публичными FAQ, а официальные заявки и расчёты передавайте форме. Серверные подключения сверяйте с [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/). Проверка URL ниже — исторический упрощённый пример: используйте разбор URL и разрешённый список из связанной статьи, а не только сравнение префиксов.
 
 > **Дополнение от 26 сентября 2026 года:** Ниже описана архитектура по состоянию на июнь 2026 года. Сейчас API чата Acecore Systems передаёт запросы через Cloudflare Pages Function и Service Binding общему acecore-chat-worker. Интерфейс получает JSON и показывает готовый ответ. Прямой вызов OpenAI ниже больше не отражает текущую реализацию.
 

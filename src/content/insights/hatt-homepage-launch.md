@@ -1,6 +1,6 @@
 ---
-title: "Hattのホームページを公開しました"
-description: "絵、小説、VRChat向け3Dアバター・ギミック制作をまとめる「Hattのホームページ」を公開しました。Astro、Sveltia CMS、Pagefindを使い、創作活動を継続して発信できる個人サイトとして設計しています。"
+title: "Astroで創作ポートフォリオを作る：CMS・検索・外部作品への導線"
+description: "絵、小説、VRChat向け3D制作をまとめたHattのサイトを例に、活動の分類、Sveltia CMS更新、Pagefind検索、BOOTHなど外部作品への導線を設計する方法を紹介します。"
 date: 2026-06-06T10:00
 author: gui
 tags: ["お知らせ", "Web制作", "Webサイト", "CMS", "Astro"]
@@ -61,11 +61,18 @@ faq:
       answer: Astro、TypeScript、UnoCSS、Sveltia CMS、Pagefindを使った静的サイトとして構築しています。
     - question: Acecoreでは個人サイトやポートフォリオサイトも相談できますか？
       answer: はい。活動内容の整理、デザイン、CMS、検索、SEO、公開後の更新導線までまとめて相談できます。
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 Hattの創作活動をまとめる個人サイト「[Hattのホームページ](https://hatt.acecore.net/)」を公開しました。
 
 このサイトは、絵、小説、VRChat向け3Dアバター・ギミック制作を一つの入口にまとめるためのホームページです。Acecore Systemsの[実績ページ](https://systems.acecore.net/works/#case-hatt-homepage)にも、Web制作・CMS構築の事例として掲載しました。
+
+## 創作ポートフォリオを一件から設計する
+
+複数の活動先をまとめたいなら、代表作品を一つ選び、紹介ページから作品の公開先へ迷わず進めるか試します。作品名・ジャンル・制作メモを検索対象にし、CMSで一件更新した後に検索でも見つかるか確かめると、記事が増えた後の運用を具体化できます。
+
+[Pagefind：静的サイト検索の導入手順](https://pagefind.app/docs/)
 
 ## 制作の背景
 

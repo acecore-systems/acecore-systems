@@ -4,7 +4,7 @@ description: "Resumen de los pasos para implementar correctamente datos estructu
 date: 2026-03-25T11:00
 author: gui
 tags: ["Tecnología", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: ¿El priority del sitemap afecta al SEO?
       answer: "Google ignora `priority` y `changefreq`; inventar valores no aporta ventajas de SEO."
 ---
+
+Empieza el SEO de Astro revisando title, description, canonical y JSON-LD del HTML generado de un artículo representativo frente al contenido visible. Valida campos obligatorios con [Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) y revisa Search Console tras publicar. La sintaxis correcta no garantiza resultados enriquecidos ni posiciones.
 
 > Actualización de septiembre de 2026: Google retiró el cuadro de búsqueda de enlaces de sitio en noviembre de 2024. Los resultados enriquecidos de FAQ se limitan generalmente a sitios gubernamentales y de salud reconocidos, y Google ignora `changefreq` y `priority` del sitemap. Lee este registro de marzo de 2026 junto con los cambios del [cuadro de búsqueda](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) y la [guía de sitemaps](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
@@ -192,7 +194,7 @@ Finalmente, resumimos los puntos a verificar en la mejora SEO de un sitio Astro.
 6. **¿El feed RSS incluye autor y categorías?**
 7. **¿Se excluyen del rastreo los índices de búsqueda (`/pagefind/`, etc.) en robots.txt?**
 
-Si se configuran todos estos elementos, la base del SEO estará lista. Lo que determinará el ranking de búsqueda será la calidad del contenido y la frecuencia de actualización.
+Estos ajustes permiten transmitir contenido público a los buscadores. Las posiciones no dependen solo de calidad y frecuencia de actualización, y configurar no demuestra más tráfico. Usa consultas, impresiones y tasas de clic posteriores para mejorar respuestas a las necesidades del lector.
 
 ---
 

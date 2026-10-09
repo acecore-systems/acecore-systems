@@ -82,8 +82,10 @@ faq:
       answer: "For post_slug based reads, created_at ordering, duplicate checks, and soft deletion, D1 is a good fit. Larger community features need a broader design."
     - question: Is client-side Turnstile enough?
       answer: "No. The Pages Function must verify the Turnstile token with Cloudflare Siteverify before writing to D1."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Choose custom blog comments based on your ability to handle approval and deletion, not storage alone. An external service suits delegated moderation; D1 suits custom UI and storage policies. For the first submission test, follow [Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/) and verify failed validation creates no database record.
 
 Static sites usually avoid server-side state. Comments are the moment that rule becomes inconvenient.
 

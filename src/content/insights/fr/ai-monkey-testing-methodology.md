@@ -1,10 +1,10 @@
 ---
 title: "Méthode pratique de monkey testing de sites web avec GitHub Copilot × Playwright"
-description: "Retour d'expérience sur le monkey testing systématique d'un site statique en combinant le mode agent de VS Code (GitHub Copilot) et les outils de navigateur Playwright. De la conception des tests aux bugs découverts et corrigés, en passant par les propositions d'amélioration."
+description: "Pour commencer des tests exploratoires avec l’IA et Playwright, délimitez la navigation et les formulaires autorisés, puis notez reproduction et résultat attendu."
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code", "Astro", "Site web"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - Navigation automatique de toutes les routes avec vérification du statut HTTP et de la structure DOM
       - Extraction automatique des cibles de test par l'IA à partir du code source
-      - Détection sans aucun oubli des images cassées, liens vides et erreurs JS
+      - Détecter images cassées, liens vides et erreurs JS dans le périmètre défini
       - Découverte → identification de la cause → correction → revérification en une seule session
 faq:
   title: Questions fréquentes
@@ -53,6 +53,8 @@ faq:
     - question: "Peut-on aussi confier la correction des bugs découverts à l'IA ?"
       answer: "Le mode agent permet la lecture et l'écriture de fichiers, ce qui permet de compléter l'ensemble du processus — de la détection du bug à sa correction et à la vérification du build — au sein d'une même session. Dans cet article, nous avons découvert 2 bugs et les avons corrigés sur-le-champ."
 ---
+
+Pour commencer des tests exploratoires avec l’IA et Playwright, délimitez la navigation et les formulaires autorisés, puis notez reproduction et résultat attendu. Appuyez-vous sur [Playwright: Best Practices](https://playwright.dev/docs/best-practices) pour créer des tests de régression reproductibles. Les nombres de routes et de violations sont des observations historiques, sans preuve d’exhaustivité.
 
 > **Mise à jour de septembre 2026:** L’utilisation de Copilot est désormais décrite en AI Credits plutôt que par le nombre mensuel de requêtes du mode agent cité à l’origine. Consultez la [documentation actuelle de GitHub](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing).
 
@@ -124,6 +126,8 @@ Cibles de test : 38 routes
 
 Résultat : toutes les routes retournent 200 OK (sauf le 404 intentionnel)
 ```
+
+Le relevé historique présente des incohérences entre le total de routes de ce journal, son détail et le récapitulatif en fin d’article. N’utilisez pas ce total comme preuve de reproductibilité : énumérez les URL cibles depuis le build réel pour définir le périmètre. Le code et les chiffres publiés restent conservés comme relevés historiques.
 
 ### Vérification de la structure DOM
 

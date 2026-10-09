@@ -1,8 +1,8 @@
 ---
-title: "Cómo verificamos la migración de Dynmap a 512px y retiramos imágenes antiguas de R2"
-description: "Registro operativo de la migración de 89 mapas en ocho servidores a imágenes de 512px, con revisión pública y limpieza de datos antiguos en R2."
+title: "Migrar Dynmap a teselas de 512px: verificación pública y limpieza de R2"
+description: "Cómo comprobar área de renderizado, imágenes normales y de zoom, y almacenamiento R2. Un ejemplo de ocho servidores y 89 mapas explica controles antes del borrado y condiciones para comparar costes."
 date: "2026-09-27T22:40:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Tecnología", "Cloudflare"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Cambiamos el formato de las imágenes de un Dynmap que distribuye mapas desde Cloudflare R2 y limpiamos los datos antiguos. El alcance fue de ocho servidores y 89 mapas. El orden era esencial: comprobar las imágenes nuevas en público antes de borrar las antiguas.
+
+## Qué comparar antes de migrar las teselas de Dynmap
+
+Compare imágenes normales y de zoom sobre la misma área antes de elegir teselas de 512px. Registre por separado las solicitudes de lectura y las escrituras de renderizado. Enumere los prefijos antiguos y decida si borrarlos tras comprobar las imágenes públicas y su regeneración desde el mundo.
+
+[R2：Medir almacenamiento y operaciones](https://developers.cloudflare.com/r2/platform/metrics-analytics/)
 
 ## Migración gradual con un área de renderizado limitada
 

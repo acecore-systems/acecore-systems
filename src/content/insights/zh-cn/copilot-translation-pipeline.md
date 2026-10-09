@@ -1,8 +1,8 @@
 ---
 title: "用 Sveltia CMS 运营多语言博客的方法"
-description: "本文记录 2026 年 6 月的 Copilot 翻译 PR 流程，以及 2026 年 9 月采用 OpenAI Batch 的现行流程。"
+description: "开始多语言博客流程时，先用代表文章的翻译文件生成各语言HTML，检查正文、title、description和内部链接。"
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: 翻译页面会被视为重复内容吗？
       answer: "Google 的说明是，主要内容已经翻译的本地化页面不会仅因为内容对应就成为重复页面。应保持 slug 对应，并通过 hreflang 表示关系。"
 ---
+
+开始多语言博客流程时，先用代表文章的翻译文件生成各语言HTML，检查正文、title、description和内部链接。按照[Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)仅关联存在的语言版本，并将翻译服务成功与公开页面完成分别验收。
 
 > **2026 年 9 月 26 日更新：** 下文的 Copilot 翻译 PR 步骤记录的是 2026 年 6 月的实施方式。翻译生成现已迁移至 OpenAI Batch。日文仍是原文，按语言发布翻译后的静态页面这一原则仍然适用。
 

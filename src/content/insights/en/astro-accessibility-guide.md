@@ -1,8 +1,8 @@
 ---
 title: "Practical Accessibility Improvements for an Astro Site"
-description: "A record of accessibility improvements made to an Astro + UnoCSS site in March 2026, including ARIA, contrast, focus, forms, and screen reader examples."
+description: "Prioritize Astro accessibility work around a task users need to complete, such as a contact form."
 date: 2026-03-25T12:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Accessibility"]
 image: "/images/insights/covers/astro-accessibility-guide-cover-v2.webp"
@@ -52,6 +52,8 @@ faq:
     - question: Does a PageSpeed Accessibility score of 100 mean WCAG compliance?
       answer: "Even a score of 100 doesn't guarantee full WCAG compliance. Lighthouse has limited check items, and some criteria can only be verified manually (logical reading order, appropriate alt text, etc.). Both automated and manual testing are necessary."
 ---
+
+Prioritize Astro accessibility work around a task users need to complete, such as a contact form. Use the keyboard to enter data, correct errors and finish, checking labels and notifications against [W3C WAI: Forms Tutorial](https://www.w3.org/WAI/tutorials/forms/). Verify task completion separately from the automated scores reported below.
 
 **Update, September 26, 2026:** The code and PageSpeed Accessibility score of 100 below record the Astro + UnoCSS site in March 2026. The current company site declares Tailwind CSS 4.3.3. These selected checks and an automated score do not establish site-wide WCAG AA conformance. A conformance assessment must define the pages and complete processes in scope and evaluate all Level A and AA success criteria with automated and human testing ([W3C conformance requirements](https://www.w3.org/WAI/WCAG22/Understanding/conformance)).
 

@@ -1,8 +1,8 @@
 ---
-title: "So prüften wir Dynmaps Umstellung auf 512px und entfernten alte R2-Bilder"
-description: "Betriebsbericht über die Umstellung von 89 Karten auf acht Servern auf 512px-Bilder und die Prüfung der öffentlichen Anzeige und alten R2-Daten."
+title: "Dynmap auf 512px-Tiles migrieren: öffentliche Prüfung und R2-Bereinigung"
+description: "Renderbereiche, normale und Zoom-Bilder sowie R2-Speicher bei einer 512px-Migration prüfen. Ein Beispiel mit acht Servern und 89 Karten erklärt Kontrollen vor dem Löschen und Bedingungen für Kostenvergleiche."
 date: "2026-09-27T22:40:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Technologie", "Cloudflare"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Wir änderten das Bildformat einer Dynmap-Installation, die Karten über Cloudflare R2 ausliefert, und räumten alte Daten auf. Betroffen waren acht Server und 89 Karten. Entscheidend war die Reihenfolge: erst die neuen Bilder öffentlich prüfen, dann die alten löschen.
+
+## Was vor einer Dynmap-Tile-Migration zu vergleichen ist
+
+Vergleichen Sie normale und Zoom-Bilder im gleichen Renderbereich, bevor Sie 512px-Tiles wählen. Erfassen Sie Abrufe und Render-Schreibvorgänge getrennt. Listen Sie alte Präfixe zunächst auf; entscheiden Sie erst nach Prüfung der öffentlichen Bilder und der Wiederherstellung durch erneutes Rendern der Welt über das Löschen.
+
+[R2：Speicher und Operationen messen](https://developers.cloudflare.com/r2/platform/metrics-analytics/)
 
 ## Schrittweise Umstellung mit begrenztem Renderbereich
 

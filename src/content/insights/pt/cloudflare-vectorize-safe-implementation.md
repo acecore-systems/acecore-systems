@@ -2,7 +2,7 @@
 title: "Guia de implementação do Cloudflare Vectorize: sincronize HTML público com segurança"
 description: "Um guia detalhado para criar o corpus a partir do HTML público, manter o Pagefind disponível e operar a sincronização do Vectorize com segurança."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags:
   ["Tecnologia", "Cloudflare", "Vectorize", "Workers AI", "Pesquisa interna"]
@@ -117,6 +117,8 @@ faq:
     - question: Em que momento a implementação é considerada concluída?
       answer: "Não consideramos merge ou testes locais suficientes. Em Preview verificamos Pagefind e o fallback da interface; em Production verificamos a correspondência entre commit publicado e corpus, a sincronização do index, a convergência das mutations, a pesquisa relacionada, o rate limit e o procedimento de interrupção antes de registrar a operação."
 ---
+
+Para testar sincronização incremental, regenere o corpus com HTML público idêntico e confirme ausência de adições ou exclusões sem alterações. Depois teste uma pequena mudança e confira conclusão da mutação e busca com [Cloudflare Vectorize: API](https://developers.cloudflare.com/vectorize/reference/client-api/). Defina limiares de exclusão separadamente dos limites do produto.
 
 > **Atualização de 26 de setembro de 2026:** A busca da Acecore Systems usa Cloudflare Workers AI BGE-M3 e um índice Vectorize dedicado de 1024 dimensões. Mudar o modelo exige reconstruir o corpus e o índice. O método de sincronizar o HTML publicado e manter o Pagefind continua válido.
 

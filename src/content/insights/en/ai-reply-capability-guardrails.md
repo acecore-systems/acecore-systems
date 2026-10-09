@@ -2,7 +2,7 @@
 title: "Preventing AI Replies from Making Promises They Cannot Keep"
 description: "How to keep an informational assistant from promising staff participation, scheduling, or follow-up it cannot perform. Covers conversation state, retrieval failures, rechecking stale drafts, and handling closed conversations."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "A generalized case; no specific conversation is published"
   text: "This case covers policy and classification changes, pre-send checks, tests, delivery, and limited operational review. It includes no other person's posts or account, and does not prove that every phrasing of an incorrect promise can be prevented."
 ---
+
+For inquiry guidance or support replies, define explaining public information, handing off to staff and making a booking as separate capabilities. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) helps frame permitted actions and approval. The following focuses on reply boundaries rather than platform-specific automated sending procedures.
 
 Even a natural-sounding informational reply must not promise that a staff member will follow up or attend at a certain time without evidence that the action can be performed. This generalized account of an internal reply workflow does not identify a platform or conversation.
 

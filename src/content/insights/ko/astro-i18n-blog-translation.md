@@ -1,8 +1,8 @@
 ---
 title: "Astro 7 사이트를 9개 언어로 지원하는 방법 ― 블로그 번역과 다국어 아키텍처"
-description: "2026년 7월 Astro 7.1.3과 UnoCSS로 9개 언어를 도입한 기록이며, 현재 의존성과 번역 경로도 안내합니다."
+description: "Astro 블로그를 다국어화할 때는 대표 글에서 본문, 메타 정보, 언어 전환을 맞추고 미번역 페이지로 연결되지 않는지 확인하세요."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["기술", "Astro", "i18n", "웹사이트"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: 새 글을 추가할 때 번역이 필요한가요?
       answer: "일본어 글을 공개하는 데 번역은 필수가 아닙니다. 해당 언어 디렉토리에 같은 이름의 Markdown 파일을 추가하면 그 locale의 글 URL, sitemap 항목, hreflang 관계가 생성 대상이 됩니다."
 ---
+
+Astro 블로그를 다국어화할 때는 대표 글에서 본문, 메타 정보, 언어 전환을 맞추고 미번역 페이지로 연결되지 않는지 확인하세요. [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)를 URL 설계 기준으로 삼아 UI와 글 번역을 따로 확장하세요. 아래 건수와 이전 CMS 구성은 도입 당시 사례입니다.
 
 > **2026년 9월 26일 추가:** 아래의 Astro 7.1.3, UnoCSS, 기사 수, Copilot 번역은 2026년 7월의 기록입니다. [현재 의존성 선언](https://github.com/acecore-systems/acecore-net/blob/main/package.json)은 Astro ^7.3.3과 Tailwind CSS 4.3.3을 사용하며, [번역 운영 업데이트](/insights/copilot-translation-pipeline/)는 OpenAI Batch를 설명합니다. 아래 코드와 수치를 현재 설정으로 사용하기 전에 최신 소스와 공개 페이지를 확인하세요.
 

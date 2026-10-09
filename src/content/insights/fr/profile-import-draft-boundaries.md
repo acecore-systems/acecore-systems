@@ -2,7 +2,7 @@
 title: "Importer un profil comme brouillon : comparer, choisir et publier avec discernement"
 description: "Une mise en œuvre générique pour importer un profil depuis du texte, un CSV, du HTML statique ou un JSON commun. Elle explique la comparaison des valeurs actuelles, le remplacement sélectif ou l’annulation, et la séparation entre enregistrement et publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Lorsqu’on transfère un profil existant vers un autre éditeur, il faut comparer les valeurs actuelles aux données candidates avant tout remplacement. Cet exemple anonymisé décrit les limites entre l’importation et la publication d’un profil.
+
+## Tester la conservation des retouches avec une biographie
+
+Modifiez manuellement la biographie, puis importez un autre texte candidat. Vérifiez conservation des champs non sélectionnés, possibilité de revoir les remplacements et restauration après annulation. Comparez ensuite brouillon et page publique : l’import seul ne doit pas modifier la publication.
+
+[OWASP：Valider format, valeurs et longueur des entrées](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Définir d’abord les formats d’entrée pris en charge
 

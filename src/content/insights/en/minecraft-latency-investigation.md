@@ -2,7 +2,7 @@
 title: "Investigating Minecraft Lag: Quiet Metrics and Shared-Storage Diagnosis"
 description: "From quiet TPS/MSPT collection to correlating JFR and OS I/O observations. This article separates a completed cause investigation from performance improvements that have not been tested."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Minecraft lag can come from different sources: server tick processing, brief save stalls, networking, or client rendering. This anonymized investigation covers several Paper servers without revealing internal hostnames or configuration.
+
+## Capture the first profile while lag is occurring
+
+Record the reported lag time, player count, and whether saving was happening; compare the profile with MSPT from that period. Take a short normal-period sample too. Distinguishing more processing from more waiting helps choose between plugin tuning and storage investigation.
+
+[PaperMC：Profiling during the problem](https://docs.papermc.io/paper/profiling/)
 
 ## Measure averages and brief pauses separately
 

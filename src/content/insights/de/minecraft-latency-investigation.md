@@ -2,7 +2,7 @@
 title: "Minecraft-Lag untersuchen: unauffällige Messung und gemeinsame Speicherpfade"
 description: "Von der leisen Erfassung von TPS/MSPT bis zum Abgleich von JFR und I/O-Beobachtungen des Betriebssystems. Der Beitrag trennt die abgeschlossene Ursachensuche von noch nicht geprüften Leistungsverbesserungen."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Minecraft-Lag kann verschiedene Ursachen haben: Tick-Verarbeitung des Servers, kurze Speicherwartezeiten, Netzwerk oder Rendering auf dem Client. Wir beschreiben anonym eine Untersuchung auf mehreren Paper-Servern, ohne interne Hostnamen oder Konfiguration offenzulegen.
+
+## Das erste Profil während des Lags erfassen
+
+Notieren Sie Lag-Zeitpunkt, Spielerzahl und laufende Speichervorgänge; vergleichen Sie das Profil mit MSPT aus diesem Zeitraum. Erfassen Sie auch ein kurzes Normalfenster. Mehr Rechenarbeit von mehr Wartezeit zu unterscheiden hilft bei der Wahl zwischen Plugin-Anpassung und Speicheranalyse.
+
+[PaperMC：Während des Problems profilieren](https://docs.papermc.io/paper/profiling/)
 
 ## Durchschnittswerte und kurze Aussetzer getrennt messen
 

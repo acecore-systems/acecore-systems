@@ -82,8 +82,10 @@ faq:
       answer: "Для выборки по post_slug, сортировки, soft delete, rate limit и дубликатов D1 хорошо подходит."
     - question: Достаточно ли Turnstile в браузере?
       answer: "Нет. Pages Function должна проверить token через Siteverify перед записью в D1."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Выбирайте собственные комментарии исходя из возможности одобрять и удалять записи, а не только хранить их. Внешний сервис позволяет делегировать модерацию, D1 — задать свой интерфейс и правила хранения. По [Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/) проверьте, что неуспешная проверка не создаёт запись.
 
 Комментарии добавляют состояние в статический сайт.
 

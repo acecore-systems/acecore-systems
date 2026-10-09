@@ -1,6 +1,6 @@
 ---
-title: "VitePress에서 Starlight로 — 문서 사이트 프레임워크 통합"
-description: "VitePress + UnoCSS로 구축한 사업계획서를 Astro + Starlight로 마이그레이션하여 두 프로젝트의 프레임워크를 통합한 기록. Mermaid 다이어그램의 CDN 이전도 다룹니다."
+title: "VitePress에서 Starlight로 이전: Markdown·URL·Mermaid 검증"
+description: "문서 기반을 Astro로 통일할지 판단하고 이전하는 방법을 설명합니다. 2026년 3월 사례로 Markdown 배치, frontmatter, 이전 URL, Mermaid 렌더링과 CDN 의존성을 확인합니다."
 date: 2026-03-15T00:00
 author: gui
 tags: ["기술", "Astro", "Starlight"]
@@ -42,13 +42,19 @@ faq:
     - question: VitePress에서 Starlight로 마이그레이션하면 어떤 이점이 있나요?
       answer: 메인 사이트가 Astro라면 프레임워크 통합으로 학습 비용이 줄어들고, 의존성 관리가 간소화되며, 설정의 일관성이 높아집니다. 빌드 파이프라인도 통합할 수 있습니다.
     - question: Mermaid 다이어그램은 어떻게 렌더링하나요?
-      answer: 플러그인 의존에서 CDN(jsdelivr)을 통한 Mermaid 로딩으로 전환했습니다. 빌드 의존성이 완전히 해소되며 안정적인 다이어그램 렌더링이 가능합니다.
+      answer: "jsdelivr에서 Mermaid를 로드하여 대상 요소에 도표 정의를 전달했습니다. Mermaid npm 의존성을 제거할 수 있지만 CDN 가용성과 버전 호환성은 별도 확인이 필요합니다."
     - question: 마이그레이션에 얼마나 걸리나요?
       answer: 주요 작업은 디렉토리 구조 변환(docs/ → src/content/docs/)과 프론트매터 조정입니다. 콘텐츠 자체가 Markdown이므로 그대로 재사용할 수 있어 비교적 빠르게 완료됩니다.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 VitePress 문서 사이트를 Astro + Starlight로 마이그레이션하는 과정을 소개합니다. 메인 사이트가 Astro라면 Starlight로 문서를 통합하면 운용이 간소화됩니다. Mermaid 다이어그램의 CDN 이전도 함께 다룹니다.
+
+## 이전 전 페이지 하나로 호환성 확인하기
+
+제목, 내부 링크, 코드, Mermaid가 있는 페이지 하나를 먼저 옮겨 생성 URL과 도표를 비교합니다. CDN import만으로 Markdown 코드 블록이 Mermaid 대상이 되는 것은 아닙니다. 정의를 class="mermaid" 요소에 전달하는 렌더링 처리도 필요하므로 생성 HTML을 확인한 뒤 전체를 이전하세요.
+
+[Starlight：Markdown과 HTML 작성 사양](https://starlight.astro.build/guides/authoring-content/)
 
 ## 왜 프레임워크를 통합하는가?
 
@@ -124,7 +130,7 @@ VitePress 환경에서는 커스텀 스타일링에 UnoCSS를 사용했지만, S
 
 ## Mermaid 다이어그램 CDN 이전
 
-사업계획서에서는 Mermaid를 사용하여 플로우차트와 조직도를 작성합니다. VitePress에서는 플러그인(`vitepress-plugin-mermaid`)으로 통합했지만, Starlight에는 이런 플러그인이 존재하지 않습니다.
+문서에서는 `vitepress-plugin-mermaid`를 사용했습니다. 의존성 관리를 통일하려 이번 Starlight 이전에서는 CDN 로드를 선택했습니다. [공식 플러그인 목록](https://starlight.astro.build/resources/plugins/)에서 확장도 확인할 수 있으며 CDN만 가능한 것은 아닙니다.
 
 그래서 브라우저 측에서 CDN으로 Mermaid를 로딩하는 방식으로 전환했습니다.
 
@@ -148,7 +154,7 @@ starlight({
 });
 ```
 
-Markdown에서 표준 Mermaid 문법을 그대로 사용할 수 있습니다:
+아래 코드 블록은 도표 정의 예시이며 [Mermaid 대상 요소](https://mermaid.js.org/intro/)에 정의를 전달하는 렌더링 처리도 필요합니다:
 
 ````markdown
 ```mermaid
@@ -162,7 +168,7 @@ graph TD
 ### CDN 방식의 이점
 
 - **빌드 의존성 제로**: Mermaid를 npm 패키지로 설치할 필요 없음
-- **항상 최신**: CDN에서 최신 버전을 가져옴
+- **버전 고정**: 예제는 11.16.0을 지정하며 CDN 사용만으로 최신 버전으로 자동 갱신되지 않음
 - **SSR 불필요**: 브라우저에서 렌더링하므로 빌드 시간에 영향 없음
 
 ## 마이그레이션 결과

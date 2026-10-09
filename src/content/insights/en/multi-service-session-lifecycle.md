@@ -2,7 +2,7 @@
 title: "Aligning login expiry across services: session renewal and reauthentication"
 description: "A generalized design for consistent login expiry across web services, separating explicit sign-in, server enforcement, cookies and identity-provider settings."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Sharing an account does not make every application session identical to the identity provider’s session. This internal case aligns expiry rules without publishing deployment targets or timeout values.
+
+## Compare the same request before and after expiry
+
+Use a short lifetime in a test environment. Run explicit login, browsing, and background refresh separately and compare changes to server-held expiry. After expiry, try the same operation through the UI and API, checking reauthentication guidance and denial of data access. Record this separately from long-term production behavior.
+
+[OWASP：Session expiry design and testing](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## Identify each lifetime
 

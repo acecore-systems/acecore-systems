@@ -2,7 +2,7 @@
 title: "使用 Cloudflare Pages 和 D1 构建受保护的运维仪表盘"
 description: "匿名介绍如何通过 Cloudflare Access 保护入口，并由 Pages Functions 读取 D1 运维汇总。区分已验证的生产发布、认证后界面、数据库索引使用，以及尚未测试的项目。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 运维信息分散在日志和数据库中时，工作人员可能难以安全地确认当前状态。本文匿名介绍一个运维仪表盘案例，说明如何验证访问边界、数据汇总和发布过程。文中不包含域名、账号、帖子内容或实时运营数值。
+
+## 从界面和API验收一项聚合
+
+先选择指定期间件数等一项聚合，用已知测试数据核对界面数值。测试能否区分空期间与读取失败，并确认认证前后的API直接访问，再增加聚合项。索引应通过该筛选条件的查询计划验证。
+
+[Cloudflare D1：根据查询条件验证索引](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## 将页面和 API 一并放入访问边界
 

@@ -2,7 +2,7 @@
 title: "Technisches Design zur Übergabe des Kontexts eines Service-CTA an das Kontaktformular"
 description: "Implementierungsdesign, das den auf einer Serviceseite gelesenen Kontext an das Kontaktformular übergibt. Behandelt werden Mini-CTAs in Astro, der URL-Parameter-Vertrag, die anfängliche Kategorieauswahl, Subject-Prefill, mehrsprachige URLs, GA-Messung und Prüfung des generierten HTML."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ Wenn ein Besucher auf einer Serviceseite denkt „dazu möchte ich eine Anfrage 
 Er muss den Servicetyp erneut auswählen und den Betreff schreiben. Auch das empfangende Team kann vor dem Lesen der Nachricht kaum erkennen, ob es um Webproduktion, Serverbetrieb oder Aceserver geht.
 
 Auf der Acecore-Website haben wir diesen Weg mit dem [PR zur Übergabe des Serviceziels an das Kontaktformular](https://github.com/acecore-systems/acecore-net/pull/100) verbessert. Dieser Artikel beschreibt die Lösung sowohl als Astro-Implementierung als auch als wiederverwendbares Journey-Design.
+
+## Formularinitialisierung anhand eines CTA prüfen
+
+Testen Sie gültige und unbekannte Schlüssel sowie Zurücknavigation nach Betreffeingabe. Prüfen Sie zulässige Optionen und Erhalt des Betreffs mit demselben Wertevertrag in Sprach-URLs. Übergeben Sie Kontext über kurze Kennungen; personenbezogene Daten und Freitext gehören nicht in URLs.
+
+[MDN URLSearchParams：URL-Parameter lesen](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## Das Ziel ist nicht nur weniger Formulareingabe
 

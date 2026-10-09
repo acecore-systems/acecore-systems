@@ -2,7 +2,7 @@
 title: "CSS utilisateur et thèmes publics sûrs : source partagée, rendu cloisonné et versions figées"
 description: "Un modèle anonymisé de modification de profil où l’interface graphique et l’édition directe partagent une même source de CSS. L’article traite d’une syntaxe CSS étendue dans un périmètre de rendu, des brouillons et versions publiées, des versions immuables de thèmes, du retrait et de la suspension opérationnelle."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Un éditeur de profil qui permet d’ajuster les couleurs et les espacements dans une interface graphique et de modifier toute la mise en page avec du CSS doit tenir compte à la fois de l’ergonomie et de la sécurité du code affiché sur les pages publiques. Ce cas anonymisé présente les limites entre modification et distribution.
+
+## Choisir séparément liberté de style et distribution
+
+Pour l’édition personnelle, testez d’abord confinement et conflits de sauvegarde. La distribution exige aussi IDs fixes, conditions d’usage et apparence standard après suspension. Un petit thème avec Grid et pseudo-éléments permet de vérifier navigation extérieure intacte et versions appliquées stables après mise à jour de l’auteur.
+
+[W3C Selectors：Vérifier la portée des sélecteurs](https://www.w3.org/TR/selectors-4/)
 
 ## Partager une même source de CSS entre l’interface graphique et l’édition directe
 

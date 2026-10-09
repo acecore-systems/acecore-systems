@@ -1,8 +1,8 @@
 ---
-title: "Astro 站点品质改善指南 续篇 - 达成 PageSpeed Insights 全项目 100 分的最终调整"
-description: "记录上一篇文章之后完成的最后一轮优化：停用 Cloudflare Web Analytics、延后加载 GA4 与搜索 UI、实现 PageSpeed Insights 移动端与桌面端四项全满分、整理 Search Console 中的面包屑与索引策略、迁移到共享 SVG 图标，以及说明哪些额外优化尝试过但没有采纳。"
+title: "比较Astro延迟加载：GA4、Pagefind与PageSpeed最终调整"
+description: "介绍延迟加载GA4和Pagefind并保留必要功能的选择方法。以2026年3月29日PageSpeed全项100分、索引整理和未采用的CSS拆分作为比较依据。"
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "Astro", "性能", "无障碍", "SEO", "网站"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -103,7 +103,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: 无障碍篇
-    description: 梳理实现 WCAG AA 合规与 Accessibility 100 的具体措施。
+    description: "aria、对比度与表单改善实例，与完整WCAG符合性验证分开。"
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX 与代码质量篇
@@ -125,6 +125,12 @@ faq:
 ---
 
 **2026年9月26日补充：** 这里的100分是2026年3月29日PageSpeed Insights的测量结果，不保证当前分数或所有真实用户的体验。实验室与真实用户数据的差异及结果波动，请参阅[Google官方说明](https://developers.google.com/speed/docs/insights/v5/about)。
+
+## 采用延迟加载前先测试首次操作
+
+GA4或搜索延迟加载应结合显示测量和功能验收判断。测试打开页面后立即点击CTA、打开搜索及跳转页面，确认事件遗漏、重复计量和首次搜索等待时间。即使分数提高，若失去必要功能也应放弃该方案。
+
+[PageSpeed Insights：理解测量结果](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## 前言
 

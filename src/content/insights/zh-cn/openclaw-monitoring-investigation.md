@@ -2,7 +2,7 @@
 title: "用OpenClaw连接监控与故障调查：检测、证据和判断的边界"
 description: "介绍定期检查与受限的OpenClaw调查如何配合，并区分已验证的运行与尚未验证的故障恢复。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 监控需要分别明确异常检测和原因调查的职责。本文介绍定期检查与OpenClaw调查的连接方式，不公开内部拓扑或通知目的地。
+
+## 用已知异常评估调查报告
+
+导入前在测试环境准备采集失败或监控值过期等原因已知的情况。评估报告是否包含观测时间、证据和未取得项目，以及超时后是否保留部分结果，避免只凭文字是否自然判断调查质量。
+
+[OpenClaw：调查环境的权限边界](https://docs.openclaw.ai/gateway/security)
 
 ## 明确检测条件
 

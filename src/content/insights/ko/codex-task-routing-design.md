@@ -1,5 +1,5 @@
 ---
-title: "Codex 작업 분담 설계: 공개 플러그인 Task Routing"
+title: "Codex 작업 분담 설계: 인계·권한·결과 검수"
 description: "Codex Task Routing을 통해 상위 작업 설정 유지, 적용 정책의 버전 식별, 범위가 정해진 인계와 실제 실행 확인 방법을 살펴봅니다."
 date: "2026-09-26T18:30:00+09:00"
 author: gui
@@ -9,8 +9,10 @@ callout:
   type: note
   title: "확인한 범위"
   text: "공개 코드, 병합된 PR, 세 운영체제의 CI, 격리 환경 설치 검사를 확인했습니다. 품질이나 사용량 개선 수치 및 실제 계정에서 하위 모델이 실행되었다는 주장은 하지 않습니다."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Codex 분담은 독립적으로 검수할 수 있는 조사나 리뷰부터 시험해 부모가 통합할 책임을 명확히 하세요. 인계에는 파일, 참고 자료, 증거, 미확인 사항을 포함하고 도구 권한에는 [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)의 최소화 원칙을 참고하세요. 분담 사실만으로 품질이나 비용 개선을 판단하지 않습니다.
 
 Codex로 여러 작업을 진행할 때 모델 선택만으로는 충분하지 않습니다. 어떤 단계를 독립적으로 맡길 수 있는지, 어떤 자료를 전달할지, 결과를 어떻게 검수할지도 정해야 합니다. Acecore는 이 판단을 명확히 하기 위해 [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing)을 공개했습니다.
 

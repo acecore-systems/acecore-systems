@@ -1,8 +1,8 @@
 ---
-title: "Astro Site Quality Improvement Guide — Achieving PageSpeed Mobile Score of 99"
-description: "A complete record of improving an Astro + UnoCSS + Cloudflare Pages site across four axes — performance, SEO, accessibility, and UX — achieving a PageSpeed Insights mobile score of 99 and perfect 100 on all desktop metrics."
+title: "Improve Astro site quality: measure speed, SEO, and accessibility"
+description: "Measure CSS, fonts, images, and external scripts, then improve SEO and usability. A March 25, 2026 mobile PageSpeed score of 99 illustrates how to choose changes and remeasure them."
 date: 2026-03-25T15:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Performance", "Accessibility", "SEO", "Website"]
 image: "/images/insights/covers/website-improvement-batches-cover-v2.webp"
@@ -40,7 +40,7 @@ compareTable:
     items:
       - Mobile 99 / 100 / 100 / 100 (all desktop metrics at 100)
       - 7 types of structured data + OGP + canonical fully implemented
-      - WCAG AA compliant (contrast, aria, SR notifications, focus-visible)
+      - Improved contrast, aria, screen-reader notices, and focus-visible
       - All components compatible with View Transitions
       - SITE constants, social URLs, and ad IDs centrally managed
 linkCards:
@@ -54,7 +54,7 @@ linkCards:
     icon: i-lucide-search
   - href: /blog/astro-accessibility-guide/
     title: Accessibility
-    description: A guide to achieving WCAG AA compliance through aria attributes, contrast, and form improvements.
+    description: "Practical improvements to aria, contrast, and forms; separate from verifying every WCAG requirement."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: UX & Code Quality
@@ -74,6 +74,12 @@ faq:
 ---
 
 **Update, September 26, 2026:** This article records improvements as of March 25, 2026. Its view that 99 was a practical ceiling was superseded by the [March 29 follow-up](/insights/website-improvement-final-batch/), which recorded 100. These are scores from their respective tests, not current scores. [Google's PageSpeed Insights documentation](https://developers.google.com/speed/docs/insights/v5/about) explains why results can vary.
+
+## Choose the first change from page transfer sizes
+
+Measure representative home and article pages under the same conditions and compare CSS, fonts, images, and external JavaScript bytes. Change one major contributor, remeasure, and test forms and search. A perfect automated score does not prove full WCAG conformance; check keyboard use and screen readers separately.
+
+[PageSpeed Insights：Lab measurement versus real-user data](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Introduction
 
@@ -181,4 +187,4 @@ Achieving PageSpeed Insights mobile 99 comes down to rigorously following the pr
 
 By pursuing SEO, accessibility, and UX improvements in parallel, high scores across all four categories become achievable. Rather than obsessing over 100, aiming for a stable 95+ is a more realistic goal.
 
-See the link cards above for detailed coverage of each topic. For information on the improvement workflow and how changes were reflected in code, also check out the [Development Workflow with GitHub Copilot](/blog/tax-return-with-copilot/).
+See the link cards above for detailed coverage of each topic. For information on the improvement workflow and how changes were reflected in code, also check out the [A tax-filing example of sharing AI decision records](/blog/tax-return-with-copilot/).

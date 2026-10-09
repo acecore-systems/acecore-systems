@@ -2,7 +2,7 @@
 title: "CSS de usuários e temas públicos com segurança: fonte compartilhada, escopo de renderização e versões fixas"
 description: "Um projeto anonimizado de edição de perfil em que a interface gráfica e a edição direta compartilham uma única fonte de CSS. Aborda sintaxe CSS ampla dentro dos limites de renderização, rascunhos e versões publicadas, versões imutáveis de temas, remoção da listagem e suspensão operacional."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Um editor de perfil que permite ajustar cores e espaçamentos por uma interface gráfica e editar todo o layout com CSS precisa cuidar tanto da usabilidade quanto da segurança do código exibido em páginas públicas. Este caso anonimizado descreve os limites entre edição e distribuição.
+
+## Escolher liberdade de estilos e distribuição separadamente
+
+Para edição pessoal, teste primeiro isolamento do escopo e conflitos ao salvar. Distribuir também exige IDs fixos, condições de uso e aparência padrão após suspensão. Use um tema pequeno com Grid e pseudoelementos para verificar navegação externa intacta e versões aplicadas estáveis após atualizações do autor.
+
+[W3C Selectors：Verificar o escopo dos seletores](https://www.w3.org/TR/selectors-4/)
 
 ## Compartilhar a mesma fonte de CSS entre a interface gráfica e a edição direta
 

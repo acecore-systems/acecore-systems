@@ -2,7 +2,7 @@
 title: "Profildaten als Entwurf importieren: vergleichen, auswählen, gezielt veröffentlichen"
 description: "Eine verallgemeinerte Umsetzung für Profilimporte aus Text, CSV, statischem HTML und gemeinsamem JSON. Sie behandelt den Vergleich vorhandener Werte, das gezielte Ersetzen oder Zurücknehmen von Änderungen und die Trennung von Speichern und Veröffentlichung."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Wer ein vorhandenes Profil in einen anderen Editor überträgt, sollte die aktuellen Werte zuerst mit den Importvorschlägen vergleichen. Dieses anonymisierte Beispiel beschreibt die Grenzen zwischen Datenimport und Veröffentlichung eines Profils.
+
+## Manuelle Änderungen mit einem Biografiefeld prüfen
+
+Bearbeiten Sie die Biografie manuell und importieren Sie einen anderen Textvorschlag. Prüfen Sie unveränderte, nicht ausgewählte Felder, überprüfbare Ersetzungen und Rückkehr zum Original nach Abbruch. Vergleichen Sie anschließend Entwurf und öffentliche Seite: Import allein darf die Veröffentlichung nicht ändern.
+
+[OWASP：Format, Werte und Länge von Eingaben prüfen](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Unterstützte Eingabeformate zuerst festlegen
 

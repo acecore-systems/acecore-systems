@@ -2,7 +2,7 @@
 title: "Relier les alertes opérationnelles à Nextcloud Talk : distinguer détection, livraison et résolution"
 description: "Un modèle général pour acheminer les exceptions de traitement des commandes et les contenus à examiner vers des salons Talk privés et une interface d’administration, avec des alertes minimales, une gestion des secrets, des tests de connexion et des limites de recette explicites."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Un problème de traitement d’une commande ou une publication à examiner peut passer inaperçu si la personne responsable ne le voit pas. Ce cas généralisé relie les alertes opérationnelles internes à Nextcloud Talk sans divulguer de données client, d’URL de salon ni de topologie interne.
+
+## Tester les reprises et le parcours administratif avec un seul avis
+
+Commencez par un type, comme un échec de traitement. Envoyez un test sans données personnelles et vérifiez l’accès d’un opérateur autorisé. Testez séparément détection répétée et échec d’envoi, pour éviter doublons et réexécution métier lors des reprises.
+
+[Nextcloud Talk：Spécifications de connexion des bots et webhooks](https://nextcloud-talk.readthedocs.io/en/stable/bots/)
 
 ## Faire de l’alerte un point de départ
 

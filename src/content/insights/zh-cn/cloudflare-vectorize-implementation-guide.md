@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize 与 RAG 入门：理解搜索与 AI 回答的区别"
 description: "说明 Cloudflare Vectorize 如何让访客用自然语言更容易找到已公开的信息，并从导入价值、普通搜索的分工、RAG 和分阶段起步方法理解其作用。"
 date: 2026-07-31T12:00
-lastUpdated: 2026-08-01T17:00
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "RAG", "语义搜索", "站内搜索"]
 image: /images/insights/vectorize-rag-hero.webp
@@ -80,6 +80,8 @@ linkCards:
     description: "确认 embedding 维度与距离指标等必须在创建 index 前决定的事项。"
     icon: i-lucide-settings-2
 ---
+
+试用语义搜索时，将指向同一公开页面的正式术语与用户改述配对，比较预期URL是否出现。先确定正确页面，再按[Cloudflare Vectorize: Create Indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/)检查索引契约，可独立于聊天回答流畅度评估检索质量。
 
 ## 先说结论：Vectorize 缩短问题与页面之间的距离
 

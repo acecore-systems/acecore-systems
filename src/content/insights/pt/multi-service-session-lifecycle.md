@@ -2,7 +2,7 @@
 title: "Alinhar a validade do login entre serviços: renovação e reautenticação"
 description: "Desenho geral de validade de login, separando acesso explícito, servidor, cookies e provedor de identidade."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Usar uma conta comum não torna idênticas as sessões das aplicações e do provedor de identidade. O caso alinha regras sem publicar destinos ou prazos.
+
+## Comparar a mesma solicitação antes e depois da expiração
+
+Use um prazo curto em testes. Execute separadamente login explícito, navegação e atualização em segundo plano, comparando a expiração no servidor. Depois, teste a mesma operação na interface e API, verificando reautenticação e recusa de acesso. Registre esse teste separado da operação prolongada em produção.
+
+[OWASP：Projeto e testes da expiração de sessão](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## Identificar cada prazo
 

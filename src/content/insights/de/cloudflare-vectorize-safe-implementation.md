@@ -2,7 +2,7 @@
 title: "Cloudflare-Vectorize-Implementierungsleitfaden: Öffentliches HTML sicher synchronisieren"
 description: "Ein ausführlicher Leitfaden, um einen Corpus aus öffentlichem HTML zu erstellen, Pagefind verfügbar zu halten und Vectorize sicher zu synchronisieren."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Cloudflare", "Vectorize", "Workers AI", "Website-Suche"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -116,6 +116,8 @@ faq:
     - question: Wann gilt die Einführung als abgeschlossen?
       answer: "Weder ein Merge noch lokale tests reichen aus. In Preview prüfen wir Pagefind und das UI-Fallback; in Production den Abgleich von veröffentlichtem Commit und Corpus, die Index-Synchronisierung, die Mutation-Konvergenz, die verwandte Suche, das rate limit und das Abschaltverfahren, bevor wir den Produktionsbetrieb dokumentieren."
 ---
+
+Erzeugen Sie für einen Test der Differenzsynchronisierung den Corpus aus identischem öffentlichen HTML neu und prüfen Sie, dass ohne Änderungen nichts hinzugefügt oder gelöscht wird. Testen Sie danach eine kleine Artikeländerung samt Mutation und Suche anhand von [Cloudflare Vectorize: API](https://developers.cloudflare.com/vectorize/reference/client-api/). Trennen Sie Löschstopp-Schwellen von Produktlimits.
 
 > **Ergänzung vom 26. September 2026:** Die Suche von Acecore Systems verwendet Cloudflare Workers AI BGE-M3 und einen eigenen Vectorize-Index mit 1024 Dimensionen. Bei einem Modellwechsel müssen Corpus und Index neu erstellt werden. Die folgenden Grundsätze zur Synchronisierung veröffentlichter HTML-Seiten und zur Beibehaltung von Pagefind gelten weiterhin.
 

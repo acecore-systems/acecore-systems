@@ -2,7 +2,7 @@
 title: "Distinguer le cache en périphérie des images publiques des limites de l’API"
 description: "Un cas où l’API de contenu et les requêtes d’images partageaient la même limite lors de consultations répétées. L’article traite de la réutilisation des images publiques, de la validation des réponses réussies, des frontières entre WAF et application et des vérifications en production."
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Dans un journal ou un catalogue contenant des images, chaque changement de date ou de page déclenche des requêtes vers l’API de contenu et vers les images. Nous décrivons un cas où les images ont cessé de se charger lors de consultations répétées, sans révéler les URL opérationnelles, les routes internes ni les valeurs de limite.
+
+## Reproduire la consultation successive à partir d’une image
+
+Récupérez plusieurs fois la même image publique et comparez hash du corps, statut et cache. Chargez ensuite texte et images par navigation normale et vérifiez quelles requêtes consomment le quota. Un HIT ne suffit pas : vérifiez contenu correct et protection de l’API.
+
+[Cloudflare Cache API：Lecture conditionnelle et cache par emplacement](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## Le contenu et les images partageaient la même limite
 

@@ -2,7 +2,7 @@
 title: "安全处理用户 CSS 与公开主题：共享正本、限定渲染和版本固定"
 description: "匿名化介绍一种个人资料编辑设计：GUI 与直接编辑共用同一 CSS 正本。涵盖限定在渲染区域内的丰富 CSS 语法、草稿与已发布版本、不可变主题版本、下架和运营停用。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 通过 GUI 调整个人资料的颜色和间距，并用 CSS 编辑整体布局的编辑器，必须同时考虑操作体验和公开页面代码的安全性。本文以匿名化实现为例，说明编辑与分发之间的边界。
+
+## 分别选择样式自由度和分发功能
+
+仅编辑自己的资料时，先验证作用域与保存冲突。向他人分发还需要固定版本ID、使用条件及停用后的默认显示。用包含Grid和伪元素的小主题测试外部导航不受影响，作者发布新版也不改变已应用版本。
+
+[W3C Selectors：检查选择器作用范围](https://www.w3.org/TR/selectors-4/)
 
 ## GUI 与直接编辑共用同一个 CSS 正本
 

@@ -1,8 +1,8 @@
 ---
 title: "How to Run a Multilingual Blog with Sveltia CMS"
-description: "This article records the June 2026 Copilot translation PR workflow and the September 2026 OpenAI Batch workflow."
+description: "To start a multilingual blog workflow, generate localized HTML from a representative article’s translations and check body, title, description and internal links."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -84,6 +84,8 @@ faq:
     - question: Are translated pages duplicate content?
       answer: "Google says localized pages are only duplicates when the main content remains untranslated. Keep each language page translated and connect variants with hreflang."
 ---
+
+To start a multilingual blog workflow, generate localized HTML from a representative article’s translations and check body, title, description and internal links. Associate only existing language versions using [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions), accepting translation-service success separately from completed public pages.
 
 > **Update, September 26, 2026:** The Copilot-based translation PR steps below document the June 2026 rollout. Translation generation has since moved to OpenAI Batch. Japanese remains the source of truth, and translated static pages remain the publishing format.
 

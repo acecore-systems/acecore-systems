@@ -2,7 +2,7 @@
 title: "Empêcher l’IA de promettre ce qu’elle ne peut pas tenir"
 description: "Comment éviter qu’un assistant d’information promette de lui-même la participation, la disponibilité ou le suivi d’un membre de l’équipe. L’article traite de l’état de la conversation, des échecs de récupération, des anciens brouillons et des conversations closes."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Cas généralisé ; aucune conversation précise n’est publiée"
   text: "Ce cas couvre des changements de politique et de classification, des contrôles avant envoi, des tests, une mise en production et une observation opérationnelle limitée. Il ne contient ni publications ni comptes d’autres personnes et ne démontre pas qu’on peut empêcher toute formulation de promesse erronée."
 ---
+
+Pour l’orientation ou le support, distinguez l’explication d’informations publiques, le transfert à une personne et la réservation effective. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) aide à définir actions autorisées et approbation. La suite traite des limites des réponses, sans procédure d’envoi automatisé propre à une plateforme.
 
 Même une réponse d’information formulée naturellement ne doit pas promettre qu’un membre de l’équipe prendra contact plus tard ou participera à une heure donnée sans preuve que cette action peut être réalisée. Ce récit généralisé d’un flux interne de réponses ne révèle ni plateforme ni conversation.
 

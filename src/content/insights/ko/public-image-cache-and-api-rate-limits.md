@@ -2,7 +2,7 @@
 title: "공개 이미지의 엣지 캐시와 API 요청 제한을 분리하기"
 description: "반복해서 탐색할 때 콘텐츠 API와 이미지 요청이 같은 제한을 공유했던 사례입니다. 공개 이미지 재사용, 정상 응답 검증, WAF와 애플리케이션의 경계, 프로덕션 확인을 다룹니다."
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 이미지가 포함된 일기나 카탈로그에서는 날짜나 페이지를 바꿀 때마다 콘텐츠 API와 이미지 요청이 함께 발생합니다. 반복 탐색 중 이미지가 멈춘 사례를 운영 URL, 내부 경로, 제한값을 공개하지 않고 설명합니다.
+
+## 이미지 한 장부터 연속 열람 재현하기
+
+같은 공개 이미지를 반복 조회하여 최초와 재조회 시 body 해시, status, 캐시 상태를 비교합니다. 다음으로 일반 페이지 전환에서 본문과 여러 이미지를 조회해 어떤 요청이 제한 횟수에 포함되는지 확인합니다. HIT만으로 성공을 판단하지 않고 이미지 내용과 API 보호를 함께 시험하세요.
+
+[Cloudflare Cache API：조건부 조회와 지역별 캐시](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## 콘텐츠와 이미지가 같은 요청 제한을 사용했다
 

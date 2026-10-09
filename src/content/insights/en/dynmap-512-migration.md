@@ -1,8 +1,8 @@
 ---
-title: "How we verified Dynmap's 512px migration and retired old R2 tiles"
-description: "An operations record of migrating Dynmap images across eight servers and 89 maps to 512px tiles, then checking public display and old R2 data removal."
+title: "Migrate Dynmap to 512px tiles: public checks and old R2 cleanup"
+description: "How to check render areas, normal and zoom images, and R2 storage during a 512px tile migration. An eight-server, 89-map example explains pre-deletion checks and conditions for cost comparisons."
 date: "2026-09-27T22:40:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["Technology", "Cloudflare"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 We changed the map image format in a Dynmap setup that serves tiles from Cloudflare R2, then cleared the old data. The scope was eight servers and 89 maps. The critical part was the order: verify the new images in public before deleting the old ones.
+
+## What to compare before migrating Dynmap tiles
+
+Compare normal and zoom tiles over the same render area before choosing 512px tiles. Record viewer requests separately from rendering writes. First inventory old prefixes; decide on deletion only after checking new public tiles and how to recreate old images from the world.
+
+[R2：Measuring storage and operations](https://developers.cloudflare.com/r2/platform/metrics-analytics/)
 
 ## Migrate in stages with a bounded render area
 

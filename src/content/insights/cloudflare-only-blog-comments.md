@@ -82,8 +82,10 @@ faq:
       answer: "記事コメントのように、post_slugで取得し、作成日時順に表示する小規模なリレーショナルデータならD1で扱いやすいです。リアルタイム通知や大規模な権限管理が必要なら別設計を検討します。"
     - question: Turnstileをフロントに置くだけではだめですか？
       answer: "だめです。TurnstileのtokenはPages Function側でSiteverify APIへ送り、成功結果とhostnameを確認してから保存処理へ進めます。"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+ブログコメントを内製するかは、保存先を選ぶだけでなく、承認・削除を担当できるかで判断します。管理を任せたいなら外部サービス、独自UIと保存方針を持ちたいならD1構成が候補です。最初の投稿試験では[Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)に沿って、検証失敗時にDBへ書き込まれないことを確認してください。
 
 静的サイトにコメント欄を付けるとき、まず候補に上がりやすいのは外部コメントサービスやGitHub Discussions連携です。
 

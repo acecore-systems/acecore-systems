@@ -1,8 +1,8 @@
 ---
-title: "如何验证 Dynmap 的 512px 迁移并清理 R2 旧图片"
-description: "记录八台服务器、89 张 Dynmap 地图迁移至 512px 图片后，如何检查公开显示和 R2 旧数据清理。"
+title: "Dynmap迁移到512px瓦片：公开验证与R2旧图像清理"
+description: "介绍512px瓦片迁移中渲染范围、普通与缩放图像、R2保存位置的验证方法。通过8台服务器、89张地图的实例说明删除前检查及费用比较条件。"
 date: "2026-09-27T22:40:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/dynmap-512-migration.webp
 tags: ["技术", "Cloudflare"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 我们对从 Cloudflare R2 分发地图图片的 Dynmap 配置进行了格式切换，并清理旧数据。范围是八台服务器、89 张地图。关键在于顺序：先确认新图片已公开显示，再删除旧图片。
+
+## 迁移Dynmap瓦片前要比较什么
+
+考虑512px瓦片时，应在相同渲染范围内比较普通图像与缩放图像，分别记录浏览请求和渲染写入。先列出旧prefix候选，确认新图像的公开显示和从世界重新渲染的恢复方法后，再决定是否删除。
+
+[R2：容量与操作次数的测量方法](https://developers.cloudflare.com/r2/platform/metrics-analytics/)
 
 ## 限定渲染范围，分阶段切换
 

@@ -1,10 +1,10 @@
 ---
 title: "使用GitHub Copilot × Playwright对网站进行猴子测试的实践方法"
-description: "结合VS Code的智能体模式（GitHub Copilot）和Playwright浏览器工具，对静态网站进行系统化猴子测试的实践记录。从测试设计思路到实际发现并修复的Bug、改进建议，全部公开。"
+description: "用AI与Playwright开展探索测试时，先限定浏览和表单操作范围，为问题记录复现步骤与预期结果。"
 date: 2026-03-25T14:00
 author: gui
 tags: ["技术", "GitHub Copilot", "VS Code", "Astro", "网站"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - 自动巡回所有路由，验证HTTP状态码和DOM结构
       - AI从源代码中自动提取测试对象
-      - 零遗漏地检测损坏的图片、空链接和JS错误
+      - 在已定义的检查范围内检测损坏图片、空链接和JS错误
       - 从发现到定位原因、修复、再验证均在同一会话内完成
 faq:
   title: 常见问题
@@ -53,6 +53,8 @@ faq:
     - question: 测试中发现的Bug也能交给AI修复吗？
       answer: "在智能体模式下可以读写文件，因此从Bug检测到修复、构建确认的整个流程都可以在同一会话内完成。本文中也发现了2个Bug并当场修复。"
 ---
+
+用AI与Playwright开展探索测试时，先限定浏览和表单操作范围，为问题记录复现步骤与预期结果。参考[Playwright: Best Practices](https://playwright.dev/docs/best-practices)将发现转为可重复的回归测试。下文的路由与违规数量是当时的观察记录，并不证明完整覆盖。
 
 > **2026年9月更新:** Copilot 的用量说明已从本文最初的智能体模式月度次数转为 AI Credits。请查看[GitHub 最新文档](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing)确认当前额度。
 
@@ -124,6 +126,8 @@ src/
 
 结果：所有路由返回200 OK（有意的404除外）
 ```
+
+当时的记录中，此日志的路由总数、明细与文章末尾的汇总存在不一致。因此，不应以路由总数作为测试可复现性的依据；请从实际构建产物中列出目标URL，确定检查范围。所刊代码与数字保留为当时的记录。
 
 ### DOM结构检查
 

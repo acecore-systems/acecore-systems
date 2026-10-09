@@ -2,7 +2,7 @@
 title: "统一多个服务的登录期限：会话更新与重新认证的边界"
 description: "区分主动登录、服务器期限、Cookie与认证平台设置，整理多个Web服务的登录期限设计和验证范围。"
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 使用同一账户，不代表应用会话与认证平台的会话完全相同。本案例将内部的期限统一工作整理为通用设计，不公布部署对象或具体时长。
+
+## 用相同请求比较到期前后的行为
+
+在测试环境设置短期限，分别执行显式登录、普通浏览和后台刷新，比较服务器保存的到期时间变化。到期后从界面与API执行相同操作，确认重新认证引导及数据访问拒绝。缩短时间的测试应与长期生产运行分开记录。
+
+[OWASP：会话期限的设计与验证](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## 先区分期限
 

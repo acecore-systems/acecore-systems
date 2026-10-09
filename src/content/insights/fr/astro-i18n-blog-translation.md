@@ -1,8 +1,8 @@
 ---
 title: "Comment faire supporter 9 langues à un site Astro 7 ― Traduction du blog et architecture multilingue"
-description: "Retour sur la mise en place de neuf langues avec Astro 7.1.3 et UnoCSS en juillet 2026, avec renvoi aux dépendances et traductions actuelles."
+description: "Pour un blog Astro multilingue, alignez d’abord texte, métadonnées et changement de langue sur un article représentatif, sans lien vers une traduction absente."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "i18n", "Site web"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: "Faut-il traduire lors de l'ajout d'un nouvel article ?"
       answer: "La traduction n'est pas requise pour publier l'article japonais. Ajouter un fichier Markdown du même nom dans le répertoire d'une langue active l'URL, l'entrée sitemap et la relation hreflang de cette locale."
 ---
+
+Pour un blog Astro multilingue, alignez d’abord texte, métadonnées et changement de langue sur un article représentatif, sans lien vers une traduction absente. Utilisez [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) pour les URL et développez séparément UI et articles. Les nombres et l’ancien CMS décrivent le déploiement initial.
 
 > **Mise à jour du 26 septembre 2026 :** Astro 7.1.3, UnoCSS, les nombres d’articles et la traduction Copilot ci-dessous correspondent à juillet 2026. Les [dépendances actuelles](https://github.com/acecore-systems/acecore-net/blob/main/package.json) utilisent Astro ^7.3.3 et Tailwind CSS 4.3.3 ; la [mise à jour du flux de traduction](/insights/copilot-translation-pipeline/) présente OpenAI Batch. Vérifiez le code et les pages publiées avant de considérer ces exemples et chiffres comme actuels.
 

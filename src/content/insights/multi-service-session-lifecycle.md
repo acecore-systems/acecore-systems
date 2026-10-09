@@ -2,7 +2,7 @@
 title: "複数サービスのログイン期限を揃える：セッション更新と再認証の境界"
 description: "複数のWebサービスでログイン期限を揃える設計。明示ログイン、サーバー側の期限、Cookie、認証基盤の設定を区別し、反映確認の範囲を整理します。"
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 同じアカウントを使うWebサービスでも、認証基盤と各サービスがログイン状態を保持する方法は同じとは限りません。複数サービスの期限ルールを揃えた社内作業を、個別の設定値を使わず設計原則として紹介します。
+
+## 期限の直前と直後を同じ要求で比べる
+
+検証環境で短い期限を用意し、明示ログイン、通常閲覧、背景更新を一つずつ実行して、サーバーが保持する期限の変化を比べます。期限切れ後は画面とAPIへ同じ操作を送り、再認証への案内とデータの拒否を確かめます。時刻を短縮した試験と長期間の実運用は分けて記録します。
+
+[OWASP：セッション期限の設計と検証](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ## 何の期限かを先に決める
 

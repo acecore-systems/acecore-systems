@@ -2,7 +2,7 @@
 title: "安全处理支付与退款 Webhook：Workers 中的状态核对"
 description: "通过实现案例介绍如何区分签名校验、重复与延迟事件、退款状态和外部 API 响应，并说明管理操作前的权限复核。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "区分实现证据与真实交易操作"
   text: "本匿名案例已验证实现、测试、本番部署以及对外部 API 的只读核对。测试没有执行客户退款、取消或积分调整，也不声称所有支付路径均已端到端验证。"
 ---
+
+验证Workers支付Webhook时，在测试环境尝试重复投递与乱序到达，确认业务状态不会重复更新。外部API重定向处理应对照[Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/)和运行环境检查，并分别记录接收、外部状态确认和后续处理。
 
 收到支付服务的事件，并不代表订单或退款已经完成。本匿名案例介绍如何在 Workers 上让运营流程将服务方状态与本地记录进行核对。文中不包含客户信息、真实交易标识符或内部通知目的地。
 

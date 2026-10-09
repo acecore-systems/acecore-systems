@@ -2,7 +2,7 @@
 title: "Relier la supervision aux investigations OpenClaw : détection, preuves et décisions"
 description: "Associer contrôles périodiques et investigations limitées, en distinguant exploitation vérifiée et reprise non démontrée."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 La supervision doit attribuer des responsabilités précises à la détection et à la recherche des causes. Ce cas relie contrôles périodiques et OpenClaw sans publier la topologie interne ni les destinataires des alertes.
+
+## Évaluer les rapports avec des anomalies connues
+
+Préparez en test des situations connues, comme une collecte échouée ou des valeurs anciennes. Évaluez présence de l’heure, des preuves et des données manquantes, ainsi que conservation des résultats après délai dépassé. La qualité d’investigation ne se réduit alors pas au style du texte.
+
+[OpenClaw：Limites des permissions de l’environnement d’investigation](https://docs.openclaw.ai/gateway/security)
 
 ## Définir la détection
 

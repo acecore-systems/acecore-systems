@@ -1,6 +1,6 @@
 ---
-title: "Dejé toda mi declaración de impuestos a GitHub Copilot ― Desde 837 asientos contables hasta la presentación"
-description: "Clasificación y verificación de 837 asientos acumulados con datos sincronizados de contabilidad en la nube, conciliación de seguros sociales, entrada de deducciones y presentación de la declaración. Un registro completo de la declaración de impuestos delegando casi todo el trabajo operativo a GitHub Copilot Agent Mode × Simple Browser."
+title: "Organizar una declaración japonesa con Copilot: 837 asientos y revisión humana"
+description: "Un caso personal de marzo de 2026 muestra cómo Copilot cotejó reglas, 837 asientos, documentos y formularios. Distingue tareas delegadas y decisiones del declarante sobre prorrateo, deducciones y envío."
 date: 2026-03-17T00:00
 author: gui
 tags: ["Tecnología", "GitHub Copilot", "VS Code"]
@@ -46,18 +46,24 @@ faq:
   title: Preguntas frecuentes
   items:
     - question: ¿Realmente se puede hacer la declaración de impuestos con GitHub Copilot?
-      answer: Sí, combinando Agent Mode y Simple Browser, se puede completar dentro de VS Code desde la clasificación de asientos, entrada de deducciones hasta la elaboración de la declaración. Sin embargo, la presentación final requiere autenticación con tarjeta My Number, por lo que la realiza el humano.
+      answer: "En este caso, Agent Mode y Simple Browser apoyaron cotejo, entrada y revisión. Las operaciones dependen del entorno y permisos. El declarante decide el tratamiento fiscal, verifica su identidad y aprueba el envío."
     - question: ¿Cuáles son los prerrequisitos para usar Copilot?
       answer: El requisito principal es haber acumulado datos de asientos contables de forma rutinaria con servicios de contabilidad en la nube como Money Forward. Copilot se encarga de organizar y verificar los datos acumulados, por lo que sin datos no puede funcionar.
     - question: ¿Cómo se detectaron las inconsistencias en los asientos?
       answer: Se hizo que Copilot cotejara el documento de criterios (reglas de cuentas contables) con el libro contable, detectando mecánicamente los asientos que no cumplían las reglas. Se encontraron 8 inconsistencias entre 837 asientos y se corrigieron.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Añadido el 26 de septiembre de 2026:** Este texto documenta una declaración personal realizada en marzo de 2026. La clasificación y entrada de datos con IA no garantizan un tratamiento fiscal correcto. La persona declarante debe revisar justificantes, declaración y resultado del envío, y verificar las reglas del año correspondiente en la [Agencia Tributaria de Japón](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
 > Delegué prácticamente todo el trabajo operativo de la declaración de impuestos al Agent Mode de GitHub Copilot. Como resultado, desde la clasificación de 837 asientos contables hasta la elaboración y verificación de la declaración se completó dentro de VS Code. Solo la presentación final la hice desde la app del smartphone con autenticación por tarjeta My Number.
 
 En este artículo registro sin reservas "hasta dónde pude delegar en Copilot" y "qué hizo el humano".
+
+## Empezar por discrepancias sin modificar el libro
+
+Comience con una comparación de solo lectura entre datos minimizados y reglas contables. Liste documentos, diferencias y estado de revisión; no confirme categorías sin verificar. Decida prorrateos y deducciones según el ejercicio y las circunstancias reales, separando sugerencias de IA y tratamiento aprobado.
+
+[Agencia Nacional Tributaria de Japón: Comprobar gastos de negocio y uso mixto](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2210.htm)
 
 ## Premisa: la sincronización de datos de MF Cloud como base
 
@@ -95,9 +101,9 @@ Si queremos delegar operaciones de pantalla a una IA, existen herramientas basad
 
 Razones para elegir GitHub Copilot Agent Mode:
 
-- **División de trabajo donde el humano inicia sesión y la IA trabaja** — El humano inicia sesión en bancos y software contable y deja las páginas abiertas. Desde ahí, las operaciones (búsqueda, entrada, verificación) las realiza Copilot a través de Simple Browser. Computer Use está diseñado para entregar todo el escritorio a la IA, por lo que no permite esta división de trabajo en la misma pantalla
+- **Login humano y comparación con IA** — El declarante inició sesión y autorizó búsquedas, entradas y revisión por Copilot dentro de un alcance definido. Otras herramientas de pantalla también permiten repartir tareas; elegimos esta por el entorno disponible y la facilidad de registro.
 - **Edición de archivos y operación del navegador en el mismo entorno** — Leer criterios.md para juzgar la corrección de asientos, escribir resultados en verificación-inconsistencias.md y corregir directamente el libro contable en Simple Browser. Todo este flujo no se interrumpe dentro de VS Code
-- **Los archivos Markdown funcionan como espacio de trabajo compartido entre humano e IA** — Computer Use se basa en capturas de pantalla, por lo que no es apto para acumular y consultar conocimiento estructurado. Con Copilot, a través de archivos .md se puede intercambiar bidireccionalmente "con qué base se tomó qué decisión"
+- **Compartir decisiones en Markdown** — Reglas, evidencias y pendientes se guardaron en .md para lectura compartida. Esto no implica que otras herramientas no puedan conservar registros.
 - **El registro de conversación se convierte en registro de trabajo** — Intercambios como "¿Incluimos esta deducción?", "No hay documento original, mejor no" quedan en el historial del chat. Poder rastrear el proceso de decisiones es especialmente importante en declaraciones de impuestos
 
 En resumen, la operación de pantalla se puede hacer con otras herramientas, pero la ventaja de Copilot Agent Mode es que **humano e IA comparten la misma pantalla y los mismos archivos mientras dividen el trabajo**.
@@ -228,13 +234,15 @@ Continuamos con "Ahora vamos con las demás deducciones", introduciendo las dedu
 
 ### Deducciones ingresadas
 
-| Tipo de deducción                          | Descripción                                                    | Trabajo de Copilot                                                                                   |
-| ------------------------------------------ | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Deducción de seguro de vida                | Datos sincronizados de My Number Portal + entrada manual       | Operó los selectores del formulario e ingresó uno por uno                                            |
-| Deducción de seguro de terremoto           | Seguros de mutualidad y de daños                               | Ingresó importes en el formulario                                                                    |
-| Deducción por cónyuge                      | Cálculo del ingreso total a partir de los ingresos del cónyuge | Calculó el importe de ingresos aplicando la deducción de ingresos salariales y verificó la deducción |
-| Deducción de seguros sociales              | Pensión + seguro de salud (importes determinados en Fase 4)    | Seleccionó el tipo en la pantalla de seguros sociales de la declaración → ingresó importes           |
-| Deducción por dependientes (menores de 16) | No afecta la deducción pero sí el impuesto de residencia       | Verificó el estado de registro en la pantalla Información básica → Familia                           |
+| Tipo de deducción                                                                       | Descripción                                                    | Trabajo de Copilot                                                                                   |
+| --------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Deducción de seguro de vida                                                             | Datos sincronizados de My Number Portal + entrada manual       | Operó los selectores del formulario e ingresó uno por uno                                            |
+| Deducción de seguro de terremoto                                                        | Seguros de mutualidad y de daños                               | Ingresó importes en el formulario                                                                    |
+| Deducción por cónyuge                                                                   | Cálculo del ingreso total a partir de los ingresos del cónyuge | Calculó el importe de ingresos aplicando la deducción de ingresos salariales y verificó la deducción |
+| Deducción de seguros sociales                                                           | Pensión + seguro de salud (importes determinados en Fase 4)    | Seleccionó el tipo en la pantalla de seguros sociales de la declaración → ingresó importes           |
+| Datos de dependientes menores de 16 (fuera de la deducción del impuesto sobre la renta) | No afecta la deducción pero sí el impuesto de residencia       | Verificó el estado de registro en la pantalla Información básica → Familia                           |
+
+[Comprobar edades elegibles con la Agencia Tributaria japonesa](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm)
 
 ### Elementos evaluados y descartados
 
@@ -252,7 +260,7 @@ La cuota mensual del ISP (conexión a internet) estaba registrada íntegramente 
 Cuando pregunté a Copilot "¿Cómo prorrateamos esto?", me presentó opciones y decidimos:
 
 1. Buscar todos los registros de ISP en el libro contable → calcular el total anual
-2. Determinar la tasa de prorrateo (para oficina en casa, 50% es la referencia habitual)
+2. El declarante decidió la proporción de uso empresarial (50% en este caso, no un estándar de oficina doméstica; debe basarse en uso real y registros)
 3. No tocar los asientos individuales, sino añadir **un asiento de ajuste global a fecha 31/12** "Retiro del propietario / Gastos de comunicación"
 4. Copilot registró el asiento en el libro contable
 

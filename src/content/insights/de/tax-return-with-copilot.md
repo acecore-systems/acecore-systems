@@ -1,6 +1,6 @@
 ---
-title: "Ich habe meine gesamte Steuererklärung von GitHub Copilot erledigen lassen — Von 837 Buchungseinträgen bis zur Abgabe"
-description: "Von der Klassifizierung und Überprüfung von 837 Buchungseinträgen, die durch Cloud-Buchhaltungsdatensynchronisierung angesammelt wurden, über den Abgleich von Sozialversicherungsbeiträgen, die Eingabe von Abzügen bis zur Abgabe der Erklärung. Ein vollständiger Bericht über eine Steuererklärung, bei der GitHub Copilot Agent Mode × Simple Browser praktisch die gesamte eigentliche Arbeit übernommen hat."
+title: "Japanische Steuerunterlagen mit Copilot: 837 Buchungen und menschliche Prüfung"
+description: "Ein Fall vom März 2026 zeigt den Abgleich von Regeln, 837 Buchungen, Belegen und Formularen. Trennt KI-Aufgaben von persönlichen Entscheidungen über Aufteilung, Abzüge und Abgabe."
 date: 2026-03-17T00:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code"]
@@ -46,18 +46,24 @@ faq:
   title: FAQ
   items:
     - question: Kann man wirklich eine Steuererklärung mit GitHub Copilot abgeben?
-      answer: Ja. Durch die Kombination von Agent Mode und Simple Browser können Buchungsklassifizierung, Abzugseingabe und Steuerformularerstellung vollständig in VS Code erledigt werden. Die endgültige Abgabe erfordert jedoch eine My Number Card-Authentifizierung, die von einem Menschen durchgeführt werden muss.
+      answer: "In diesem Fall unterstützten Agent Mode und Simple Browser Abgleich, Eingabe und Prüfung. Aktionen hängen von Umgebung und Rechten ab. Steuerentscheidungen, Identitätsprüfung und Freigabe der Abgabe bleiben beim Erklärenden."
     - question: Was sind die Voraussetzungen für die Nutzung von Copilot auf diese Weise?
       answer: Die wichtigste Voraussetzung sind täglich über Cloud-Buchhaltungssoftware wie MoneyForward angesammelte Buchungsdaten. Copilot übernimmt die Organisation und Überprüfung der angesammelten Daten und kann daher ohne Daten nicht funktionieren.
     - question: Wie wurden Buchungsinkonsistenzen erkannt?
       answer: Copilot erhielt das Richtliniendokument (Kontokategorieregeln) und das Buchungsjournal zum Abgleich und erkannte mechanisch Einträge, die nicht den Regeln entsprachen. Von 837 Einträgen wurden 8 Unstimmigkeiten gefunden und korrigiert.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Ergänzt am 26. September 2026:** Dieser Beitrag dokumentiert eine persönliche Steuererklärung vom März 2026. KI-Klassifizierung und Eingabe gewährleisten keine steuerliche Richtigkeit. Die erklärende Person muss Belege, Erklärung und Übermittlungsergebnis prüfen und die Regeln des betreffenden Jahres bei der [japanischen Steuerbehörde](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm) nachlesen.
 > Ich habe praktisch die gesamte eigentliche Arbeit der Steuererklärung an GitHub Copilots Agent Mode delegiert. Das Ergebnis: Alles von der Klassifizierung von 837 Buchungseinträgen bis zur Erstellung und Überprüfung der Steuerformulare wurde innerhalb von VS Code abgeschlossen. Das Einzige, was noch übrig blieb, war die Authentifizierung mit der My Number Card über die Smartphone-App und die Übermittlung — und die Steuererklärung war erledigt.
 
 Dieser Artikel ist ein ehrlicher Bericht darüber, „wie viel Copilot übernehmen konnte" und „was der Mensch tatsächlich getan hat."
+
+## Zuerst Abweichungen sammeln, ohne das Buch zu ändern
+
+Vergleichen Sie minimierte Transaktionsdaten und Buchungsregeln zunächst nur lesend. Listen Sie Belege, Abweichungen und Prüfstatus auf; bestätigen Sie keine ungeprüften Kategorien. Entscheiden Sie Aufteilung und Abzüge nach Steuerjahr und tatsächlicher Nutzung, getrennt von KI-Vorschlägen und freigegebener Behandlung.
+
+[Nationale Steuerbehörde Japans: Betriebliche und gemischte Ausgaben prüfen](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2210.htm)
 
 ## Voraussetzung: MF Clouds Datensynchronisierung war das Fundament
 
@@ -95,9 +101,9 @@ Wenn man möchte, dass KI Bildschirmoperationen übernimmt, gibt es Screenshot-b
 
 Warum GitHub Copilot Agent Mode gewählt wurde:
 
-- **Arbeitsteilung: Mensch loggt ein, KI arbeitet** — Der Mensch loggt sich bei Banken und Buchhaltungssoftware ein und öffnet Seiten. Alles darüber hinaus (Suchen, Eingeben, Überprüfen) wird von Copilot über Simple Browser erledigt. Computer Use ist darauf ausgelegt, den gesamten Desktop der KI zu übergeben, sodass die gleiche Bildschirmaufteilung „Mensch loggt ein, KI erledigt den Rest" nicht möglich ist
+- **Menschliche Anmeldung und KI-Abgleich** — Der Erklärende meldete sich an und erlaubte Copilot Suchen, Eingeben und Prüfen in einem festgelegten Umfang. Andere Bildschirmwerkzeuge können ebenfalls Arbeitsteilung ermöglichen; die Wahl beruhte auf verfügbarer Umgebung und einfacher Dokumentation.
 - **Dateibearbeitung und Browseroperationen in derselben Umgebung** — policy.md lesen, um die Genauigkeit von Buchungen zu beurteilen, Ergebnisse in inconsistency-check.md schreiben, dann das Journal über Simple Browser korrigieren. Dieser gesamte Ablauf bleibt ununterbrochen in VS Code
-- **Markdown-Dateien dienen als gemeinsamer Arbeitsbereich** — Computer Use ist Screenshot-basiert und eignet sich nicht für die Ansammlung und Referenzierung von strukturiertem Wissen. Mit Copilot ermöglichen .md-Dateien den bidirektionalen Austausch von „was war die Grundlage und wie wurde entschieden"
+- **Entscheidungen in Markdown teilen** — Regeln, Belege und offene Punkte lagen in gemeinsamen .md-Dateien. Daraus folgt nicht, dass andere Werkzeuge keine Aufzeichnungen ermöglichen.
 - **Chat-Protokolle werden zu Arbeitsnachweisen** — Austausch wie „Sollen wir diesen Abzug einbeziehen?" „Kein Beleg, lassen wir es" werden im Chat-Verlauf bewahrt. Die Nachvollziehbarkeit der Argumentation ist besonders bei Steuererklärungen wichtig
 
 Kurz gesagt, Bildschirmbedienung allein können auch andere Tools, aber **die Fähigkeit, dass Mensch und KI denselben Bildschirm und dieselben Dateien teilen und dabei die Arbeit aufteilen**, ist die Stärke von Copilot Agent Mode.
@@ -228,13 +234,15 @@ Die automatische Kategorisierung in Haushalts-Apps ist nicht perfekt. In einem F
 
 ### Eingegebene Abzüge
 
-| Abzugsart                         | Übersicht                                                           | Copilots Arbeit                                                                 |
-| --------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Lebensversicherungsprämienabzug   | My Number Portal synchronisierte Einträge + manuelle Eingaben       | Optionen in Formular-Dropdown-Menüs ausgewählt und Einträge einzeln eingegeben  |
-| Erdbebenversicherungsprämienabzug | Genossenschafts- & Sachversicherungsprämien                         | Beträge ins Formular eingegeben                                                 |
-| Ehegattenabzug                    | Gesamteinkommen aus dem Verdienst des Ehepartners berechnet         | Einkommen nach Arbeitnehmerabzug berechnet, Abzugsbetrag bestätigt              |
-| Sozialversicherungsprämienabzug   | Rente + Krankenversicherung (in Phase 4 finalisierte Beträge)       | Typen auf dem Sozialversicherungsbildschirm ausgewählt → Beträge eingegeben     |
-| Unterhaltsabzug (unter 16)        | Keine steuerliche Auswirkung, aber relevant für die Einwohnersteuer | Registrierungsstatus auf dem Bildschirm Grunddaten → Familienmitglieder geprüft |
+| Abzugsart                                                                  | Übersicht                                                           | Copilots Arbeit                                                                 |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Lebensversicherungsprämienabzug                                            | My Number Portal synchronisierte Einträge + manuelle Eingaben       | Optionen in Formular-Dropdown-Menüs ausgewählt und Einträge einzeln eingegeben  |
+| Erdbebenversicherungsprämienabzug                                          | Genossenschafts- & Sachversicherungsprämien                         | Beträge ins Formular eingegeben                                                 |
+| Ehegattenabzug                                                             | Gesamteinkommen aus dem Verdienst des Ehepartners berechnet         | Einkommen nach Arbeitnehmerabzug berechnet, Abzugsbetrag bestätigt              |
+| Sozialversicherungsprämienabzug                                            | Rente + Krankenversicherung (in Phase 4 finalisierte Beträge)       | Typen auf dem Sozialversicherungsbildschirm ausgewählt → Beträge eingegeben     |
+| Angaben zu Angehörigen unter 16 (kein entsprechender Einkommensteuerabzug) | Keine steuerliche Auswirkung, aber relevant für die Einwohnersteuer | Registrierungsstatus auf dem Bildschirm Grunddaten → Familienmitglieder geprüft |
+
+[Zulässige Altersgruppen bei Japans Steuerbehörde prüfen](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm)
 
 ### Erwogene, aber aufgeschobene Punkte
 
@@ -252,7 +260,7 @@ ISP (Internet)-Monatsgebühren wurden im Journal vollständig als Kommunikations
 Auf die Frage „Wie sollen wir das aufteilen?" präsentierte Copilot Optionen, und wir diskutierten den Ansatz:
 
 1. Alle ISP-bezogenen Einträge im Journal suchen → Jahressumme berechnen
-2. Den Geschäftsnutzungsanteil bestimmen (50% ist ein üblicher Richtwert für Heimbüros)
+2. Der Erklärende legte den betrieblichen Anteil fest (hier 50%, kein allgemeiner Heimbürostandard; anhand tatsächlicher Nutzung und Nachweisen bestimmen)
 3. Statt einzelne Einträge zu ändern, einen **einzelnen Korrekturbeleg mit Datum 31.12.** hinzufügen mit „Privatentnahmen / Kommunikationskosten"
 4. Copilot hat den Eintrag ins Journal gebucht
 

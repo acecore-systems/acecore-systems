@@ -2,7 +2,7 @@
 title: "Fallstricke und Lösungen für Astro View Transitions — Ein Leitfaden zur Verbesserung von UX und Code-Qualität"
 description: "Ein praktischer Leitfaden mit Lösungen für Skriptprobleme bei Astro View Transitions, Einführung der Pagefind-Volltextsuche, Verbesserung der TypeScript-Typsicherheit, Zentralisierung von Konstanten und mehr zur Verbesserung von UX und Code-Qualität."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Website"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: Funktioniert der Code noch, wenn ich TypeScript-Typfehler ignoriere?
       answer: "Er wird funktionieren, aber Typfehler sind Anzeichen für potenzielle Bugs. Besonders wenn Astros Content-Schemas typsicher gemacht werden, ermöglicht dies IDE-Autovervollständigung für Eigenschaftszugriffe innerhalb von Templates, was die Entwicklungseffizienz erheblich verbessert."
 ---
+
+Versagen Menü oder Suche nur nach Navigation, vergleichen Sie Direktaufruf und ClientRouter-Wechsel und prüfen Sie den Initialisierungszeitpunkt. Ordnen Sie Ereignisse gemäß dem Lebenszyklus in [Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/) und prüfen Sie doppelte Ausführung sowie Vor- und Zurücknavigation.
 
 ## Einführung
 
@@ -136,7 +138,7 @@ Implementieren Sie ein Such-Modal, das mit der Tastenkombination `Ctrl+K` geöff
 
 ### SearchAction-Integration
 
-Indem Sie einen `?q=`-Parameter in Googles `SearchAction`-strukturierten Daten definieren, können Nutzer direkt von den Suchergebnissen zu Ihrer Website-Suche navigieren. Fügen Sie eine Logik zum Erkennen von URL-Parametern hinzu, die das Such-Modal automatisch startet.
+Google stellte das Sitelinks-Suchfeld in 2024-11 ein ([offizielle Ankündigung](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)). Behandeln Sie vorhandenes `SearchAction` als historische Implementierung, ohne ein Suchfeld in Ergebnissen zu erwarten. Das Öffnen des Suchdialogs über `?q=` bleibt für geteilte Links und interne Suche nützlich.
 
 ### Cache-Einstellungen
 

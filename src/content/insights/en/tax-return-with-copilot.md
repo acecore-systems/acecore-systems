@@ -1,6 +1,6 @@
 ---
-title: "I Let GitHub Copilot Handle My Entire Tax Return — From 837 Journal Entries to Filing"
-description: "From classifying and verifying 837 journal entries accumulated through cloud accounting data sync, to reconciling social insurance premiums, entering deductions, and filing the return. A complete record of a tax return where GitHub Copilot Agent Mode × Simple Browser handled virtually all the real work."
+title: "Organize a Japanese tax return with Copilot: 837-entry checks and human review"
+description: "A March 2026 personal filing shows how Copilot compared classification rules, 837 entries, evidence, and tax forms. Distinguishes delegated tasks from the filer’s decisions on apportionment, deductions, and submission."
 date: 2026-03-17T00:00
 author: gui
 tags: ["Technology", "GitHub Copilot", "VS Code"]
@@ -46,18 +46,24 @@ faq:
   title: FAQ
   items:
     - question: Can you really file a tax return with GitHub Copilot?
-      answer: Yes. By combining Agent Mode and Simple Browser, you can handle journal classification, deduction entry, and tax form creation entirely within VS Code. However, the final filing requires My Number Card authentication, which must be done by a human.
+      answer: "In this case, Agent Mode and Simple Browser supported classification checks, entry, and form review. Available operations depend on environment and permissions. The filer handles tax decisions, identity verification, and submission approval."
     - question: What are the prerequisites for using Copilot this way?
       answer: The biggest prerequisite is having journal data accumulated daily through cloud accounting software like MoneyForward. Copilot handles the organization and verification of accumulated data, so it cannot function without data.
     - question: How were journal inconsistencies detected?
       answer: Copilot was given the policy document (account category rules) and the journal ledger to cross-check, mechanically detecting entries that didn't match the rules. Out of 837 entries, 8 inconsistencies were found and corrected.
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
 
 > **Added September 26, 2026:** This records one person’s filing work in March 2026. AI classification and form entry do not guarantee correct tax treatment. The filer must review source documents, the return, and the submission result; check the rules and procedure for the relevant year with [Japan’s National Tax Agency](https://www.nta.go.jp/taxes/shiraberu/shinkoku/kakutei.htm).
 > I delegated virtually all the real work of filing a tax return to GitHub Copilot's Agent Mode. The result: everything from classifying 837 journal entries to creating and verifying the tax forms was completed within VS Code. The only thing left was to authenticate with My Number Card through the smartphone app and submit — and the tax return was done.
 
 This article is a candid record of "how much Copilot could handle" and "what the human actually did."
+
+## Start by collecting discrepancies without changing the ledger
+
+Begin with read-only comparison of minimized transaction data and classification rules. List source documents, ledger differences, and review status; do not turn unverified candidates into confirmed categories. Decide apportionment and deductions using the relevant year and actual circumstances, keeping AI suggestions separate from approved treatment.
+
+[National Tax Agency of Japan: Checking business and mixed-use expenses](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2210.htm)
 
 ## Premise: MF Cloud's Data Sync Was the Foundation
 
@@ -95,9 +101,9 @@ If you want AI to handle screen operations, there are screenshot-based tools lik
 
 Why GitHub Copilot Agent Mode was chosen:
 
-- **Division of labor: human logs in, AI works** — The human logs into banks and accounting software and opens pages. Everything beyond that (searching, entering, verifying) is handled by Copilot via Simple Browser. Computer Use is designed to hand the entire desktop to AI, so the same-screen division of "human logs in, AI does the rest" isn't possible
+- **Human login and AI comparison** — The filer logged into banks and accounting software, then authorized Copilot to search, enter, and review within a defined scope. Other screen-operation tools can also support division of labor; this choice reflected the available environment and ease of recording.
 - **File editing and browser operations in the same environment** — Reading policy.md to judge journal accuracy, writing results to inconsistency-check.md, then fixing the ledger via Simple Browser. This entire flow stays uninterrupted within VS Code
-- **Markdown files serve as a shared workspace** — Computer Use is screenshot-based and isn't suited for accumulating and referencing structured knowledge. With Copilot, .md files enable bidirectional exchange of "what was the basis and how was it judged"
+- **Share decision records in Markdown** — Rules, evidence, and pending items were kept in .md files that the filer and Copilot both read. This does not imply that other tools cannot keep records.
 - **Chat logs become work records** — Exchanges like "Should we include this deduction?" "No receipt, let's skip it" are preserved in chat history. Being able to trace back the reasoning is especially important for tax returns
 
 In short, screen operation alone can be done by other tools, but **the ability for human and AI to share the same screen and files while dividing work** is Copilot Agent Mode's strength.
@@ -228,13 +234,15 @@ Moving on to deductions beyond social insurance, entries were made through Simpl
 
 ### Deductions Entered
 
-| Deduction Type                         | Overview                                                  | Copilot's Work                                                                  |
-| -------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Life insurance premium deduction       | My Number Portal synced items + manual entries            | Selected options in form dropdowns and entered items one by one                 |
-| Earthquake insurance premium deduction | Mutual aid & property insurance premiums                  | Entered amounts in the form                                                     |
-| Spousal deduction                      | Calculated total income from spouse's earnings            | Calculated income after employment income deduction, confirmed deduction amount |
-| Social insurance premium deduction     | Pension + health insurance (amounts finalized in Phase 4) | Selected types on the social insurance screen → entered amounts                 |
-| Dependent deduction (under 16)         | No tax deduction impact, but relevant for resident tax    | Checked registration status on Basic Info → Family Members screen               |
+| Deduction Type                                                                  | Overview                                                  | Copilot's Work                                                                  |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Life insurance premium deduction                                                | My Number Portal synced items + manual entries            | Selected options in form dropdowns and entered items one by one                 |
+| Earthquake insurance premium deduction                                          | Mutual aid & property insurance premiums                  | Entered amounts in the form                                                     |
+| Spousal deduction                                                               | Calculated total income from spouse's earnings            | Calculated income after employment income deduction, confirmed deduction amount |
+| Social insurance premium deduction                                              | Pension + health insurance (amounts finalized in Phase 4) | Selected types on the social insurance screen → entered amounts                 |
+| Dependent information under age 16 (outside the income-tax dependent deduction) | No tax deduction impact, but relevant for resident tax    | Checked registration status on Basic Info → Family Members screen               |
+
+[Check eligible ages with Japan’s National Tax Agency](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1180.htm)
 
 ### Items Considered but Deferred
 
@@ -252,7 +260,7 @@ ISP (internet) monthly fees were recorded entirely as communication expenses in 
 When asked "How should we apportion this?", Copilot presented options and we discussed the approach:
 
 1. Search all ISP-related entries in the journal → Calculate annual total
-2. Determine the business-use ratio (50% is a common benchmark for home offices)
+2. The filer chose the business-use ratio (50% in this case, not a general home-office standard; determine it from actual use and records)
 3. Instead of modifying individual entries, add a **single adjustment entry dated 12/31** with "Owner's drawings / Communication expenses"
 4. Copilot posted the entry to the ledger
 

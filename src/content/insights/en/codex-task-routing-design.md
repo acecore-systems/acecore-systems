@@ -1,5 +1,5 @@
 ---
-title: "Designing task delegation in Codex: the public Task Routing plugin"
+title: "Codex Task Delegation: Handoffs, Permissions and Result Review"
 description: "A look at Codex Task Routing's design choices: preserving the parent's settings, versioning effective policy, handing off bounded work, and verifying what actually ran."
 date: "2026-09-26T18:30:00+09:00"
 author: gui
@@ -9,8 +9,10 @@ callout:
   type: note
   title: "What was verified"
   text: "We checked the public code, merged PRs, CI on three operating systems, and installation in an isolated environment. This article does not claim measured improvements in quality or usage, or a verified child-model run on a real account."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Trial Codex delegation with research or reviews that can be accepted independently, clarifying what the parent must integrate. Include files, references, returned evidence and unknowns in the handoff; use the least-privilege approach in [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) for tools. Delegation alone does not demonstrate quality or cost improvement.
 
 When several jobs run through Codex, choosing a model is only part of the decision. We also need to decide which step can stand alone, what context travels with it, and how its result will be checked. Acecore published [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) to make those decisions explicit.
 

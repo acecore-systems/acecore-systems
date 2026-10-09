@@ -2,7 +2,7 @@
 title: "R2와 restic 백업 모니터링: 저장 성공부터 복원 검증까지"
 description: "스냅샷 최신성, 저장소 무결성, 복원을 따로 점검하고 아직 검증하지 않은 애플리케이션 복구 범위를 설명합니다."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 백업 작업이 끝나도 필요한 데이터를 복구할 수 있다는 뜻은 아닙니다. 내부 사례를 일반화해 저장·무결성·복원·서비스 복구를 따로 평가합니다. 다른 백업 서비스에서 이전을 완료했다는 사례는 아닙니다.
+
+## snapshot ID와 복원 목적 하나를 고정하기
+
+검증할 snapshot ID를 기록하고 빈 격리 경로에 필요한 파일을 복원합니다. 설정은 참조 경로와 권한, DB는 격리 환경에서 읽을 수 있는지까지 확인하고 소요 시간을 기록하세요. 같은 항목으로 정기 시험을 이어 가면 저장 시점과 실제 복구 가능한 범위를 비교할 수 있습니다.
+
+[restic：격리된 경로로 복원하는 절차](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## 원본과 성공 기준 정의
 

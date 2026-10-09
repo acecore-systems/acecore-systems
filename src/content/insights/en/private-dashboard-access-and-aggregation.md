@@ -2,7 +2,7 @@
 title: "Building an Access-Protected Operations Dashboard with Cloudflare Pages and D1"
 description: "An anonymized design for protecting the entry point with Cloudflare Access and reading operational aggregates from D1 through Pages Functions. It separates verified production delivery, authenticated UI, and database-index use from items not tested."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 When operational information is scattered across logs and databases, it can be hard for staff to check the current state safely. This anonymized dashboard example explains how to verify access, aggregation, and delivery. It omits domain names, accounts, post content, and live operational figures.
+
+## Validate one aggregation through the UI and API
+
+Start with one aggregate, such as counts for a chosen period, and compare the screen against known test data. Check empty periods separately from retrieval failures and test direct API access before and after authentication. Add further aggregates after checking the query plan for that filter.
+
+[Cloudflare D1：Checking indexes against query conditions](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## Put the page and API behind the access boundary
 

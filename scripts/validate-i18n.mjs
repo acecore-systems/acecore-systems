@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -733,6 +733,14 @@ function validateInternalLinks(html, route, locale) {
       continue;
     }
     if (url.origin !== siteOrigin) continue;
+    if (url.pathname.startsWith("/images/")) {
+      const assetPath = join(root, "dist", url.pathname);
+      assert.ok(
+        existsSync(assetPath) && statSync(assetPath).isFile(),
+        `${route}: linked shared asset missing: ${href}`,
+      );
+      continue;
+    }
     assert.equal(
       url.pathname.includes("/blog/"),
       false,

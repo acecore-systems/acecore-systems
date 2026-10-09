@@ -4,7 +4,7 @@ description: "Пошаговое руководство по правильно�
 date: 2026-03-25T11:00
 author: gui
 tags: ["Технологии", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: Влияет ли приоритет в карте сайта на SEO?
       answer: "Google игнорирует `priority` и `changefreq`; выдуманные значения не дают преимуществ в SEO."
 ---
+
+Начните SEO в Astro с проверки title, description, canonical и JSON-LD в сгенерированном HTML показательной статьи на соответствие видимому содержимому. Проверьте обязательные поля по [Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data), после публикации — Search Console. Корректный синтаксис не гарантирует расширенные результаты или позиции.
 
 > Обновление за сентябрь 2026 года: Google убрал поисковое поле в дополнительных ссылках в ноябре 2024 года. Расширенные результаты FAQ обычно доступны лишь авторитетным государственным и медицинским сайтам, а `changefreq` и `priority` в карте сайта Google игнорирует. Сопоставляйте этот отчёт марта 2026 года с изменениями [поля поиска](https://developers.google.com/search/blog/2024/10/sitelinks-search-box), [FAQ](https://developers.google.com/search/blog/2023/08/howto-faq-changes) и [рекомендациями по sitemap](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping).
 
@@ -192,7 +194,7 @@ items: posts.map((post) => ({
 6. **Включает ли RSS-лента автора и категории?**
 7. **Исключает ли robots.txt поисковые индексы (например, `/pagefind/`) из обхода?**
 
-После настройки всего этого основа вашего SEO создана. Далее позиции в поиске определяются качеством контента и частотой обновлений.
+Эти настройки помогают передать публичное содержимое поисковым системам. Позиции зависят не только от качества и частоты обновлений, а завершённая настройка не доказывает рост трафика. Анализируйте запросы, показы и кликабельность после публикации, улучшая ответы на задачи читателя.
 
 ---
 

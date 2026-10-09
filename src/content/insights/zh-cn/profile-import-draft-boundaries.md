@@ -2,7 +2,7 @@
 title: "将个人资料导入草稿：比较、选择与审慎发布"
 description: "介绍从文本、CSV、静态 HTML 和通用 JSON 导入个人资料的实现，以及如何比较现有值、选择并替换字段或撤销更改，并将保存与发布分开处理。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 将已有个人资料迁移到另一个编辑器时，应先比较当前值与导入候选，再决定是否替换。本文以匿名化实现为例，说明资料导入与发布之间的边界。
+
+## 用一项简介测试手动编辑的保留
+
+手动修改现有简介，再从不同文本生成导入候选。依次确认未选项目保留当前值、选择替换时可核对、取消后恢复原值。应用后比较草稿与公开页面，检查仅导入不会改变公开内容。
+
+[OWASP：验证输入格式、值和长度](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## 先明确支持的输入格式
 

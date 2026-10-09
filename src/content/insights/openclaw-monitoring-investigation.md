@@ -2,7 +2,7 @@
 title: "OpenClawで監視と障害調査をつなぐ：検知・証拠・判断の境界"
 description: "定期監視にOpenClawの調査を組み合わせる設計。実装・定期実行で確認した範囲と、実障害や自動復旧の未検証範囲を整理します。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 サーバー監視では、異常を見つける条件と、その原因を調べる手順に別の責任があります。社内運用で整えた仕組みを題材に、定期チェックとOpenClawによる追加調査をつなぐ設計を紹介します。内部構成や通知先は掲載せず、一般化した判断手順を扱います。
+
+## 既知の異常で調査報告を評価する
+
+導入前の試験では、取得失敗や古い監視値など、原因が分かっている状況を検証環境で用意します。報告が観測時刻・根拠・未取得項目を含むか、時間切れでも途中の結果を残せるかを採点すると、文章の自然さだけで調査品質を判断せずに済みます。
+
+[OpenClaw：調査環境の権限境界](https://docs.openclaw.ai/gateway/security)
 
 ## 検知条件を明確にする
 

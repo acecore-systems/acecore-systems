@@ -1,8 +1,8 @@
 ---
-title: "Sveltia CMS導入ガイド"
-description: "AcecoreのSveltia CMS導入と運用変更の記録。編集者認証、GitHub Appによる検証付き直接保存、画像・多言語運用を時点別に整理します。"
+title: "AstroにSveltia CMSを導入する方法：編集・画像・認証の設計"
+description: "AstroへSveltia CMSを導入するなら、まず更新頻度の高い記事だけをcollectionにし、画像の保存場所と公開URL、競合時の再読込を確認します。"
 date: 2026-06-07T16:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技術", "CMS", "Astro", "Cloudflare", "セキュリティ"]
 image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
@@ -69,6 +69,8 @@ faq:
     - question: 多言語サイトでは全言語をCMSで編集させるべきですか？
       answer: 小規模チームでは日本語sourceだけをCMSで編集し、翻訳はPRで反映するほうが事故が少ないです。全言語をCMSに出すと、翻訳差分、レビュー、古い訳の検知が難しくなります。
 ---
+
+AstroへSveltia CMSを導入するなら、まず更新頻度の高い記事だけをcollectionにし、画像の保存場所と公開URL、競合時の再読込を確認します。[Sveltia CMS: Getting Started](https://sveltiacms.app/en/docs/start)の基本構成と、自サイト固有の認証・保存proxyを分けて設計してください。本文の旧OAuth手順と現在のログイン方式は同じものではありません。
 
 **2026年9月26日追記:** GitHub OAuth Workerを編集者ログインに使う以下の手順は導入当時の記録です。9月に統合された公式サイトのコードでは、AcecoreID / Cloudflare Accessでログインした本人と連携GitHub IDを確認し、repositoryのwrite権限を保存直前に検証します。ファイル操作は引き続きサイト専用GitHub Appが担い、許可path・内容・最新HEADを検証して`main`へ直接保存します。翻訳はOpenAI Batchと翻訳PRを別経路で扱います。実装の[統合PR #251](https://github.com/acecore-systems/acecore-net/pull/251)と以下の旧手順の時点を区別してください。
 

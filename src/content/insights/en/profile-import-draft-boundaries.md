@@ -2,7 +2,7 @@
 title: "Import Profile Details as a Draft: Compare, Select, and Publish Deliberately"
 description: "A generalized profile-import flow for text, CSV, static HTML, and shared JSON. Learn how it compares current values, lets people replace selected fields or undo changes, and keeps saving separate from publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 When moving an existing profile into another editor, compare the current values with the import candidates before replacing anything. This anonymized example explains the boundaries between importing data and publishing a profile.
+
+## Test preservation of edits with one biography field
+
+Manually edit an existing biography, then import a different candidate. Check that unselected fields remain, selected replacements can be reviewed, and cancellation restores the original. After applying, compare the draft with the public page to verify that importing alone does not change publication.
+
+[OWASP：Validating input format, values, and length](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Choose supported input formats first
 

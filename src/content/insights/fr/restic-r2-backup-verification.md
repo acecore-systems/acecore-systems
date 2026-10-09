@@ -2,7 +2,7 @@
 title: "Superviser restic sur R2 : du stockage réussi à la restauration vérifiée"
 description: "Suivre séparément fraîcheur des instantanés, intégrité et restauration, en précisant la reprise applicative restant à vérifier."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Une tâche terminée ne prouve pas que les données nécessaires sont récupérables. Ce cas interne généralisé évalue séparément stockage, intégrité, restauration et reprise du service. Il ne décrit pas une migration achevée depuis un autre service.
+
+## Fixer l’ID du snapshot et un objectif de reprise
+
+Notez l’ID et restaurez les fichiers nécessaires dans une destination vide et isolée. Vérifiez références et permissions des configurations, ou chargement de la base en isolation. Mesurez la durée. Répétez périodiquement les mêmes contrôles pour comparer fraîcheur et périmètre récupérable.
+
+[restic：Restaurer dans une destination isolée](https://restic.readthedocs.io/en/stable/050_restore.html)
 
 ## Définir source et réussite
 

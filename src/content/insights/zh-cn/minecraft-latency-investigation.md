@@ -2,7 +2,7 @@
 title: "排查 Minecraft 卡顿：静默采集指标与共享存储定位"
 description: "从安静地采集 TPS/MSPT，到对照 JFR 与操作系统 I/O 观测。本文区分已经完成的原因调查与尚未验证的性能改进。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Minecraft 卡顿可能来自服务器 tick 处理、短暂保存停顿、网络或客户端渲染等不同环节。本文匿名介绍对多台 Paper 服务器的调查，不公开内部主机名和配置。
+
+## 先在延迟发生时采集剖析数据
+
+记录玩家报告延迟的时间、人数及是否正在保存，并将该时段的剖析数据与MSPT比较。再采集一段正常时段作为对照，区分处理时间增加和等待增加，有助于选择插件调整还是存储调查。
+
+[PaperMC：问题发生时的剖析采集](https://docs.papermc.io/paper/profiling/)
 
 ## 分别测量平均值与短暂停顿
 

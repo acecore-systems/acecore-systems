@@ -1,6 +1,6 @@
 ---
-title: "Dando forma a uma «infraestrutura silenciosa». Renovamos o site da Acecore Systems"
-description: "Renovamos o site da Acecore Systems com o tema «infraestrutura silenciosa». Apresentamos o contexto e as principais mudanças de uma reorganização que aborda o trabalho em três camadas —dia a dia, sistema e operação— e conecta nossa abordagem, serviços, projetos, preços, guia de implementação e processo de contato."
+title: "Redesign de site corporativo: conectar serviços, preços e contato"
+description: "Antes de escolher o visual de um site corporativo, defina quem precisa de cada informação e qual decisão ela apoia."
 date: 2026-07-30T15:00
 author: gui
 tags: ["Notícias", "Serviços", "Site", "Desenvolvimento web"]
@@ -87,7 +87,10 @@ faq:
       answer: Você pode nos consultar sobre sistemas empresariais, aplicações web, painéis administrativos, integrações de dados e serviços externos e melhorias em sistemas existentes. Atualmente, também publicamos informações sobre consultoria de TI, adoção de IA, acompanhamento de deploys e adição de CMS, busca e formulários a sites.
     - question: Posso consultar mesmo sem ter decidido o que quero criar?
       answer: Sim. Podemos começar organizando a situação atual, os problemas, os usuários, as restrições e as prioridades. Você também pode nos consultar antes que os requisitos ou o escopo da contratação estejam definidos.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Antes de escolher o visual de um site corporativo, defina quem precisa de cada informação e qual decisão ela apoia. Verifique o percurso de uma consulta típica entre serviços, projetos, preços e contato. O caso da Acecore Systems ilustra essa abordagem; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) também aborda estrutura e descoberta nas buscas.
 
 Em 26 de julho de 2026, renovamos o [site oficial da Acecore Systems](/pt/).
 

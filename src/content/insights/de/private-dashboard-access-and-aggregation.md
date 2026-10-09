@@ -2,7 +2,7 @@
 title: "Ein geschütztes Betriebs-Dashboard mit Cloudflare Pages und D1"
 description: "Ein anonymisiertes Design, das den Zugang mit Cloudflare Access schützt und Betriebsaggregate über Pages Functions aus D1 liest. Es trennt geprüfte Produktivbereitstellung, authentifizierte Oberfläche und Indexnutzung von nicht getesteten Punkten."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/private-dashboard-access-and-aggregation-cover-v1.webp
 tags: ["Cloudflare Pages", "Cloudflare D1", "Security"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Wenn Betriebsinformationen über Protokolle und Datenbanken verteilt sind, kann es für das Team schwierig sein, den aktuellen Zustand sicher zu prüfen. Dieses anonymisierte Dashboard-Beispiel erläutert, wie Zugriff, Aggregation und Bereitstellung überprüft werden. Domains, Konten, Beitragsinhalte und aktuelle Betriebszahlen werden nicht offengelegt.
+
+## Eine Aggregation über Oberfläche und API prüfen
+
+Beginnen Sie mit einer Zeitraumzählung und vergleichen Sie die Anzeige mit bekannten Testdaten. Unterscheiden Sie leere Zeiträume von Abruffehlern und testen Sie direkten API-Zugriff vor und nach Anmeldung. Erweitern Sie erst nach Prüfung des Abfrageplans für diesen Filter.
+
+[Cloudflare D1：Indizes anhand der Abfragebedingungen prüfen](https://developers.cloudflare.com/d1/best-practices/use-indexes/)
 
 ## Seite und API in die Zugriffsschranke aufnehmen
 

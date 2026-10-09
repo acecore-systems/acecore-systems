@@ -82,8 +82,10 @@ faq:
       answer: "按 post_slug 查询、按 created_at 排序、soft delete、重复检测和速率限制都很适合用 D1 处理。"
     - question: 只在前端放 Turnstile 可以吗？
       answer: "不可以。Pages Function 必须把 token 发送到 Cloudflare Siteverify，并在验证成功后再写入 D1。"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+是否自建博客评论，应依据能否承担审核与删除，而不只是存储选择。希望委托管理可选外部服务，需要独立UI和存储策略可考虑D1。首次投稿测试应按[Cloudflare Turnstile: Server-side Validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)确认验证失败不会写入数据库。
 
 静态网站一旦需要评论功能，就会遇到状态保存和防 spam 的问题。
 

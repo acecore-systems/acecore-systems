@@ -1,6 +1,6 @@
 ---
-title: "Donner forme à une « infrastructure discrète ». Nous avons renouvelé le site d’Acecore Systems"
-description: "Nous avons renouvelé le site d’Acecore Systems autour du thème de l’« infrastructure discrète ». Cet article présente le contexte et les principales évolutions d’une refonte qui envisage le travail en trois couches —terrain, système et exploitation— et relie notre approche, nos services, nos réalisations, nos tarifs, notre guide de mise en œuvre et le parcours de contact."
+title: "Refonte de site d’entreprise : relier services, tarifs et contact"
+description: "Avant de choisir le design visuel d’un site d’entreprise, précisez qui cherche quelles informations et quelle décision elles permettent."
 date: 2026-07-30T15:00
 author: gui
 tags: ["Actualités", "Services", "Site web", "Création web"]
@@ -87,7 +87,10 @@ faq:
       answer: Vous pouvez nous consulter pour des systèmes métier, des applications web, des interfaces d’administration, des intégrations de données et de services externes ou l’amélioration de systèmes existants. Nous publions aussi des informations sur le conseil IT, l’adoption de l’IA, l’accompagnement au déploiement et l’ajout d’un CMS, d’une recherche ou de formulaires à un site web.
     - question: Puis-je vous consulter sans avoir encore décidé ce que je souhaite créer ?
       answer: Oui. Nous pouvons commencer par clarifier votre fonctionnement actuel, vos difficultés, vos utilisateurs, vos contraintes et vos priorités. Vous pouvez également nous solliciter avant que les besoins ou le périmètre de la commande soient arrêtés.
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Avant de choisir le design visuel d’un site d’entreprise, précisez qui cherche quelles informations et quelle décision elles permettent. Vérifiez le parcours d’une demande habituelle entre services, réalisations, tarifs et contact. Le cas Acecore Systems illustre cette démarche ; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) traite aussi de la structure et de la visibilité dans les recherches.
 
 Le 26 juillet 2026, nous avons renouvelé le [site officiel d’Acecore Systems](/fr/).
 

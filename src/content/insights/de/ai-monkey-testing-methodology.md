@@ -1,10 +1,10 @@
 ---
 title: "Monkey-Testing Ihrer Website mit GitHub Copilot × Playwright: Ein praktischer Leitfaden"
-description: "Ein praxisnaher Leitfaden zum systematischen Monkey-Testing einer statischen Website mit dem VS Code Agent Mode (GitHub Copilot) in Kombination mit den Playwright-Browsertools. Behandelt die Testdesign-Methodik, entdeckte Fehler und deren Behebung sowie Verbesserungsempfehlungen."
+description: "Legen Sie für explorative Tests mit KI und Playwright zulässige Navigation und Formulareingaben fest und dokumentieren Sie Reproduktion und Soll-Ergebnis."
 date: 2026-03-25T14:00
 author: gui
 tags: ["Technologie", "GitHub Copilot", "VS Code", "Astro", "Website"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/ai-monkey-testing-methodology-cover-v2.webp"
 callout:
   type: tip
@@ -39,7 +39,7 @@ compareTable:
     items:
       - Automatisches Crawlen aller Routen zur Überprüfung von HTTP-Status und DOM-Struktur
       - KI extrahiert Testziele automatisch aus dem Quellcode
-      - Lückenlose Erkennung von fehlerhaften Bildern, leeren Links und JS-Fehlern
+      - Fehlerhafte Bilder, leere Links und JS-Fehler im definierten Prüfumfang erkennen
       - Entdeckung → Ursachenanalyse → Behebung → erneuter Test – alles in einer einzigen Sitzung
 faq:
   title: Häufig gestellte Fragen
@@ -53,6 +53,8 @@ faq:
     - question: Kann die KI entdeckte Fehler auch selbst beheben?
       answer: "Im Agent Mode ist das Lesen und Schreiben von Dateien möglich, sodass der gesamte Ablauf von der Fehlererkennung über die Behebung bis zur Build-Überprüfung in einer einzigen Sitzung abgeschlossen werden kann. In diesem Artikel haben wir 2 Fehler entdeckt und sofort behoben."
 ---
+
+Legen Sie für explorative Tests mit KI und Playwright zulässige Navigation und Formulareingaben fest und dokumentieren Sie Reproduktion und Soll-Ergebnis. Überführen Sie Befunde mithilfe von [Playwright: Best Practices](https://playwright.dev/docs/best-practices) in wiederholbare Regressionstests. Die folgenden Routen- und Verstoßzahlen sind historische Beobachtungen und belegen keine vollständige Abdeckung.
 
 > **Aktualisierung vom September 2026:** Die Copilot-Nutzung wird nun in AI Credits statt der ursprünglich genannten monatlichen Agent-Mode-Anfragen beschrieben. Prüfen Sie die [aktuelle GitHub-Dokumentation](https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing).
 
@@ -124,6 +126,8 @@ Testziele: 38 Routen
 
 Ergebnis: Alle Routen 200 OK (außer beabsichtigter 404)
 ```
+
+Im historischen Protokoll stimmen die Gesamtzahl der Routen dieses Logs, ihre Aufschlüsselung und die Zusammenfassung am Artikelende nicht überein. Nutzen Sie die Gesamtzahl nicht als Beleg für reproduzierbare Tests; listen Sie Ziel-URLs aus dem tatsächlichen Build auf, um den Prüfumfang festzulegen. Code und Zahlen bleiben als historische Aufzeichnungen erhalten.
 
 ### DOM-Strukturprüfung
 

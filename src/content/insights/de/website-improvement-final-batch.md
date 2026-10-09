@@ -1,8 +1,8 @@
 ---
-title: "Astro-Website-Qualitätsverbesserungsleitfaden, Fortsetzung - Letzte Anpassungen für 100 Punkte in allen PageSpeed-Insights-Kategorien"
-description: "Dokumentation der finalen Optimierungsrunde nach dem vorherigen Artikel: Cloudflare Web Analytics deaktivieren, GA4 und die Suche verzögert laden, 100 Punkte in allen vier PageSpeed-Insights-Kategorien auf Mobile und Desktop erreichen, Breadcrumbs und Indexierungsregeln in Search Console bereinigen, auf gemeinsame SVG-Icons umstellen und auch begründen, welche zusätzlichen Optimierungen bewusst nicht übernommen wurden."
+title: "Verzögertes Laden in Astro: GA4, Pagefind und PageSpeed vergleichen"
+description: "GA4 und Pagefind verzögert laden und nötige Funktionen erhalten. Vergleicht PageSpeed-100-Messungen vom 29. März 2026, Indexbereinigung und verworfene CSS-Aufteilung."
 date: 2026-03-29T02:30
-lastUpdated: "2026-09-26T18:25:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technologie", "Astro", "Leistung", "Barrierefreiheit", "SEO", "Website"]
 image: /uploads/acecore-generated/blog-website-improvement-final-batch.webp
@@ -103,7 +103,7 @@ linkCards:
     icon: i-lucide-gauge
   - href: /blog/astro-accessibility-guide/
     title: Artikel zur Barrierefreiheit
-    description: Ordnet die konkreten Maßnahmen zur Erreichung von WCAG AA und Accessibility 100.
+    description: "Beispiele zu aria, Kontrast und Formularen; getrennt von der Prüfung sämtlicher WCAG-Anforderungen."
     icon: i-lucide-accessibility
   - href: /blog/astro-ux-and-code-quality/
     title: Artikel zu UX und Codequalität
@@ -125,6 +125,12 @@ faq:
 ---
 
 **Aktualisierung vom 26. September 2026:** Die 100 Punkte stammen aus einer PageSpeed-Insights-Messung vom 29. März 2026. Sie garantieren weder den aktuellen Wert noch die Erfahrung aller realen Nutzer. Siehe [Googles Dokumentation](https://developers.google.com/speed/docs/insights/v5/about) zu Labor- und Felddaten sowie Schwankungen.
+
+## Die erste Interaktion vor verzögertem Laden testen
+
+Bewerten Sie verzögertes GA4 oder Suche mit Messung und Funktionsabnahme. Klicken Sie sofort auf einen CTA, öffnen Sie Suche und wechseln Sie Seiten; prüfen Sie fehlende oder doppelte Ereignisse und anfängliche Wartezeit. Verwerfen Sie Änderungen, die nötige Funktionen verlieren, auch bei besserem Score.
+
+[PageSpeed Insights：Messergebnisse interpretieren](https://developers.google.com/speed/docs/insights/v5/about)
 
 ## Einleitung
 

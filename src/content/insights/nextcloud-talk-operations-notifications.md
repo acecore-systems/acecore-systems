@@ -2,7 +2,7 @@
 title: "運営通知をNextcloud Talkへつなぐ：検知・送信・対応完了を分ける"
 description: "注文処理や要確認コンテンツの通知を、非公開のTalkと管理画面へつなぐ設計。最小限の通知、秘密管理、接続テスト、実業務の受入範囲を紹介します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/nextcloud-talk-operations-notifications-cover-v1.webp
 tags: ["Nextcloud", "Monitoring", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 注文処理の問題や確認が必要な投稿を見つけても、担当者が気づかなければ対応は進みません。社内の運営通知をNextcloud Talkへつないだ事例を、顧客情報・ルームURL・内部構成を伏せて整理します。
+
+## 一種類の通知で再送と管理導線を試す
+
+まず「処理失敗」のような一種類を選び、個人情報を含まないテスト通知から、権限のある担当者が管理画面へ進めるか確かめます。同じ問題を再検知した場合と送信だけに失敗した場合を別々に試し、重複通知や業務処理の二重実行を起こさず再送できるか確認します。
+
+[Nextcloud Talk：BotとWebhookの接続仕様](https://nextcloud-talk.readthedocs.io/en/stable/bots/)
 
 ## 通知は気づく入口にする
 

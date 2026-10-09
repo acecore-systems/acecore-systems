@@ -2,7 +2,7 @@
 title: "将服务CTA上下文传递到咨询表单的技术设计"
 description: "这是将用户在服务页面中阅读的上下文传递到咨询表单的实现设计。内容涵盖Astro网站中的迷你CTA、URL参数契约、表单类别的初始选择、主题prefill、多语言URL、GA计量和生成HTML检查，可复用于其他网站。"
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "网站", "服务", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ faq:
 用户需要在表单中重新选择服务类型，并再次填写主题。接收方在阅读正文之前，也难以判断这是“网站制作”“服务器运营”还是“Aceserver”的咨询。
 
 Acecore网站通过[把服务CTA的咨询对象传递到咨询表单的PR](https://github.com/acecore-systems/acecore-net/pull/100) 改善了这条导流。本文不仅记录Astro中的实现，也将其整理为可供其他网站使用的导流设计。
+
+## 从一个CTA验证表单初始化
+
+测试有效service key、未知key和已输入主题后返回的操作。确认映射到允许的选项且不覆盖已有主题，各语言URL沿用相同值契约。URL不应包含个人信息或自由文本，只用短标识符传递咨询上下文。
+
+[MDN URLSearchParams：URL参数读取规范](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## 目的不只是减少表单输入
 

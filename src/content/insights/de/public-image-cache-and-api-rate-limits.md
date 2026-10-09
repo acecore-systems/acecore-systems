@@ -2,7 +2,7 @@
 title: "Edge-Caching öffentlicher Bilder von API-Ratenbegrenzungen trennen"
 description: "Ein Fall, in dem Inhalts-API und Bildanfragen beim wiederholten Aufrufen dasselbe Limit teilten. Behandelt werden die Wiederverwendung öffentlicher Bilder, die Prüfung erfolgreicher Antworten, die Grenzen zwischen WAF und Anwendung sowie Produktionsprüfungen."
 date: "2026-10-06T02:20:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/public-image-cache-and-api-rate-limits-cover-v1.webp
 tags: ["Cloudflare", "Performance", "Web"]
@@ -13,6 +13,12 @@ callout:
 ---
 
 Bei Tagebüchern und Katalogen mit Bildern löst jeder Wechsel von Datum oder Seite Anfragen an die Inhalts-API und an die Bilder aus. Wir beschreiben einen Fall, in dem Bilder beim wiederholten Aufrufen nicht mehr geladen wurden, ohne Betriebs-URLs, interne Routen oder Grenzwerte offenzulegen.
+
+## Fortlaufendes Browsen mit einem Bild nachstellen
+
+Rufen Sie dasselbe öffentliche Bild mehrfach ab und vergleichen Sie Body-Hash, Status und Cache-Zustand. Laden Sie danach Text und mehrere Bilder bei normalen Seitenwechseln und prüfen Sie, welche Anfragen das Limit verbrauchen. Ein HIT genügt nicht: Bildinhalt und API-Schutz gehören zur Prüfung.
+
+[Cloudflare Cache API：Bedingter Abruf und lokaler Cache](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 
 ## Inhalt und Bilder teilten dasselbe Ratenlimit
 

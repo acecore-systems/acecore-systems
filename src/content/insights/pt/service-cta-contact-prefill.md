@@ -2,7 +2,7 @@
 title: "Projeto técnico para levar o contexto de um CTA de serviço ao formulário de contato"
 description: "Projeto de implementação para levar ao formulário o contexto lido em uma página de serviço. Abrange mini CTAs em Astro, contrato de parâmetros de URL, seleção inicial da categoria, prefill do assunto, URLs multilíngues, medição com GA e verificação do HTML gerado."
 date: 2026-06-07T13:00
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Tecnologia", "Site", "Serviços", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
@@ -87,6 +87,12 @@ Quando alguém que lê uma página de serviço pensa “quero consultar sobre is
 O usuário precisa escolher novamente o tipo de serviço e escrever o assunto. A equipe receptora também não consegue saber facilmente se a consulta é sobre produção web, operação de servidores ou Aceserver antes de ler a mensagem.
 
 No site da Acecore, melhoramos essa jornada no [PR que leva o alvo do CTA de serviço ao formulário](https://github.com/acecore-systems/acecore-net/pull/100). Este artigo organiza a solução não só como registro de implementação em Astro, mas como projeto de jornada reutilizável em outros sites.
+
+## Validar a inicialização do formulário a partir de um CTA
+
+Teste uma chave válida, outra desconhecida e voltar após escrever o assunto. Verifique opções permitidas e preservação do assunto, mantendo o mesmo contrato nas URLs por idioma. Não inclua dados pessoais nem texto livre na URL; passe contexto com identificadores curtos.
+
+[MDN URLSearchParams：Ler parâmetros de URL](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
 ## O objetivo não é apenas reduzir o preenchimento
 

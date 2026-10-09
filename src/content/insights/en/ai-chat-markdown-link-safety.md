@@ -2,7 +2,7 @@
 title: "Safely Rendering Markdown Links in AI Chat Answers"
 description: "An implementation note on converting Markdown links in AI chat answers into safe HTML. By separating whitespace-tolerant parsing, href trimming, allowlist validation, DOM rendering, fallbacks, and test cases, the same pattern can be reused on other sites."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Website", "AI", "Security", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -78,6 +78,8 @@ faq:
     - question: Should disallowed URLs be removed?
       answer: Usually keeping them as text is easier to debug and preserves context for the user. If your policy requires hiding suspicious strings, dropping the whole link is also valid.
 ---
+
+If an AI link remains plain text, run the same input through parsing, URL validation and DOM rendering to locate the failure. Use text APIs such as [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) for labels, keeping link eligibility separate from HTML interpretation when adapting an existing chat.
 
 When an AI chat returns `See [Services]( /services/ ) for details`, the link can fail to render and the raw Markdown can remain on screen.
 

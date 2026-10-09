@@ -4,7 +4,7 @@ description: "Astro + Cloudflare Pages 構成のサイトに JSON-LD 構造化�
 date: 2026-03-25T11:00
 author: gui
 tags: ["技術", "Astro", "SEO"]
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 image: "/images/insights/covers/astro-seo-and-structured-data-cover-v2.webp"
 callout:
   type: tip
@@ -56,6 +56,8 @@ faq:
     - question: サイトマップの priority は SEO に影響しますか？
       answer: "Googleは `priority` と `changefreq` を使いません。根拠のない値をSEO上の効果として設定する必要はありません。"
 ---
+
+AstroのSEO実装は、代表記事の生成HTMLでtitle・description・canonicalと、画面に見える内容に一致するJSON-LDを確認するところから始めます。[Google: Structured Data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)に沿って必要項目を検証し、公開後はSearch Consoleで確認してください。構文が正しくても、リッチリザルト表示や検索順位は保証されません。
 
 > 2026年9月追記: Googleは2024年11月に検索結果のサイト内検索ボックスを終了しました。FAQリッチリザルトは主に権威ある政府・医療サイトに限定されています。また、Googleはサイトマップの `changefreq` と `priority` を使いません。以下の2026年3月の実装記録は、この[検索ボックス変更](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)、[FAQ変更](https://developers.google.com/search/blog/2023/08/howto-faq-changes)、[サイトマップの説明](https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping)を踏まえて読んでください。
 
@@ -194,7 +196,7 @@ items: posts.map((post) => ({
 6. **RSSフィードに著者・カテゴリが含まれているか**
 7. **robots.txt で検索インデックス（`/pagefind/`など）をクロール除外しているか**
 
-これらを一通り設定しておけば、SEOの基盤は整います。あとはコンテンツの質と更新頻度で検索順位が決まります。
+これらは公開情報を検索エンジンへ正しく渡すための基盤です。検索順位は内容の質や更新頻度だけでは決まらず、設定完了も流入増加の証拠にはなりません。公開後の検索語、表示回数、クリック率を見て、読者の課題に答える内容を改善します。
 
 ---
 

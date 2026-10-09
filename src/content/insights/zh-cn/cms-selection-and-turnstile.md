@@ -1,8 +1,8 @@
 ---
-title: "Sveltia CMS 导入指南"
-description: "按时间梳理Acecore的Sveltia CMS实施：编辑者认证、GitHub App验证后的直接保存、媒体与多语言运营。"
+title: "为Astro引入Sveltia CMS：编辑、图片与认证设计"
+description: "为Astro引入Sveltia CMS时，先将经常更新的文章设为collection，检查图片存储、公开URL和冲突后的重新加载。"
 date: 2026-06-07T16:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "CMS", "Astro", "Cloudflare", "安全"]
 image: "/images/insights/covers/cms-selection-and-turnstile-cover-v2.webp"
@@ -69,6 +69,8 @@ faq:
     - question: 多语言网站应该让所有语言都能在 CMS 中编辑吗？
       answer: 小团队更适合只在 CMS 中编辑日语 source，再通过 PR 更新翻译。把所有语言都暴露给 CMS，会让审核和旧翻译检测变难。
 ---
+
+为Astro引入Sveltia CMS时，先将经常更新的文章设为collection，检查图片存储、公开URL和冲突后的重新加载。把[Sveltia CMS: Getting Started](https://sveltiacms.app/en/docs/start)的基础配置与网站特定的认证、保存proxy分开设计。下文旧OAuth步骤不同于当前登录方式。
 
 **2026年9月26日补充：** 下文的GitHub OAuth Worker登录步骤属于初期配置。9月合并的公司网站代码会在保存前检查AcecoreID / Cloudflare Access登录身份、关联的GitHub ID及repository写入权限。站点专用GitHub App仍负责写入：先验证允许的路径、内容及当前HEAD，再直接提交到`main`。OpenAI Batch和翻译PR是独立流程。参见[已合并的PR #251](https://github.com/acecore-systems/acecore-net/pull/251)，下文旧步骤应按当时背景阅读。
 

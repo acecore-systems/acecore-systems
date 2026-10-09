@@ -2,7 +2,7 @@
 title: "Pitfalls and Solutions for Astro View Transitions — A UX and Code Quality Improvement Guide"
 description: "A practical guide covering solutions for scripts breaking with Astro View Transitions, introducing Pagefind full-text search, improving TypeScript type safety, centralizing constants, and more to improve UX and code quality."
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "Website"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: Will the code still work if I ignore TypeScript type errors?
       answer: "It will work, but type errors are signs of potential bugs. Especially with Astro's content schemas, making them type-safe enables IDE autocompletion for property access within templates, greatly improving development efficiency."
 ---
+
+If menus or search fail only after navigation, compare direct loads with ClientRouter navigation and inspect initialization timing. Follow the lifecycle in [Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/) to organize event registration, checking duplicate execution as well as back and forward navigation.
 
 ## Introduction
 
@@ -136,7 +138,7 @@ Implement a search modal that opens with the `Ctrl+K` shortcut. When there are z
 
 ### SearchAction Integration
 
-By defining a `?q=` parameter in Google's `SearchAction` structured data, users can navigate directly from search results to your site search. Add logic to detect URL parameters and automatically launch the search modal.
+Google retired the sitelinks search box in 2024-11 ([official announcement](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)). Treat existing `SearchAction` as historical implementation, without expecting a search box in results. Opening the search modal from `?q=` remains useful for shared links and on-site search navigation.
 
 ### Cache Settings
 

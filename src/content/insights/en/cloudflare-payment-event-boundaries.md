@@ -2,7 +2,7 @@
 title: "Handling Payment and Refund Webhooks Safely: State Reconciliation in Workers"
 description: "An implementation example that separates signature checks, duplicate and delayed events, refund state, and external API responses. It also explains rechecking authorization before administrative actions."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 image: /images/insights/covers/cloudflare-payment-event-boundaries-cover-v1.webp
 tags: ["Cloudflare Workers", "Stripe", "Security"]
@@ -11,6 +11,8 @@ callout:
   title: "Separate implementation evidence from real transaction actions"
   text: "Implementation, tests, production deployment, and read-only reconciliation with external APIs were verified in this anonymized case. No customer refund, cancellation, or point adjustment was performed for testing, and the article does not claim end-to-end verification of every payment path."
 ---
+
+For payment webhooks on Workers, test duplicate delivery and reordered events in a test environment, verifying business state is not updated twice. Check external API redirect handling against [Cloudflare Workers: Request](https://developers.cloudflare.com/workers/runtime-apis/request/) and the runtime, and record receipt, external-state confirmation and follow-up processing separately.
 
 Receiving a payment-provider event does not by itself complete an order or refund. This anonymized example shows how an operations flow on Workers reconciles provider state with local records. It omits customer details, live transaction identifiers, and internal notification destinations.
 

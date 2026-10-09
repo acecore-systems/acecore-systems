@@ -1,5 +1,5 @@
 ---
-title: "Concevoir la délégation dans Codex : le plugin public Task Routing"
+title: "Délégation de tâches Codex : transmission, permissions et validation"
 description: "Les choix de Codex Task Routing : préserver les réglages de l'agent principal, identifier la politique appliquée et vérifier les tâches confiées."
 date: "2026-09-26T18:30:00+09:00"
 author: gui
@@ -9,8 +9,10 @@ callout:
   type: note
   title: "Ce qui a été vérifié"
   text: "Le code public, les PR fusionnées, la CI sur trois systèmes et l'installation dans un environnement isolé ont été vérifiés. Cet article ne prétend pas mesurer un gain de qualité ou d'utilisation, ni prouver l'exécution d'un modèle délégué sur un compte réel."
-lastUpdated: "2026-10-06T08:52:00+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 ---
+
+Testez la délégation Codex sur des recherches ou revues vérifiables indépendamment, en précisant l’intégration par le parent. Transmettez fichiers, références, preuves et inconnues ; appliquez aux outils les privilèges minimaux de [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/). Déléguer ne démontre pas à lui seul une amélioration de qualité ou de coût.
 
 Pour mener plusieurs travaux avec Codex, choisir un modèle n'est qu'une partie de la décision. Il faut aussi définir quelle étape peut être isolée, quel contexte transmettre et comment vérifier le résultat. Acecore a publié [Codex Task Routing](https://github.com/acecore-systems/codex-task-routing) pour expliciter ces choix.
 

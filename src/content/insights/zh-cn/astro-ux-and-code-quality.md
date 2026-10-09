@@ -2,7 +2,7 @@
 title: "Astro View Transitions的坑与解决方案 ― UX与代码质量改善指南"
 description: "介绍Astro View Transitions中脚本失效问题的解决方案、Pagefind全文搜索的引入、TypeScript类型安全性的提升、常量统一管理等改善UX和代码质量的实践指南。"
 date: 2026-03-25T13:00
-lastUpdated: "2026-10-06T13:58:01+09:00"
+lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
 tags: ["技术", "Astro", "网站"]
 image: "/images/insights/covers/astro-ux-and-code-quality-cover-v2.webp"
@@ -51,6 +51,8 @@ faq:
     - question: TypeScript的类型错误可以忽略吗？
       answer: "虽然程序可以运行，但类型错误是Bug的先兆。尤其是将Astro的内容Schema做到类型安全后，模板中的属性访问可以获得IDE的自动补全，大幅提高开发效率。"
 ---
+
+菜单或搜索仅在页面跳转后失效时，对比直接加载与ClientRouter跳转，检查初始化时机。按照[Astro: View Transitions](https://docs.astro.build/en/guides/view-transitions/)的生命周期组织事件注册，同时检查重复执行以及前进、后退操作。
 
 ## 前言
 
@@ -136,7 +138,7 @@ Astro的View Transitions（ClientRouter）是一项强大的功能，可以让�
 
 ### SearchAction联动
 
-在Google的结构化数据 `SearchAction` 中定义 `?q=` 参数，就可以从搜索结果直接跳转到站内搜索。添加检测URL参数自动启动搜索模态框的处理。
+Google于2024-11停用站点链接搜索框（[官方公告](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)）。已有 `SearchAction` 应视为历史实现，不应期待搜索结果中的搜索框。接收 `?q=` 后打开搜索弹窗的处理仍可用于分享链接和站内搜索入口。
 
 ### 缓存设置
 
