@@ -80,4 +80,6 @@ Sveltia CMS は `/admin/` から利用します。CMS では日本語の固定�
 
 OpenAI Batchの回収時は `npm run update:i18n-state` で完成したlocaleを翻訳待ちから外し、全言語が揃った記事の宣言を削除します。変更した翻訳ファイルだけをPrettierで整形し、専用Translation Botが同一repositoryの `translation/openai/` branchからPRを作成します。自動マージ対象は、Bot、source marker、変更path、現在の全source hash、`Build and Format` を再検証します。behindの場合は検証済みHEAD SHAで最新mainへ追従させ、GitHubの必須checkが未完了ならsquash Auto-mergeを予約し、すべて揃ってcleanなら検証済みHEAD SHAを固定してsquash mergeします。
 
+翻訳前に数値、URL、既存のplaceholder、inline code、fenced codeを一意の保護tokenへ置き換え、回収時に現在の日本語sourceから復元します。tokenの欠落・重複・未知のtokenは拒否し、復元後も数値・コード・リンク・固定frontmatterの一致検証を行います。保護方式の版はBatchのcustom_idに記録し、既に投入済みの旧方式の結果には従来の検証を適用します。Batch内の全結果を検証してからファイルを書き込むため、後半の言語が不正でも前半だけを適用しません。検証失敗時は処理を失敗のまま止め、Batch ID・source hash・対象言語とsource path・原因をActions artifactに30日保存します。追加のモデル呼び出しや自動再翻訳は行いません。
+
 移行の本番切替条件と旧認証へのロールバックは [AcecoreID管理ログイン移行](docs/acecoreid-admin-migration.md) を参照してください。旧OAuthの説明が残る運用資料より、この移行手順を優先します。

@@ -11,6 +11,11 @@ import {
   translatedLocales,
   translationSourcePaths,
 } from "./i18n-source-hash.mjs";
+import {
+  fencedCodeBlocks,
+  protectTranslationText,
+  restoreTranslationText,
+} from "./translation-protected-text.mjs";
 
 const API_BASE_URL = "https://api.openai.com/v1";
 const BATCH_ENDPOINT = "/v1/responses";
@@ -276,20 +281,21 @@ export function decodeMetadata(customId) {
     !["content", "ui", "contact", "insight"].includes(parsed.kind) ||
     typeof parsed.locale !== "string" ||
     typeof parsed.sourcePath !== "string" ||
-    !/^[a-f0-9]{64}$/u.test(parsed.sourceHash)
+    !/^[a-f0-9]{64}$/u.test(parsed.sourceHash) ||
+    (parsed.protectionVersion !== undefined && parsed.protectionVersion !== 1)
   ) {
     throw new Error("OpenAI Batch custom_id metadata is invalid");
   }
   return parsed;
 }
 
-function createStructuredRequest(metadata, source) {
+export function createStructuredRequest(metadata, source) {
   const entries = listTextEntries(source, [], {
     omitStable: metadata.kind === "content",
   });
   if (entries.length === 0) return null;
   return {
-    custom_id: encodeMetadata(metadata),
+    custom_id: encodeMetadata({ ...metadata, protectionVersion: 1 }),
     method: "POST",
     url: BATCH_ENDPOINT,
     body: {
@@ -299,12 +305,16 @@ function createStructuredRequest(metadata, source) {
         "Translate Japanese Acecore Systems website copy into the requested target locale.",
         "Return one translation for every supplied id.",
         "Do not change placeholders, URLs, inline code, numeric values, product names, or code-like tokens.",
+        "Copy each {ACECORE_KEEP_...} token exactly once, unchanged. These tokens represent immutable source text and will be restored locally. Do not add formatting around them or replace them with words.",
         "Use natural professional website language. Return only the requested JSON object.",
       ].join("\n"),
       input: JSON.stringify({
         targetLocale: metadata.locale,
         sourcePath: metadata.sourcePath,
-        entries,
+        entries: entries.map((entry) => ({
+          ...entry,
+          source: protectTranslationText(entry.source).text,
+        })),
       }),
       text: {
         format: createResponseFormat("translation_entries", textResponseSchema),
@@ -313,9 +323,9 @@ function createStructuredRequest(metadata, source) {
   };
 }
 
-function createInsightRequest(metadata, markdown) {
+export function createInsightRequest(metadata, markdown) {
   return {
-    custom_id: encodeMetadata(metadata),
+    custom_id: encodeMetadata({ ...metadata, protectionVersion: 1 }),
     method: "POST",
     url: BATCH_ENDPOINT,
     body: {
@@ -327,13 +337,14 @@ function createInsightRequest(metadata, markdown) {
         "Keep frontmatter keys, author, date, lastUpdated, image, uploadedImage, URLs, image destinations, placeholders, inline code, and fenced code unchanged.",
         "Preserve every numeric token exactly, including prose and visible frontmatter. Do not spell digits out as words or omit counts when paraphrasing; retain 0 rather than zero or no users.",
         "After JSON decoding, fenced code must be identical to the source, including comments, indentation, and literal backslashes. Do not escape code a second time.",
+        "Copy each {ACECORE_KEEP_...} token exactly once, unchanged. These tokens represent immutable source text and will be restored locally. Do not add formatting around them or replace them with words. A standalone CODE token represents an entire fenced code block; do not wrap it in another code block.",
         "Translate all user-visible prose, including visible frontmatter strings, headings, labels, lists, tables, callouts, FAQs, and image alt text.",
         "Return only the requested JSON object.",
       ].join("\n"),
       input: JSON.stringify({
         targetLocale: metadata.locale,
         sourcePath: metadata.sourcePath,
-        markdown: normalizeText(markdown),
+        markdown: protectTranslationText(markdown).text,
       }),
       text: {
         format: createResponseFormat(
@@ -583,7 +594,11 @@ function parseJsonResponse(body) {
   return parsed;
 }
 
-function parseTranslationMap(response, source, { omitStable = false } = {}) {
+function parseTranslationMap(
+  response,
+  source,
+  { omitStable = false, protectionVersion } = {},
+) {
   if (!Array.isArray(response.translations)) {
     throw new Error("Translation response.translations must be an array");
   }
@@ -599,14 +614,25 @@ function parseTranslationMap(response, source, { omitStable = false } = {}) {
     }
     translations.set(value.id, value.text);
   }
-  const expected = new Set(
-    listTextEntries(source, [], { omitStable }).map((entry) => entry.id),
-  );
+  const entries = listTextEntries(source, [], { omitStable });
+  const expected = new Set(entries.map((entry) => entry.id));
   if (translations.size !== expected.size) {
     throw new Error("Translation response has an unexpected entry count");
   }
   for (const id of expected) {
     if (!translations.has(id)) throw new Error(`Missing translation for ${id}`);
+  }
+  if (protectionVersion === 1) {
+    for (const entry of entries) {
+      translations.set(
+        entry.id,
+        restoreTranslationText(
+          entry.source,
+          translations.get(entry.id),
+          `Translation ${entry.id}`,
+        ),
+      );
+    }
   }
   return translations;
 }
@@ -698,10 +724,11 @@ function writeFileIfChanged(filePath, content) {
   return true;
 }
 
-function applyContentTranslation(metadata, response) {
-  const source = getSourceValue(metadata.sourcePath);
+function prepareContentTranslation(metadata, response, pendingFiles, readers) {
+  const source = readers.getSourceValue(metadata.sourcePath);
   const translations = parseTranslationMap(response, source, {
     omitStable: true,
+    protectionVersion: metadata.protectionVersion,
   });
   const translated = buildTranslatedValue(source, translations, [], {
     omitStable: true,
@@ -710,9 +737,11 @@ function applyContentTranslation(metadata, response) {
   if (!targetPath)
     throw new Error(`Unknown content source: ${metadata.sourcePath}`);
   const filePath = `src/i18n/content/${metadata.locale}.json`;
-  const target = JSON.parse(readFileSync(filePath, "utf8"));
+  const target = JSON.parse(
+    pendingFiles.get(filePath) ?? readers.readFile(filePath, "utf8"),
+  );
   setAtPath(target, targetPath, translated);
-  return writeFileIfChanged(filePath, `${JSON.stringify(target, null, 2)}\n`);
+  pendingFiles.set(filePath, `${JSON.stringify(target, null, 2)}\n`);
 }
 
 function findMatchingBrace(source, openingIndex) {
@@ -755,13 +784,20 @@ export function replaceLocaleObject(source, locale, value) {
   return `${source.slice(0, opening)}${JSON.stringify(value, null, 2)}${source.slice(closing + 1)}`;
 }
 
-function applyInterfaceTranslation(metadata, response, pendingFiles) {
-  const source = getSourceValue(metadata.sourcePath);
-  const translations = parseTranslationMap(response, source);
+function prepareInterfaceTranslation(
+  metadata,
+  response,
+  pendingFiles,
+  readers,
+) {
+  const source = readers.getSourceValue(metadata.sourcePath);
+  const translations = parseTranslationMap(response, source, {
+    protectionVersion: metadata.protectionVersion,
+  });
   const translated = buildTranslatedValue(source, translations);
   const current =
     pendingFiles.get(metadata.sourcePath) ??
-    readFileSync(metadata.sourcePath, "utf8");
+    readers.readFile(metadata.sourcePath, "utf8");
   pendingFiles.set(
     metadata.sourcePath,
     replaceLocaleObject(current, metadata.locale, translated),
@@ -805,10 +841,9 @@ export function validateInsightTranslation(
   ) {
     throw new Error("Translated Insight changed fenced code delimiters");
   }
-  const fencedCode = (markdown) =>
-    markdown.match(/^```[^\n]*\n[\s\S]*?^```[ \t]*$/gmu) ?? [];
   if (
-    JSON.stringify(fencedCode(source)) !== JSON.stringify(fencedCode(output))
+    JSON.stringify(fencedCodeBlocks(source)) !==
+    JSON.stringify(fencedCodeBlocks(output))
   ) {
     throw new Error(`${label}: fenced code changed`);
   }
@@ -822,21 +857,88 @@ export function validateInsightTranslation(
   return output.endsWith("\n") ? output : `${output}\n`;
 }
 
-function applyInsightTranslation(metadata, response) {
+function prepareInsightTranslation(metadata, response, pendingFiles, readers) {
   if (typeof response.markdown !== "string") {
     throw new Error("Insight response.markdown must be a string");
   }
-  const source = readFileSync(metadata.sourcePath, "utf8");
+  const source = readers.readFile(metadata.sourcePath, "utf8");
+  const label = `Translated Insight (${metadata.locale}: ${metadata.sourcePath})`;
   const translated = validateInsightTranslation(
     source,
-    response.markdown,
-    `Translated Insight (${metadata.locale}: ${metadata.sourcePath})`,
+    metadata.protectionVersion === 1
+      ? restoreTranslationText(source, response.markdown, label)
+      : response.markdown,
+    label,
   );
   const slug = path.basename(metadata.sourcePath);
-  return writeFileIfChanged(
+  pendingFiles.set(
     path.join("src/content/insights", metadata.locale, slug),
     translated,
   );
+}
+
+export function prepareBatchTranslations(
+  outputLines,
+  currentSourceHash,
+  readers = { getSourceValue, readFile: readFileSync },
+) {
+  const pendingFiles = new Map();
+  const seen = new Set();
+  for (const output of outputLines) {
+    if (!output.response || output.response.status_code !== 200) {
+      throw new Error("Batch contains a failed request");
+    }
+    const metadata = decodeMetadata(output.custom_id);
+    const label = `${metadata.locale}: ${metadata.sourcePath}`;
+    try {
+      if (metadata.sourceHash !== currentSourceHash) {
+        throw new Error("Batch contains an old sourceHash");
+      }
+      const identity = JSON.stringify([
+        metadata.kind,
+        metadata.locale,
+        metadata.sourcePath,
+      ]);
+      if (seen.has(identity))
+        throw new Error("Batch contains a duplicate result");
+      seen.add(identity);
+      const response = parseJsonResponse(output.response.body);
+      if (metadata.kind === "content") {
+        prepareContentTranslation(metadata, response, pendingFiles, readers);
+      } else if (metadata.kind === "insight") {
+        prepareInsightTranslation(metadata, response, pendingFiles, readers);
+      } else {
+        prepareInterfaceTranslation(metadata, response, pendingFiles, readers);
+      }
+    } catch (error) {
+      throw new Error(`${label}: ${error.message}`, { cause: error });
+    }
+  }
+  return pendingFiles;
+}
+
+export function applyBatchTranslations(
+  outputLines,
+  currentSourceHash,
+  {
+    getSourceValue: readSource = getSourceValue,
+    readFile = readFileSync,
+    writeFile = writeFileIfChanged,
+  } = {},
+) {
+  const pendingFiles = prepareBatchTranslations(
+    outputLines,
+    currentSourceHash,
+    {
+      getSourceValue: readSource,
+      readFile,
+    },
+  );
+  let hasChanges = false;
+  for (const [filePath, content] of pendingFiles) {
+    hasChanges = writeFile(filePath, content) || hasChanges;
+  }
+  return hasChanges;
 }
 
 function parseOutputLines(value) {
@@ -1029,29 +1131,23 @@ async function collectBatch(options) {
     return;
   }
 
-  let hasChanges = false;
-  const pendingInterfaceFiles = new Map();
-  for (const output of outputLines) {
-    if (!output.response || output.response.status_code !== 200) {
-      throw new Error(`Batch ${batch.id} contains a failed request`);
-    }
-    const metadata = decodeMetadata(output.custom_id);
-    if (metadata.sourceHash !== currentSourceHash) {
-      throw new Error(`Batch ${batch.id} contains an old sourceHash`);
-    }
-    const response = parseJsonResponse(output.response.body);
-    if (metadata.kind === "content") {
-      hasChanges = applyContentTranslation(metadata, response) || hasChanges;
-    } else if (metadata.kind === "insight") {
-      hasChanges = applyInsightTranslation(metadata, response) || hasChanges;
-    } else {
-      applyInterfaceTranslation(metadata, response, pendingInterfaceFiles);
-    }
+  let hasChanges;
+  try {
+    hasChanges = applyBatchTranslations(outputLines, currentSourceHash);
+  } catch (error) {
+    const directory = process.env.RUNNER_TEMP ?? ".tmp";
+    mkdirSync(directory, { recursive: true });
+    const reportPath = path.join(
+      directory,
+      `openai-translation-validation-${batch.id}.json`,
+    );
+    writeFileSync(
+      reportPath,
+      `${JSON.stringify({ batchId: batch.id, sourceHash: currentSourceHash, error: error.message }, null, 2)}\n`,
+    );
+    writeOutput("validation_report_path", reportPath);
+    throw error;
   }
-  for (const [filePath, content] of pendingInterfaceFiles) {
-    hasChanges = writeFileIfChanged(filePath, content) || hasChanges;
-  }
-
   const bodyPath = hasChanges
     ? path.join(
         process.env.RUNNER_TEMP ?? ".tmp",

@@ -3,6 +3,9 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import {
+  applyBatchTranslations,
+  createInsightRequest,
+  createStructuredRequest,
   decodeMetadata,
   getSourceHashFromPullRequestBody,
   getSourceMarker,
@@ -12,6 +15,10 @@ import {
   selectCompletedBatch,
   validateInsightTranslation,
 } from "../scripts/openai-translation-batch.mjs";
+import {
+  protectTranslationText,
+  restoreTranslationText,
+} from "../scripts/translation-protected-text.mjs";
 
 const insightFixture = [
   "---",
@@ -26,6 +33,212 @@ const insightFixture = [
   "```",
   "",
 ].join("\n");
+
+const sourceHash = "a".repeat(64);
+const metadata = {
+  version: 1,
+  kind: "insight",
+  locale: "en",
+  sourcePath: "src/content/insights/protected-token-fixture.md",
+  sourceHash,
+};
+
+function batchResult(request, response) {
+  return {
+    custom_id: request.custom_id,
+    response: {
+      status_code: 200,
+      body: { output_text: JSON.stringify(response) },
+    },
+  };
+}
+
+test("翻訳へ渡す数値・URL・placeholder・コードを保護し、JSON往復後に原文から復元する", () => {
+  const source = `${insightFixture}価格は1,500円、15秒。\n{count}と\`init=/bin/bash\`を確認する。\nhttps://example.com/v26?q=0\n`;
+  const { text, tokens } = protectTranslationText(source);
+  assert.doesNotMatch(text, /printf|%s\\n|https:\/\/example|init=\/bin/u);
+  assert.ok([...tokens.values()].includes("0"));
+  assert.ok([...tokens.values()].includes("1,500"));
+  const transported = JSON.parse(JSON.stringify({ markdown: text })).markdown;
+  const translated = transported.replace("確認する", "Check");
+  assert.equal(
+    restoreTranslationText(source, translated),
+    source.replace("確認する", "Check"),
+  );
+  validateInsightTranslation(
+    source,
+    restoreTranslationText(source, translated),
+  );
+});
+
+test("保護tokenの省略・複製・改変・追加を拒否する", () => {
+  const { text, tokens } = protectTranslationText(insightFixture);
+  const token = tokens.keys().next().value;
+  for (const invalid of [
+    text.replace(token, "zero"),
+    `${text}\n${token}`,
+    text.replace(token, token.replace("KEEP", "CHANGED")),
+    `${text}\n{ACECORE_KEEP_unknown}`,
+  ]) {
+    assert.throws(
+      () => restoreTranslationText(insightFixture, invalid, "en: fixture"),
+      /en: fixture: (unknown or duplicated|protected token is missing or changed)/u,
+    );
+  }
+});
+
+test("長いbacktick fenceとtilde fenceも一括保護し、内部の3連backtickをコードのまま保つ", () => {
+  const source = `${insightFixture}\n\`\`\`\`text\n\`\`\`bash\nprintf '%s\\n' 0\n\`\`\`\n\`\`\`\`\`\n~~~sh\n# 日本語コメント\nprintf '%s\\n' 15\n~~~\n`;
+  const { text, tokens } = protectTranslationText(source);
+  assert.doesNotMatch(text, /```|~~~|printf|日本語コメント/u);
+  assert.equal(
+    [...tokens.values()].filter((value) => value.includes("printf")).length,
+    3,
+  );
+  const restored = restoreTranslationText(source, text);
+  assert.equal(restored, source);
+  validateInsightTranslation(source, restored);
+  assert.throws(
+    () =>
+      validateInsightTranslation(
+        source,
+        source.replace("# 日本語コメント", "# Comment"),
+      ),
+    /fenced code changed/u,
+  );
+});
+
+test("新方式のInsight結果を復元して適用し、旧方式は従来の厳格検証を続ける", () => {
+  const request = createInsightRequest(metadata, insightFixture);
+  assert.equal(decodeMetadata(request.custom_id).protectionVersion, 1);
+  const masked = JSON.parse(request.body.input).markdown;
+  const writes = new Map();
+  const readers = {
+    readFile: () => insightFixture,
+    writeFile: (filePath, content) => {
+      writes.set(filePath, content);
+      return true;
+    },
+  };
+  assert.equal(
+    applyBatchTranslations(
+      [batchResult(request, { markdown: masked.replace("確認する", "Check") })],
+      sourceHash,
+      readers,
+    ),
+    true,
+  );
+  assert.equal(writes.size, 1);
+  const content = [...writes.values()][0];
+  assert.equal(content, insightFixture.replace("確認する", "Check"));
+  assert.doesNotMatch(content, /ACECORE_KEEP/u);
+
+  const legacy = {
+    ...request,
+    custom_id: `acecore-systems:${Buffer.from(JSON.stringify(metadata)).toString("base64url")}`,
+  };
+  writes.clear();
+  applyBatchTranslations(
+    [batchResult(legacy, { markdown: insightFixture })],
+    sourceHash,
+    readers,
+  );
+  assert.equal(writes.size, 1);
+  writes.clear();
+  assert.throws(
+    () =>
+      applyBatchTranslations(
+        [
+          batchResult(legacy, {
+            markdown: insightFixture.replace("利用者が0", "利用者がzero"),
+          }),
+        ],
+        sourceHash,
+        readers,
+      ),
+    /numeric value changed/u,
+  );
+  assert.equal(writes.size, 0);
+});
+
+test("Batch後半の不正結果やduplicate・旧source hashでは、前半の正常結果も書き込まない", () => {
+  const request = createInsightRequest(metadata, insightFixture);
+  const markdown = JSON.parse(request.body.input).markdown;
+  const valid = batchResult(request, { markdown });
+  const second = createInsightRequest(
+    { ...metadata, locale: "es" },
+    insightFixture,
+  );
+  const invalid = batchResult(second, {
+    markdown: markdown.replace(/\{ACECORE_KEEP_[^}]+\}/u, "zero"),
+  });
+  const stale = createInsightRequest(
+    { ...metadata, locale: "es", sourceHash: "b".repeat(64) },
+    insightFixture,
+  );
+  const writes = [];
+  for (const results of [
+    [valid, invalid],
+    [valid, valid],
+    [valid, batchResult(stale, { markdown })],
+  ]) {
+    assert.throws(
+      () =>
+        applyBatchTranslations(results, sourceHash, {
+          readFile: () => insightFixture,
+          writeFile: (...args) => writes.push(args),
+        }),
+      /protected token|duplicate result|old sourceHash/u,
+    );
+    assert.deepEqual(writes, []);
+  }
+});
+
+test("構造化copyでも数値・inline codeを復元し、同一localeの複数sourceを一括で反映する", () => {
+  const sources = new Map([
+    ["src/data/home.json", { id: "stable-home", heading: "利用者は0人。" }],
+    ["src/data/site.json", { label: "15秒後に`list`を確認する。" }],
+  ]);
+  const results = [...sources].map(([sourcePath, source]) => {
+    const request = createStructuredRequest(
+      { ...metadata, kind: "content", sourcePath },
+      source,
+    );
+    const entries = JSON.parse(request.body.input).entries;
+    assert.equal(decodeMetadata(request.custom_id).protectionVersion, 1);
+    assert.equal(
+      entries.some((entry) => entry.id === "/id"),
+      false,
+    );
+    return batchResult(request, {
+      translations: entries.map((entry) => ({
+        id: entry.id,
+        text: entry.source.replace("確認する", "Check"),
+      })),
+    });
+  });
+  const writes = [];
+  applyBatchTranslations(results, sourceHash, {
+    getSourceValue: (sourcePath) => sources.get(sourcePath),
+    readFile: () => JSON.stringify({ keep: "existing", home: {}, site: {} }),
+    writeFile: (filePath, value) => {
+      writes.push([filePath, JSON.parse(value)]);
+      return true;
+    },
+  });
+  assert.equal(writes.length, 1);
+  assert.equal(writes[0][0], "src/i18n/content/en.json");
+  assert.deepEqual(writes[0][1], {
+    keep: "existing",
+    home: { heading: "利用者は0人。" },
+    site: { label: "15秒後に`list`をCheck。" },
+  });
+});
+
+test("未知の保護方式を黙って旧方式として適用しない", () => {
+  const customId = `acecore-systems:${Buffer.from(JSON.stringify({ ...metadata, protectionVersion: 2 })).toString("base64url")}`;
+  assert.throws(() => decodeMetadata(customId), /metadata is invalid/u);
+});
 
 test("Insightの数値は本文でも桁を保ち、単語化や省略を拒否する", () => {
   const translated = insightFixture.replace(
@@ -186,6 +399,11 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(collect, /Format collected translation files/u);
   assert.match(collect, /git diff --name-only --diff-filter=ACMRT -z/u);
   assert.match(collect, /npx prettier --write --/u);
+  assert.match(collect, /Preserve translation validation failure/u);
+  assert.match(
+    collect,
+    /failure\(\) && steps\.collector\.outputs\.validation_report_path/u,
+  );
   assert.match(script, /gpt-6-luna/u);
   assert.match(script, /reasoning: \{ effort: "max" \}/u);
 });
