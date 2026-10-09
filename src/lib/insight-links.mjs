@@ -28,6 +28,7 @@ export const insightSlugs = Object.freeze([
   "multi-service-session-lifecycle",
   "nextcloud-talk-operations-notifications",
   "openclaw-monitoring-investigation",
+  "openai-decisions-api-adoption",
   "private-dashboard-access-and-aggregation",
   "profile-import-draft-boundaries",
   "public-image-cache-and-api-rate-limits",
