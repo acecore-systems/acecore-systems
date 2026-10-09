@@ -1,0 +1,556 @@
+{
+  "evaluatedAt": "2026-10-08",
+  "publishedAt": "2026-10-09",
+  "model": "gpt-6-luna",
+  "methods": [
+    "Chat Completions with reasoning_effort=low",
+    "Decisions with one choice per pixel and fixed candidate colors"
+  ],
+  "attempts": 8,
+  "renderableOutputs": 8,
+  "invoiceVerified": false,
+  "timingUnit": "milliseconds, including provider and network time",
+  "costUnit": "estimated USD from returned usage and short-context standard rates at evaluation time",
+  "comparisons": [
+    {
+      "caseId": "patch-4x4",
+      "repetitionsPerRoute": 2,
+      "nativeAverageMs": 4978.5,
+      "decisionsAverageMs": 318.5,
+      "speedFactor": 15.631083202511775,
+      "nativeAverageUSD": 0.0003043,
+      "decisionsAverageUSD": 0.00039070000000000006,
+      "costFactor": 1.2839303319093
+    },
+    {
+      "caseId": "face-8x8",
+      "repetitionsPerRoute": 2,
+      "nativeAverageMs": 6537.5,
+      "decisionsAverageMs": 544,
+      "speedFactor": 12.017463235294118,
+      "nativeAverageUSD": 0.00032094999999999997,
+      "decisionsAverageUSD": 0.0012636000000000001,
+      "costFactor": 3.93706184763982
+    }
+  ],
+  "candidateColorCounts": {
+    "patch-4x4": 5,
+    "face-8x8": 7
+  },
+  "cases": [
+    {
+      "id": "patch-4x4",
+      "label": "深緑の胸に金色の十字ワッペン",
+      "region": {
+        "w": 4,
+        "h": 4
+      },
+      "input": [
+        ["#1f5d3a", "#1f5d3a", "#1f5d3a", "#1f5d3a"],
+        ["#1f5d3a", "#1f5d3a", "#1f5d3a", "#1f5d3a"],
+        ["#1f5d3a", "#1f5d3a", "#1f5d3a", "#1f5d3a"],
+        ["#1f5d3a", "#1f5d3a", "#1f5d3a", "#1f5d3a"]
+      ],
+      "outputs": [
+        {
+          "route": "chat",
+          "run": 1,
+          "ms": 4999,
+          "estimatedUSD": 0.00026680000000000003,
+          "pixels": [
+            ["#d8a52b", "#d8a52b", "#1f5d3a", "#1f5d3a"],
+            ["#d8a52b", "#d8a52b", "#d8a52b", "#d8a52b"],
+            ["#d8a52b", "#d8a52b", "#d8a52b", "#d8a52b"],
+            ["#d8a52b", "#d8a52b", "#1f5d3a", "#1f5d3a"]
+          ]
+        },
+        {
+          "route": "chat",
+          "run": 2,
+          "ms": 4958,
+          "estimatedUSD": 0.0003418,
+          "pixels": [
+            ["#1f5d3a", "#d4af37", "#d4af37", "#1f5d3a"],
+            ["#d4af37", "#d4af37", "#d4af37", "#d4af37"],
+            ["#d4af37", "#d4af37", "#d4af37", "#d4af37"],
+            ["#1f5d3a", "#d4af37", "#d4af37", "#1f5d3a"]
+          ]
+        },
+        {
+          "route": "decisions",
+          "run": 1,
+          "ms": 376,
+          "estimatedUSD": 0.00039070000000000006,
+          "pixels": [
+            ["#d6a72c", "#d6a72c", "#d6a72c", "#d6a72c"],
+            ["#d6a72c", "#d6a72c", "#d6a72c", "#d6a72c"],
+            ["#d6a72c", "#d6a72c", "#d6a72c", "#d6a72c"],
+            ["#d6a72c", "#f0c94a", "#d6a72c", "#d6a72c"]
+          ]
+        },
+        {
+          "route": "decisions",
+          "run": 2,
+          "ms": 261,
+          "estimatedUSD": 0.00039070000000000006,
+          "pixels": [
+            ["#d6a72c", "#d6a72c", "#d6a72c", "#d6a72c"],
+            ["#d6a72c", "#d6a72c", "#d6a72c", "#d6a72c"],
+            ["#d6a72c", "#d6a72c", "#d6a72c", "#d6a72c"],
+            ["#d6a72c", "#f0c94a", "#d6a72c", "#d6a72c"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "face-8x8",
+      "label": "栗色の髪と肌を保ち、青い目と茶色の笑顔を追加",
+      "region": {
+        "w": 8,
+        "h": 8
+      },
+      "input": [
+        [
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c"
+        ],
+        [
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c",
+          "#5b351c"
+        ],
+        [
+          "#5b351c",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#5b351c"
+        ],
+        [
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276"
+        ],
+        [
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276"
+        ],
+        [
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276"
+        ],
+        [
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276"
+        ],
+        [
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276",
+          "#d7a276"
+        ]
+      ],
+      "outputs": [
+        {
+          "route": "chat",
+          "run": 1,
+          "ms": 6655,
+          "estimatedUSD": 0.0003212,
+          "pixels": [
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#5b351c",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#5b351c"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#2878d0",
+              "#d7a276",
+              "#d7a276",
+              "#2878d0",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#321b12",
+              "#d7a276",
+              "#d7a276",
+              "#321b12",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#321b12",
+              "#321b12",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ]
+          ]
+        },
+        {
+          "route": "chat",
+          "run": 2,
+          "ms": 6420,
+          "estimatedUSD": 0.0003207,
+          "pixels": [
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#5b351c",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#5b351c"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#2878c8",
+              "#d7a276",
+              "#d7a276",
+              "#2878c8",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#5b351c",
+              "#d7a276",
+              "#d7a276",
+              "#5b351c",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#5b351c",
+              "#5b351c",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ]
+          ]
+        },
+        {
+          "route": "decisions",
+          "run": 1,
+          "ms": 546,
+          "estimatedUSD": 0.0012636000000000001,
+          "pixels": [
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#3f7de8",
+              "#d7a276",
+              "#3f7de8",
+              "#5b351c"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#3f7de8",
+              "#3f7de8",
+              "#3f7de8",
+              "#3f7de8",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#3f7de8",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ]
+          ]
+        },
+        {
+          "route": "decisions",
+          "run": 2,
+          "ms": 542,
+          "estimatedUSD": 0.0012636000000000001,
+          "pixels": [
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c",
+              "#5b351c"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#3f7de8",
+              "#d7a276",
+              "#3f7de8",
+              "#5b351c"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#3f7de8",
+              "#3f7de8",
+              "#3f7de8",
+              "#3f7de8",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#3f7de8",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#3f7de8",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ],
+            [
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276",
+              "#d7a276"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Two fictional cases and two repetitions per route, not a statistical or broad quality evaluation.",
+    "Candidate colors are a constrained set; arbitrary new-color generation and full-body API acceptance are not evaluated.",
+    "Cost is an estimate from returned usage and verified short-context standard public rates, not an invoice.",
+    "All saved images are synthetic; no posting, user database updates, or deployment."
+  ]
+}
