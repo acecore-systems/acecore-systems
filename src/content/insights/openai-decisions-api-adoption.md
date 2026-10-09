@@ -2,7 +2,7 @@
 title: "OpenAI Decisions API活用術：分類・判定の使いどころと実装のコツ"
 description: "問い合わせ分類、複数条件の判定、候補IDからの原文再利用。OpenAI Decisions APIを既存アプリへ取り入れる3つの活用法を、要求例と実例で解説します。生成AIとの使い分け、料金の見積もり方、移行前の比較方法も紹介します。"
 date: 2026-10-09T09:57
-lastUpdated: "2026-10-09T12:37:15+09:00"
+lastUpdated: "2026-10-09T13:51:13+09:00"
 author: gui
 tags: ["技術", "OpenAI", "Decisions API", "AI", "API設計"]
 image: /images/insights/covers/openai-decisions-api-adoption-cover-v1.webp
@@ -19,6 +19,14 @@ linkCards:
     title: Decisions API Reference
     description: "要求・応答の型と、拒否応答の仕様を確認できます。"
     icon: i-lucide-code-2
+  - href: https://gigazine.net/news/20261007-decisions-api/
+    title: GIGAZINE：Decisions APIの概要と活用例
+    description: "2026年10月7日の解説記事。問い合わせの振り分けなど、判断専用APIの基本的な用途を日本語で紹介しています。"
+    icon: i-lucide-book-open
+  - href: https://developers.openai.com/api/docs/pricing
+    title: OpenAI APIの通常生成料金
+    description: "生成API側のLunaの料金を確認できます。Decisionsの料金は公式ガイドで別に確認します。"
+    icon: i-lucide-book-open
   - href: /insights/ai-reply-capability-guardrails/
     title: AIの回答と実行できる操作の境界
     description: "モデルの判断と、アプリが実際に実行できる操作を分ける設計です。"
@@ -28,6 +36,8 @@ linkCards:
 「問い合わせの種類だけ知りたい」「条件を満たすか判定したい」「既存の候補から一つ選んでほしい」。こうした処理のために生成AIへJSONを作らせているなら、OpenAI Decisions APIが置き換え候補になります。
 
 Decisionsは、分類・真偽・段階評価という決まった形の答えを受け取るAPIです。候補を選ぶ処理、複数の条件をまとめて評価する処理、選んだIDから元データを再利用する処理。この三つの活用法を、要求例とAcecoreの実例から説明します。
+
+基本的な用途の日本語解説には、[GIGAZINEのDecisions API紹介記事](https://gigazine.net/news/20261007-decisions-api/)も参考になります。ここでは、そのAPIを既存の処理へ組み込む方法と、比較から見えた使い分けを紹介します。
 
 ## まず、AIに返してほしい答えの形を選ぶ
 
