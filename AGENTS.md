@@ -7,3 +7,11 @@
 - 仕様の一次資料、関連する解説記事、実測の根拠へ、内容が分かるリンクを付ける。外部リンクと被リンクを区別し、リンク数だけでSEO効果を主張しない。
 - 実測・推定・架空例・未確認事項を区別し、公開を控える指定がある運用詳細を記事や添付資料へ載せない。
 - 日本語sourceを変更したら翻訳状態も更新し、既存のBatch翻訳・PR・CI・GitHub連携公開の経路に従う。
+
+## 共通SEO・執筆ガイドの参照
+
+新規記事・改訂の共通方針は、[共通執筆ガイド](https://github.com/acecore-systems/seo-content-ops/blob/main/docs/01-writing-guide.md) と [このサイトの補足](https://github.com/acecore-systems/seo-content-ops/blob/main/docs/sites/acecore-systems.md) を確認する。
+
+実装、コンテンツschema、翻訳、検証、CMS、公開手順は、このrepoの最新のguidanceとローカルガイドを正本とする。共通ガイドの参照だけで、変更・翻訳・公開の権限や経路を追加しない。
+
+参照先は非公開repoのため、閲覧権限がない場合や取得できない場合は、読めなかった資料を明記し、このrepoの既存ガイドに従う。読者向けの公開参考資料を非公開のガイドリンクへ置き換えない。
