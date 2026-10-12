@@ -1,5 +1,5 @@
 ---
-title: "Organize a Japanese tax return with Copilot: 837-entry checks and human review"
+title: "Japanese tax returns with Copilot and human review"
 description: "A March 2026 personal filing shows how Copilot compared classification rules, 837 entries, evidence, and tax forms. Distinguishes delegated tasks from the filer’s decisions on apportionment, deductions, and submission."
 date: 2026-03-17T00:00
 author: gui

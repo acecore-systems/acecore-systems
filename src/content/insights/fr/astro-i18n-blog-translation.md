@@ -1,5 +1,5 @@
 ---
-title: "Comment faire supporter 9 langues à un site Astro 7 ― Traduction du blog et architecture multilingue"
+title: "Blog Astro 7 en 9 langues : traduction et i18n"
 description: "Pour un blog Astro multilingue, alignez d’abord texte, métadonnées et changement de langue sur un article représentatif, sans lien vers une traduction absente."
 date: 2026-03-25T10:00
 lastUpdated: "2026-10-09T15:00:00+09:00"
