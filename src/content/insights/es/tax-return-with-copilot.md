@@ -1,5 +1,5 @@
 ---
-title: "Organizar una declaración japonesa con Copilot: 837 asientos y revisión humana"
+title: "Declaración japonesa con Copilot y revisión humana"
 description: "Un caso personal de marzo de 2026 muestra cómo Copilot cotejó reglas, 837 asientos, documentos y formularios. Distingue tareas delegadas y decisiones del declarante sobre prorrateo, deducciones y envío."
 date: 2026-03-17T00:00
 author: gui
