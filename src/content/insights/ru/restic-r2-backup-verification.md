@@ -1,8 +1,8 @@
 ---
 title: "Резервные копии restic в R2: от сохранения до проверенного восстановления"
-description: "Раздельная проверка свежести снимков, целостности и восстановления с указанием ещё не проверенных этапов запуска приложений."
+description: "Разделение свежести snapshot, целостности и восстановления R2/restic: версия PostgreSQL после обновления OS, изолированный runtime Samba, DB/LDAP и условия полной готовности."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -36,42 +36,45 @@ callout:
 
 Выбирайте снимки политикой restic, используйте `forget`, `prune`, `check` и заранее проверяйте, что останется. Удаление объектов R2 только по возрасту может уничтожить общие данные сохранённых снимков. Следуйте [документации хранения](https://restic.readthedocs.io/en/stable/060_forget.html); очистка объектов доставки изображений — другой случай.
 
-## Оставшиеся проверки
+## После обновления OS проверить PostgreSQL теста восстановления
 
-Выполнены регулярная работа, мониторинг/уведомления, управление хранением и извлечение/целостность выбранных данных. Запуск всех приложений, восстановление настроек и зависимостей, доступ к отдельно хранимым учётным данным требуют сквозной проверки. Время восстановления и допустимая потеря данных требуют измерения. Полное аварийное восстановление и доказанная экономия не заявляются.
+После обновления OS тест обращался к фиксированному пути старого major PostgreSQL и падал. Изменение выбирает численно новейший установленный major с полным набором исполняемых server-инструментов, используя одну версию для инициализации, запуска, восстановления, проверки и остановки. Без полного набора тест падает, не подключаясь к действующей базе для ложного успеха.
+
+Проверяйте формат dump и совместимость назначения по [документации PostgreSQL SQL dump и восстановления](https://www.postgresql.org/docs/current/backup-dump.html). Автовыбор версии не гарантирует любой dump. Выбор проверен тестами и CI; реальное восстановление базы R2 остается отдельной приемкой.
+
+## Воссоздать runtime внутри изолированного Samba
+
+Читаемой базы недостаточно: без runtime внутренних sockets изолированный DC не запускался. Разделите network, PID и mount namespaces, проверьте изоляцию и только внутри создайте отдельный tmpfs `/run` и `/run/samba`. Используйте созданные изолированные конфигурацию и пути, не смешивая тесты с runtime и портами production.
+
+Через [официальные samba-tool domain backup restore и dbcheck](https://www.samba.org/samba/docs/current/man-html/samba-tool.8.html) проверены база, запуск DC и готовность LDAP. Этот путь Samba проверен реальным R2-бэкапом. Все входы приложений, связи сервисов и отдельно хранимые учетные данные требуют других испытаний аварийного восстановления. Проверено 14 октября 2026 года.
 
 <figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
   <figcaption>
-    <strong id="diagram-restic-r2-backup-verification">Проверяйте доказательства по этапам: от свежести snapshot до полного восстановления</strong>
-    <span>Извлечение данных не доказывает восстановление приложений или учётных данных.</span>
+    <strong id="diagram-restic-r2-backup-verification">От snapshot к восстановлению сервисов и всей системы</strong>
+    <span>Samba DC, DB и LDAP проверены реальным R2; реальный PostgreSQL и вся система — отдельные задачи.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">1</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
-      </span>
-      <strong>Успешный snapshot и его свежесть</strong>
-      <span>Проверьте время действительно успешного snapshot и задержку относительно расписания. Сам запуск задания не означает успех.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Успешный snapshot и свежесть</strong>
+      <span>Фиксировать реальный успех и границы проверки.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">2</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
-      </span>
-      <strong>Целостность и изолированное восстановление</strong>
-      <span>Зафиксируйте охват проверки, выполните restore --verify в отдельном месте и сравните нужные файлы и hash, затем проверьте хранение и prune.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Воссоздание изоляции</strong>
+      <span>Проверить DB-версию, network/PID/mount и runtime.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">3</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
-      </span>
-      <strong>Полное аварийное восстановление</strong>
-      <span>Запуск всех приложений, зависимые данные и восстановление отдельно хранимых учётных данных остаются непроверенными. Время восстановления и допустимая потеря данных не измерялись.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Проверка запуска сервиса</strong>
+      <span>Samba DB и LDAP проверены; все приложения не доказаны.</span>
     </li>
   </ol>
 </figure>
+
+## Оставшиеся проверки
+
+Выполнены регулярная работа, мониторинг/уведомления, управление хранением и извлечение/целостность выбранных данных. Запуск всех приложений, восстановление настроек и зависимостей, доступ к отдельно хранимым учётным данным требуют сквозной проверки. Время восстановления и допустимая потеря данных требуют измерения. Полное аварийное восстановление и доказанная экономия не заявляются.
 
 ## Дополнение от 6 октября 2026 года: устаревшие блокировки и конкуренция при проверке восстановления
 

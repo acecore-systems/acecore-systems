@@ -1,15 +1,15 @@
 ---
 title: "ユーザーCSSと公開テーマを安全に扱う：検証・版固定・停止の設計"
-description: "CSS正本をGUIと直接編集で共有するプロフィール編集を一般化。Grid・Flex・レスポンシブ指定の描画境界、下書きと公開版、不変のテーマ版、掲載終了と運営停止を整理します。"
+description: "GUIと手書きCSSの共通正本、描画の安全境界、固定版ストアテーマの即時適用を解説。ページ用と一覧カード用の独立、本人プレビュー、下書き保存と公開操作を整理します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
 callout:
   type: note
   title: "実装確認と利用者の通し検証を区別"
-  text: "固定版テーマ配布のDB変更・本番配信・検証用データの表示は確認済みです。CSS正本とGUI共通編集の拡張はmain統合とCIまで確認し、この監査範囲では本番反映とログイン受入は未確認です。実利用者の投稿・適用や有料販売も実証していません。"
+  text: "CSS/GUI編集、固定版ストア、即時適用、ページと一覧カードの独立、本人プレビューは統合・本番配信と公開表示を確認しています。認証済み操作は合成プロフィールで検証しました。実本人の同意・適用・編集保存・公開の通し受入と有料販売は未実証です。"
 ---
 
 プロフィールの配色や余白をGUIで変え、CSSでレイアウト全体も編集できる仕組みには、画面の操作性と公開するコードの安全性の両方が必要です。匿名化した実装事例から、編集と配布の境界を整理します。
@@ -24,7 +24,7 @@ callout:
 
 その後の拡張では、CSS全体をテーマの正本にし、GUIも同じCSSの対象宣言を書き換える構成にしました。手書きのコメント、GUIが扱わない宣言、レスポンシブ指定を保持します。従来のGUI設定と追加CSSを持つ形式も、編集可能なCSS全体へ引き継ぎます。補助的な一覧表示用の設定だけを変えて、描画CSSまで変わったことにはしません。
 
-backendとfrontendの拡張は、それぞれのmainへ統合され、CIと実装テストを確認しました。これを、この監査範囲での本番反映やログイン利用者による通し検証の証明にはしません。
+CSS/GUI編集と本人プレビューの拡張は統合・CI・本番配信を確認しています。認証済みの操作検証には合成プロフィールを使い、実本人が編集・保存・公開したことの証明とは区別します。
 
 ## 豊富なCSS構文を描画領域に閉じる
 
@@ -34,9 +34,41 @@ backendとfrontendの拡張は、それぞれのmainへ統合され、CIと実�
 
 外部リソースの取得、`@import`・`@font-face`などのglobalなルール、解析不能な記述、CSS nesting、HTMLのstyle終端、名前を安全に確定できないアニメーション指定は拒否します。入力と生成後の容量も検査します。公開時とsnapshotの読込み時には、スコープ・固有名・検証済みcanonical文字列の一致を再確認します。広い構文への対応は、すべてのブラウザーで同じ表示になる保証ではありません。
 
-## 試着・下書き・公開を分ける
+## 試着・CSSの保存・ストア適用で反映先を決める
 
-テーマの試着や適用は下書きを変えます。公開ページは本人の公開操作まで変えません。手書きCSSを編集し直せることと、訪問者へその原文を渡すことも別です。保存の競合を検出し、同じ操作の再送で版や下書きを重複更新しない契約を使います。
+手書きCSSやGUIの編集、試着、下書き保存は、本人の編集中の表示を変えます。保存したCSSを訪問者へ見せるには、別のプロフィール公開操作が必要です。保存の競合を検出し、再送で版や下書きを重複更新しない境界を保ちます。
+
+ストアで公開・利用可能な固定版テーマを選び、本人が利用条件に同意して適用した場合は、公開中のプロフィールの見た目へすぐ反映します。編集中の本文・画像を公開せず、既存の公開内容を保持してテーマだけを変えます。未公開のプロフィールを公開状態へ変えません。ストア適用と、手書きCSSの下書き保存を同じ操作として説明しないことが重要です。
+
+<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
+  <figcaption>
+    <strong id="diagram-user-css-versioned-theme-safety">CSS編集とストア適用の反映先</strong>
+    <span>公開中のプロフィールにストアテーマを適用すると、選んだ用途の見た目だけが即時反映されます。</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>CSS/GUI編集</strong>
+      <span>本人プレビューと下書き保存。公開は別操作。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>固定版ストア適用</strong>
+      <span>利用可能な公開版と同意を確認。未公開プロフィールは公開しない。</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>ページと一覧を独立</strong>
+      <span>用途ごとのCSS・下書き・公開版を保持。</span>
+    </li>
+  </ol>
+</figure>
+
+## ページと一覧カードを独立させ、本人の内容で試す
+
+プロフィールページとディレクトリの一覧カードは、CSS、下書き、公開版、適用元、ストアの用途を別々に持ちます。ページテーマを選んでも一覧の見た目は変えず、用途の違う固定版の適用や用途変更を拒否します。一覧カードは共通の寸法とレスポンシブ境界を保ち、長い活動名・説明で表示を確認します。
+
+設定画面では保存済みの本人プレビューとテーマ名を示し、同じ画面から対象のストア選択と編集へ進めます。ビジュアル編集とコード編集を切り替えても、未保存の名前・CSS・競合検出用の版を保持します。テーマ見本だけでなく本人の内容で試し、保存は選んだ対象の下書きだけへ反映します。
 
 ## 他人の更新で利用中の見た目を変えない
 
@@ -46,32 +78,8 @@ backendとfrontendの拡張は、それぞれのmainへ統合され、CIと実�
 
 作者による掲載終了は、新しい発見・適用を止めても、既存の固定版利用を直ちに失効させる操作とは限りません。一方、危険なテーマの運営停止では公開取得や既存snapshotのCSSを止め、標準の見た目へ戻す境界が必要です。古いsnapshotへ切り戻しても現在の停止状態を確認し、停止前のCSSを復活させない設計にします。
 
-<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="3" aria-labelledby="diagram-user-css-versioned-theme-safety">
-  <figcaption>
-    <strong id="diagram-user-css-versioned-theme-safety">CSS編集から固定版公開まで</strong>
-    <span>コード統合とCI、旧版Storeの本番配信は確認済み。新CSSの本番/ログイン受入、実利用者の適用、有料販売は未確認。</span>
-  </figcaption>
-  <ol class="article-diagram__nodes">
-    <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg></span>
-      <strong>共有CSS正本</strong>
-      <span>GUIと直接編集が同じCSSを使い、手書きルールを保持。</span>
-    </li>
-    <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/></svg></span>
-      <strong>解析して領域を限定</strong>
-      <span>Grid/Flex・変数・疑似要素・responsive/animationに対応。外部・global・解析不能な入力は拒否。</span>
-    </li>
-    <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
-      <strong>版を明示公開</strong>
-      <span>preview/draft後にimmutable版を公開。掲載終了と運営停止を分ける。</span>
-    </li>
-  </ol>
-</figure>
-
 ## 公開前に確かめること
 
-範囲外セレクター、外部通信、入力容量、保存競合、再送、作者の非公開化、掲載終了、運営停止、切戻しを確認します。固定版配布の本番配信と検証用データの表示は確認済みですが、CSS編集拡張の本番反映・ログイン受入はこの監査範囲では未確認です。以前の確認時点の公開テーマは0件で、実際のテーマ投稿と他利用者による適用を一連で試したことや、現在の公開数を示すものではありません。利用条件を設けても、ブラウザーへ届いたCSSの完全なコピー防止を保証するものではありません。
+範囲外セレクター、外部通信、容量、保存競合、再送、掲載終了、運営停止、切戻しを検査します。固定版・CSS/GUI編集・対象独立・本人プレビューの本番配信と、公開カタログ・実一覧カードの表示は確認済みです。認証済み操作は合成プロフィールによる検証で、実本人の同意・適用・保存・公開は未受入です。利用条件があっても、配信CSSの完全なコピー防止は保証しません。確認日：2026年10月14日。
 
 編集の入力側は[プロフィール情報の下書き取込](/insights/profile-import-draft-boundaries/)、CMS運用は[Sveltia CMS導入ガイド](/insights/cms-selection-and-turnstile/)と合わせて読めます。

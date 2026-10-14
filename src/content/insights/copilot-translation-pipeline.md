@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMSで多言語ブログを運用する方法"
-description: "多言語ブログ運用を始めるなら、まず代表記事の翻訳ファイルから言語別HTMLを生成し、本文・title・description・内部リンクを確認します。"
+description: "日本語を正本に8言語を静的公開する運用を解説。OpenAI Batchの数値・URL・コード保護、全件検証後の書込み、翻訳PR・CI・GitHub連携公開を整理します。"
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -12,24 +12,24 @@ callout:
   text: "ブラウザやウィジェットで画面上の文章を翻訳するだけでは、言語別URL、title、description、内部リンク、RSS、sitemap、hreflangまで言語別の資産にはなりません。検索エンジンに各言語ページとして渡すなら、翻訳結果を静的HTMLとして公開する設計が必要です。"
 processFigure:
   eyebrow: Translation Workflow
-  title: Sveltia CMSから翻訳PRまでの流れ（2026年6月の方式）
-  description: 日本語をsource of truthにして、翻訳はGitHub側のPR運用に分離します。
+  title: "日本語正本から検証済みの翻訳PRへ"
+  description: "数値・URL・コードを原文から復元し、全結果を検証してから書き込みます。"
   variant: inline
   steps:
-    - title: 日本語だけ編集
-      description: Sveltia CMSまたはMarkdownで `src/content/blog/{slug}.md` を更新する。
+    - title: "日本語を編集"
+      description: "mainのsourceを確認し、連続編集をまとめる。"
       icon: i-lucide-file-pen-line
       accent: brand
-    - title: CMS commitを検出
-      description: "`cms:` prefixや変更pathをGitHub Actions側の契約にする。"
-      icon: i-lucide-git-commit-horizontal
+    - title: "保護してBatch投入"
+      description: "数値・URL・placeholder・コードをtoken化。"
+      icon: i-lucide-shield-check
       accent: amber
-    - title: 翻訳PRを作成
-      description: Copilotにsource path、locale、翻訳ルールを渡して翻訳ファイルを生成させる。
+    - title: "全件検証後に書込"
+      description: "sourceHash・token・内容を照合。失敗は記録して停止。"
       icon: i-lucide-languages
       accent: emerald
-    - title: build後に反映
-      description: Astro build、Pagefind、リンク確認を通したPRだけをmainへ入れる。
+    - title: "PR・CI・本番公開"
+      description: "検証した翻訳をGitHub連携で公開し、内容も確認。"
       icon: i-lucide-check-check
       accent: slate
 compareTable:
@@ -55,7 +55,7 @@ checklist:
       checked: true
     - text: "翻訳ファイルのslugを日本語記事と一致させる"
       checked: true
-    - text: "`cms:` commitなど、翻訳ワークフローの起動条件を固定する"
+    - text: "日本語sourceのmain更新を翻訳の起動条件にする"
       checked: true
     - text: "URL、画像path、コードブロック、タグIDを翻訳で壊さない"
       checked: true
@@ -87,32 +87,38 @@ faq:
 
 多言語ブログ運用を始めるなら、まず代表記事の翻訳ファイルから言語別HTMLを生成し、本文・title・description・内部リンクを確認します。[Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)に沿って実在する言語版だけを対応付け、翻訳サービスの成功と公開ページの完成を別に検収してください。
 
-> **2026年9月26日更新:** 以下のCopilotによる翻訳PR作成手順は、2026年6月時点の導入記録です。現在の翻訳生成はOpenAI Batchへ移行しました。日本語を正本とし、翻訳版を言語別の静的ページとして公開する原則は共通です。
+> **2026年10月14日確認:** 現在の翻訳生成はOpenAI Batchです。以下のCopilot手順は2026年6月の導入記録として残しています。現行の図と運用は、数値・コードの保護と全件検証後の書込みへ更新しました。
 
-## 現行の翻訳運用（2026年9月）
+## 現行の翻訳運用：保護・検証・PRを分ける
 
-Acecore公式サイトでは、日本語記事または日本語UI原稿がmainで更新されると、[Batch提出workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)が起動します。続けて入る編集をまとめるため15分待ち、最新のmainを確認してから翻訳を提出します。[回収workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)は結果を現在の日本語原稿のsourceHashと照合し、古い結果を除いて翻訳PRを作ります。[統合workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)は検証条件を満たした翻訳PRの自動統合を有効にします。翻訳後も用語、リンク、事実関係、自然さを確認する必要があります。
+このSystemsでは、日本語記事やUI原稿のmain更新から15分待ち、最新mainで[Batch投入workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/submit-openai-translation-batch.yml)を実行します。[回収workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/collect-openai-translation-batch.yml)は毎時2・17・32・47分を予定し、現在のsourceHashと照合して翻訳PRを作ります。[統合workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/merge-openai-translation-pr.yml)はCIと条件が揃ったPRを既存のGitHub連携公開へ進めます。予定時刻、Batch完了、PR統合、本番公開は別の状態です。
+
+送信前に、数値、URL、既存placeholder、inline code、fenced codeを一意のtokenへ置き換えます。回収時には一致する日本語sourceから原文を復元し、tokenの欠落・重複・改変・追加を拒否します。保護は翻訳モデルに意味を改変させないための仕組みで、復元後の検証と本文のレビューも続けます。
+
+[OpenAIのBatch仕様](https://developers.openai.com/api/docs/guides/batch)では返却順序が入力順と一致するとは限らないため、`custom_id`で言語・source path・sourceHashを照合します。[保護と回収の改修](https://github.com/acecore-systems/acecore-systems/pull/131)は、Batch内のすべての結果を検証した後に書込みを始めます。後半の不正結果、重複結果、古いsourceで前半だけが適用される状態を防ぎ、検証失敗の言語・source path・Batch ID・原因をartifactへ記録します。これは途中のディスク障害まで含むファイルシステムのtransaction保証とは異なります。
+
+改修では27件の自動化テストと、日本語55 source × 8 localeの440結果を保護・復元するオフライン検査を確認しました。実モデルAPIへの追加呼出しによる全件再翻訳の実証ではありません。既存8言語の改訂は日本語と同じPRで内容を揃え、整形後のsource hashを更新します。翻訳済みの内容を変えずhashだけ合わせないことが必要です。
 
 <figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
   <figcaption>
-    <strong id="diagram-copilot-translation-pipeline">翻訳結果を現在の日本語原稿と照合</strong>
-    <span>古い日本語原稿から生成された翻訳結果は除外します。条件を満たしたPRも、用語・リンク・事実・自然さを確認します。</span>
+    <strong id="diagram-copilot-translation-pipeline">保護した原文と全結果を照合</strong>
+    <span>検証失敗で一部言語だけ書き換えない。Batch完了は公開完了ではありません。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
-      <strong>日本語原稿を更新</strong>
-      <span>mainの日本語原稿の変更を受けて翻訳Batchを提出。</span>
+      <strong>原文を保護</strong>
+      <span>数値・URL・コードを一意のtokenへ。</span>
     </li>
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
-      <strong>sourceHashを照合</strong>
-      <span>回収時に現在の原稿と一致しない結果を除外。</span>
+      <strong>現在sourceと全件を検証</strong>
+      <span>custom_id・sourceHash・tokenを照合して復元。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
-      <strong>翻訳PRを統合</strong>
-      <span>検証条件で自動統合。内容の確認は別途必要。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>翻訳PRを公開経路へ</strong>
+      <span>検証後の書込み、CI・内容確認を経て反映。</span>
     </li>
   </ol>
 </figure>

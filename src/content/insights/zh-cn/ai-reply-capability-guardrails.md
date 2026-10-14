@@ -1,8 +1,8 @@
 ---
 title: "避免 AI 回复做出无法兑现的承诺"
-description: "防止信息助手擅自承诺工作人员参与、安排时间或后续联系。介绍会话状态、检索失败、旧草稿复检和会话结束时的处理。"
+description: "防止AI擅自承诺担当者行为的回复设计，说明上下文、实测人数、新鲜度与获取失败、人格一致的公告、相似文抑制及发送前检查。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -36,26 +36,38 @@ callout:
 
 生成时通过检查的草稿，可能会因会话或策略变化而过时。发送前应按最新状态再次检查，不要发送已结束会话的草稿。将跳过发送和会话结束分别记录在审计状态中，与发送成功区分。若提问只会无谓延长对话，也可以选择不回复。
 
+## 按实测人数和观测时间判断
+
+人数公告把公开语音聊天的人类参与者与所有监控Minecraft服务器的同时在线合计作为不同指标。本例任一达到15人即可，不把两者相加。Minecraft的所有来源必须在30秒内，语音聊天必须在120秒内；仅一方可获取且达标时，只描述该指标。
+
+获取失败或过期不等于0人。仅当两方均获取且都低于门槛，才重新准备判断下一次热度到达。同一次持续热度不重复发帖，且距离上次发送操作至少3小时。只轮询人数时不调用AI。
+
+## 保持人格，跳过近乎相同的公告
+
+每次根据共享人格、语气和最近20篇公告生成，将人数放在独立行。数字和观测时间不由模型填写，而是在生成后重新获取实测值插入。若仅数字不同而文案近似，只重新生成一次，仍近似则跳过。生成失败、需人工确认或前后达标指标变化时不发布，也不退回固定模板。
+
+文案通过仍需在点击前重新确认账户、会话、限制、互斥和数据新鲜度。发送后不确定时不自动重发；只有公开结果的作者、全文、时间一致才记录成功。已完成实现、测试、配置和有限运维检查，但条件成立后的真实发帖成功不在此次实证范围。确认日期：2026年10月14日。
+
 <figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
   <figcaption>
-    <strong id="diagram-ai-reply-capability-guardrails">回复前检查依据与能力</strong>
-    <span>根据会话语境选择答复或暂缓。检索停止条件在生产环境的运行尚未确认。</span>
+    <strong id="diagram-ai-reply-capability-guardrails">回复与公告都检查依据、新鲜度和发送权限</strong>
+    <span>自然文案不构成发布许可；缺失不当0，发送前再次检查。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
-      <strong>识别说话者与请求</strong>
-      <span>确认是招募还是参与意愿、对应版本以及会话状态。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>读取上下文和实测值</strong>
+      <span>确认发言者、请求、人数及观测时间。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
-      <strong>只回答有依据的内容</strong>
-      <span>只说明确实能够执行的事项，并在发送前重新检查。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>在依据内生成并检查</strong>
+      <span>匹配能力、人格、相似文和最新条件。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-      <strong>不明确时暂缓</strong>
-      <span>检索失败或格式错误不视为已查阅，应转交人工。等待有上限，并抑制重复发送。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>获准发送或保留</strong>
+      <span>检查会话、新鲜度和互斥，不确定则不重发。</span>
     </li>
   </ol>
 </figure>

@@ -1,8 +1,8 @@
 ---
 title: "Sveltia CMS로 다국어 블로그를 운영하는 방법"
-description: "다국어 블로그 운영은 대표 글의 번역 파일로 언어별 HTML을 생성해 본문, title, description, 내부 링크를 확인하는 것부터 시작하세요."
+description: "일본어 정본으로 8개 언어 정적 페이지를 운영하는 방법. OpenAI Batch의 숫자·URL·코드 보호, 전체 검증 후 쓰기, 번역 PR·CI·GitHub 연계 공개를 설명합니다."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 tags: ["기술", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -12,24 +12,24 @@ callout:
   text: "브라우저 번역이나 번역 위젯은 독자가 현재 페이지를 읽는 데 도움이 되지만, 언어별 URL, title, description, 내부 링크, RSS, sitemap, hreflang을 자동으로 만들지는 않습니다. 검색 엔진에 각 언어 페이지를 전달하려면 번역된 정적 HTML이 필요합니다."
 processFigure:
   eyebrow: Translation Workflow
-  title: Sveltia CMS에서 번역 PR까지 (2026년 6월 방식)
-  description: 일본어를 source of truth로 두고 번역은 GitHub 측 PR 운영으로 분리합니다.
+  title: "일본어 정본에서 검증된 번역 PR까지"
+  description: "숫자·URL·코드를 원문에서 복원하고 전체 결과 검증 후 씁니다."
   variant: inline
   steps:
-    - title: 일본어만 편집
-      description: Sveltia CMS 또는 Markdown으로 `src/content/blog/{slug}.md`를 업데이트합니다.
+    - title: "일본어 편집"
+      description: "최신 main을 확인하고 연속 편집을 모읍니다."
       icon: i-lucide-file-pen-line
       accent: brand
-    - title: CMS commit 감지
-      description: "`cms:` prefix와 변경 path를 GitHub Actions 측 계약으로 삼습니다."
-      icon: i-lucide-git-commit-horizontal
+    - title: "보호 후 Batch 제출"
+      description: "숫자·URL·placeholder·코드를 token화."
+      icon: i-lucide-shield-check
       accent: amber
-    - title: 번역 PR 생성
-      description: Copilot에 source path, locale, 번역 규칙을 전달해 번역 파일을 생성합니다.
+    - title: "전체 검증 후 쓰기"
+      description: "sourceHash·token·내용을 대조하고 실패는 기록 후 중단."
       icon: i-lucide-languages
       accent: emerald
-    - title: build 후 반영
-      description: Astro build, Pagefind, 링크 검사를 통과한 PR만 main에 반영합니다.
+    - title: "PR·CI·운영 공개"
+      description: "GitHub 연계로 공개하고 내용도 확인."
       icon: i-lucide-check-check
       accent: slate
 compareTable:
@@ -55,7 +55,7 @@ checklist:
       checked: true
     - text: "번역 파일의 slug를 일본어 기사와 일치시킨다"
       checked: true
-    - text: "`cms:` commit 등 번역 workflow의 시작 조건을 고정한다"
+    - text: "main의 일본어 source 갱신으로 번역 시작"
       checked: true
     - text: "번역에서 URL, 이미지 path, 코드 블록, 태그 ID를 손상시키지 않는다"
       checked: true
@@ -83,32 +83,38 @@ faq:
 
 다국어 블로그 운영은 대표 글의 번역 파일로 언어별 HTML을 생성해 본문, title, description, 내부 링크를 확인하는 것부터 시작하세요. [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)에 따라 실제 있는 언어판만 연결하고 번역 서비스 성공과 공개 페이지 완성을 따로 검수하세요.
 
-> **2026년 9월 26일 추가:** 아래 Copilot 기반 번역 PR 절차는 2026년 6월 도입 기록입니다. 현재 번역 생성은 OpenAI Batch로 전환되었습니다. 일본어를 원본으로 삼고 번역된 정적 페이지를 언어별로 공개하는 원칙은 그대로입니다.
+> **2026년 10월 14일 확인:** 현재 번역 생성은 OpenAI Batch입니다. 아래 Copilot 절차는 2026년 6월 도입 기록으로 남깁니다. 현행 그림·운영은 원문 보호와 모든 결과 검증 후 쓰기로 갱신했습니다.
 
-## 현재 번역 운영 (2026년 9월)
+## 현행 번역 운영: 보호·검증·PR을 구분한다
 
-main에서 일본어 기사나 UI 원본이 변경되면 [Batch 제출 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)가 시작됩니다. 연속 편집을 모으기 위해 15분 기다린 뒤 최신 main을 확인하고 번역을 제출합니다. [결과 수집 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)는 현재 원본의 sourceHash와 결과를 비교하고 오래된 결과를 제외한 후 번역 PR을 만듭니다. [통합 워크플로](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)는 조건을 충족한 PR에만 자동 통합을 활성화합니다. 용어, 링크, 사실관계, 자연스러운 표현은 계속 검토해야 합니다.
+Systems는 일본어 기사·UI의 main 갱신 후 15분 기다렸다가 최신 main으로 [제출 workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/submit-openai-translation-batch.yml)를 실행합니다. [회수 workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/collect-openai-translation-batch.yml)는 매시간 2·17·32·47분 예정이며 현재 sourceHash와 대조해 번역 PR을 만듭니다. [병합 workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/merge-openai-translation-pr.yml)는 조건과 CI를 충족한 PR을 기존 GitHub 연계 공개로 보냅니다. 예정 시각·Batch 완료·병합·운영 공개는 별도 상태입니다.
+
+제출 전 숫자·URL·기존 placeholder·inline code·fenced code를 고유 token으로 바꿉니다. 회수 때 일치하는 일본어 source에서 원문을 복원하고 token 누락·중복·변조·추가를 거부합니다. 모델의 세부 변경을 막는 보호이며 복원 후 검증과 내용 리뷰도 유지합니다.
+
+[OpenAI Batch 문서](https://developers.openai.com/api/docs/guides/batch)는 반환 순서가 다를 수 있다고 설명하므로 `custom_id`로 언어·source path·sourceHash를 대조합니다. [보호·회수 수정](https://github.com/acecore-systems/acecore-systems/pull/131)은 Batch의 모든 결과를 검증한 뒤 쓰기를 시작합니다. 뒤쪽 오류·중복·오래된 source 때문에 앞쪽만 적용되는 상태를 막고 artifact에 언어·source path·Batch ID·원인을 남깁니다. 쓰기 중 디스크 장애까지 파일시스템 transaction으로 보장한다는 뜻은 아닙니다.
+
+27개 자동화 테스트와 일본어 55 source × 8 locale, 440개 결과의 오프라인 보호·복원 왕복을 확인했습니다. 추가 모델 API로 전체 재번역한 실증은 아닙니다. 기존 번역 개정은 일본어와 같은 PR로 맞추고 정형 후 source hash를 갱신합니다. 번역 내용을 두고 hash만 맞추지 않습니다.
 
 <figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
   <figcaption>
-    <strong id="diagram-copilot-translation-pipeline">번역 결과를 현재 일본어 원고와 대조합니다</strong>
-    <span>오래된 source의 Batch 결과는 제외합니다. 조건을 만족한 PR도 용어, 링크, 사실, 자연스러움을 확인해야 합니다.</span>
+    <strong id="diagram-copilot-translation-pipeline">보호한 원문과 전체 결과 대조</strong>
+    <span>검증 실패로 일부 언어만 바꾸지 않습니다. Batch 완료는 공개 완료가 아닙니다.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
-      <strong>일본어 원고 갱신</strong>
-      <span>main의 source 변경으로 번역 Batch를 시작합니다.</span>
+      <strong>원문 보호</strong>
+      <span>숫자·URL·코드를 고유 token으로.</span>
     </li>
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
-      <strong>sourceHash 대조</strong>
-      <span>회수할 때 현재 원고와 일치하지 않는 결과를 제외합니다.</span>
+      <strong>현재 source와 전체 검증</strong>
+      <span>custom_id·sourceHash·token을 대조하고 복원.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
-      <strong>번역 PR 통합</strong>
-      <span>검증 조건을 만족하면 자동 통합할 수 있으며 내용은 별도로 검토합니다.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>번역 PR을 공개 경로로</strong>
+      <span>검증 후 쓰고 CI·내용 리뷰를 거쳐 반영.</span>
     </li>
   </ol>
 </figure>

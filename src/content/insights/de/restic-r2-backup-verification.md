@@ -1,8 +1,8 @@
 ---
 title: "restic-Backups auf R2 überwachen: von Speicherung zu geprüfter Wiederherstellung"
-description: "Snapshot-Aktualität, Integrität und Wiederherstellung getrennt prüfen und noch ungeprüfte Anwendungswiederherstellung benennen."
+description: "Snapshot-Aktualität, Integrität und Wiederherstellung mit R2/restic trennen: PostgreSQL-Version nach OS-Updates, isolierte Samba-Runtime, DB/LDAP-Prüfung und offene Gesamtrettung."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -36,42 +36,45 @@ Standard-`restic check` und datenlesende Prüfungen haben unterschiedliche Umfä
 
 Wählen Sie Snapshots per Aufbewahrungsrichtlinie und verwenden Sie `forget`, `prune`, `check`; prüfen Sie vorher, was erhalten bleibt. Altersbasierte pauschale Objektlöschung auf R2 kann gemeinsam genutzte Daten erhaltener Snapshots zerstören. Folgen Sie der [Aufbewahrungsdokumentation](https://restic.readthedocs.io/en/stable/060_forget.html); Bildauslieferungsobjekte sind ein anderer Fall.
 
-## Offene Wiederherstellungsprüfungen
+## Nach OS-Updates auch PostgreSQL der Wiederherstellung prüfen
 
-Regelbetrieb, Monitoring/Meldungen, Aufbewahrung und Extraktion/Integrität ausgewählter Daten wurden durchgeführt. Start aller Anwendungen, Konfigurationen und Abhängigkeiten sowie Zugriff auf getrennte Zugangsdaten brauchen noch Ende-zu-Ende-Prüfung. Wiederherstellungszeit und akzeptabler Datenverlust müssen gemessen werden. Vollständige Notfallwiederherstellung oder belegte Einsparungen werden nicht behauptet.
+Nach einem OS-Update scheiterte der Test am festen Pfad einer alten PostgreSQL-Hauptversion. Die Änderung wählt die numerisch neueste installierte Hauptversion mit vollständigen ausführbaren Serverwerkzeugen und verwendet sie für Initialisierung, Start, Restore, Prüfung und Ende. Ohne vollständigen Satz wird abgebrochen, statt eine laufende Datenbank zu verbinden und Erfolg zu behaupten.
+
+Dump-Format und Zielkompatibilität anhand der [PostgreSQL-Dokumentation zu SQL-Dump und Restore](https://www.postgresql.org/docs/current/backup-dump.html) prüfen. Automatische Versionswahl garantiert nicht jeden Dump. Tests und CI belegen die Auswahländerung; die reale R2-Datenbankwiederherstellung bleibt eine eigene Abnahme.
+
+## Runtime im isolierten Samba nachbilden
+
+Eine lesbare Datenbank genügte nicht: Ohne Runtime für interne Sockets startete der isolierte DC nicht. Netzwerk-, PID- und Mount-Namespaces trennen, Isolation prüfen und nur darin privates `/run`-tmpfs und `/run/samba` erstellen. Generierte isolierte Konfiguration und Restore-Pfade verhindern Vermischung mit produktiver Runtime und Listenern.
+
+Mit [offiziellem samba-tool domain backup restore und dbcheck](https://www.samba.org/samba/docs/current/man-html/samba-tool.8.html) wurden Datenbank, DC-Start und LDAP-Bereitschaft geprüft. Dieser Samba-Pfad nutzte ein echtes R2-Backup. Wiederherstellung aller Anmeldungen, Dienstverbindungen und separat gelagerter Zugangsdaten erfordert weitere Tests. Geprüft am 14. Oktober 2026.
 
 <figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
   <figcaption>
-    <strong id="diagram-restic-r2-backup-verification">Nachweise stufenweise prüfen: von der Snapshot-Aktualität bis zur vollständigen Wiederherstellung</strong>
-    <span>Das Abrufen von Daten beweist nicht die Wiederherstellung von Anwendungen oder Zugangsdaten.</span>
+    <strong id="diagram-restic-r2-backup-verification">Vom Snapshot zur Dienstwiederherstellung und Gesamtrettung</strong>
+    <span>Samba-DC, DB und LDAP mit echtem R2 geprüft; reale PostgreSQL-Abnahme und Gesamtrettung bleiben getrennt.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">1</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
-      </span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
       <strong>Erfolgreicher Snapshot und Aktualität</strong>
-      <span>Zeitpunkt eines tatsächlich erfolgreichen Snapshots und Verzögerung gegenüber dem Zeitplan prüfen. Der Start eines Jobs allein ist kein Erfolg.</span>
+      <span>Echten Erfolg und Prüfumfang dokumentieren.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">2</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
-      </span>
-      <strong>Integrität und isolierte Wiederherstellung</strong>
-      <span>Prüfumfang dokumentieren, restore --verify an einem getrennten Ort ausführen und die vorgesehenen Dateien und Hashes vergleichen; danach Aufbewahrung und prune prüfen.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Isolation nachbilden</strong>
+      <span>DB-Version, Netzwerk/PID/Mount und Runtime prüfen.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">3</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
-      </span>
-      <strong>Vollständige Notfallwiederherstellung</strong>
-      <span>Anwendungsstart, abhängige Daten und Wiederherstellung separat verwahrter Zugangsdaten sind nicht verifiziert. Wiederherstellungszeit und tolerierbarer Datenverlust sind nicht gemessen.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Dienststart testen</strong>
+      <span>Samba DB und LDAP prüfen; alle Anwendungen bleiben unbelegt.</span>
     </li>
   </ol>
 </figure>
+
+## Offene Wiederherstellungsprüfungen
+
+Regelbetrieb, Monitoring/Meldungen, Aufbewahrung und Extraktion/Integrität ausgewählter Daten wurden durchgeführt. Start aller Anwendungen, Konfigurationen und Abhängigkeiten sowie Zugriff auf getrennte Zugangsdaten brauchen noch Ende-zu-Ende-Prüfung. Wiederherstellungszeit und akzeptabler Datenverlust müssen gemessen werden. Vollständige Notfallwiederherstellung oder belegte Einsparungen werden nicht behauptet.
 
 ## Ergänzung vom 6. Oktober 2026: Veraltete Sperren und Parallelität bei Wiederherstellungstests
 

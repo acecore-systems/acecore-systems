@@ -1,8 +1,8 @@
 ---
 title: "AI返信で果たせない約束を防ぐ：会話の文脈と送信前検査"
-description: "案内用AIが担当者の参加・予定調整・連絡を勝手に約束しない設計。会話状態、参照取得失敗、古い下書きの再検査、終了時の扱いを整理します。"
+description: "AIが担当者の行動を勝手に約束しない返信設計。会話・実測人数・鮮度・取得失敗、人格に沿う告知と類似文抑止、送信前ゲートを整理します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -36,26 +36,38 @@ callout:
 
 生成時に通った下書きでも、その後に会話や方針が変わることがあります。実際の送信直前にも最新の状態で検査し、終了した会話の下書きを送信しないようにします。見送りや会話終了も監査状態へ反映し、送信成功の記録と区別します。不要な質問を足して会話を引き延ばすより、返信を省略することも扱います。
 
+## 参加人数は実測値と観測時刻で判断する
+
+人数に応じた告知では、公開ボイスチャットの人間の参加者と、監視対象Minecraft全サーバーの同時接続合計を別の指標として扱います。この事例の条件はどちらかが15人以上で、二つの人数を足して判定しません。Minecraftは全対象が30秒以内、ボイスチャットは120秒以内の値だけを使います。取得できた一方が条件を満たす場合は、その指標だけを説明できます。
+
+取得失敗・期限切れを0人とみなしません。両方を取得して両方が条件未満と確認したときだけ、次の盛り上がりへの再到達を判定します。同じ盛り上がりの継続中は再投稿せず、送信操作から最低3時間を空けます。人数だけを確認する定期処理ではAIを呼びません。
+
+## 人格を保ち、ほぼ同じ告知は見送る
+
+告知は共有した人格・口調と最近20件の告知文を使って毎回生成し、人数欄を独立した行にします。人数・観測時刻はモデルに書かせず、生成後に再取得した実測値を入れます。人数だけを変えた類似文なら再生成を一回だけ試し、それでも似ていれば見送ります。生成失敗、人の確認が必要な文、生成前後で対象指標が変わった文は投稿せず、固定文へ戻しません。
+
+文面が通っても、投稿アカウント・セッション・制限・排他とクリック直前の鮮度を再確認します。送信操作後の不確定状態は自動再送せず、投稿者・全文・時刻が一致する公開結果を確認して成功を記録します。実装・テスト・設定と限定的な運用確認は済んでいますが、人数条件成立後の実投稿成功は今回の実証範囲に含めません。確認日：2026年10月14日。
+
 <figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
   <figcaption>
-    <strong id="diagram-ai-reply-capability-guardrails">返信前に根拠と能力を確認</strong>
-    <span>会話の文脈で回答と保留を分岐。取得停止の本番稼働は未確認です。</span>
+    <strong id="diagram-ai-reply-capability-guardrails">返信と告知で根拠・鮮度・送信権限を確認</strong>
+    <span>自然な文面だけでは投稿を許可しません。取得失敗を0として扱わず、送信直前にも検査します。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
-      <strong>話者・要求を読む</strong>
-      <span>募集か希望か、対象の版と会話状態を確認する。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>文脈と実測値を読む</strong>
+      <span>話者・要求・参加人数・観測時刻を確認。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
-      <strong>根拠ある範囲で回答</strong>
-      <span>実行できる内容だけ伝え、送信直前に再確認する。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>根拠内で生成・検査</strong>
+      <span>能力・人格・類似文と最新条件を照合。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-      <strong>曖昧なら保留</strong>
-      <span>取得失敗や不正応答は参照済みにせず人へ戻す。有限待機と重複抑止を適用する。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>許可された送信か保留</strong>
+      <span>セッション・鮮度・排他を検査。不確定なら再送しない。</span>
     </li>
   </ol>
 </figure>

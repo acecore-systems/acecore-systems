@@ -1,8 +1,8 @@
 ---
 title: "Evitar que una respuesta de IA prometa algo que no puede cumplir"
-description: "Cómo impedir que un asistente informativo prometa por su cuenta la participación, la disponibilidad o el seguimiento de una persona del equipo. Trata el estado de la conversación, los fallos de recuperación y la revisión de borradores antiguos."
+description: "Evitar promesas de acciones que la IA no puede ejecutar: contexto, asistencia medida, frescura y fallos, anuncios con personalidad, supresión de textos similares y controles de envío."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -36,26 +36,38 @@ Distingue una publicación que busca participantes de una persona que expresa su
 
 Un borrador que pasó las comprobaciones al generarse puede quedar obsoleto si cambia la conversación o la política. Compruébalo de nuevo con el estado más reciente justo antes del envío y no envíes borradores de conversaciones cerradas. Registra por separado la omisión del envío y el cierre de la conversación, sin confundirlos con un envío correcto. También se puede omitir una respuesta cuando una pregunta innecesaria solo alargaría el intercambio.
 
+## Usar asistencia medida y hora de observación
+
+Los anuncios distinguen participantes humanos de voz pública y jugadores simultáneos sumados de todos los servidores Minecraft supervisados. Basta con que un indicador alcance 15 personas; no se suman ambos. Todas las fuentes Minecraft deben tener menos de 30 segundos y voz, 120 segundos. Si solo hay un indicador disponible que cumple, describir solo ese.
+
+Datos ausentes o caducados no son cero. Solo se prepara un nuevo auge cuando ambos se obtienen y están bajo el umbral. No se repite durante el mismo auge y deben pasar al menos 3 horas desde el intento de envío anterior. El sondeo solo de asistencia no llama a IA.
+
+## Mantener la personalidad y omitir anuncios casi idénticos
+
+Cada anuncio usa personalidad y tono compartidos y los últimos 20 anuncios, con una línea de asistencia separada. El modelo no escribe cifras ni horas: se insertan mediciones recuperadas tras generar. Si solo cambian cifras y el texto es similar, se regenera una vez y se omite si persiste. Fallos, revisión humana necesaria o cambio del indicador válido impiden publicar, sin plantilla fija de respaldo.
+
+Aprobar el texto no basta. Revisar cuenta, sesión, restricciones, exclusión mutua y frescura justo antes del clic. Un resultado incierto no se reenvía automáticamente; éxito exige resultado público con autor, texto completo y hora coincidentes. Se completaron implementación, pruebas, configuración y revisión operativa limitada; falta demostrar un envío real exitoso tras cumplirse el umbral. Comprobado el 14 de octubre de 2026.
+
 <figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
   <figcaption>
-    <strong id="diagram-ai-reply-capability-guardrails">Comprobar pruebas y capacidad antes de responder</strong>
-    <span>El contexto determina si se responde o se pone en espera. La operación en producción de la detención de recuperación no está confirmada.</span>
+    <strong id="diagram-ai-reply-capability-guardrails">Comprobar evidencia, frescura y autorización</strong>
+    <span>Un texto natural no autoriza publicar. Ausencia no es cero; revisar antes de enviar.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
-      <strong>Leer quién habla y qué pide</strong>
-      <span>Comprueba si es una invitación o interés, la edición pertinente y el estado de la conversación.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Leer contexto y mediciones</strong>
+      <span>Revisar hablante, petición, asistencia y hora.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
-      <strong>Responder con respaldo</strong>
-      <span>Indica solo lo que se puede hacer y vuelve a comprobar justo antes del envío.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Generar y validar con evidencia</strong>
+      <span>Cotejar capacidad, personalidad, similitud y condiciones.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-      <strong>Poner en espera si hay dudas</strong>
-      <span>No consideres consultada una recuperación fallida o mal formada; devuelve el caso a una persona. Limita la espera y evita duplicados.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Enviar autorizado o retener</strong>
+      <span>Revisar sesión, frescura y exclusión; no reenviar lo incierto.</span>
     </li>
   </ol>
 </figure>

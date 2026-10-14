@@ -1,8 +1,8 @@
 ---
 title: "用 Sveltia CMS 运营多语言博客的方法"
-description: "开始多语言博客流程时，先用代表文章的翻译文件生成各语言HTML，检查正文、title、description和内部链接。"
+description: "以日语正本生成8种语言静态页面，说明OpenAI Batch对数字、URL、代码的保护、全部结果验证后写入、翻译PR、CI及GitHub关联发布。"
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 tags: ["技术", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -12,24 +12,24 @@ callout:
   text: "浏览器翻译或翻译插件可以帮助读者阅读当前页面，但不会自动生成语言专用 URL、title、description、内部链接、RSS、sitemap 或 hreflang。若希望搜索引擎把各语言当作独立页面理解，就需要发布翻译后的静态 HTML。"
 processFigure:
   eyebrow: Translation Workflow
-  title: 从 Sveltia CMS 到翻译 PR（2026 年 6 月流程）
-  description: 以日语作为source of truth，将翻译分离到GitHub侧的PR流程中。
+  title: "从日语正本到验证后的翻译PR"
+  description: "从原文恢复数字、URL、代码，验证全部结果后才写入。"
   variant: inline
   steps:
-    - title: 只编辑日语
-      description: 使用Sveltia CMS或Markdown更新 `src/content/blog/{slug}.md`。
+    - title: "编辑日语"
+      description: "检查最新main并合并连续编辑。"
       icon: i-lucide-file-pen-line
       accent: brand
-    - title: 检测CMS commit
-      description: "把 `cms:` prefix和变更path作为GitHub Actions侧的契约。"
-      icon: i-lucide-git-commit-horizontal
+    - title: "保护后提交Batch"
+      description: "将数字、URL、placeholder、代码token化。"
+      icon: i-lucide-shield-check
       accent: amber
-    - title: 创建翻译PR
-      description: 向Copilot传递source path、locale与翻译规则，让其生成翻译文件。
+    - title: "全量验证后写入"
+      description: "核对sourceHash、token及内容，失败记录后停止。"
       icon: i-lucide-languages
       accent: emerald
-    - title: build后反映
-      description: 只有通过Astro build、Pagefind和链接检查的PR才合入main。
+    - title: "PR、CI和生产发布"
+      description: "通过GitHub关联发布并检查内容。"
       icon: i-lucide-check-check
       accent: slate
 compareTable:
@@ -55,7 +55,7 @@ checklist:
       checked: true
     - text: "使翻译文件的slug与日语文章一致"
       checked: true
-    - text: "固定 `cms:` commit等翻译workflow的启动条件"
+    - text: "以main上的日语source更新触发翻译"
       checked: true
     - text: "翻译时不得破坏URL、图片path、代码块和标签ID"
       checked: true
@@ -83,32 +83,38 @@ faq:
 
 开始多语言博客流程时，先用代表文章的翻译文件生成各语言HTML，检查正文、title、description和内部链接。按照[Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)仅关联存在的语言版本，并将翻译服务成功与公开页面完成分别验收。
 
-> **2026 年 9 月 26 日更新：** 下文的 Copilot 翻译 PR 步骤记录的是 2026 年 6 月的实施方式。翻译生成现已迁移至 OpenAI Batch。日文仍是原文，按语言发布翻译后的静态页面这一原则仍然适用。
+> **2026年10月14日确认：** 当前翻译使用OpenAI Batch。以下Copilot步骤保留为2026年6月的导入记录。现行图和流程已更新为保护原文、验证全部结果后再写入。
 
-## 当前翻译流程（2026 年 9 月）
+## 现行翻译：分别处理保护、验证和PR
 
-当 main 上的日文文章或界面原文发生变化时，[Batch 提交工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml)启动。它等待 15 分钟以合并后续编辑，检查当前 main 后再提交翻译。[结果收集工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml)将结果与当前日文原文的 sourceHash 对照，丢弃过期结果并创建翻译 PR。[合并工作流](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml)仅为符合条件的 PR 启用自动合并。术语、链接、事实和语言自然度仍需审核。
+Systems的main更新日语文章或UI后，等待15分钟，再由[提交workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/submit-openai-translation-batch.yml)读取最新main。[回收workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/collect-openai-translation-batch.yml)计划每小时第2、17、32、47分钟执行，核对当前sourceHash并创建翻译PR。[合并workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/merge-openai-translation-pr.yml)将满足条件的PR经过CI交给现有GitHub关联发布。计划时刻、Batch完成、PR合并和生产发布是不同状态。
+
+发送前将数字、URL、现有placeholder、inline code和fenced code替换成唯一token。回收时从匹配的日语source恢复原文，拒绝token缺失、重复、改写或增加。保护用于避免模型改动这些细节，恢复后的验证和内容审查仍然必要。
+
+[OpenAI Batch文档](https://developers.openai.com/api/docs/guides/batch)说明输出顺序可能不同，因此通过`custom_id`匹配语言、source path和sourceHash。[保护与回收改修](https://github.com/acecore-systems/acecore-systems/pull/131)验证Batch内全部结果后才开始写入。后半的不合格、重复或旧source结果不会使前半翻译已被部分应用。失败artifact记录语言、source path、Batch ID和原因。这不等于对写入期间磁盘故障的文件系统事务保证。
+
+改修验证了27项自动化测试，以及55个日语source × 8个locale、共440结果的离线保护恢复往返。这不是新增模型API调用的全量重译。现有译文与日语在同一PR改订，再更新格式化后的source hash；不能只对齐hash而不改译文。
 
 <figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
   <figcaption>
-    <strong id="diagram-copilot-translation-pipeline">将翻译结果与当前日语原稿进行比对</strong>
-    <span>排除基于旧 source 的 Batch 结果。即使 PR 满足条件，也要检查术语、链接、事实和表达自然度。</span>
+    <strong id="diagram-copilot-translation-pipeline">核对受保护原文和全部结果</strong>
+    <span>验证失败不能只改部分语言；Batch完成不代表发布完成。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
-      <strong>更新日语原稿</strong>
-      <span>main 上的 source 变更会触发翻译 Batch。</span>
+      <strong>保护原文</strong>
+      <span>数字、URL、代码使用唯一token。</span>
     </li>
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
-      <strong>比对 sourceHash</strong>
-      <span>回收时排除与当前原稿不再匹配的结果。</span>
+      <strong>验证当前source和全部结果</strong>
+      <span>匹配custom_id、sourceHash、token并恢复。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
-      <strong>合并翻译 PR</strong>
-      <span>满足验证条件时可自动合并；内容仍需另行检查。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>PR进入发布流程</strong>
+      <span>验证后写入，再经过CI与内容检查。</span>
     </li>
   </ol>
 </figure>
