@@ -1,8 +1,8 @@
 ---
 title: "Mehrsprachige Blogs mit Sveltia CMS betreiben"
-description: "Erzeugen Sie zu Beginn eines mehrsprachigen Blog-Ablaufs lokales HTML eines repräsentativen Artikels und prüfen Sie Text, title, description und interne Links."
+description: "Acht statische Übersetzungen aus japanischer Quelle: Schutz von Zahlen, URLs und Code in OpenAI Batch, vollständige Prüfung vor dem Schreiben, PR, CI und GitHub-Veröffentlichung."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 tags: ["Technologie", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -12,24 +12,24 @@ callout:
   text: "Browser-Übersetzung oder Widgets helfen beim Lesen, erzeugen aber keine sprachspezifischen URLs, Title, Description, internen Links, RSS, Sitemap oder hreflang. Für Suchmaschinen sollten übersetzte statische HTML-Seiten veröffentlicht werden."
 processFigure:
   eyebrow: Translation Workflow
-  title: Von Sveltia CMS zum Übersetzungs-PR (Ablauf vom Juni 2026)
-  description: Japanisch bleibt die source of truth, während Übersetzungen in den PR-Prozess auf GitHub ausgelagert werden.
+  title: "Von japanischer Quelle zur geprüften Übersetzungs-PR"
+  description: "Zahlen, URLs und Code wiederherstellen; alles vor dem Schreiben prüfen."
   variant: inline
   steps:
-    - title: Nur Japanisch bearbeiten
-      description: "`src/content/blog/{slug}.md` mit Sveltia CMS oder Markdown aktualisieren."
+    - title: "Japanisch bearbeiten"
+      description: "Aktuelles main nutzen und Änderungen bündeln."
       icon: i-lucide-file-pen-line
       accent: brand
-    - title: CMS-Commit erkennen
-      description: "Den Prefix `cms:` und den geänderten Path zum Vertrag auf der GitHub-Actions-Seite machen."
-      icon: i-lucide-git-commit-horizontal
+    - title: "Schützen und Batch einreichen"
+      description: "Zahlen, URLs, Platzhalter und Code tokenisieren."
+      icon: i-lucide-shield-check
       accent: amber
-    - title: Übersetzungs-PR erstellen
-      description: Copilot Source Path, Locale und Übersetzungsregeln übergeben, damit die übersetzten Dateien erzeugt werden.
+    - title: "Alles prüfen, dann schreiben"
+      description: "sourceHash, Tokens und Inhalt prüfen; Fehler protokollieren und stoppen."
       icon: i-lucide-languages
       accent: emerald
-    - title: Nach dem Build übernehmen
-      description: Nur PRs nach main übernehmen, die Astro build, Pagefind und die Linkprüfung bestehen.
+    - title: "PR, CI und Veröffentlichung"
+      description: "Über GitHub veröffentlichen und Inhalt prüfen."
       icon: i-lucide-check-check
       accent: slate
 compareTable:
@@ -55,7 +55,7 @@ checklist:
       checked: true
     - text: "Den Slug der Übersetzungsdateien mit dem japanischen Artikel abgleichen"
       checked: true
-    - text: "Auslösebedingungen des Workflows wie `cms:`-Commits festlegen"
+    - text: "Übersetzung durch japanische Quelländerungen auf main starten"
       checked: true
     - text: "URLs, Bild-Paths, Codeblöcke und Tag-IDs bei der Übersetzung nicht verändern"
       checked: true
@@ -83,32 +83,38 @@ faq:
 
 Erzeugen Sie zu Beginn eines mehrsprachigen Blog-Ablaufs lokales HTML eines repräsentativen Artikels und prüfen Sie Text, title, description und interne Links. Verknüpfen Sie nach [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions) nur vorhandene Sprachversionen. Nehmen Sie Übersetzungsdienst und fertige öffentliche Seiten getrennt ab.
 
-> **Ergänzung vom 26. September 2026:** Die folgenden Schritte mit Copilot dokumentieren die Einführung vom Juni 2026. Die Übersetzungserstellung wurde inzwischen auf OpenAI Batch umgestellt. Japanisch bleibt die maßgebliche Quelle; übersetzte statische Seiten bleiben das Veröffentlichungsformat.
+> **Geprüft am 14. Oktober 2026:** Aktuelle Übersetzungen nutzen OpenAI Batch. Die folgenden Copilot-Schritte bleiben der Einführungsbericht vom Juni 2026. Aktuelle Diagramme und Abläufe schützen die Quelle und prüfen alle Ergebnisse vor dem Schreiben.
 
-## Aktueller Übersetzungsablauf (September 2026)
+## Aktueller Ablauf: Schutz, Prüfung und PR
 
-Wenn ein japanischer Artikel oder UI-Quelltext auf main geändert wird, startet der [Workflow zur Batch-Einreichung](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml). Er wartet 15 Minuten auf weitere Änderungen, prüft den aktuellen main-Stand und reicht dann die Übersetzung ein. Der [Abhol-Workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) gleicht die Ergebnisse mit dem aktuellen sourceHash ab, verwirft veraltete Ergebnisse und erstellt einen Übersetzungs-PR. Der [Merge-Workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) aktiviert die automatische Zusammenführung nur für geeignete PRs. Begriffe, Links, Fakten und Sprachqualität müssen weiterhin geprüft werden.
+Bei Systems warten japanische Artikel- oder UI-Änderungen auf main 15 Minuten, bevor der [Einreichungsworkflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/submit-openai-translation-batch.yml) aktuelles main nutzt. Die [Abholung](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/collect-openai-translation-batch.yml) ist zu Minute 2, 17, 32 und 47 geplant, prüft sourceHash und erstellt eine PR. Der [Merge-Workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/merge-openai-translation-pr.yml) leitet geeignete PRs über CI und bestehende GitHub-Veröffentlichung weiter. Planzeit, Batch-Abschluss, Merge und Veröffentlichung sind getrennte Zustände.
+
+Vor dem Senden werden Zahlen, URLs, vorhandene Platzhalter, inline code und fenced code durch eindeutige Tokens ersetzt. Bei Abholung wird aus passender japanischer Quelle wiederhergestellt; fehlende, doppelte, geänderte oder zusätzliche Tokens werden abgewiesen. Der Schutz verhindert Modelländerungen dieser Details, während Prüfung nach Wiederherstellung und Inhaltsreview bestehen bleiben.
+
+Laut [OpenAI-Batch-Dokumentation](https://developers.openai.com/api/docs/guides/batch) kann die Ergebnisreihenfolge abweichen; `custom_id` ordnet Sprache, source path und sourceHash zu. Die [Schutz- und Abholänderung](https://github.com/acecore-systems/acecore-systems/pull/131) prüft alle Ergebnisse vor Schreibbeginn. Ein später ungültiges, doppeltes oder veraltetes Ergebnis lässt keine früheren Übersetzungen teilweise angewandt zurück. Ein Artifact enthält Sprache, source path, Batch ID und Ursache. Das garantiert keine Dateisystemtransaktion gegen Datenträgerfehler während des Schreibens.
+
+Geprüft wurden 27 Tests und ein Offline-Schutz/Wiederherstellungsrundlauf für 55 japanische Quellen × 8 Locales, also 440 Ergebnisse. Es war keine neue Komplettübersetzung per Modell-API. Bestehende Übersetzungen werden mit Japanisch in derselben PR geändert, dann folgt der Hash der formatierten Quelle; niemals nur der Hash.
 
 <figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
   <figcaption>
-    <strong id="diagram-copilot-translation-pipeline">Übersetzungsergebnisse mit der aktuellen japanischen Quelle abgleichen</strong>
-    <span>Batch-Ergebnisse veralteter Quellen werden ausgeschlossen. Auch passende PRs müssen auf Begriffe, Links, Fakten und Natürlichkeit geprüft werden.</span>
+    <strong id="diagram-copilot-translation-pipeline">Geschützte Quelle und alle Ergebnisse abgleichen</strong>
+    <span>Prüffehler dürfen nicht nur einige Sprachen ändern. Batch-Abschluss ist keine Veröffentlichung.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
-      <strong>Japanische Quelle aktualisieren</strong>
-      <span>Eine Source-Änderung auf main löst einen Übersetzungs-Batch aus.</span>
+      <strong>Quelle schützen</strong>
+      <span>Eindeutige Tokens für Zahlen, URLs und Code.</span>
     </li>
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
-      <strong>sourceHash vergleichen</strong>
-      <span>Bei der Abholung Ergebnisse ausschließen, die nicht mehr zur aktuellen Quelle passen.</span>
+      <strong>Aktuelle Quelle und Ergebnisse prüfen</strong>
+      <span>custom_id, sourceHash und Tokens abgleichen und wiederherstellen.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
-      <strong>Übersetzungs-PR integrieren</strong>
-      <span>Die Validierung kann Auto-Merge ermöglichen; der Inhalt braucht eine separate Prüfung.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>PR im Veröffentlichungspfad</strong>
+      <span>Nach Prüfung schreiben, dann CI und Review.</span>
     </li>
   </ol>
 </figure>

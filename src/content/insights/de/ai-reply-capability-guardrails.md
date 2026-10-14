@@ -1,8 +1,8 @@
 ---
 title: "KI-Antworten dürfen keine unerfüllbaren Versprechen machen"
-description: "So lässt sich verhindern, dass ein Informationsassistent eigenmächtig die Teilnahme, Terminplanung oder spätere Kontaktaufnahme durch Mitarbeitende verspricht. Behandelt werden Gesprächsstatus, Abruffehler, veraltete Entwürfe und geschlossene Gespräche."
+description: "Unbegründete KI-Versprechen verhindern: Gespräch, gemessene Teilnahme, Aktualität und Abruffehler, persona-konforme Meldungen, ähnliche Texte und Prüfungen vor dem Senden."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -36,26 +36,38 @@ Unterscheide einen Beitrag, der Teilnehmende sucht, von der Aussage einer Person
 
 Ein beim Erstellen geprüfter Entwurf kann veraltet sein, wenn sich Gespräch oder Richtlinie ändern. Prüfe ihn unmittelbar vor dem Versand erneut anhand des neuesten Status und sende keine Entwürfe für geschlossene Gespräche. Protokolliere einen ausgelassenen Versand und ein geschlossenes Gespräch getrennt von einem erfolgreichen Versand. Eine Antwort kann auch entfallen, wenn eine unnötige Frage den Austausch nur verlängern würde.
 
+## Gemessene Teilnehmer und Beobachtungszeit verwenden
+
+Meldungen trennen Menschen im öffentlichen Sprachchat und gleichzeitige Spieler aller überwachten Minecraft-Server. Einer der Werte muss 15 erreichen; beide werden nicht addiert. Alle Minecraft-Quellen müssen innerhalb von 30 Sekunden liegen, Sprachchat innerhalb von 120 Sekunden. Ist nur ein qualifizierender Wert verfügbar, nur diesen beschreiben.
+
+Fehlende oder veraltete Daten sind nicht null. Erst wenn beide verfügbar und unter der Grenze sind, wird ein neuer Anstieg vorbereitet. Während desselben Anstiegs nicht erneut posten und mindestens 3 Stunden nach dem vorherigen Sendeversuch warten. Reines Teilnehmer-Polling ruft keine KI auf.
+
+## Persona erhalten und fast gleiche Meldungen auslassen
+
+Jede Meldung nutzt gemeinsame Persona, Ton und die letzten 20 Meldungen, mit eigener Teilnehmerzeile. Zahlen und Beobachtungszeiten stammen nicht vom Modell, sondern aus neuen Messungen nach der Erzeugung. Ändern sich nur Zahlen, einmal neu erzeugen und bei weiterer Ähnlichkeit auslassen. Fehler, erforderliche menschliche Prüfung oder geänderte qualifizierende Metrik blockieren das Posting ohne feste Ersatzvorlage.
+
+Gültiger Text allein genügt nicht. Konto, Sitzung, Sperren, gegenseitigen Ausschluss und Aktualität vor dem Klick erneut prüfen. Unklare Ergebnisse nicht automatisch erneut senden; Erfolg erst nach öffentlichem Abgleich von Autor, Volltext und Zeit. Implementierung, Tests, Einstellungen und begrenzter Betrieb wurden geprüft; ein echter erfolgreicher Post nach Erreichen der Grenze ist hier nicht belegt. Geprüft am 14. Oktober 2026.
+
 <figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
   <figcaption>
-    <strong id="diagram-ai-reply-capability-guardrails">Belege und Fähigkeit vor der Antwort prüfen</strong>
-    <span>Der Gesprächskontext entscheidet zwischen Antworten und Zurückstellen. Der Produktivbetrieb des Abrufstopps ist unbestätigt.</span>
+    <strong id="diagram-ai-reply-capability-guardrails">Belege, Aktualität und Senderechte prüfen</strong>
+    <span>Natürliche Sprache erlaubt kein Posting. Fehlende Daten sind nicht null; vor dem Senden erneut prüfen.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
-      <strong>Sprecher und Anfrage erfassen</strong>
-      <span>Prüfen, ob es eine Einladung oder Interesse ist, welche Ausgabe gemeint ist und wie der Gesprächsstatus lautet.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Kontext und Messwerte lesen</strong>
+      <span>Sprecher, Anfrage, Teilnehmer und Zeit prüfen.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
-      <strong>Nur belegt antworten</strong>
-      <span>Nur tatsächlich Machbares mitteilen und unmittelbar vor dem Senden erneut prüfen.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Belegt erzeugen und prüfen</strong>
+      <span>Fähigkeit, Persona, Ähnlichkeit und Bedingungen abgleichen.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-      <strong>Bei Unklarheit zurückstellen</strong>
-      <span>Fehlerhafte oder fehlgeschlagene Abrufe nicht als gelesen behandeln, sondern an eine Person geben. Wartezeiten begrenzen und Duplikate vermeiden.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Erlaubt senden oder warten</strong>
+      <span>Sitzung, Aktualität und Ausschluss prüfen; Unklares nicht erneut senden.</span>
     </li>
   </ol>
 </figure>

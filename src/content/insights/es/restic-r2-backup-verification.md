@@ -1,8 +1,8 @@
 ---
 title: "Copias con restic en R2: de guardar datos a verificar su restauración"
-description: "Supervise por separado la actualidad de las instantáneas, la integridad y la restauración, indicando qué recuperación de aplicaciones falta probar."
+description: "Separar frescura, integridad y restauración con R2 y restic: selección PostgreSQL tras actualizar el OS, runtime aislado Samba, comprobaciones DB/LDAP y recuperación completa pendiente."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -36,42 +36,45 @@ Siga por separado la última instantánea correcta, retrasos, fallos y resultado
 
 Seleccione instantáneas mediante su política y use `forget`, `prune` y `check`, revisando antes qué se conservará. Borrar objetos por antigüedad en R2 puede eliminar datos compartidos necesarios para instantáneas retenidas. Siga la [documentación de retención](https://restic.readthedocs.io/en/stable/060_forget.html); limpiar imágenes de distribución es otro caso.
 
-## Comprobaciones pendientes
+## Comprobar el PostgreSQL de restauración tras actualizar el OS
 
-Se realizaron operación periódica, supervisión/avisos, retención y extracción/integridad de datos seleccionados. Faltan validar de extremo a extremo el arranque de todas las aplicaciones, configuración y dependencias, y acceso a credenciales independientes. Tiempo de recuperación y pérdida aceptable requieren medición. No se afirma recuperación completa ni ahorro demostrado.
+Tras actualizar el OS, la prueba falló por una ruta fija de un major antiguo de PostgreSQL. El cambio elige el major instalado más nuevo en orden numérico con todas las herramientas de servidor ejecutables y usa la misma versión para inicializar, arrancar, restaurar, comprobar y parar. Si no existe un conjunto completo, falla sin conectarse a otra base activa y darlo por éxito.
+
+Compruebe formato y compatibilidad del destino con la [documentación PostgreSQL de SQL dump y restauración](https://www.postgresql.org/docs/current/backup-dump.html). Seleccionar versión automáticamente no garantiza cualquier dump. El cambio tiene pruebas automáticas y CI; restaurar la base real de R2 sigue siendo otra aceptación.
+
+## Recrear el runtime dentro del Samba aislado
+
+Poder leer la base restaurada no bastaba: sin runtime para sockets internos, el DC aislado no arrancaba. Separe namespaces de red, PID y mount, compruebe aislamiento y cree solo dentro un tmpfs privado en `/run` y `/run/samba`. Use configuración y destinos aislados, sin mezclar procesos de prueba con runtime o puertos productivos.
+
+Con [samba-tool oficial, domain backup restore y dbcheck](https://www.samba.org/samba/docs/current/man-html/samba-tool.8.html), se comprobaron base restaurada, arranque del DC y disponibilidad LDAP. Este recorrido Samba se verificó con una copia R2 real. Recuperar todas las aplicaciones, conexiones y credenciales guardadas por separado requiere otras pruebas. Comprobado el 14 de octubre de 2026.
 
 <figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
   <figcaption>
-    <strong id="diagram-restic-r2-backup-verification">Verificar las pruebas por etapas, desde la actualidad del snapshot hasta la recuperación completa</strong>
-    <span>Recuperar datos no demuestra que también puedan recuperarse las aplicaciones o las credenciales.</span>
+    <strong id="diagram-restic-r2-backup-verification">De snapshot a restauración por servicio y recuperación completa</strong>
+    <span>Samba DC, DB y LDAP se verificaron con R2 real; PostgreSQL real y recuperación global siguen separados.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">1</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
-      </span>
-      <strong>Snapshot correcto y actualidad</strong>
-      <span>Compruebe la hora del snapshot que terminó correctamente y su retraso respecto al calendario. Que el trabajo haya empezado no significa que haya tenido éxito.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Snapshot correcto y frescura</strong>
+      <span>Registrar éxito real y alcance.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">2</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
-      </span>
-      <strong>Integridad y restauración aislada</strong>
-      <span>Registre el alcance de la comprobación, ejecute restore --verify en otra ubicación y compare los archivos y hashes previstos antes de revisar la retención y prune.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Recrear aislamiento</strong>
+      <span>Verificar versión DB, red/PID/mount y runtime.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">3</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
-      </span>
-      <strong>Recuperación completa</strong>
-      <span>El arranque de todas las aplicaciones, los datos dependientes y la recuperación de credenciales guardadas aparte siguen sin verificarse. El tiempo de recuperación y la pérdida de datos admisible no se han medido.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Probar arranque del servicio</strong>
+      <span>Samba DB y LDAP verificados; falta recuperación de todas las apps.</span>
     </li>
   </ol>
 </figure>
+
+## Comprobaciones pendientes
+
+Se realizaron operación periódica, supervisión/avisos, retención y extracción/integridad de datos seleccionados. Faltan validar de extremo a extremo el arranque de todas las aplicaciones, configuración y dependencias, y acceso a credenciales independientes. Tiempo de recuperación y pérdida aceptable requieren medición. No se afirma recuperación completa ni ahorro demostrado.
 
 ## Actualización del 6 de octubre de 2026: bloqueos obsoletos y control de la concurrencia en las pruebas de restauración
 

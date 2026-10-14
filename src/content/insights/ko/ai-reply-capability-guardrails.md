@@ -1,8 +1,8 @@
 ---
 title: "AI 답변이 지킬 수 없는 약속을 하지 않게 하기"
-description: "안내용 AI가 직원의 참여, 일정 조율, 후속 연락을 임의로 약속하지 않도록 하는 방법입니다. 대화 상태, 검색 실패, 오래된 초안의 재검사, 대화 종료 처리를 다룹니다."
+description: "AI가 실행 불가능한 행동을 약속하지 않는 답변 설계. 대화·실측 인원·신선도·수집 실패, 인격 기반 공지·유사문 억제·전송 전 게이트를 설명합니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -36,26 +36,38 @@ callout:
 
 생성 시점에 검사를 통과한 초안도 대화나 정책이 바뀌면 오래된 내용이 될 수 있습니다. 전송 직전에 최신 상태로 다시 검사하고 종료된 대화의 초안을 보내지 않습니다. 답변 생략과 대화 종료는 전송 성공과 구분해 감사 상태에 기록합니다. 불필요한 질문으로 대화를 늘리기보다 답변을 생략하는 선택도 둡니다.
 
+## 실측 인원과 관측 시각으로 판단하기
+
+인원 공지는 공개 음성 채팅의 사람 수와 모니터링 중인 Minecraft 전체 서버 동시 접속 합계를 별도 지표로 다룹니다. 이 사례는 어느 한쪽이 15명 이상이어야 하며 두 수를 합하지 않습니다. Minecraft는 모든 대상이 30초 이내, 음성 채팅은 120초 이내인 값만 사용합니다. 수집한 한쪽만 조건을 충족하면 그 지표만 설명합니다.
+
+수집 실패·만료를 0명으로 보지 않습니다. 양쪽을 수집해 둘 다 기준 미만일 때만 다음 상승에 대비합니다. 같은 상승이 계속되면 다시 게시하지 않고 지난 전송 조작부터 최소 3시간을 둡니다. 인원만 확인하는 폴링에서는 AI를 호출하지 않습니다.
+
+## 인격을 유지하고 거의 같은 공지는 건너뛰기
+
+공유 인격·말투와 최근 20개 공지를 사용해 매번 생성하고 인원은 독립된 줄로 둡니다. 모델이 인원·시각을 작성하지 않으며 생성 뒤 새로 수집한 실측값을 넣습니다. 숫자만 바뀐 유사문은 한 번만 재생성하고 여전히 비슷하면 건너뜁니다. 생성 실패·사람 확인 필요·생성 전후 기준 충족 지표 변경이면 게시하지 않으며 고정문으로 되돌리지 않습니다.
+
+문안 통과 후에도 계정·세션·제한·배타·클릭 직전 신선도를 재확인합니다. 전송 뒤 불확실하면 자동 재전송하지 않고 작성자·전체 본문·시각이 일치하는 공개 결과를 확인한 뒤 성공을 기록합니다. 구현·테스트·설정·제한된 운영 확인은 마쳤지만 조건 충족 뒤 실제 게시 성공은 이번 실증 범위가 아닙니다. 확인일: 2026년 10월 14일.
+
 <figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
   <figcaption>
-    <strong id="diagram-ai-reply-capability-guardrails">답변 전에 근거와 실행 가능성 확인</strong>
-    <span>대화 문맥에 따라 답변하거나 보류합니다. 검색 중단의 프로덕션 운영은 확인되지 않았습니다.</span>
+    <strong id="diagram-ai-reply-capability-guardrails">근거·신선도·전송 권한 확인</strong>
+    <span>자연스러운 문안만으로 게시를 허용하지 않습니다. 미수집은 0이 아니며 전송 직전 재검사합니다.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
-      <strong>화자와 요청 확인</strong>
-      <span>모집인지 참여 의향인지, 해당 버전과 대화 상태를 확인합니다.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>문맥·실측값 읽기</strong>
+      <span>화자·요구·인원·관측 시각 확인.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
-      <strong>근거 범위에서 답변</strong>
-      <span>실제로 할 수 있는 내용만 알리고 전송 직전에 다시 확인합니다.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>근거 안에서 생성·검사</strong>
+      <span>능력·인격·유사문·최신 조건 대조.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-      <strong>불명확하면 보류</strong>
-      <span>검색 실패나 잘못된 응답은 확인 완료로 보지 않고 사람에게 넘깁니다. 대기에는 한도를 두고 중복을 억제합니다.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>허용된 전송 또는 보류</strong>
+      <span>세션·신선도·배타 검사. 불확실하면 재전송 금지.</span>
     </li>
   </ol>
 </figure>

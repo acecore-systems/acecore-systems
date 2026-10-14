@@ -1,8 +1,8 @@
 ---
 title: "Impeça que respostas de IA façam promessas que não podem cumprir"
-description: "Como evitar que um assistente informativo prometa por conta própria a participação, o agendamento ou o contato posterior de alguém da equipe. Aborda o estado da conversa, falhas de recuperação, revisão de rascunhos antigos e encerramento."
+description: "Evitar promessas de ações que a IA não executa: contexto, presença medida, frescor e falhas, anúncios com personalidade, supressão de textos similares e barreiras de envio."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -36,26 +36,38 @@ Diferencie uma publicação que procura participantes de uma fala de alguém que
 
 Um rascunho aprovado quando foi gerado pode ficar desatualizado se a conversa ou a política mudar. Verifique-o novamente com o estado mais recente imediatamente antes do envio e não envie rascunhos de conversas encerradas. Registre separadamente o envio omitido e a conversa encerrada, sem confundi-los com um envio concluído. Também é válido não responder quando uma pergunta desnecessária apenas prolongaria a conversa.
 
+## Usar presença medida e horário observado
+
+Anúncios separam humanos no chat de voz público e jogadores simultâneos somados em todos os servidores Minecraft monitorados. Basta um indicador atingir 15 pessoas; não se somam os dois. Todas as fontes Minecraft precisam estar dentro de 30 segundos e voz, 120 segundos. Se só um indicador está disponível e atende, descreva apenas ele.
+
+Dados indisponíveis ou vencidos não são zero. Só se prepara nova chegada quando ambos são obtidos e ficam abaixo do limite. Não se repete o mesmo pico contínuo e aguardam-se pelo menos 3 horas após a tentativa anterior. Consulta apenas de presença não chama IA.
+
+## Preservar a personalidade e pular anúncios quase iguais
+
+Cada anúncio usa personalidade e tom compartilhados e os últimos 20 anúncios, com presença em linha separada. O modelo não escreve números e horários: inserem-se medições obtidas novamente após gerar. Se apenas números mudam num texto similar, tenta-se regenerar uma vez e depois pula-se. Falha, revisão humana necessária ou mudança do indicador qualificado impedem publicar, sem modelo fixo de fallback.
+
+Texto aprovado não basta. Confira conta, sessão, restrições, exclusão mútua e frescor antes do clique. Resultados incertos não são reenviados automaticamente; sucesso exige publicação com autor, texto completo e hora correspondentes. Implementação, testes, configuração e verificações operacionais limitadas foram concluídos; postagem real após atingir o limite não foi demonstrada neste escopo. Verificado em 14 de outubro de 2026.
+
 <figure class="article-diagram" data-layout="branches" data-tone="violet" data-count="3" aria-labelledby="diagram-ai-reply-capability-guardrails">
   <figcaption>
-    <strong id="diagram-ai-reply-capability-guardrails">Verificar evidências e capacidade antes de responder</strong>
-    <span>O contexto da conversa determina se a resposta será enviada ou pausada. A operação em produção da interrupção de recuperação não foi confirmada.</span>
+    <strong id="diagram-ai-reply-capability-guardrails">Conferir evidência, frescor e autorização</strong>
+    <span>Texto natural não autoriza postar. Ausência não é zero; conferir antes de enviar.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5h14v11H9l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></span>
-      <strong>Leia quem fala e o pedido</strong>
-      <span>Verifique se é um convite ou interesse em participar, a edição pertinente e o estado da conversa.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Ler contexto e medidas</strong>
+      <span>Conferir falante, pedido, presença e horário.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
-      <strong>Responda com respaldo</strong>
-      <span>Informe apenas o que pode ser feito e confira novamente antes do envio.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Gerar e validar com base</strong>
+      <span>Comparar capacidade, personalidade, similaridade e condições.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-      <strong>Pause se houver dúvida</strong>
-      <span>Não trate uma recuperação com falha ou inválida como consulta concluída; encaminhe a uma pessoa. Limite a espera e evite duplicidades.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Enviar autorizado ou reter</strong>
+      <span>Conferir sessão, frescor e exclusão; não reenviar resultados incertos.</span>
     </li>
   </ol>
 </figure>

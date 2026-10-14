@@ -1,15 +1,15 @@
 ---
 title: "Import Profile Details as a Draft: Compare, Select, and Publish Deliberately"
-description: "A generalized profile-import flow for text, CSV, static HTML, and shared JSON. Learn how it compares current values, lets people replace selected fields or undo changes, and keeps saving separate from publication."
+description: "Import public URLs, text, CSV, HTML and JSON into profile drafts. Covers limited image and audio retrieval, link order, retaining candidates after reread failures, and owner-controlled saving and publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
   title: "Verified implementation; real-account acceptance remains"
-  text: "Text, CSV, static HTML, and shared JSON import have been implemented, integrated, and deployed to production. Real-account acceptance from import through save and publication is incomplete. Automatic service-specific URL retrieval and image or audio migration are outside this completed scope."
+  text: "File inputs and limited public URL, image and audio imports have been implemented, integrated and deployed. Checks cover synthetic interactions and retrieval of selected public media. Real-owner rights review, saving and publication, official login integrations and resolving source-side 429 responses remain separate unfinished work."
 ---
 
 When moving an existing profile into another editor, compare the current values with the import candidates before replacing anything. This anonymized example explains the boundaries between importing data and publishing a profile.
@@ -22,19 +22,58 @@ Manually edit an existing biography, then import a different candidate. Check th
 
 ## Choose supported input formats first
 
-Alongside the original text, CSV, and static HTML paths, the flow now reads a shared JSON file and provides a downloadable template. Parsing pasted content or a file is different from visiting a URL to retrieve its contents. Service-specific export formats, automatic URL retrieval, image and audio migration, dynamic pages, and external-service APIs are not complete.
+Text, CSV, static HTML and shared JSON imports and templates now sit alongside candidate retrieval from supported public profile URLs. HTML is parsed as input data; scripts and original HTML are not executed on the public page. Length, count, format and HTTPS links are validated.
 
-Treat HTML as input data. Do not execute scripts or render the imported HTML itself on the public page. Limit text length, fields, links, and input formats, then convert the source into text candidates suitable for a profile.
+Links retain their order of appearance and balanced parentheses within URLs. A URL inside a Markdown link is not collected twice, while the same URL repeated elsewhere remains a separate candidate. Order and duplicates are not silently tidied without the owner deciding.
 
 ## Review candidates before replacing existing values
 
 Do not publish parsed results immediately. Compare them with current values first. The owner selects fields one by one and can edit candidate values before applying them to the editor. Applying a selected field replaces its current value, so review the differences on every import. The change can also be undone. These controls do not guarantee that conflicts with edits made elsewhere or by another person will be resolved automatically.
 
-## Separate common JSON from service-specific support
+When rereading the same URL or file fails, retain the previous candidates, owner edits, selections, CSV column mappings and downloaded media. Show both the retrieval error and that these are previous candidates. Replace candidates after an input source, method, text or file changes, or after a successful reread. Retention itself never applies, saves or publishes them.
 
-The interface shows support status for 7 activity services. Reading data in the shared format does not mean the flow can fetch a profile directly from each service URL. For unsupported URLs, it directs people to import by pasting content instead. A status list for all 7 services does not mean that dedicated exports or API integrations have been implemented for each one.
+## Distinguish URL retrieval from official integrations
 
-Synthetic data was used to check JSON import, comparison with existing values, applying selected fields, undo, and the mobile layout. Acceptance from import through save and publication in a real account still needs a separate check.
+URL retrieval is limited to known public structures on Profcard, lit.link, POTOFU, HTML Meishi and foriio. Check source identity, indexing exclusions and candidate consistency, and do not expand retrieval to authenticated pages or disallowed destinations. This does not establish official login or API integration with those services, or complete profile migration.
+
+Shared JSON templates and per-service capability information remain available. Unsupported URLs and dynamic content use pasted text or file import. Stop on source responses such as 401, 403 or 429; do not bypass restrictions through another browser or API.
+
+[OWASP: Limit URL destinations and redirects to prevent SSRF](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+
+## Review the retrieved image or audio before selecting it
+
+Alongside GIF profile images, known link cards and public posts can provide portfolio images and titles. Allowed GitHub image, WAV and MP3 links in owner link fields, and public Dropbox single files, have limited support. Initial POTOFU post cards are supported; descriptions, extra pages, embedded players and retrieval of the foriio portfolio gallery are outside the completed scope.
+
+Recheck the source and candidate, then validate host, path, redirects, MIME, file content, size and deadlines. Owners view or listen to the same retrieved bytes and review rights, titles and descriptions. Add only selected attachments to unsaved portfolio entries, prepare them through the existing upload path and use normal saving. Saving rechecks owner, profile, media kind and ready state while preserving manual input and the public snapshot.
+
+<figure class="article-diagram" data-layout="flow" data-tone="violet" data-count="4" aria-labelledby="diagram-profile-import-draft-boundaries">
+  <figcaption>
+    <strong id="diagram-profile-import-draft-boundaries">Boundaries between retrieval, selection, saving and publication</strong>
+    <span>Failed rereads retain previous candidates. Import alone leaves the public snapshot unchanged.</span>
+  </figcaption>
+  <ol class="article-diagram__nodes">
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>Read limited inputs</strong>
+      <span>Validate supported URLs, formats and retrieval limits.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>Compare and select</strong>
+      <span>Review image/audio and preserve manual edits.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Save the draft</strong>
+      <span>Use normal saving for selected fields and prepared attachments.</span>
+    </li>
+    <li>
+      <span class="article-diagram__symbol"><span aria-hidden="true">4</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
+      <strong>Owner publishes</strong>
+      <span>Update the public snapshot in a separate action.</span>
+    </li>
+  </ol>
+</figure>
 
 ## Do not infer qualifications or rights from imported text
 
@@ -50,27 +89,8 @@ A separate editing update, independent of profile import, adds HTTPS links to pu
 
 The related forms also remove an unnecessary title field for collaboration availability slots and fields for private notes. Database changes, CI, production deployment, and screens using verification data were checked. Acceptance by an owner signing in, saving an actual event, and publishing it remains unverified.
 
-<figure class="article-diagram" data-layout="boundary" data-tone="violet" data-count="2" aria-labelledby="diagram-profile-import-draft-boundaries">
-  <figcaption>
-    <strong id="diagram-profile-import-draft-boundaries">Boundaries for imports and calendar links</strong>
-    <span>These are separate editor functions. Logged-in acceptance of saving and publishing remains unverified.</span>
-  </figcaption>
-  <ol class="article-diagram__nodes">
-    <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></svg></span>
-      <strong>Profile import</strong>
-      <span>The user reviews and edits supported formats. Saving and publishing are separate actions.</span>
-    </li>
-    <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M14 15h5m-2-2 2 2-2 2"/></svg></span>
-      <strong>Public calendar link</strong>
-      <span>Open an HTTPS link in a safe new tab. Events without a link remain non-interactive.</span>
-    </li>
-  </ol>
-</figure>
-
 ## What was verified and what comes next
 
-Implementation, integration, and production deployment were confirmed for text, CSV, static HTML, and shared JSON import. An end-to-end test by a real user—from import through editing and saving to checking the published result—has not been completed. The broader idea of automatically building a full profile from an activity-service URL is not complete.
+Implementation, CI and production delivery cover limited URLs, GIFs, portfolio images and audio. Checks include synthetic editing and undo, and retrieval of selected public files. The source POTOFU profile still returns 429; retrieving a CDN file does not prove profile retrieval. Real-owner acceptance from rights review through saving and publication remains incomplete. Checked on 14 October 2026.
 
 For boundaries around published CSS, see [Safe user CSS and versioned public themes](/insights/user-css-versioned-theme-safety/). For login boundaries, see [Session lifecycles across services](/insights/multi-service-session-lifecycle/).

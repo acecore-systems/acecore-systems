@@ -1,8 +1,8 @@
 ---
 title: "R2与restic备份监控：从保存成功到恢复验证"
-description: "分别检查快照新鲜度、仓库完整性与数据恢复，并说明尚未验证的应用恢复范围。"
+description: "使用R2和restic分别验证snapshot新鲜度、完整性和恢复，介绍OS升级后的PostgreSQL版本选择、Samba隔离runtime及DB/LDAP检查和完整灾备的剩余条件。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -36,42 +36,45 @@ callout:
 
 按restic保留策略选择快照，使用`forget`、`prune`、`check`，执行前确认将保留的内容。按对象年龄在R2统一删除可能破坏保留快照所依赖的共享数据。应遵循[保留文档](https://restic.readthedocs.io/en/stable/060_forget.html)，不要与图片分发等其他用途的对象清理混淆。
 
-## 剩余恢复检查
+## OS升级后也要检查恢复测试使用的PostgreSQL
 
-已进行定期运行、监控通知、保留处理和选定数据的提取及完整性检查。所有应用启动、配置和依赖恢复、独立保管凭据的取回仍需端到端验证；恢复时间和可接受的数据损失也需实测。本文不宣称完整灾难恢复或已证实的费用节省。
+OS升级后，恢复测试因引用固定的旧PostgreSQL major路径而失败。改修按数字顺序选择具有完整可执行server工具的最新已安装major，并用同一版本完成初始化、启动、恢复、比对和停止。没有完整工具时直接失败，不连接其他运行中的数据库充当成功。
+
+依据[PostgreSQL SQL dump与恢复文档](https://www.postgresql.org/docs/current/backup-dump.html)检查dump格式与目标兼容性。自动选版不保证所有dump兼容。此次版本选择由自动测试和CI确认，真实R2数据库备份恢复仍是独立验收事项。
+
+## 在隔离Samba中重建runtime并验证启动
+
+即使恢复数据库可读，缺少内部socket所需runtime时隔离DC仍无法启动。分离network、PID、mount命名空间并确认隔离后，只在内部创建专用`/run` tmpfs和`/run/samba`。使用生成的隔离配置和恢复路径，不把测试进程混入生产runtime或监听端口。
+
+通过[官方samba-tool的domain backup restore与dbcheck](https://www.samba.org/samba/docs/current/man-html/samba-tool.8.html)，确认恢复数据库、隔离DC启动和LDAP就绪。此Samba路径已用真实R2备份验证。所有应用登录、服务连接及独立保管凭据的恢复仍属于另外的灾备测试。确认日期：2026年10月14日。
 
 <figure class="article-diagram" data-layout="layers" data-tone="amber" data-count="3" aria-labelledby="diagram-restic-r2-backup-verification">
   <figcaption>
-    <strong id="diagram-restic-r2-backup-verification">从快照新鲜度到完整恢复，分阶段核对证据</strong>
-    <span>能够取回数据，并不证明应用或凭据也已恢复。</span>
+    <strong id="diagram-restic-r2-backup-verification">从snapshot到各服务恢复，再到完整恢复</strong>
+    <span>Samba已用真实R2确认DC、DB和LDAP；PostgreSQL真实验收与完整恢复仍独立。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">1</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4z M3 7l2-4h14l2 4 M8 11h8 M12 11v5"/></svg>
-      </span>
-      <strong>成功快照与新鲜度</strong>
-      <span>检查实际成功快照的时间及相对计划的延迟。仅启动作业不算成功。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
+      <strong>成功snapshot与新鲜度</strong>
+      <span>记录真实保存成功和检查范围。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">2</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 6h14v13H5z M8 10h8 M8 14l2 2 4-4"/></svg>
-      </span>
-      <strong>完整性与隔离恢复</strong>
-      <span>记录检查范围，在独立位置运行 restore --verify，并核对目标文件与 hash，然后再检查保留策略和 prune。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
+      <strong>重建隔离环境</strong>
+      <span>检查DB版本、network/PID/mount及runtime。</span>
     </li>
     <li>
-      <span class="article-diagram__symbol">
-        <span aria-hidden="true">3</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 8h14v12H5z M8 8V5h8v3 M9 14h.01 M12 14h.01 M15 14h.01"/></svg>
-      </span>
-      <strong>完整灾难恢复</strong>
-      <span>所有应用启动、依赖数据和单独保存的凭据恢复仍未验证。恢复时间和可接受的数据损失也未测量。</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>验证服务启动</strong>
+      <span>验证Samba DB与LDAP，全部应用恢复未实证。</span>
     </li>
   </ol>
 </figure>
+
+## 剩余恢复检查
+
+已进行定期运行、监控通知、保留处理和选定数据的提取及完整性检查。所有应用启动、配置和依赖恢复、独立保管凭据的取回仍需端到端验证；恢复时间和可接受的数据损失也需实测。本文不宣称完整灾难恢复或已证实的费用节省。
 
 ## 2026年10月6日补充：过期lock与恢复检查占用
 

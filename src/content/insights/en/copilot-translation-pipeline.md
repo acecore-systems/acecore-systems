@@ -1,8 +1,8 @@
 ---
 title: "How to Run a Multilingual Blog with Sveltia CMS"
-description: "To start a multilingual blog workflow, generate localized HTML from a representative article’s translations and check body, title, description and internal links."
+description: "Publish eight static translations from Japanese source. Covers OpenAI Batch protection for numbers, URLs and code, validating all results before writing, translation PRs, CI and GitHub-connected publication."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-15T00:00:00+09:00"
 author: gui
 tags: ["Technology", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -12,24 +12,24 @@ callout:
   text: "Browser translation and translation widgets can help readers, but they do not automatically create localized URLs, titles, descriptions, internal links, RSS feeds, sitemaps, or hreflang clusters. If search engines need to see each language as a real page, publish translated static HTML."
 processFigure:
   eyebrow: Translation Workflow
-  title: From Sveltia CMS to Translation PRs (June 2026 workflow)
-  description: Keep Japanese as the source of truth and move translation work into GitHub pull requests.
+  title: "From Japanese source to a validated translation PR"
+  description: "Restore protected numbers, URLs and code; validate all results before writing."
   variant: inline
   steps:
-    - title: Edit Japanese
-      description: Update `src/content/blog/{slug}.md` from Sveltia CMS or Markdown.
+    - title: "Edit Japanese source"
+      description: "Use current main and group consecutive edits."
       icon: i-lucide-file-pen-line
       accent: brand
-    - title: Detect CMS commits
-      description: "Use a `cms:` prefix and changed paths as the GitHub Actions contract."
-      icon: i-lucide-git-commit-horizontal
+    - title: "Protect and submit Batch"
+      description: "Tokenize numbers, URLs, placeholders and code."
+      icon: i-lucide-shield-check
       accent: amber
-    - title: Create translation PRs
-      description: Pass the source path, locale list, and translation rules to GitHub Copilot.
+    - title: "Validate all, then write"
+      description: "Check sourceHash, tokens and content; record failures and stop."
       icon: i-lucide-languages
       accent: emerald
-    - title: Build and merge
-      description: Merge only after Astro build, search index generation, and link checks pass.
+    - title: "PR, CI and publication"
+      description: "Publish through GitHub integration and review the content."
       icon: i-lucide-check-check
       accent: slate
 compareTable:
@@ -55,7 +55,7 @@ checklist:
       checked: true
     - text: "Keep translated slugs aligned with the Japanese source"
       checked: true
-    - text: "Fix the trigger contract for translation workflows, such as `cms:` commits"
+    - text: "Trigger translation from Japanese source updates on main"
       checked: true
     - text: "Preserve URLs, image paths, code blocks, and tag IDs during translation"
       checked: true
@@ -87,32 +87,38 @@ faq:
 
 To start a multilingual blog workflow, generate localized HTML from a representative article’s translations and check body, title, description and internal links. Associate only existing language versions using [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions), accepting translation-service success separately from completed public pages.
 
-> **Update, September 26, 2026:** The Copilot-based translation PR steps below document the June 2026 rollout. Translation generation has since moved to OpenAI Batch. Japanese remains the source of truth, and translated static pages remain the publishing format.
+> **Checked on 14 October 2026:** Current translation generation uses OpenAI Batch. The Copilot steps below remain as the June 2026 rollout record. The current diagrams and workflow now cover source protection and validation of every result before writing.
 
-## Current translation workflow (September 2026)
+## Current workflow: protection, validation and PRs
 
-When a Japanese article or UI source changes on main, the [Batch submission workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/submit-openai-translation-batch.yml) starts. It waits 15 minutes for follow-up edits, checks the current main, then submits the translation. The [collection workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/collect-openai-translation-batch.yml) compares results with the current Japanese sourceHash, discards stale results, and creates a translation PR. The [merge workflow](https://github.com/acecore-systems/acecore-net/blob/main/.github/workflows/merge-translation-pr.yml) enables automatic merging only for eligible PRs. Terminology, links, facts, and naturalness still need review.
+On Systems, updates to Japanese articles or UI source on main wait 15 minutes before the [submission workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/submit-openai-translation-batch.yml) uses current main. The [collection workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/collect-openai-translation-batch.yml) is scheduled at minutes 2, 17, 32 and 47 each hour, checks the current sourceHash and creates a translation PR. The [merge workflow](https://github.com/acecore-systems/acecore-systems/blob/main/.github/workflows/merge-openai-translation-pr.yml) advances qualifying PRs through CI and the existing GitHub-connected publication path. Scheduled time, Batch completion, merge and production publication are separate states.
+
+Before sending, replace numbers, URLs, existing placeholders, inline code and fenced code with unique tokens. Restore the original text from the matching Japanese source during collection; reject missing, duplicated, altered or added tokens. This protects source details from model changes while retaining post-restoration validation and content review.
+
+The [OpenAI Batch documentation](https://developers.openai.com/api/docs/guides/batch) says output order may differ from input order, so use `custom_id` to match locale, source path and sourceHash. The [protection and collection change](https://github.com/acecore-systems/acecore-systems/pull/131) validates every result in the Batch before starting writes. A later invalid, duplicate or stale-source result cannot leave earlier translations applied. Failures record locale, source path, Batch ID and cause in an artifact. This is not a filesystem transaction guarantee against a disk failure during writing.
+
+The change checked 27 automation tests and an offline protection/restoration round trip for 55 Japanese sources × 8 locales, or 440 results. This was not a fresh full translation through the model API. Existing translated articles are revised with Japanese in the same PR, then the formatted source hash is updated. Never update only the hash while leaving translated content unchanged.
 
 <figure class="article-diagram" data-layout="flow" data-tone="green" data-count="3" aria-labelledby="diagram-copilot-translation-pipeline">
   <figcaption>
-    <strong id="diagram-copilot-translation-pipeline">Check translation results against the current Japanese source</strong>
-    <span>Exclude Batch results from stale sources. Even eligible PRs need checks for terminology, links, facts, and fluency.</span>
+    <strong id="diagram-copilot-translation-pipeline">Match protected source and validate every result</strong>
+    <span>Validation failure must not update only some locales. Batch completion is not publication.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h6"/></svg></span>
-      <strong>Japanese source updated</strong>
-      <span>A source change on main triggers a translation Batch.</span>
+      <strong>Protect the source</strong>
+      <span>Unique tokens for numbers, URLs and code.</span>
     </li>
     <li>
       <span class="article-diagram__symbol"><span aria-hidden="true">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10l2 2 3-4"/></svg></span>
-      <strong>Compare sourceHash</strong>
-      <span>At collection, exclude results that no longer match the current source.</span>
+      <strong>Validate current source and all results</strong>
+      <span>Match custom_id, sourceHash and tokens, then restore.</span>
     </li>
     <li>
-      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 4v6a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v4"/><path d="M18 4v3a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3v7"/></svg></span>
-      <strong>Integrate the translation PR</strong>
-      <span>Validation can enable auto-merge; content still needs a separate review.</span>
+      <span class="article-diagram__symbol"><span aria-hidden="true">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <strong>Send the PR through publication</strong>
+      <span>Write after validation, then CI and content review.</span>
     </li>
   </ol>
 </figure>
