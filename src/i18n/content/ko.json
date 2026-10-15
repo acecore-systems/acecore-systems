@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "설계 철학",
     "philosophyTitle": "보이는 부분과 보이지 않는 부분을, 같은 정밀도로 설계합니다.",
-    "philosophyLead": "고객과의 접점부터 업무를 뒷받침하는 체계와 지속 가능한 운영까지. 현장·체계·운영을 분리하지 않고, 같은 정밀도로 정비합니다.",
+    "philosophyLead": "Acecore는 ‘세계를 다음 단계로’라는 이념 아래 본질적이지 않은 부담을 줄이고 하고 싶은 일에 대한 도전을 뒷받침하는 사회를 지향합니다. Systems는 현장·시스템·운영을 하나로 정비하고 기술로 그 첫걸음을 돕습니다.",
     "designPrinciples": [
       {
         "title": "현장에서 시작합니다",
@@ -250,7 +250,8 @@
     "ctaEyebrow": "대화로 시작하기",
     "ctaTitle": "무엇을 만들지 정하기 전에, 지금의 업무를 들려주세요.",
     "ctaBody": "요구사항이 아직 완전히 정해지지 않은 단계에서도 상담할 수 있습니다. 현재 업무의 흐름, 제약 조건, 우선순위부터 함께 정리합니다.",
-    "ctaLabel": "상담 방법 선택하기"
+    "ctaLabel": "상담 방법 선택하기",
+    "philosophyLinkLabel": "Acecore의 기업 이념과 비전"
   },
   "itAdvisor": {
     "title": "IT 자문 엔지니어",
@@ -1494,7 +1495,9 @@
         "title": "공개·개선",
         "body": "공개 후의 버그 대응, 추가 요구, 운영 개선까지 계속 지원합니다."
       }
-    ]
+    ],
+    "designContextNote": "Acecore Design 부문의 구상·준비 상황과 현재 제작 상담 접수는 별개입니다. 이 페이지에서 소개하는 디자인·크리에이티브 제작 상담은 Systems에서 접수합니다.",
+    "designContextLinkLabel": "Acecore Design 부문 안내"
   },
   "workDetail": {
     "title": "Acecore 공식 사이트의 기능 확장과 운영 기반",

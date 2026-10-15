@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "设计理念",
     "philosophyTitle": "看得见的部分与看不见的部分，都以同样的精度打磨。",
-    "philosophyLead": "从客户触点，到支撑业务的系统，再到让业务持续运转的运营方式。我们不把业务现场、系统与运营割裂开来，而是以同样的精度一体打磨。",
+    "philosophyLead": "Acecore以“让世界迈向下一阶段”为理念，致力于减少非本质的负担，支持人们挑战自己想做的事。Systems将业务现场、系统与运营一体化整合，以技术支持迈出第一步。",
     "designPrinciples": [
       {
         "title": "从业务现场开始",
@@ -250,7 +250,8 @@
     "ctaEyebrow": "从一次沟通开始",
     "ctaTitle": "在决定要做什么之前，先让我们了解您目前的业务。",
     "ctaBody": "即使需求尚未完全确定，也可以咨询。我们会从现状流程、限制条件和优先级出发，一起梳理清楚。",
-    "ctaLabel": "选择咨询方式"
+    "ctaLabel": "选择咨询方式",
+    "philosophyLinkLabel": "Acecore的企业理念与愿景"
   },
   "itAdvisor": {
     "title": "IT 顾问工程师",
@@ -1479,7 +1480,9 @@
         "title": "发布/改进",
         "body": "发布后我们将继续为您提供支持，包括故障排除、其他请求和操作改进。"
       }
-    ]
+    ],
+    "designContextNote": "Acecore Design部门的筹备情况与目前受理的制作咨询是分开的。本页面介绍的设计与创意制作咨询由Systems受理。",
+    "designContextLinkLabel": "了解Acecore Design部门"
   },
   "workDetail": {
     "title": "Acecore 官方网站的功能扩展与运营基础",

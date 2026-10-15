@@ -4,6 +4,7 @@ import ServiceVisual from "../components/ServiceVisual.astro";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
+import site from "../data/site.json";
 
 interface Props {
   locale?: Locale;
@@ -157,6 +158,19 @@ const serviceDetailGroups = [
                     <li>{example}</li>
                   ))}
                 </ul>
+                {service.id === "design" && (
+                  <>
+                    <p class="service-row__description">
+                      {data.designContextNote}
+                    </p>
+                    <a
+                      class="service-row__detail"
+                      href={`${site.acecoreUrl}${getLocalizedUrl("/services/", locale)}#design`}
+                    >
+                      {data.designContextLinkLabel}
+                    </a>
+                  </>
+                )}
                 {service.detailUrl && (
                   <a
                     class="service-row__detail"

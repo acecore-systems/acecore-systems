@@ -35,7 +35,7 @@
   ],
   "philosophyEyebrow": "DESIGN PHILOSOPHY",
   "philosophyTitle": "見える部分と、見えない部分を、同じ精度で。",
-  "philosophyLead": "顧客との接点から、業務を支える仕組み、続けるための運用まで。現場・仕組み・運用を切り離さず、同じ精度で整えます。",
+  "philosophyLead": "Acecoreは「世界を次のステージへ」を掲げ、本質的でない負担を減らし、「やりたいこと」への挑戦を後押しする社会を目指しています。Systemsは、現場・仕組み・運用を一体で整え、技術でその一歩を支えます。",
   "designPrinciples": [
     {
       "number": "01",
@@ -92,5 +92,6 @@
   "ctaTitle": "作るものより先に、今の業務を聞かせてください。",
   "ctaBody": "要件が固まりきっていない段階でも相談できます。現状の流れ、制約、優先順位から一緒に整理します。",
   "ctaLabel": "相談方法を選ぶ",
-  "ctaHref": "/guide/"
+  "ctaHref": "/guide/",
+  "philosophyLinkLabel": "Acecoreの企業理念・目指す姿"
 }

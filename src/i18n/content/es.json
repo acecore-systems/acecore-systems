@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "FILOSOFÍA DE DISEÑO",
     "philosophyTitle": "Lo visible y lo invisible, con la misma precisión.",
-    "philosophyLead": "Desde los puntos de contacto con los clientes hasta los sistemas que sostienen las operaciones y la gestión necesaria para mantenerlas en marcha. No separamos la realidad operativa, los sistemas ni la forma de gestionarlos: damos forma a todo con la misma precisión.",
+    "philosophyLead": "La filosofía de Acecore es «Llevar el mundo a la siguiente etapa»: reducir las cargas no esenciales y ayudar a las personas a perseguir sus aspiraciones. Systems apoya ese primer paso con tecnología, integrando el trabajo, los sistemas y su operación.",
     "designPrinciples": [
       {
         "title": "Empezar por la realidad operativa",
@@ -250,7 +250,8 @@
     "ctaEyebrow": "EMPECEMOS CON UNA CONVERSACIÓN",
     "ctaTitle": "Antes de decidir qué construir, cuéntenos cómo funcionan hoy sus operaciones.",
     "ctaBody": "Puede consultarnos incluso si los requisitos aún no están completamente definidos. Juntos ponemos en orden el flujo actual, las restricciones y las prioridades.",
-    "ctaLabel": "Elegir una forma de consulta"
+    "ctaLabel": "Elegir una forma de consulta",
+    "philosophyLinkLabel": "Filosofía y visión de Acecore"
   },
   "itAdvisor": {
     "title": "Ingeniero asesor de IT",
@@ -1504,7 +1505,9 @@
         "title": "Lanzamiento y mejora",
         "body": "Seguimos apoyando la resolución de fallos, nuevas solicitudes y mejora operativa."
       }
-    ]
+    ],
+    "designContextNote": "La preparación del departamento Acecore Design es independiente de las consultas sobre los servicios creativos actualmente disponibles. Systems recibe las consultas sobre el diseño y la producción creativa descritos en esta página.",
+    "designContextLinkLabel": "Sobre el departamento Acecore Design"
   },
   "workDetail": {
     "title": "Funciones y base operativa del sitio corporativo de Acecore",

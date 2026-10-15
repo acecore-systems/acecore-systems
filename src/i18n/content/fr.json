@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "PHILOSOPHIE DE CONCEPTION",
     "philosophyTitle": "La même précision pour ce qui se voit comme pour ce qui ne se voit pas.",
-    "philosophyLead": "Des points de contact avec vos clients aux systèmes qui soutiennent votre activité, en passant par leur fonctionnement au quotidien. Nous ne dissocions pas la réalité du terrain, les systèmes et leur exploitation : nous les structurons avec le même niveau de précision.",
+    "philosophyLead": "La philosophie d’Acecore est de « Faire passer le monde à l’étape suivante » : réduire les contraintes non essentielles et aider chacun à poursuivre ses aspirations. Systems soutient ce premier pas par la technologie, en reliant le travail, les systèmes et leur exploitation.",
     "designPrinciples": [
       {
         "title": "Commencer par le terrain",
@@ -250,7 +250,8 @@
     "ctaEyebrow": "COMMENÇONS PAR EN PARLER",
     "ctaTitle": "Avant de définir ce qu’il faut construire, parlez-nous de votre fonctionnement actuel.",
     "ctaBody": "Vous pouvez nous consulter même si les exigences ne sont pas encore totalement définies. Nous clarifions ensemble vos processus actuels, vos contraintes et vos priorités.",
-    "ctaLabel": "Choisir un mode de contact"
+    "ctaLabel": "Choisir un mode de contact",
+    "philosophyLinkLabel": "Philosophie et vision d’Acecore"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer : conseil IT et déploiement",
@@ -1509,7 +1510,9 @@
         "title": "Lancement et amélioration",
         "body": "Après le lancement, nous continuons à vous accompagner pour résoudre les problèmes, traiter les demandes supplémentaires et améliorer les opérations."
       }
-    ]
+    ],
+    "designContextNote": "La préparation du pôle Acecore Design est distincte des prestations créatives actuellement ouvertes aux demandes. Systems reçoit les demandes concernant le design et la création présentés sur cette page.",
+    "designContextLinkLabel": "À propos du pôle Acecore Design"
   },
   "workDetail": {
     "title": "Évolution fonctionnelle et socle opérationnel du site d’entreprise Acecore",
