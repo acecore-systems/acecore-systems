@@ -9,6 +9,7 @@ import ServicesPage from "../services.astro";
 import DevelopmentPage from "../services/development.astro";
 import ItAdvisorPage from "../services/it-advisor.astro";
 import OperationsPage from "../services/operations.astro";
+import SecurityPage from "../services/security.astro";
 import SiteFunctionsPage from "../services/site-functions.astro";
 import SiteQualityPage from "../services/site-quality.astro";
 import WorksPage from "../works.astro";
@@ -21,6 +22,7 @@ const pages = {
   development: DevelopmentPage,
   "it-advisor": ItAdvisorPage,
   operations: OperationsPage,
+  security: SecurityPage,
   "site-functions": SiteFunctionsPage,
   "site-quality": SiteQualityPage,
   pricing: PricingPage,
@@ -46,6 +48,7 @@ export function getStaticPaths() {
     { path: "services/development", pageKey: "development" },
     { path: "services/it-advisor", pageKey: "it-advisor" },
     { path: "services/operations", pageKey: "operations" },
+    { path: "services/security", pageKey: "security" },
     { path: "services/site-functions", pageKey: "site-functions" },
     { path: "services/site-quality", pageKey: "site-quality" },
     { path: "pricing", pageKey: "pricing" },

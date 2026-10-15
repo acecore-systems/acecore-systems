@@ -44,6 +44,7 @@ const sourceTargetPaths = new Map([
     "src/data/service-details/operations.json",
     ["serviceDetails", "operations"],
   ],
+  ["src/data/service-details/security.json", ["serviceDetails", "security"]],
   [
     "src/data/service-details/site-functions.json",
     ["serviceDetails", "siteFunctions"],

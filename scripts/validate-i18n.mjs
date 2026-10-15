@@ -52,6 +52,7 @@ const fixedRoutes = [
   "/services/development/",
   "/services/it-advisor/",
   "/services/operations/",
+  "/services/security/",
   "/services/site-functions/",
   "/services/site-quality/",
   "/pricing/",
@@ -72,6 +73,7 @@ const sourceFiles = {
   serviceDetails: {
     development: "src/data/service-details/development.json",
     operations: "src/data/service-details/operations.json",
+    security: "src/data/service-details/security.json",
     siteFunctions: "src/data/service-details/site-functions.json",
     siteQuality: "src/data/service-details/site-quality.json",
   },

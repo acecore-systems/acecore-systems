@@ -1,7 +1,7 @@
 {
   "contact": {
     "title": "Kontakt",
-    "description": "Wir beraten zu IT-Beratung, AI-Einführung, Deployment, Geschäftssystemen, Webanwendungen, Design und Kreativleistungen sowie zur Automatisierung bestehender Abläufe – auch bevor die Anforderungen vollständig feststehen.",
+    "description": "Wir beraten zu IT-Beratung, AI-Einführung, Deployment, Geschäftssystemen, Webanwendungen, Design und Kreativleistungen sowie zur Automatisierung bestehender Abläufe – auch bevor die Anforderungen vollständig feststehen. Wir bieten auch Web- und API-Sicherheitsprüfungen und Unterstützung bei der Behebung an.",
     "heroTitle": "Sie können uns ansprechen, auch wenn die Anforderungen noch nicht feststehen.",
     "heroLead": "Beschreiben Sie Ihren aktuellen Ablauf, die Schwierigkeiten, die eingesetzten Werkzeuge und den gewünschten Zeitraum.",
     "formLead": "Erstgespräch und erste Kosteneinschätzung sind kostenlos. Wir unterstützen auch bei der Klärung vor einem verbindlichen Angebot. In der Regel antworten wir innerhalb von 1–2 Werktagen.",
@@ -241,6 +241,10 @@
       {
         "title": "Herausforderungen klären, bevor daraus Anforderungen werden",
         "body": "Wir möchten Ziele, Nutzer, Rahmenbedingungen und Prioritäten ordnen und ein realistisches Vorgehen festlegen."
+      },
+      {
+        "title": "Die Sicherheit Ihrer App prüfen und verbessern",
+        "body": "Hilfe bei Prüfungen vor Veröffentlichung, Web-/API-Prüfungen und Korrekturen nach einem Bericht."
       }
     ],
     "ctaEyebrow": "MIT EINEM GESPRÄCH BEGINNEN",
@@ -623,6 +627,26 @@
         "label": "Anforderungen Organisation/technische Beratung",
         "price": "Individuelles Angebot",
         "note": "Wir unterstützen auch die Arbeitsorganisation vor der Entwicklung, die Untersuchung bestehender Systeme und die Überprüfung der Konfiguration."
+      },
+      {
+        "label": "Prüfung vor Veröffentlichung",
+        "price": "Individuelles Angebot",
+        "note": "Architektur, öffentliche Erreichbarkeit, Geheimnisse, Abhängigkeiten und Authentifizierung. Angebot nach Prüfung der Unterlagen und Umgebung."
+      },
+      {
+        "label": "Web- und API-Schwachstellenprüfung",
+        "price": "Individuelles Angebot",
+        "note": "Vereinbarte automatische und manuelle Prüfungen. Machbarkeit und Kosten nach Funktionen, Anfragen, Rechten und Umgebungen."
+      },
+      {
+        "label": "Korrekturen und Nachprüfung",
+        "price": "Individuelles Angebot",
+        "note": "Korrekturen, Tests, Veröffentlichung und Nachprüfung, auch nach fremden Berichten. Umfang, Fristen und Anzahl der Nachprüfungen werden im Angebot vereinbart."
+      },
+      {
+        "label": "Laufende Sicherheitsunterstützung",
+        "price": "Individuelles Angebot",
+        "note": "Updates, Rechte, Änderungskontrollen und Beratung. Ziele, Häufigkeit, Stunden und Zusatzleistungen werden individuell vereinbart."
       }
     ]
   },
@@ -1246,11 +1270,137 @@
       ],
       "ctaTitle": "Prioritäten für die Website-Qualität besprechen",
       "ctaBody": "Nennen Sie Ziel-URL und Ihre Fragen zu Suche, Geschwindigkeit, Bedienung oder Sicherheit."
+    },
+    "security": {
+      "title": "Web- und API-Sicherheitsprüfung und Unterstützung bei der Behebung",
+      "description": "Für kleine Unternehmen, kleine SaaS-Teams und Eigentümer von mit AI oder extern entwickelten Web-Apps: Prüfung vor Veröffentlichung, Web-/API-Schwachstellenprüfung, Behebung und laufende Unterstützung. Machbarkeit und Umfang werden vor einem individuellen Angebot geklärt.",
+      "heroEyebrow": "Security / Prüfung und Verbesserung",
+      "heroTitle": "Von Fragen vor der Veröffentlichung\nbis zur Verbesserung nach der Prüfung.",
+      "heroLead": "Web-Apps aus eigener Entwicklung, mit AI oder von externen Entwicklern sicherer betreiben. Wir klären den Prüfbedarf und kombinieren Prüfung, Korrekturen und Nachprüfung passend zu Ihren Anforderungen.",
+      "visual": {
+        "alt": "Eine verantwortliche Person und ein Ingenieur prüfen dieselbe Website auf einem Computer und einem Smartphone",
+        "caption": "Wir schauen uns gemeinsam den Bildschirm des Benutzers und die Messergebnisse an und entscheiden über Prioritäten für Verbesserungen."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Betriebsschreibtisch mit Überwachungsbildschirmen, Backup-Geräten, Änderungsbestätigungsblättern und Notizbüchern zur Aufzeichnung von Fehlern",
+          "caption": "Wir klären Architektur, Rechte und Änderungshistorie, um Prüfumfang und Verantwortung festzulegen."
+        },
+        "process": {
+          "alt": "Verantwortlicher und Ingenieur überprüfen die überarbeitete Website erneut auf PC und Smartphone",
+          "caption": "Überprüfen Sie die korrigierte Anzeige und Bedienung auf mehreren Geräten und nutzen Sie sie für nächste Verbesserungen."
+        }
+      },
+      "indexSummary": "Von der Architekturprüfung vor Veröffentlichung über Web-/API-Prüfungen bis zu Korrekturen und Nachprüfung.",
+      "indexTopics": [
+        "Prüfung vor Veröffentlichung",
+        "Web- und API-Prüfung",
+        "Umsetzung von Korrekturen",
+        "Laufende Unterstützung"
+      ],
+      "introTitle": "Die App für Veröffentlichung und Betrieb vorbereiten.",
+      "introBody": "Unterstützung für kleine Unternehmen, kleine SaaS-Teams und andere Eigentümer von Web-Apps. Neben funktionierenden Oberflächen prüfen wir Anmeldung, Rechte, Datenverarbeitung und öffentliche Konfiguration und priorisieren nach Geschäftsauswirkung.",
+      "challenges": [
+        {
+          "title": "Unklar, ob die App veröffentlicht werden kann",
+          "body": "Sie möchten Architektur, öffentliche Erreichbarkeit und Geheimnisverwaltung einer mit AI oder extern erstellten App prüfen lassen."
+        },
+        {
+          "title": "Sorgen um Rechte und API nach der Anmeldung",
+          "body": "Sie möchten prüfen, ob jeder Nutzer nur auf die vorgesehenen Informationen und Aktionen zugreifen kann."
+        },
+        {
+          "title": "Ein Prüfbericht liegt vor, aber Korrekturen stocken",
+          "body": "Sie möchten Befunde, auch von anderen Anbietern, priorisieren und Korrekturen, Tests und die Kontrolle nach Veröffentlichung voranbringen."
+        }
+      ],
+      "offeringsTitle": "4 Unterstützungsangebote für Ihre aktuelle Phase",
+      "offeringsLead": "Einzeln oder kombiniert nutzbar. Wir prüfen Technik und Anforderungen, klären Machbarkeit und Umfang und erstellen danach ein Angebot.",
+      "offerings": [
+        {
+          "title": "Prüfung vor Veröffentlichung",
+          "body": "Wir prüfen Architektur und Veröffentlichungsweg und benennen Konfigurations- und Betriebsfragen, die vor dem Start zu klären sind.",
+          "includes": [
+            "Architektur, öffentliche Erreichbarkeit und externe Dienste",
+            "Verwaltung von Geheimnissen und Abhängigkeiten",
+            "Authentifizierung, Rechte und Veröffentlichungsabläufe"
+          ],
+          "priceNote": "Angebot nach vorhandenen Unterlagen und Zielumgebung."
+        },
+        {
+          "title": "Web- und API-Schwachstellenprüfung",
+          "body": "Im vereinbarten Umfang verbinden wir automatische Prüfungen und manuelle Kontrollen von Web-Apps und API. Die Machbarkeit je Ziel wird bei der Angebotserstellung geklärt.",
+          "includes": [
+            "Authentifizierung, Autorisierung und Sitzungsverwaltung",
+            "Eingabeverarbeitung, API und Geschäftslogik",
+            "Bericht mit geprüften, ungeprüften und ausgeschlossenen Bereichen"
+          ],
+          "priceNote": "Angebot nach Prüfung von Funktionen, Anfragen, Rechten und Umgebungen."
+        },
+        {
+          "title": "Korrekturen und Nachprüfung",
+          "body": "Auf Basis der Befunde setzen wir vereinbarte Korrekturen, Tests, Veröffentlichung und Nachprüfung um. Auch zur Verbesserung nach Berichten anderer Anbieter können Sie uns ansprechen.",
+          "includes": [
+            "Korrekturplan nach Auswirkung und Priorität",
+            "Code- und Konfigurationsänderungen mit Funktionstests",
+            "Veröffentlichungsabläufe und Prüfung der Korrekturen"
+          ],
+          "priceNote": "Umfang, Fristen und Anzahl der Nachprüfungen werden im Angebot vereinbart."
+        },
+        {
+          "title": "Laufende Sicherheitsunterstützung",
+          "body": "Bei Updates und Funktionsänderungen prüfen wir Abhängigkeiten, Rechte, Einstellungen und Betriebsabläufe. Beratungshäufigkeit und Arbeitsstunden werden für die laufende Unterstützung vereinbart.",
+          "includes": [
+            "Updates von Abhängigkeiten und Rechteprüfung",
+            "Prüfpunkte bei Änderungen und Verbesserungsvorschläge",
+            "Beratung und Arbeit innerhalb vereinbarter Grenzen"
+          ],
+          "priceNote": "Ziele, Häufigkeit, Arbeitsstunden und Bedingungen für Zusatzleistungen werden individuell festgelegt."
+        }
+      ],
+      "processTitle": "Umfang vereinbaren und Ergebnisse sowie offene Punkte teilen.",
+      "processLead": "Penetrationstests, 24-Stunden-Überwachung und Notfallreaktion bei Vorfällen liegen außerhalb des Standardumfangs. Die Machbarkeit wird bei der Anfrage geprüft.",
+      "process": [
+        {
+          "title": "Beratung und Zielklärung",
+          "body": "Beschreiben Sie App, Nutzer, Anliegen und Zeitplan. Fragen Sie nur zu Systemen an, die Ihnen gehören oder die Sie verwalten dürfen."
+        },
+        {
+          "title": "Schriftliche Umfangsvereinbarung",
+          "body": "Wir vereinbaren Ziele, Umfang, Umgebungen, Dauer und notwendige Rechte schriftlich. Testumgebung und mögliche Auswirkungen werden vor Beginn geklärt."
+        },
+        {
+          "title": "Prüfung und Bericht",
+          "body": "Der Bericht enthält Prüfumfang, ungeprüfte und ausgeschlossene Bereiche, Auswirkungen, Reproduktionsbedingungen und Prioritäten. Wir teilen Ergebnisse und Verbesserungsplan."
+        },
+        {
+          "title": "Korrekturen und Nachprüfung",
+          "body": "Korrekturen und Nachprüfungen erfolgen mit bei Angebotserstellung vereinbartem Umfang, Fristen und Anzahl. Wir klären auch offene Punkte und künftige Prüfungen."
+        }
+      ],
+      "resourcesTitle": "Technische Hinweise zu sicherer Veröffentlichung und Betrieb",
+      "resourcesLead": "Wir erläutern Umsetzungsentscheidungen zu Auslieferungseinstellungen, Rechten und Veröffentlichungsabläufen.",
+      "resources": [
+        {
+          "title": "Sichere statische Site-Bereitstellung mit Cloudflare Pages erreicht",
+          "description": "Verwaltet Sicherheitsheader, CSP, Cache und Seitenbereitstellungseinstellungen."
+        },
+        {
+          "title": "Sveltia CMS Installationshandbuch",
+          "description": "Wir haben den Betriebsablauf und die Gestaltung der Befugnisse von der Bearbeitung bis zur Bestätigung, PR und Veröffentlichung zusammengefasst."
+        },
+        {
+          "title": "Gesamtdesign zur Verbesserung der Funktionalität der offiziellen Website mit Astro + Cloudflare",
+          "description": "Es fasst die Idee der Trennung von statischer Veröffentlichungsinfrastruktur, dynamischen Funktionen, CMS und Bestätigungs-/Veröffentlichungsfluss zusammen."
+        }
+      ],
+      "ctaTitle": "Anliegen und Prüfbedarf besprechen",
+      "ctaBody": "Beschreiben Sie die App und Ihre Anliegen. Passwörter, API-Schlüssel und Produktionsdaten sind im ersten Formular nicht erforderlich."
     }
   },
   "services": {
     "title": "Leistungen",
-    "description": "Leistungen von Acecore Systems: IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Entwicklung von Geschäftssystemen und Webanwendungen, Administrationsoberflächen, Design und Kreativleistungen, CMS, Suche, Datennutzung und Modernisierung bestehender Systeme.",
+    "description": "Leistungen von Acecore Systems: IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Entwicklung von Geschäftssystemen und Webanwendungen, Administrationsoberflächen, Design und Kreativleistungen, CMS, Suche, Datennutzung und Modernisierung bestehender Systeme. Wir bieten auch Web- und API-Sicherheitsprüfungen und Unterstützung bei der Behebung an.",
     "heroTitle": "Von der Klärung des Problems\nbis zu Entwicklung, Design und Betriebsverbesserung.",
     "heroLead": "Wir liefern nicht nur einmalig, sondern gestalten auch den Weg, auf dem die Lösung im Arbeitsalltag ankommt und weiter verbessert werden kann.",
     "entryPoints": [
@@ -1330,6 +1480,15 @@
           "Legacy-Systemorganisation und Phasenmigration",
           "Geschwindigkeitsverbesserung, Verbesserung der Benutzeroberfläche, Fehleruntersuchung",
           "GitHub-basierte Entwicklung und Wartung des Betriebsablaufs"
+        ]
+      },
+      {
+        "title": "Web- und API-Sicherheitsprüfung und Unterstützung bei der Behebung",
+        "body": "Für Web-Apps kleiner Unternehmen und kleiner SaaS-Teams unterstützen wir Prüfung vor Veröffentlichung, Web-/API-Prüfung, Korrekturen und Nachprüfung im vereinbarten Umfang.",
+        "examples": [
+          "Prüfung vor Veröffentlichung von mit AI oder extern erstellten Apps",
+          "Schwachstellenprüfung von Authentifizierung, Rechten und API",
+          "Korrekturen und Nachprüfung auf Basis fremder Prüfberichte"
         ]
       }
     ],

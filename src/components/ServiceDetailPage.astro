@@ -19,7 +19,7 @@ interface Props {
   data: ServiceDetail;
   canonicalPath: string;
   serviceKey: string;
-  consultationServiceKey?: "business-system" | "it-advisor";
+  consultationServiceKey?: "business-system" | "it-advisor" | "security";
   locale?: Locale;
 }
 
@@ -37,6 +37,7 @@ const {
   siteFunctions: localizedSiteFunctions,
   siteQuality,
   operations,
+  security,
 } = content.serviceDetails;
 const text = getUi(locale);
 const canonicalPath = getLocalizedUrl(canonicalInput, locale);
@@ -62,6 +63,10 @@ const serviceIndex = [
   {
     href: getLocalizedUrl("/services/operations/", locale),
     data: operations,
+  },
+  {
+    href: getLocalizedUrl("/services/security/", locale),
+    data: security,
   },
 ];
 const relatedServices = serviceIndex.filter(
@@ -344,7 +349,7 @@ const jsonLd = [
           "detail-related-list",
           {
             "detail-related-list--three": relatedServices.length === 3,
-            "detail-related-list--four": relatedServices.length === 4,
+            "detail-related-list--grid": relatedServices.length >= 4,
           },
         ]}
       >
@@ -384,24 +389,26 @@ const jsonLd = [
 <style is:global>
   @layer theme, base, components, utilities;
   @layer components {
-    .detail-related-list--four .detail-related {
+    .detail-related-list--grid .detail-related {
       border-bottom: 1px solid var(--line);
     }
 
-    .detail-related-list--four .detail-related:nth-child(even) {
+    .detail-related-list--grid .detail-related:nth-child(even) {
       border-right: 0;
     }
 
-    .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+    .detail-related-list--grid .detail-related:last-child,
+    .detail-related-list--grid
+      .detail-related:nth-last-child(2):nth-child(odd) {
       border-bottom: 0;
     }
 
     @media (max-width: 860px) {
-      .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+      .detail-related-list--grid .detail-related:nth-last-child(-n + 2) {
         border-bottom: 1px solid var(--line);
       }
 
-      .detail-related-list--four .detail-related:last-child {
+      .detail-related-list--grid .detail-related:last-child {
         border-bottom: 0;
       }
     }

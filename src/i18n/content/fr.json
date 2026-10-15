@@ -1,7 +1,7 @@
 {
   "contact": {
     "title": "Nous contacter",
-    "description": "Nous vous accompagnons sur vos besoins de conseil IT, d’adoption de l’AI, de déploiement, de systèmes métier, d’applications Web, de design et de création, ainsi que d’automatisation des opérations existantes, même si votre cahier des charges n’est pas encore finalisé.",
+    "description": "Nous vous accompagnons sur vos besoins de conseil IT, d’adoption de l’AI, de déploiement, de systèmes métier, d’applications Web, de design et de création, ainsi que d’automatisation des opérations existantes, même si votre cahier des charges n’est pas encore finalisé. Nous proposons aussi une évaluation de sécurité Web et API et un accompagnement des corrections.",
     "heroTitle": "Parlons-en, même si votre projet reste encore à définir.",
     "heroLead": "Présentez-nous vos opérations actuelles, vos difficultés, les outils que vous utilisez et le calendrier souhaité.",
     "formLead": "Le premier échange et le devis sont gratuits. Nous pouvons également vous aider à structurer vos besoins avant l’établissement d’un devis formel. Nous répondons généralement sous 1–2 jours ouvrés.",
@@ -241,6 +241,10 @@
       {
         "title": "Structurer les problématiques avant de les traduire en exigences",
         "body": "Vous souhaitez clarifier les objectifs, les utilisateurs, les contraintes et les priorités, puis définir une démarche réaliste."
+      },
+      {
+        "title": "Vérifier et améliorer la sécurité de votre application",
+        "body": "Demandez une revue avant publication, une évaluation Web et API ou des corrections après réception d’un rapport."
       }
     ],
     "ctaEyebrow": "COMMENÇONS PAR EN PARLER",
@@ -623,6 +627,26 @@
         "label": "Définition des besoins et conseil technique",
         "price": "Sur devis",
         "note": "Également disponible pour l’analyse des processus avant développement, l’examen d’un système existant et la revue d’architecture."
+      },
+      {
+        "label": "Revue avant publication",
+        "price": "Sur devis",
+        "note": "Architecture, exposition publique, secrets, dépendances et authentification. Devis après examen des documents et de l’environnement."
+      },
+      {
+        "label": "Évaluation des vulnérabilités Web et API",
+        "price": "Sur devis",
+        "note": "Contrôles automatiques et manuels convenus. Faisabilité et coût selon fonctions, requêtes, droits et environnements."
+      },
+      {
+        "label": "Corrections et vérification",
+        "price": "Sur devis",
+        "note": "Corrections, tests, publication et vérification, y compris après des rapports tiers. Périmètre, délais et nombre de nouveaux tests convenus au devis."
+      },
+      {
+        "label": "Accompagnement continu en sécurité",
+        "price": "Sur devis",
+        "note": "Mises à jour, droits, contrôles des changements et consultations. Cibles, fréquence, temps et prestations supplémentaires définis individuellement."
       }
     ]
   },
@@ -1246,11 +1270,137 @@
       ],
       "ctaTitle": "Discuter des priorités de qualité de votre site Web",
       "ctaBody": "Indiquez-nous l’URL concernée et vos éventuelles préoccupations liées à la recherche, à la vitesse, aux interactions ou à la sécurité."
+    },
+    "security": {
+      "title": "Évaluation de sécurité Web et API et accompagnement des corrections",
+      "description": "Pour les PME, petites équipes SaaS et propriétaires d'applications Web créées avec AI ou par un prestataire : revue avant publication, évaluation des vulnérabilités Web et API, corrections et suivi. La faisabilité et le périmètre sont confirmés avant un devis personnalisé.",
+      "heroEyebrow": "Security / Évaluation et amélioration",
+      "heroTitle": "Des inquiétudes avant publication\naux améliorations après évaluation.",
+      "heroLead": "Pour exploiter plus sereinement une application Web développée en interne, avec AI ou par un prestataire. Nous précisons les points à vérifier et combinons évaluation, corrections et validation selon vos besoins.",
+      "visual": {
+        "alt": "Un responsable d’entreprise et un ingénieur examinent le même site Web sur un ordinateur et un smartphone",
+        "caption": "Nous examinons ensemble les écrans visibles par les utilisateurs et les résultats des mesures afin de hiérarchiser les améliorations."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Un poste d’exploitation avec des écrans de supervision, du matériel de sauvegarde, une liste de contrôle des changements et un journal des incidents",
+          "caption": "Nous précisons architecture, droits et historique des changements pour définir le périmètre et les responsabilités."
+        },
+        "process": {
+          "alt": "Un responsable d’entreprise et un ingénieur vérifient à nouveau le site Web mis à jour sur un ordinateur et un smartphone",
+          "caption": "Après les changements, nous vérifions le rendu et le fonctionnement sur plusieurs appareils, puis intégrons les constats aux améliorations suivantes."
+        }
+      },
+      "indexSummary": "De la revue d'architecture avant publication à l'évaluation Web et API, aux corrections et à leur vérification.",
+      "indexTopics": [
+        "Revue avant publication",
+        "Évaluation Web et API",
+        "Mise en œuvre des corrections",
+        "Accompagnement continu"
+      ],
+      "introTitle": "Préparez votre application à la publication et à l'exploitation.",
+      "introBody": "Un accompagnement pour les PME, petites équipes SaaS et autres propriétaires d'applications Web. Au-delà du fonctionnement des écrans, nous examinons authentification, droits, traitement des données et configuration publique, puis priorisons selon l'impact métier.",
+      "challenges": [
+        {
+          "title": "Vous hésitez à publier votre application",
+          "body": "Vous souhaitez vérifier l'architecture, l'exposition publique et la gestion des secrets d'une application créée avec AI ou par un prestataire."
+        },
+        {
+          "title": "Les droits et les API après connexion vous préoccupent",
+          "body": "Vous souhaitez vérifier que chaque utilisateur n'accède qu'aux informations et aux actions prévues."
+        },
+        {
+          "title": "Vous avez un rapport, mais les corrections n'avancent pas",
+          "body": "Vous devez prioriser les constats, y compris ceux d'un autre prestataire, et avancer jusqu'aux corrections, tests et vérifications après publication."
+        }
+      ],
+      "offeringsTitle": "4 formes d'accompagnement selon votre étape",
+      "offeringsLead": "Choisissez un service ou une combinaison. Nous examinons vos technologies et besoins, confirmons la faisabilité et le périmètre, puis établissons un devis.",
+      "offerings": [
+        {
+          "title": "Revue avant publication",
+          "body": "Nous examinons l'architecture et le mode de publication, puis identifions les réglages et questions d'exploitation à traiter avant la mise en ligne.",
+          "includes": [
+            "Architecture, exposition publique et services externes",
+            "Gestion des secrets et dépendances",
+            "Authentification, droits et procédures de publication"
+          ],
+          "priceNote": "Devis selon les documents disponibles et l'environnement concerné."
+        },
+        {
+          "title": "Évaluation des vulnérabilités Web et API",
+          "body": "Nous combinons contrôles automatisés et vérifications manuelles dans le périmètre convenu pour examiner les applications Web et API. La faisabilité de chaque cible est confirmée lors du devis.",
+          "includes": [
+            "Authentification, autorisation et gestion des sessions",
+            "Traitement des entrées, API et logique métier",
+            "Rapport précisant les zones évaluées, non vérifiées et exclues"
+          ],
+          "priceNote": "Devis après examen des fonctions, requêtes, droits et environnements."
+        },
+        {
+          "title": "Corrections et vérification",
+          "body": "À partir des constats, nous réalisons les corrections, tests, publication et vérifications convenus. Vous pouvez aussi nous consulter après un rapport établi par un autre prestataire.",
+          "includes": [
+            "Plan de correction selon l'impact et la priorité",
+            "Modifications du code et de la configuration, tests fonctionnels",
+            "Procédures de publication et vérification des corrections"
+          ],
+          "priceNote": "Le périmètre, les délais et le nombre de nouveaux tests sont convenus lors du devis."
+        },
+        {
+          "title": "Accompagnement continu en sécurité",
+          "body": "Nous réexaminons dépendances, droits, réglages et procédures lors des mises à jour ou changements. La fréquence des consultations et le temps de travail sont convenus pour le suivi.",
+          "includes": [
+            "Mises à jour des dépendances et revue des droits",
+            "Points à vérifier lors des changements et améliorations proposées",
+            "Consultations et travaux dans les limites convenues"
+          ],
+          "priceNote": "Cibles, fréquence, temps de travail et conditions des prestations supplémentaires sont définis au cas par cas."
+        }
+      ],
+      "processTitle": "Convenir du périmètre et partager résultats et points restants.",
+      "processLead": "Les tests d'intrusion, la surveillance de 24 heures et la réponse urgente aux incidents sont hors du périmètre standard. Leur faisabilité est examinée à la prise de contact.",
+      "process": [
+        {
+          "title": "Échange et définition de la cible",
+          "body": "Présentez l'application, ses utilisateurs, vos préoccupations et vos délais. Consultez-nous uniquement pour des systèmes que vous possédez ou êtes autorisé à administrer."
+        },
+        {
+          "title": "Accord écrit sur le périmètre",
+          "body": "Nous convenons par écrit des cibles, du périmètre, des environnements, de la durée et des droits nécessaires. L'environnement de test et les effets possibles sont clarifiés avant de commencer."
+        },
+        {
+          "title": "Évaluation et rapport",
+          "body": "Le rapport précise périmètre évalué, zones non vérifiées ou exclues, impact, conditions de reproduction et priorités de correction. Nous partageons les résultats et le plan d'amélioration."
+        },
+        {
+          "title": "Corrections et vérification",
+          "body": "Corrections et nouveaux tests suivent le périmètre, les délais et le nombre convenus lors du devis. Nous précisons aussi les points restants et les vérifications futures."
+        }
+      ],
+      "resourcesTitle": "Notes techniques pour une publication et une exploitation sûres",
+      "resourcesLead": "Découvrez nos choix d'implémentation pour la diffusion, les droits et les procédures de publication.",
+      "resources": [
+        {
+          "title": "Diffusion sécurisée d’un site statique avec Cloudflare Pages",
+          "description": "Présentation des en-têtes de sécurité, de CSP, de la mise en cache et des réglages de diffusion de Pages."
+        },
+        {
+          "title": "Guide de mise en œuvre de Sveltia CMS",
+          "description": "Vue d’ensemble du processus opérationnel et de la conception des droits, de l’édition à la publication en passant par le contrôle et la PR."
+        },
+        {
+          "title": "Architecture pour faire évoluer un site d’entreprise avec Astro + Cloudflare",
+          "description": "Vue d’ensemble de la séparation entre le socle de publication statique, les fonctions dynamiques, le CMS et les processus de contrôle et de publication."
+        }
+      ],
+      "ctaTitle": "Parlez-nous de vos préoccupations et des points à vérifier",
+      "ctaBody": "Décrivez votre application et vos préoccupations. Il n'est pas nécessaire d'envoyer des mots de passe, clés API ou données de production dans le premier formulaire."
     }
   },
   "services": {
     "title": "Nos services",
-    "description": "Acecore Systems propose du conseil IT, l’adoption de l’AI et l’amélioration opérationnelle, l’accompagnement au déploiement, le développement de systèmes métier, des applications Web et interfaces d’administration, du design et de la création, des CMS, la recherche, l’exploitation des données et l’amélioration des systèmes existants.",
+    "description": "Acecore Systems propose du conseil IT, l’adoption de l’AI et l’amélioration opérationnelle, l’accompagnement au déploiement, le développement de systèmes métier, des applications Web et interfaces d’administration, du design et de la création, des CMS, la recherche, l’exploitation des données et l’amélioration des systèmes existants. Nous proposons aussi une évaluation de sécurité Web et API et un accompagnement des corrections.",
     "heroTitle": "De la structuration du problème\nau développement, au design et à l’amélioration opérationnelle.",
     "heroLead": "Au-delà d’une production ou d’un développement ponctuel, nous privilégions une conception et des améliorations qui permettent à la solution de s’inscrire dans les opérations quotidiennes.",
     "entryPoints": [
@@ -1330,6 +1480,15 @@
           "Évaluation des systèmes anciens et migration progressive",
           "Amélioration des performances et de l’UI, et investigation des incidents",
           "Processus de développement et d’exploitation fondés sur GitHub"
+        ]
+      },
+      {
+        "title": "Évaluation de sécurité Web et API et accompagnement des corrections",
+        "body": "Pour les applications Web de PME et petites équipes SaaS, nous assurons revue avant publication, évaluation Web et API, corrections et vérification dans un périmètre convenu.",
+        "examples": [
+          "Contrôles avant publication d’applications créées avec AI ou par un prestataire",
+          "Évaluation des vulnérabilités d’authentification, de droits et d’API",
+          "Corrections et vérification à partir du rapport d’un autre prestataire"
         ]
       }
     ],

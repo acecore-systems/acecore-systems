@@ -13,7 +13,7 @@ const locale = Astro.props.locale ?? "ja";
 const content = getLocalizedContent(locale);
 const data = content.services;
 const { itAdvisor } = content;
-const { development, siteFunctions, siteQuality, operations } =
+const { development, siteFunctions, siteQuality, operations, security } =
   content.serviceDetails;
 const text = getUi(locale);
 const localizeHref = (href: string) =>
@@ -47,6 +47,10 @@ const supportingServiceDetails = [
   {
     href: getLocalizedUrl("/services/operations/", locale),
     data: operations,
+  },
+  {
+    href: getLocalizedUrl("/services/security/", locale),
+    data: security,
   },
 ];
 

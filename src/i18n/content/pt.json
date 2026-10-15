@@ -1,7 +1,7 @@
 {
   "contact": {
     "title": "Contato",
-    "description": "Atendemos consultas sobre assessoria de TI, adoção de AI, implantação, sistemas empresariais, aplicativos web, design e produção criativa e automação de operações existentes, mesmo antes de os requisitos estarem definidos.",
+    "description": "Atendemos consultas sobre assessoria de TI, adoção de AI, implantação, sistemas empresariais, aplicativos web, design e produção criativa e automação de operações existentes, mesmo antes de os requisitos estarem definidos. Também oferecemos avaliação de segurança Web e API e apoio à correção.",
     "heroTitle": "Você pode falar conosco mesmo que os requisitos ainda não estejam definidos.",
     "heroLead": "Conte-nos sobre suas operações atuais, as dificuldades, as ferramentas utilizadas e o prazo desejado.",
     "formLead": "A primeira consulta e o orçamento são gratuitos. Também ajudamos a organizar o projeto antes do orçamento formal. Normalmente respondemos em 1 a 2 dias úteis.",
@@ -241,6 +241,10 @@
       {
         "title": "Quer organizar os desafios antes que se tornem requisitos",
         "body": "Quer organizar o objetivo, os usuários, as restrições e as prioridades e definir uma forma realista de avançar."
+      },
+      {
+        "title": "Verificar e melhorar a segurança da aplicação",
+        "body": "Conte com revisão pré-lançamento, avaliação Web e API e correções após receber um relatório."
       }
     ],
     "ctaEyebrow": "COMECE COM UMA CONVERSA",
@@ -623,6 +627,26 @@
         "label": "Definição de requisitos e consulta técnica",
         "price": "Orçamento personalizado",
         "note": "Também atendemos à organização das operações antes do desenvolvimento, investigação de sistemas existentes e revisão de arquitetura."
+      },
+      {
+        "label": "Revisão pré-lançamento",
+        "price": "Orçamento individual",
+        "note": "Arquitetura, exposição pública, segredos, dependências e autenticação. Orçamento após revisar documentação e ambiente."
+      },
+      {
+        "label": "Avaliação de vulnerabilidades Web e API",
+        "price": "Orçamento individual",
+        "note": "Verificações automáticas e manuais acordadas. Viabilidade e custo conforme funções, requisições, permissões e ambientes."
+      },
+      {
+        "label": "Correções e verificação",
+        "price": "Orçamento individual",
+        "note": "Correções, testes, publicação e verificação, inclusive de relatórios de terceiros. Escopo, prazos e quantidade de retestes são acordados no orçamento."
+      },
+      {
+        "label": "Apoio contínuo em segurança",
+        "price": "Orçamento individual",
+        "note": "Atualizações, permissões, verificação de mudanças e consultas. Alvos, frequência, horas e trabalho extra são definidos individualmente."
       }
     ]
   },
@@ -1246,11 +1270,137 @@
       ],
       "ctaTitle": "Consultar sobre as prioridades de qualidade do site",
       "ctaBody": "Informe a URL e suas preocupações com busca, velocidade, operação ou segurança."
+    },
+    "security": {
+      "title": "Avaliação de segurança Web e API e apoio à correção",
+      "description": "Para pequenas empresas, pequenas equipes SaaS e proprietários de aplicações Web criadas com AI ou por terceiros: revisão pré-lançamento, avaliação de vulnerabilidades Web e API, correções e apoio contínuo. Confirmamos viabilidade e escopo antes do orçamento.",
+      "heroEyebrow": "Security / Avaliação e melhoria",
+      "heroTitle": "Das dúvidas antes de publicar\nàs melhorias após a avaliação.",
+      "heroLead": "Para operar com mais confiança aplicações Web desenvolvidas internamente, com AI ou por terceiros. Definimos o que verificar e combinamos avaliação, correções e validação conforme a necessidade.",
+      "visual": {
+        "alt": "Responsável e engenheiro verificando o mesmo site em um computador e smartphone",
+        "caption": "Analisamos juntos a tela do usuário e as medições para definir as prioridades de melhoria."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Mesa de operações com tela de monitoramento, equipamento de backup, lista de verificação de mudanças e caderno de incidentes",
+          "caption": "Organizamos arquitetura, permissões e histórico de mudanças para definir o escopo e as responsabilidades."
+        },
+        "process": {
+          "alt": "Responsável e engenheiro verificando novamente o site corrigido em um computador e smartphone",
+          "caption": "Confirmamos a exibição e a operação após as correções em vários dispositivos e conectamos os resultados à próxima melhoria."
+        }
+      },
+      "indexSummary": "Da revisão de arquitetura antes do lançamento à avaliação Web e API, às correções e à verificação.",
+      "indexTopics": [
+        "Revisão pré-lançamento",
+        "Avaliação Web e API",
+        "Implementação de correções",
+        "Apoio contínuo"
+      ],
+      "introTitle": "Prepare sua aplicação para publicação e operação.",
+      "introBody": "Apoio a pequenas empresas, pequenas equipes SaaS e outros proprietários de aplicações Web. Além das telas funcionarem, revisamos autenticação, permissões, tratamento de dados e configurações públicas, priorizando pelo impacto no negócio.",
+      "challenges": [
+        {
+          "title": "Não sabe se a aplicação está pronta para publicar",
+          "body": "Você quer revisar a arquitetura, a exposição pública e a gestão de segredos de uma aplicação criada com AI ou por terceiros."
+        },
+        {
+          "title": "Preocupação com permissões e API após o login",
+          "body": "Você quer confirmar que cada usuário acesse apenas as informações e ações previstas."
+        },
+        {
+          "title": "Recebeu um relatório, mas as correções não avançam",
+          "body": "Você precisa priorizar os resultados, inclusive de outro fornecedor, e avançar com correções, testes e verificação após publicar."
+        }
+      ],
+      "offeringsTitle": "4 tipos de apoio para cada etapa",
+      "offeringsLead": "Escolha serviços individuais ou combinados. Analisamos a tecnologia e suas necessidades, confirmamos viabilidade e escopo e preparamos o orçamento.",
+      "offerings": [
+        {
+          "title": "Revisão pré-lançamento",
+          "body": "Revisamos a arquitetura e a forma de publicação para identificar configurações e questões operacionais a resolver antes do lançamento.",
+          "includes": [
+            "Arquitetura, exposição pública e serviços externos",
+            "Gestão de segredos e dependências",
+            "Autenticação, permissões e procedimentos de publicação"
+          ],
+          "priceNote": "Orçamento conforme a documentação disponível e o ambiente alvo."
+        },
+        {
+          "title": "Avaliação de vulnerabilidades Web e API",
+          "body": "Combinamos verificações automatizadas e avaliação manual dentro do escopo acordado para investigar aplicações Web e API. A viabilidade de cada alvo é confirmada no orçamento.",
+          "includes": [
+            "Autenticação, autorização e gestão de sessões",
+            "Tratamento de entradas, API e lógica de negócio",
+            "Relatório com áreas avaliadas, não verificadas e excluídas"
+          ],
+          "priceNote": "Orçamento após analisar funções, requisições, permissões e ambientes."
+        },
+        {
+          "title": "Correções e verificação",
+          "body": "Realizamos as correções, testes, publicação e verificação acordados com base nos resultados. Também aceitamos consultas sobre melhorias após relatórios de outros fornecedores.",
+          "includes": [
+            "Plano de correção por impacto e prioridade",
+            "Alterações de código e configuração com testes funcionais",
+            "Procedimentos de publicação e verificação das correções"
+          ],
+          "priceNote": "Escopo, prazos e quantidade de retestes são acordados no orçamento."
+        },
+        {
+          "title": "Apoio contínuo em segurança",
+          "body": "Revisamos dependências, permissões, configurações e procedimentos conforme a aplicação muda. Frequência de consultas e horas de trabalho são acordadas para o apoio contínuo.",
+          "includes": [
+            "Atualização de dependências e revisão de permissões",
+            "Verificações em mudanças e propostas de melhoria",
+            "Consultas e trabalho dentro dos limites acordados"
+          ],
+          "priceNote": "Alvos, frequência, horas e condições para trabalho adicional são definidos individualmente."
+        }
+      ],
+      "processTitle": "Acordamos o escopo e compartilhamos resultados e pendências.",
+      "processLead": "Testes de intrusão, monitoramento de 24 horas e resposta emergencial a incidentes ficam fora do escopo padrão. A viabilidade é verificada no atendimento inicial.",
+      "process": [
+        {
+          "title": "Consulta e definição do alvo",
+          "body": "Conte sobre a aplicação, os usuários, suas preocupações e os prazos. Consulte apenas sobre sistemas próprios ou que esteja autorizado a administrar."
+        },
+        {
+          "title": "Acordo de escopo por escrito",
+          "body": "Acordamos por escrito alvos, escopo, ambientes, duração e permissões necessárias. Definimos o ambiente de teste e o possível impacto antes de começar."
+        },
+        {
+          "title": "Avaliação e relatório",
+          "body": "O relatório registra escopo avaliado, áreas não verificadas e excluídas, impacto, condições de reprodução e prioridades de correção. Compartilhamos resultados e o plano de melhoria."
+        },
+        {
+          "title": "Correções e verificação",
+          "body": "Correções e retestes seguem o escopo, os prazos e a quantidade acordados no orçamento. Também organizamos pendências e verificações futuras."
+        }
+      ],
+      "resourcesTitle": "Notas técnicas para publicação e operação seguras",
+      "resourcesLead": "Apresentamos decisões de implementação sobre distribuição, permissões e fluxos de publicação.",
+      "resources": [
+        {
+          "title": "Entrega segura de sites estáticos com Cloudflare Pages",
+          "description": "Aborda cabeçalhos de segurança, CSP, cache e configurações de entrega do Pages."
+        },
+        {
+          "title": "Guia de adoção do Sveltia CMS",
+          "description": "Reúne o fluxo operacional e o projeto de permissões desde a edição até a revisão, o PR e a publicação."
+        },
+        {
+          "title": "Arquitetura para ampliar um site oficial com Astro + Cloudflare",
+          "description": "Uma visão geral de como separar a base de publicação estática, as funções dinâmicas, o CMS e os fluxos de revisão e publicação."
+        }
+      ],
+      "ctaTitle": "Converse sobre suas preocupações e o que verificar",
+      "ctaBody": "Descreva a aplicação e suas preocupações. Não é necessário enviar senhas, chaves API ou dados de produção no formulário inicial."
     }
   },
   "services": {
     "title": "Serviços",
-    "description": "Conheça os serviços da Acecore Systems: assessoria de TI, adoção de AI e melhoria operacional, suporte à implantação, desenvolvimento de sistemas empresariais, aplicativos web e painéis administrativos, design e produção criativa, CMS, busca, uso de dados e melhoria de sistemas existentes.",
+    "description": "Conheça os serviços da Acecore Systems: assessoria de TI, adoção de AI e melhoria operacional, suporte à implantação, desenvolvimento de sistemas empresariais, aplicativos web e painéis administrativos, design e produção criativa, CMS, busca, uso de dados e melhoria de sistemas existentes. Também oferecemos avaliação de segurança Web e API e apoio à correção.",
     "heroTitle": "Da organização dos problemas\nao desenvolvimento, design e melhoria operacional.",
     "heroLead": "Além da produção e do desenvolvimento pontuais, valorizamos o projeto e as melhorias até que a solução se consolide na operação.",
     "entryPoints": [
@@ -1330,6 +1480,15 @@
           "Organização de sistemas legados e migração gradual",
           "Melhoria de velocidade e UI e investigação de falhas",
           "Estruturação de fluxos de desenvolvimento e operação baseados no GitHub"
+        ]
+      },
+      {
+        "title": "Avaliação de segurança Web e API e apoio à correção",
+        "body": "Para aplicações Web de pequenas empresas e pequenas equipes SaaS, oferecemos revisão pré-lançamento, avaliação Web e API, correções e verificação dentro de um escopo acordado.",
+        "examples": [
+          "Verificações prévias de aplicações criadas com AI ou por terceiros",
+          "Avaliação de vulnerabilidades de autenticação, permissões e API",
+          "Correções e verificação com base em relatórios de outros fornecedores"
         ]
       }
     ],
