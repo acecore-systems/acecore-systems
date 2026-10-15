@@ -1,0 +1,42 @@
+---
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+import PurposeIcon from "./PurposeIcon.astro";
+interface Props {
+  locale: Locale;
+  compact?: boolean;
+}
+const { locale, compact = false } = Astro.props;
+const { works } = getLocalizedContent(locale);
+const text = getUi(locale);
+const work = works.cases.find((item) => item.id === "case-cherry-homepage");
+const href = `${getLocalizedUrl("/works/", locale)}#case-cherry-homepage`;
+---
+
+{
+  work && (
+    <figure class:list={["purpose-work", compact && "purpose-work--compact"]}>
+      <a class="purpose-work__image" href={href}>
+        <img
+          src={work.image}
+          alt={work.imageAlt}
+          width="1585"
+          height="892"
+          loading={compact ? "eager" : "lazy"}
+          decoding="async"
+        />
+      </a>
+      <figcaption>
+        <span>
+          {work.title}
+          <span class="purpose-work__category">{work.category}</span>
+        </span>
+        <a href={href}>
+          {text.viewWorks}
+          <PurposeIcon name="arrow" />
+        </a>
+      </figcaption>
+    </figure>
+  )
+}

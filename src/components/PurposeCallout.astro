@@ -1,0 +1,19 @@
+---
+import { getLocalizedUrl, type Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+import PurposeIcon from "./PurposeIcon.astro";
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const text = getUi(locale);
+---
+
+<aside class="purpose-callout">
+  <div class="container purpose-callout__inner">
+    <p>{text.consultSpecificBody}</p>
+    <a class="purpose-button" href={getLocalizedUrl("/contact/", locale)}
+      >{text.purposeContact}<PurposeIcon name="arrow" /></a
+    >
+  </div>
+</aside>

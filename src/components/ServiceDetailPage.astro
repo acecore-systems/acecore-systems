@@ -2,6 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ServiceHandoff from "./ServiceHandoff.astro";
 import ServiceVisual from "./ServiceVisual.astro";
+import PurposeWork from "./PurposeWork.astro";
+import WebsitePricePreview from "./WebsitePricePreview.astro";
+import PurposeIcon from "./PurposeIcon.astro";
 import site from "../data/site.json";
 import development from "../data/service-details/development.json";
 import siteFunctions from "../data/service-details/site-functions.json";
@@ -16,6 +19,7 @@ type ServiceDetail = typeof siteFunctions & {
   visual?: typeof development.visual;
   sectionVisuals?: typeof development.sectionVisuals;
   heroPrimaryCta?: string;
+  heroBenefits?: string[];
   heroSecondaryCta?: string;
   costExample?: typeof website.costExample;
   termsTitle?: string;
@@ -172,6 +176,8 @@ const jsonLd = [
   canonical={canonicalPath}
   jsonLd={jsonLd}
   mainEntityId={serviceEntityId}
+  bodyClass={"service-detail-page" +
+    (serviceKey === "website" ? " service-detail-page--website" : "")}
   locale={locale}
 >
   <section class="page-hero page-hero--detail">
@@ -185,9 +191,23 @@ const jsonLd = [
           <li aria-current="page">{data.title}</li>
         </ol>
       </nav>
-      <p class="page-eyebrow">{data.heroEyebrow}</p>
+      <p class="page-eyebrow">
+        {serviceKey === "website" ? data.title : data.heroEyebrow}
+      </p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
+      {
+        Boolean(data.heroBenefits?.length) && (
+          <ul class="purpose-hero-benefits">
+            {data.heroBenefits.map((benefit) => (
+              <li>
+                <PurposeIcon name="check" />
+                {benefit}
+              </li>
+            ))}
+          </ul>
+        )
+      }
       {
         data.heroPrimaryCta && (
           <div class="home-actions">
@@ -197,7 +217,14 @@ const jsonLd = [
             >
               {data.heroPrimaryCta}
             </a>
-            <a class="editorial-link" href={`#${data.offerings[0].id}`}>
+            <a
+              class="editorial-link"
+              href={
+                serviceKey === "website"
+                  ? "#website-pricing-preview"
+                  : `#${data.offerings[0].id}`
+              }
+            >
               {data.heroSecondaryCta}
             </a>
           </div>
@@ -207,7 +234,34 @@ const jsonLd = [
   </section>
 
   {
-    data.visual && (
+    serviceKey === "website" && (
+      <>
+        <section
+          class="purpose-website-work"
+          aria-label={text.selectedWorkTitle}
+        >
+          <div class="container">
+            <PurposeWork locale={locale} compact />
+          </div>
+        </section>
+        <nav class="purpose-detail-nav" aria-label={text.tableOfContents}>
+          <a href="#detail-introduction-title">{text.purposeFeatures}</a>
+          <a
+            href={getLocalizedUrl("/works/", locale) + "#case-cherry-homepage"}
+          >
+            {text.works}
+          </a>
+          <a href="#website-pricing-preview">{text.pricing}</a>
+          <a href="#detail-process-title">{text.processTitle}</a>
+          <a href="#website-faq-title">{data.faqsTitle}</a>
+        </nav>
+        <WebsitePricePreview locale={locale} />
+      </>
+    )
+  }
+
+  {
+    data.visual && serviceKey !== "website" && (
       <section
         class="service-story-visual-section"
         aria-label={data.visual.alt}

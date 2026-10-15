@@ -51,6 +51,7 @@ const workDetailData = readJson(
   "src/data/work-details/acecore-site-platform.json",
 );
 const serviceIndexData = readJson("src/data/services.json");
+const homeData = readJson("src/data/home.json");
 const pricingData = readJson("src/data/pricing.json");
 const pricingByKey = new Map(pricingData.items.map((item) => [item.key, item]));
 const designService = serviceIndexData.services.find(
@@ -362,32 +363,44 @@ for (const expectedHref of [
     `home: direct development route ${expectedHref} missing`,
   );
 }
+const homeNeeds = loadHtml(home)(".purpose-needs a");
 assert.deepEqual(
-  Array.from(
-    home.matchAll(/href="(\/services\/#[^"]+)"/g),
-    (match) => match[1],
-  ),
-  [],
-  "home: service-index anchors must not be used as pillar destinations",
+  homeNeeds.map((_, link) => loadHtml(link)("a").attr("href")).get(),
+  ["/services/#web", "/services/#work", advisorRoute],
+  "home: the three purpose routes must lead to the matching category or advisor",
 );
 for (const anchor of ["customer-touchpoints", "operations", "it-foundation"]) {
-  assert.equal(
-    home.includes(`href="#${anchor}"`),
-    true,
-    `home: pillar summary anchor ${anchor} missing`,
-  );
   assert.equal(
     home.includes(`class="domain-row" id="${anchor}"`),
     true,
     `home: pillar destination ${anchor} missing`,
   );
+  const layer = homeData.layers.find((item) => item.id === anchor);
+  assert.equal(
+    loadHtml(home)(`.domain-row#${anchor} > a`).attr("href"),
+    layer.detailHref,
+    `home: ${anchor} must keep its direct support route`,
+  );
 }
 
-assert.equal(
-  count(services, 'class="service-entry-point"'),
-  serviceIndexData.entryPoints.length,
-  "services: every service entry point must be rendered",
+const catalogRoutes = new Set([
+  ...serviceIndexData.entryPoints.map((entry) => entry.href),
+  ...focusedServices.map((service) => service.route),
+]);
+const serviceRows = loadHtml(services)(
+  ".purpose-catalog a.purpose-service-row",
 );
+assert.equal(
+  serviceRows.length,
+  catalogRoutes.size,
+  "services: every distinct service needs a dedicated catalog row",
+);
+for (const route of catalogRoutes)
+  assert.equal(
+    serviceRows.filter(`[href="${route}"]`).length,
+    1,
+    `services: ${route} must be independently selectable`,
+  );
 assert.equal(
   services.includes(`id="${designService.id}"`),
   true,
@@ -525,18 +538,13 @@ for (const [key, visual] of Object.entries(advisorData.sectionVisuals)) {
 for (const [key, visual] of Object.entries(developmentData.sectionVisuals)) {
   validateServiceVisual(developmentPage, visual, `development ${key} visual`);
 }
-validateServiceVisual(services, advisorData.visual, "services IT advisor card");
-validateServiceVisual(
-  services,
-  developmentData.visual,
-  "services development card",
-);
 for (const service of focusedServices) {
-  validateServiceVisual(
-    service.html,
-    service.data.visual,
-    `${service.route} overview visual`,
-  );
+  if (service.route !== "/services/website/")
+    validateServiceVisual(
+      service.html,
+      service.data.visual,
+      `${service.route} overview visual`,
+    );
   for (const [key, visual] of Object.entries(service.data.sectionVisuals)) {
     validateServiceVisual(
       service.html,
@@ -545,17 +553,22 @@ for (const service of focusedServices) {
     );
   }
   const serviceCard = loadHtml(services)(
-    `${service.route === "/services/website/" ? "a.service-entry-point" : "a.service-detail-index__item"}[href="${service.route}"]`,
+    `.purpose-catalog a.purpose-service-row[href="${service.route}"]`,
   );
   assert.equal(
     serviceCard.length,
     1,
-    `services ${service.route}: exactly one detail card is required`,
+    `services ${service.route}: exactly one catalog row is required`,
   );
-  validateServiceVisual(
-    serviceCard.html() ?? "",
-    service.data.visual,
-    `services ${service.route} card`,
+  assert.equal(
+    serviceCard.find("h3").text().trim(),
+    service.data.title,
+    `services ${service.route}: service title missing`,
+  );
+  assert.equal(
+    serviceCard.find("p").text().trim(),
+    service.data.indexSummary,
+    `services ${service.route}: service description missing`,
   );
 }
 
@@ -605,11 +618,28 @@ for (const work of worksData.cases) {
     `works ${work.id}`,
   );
 }
-for (const work of worksData.cases.slice(0, 2)) {
+const featuredWork = worksData.cases.find(
+  (work) => work.id === "case-cherry-homepage",
+);
+assert.ok(featuredWork, "the selected homepage case study must exist");
+for (const [label, html] of [
+  ["home", home],
+  [
+    "website",
+    focusedServices.find((service) => service.route === "/services/website/")
+      .html,
+  ],
+]) {
   validateServiceVisual(
-    home,
-    { src: work.image, alt: work.imageAlt },
-    `home selected work ${work.id}`,
+    html,
+    { src: featuredWork.image, alt: featuredWork.imageAlt },
+    `${label} selected work ${featuredWork.id}`,
+  );
+  assert.equal(
+    loadHtml(html)(`.purpose-work a[href="/works/#${featuredWork.id}"]`)
+      .length > 0,
+    true,
+    `${label}: case study must link to the actual work`,
   );
 }
 for (const field of ["visual", "outcomesVisual", "scopeVisual"]) {

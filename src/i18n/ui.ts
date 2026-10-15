@@ -1,6 +1,16 @@
 import type { Locale } from "./config";
 
 type UiText = {
+  purposeViewServices: string;
+  purposeAll: string;
+  purposeWeb: string;
+  purposeWork: string;
+  purposeOperate: string;
+  purposeWebsiteNeed: string;
+  purposeAutomationNeed: string;
+  purposeAdvisorNeed: string;
+  purposeFeatures: string;
+  purposeContact: string;
   skipToContent: string;
   officialSite: string;
   mainNavigation: string;
@@ -104,6 +114,16 @@ type UiText = {
 
 export const ui: Record<Locale, UiText> = {
   ja: {
+    purposeViewServices: "サービスを見る",
+    purposeAll: "すべて",
+    purposeWeb: "Webを整える",
+    purposeWork: "仕事を効率化する",
+    purposeOperate: "安心して運用する",
+    purposeWebsiteNeed: "ホームページを作りたい・直したい",
+    purposeAutomationNeed: "毎日の手作業を減らしたい",
+    purposeAdvisorNeed: "ITの相談先がほしい",
+    purposeFeatures: "特徴",
+    purposeContact: "相談する",
     skipToContent: "本文へ移動",
     officialSite: "Acecore公式サイト",
     mainNavigation: "メインナビゲーション",
@@ -218,6 +238,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "トップへ戻る",
   },
   en: {
+    purposeViewServices: "View services",
+    purposeAll: "All services",
+    purposeWeb: "Improve your website",
+    purposeWork: "Make work simpler",
+    purposeOperate: "Keep IT running",
+    purposeWebsiteNeed: "Create or improve a website",
+    purposeAutomationNeed: "Reduce daily manual work",
+    purposeAdvisorNeed: "Find an IT partner",
+    purposeFeatures: "Features",
+    purposeContact: "Talk to us",
     skipToContent: "Skip to content",
     officialSite: "Acecore corporate site",
     mainNavigation: "Main navigation",
@@ -337,6 +367,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Return home",
   },
   "zh-cn": {
+    purposeViewServices: "查看服务",
+    purposeAll: "全部",
+    purposeWeb: "完善网站",
+    purposeWork: "提高工作效率",
+    purposeOperate: "安心运营",
+    purposeWebsiteNeed: "创建或改进网站",
+    purposeAutomationNeed: "减少日常手动操作",
+    purposeAdvisorNeed: "寻找IT咨询伙伴",
+    purposeFeatures: "服务特色",
+    purposeContact: "咨询我们",
     skipToContent: "跳转到正文",
     officialSite: "Acecore 官方网站",
     mainNavigation: "主导航",
@@ -445,6 +485,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "返回首页",
   },
   es: {
+    purposeViewServices: "Ver servicios",
+    purposeAll: "Todos",
+    purposeWeb: "Mejorar la web",
+    purposeWork: "Simplificar el trabajo",
+    purposeOperate: "Operar con tranquilidad",
+    purposeWebsiteNeed: "Crear o mejorar una web",
+    purposeAutomationNeed: "Reducir las tareas manuales",
+    purposeAdvisorNeed: "Encontrar apoyo informático",
+    purposeFeatures: "Características",
+    purposeContact: "Consultar",
     skipToContent: "Ir al contenido",
     officialSite: "Sitio corporativo de Acecore",
     mainNavigation: "Navegación principal",
@@ -565,6 +615,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Volver al inicio",
   },
   pt: {
+    purposeViewServices: "Ver serviços",
+    purposeAll: "Todos",
+    purposeWeb: "Melhorar o site",
+    purposeWork: "Simplificar o trabalho",
+    purposeOperate: "Operar com segurança",
+    purposeWebsiteNeed: "Criar ou melhorar um site",
+    purposeAutomationNeed: "Reduzir tarefas manuais",
+    purposeAdvisorNeed: "Encontrar apoio de TI",
+    purposeFeatures: "Características",
+    purposeContact: "Fale conosco",
     skipToContent: "Ir para o conteúdo",
     officialSite: "Site institucional da Acecore",
     mainNavigation: "Navegação principal",
@@ -685,6 +745,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Voltar ao início",
   },
   fr: {
+    purposeViewServices: "Voir les services",
+    purposeAll: "Tous",
+    purposeWeb: "Améliorer votre site",
+    purposeWork: "Simplifier le travail",
+    purposeOperate: "Assurer le fonctionnement",
+    purposeWebsiteNeed: "Créer ou améliorer un site",
+    purposeAutomationNeed: "Réduire les tâches manuelles",
+    purposeAdvisorNeed: "Trouver un partenaire informatique",
+    purposeFeatures: "Points forts",
+    purposeContact: "Nous contacter",
     skipToContent: "Aller au contenu",
     officialSite: "Site institutionnel Acecore",
     mainNavigation: "Navigation principale",
@@ -804,6 +874,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Retour à l’accueil",
   },
   ko: {
+    purposeViewServices: "서비스 보기",
+    purposeAll: "전체",
+    purposeWeb: "웹사이트 정비",
+    purposeWork: "업무 효율화",
+    purposeOperate: "안정적인 운영",
+    purposeWebsiteNeed: "홈페이지를 만들거나 개선하고 싶어요",
+    purposeAutomationNeed: "매일 반복하는 수작업을 줄이고 싶어요",
+    purposeAdvisorNeed: "IT 상담 파트너가 필요해요",
+    purposeFeatures: "특징",
+    purposeContact: "상담하기",
     skipToContent: "본문으로 이동",
     officialSite: "Acecore 공식 사이트",
     mainNavigation: "주요 내비게이션",
@@ -916,6 +996,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "홈으로 돌아가기",
   },
   de: {
+    purposeViewServices: "Leistungen ansehen",
+    purposeAll: "Alle",
+    purposeWeb: "Website verbessern",
+    purposeWork: "Arbeit vereinfachen",
+    purposeOperate: "IT zuverlässig betreiben",
+    purposeWebsiteNeed: "Eine Website erstellen oder verbessern",
+    purposeAutomationNeed: "Manuelle Arbeit reduzieren",
+    purposeAdvisorNeed: "Einen IT-Partner finden",
+    purposeFeatures: "Leistungen",
+    purposeContact: "Kontakt",
     skipToContent: "Zum Inhalt",
     officialSite: "Acecore-Unternehmensseite",
     mainNavigation: "Hauptnavigation",
@@ -1035,6 +1125,16 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Zur Startseite",
   },
   ru: {
+    purposeViewServices: "Посмотреть услуги",
+    purposeAll: "Все",
+    purposeWeb: "Улучшить сайт",
+    purposeWork: "Упростить работу",
+    purposeOperate: "Обеспечить работу ИТ",
+    purposeWebsiteNeed: "Создать или улучшить сайт",
+    purposeAutomationNeed: "Сократить ручную работу",
+    purposeAdvisorNeed: "Найти ИТ-партнёра",
+    purposeFeatures: "Особенности",
+    purposeContact: "Связаться",
     skipToContent: "Перейти к содержанию",
     officialSite: "Корпоративный сайт Acecore",
     mainNavigation: "Основная навигация",

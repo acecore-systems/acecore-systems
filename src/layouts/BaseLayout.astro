@@ -18,6 +18,7 @@ import {
 import { getUi } from "../i18n/ui";
 import { getLocalizedContent } from "../i18n/content";
 import "../styles/global.css";
+import "../styles/purpose.css";
 
 interface Props {
   title: string;
@@ -204,27 +205,7 @@ const pagefindMainAttributes =
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={localizedDescription} />
     <meta name="twitter:image" content={ogImage} />
-    {
-      bodyClass === "home-page" && (
-        <>
-          <link
-            rel="preload"
-            as="image"
-            href="/images/quiet-home-surface-v3-exact.webp"
-            media="(min-width: 1041px)"
-            fetchpriority="high"
-          />
-          <link
-            rel="preload"
-            as="image"
-            href="/images/quiet-home-hero-v2-exact.webp"
-            media="(max-width: 1040px)"
-            fetchpriority="high"
-          />
-        </>
-      )
-    }
-    <meta name="theme-color" content="#f2f0ea" />
+    <meta name="theme-color" content="#ffffff" />
     <script type="application/ld+json" set:html={serializedJsonLd} />
     {
       site.ga4Id && (

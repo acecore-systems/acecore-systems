@@ -1,6 +1,7 @@
 ---
 import site from "../data/site.json";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import PurposeIcon from "./PurposeIcon.astro";
 import {
   getLocalizedUrl,
   htmlLangMap,
@@ -22,6 +23,15 @@ const content = getLocalizedContent(locale);
 const currentPath = Astro.url.pathname;
 const availableLocales = getAvailableRouteLocales(currentPath);
 const contactHref = getLocalizedUrl("/contact/", locale);
+const primaryNavPaths = new Set([
+  "/services/",
+  "/works/",
+  "/pricing/",
+  "/insights/",
+]);
+const desktopNav = content.site.nav
+  .filter((item) => primaryNavPaths.has(item.href))
+  .map((item) => ({ ...item, href: getLocalizedUrl(item.href, locale) }));
 const nav = content.site.nav.map((item) => ({
   ...item,
   href: getLocalizedUrl(item.href, locale),
@@ -56,7 +66,7 @@ const isCurrent = (href: string) =>
     </div>
     <nav class="nav desktop-nav" aria-label={text.mainNavigation}>
       {
-        nav.map((item) => (
+        desktopNav.map((item) => (
           <a
             href={item.href}
             aria-current={isCurrent(item.href) ? "page" : undefined}
@@ -77,11 +87,8 @@ const isCurrent = (href: string) =>
             aria-controls="site-search-dialog"
             data-search-open
           >
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <circle cx="11" cy="11" r="6.5" />
-              <path d="m16 16 4 4" />
-            </svg>
-            <span>検索</span>
+            <PurposeIcon name="search" />
+            <span class="visually-hidden">検索</span>
           </button>
         )
       }
@@ -90,7 +97,7 @@ const isCurrent = (href: string) =>
         href={contactHref}
         aria-current={currentPath.startsWith(contactHref) ? "page" : undefined}
       >
-        {text.contact}
+        {text.purposeContact}
       </a>
     </div>
     <details class="mobile-menu">

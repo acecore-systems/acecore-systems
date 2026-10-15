@@ -284,6 +284,9 @@ test("ホームページの費用例・対応条件・FAQ・一覧説明の欠�
   );
   for (const value of [
     { ...website, terms: [] },
+    { ...website, heroBenefits: "not-an-array" },
+    { ...website, heroBenefits: [{ title: "invalid-object" }] },
+    { ...website, heroBenefits: [""] },
     { ...website, faqs: [{ question: "質問" }] },
     { ...website, costExample: { title: "費用" } },
     { ...website, indexNavigation: {} },

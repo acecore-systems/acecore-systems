@@ -4,6 +4,7 @@
   "heroEyebrow": "WEBSITE / PRODUCTION & SUPPORT",
   "heroTitle": "本業に集中できる、\nホームページを。",
   "heroLead": "お店や事業の魅力を伝えるホームページを、文章の整理から公開後の更新までお手伝いします。小規模事業者・店舗・教室など、業種を問わずご相談いただけます。",
+  "heroBenefits": ["文章の整理から相談できる", "公開後の更新も頼める"],
   "visual": {
     "src": "/images/service-site-functions-overview.webp",
     "alt": "編集画面とホームページを確認する担当者の制作イメージ",
