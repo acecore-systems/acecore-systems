@@ -41,10 +41,7 @@ function addXDefaultAlternates(xml, file, publishedUrls) {
     }
     if (!japaneseAlternate) {
       const pathname = new URL(href).pathname;
-      if (
-        !/^\/insights\/[^/]+\/$/u.test(pathname) ||
-        getAvailableRouteLocales(pathname).join(",") !== "ja"
-      ) {
+      if (getAvailableRouteLocales(pathname).join(",") !== "ja") {
         throw new Error(
           `${file}: Japanese alternate is missing from a translated URL entry`,
         );

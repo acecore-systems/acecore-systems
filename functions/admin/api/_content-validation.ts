@@ -8,6 +8,7 @@ import services from "../../../src/data/services.json";
 import site from "../../../src/data/site.json";
 import development from "../../../src/data/service-details/development.json";
 import operations from "../../../src/data/service-details/operations.json";
+import website from "../../../src/data/service-details/website.json";
 import siteFunctions from "../../../src/data/service-details/site-functions.json";
 import siteQuality from "../../../src/data/service-details/site-quality.json";
 import works from "../../../src/data/works.json";
@@ -35,6 +36,7 @@ const BASELINES = new Map<string, unknown>([
   ["src/data/service-details/site-functions.json", siteFunctions],
   ["src/data/service-details/site-quality.json", siteQuality],
   ["src/data/service-details/operations.json", operations],
+  ["src/data/service-details/website.json", website],
   ["src/data/work-details/acecore-site-platform.json", acecoreSitePlatform],
 ]);
 

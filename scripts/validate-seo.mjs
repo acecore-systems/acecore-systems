@@ -19,6 +19,11 @@ const advisorData = readJson("src/data/it-advisor.json");
 const developmentData = readJson("src/data/service-details/development.json");
 const focusedServices = [
   {
+    route: "/services/website/",
+    pagePath: "dist/services/website/index.html",
+    data: readJson("src/data/service-details/website.json"),
+  },
+  {
     route: "/services/site-functions/",
     pagePath: "dist/services/site-functions/index.html",
     data: readJson("src/data/service-details/site-functions.json"),
@@ -178,6 +183,7 @@ for (const service of focusedServices) {
     html: service.html,
     route: service.route,
     serviceEntitySuffix: "#service",
+    requiresFaq: Boolean(service.data.faqs?.length),
   });
 }
 
@@ -373,8 +379,8 @@ for (const anchor of ["customer-touchpoints", "operations", "it-foundation"]) {
 
 assert.equal(
   count(services, 'class="service-entry-point"'),
-  2,
-  "services: development and IT advisor entry points are required",
+  serviceIndexData.entryPoints.length,
+  "services: every service entry point must be rendered",
 );
 assert.equal(
   services.includes(`id="${designService.id}"`),
@@ -401,6 +407,29 @@ assert.equal(
   contact.includes("デザイン・クリエイティブについて"),
   true,
   "contact: design service category missing",
+);
+
+for (const item of pricingData.items.filter(
+  (item) => item.track === "website",
+)) {
+  assert.equal(
+    pricing.includes(`href="${item.detailUrl}"`) &&
+      pricing.includes(item.price),
+    true,
+    `pricing: ${item.key} must link to its website plan`,
+  );
+}
+assert.equal(
+  home.includes('href="/services/website/"'),
+  true,
+  "home: website entry missing",
+);
+assert.equal(
+  contact.includes(
+    '<option value="ホームページ制作・更新について">ホームページ制作・更新サポート</option>',
+  ),
+  true,
+  "contact: website category missing",
 );
 
 const pricingJsonLdMatch = pricing.match(
@@ -452,9 +481,13 @@ function validateImageAlts(html, label) {
 
 function validateServiceVisual(html, visual, label) {
   assert.equal(
-    count(html, `src="${visual.src}"`),
+    [...html.matchAll(/<img\b[^>]*>/gu)].filter(
+      ([tag]) =>
+        tag.includes(`src="${visual.src}"`) &&
+        tag.includes(`alt="${visual.alt}"`),
+    ).length,
     1,
-    `${label}: service visual must appear exactly once`,
+    `${label}: matching service visual and alt must appear exactly once`,
   );
   assert.equal(
     html.includes(`alt="${visual.alt}"`),

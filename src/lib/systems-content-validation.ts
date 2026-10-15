@@ -3,6 +3,7 @@ const SERVICE_PATHS = [
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
+  "src/data/service-details/website.json",
 ] as const;
 
 const WORK_PATHS = [
@@ -22,6 +23,7 @@ const SERVICE_ROUTES = new Map([
   [SERVICE_PATHS[1], "/services/site-functions/"],
   [SERVICE_PATHS[2], "/services/site-quality/"],
   [SERVICE_PATHS[3], "/services/operations/"],
+  [SERVICE_PATHS[4], "/services/website/"],
   [ADVISOR_PATH, "/services/it-advisor/"],
 ]);
 
@@ -181,6 +183,50 @@ export function validateSystemsContentFiles(
     }
   }
 
+  const websitePath = SERVICE_PATHS[4];
+  const website = asRecord(files.get(websitePath));
+  if (website) {
+    for (const key of [
+      "heroPrimaryCta",
+      "heroSecondaryCta",
+      "termsTitle",
+      "faqsTitle",
+    ])
+      requireText(website[key], `${websitePath}.${key}`, errors);
+    const navigation = asRecord(website.indexNavigation);
+    for (const key of [
+      "chooseScopeLead",
+      "serviceDetailsLead",
+      "primaryServicesTitle",
+      "primaryServicesLead",
+    ])
+      requireText(
+        navigation?.[key],
+        `${websitePath}.indexNavigation.${key}`,
+        errors,
+      );
+    const example = asRecord(website.costExample);
+    for (const key of ["title", "body"])
+      requireText(example?.[key], `${websitePath}.costExample.${key}`, errors);
+    for (const [listKey, fields] of [
+      ["terms", ["title", "body"]],
+      ["faqs", ["question", "answer"]],
+    ] as const) {
+      requireNonEmptyArray(
+        website[listKey],
+        `${websitePath}.${listKey}`,
+        errors,
+      ).forEach((item, index) => {
+        const entry = asRecord(item);
+        for (const key of fields)
+          requireText(
+            entry?.[key],
+            `${websitePath}.${listKey}[${index}].${key}`,
+            errors,
+          );
+      });
+    }
+  }
   validateAdvisor(files.get(ADVISOR_PATH), pricingKeys, routeAnchors, errors);
 
   for (const article of MIGRATED_TECHNICAL_ARTICLES) {

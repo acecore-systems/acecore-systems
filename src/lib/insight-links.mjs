@@ -1,4 +1,5 @@
 import translationState from "../i18n/translation-state.json" with { type: "json" };
+import { getAvailableContentRouteLocales } from "./pending-content.mjs";
 
 export const insightSlugs = Object.freeze([
   "acecore-systems-site-renewal",
@@ -61,7 +62,7 @@ const insightUrl =
   /^(?:(https:\/\/(?:www\.)?(?:acecore\.net|systems\.acecore\.net))?)\/(?:(ja|en|zh-cn|es|pt|fr|ko|de|ru)\/)?(?:blog|insights)\/([^/?#]+)\/?([?#].*)?$/;
 const systemsOrigin = "https://systems.acecore.net";
 const systemsPagePath =
-  /^\/(?:services(?:\/(?:development|it-advisor|operations|site-functions|site-quality))?|pricing|guide|works(?:\/acecore-site-platform)?|contact(?:\/thanks)?|privacy)\/?$/u;
+  /^\/(?:services(?:\/(?:development|it-advisor|operations|site-functions|site-quality|website))?|pricing|guide|works(?:\/acecore-site-platform)?|contact(?:\/thanks)?|privacy)\/?$/u;
 
 export function getInsightSlug(id) {
   const normalized = id.replace(/\.md$/i, "");
@@ -91,7 +92,11 @@ export function getAvailableRouteLocales(path, pendingInsights) {
   if (segments.length === 2 && segments[0] === "insights") {
     return getAvailableInsightLocales(segments[1], pendingInsights);
   }
-  return [...supportedLocales];
+  return getAvailableContentRouteLocales(
+    `/${segments.join("/")}/`,
+    supportedLocales,
+    translationState.pendingContent,
+  );
 }
 
 export function getLocalizedInsightHref(

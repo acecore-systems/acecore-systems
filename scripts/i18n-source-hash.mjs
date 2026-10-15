@@ -17,6 +17,36 @@ export const translatedLocales = [
   "ru",
 ];
 
+export const structuredTranslationTargets = new Map([
+  ["src/data/contact.json", ["contact"]],
+  ["src/data/guide.json", ["guide"]],
+  ["src/data/home.json", ["home"]],
+  ["src/data/it-advisor.json", ["itAdvisor"]],
+  ["src/data/pricing.json", ["pricing"]],
+  ["src/data/privacy.json", ["privacy"]],
+  [
+    "src/data/service-details/development.json",
+    ["serviceDetails", "development"],
+  ],
+  [
+    "src/data/service-details/operations.json",
+    ["serviceDetails", "operations"],
+  ],
+  [
+    "src/data/service-details/site-functions.json",
+    ["serviceDetails", "siteFunctions"],
+  ],
+  [
+    "src/data/service-details/site-quality.json",
+    ["serviceDetails", "siteQuality"],
+  ],
+  ["src/data/service-details/website.json", ["serviceDetails", "website"]],
+  ["src/data/services.json", ["services"]],
+  ["src/data/site.json", ["site"]],
+  ["src/data/work-details/acecore-site-platform.json", ["workDetail"]],
+  ["src/data/works.json", ["works"]],
+]);
+
 export const translationSourcePaths = [
   "src/data/contact.json",
   "src/data/guide.json",
@@ -28,6 +58,7 @@ export const translationSourcePaths = [
   "src/data/service-details/operations.json",
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
+  "src/data/service-details/website.json",
   "src/data/services.json",
   "src/data/site.json",
   "src/data/work-details/acecore-site-platform.json",

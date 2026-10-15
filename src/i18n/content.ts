@@ -8,6 +8,9 @@ import development from "../data/service-details/development.json";
 import operations from "../data/service-details/operations.json";
 import siteFunctions from "../data/service-details/site-functions.json";
 import siteQuality from "../data/service-details/site-quality.json";
+import website from "../data/service-details/website.json";
+import translationState from "./translation-state.json";
+import { isContentUnavailable } from "../lib/pending-content.mjs";
 import services from "../data/services.json";
 import site from "../data/site.json";
 import workDetail from "../data/work-details/acecore-site-platform.json";
@@ -21,6 +24,12 @@ import pt from "./content/pt.json";
 import ru from "./content/ru.json";
 import zhCn from "./content/zh-cn.json";
 import type { Locale } from "./config";
+const pendingContent =
+  (
+    translationState as {
+      pendingContent?: Record<string, { locales: string[] }>;
+    }
+  ).pendingContent ?? {};
 
 const japaneseContent = {
   contact,
@@ -34,6 +43,7 @@ const japaneseContent = {
     operations,
     siteFunctions,
     siteQuality,
+    website,
   },
   services,
   site,
@@ -62,15 +72,29 @@ const translatedContent: Record<
   ru,
 };
 
-function mergeContent<T>(base: T, translated: DeepPartial<T>): T {
+function mergeContent<T>(
+  base: T,
+  translated: DeepPartial<T>,
+  locale: Locale,
+  pointer = "",
+): T {
   if (Array.isArray(base)) {
     if (!Array.isArray(translated)) return base;
 
-    return base.map((value, index) =>
-      index < translated.length
-        ? mergeContent(value, translated[index] as DeepPartial<typeof value>)
-        : value,
-    ) as T;
+    return base.flatMap((value, index) => {
+      const childPointer = `${pointer}/${index}`;
+      if (isContentUnavailable(childPointer, locale, pendingContent)) return [];
+      return [
+        index < translated.length
+          ? mergeContent(
+              value,
+              translated[index] as DeepPartial<typeof value>,
+              locale,
+              childPointer,
+            )
+          : value,
+      ];
+    }) as T;
   }
   if (
     base &&
@@ -79,17 +103,24 @@ function mergeContent<T>(base: T, translated: DeepPartial<T>): T {
     typeof translated === "object"
   ) {
     return Object.fromEntries(
-      Object.entries(base).map(([key, value]) => [
-        key,
-        key in translated
-          ? mergeContent(
-              value,
-              (translated as Record<string, unknown>)[key] as DeepPartial<
-                typeof value
-              >,
-            )
-          : value,
-      ]),
+      Object.entries(base)
+        .filter(
+          ([key]) =>
+            !isContentUnavailable(`${pointer}/${key}`, locale, pendingContent),
+        )
+        .map(([key, value]) => [
+          key,
+          key in translated
+            ? mergeContent(
+                value,
+                (translated as Record<string, unknown>)[key] as DeepPartial<
+                  typeof value
+                >,
+                locale,
+                `${pointer}/${key}`,
+              )
+            : value,
+        ]),
     ) as T;
   }
   return (translated ?? base) as T;
@@ -98,5 +129,5 @@ function mergeContent<T>(base: T, translated: DeepPartial<T>): T {
 export function getLocalizedContent(locale: Locale): LocalizedContent {
   return locale === "ja"
     ? japaneseContent
-    : mergeContent(japaneseContent, translatedContent[locale]);
+    : mergeContent(japaneseContent, translatedContent[locale], locale);
 }
