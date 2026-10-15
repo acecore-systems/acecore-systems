@@ -4,6 +4,7 @@ const SERVICE_PATHS = [
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
   "src/data/service-details/website.json",
+  "src/data/service-details/security.json",
 ] as const;
 
 const WORK_PATHS = [
@@ -24,6 +25,7 @@ const SERVICE_ROUTES = new Map([
   [SERVICE_PATHS[2], "/services/site-quality/"],
   [SERVICE_PATHS[3], "/services/operations/"],
   [SERVICE_PATHS[4], "/services/website/"],
+  [SERVICE_PATHS[5], "/services/security/"],
   [ADVISOR_PATH, "/services/it-advisor/"],
 ]);
 

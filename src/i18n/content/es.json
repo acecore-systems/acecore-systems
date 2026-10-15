@@ -1,7 +1,7 @@
 {
   "contact": {
     "title": "Contacto",
-    "description": "Atendemos consultas sobre asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, y automatización de operaciones existentes, incluso antes de definir los requisitos.",
+    "description": "Atendemos consultas sobre asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, y automatización de operaciones existentes, incluso antes de definir los requisitos. También ofrecemos evaluación de seguridad Web y API y apoyo a la remediación.",
     "heroTitle": "Puede consultarnos aunque los requisitos aún no estén definidos.",
     "heroLead": "Cuéntenos sobre sus operaciones actuales, dificultades, herramientas y plazos deseados.",
     "formLead": "La consulta inicial y el presupuesto son gratuitos. También podemos ayudarle a organizar el proyecto antes del presupuesto formal. Normalmente respondemos en 1–2 días laborables.",
@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "FILOSOFÍA DE DISEÑO",
     "philosophyTitle": "Lo visible y lo invisible, con la misma precisión.",
-    "philosophyLead": "Desde los puntos de contacto con los clientes hasta los sistemas que sostienen las operaciones y la gestión necesaria para mantenerlas en marcha. No separamos la realidad operativa, los sistemas ni la forma de gestionarlos: damos forma a todo con la misma precisión.",
+    "philosophyLead": "La filosofía de Acecore es «Llevar el mundo a la siguiente etapa»: reducir las cargas no esenciales y ayudar a las personas a perseguir sus aspiraciones. Systems apoya ese primer paso con tecnología, integrando el trabajo, los sistemas y su operación.",
     "designPrinciples": [
       {
         "title": "Empezar por la realidad operativa",
@@ -241,12 +241,17 @@
       {
         "title": "Quiere ordenar los problemas antes de convertirlos en requisitos",
         "body": "Quiere ordenar los objetivos, los usuarios, las restricciones y las prioridades, y decidir una forma realista de avanzar."
+      },
+      {
+        "title": "Comprobar y mejorar la seguridad de su aplicación",
+        "body": "Solicite revisión previa al lanzamiento, evaluación Web y API o correcciones tras recibir un informe."
       }
     ],
     "ctaEyebrow": "EMPECEMOS CON UNA CONVERSACIÓN",
     "ctaTitle": "Antes de decidir qué construir, cuéntenos cómo funcionan hoy sus operaciones.",
     "ctaBody": "Puede consultarnos incluso si los requisitos aún no están completamente definidos. Juntos ponemos en orden el flujo actual, las restricciones y las prioridades.",
-    "ctaLabel": "Elegir una forma de consulta"
+    "ctaLabel": "Elegir una forma de consulta",
+    "philosophyLinkLabel": "Filosofía y visión de Acecore"
   },
   "itAdvisor": {
     "title": "Ingeniero asesor de IT",
@@ -623,6 +628,26 @@
         "label": "Requisitos y consulta técnica",
         "price": "Presupuesto personalizado",
         "note": "También disponible para revisar operaciones antes del desarrollo, investigar sistemas existentes y revisar la arquitectura."
+      },
+      {
+        "label": "Revisión previa al lanzamiento",
+        "price": "Presupuesto individual",
+        "note": "Arquitectura, exposición pública, secretos, dependencias y diseño de autenticación. Presupuesto tras revisar documentación y entorno."
+      },
+      {
+        "label": "Evaluación de vulnerabilidades Web y API",
+        "price": "Presupuesto individual",
+        "note": "Comprobaciones automáticas y manuales acordadas. Viabilidad y coste según funciones, solicitudes, permisos y entornos."
+      },
+      {
+        "label": "Correcciones y verificación",
+        "price": "Presupuesto individual",
+        "note": "Correcciones, pruebas, publicación y verificación, incluidos informes de terceros. Alcance, plazos y número de reevaluaciones se acuerdan al presupuestar."
+      },
+      {
+        "label": "Apoyo continuo en seguridad",
+        "price": "Presupuesto individual",
+        "note": "Actualizaciones, permisos, revisión de cambios y consultas. Objetivos, frecuencia, horas y trabajo adicional se acuerdan individualmente."
       }
     ]
   },
@@ -1241,11 +1266,137 @@
       ],
       "ctaTitle": "Consultar prioridades de calidad",
       "ctaBody": "Indíquenos la URL y sus inquietudes sobre búsqueda, velocidad, uso o seguridad."
+    },
+    "security": {
+      "title": "Evaluación de seguridad Web y API y apoyo a la remediación",
+      "description": "Para pymes, pequeños equipos SaaS y propietarios de aplicaciones Web creadas con AI o por terceros: revisión previa al lanzamiento, evaluación de vulnerabilidades Web y API, correcciones y apoyo continuo. Confirmamos viabilidad y alcance antes de presupuestar.",
+      "heroEyebrow": "Security / Evaluación y mejora",
+      "heroTitle": "De las dudas antes de publicar\na las mejoras tras la evaluación.",
+      "heroLead": "Para operar con mayor confianza aplicaciones Web desarrolladas internamente, con AI o por terceros. Definimos qué revisar y combinamos evaluación, correcciones y verificación según sus necesidades.",
+      "visual": {
+        "alt": "Una persona responsable y un ingeniero revisan el mismo sitio Web en ordenador y teléfono",
+        "caption": "Revisamos pantallas y mediciones para priorizar mejoras."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Mesa operativa con supervisión, copias, lista de cambios y registro de incidentes",
+          "caption": "Aclaramos arquitectura, permisos e historial de cambios para definir el alcance y las responsabilidades."
+        },
+        "process": {
+          "alt": "Una persona responsable y un ingeniero vuelven a revisar el sitio corregido",
+          "caption": "Verificamos en varios dispositivos y trasladamos los resultados a la siguiente mejora."
+        }
+      },
+      "indexSummary": "Desde la revisión de arquitectura previa al lanzamiento hasta la evaluación Web y API, las correcciones y su verificación.",
+      "indexTopics": [
+        "Revisión previa al lanzamiento",
+        "Evaluación Web y API",
+        "Implementación de correcciones",
+        "Apoyo continuo"
+      ],
+      "introTitle": "Prepare su aplicación para publicarla y operarla.",
+      "introBody": "Apoyo para pymes, pequeños equipos SaaS y otros propietarios de aplicaciones Web. Además de comprobar las pantallas, revisamos autenticación, permisos, tratamiento de datos y configuración pública, y priorizamos según el impacto en el negocio.",
+      "challenges": [
+        {
+          "title": "No sabe si su aplicación está lista para publicarse",
+          "body": "Quiere revisar la arquitectura, la exposición pública y la gestión de secretos de una aplicación creada con AI o por terceros."
+        },
+        {
+          "title": "Le preocupan los permisos y las API tras iniciar sesión",
+          "body": "Quiere confirmar que cada usuario solo acceda a la información y las acciones previstas."
+        },
+        {
+          "title": "Tiene un informe, pero las correcciones no avanzan",
+          "body": "Necesita priorizar resultados, incluidos los de otro proveedor, y avanzar con correcciones, pruebas y verificación tras publicar."
+        }
+      ],
+      "offeringsTitle": "4 tipos de apoyo según su etapa",
+      "offeringsLead": "Puede elegir servicios independientes o combinarlos. Revisamos su tecnología y necesidades, confirmamos viabilidad y alcance, y preparamos un presupuesto.",
+      "offerings": [
+        {
+          "title": "Revisión previa al lanzamiento",
+          "body": "Revisamos la arquitectura y el método de publicación para identificar ajustes y problemas operativos que resolver antes del lanzamiento.",
+          "includes": [
+            "Arquitectura, exposición pública y servicios externos",
+            "Gestión de secretos y dependencias",
+            "Autenticación, permisos y procedimientos de publicación"
+          ],
+          "priceNote": "Presupuesto según la documentación disponible y el entorno objetivo."
+        },
+        {
+          "title": "Evaluación de vulnerabilidades Web y API",
+          "body": "Combinamos comprobaciones automatizadas y revisión manual dentro del alcance acordado para investigar aplicaciones Web y API. La viabilidad de cada objetivo se confirma al presupuestar.",
+          "includes": [
+            "Autenticación, autorización y gestión de sesiones",
+            "Tratamiento de entradas, API y lógica de negocio",
+            "Informe con áreas evaluadas, no verificadas y excluidas"
+          ],
+          "priceNote": "Presupuesto tras revisar funciones, solicitudes, permisos y entornos."
+        },
+        {
+          "title": "Correcciones y verificación",
+          "body": "Realizamos las correcciones, pruebas, publicación y verificación acordadas a partir de los resultados. También puede consultarnos sobre informes de otros proveedores.",
+          "includes": [
+            "Plan de correcciones según impacto y prioridad",
+            "Cambios en código y configuración con pruebas funcionales",
+            "Procedimientos de publicación y verificación de correcciones"
+          ],
+          "priceNote": "El alcance, plazo y número de reevaluaciones se acuerdan al presupuestar."
+        },
+        {
+          "title": "Apoyo continuo en seguridad",
+          "body": "Revisamos dependencias, permisos, ajustes y procedimientos cuando cambia la aplicación. Acordamos la frecuencia de consulta y las horas de trabajo para el apoyo continuo.",
+          "includes": [
+            "Actualización de dependencias y revisión de permisos",
+            "Comprobaciones de cambios y propuestas de mejora",
+            "Consultas y trabajo dentro de los límites acordados"
+          ],
+          "priceNote": "Objetivos, frecuencia, horas y condiciones del trabajo adicional se definen individualmente."
+        }
+      ],
+      "processTitle": "Acordamos el alcance y compartimos resultados y asuntos pendientes.",
+      "processLead": "Las pruebas de penetración, la vigilancia de 24 horas y la respuesta urgente a incidentes quedan fuera del alcance estándar. Su viabilidad se confirma al recibir la consulta.",
+      "process": [
+        {
+          "title": "Consulta y definición del objetivo",
+          "body": "Cuéntenos sobre la aplicación, sus usuarios, sus dudas y sus plazos. Consulte solo sobre sistemas de su propiedad o que esté autorizado a gestionar."
+        },
+        {
+          "title": "Acuerdo escrito del alcance",
+          "body": "Acordamos por escrito los objetivos, el alcance, los entornos, la duración y los permisos necesarios. Aclaramos el entorno de pruebas y los posibles efectos antes de empezar."
+        },
+        {
+          "title": "Evaluación e informe",
+          "body": "El informe recoge alcance evaluado, áreas no verificadas o excluidas, impacto, condiciones de reproducción y prioridades de corrección. Compartimos resultados y un plan de mejora."
+        },
+        {
+          "title": "Correcciones y verificación",
+          "body": "Las correcciones y reevaluaciones se realizan con alcance, plazos y número de pruebas acordados al presupuestar. También definimos asuntos pendientes y comprobaciones futuras."
+        }
+      ],
+      "resourcesTitle": "Notas técnicas para publicar y operar con seguridad",
+      "resourcesLead": "Explicamos decisiones de implementación sobre configuración de distribución, permisos y flujos de publicación.",
+      "resources": [
+        {
+          "title": "Entrega estática segura con Cloudflare Pages",
+          "description": "Cabeceras, CSP, caché y configuración de Pages."
+        },
+        {
+          "title": "Guía de implementación de Sveltia CMS",
+          "description": "Flujo y permisos desde edición hasta revisión, PR y publicación."
+        },
+        {
+          "title": "Arquitectura para ampliar un sitio corporativo con Astro + Cloudflare",
+          "description": "Cómo separar base estática, funciones dinámicas, CMS y revisión y publicación."
+        }
+      ],
+      "ctaTitle": "Consulte sus dudas y qué necesita revisar",
+      "ctaBody": "Describa su aplicación y sus dudas. No necesita enviar contraseñas, claves API ni datos de producción en el formulario inicial."
     }
   },
   "services": {
     "title": "Servicios",
-    "description": "Servicios de Acecore Systems: asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web e interfaces de administración, diseño y producción creativa, CMS, búsqueda, datos y modernización.",
+    "description": "Servicios de Acecore Systems: asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web e interfaces de administración, diseño y producción creativa, CMS, búsqueda, datos y modernización. También ofrecemos evaluación de seguridad Web y API y apoyo a la remediación.",
     "heroTitle": "Desde organizar el problema\nhasta el desarrollo, el diseño y la mejora operativa.",
     "heroLead": "Además de trabajos puntuales, damos prioridad al diseño y la mejora que ayudan a integrar la solución en las operaciones.",
     "entryPoints": [
@@ -1326,6 +1477,15 @@
           "Mejoras de velocidad y UI e investigación de fallos",
           "Flujos de desarrollo y operación basados en GitHub"
         ]
+      },
+      {
+        "title": "Evaluación de seguridad Web y API y apoyo a la remediación",
+        "body": "Para aplicaciones Web de pymes y pequeños equipos SaaS, ofrecemos revisión previa al lanzamiento, evaluación Web y API, correcciones y verificación dentro de un alcance acordado.",
+        "examples": [
+          "Revisión previa de aplicaciones creadas con AI o por terceros",
+          "Evaluación de vulnerabilidades de autenticación, permisos y API",
+          "Correcciones y verificación a partir de informes de otros proveedores"
+        ]
       }
     ],
     "process": [
@@ -1345,7 +1505,9 @@
         "title": "Lanzamiento y mejora",
         "body": "Seguimos apoyando la resolución de fallos, nuevas solicitudes y mejora operativa."
       }
-    ]
+    ],
+    "designContextNote": "La preparación del departamento Acecore Design es independiente de las consultas sobre los servicios creativos actualmente disponibles. Systems recibe las consultas sobre el diseño y la producción creativa descritos en esta página.",
+    "designContextLinkLabel": "Sobre el departamento Acecore Design"
   },
   "workDetail": {
     "title": "Funciones y base operativa del sitio corporativo de Acecore",

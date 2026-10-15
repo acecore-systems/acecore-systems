@@ -81,6 +81,7 @@ const cmsJsonPaths = [
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
   "src/data/service-details/website.json",
+  "src/data/service-details/security.json",
   "src/data/work-details/acecore-site-platform.json",
 ];
 
@@ -258,6 +259,11 @@ const serviceSources = [
     route: "/services/operations/",
     page: "src/pages/services/operations.astro",
     data: "src/data/service-details/operations.json",
+  },
+  {
+    route: "/services/security/",
+    page: "src/pages/services/security.astro",
+    data: "src/data/service-details/security.json",
   },
 ];
 const advisorSource = {

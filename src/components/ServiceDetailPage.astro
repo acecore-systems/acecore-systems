@@ -28,7 +28,8 @@ interface Props {
   data: ServiceDetail;
   canonicalPath: string;
   serviceKey: string;
-  consultationServiceKey?: "business-system" | "it-advisor" | "website";
+  consultationServiceKey?:
+    "business-system" | "it-advisor" | "website" | "security";
   locale?: Locale;
 }
 
@@ -46,6 +47,7 @@ const {
   siteFunctions: localizedSiteFunctions,
   siteQuality,
   operations,
+  security,
 } = content.serviceDetails;
 const text = getUi(locale);
 const canonicalPath = getLocalizedUrl(canonicalInput, locale);
@@ -79,6 +81,10 @@ const serviceIndex = [
   {
     href: getLocalizedUrl("/services/operations/", locale),
     data: operations,
+  },
+  {
+    href: getLocalizedUrl("/services/security/", locale),
+    data: security,
   },
 ];
 const relatedServices = serviceIndex.filter(
@@ -468,8 +474,7 @@ const jsonLd = [
           "detail-related-list",
           {
             "detail-related-list--three": relatedServices.length === 3,
-            "detail-related-list--four": relatedServices.length === 4,
-            "detail-related-list--five": relatedServices.length === 5,
+            "detail-related-list--grid": relatedServices.length >= 4,
           },
         ]}
       >
@@ -529,38 +534,32 @@ const jsonLd = [
       color: var(--ink-soft);
       line-height: 1.9;
     }
-    .detail-related-list--five {
-      gap: 1px;
-      background: var(--line);
-    }
-    .detail-related-list--five .detail-related {
-      border: 0;
-      background: var(--paper);
-    }
     @media (max-width: 680px) {
       .website-terms article {
         grid-template-columns: 1fr;
         gap: 10px;
       }
     }
-    .detail-related-list--four .detail-related {
+    .detail-related-list--grid .detail-related {
       border-bottom: 1px solid var(--line);
     }
 
-    .detail-related-list--four .detail-related:nth-child(even) {
+    .detail-related-list--grid .detail-related:nth-child(even) {
       border-right: 0;
     }
 
-    .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+    .detail-related-list--grid .detail-related:last-child,
+    .detail-related-list--grid
+      .detail-related:nth-last-child(2):nth-child(odd) {
       border-bottom: 0;
     }
 
     @media (max-width: 860px) {
-      .detail-related-list--four .detail-related:nth-last-child(-n + 2) {
+      .detail-related-list--grid .detail-related:nth-last-child(-n + 2) {
         border-bottom: 1px solid var(--line);
       }
 
-      .detail-related-list--four .detail-related:last-child {
+      .detail-related-list--grid .detail-related:last-child {
         border-bottom: 0;
       }
     }

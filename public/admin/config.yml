@@ -87,6 +87,11 @@ collections:
             }
           - { name: philosophyTitle, label: 設計思想見出し, widget: string }
           - { name: philosophyLead, label: 設計思想説明, widget: text }
+          - {
+              name: philosophyLinkLabel,
+              label: 企業理念リンク文言,
+              widget: string,
+            }
           - label: 設計原則
             name: designPrinciples
             widget: list
@@ -122,6 +127,16 @@ collections:
         file: src/data/services.json
         format: json
         fields:
+          - {
+              name: designContextNote,
+              label: Design部門と制作相談の補足,
+              widget: text,
+            }
+          - {
+              name: designContextLinkLabel,
+              label: Design部門リンク文言,
+              widget: string,
+            }
           - { name: title, label: タイトル, widget: string }
           - { name: description, label: 説明, widget: text }
           - { name: heroTitle, label: ヒーロータイトル, widget: string }

@@ -11,6 +11,7 @@ import ItAdvisorPage from "../services/it-advisor.astro";
 import WebsitePage from "../services/website.astro";
 import { getAvailableRouteLocales } from "../../lib/insight-links.mjs";
 import OperationsPage from "../services/operations.astro";
+import SecurityPage from "../services/security.astro";
 import SiteFunctionsPage from "../services/site-functions.astro";
 import SiteQualityPage from "../services/site-quality.astro";
 import WorksPage from "../works.astro";
@@ -24,6 +25,7 @@ const pages = {
   "it-advisor": ItAdvisorPage,
   website: WebsitePage,
   operations: OperationsPage,
+  security: SecurityPage,
   "site-functions": SiteFunctionsPage,
   "site-quality": SiteQualityPage,
   pricing: PricingPage,
@@ -50,6 +52,7 @@ export function getStaticPaths() {
     { path: "services/it-advisor", pageKey: "it-advisor" },
     { path: "services/website", pageKey: "website" },
     { path: "services/operations", pageKey: "operations" },
+    { path: "services/security", pageKey: "security" },
     { path: "services/site-functions", pageKey: "site-functions" },
     { path: "services/site-quality", pageKey: "site-quality" },
     { path: "pricing", pageKey: "pricing" },

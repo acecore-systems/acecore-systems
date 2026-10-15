@@ -62,7 +62,7 @@ const insightUrl =
   /^(?:(https:\/\/(?:www\.)?(?:acecore\.net|systems\.acecore\.net))?)\/(?:(ja|en|zh-cn|es|pt|fr|ko|de|ru)\/)?(?:blog|insights)\/([^/?#]+)\/?([?#].*)?$/;
 const systemsOrigin = "https://systems.acecore.net";
 const systemsPagePath =
-  /^\/(?:services(?:\/(?:development|it-advisor|operations|site-functions|site-quality|website))?|pricing|guide|works(?:\/acecore-site-platform)?|contact(?:\/thanks)?|privacy)\/?$/u;
+  /^\/(?:services(?:\/(?:development|it-advisor|operations|security|site-functions|site-quality|website))?|pricing|guide|works(?:\/acecore-site-platform)?|contact(?:\/thanks)?|privacy)\/?$/u;
 
 export function getInsightSlug(id) {
   const normalized = id.replace(/\.md$/i, "");

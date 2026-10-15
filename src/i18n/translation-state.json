@@ -8,11 +8,11 @@
       "sourceHash": "edbca9b6a12c253644f9ab8112ff2bed96e9d9f34c23ab8f38d04d058cf072c7",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/services/services/7": {
+    "/services/services/8": {
       "sourceHash": "d82868e6deae330cd5c0583dacd42de0299248dda61c6a4446923b6b3c42d985",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/home/consultationSituations/5": {
+    "/home/consultationSituations/6": {
       "sourceHash": "9fe5d5ab65628d6110b4be485d1da6714e4d6a88f40bd9332c33f32b49d8c9ca",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
@@ -20,31 +20,31 @@
       "sourceHash": "0152b166c02c2f276dfcd5ed65cc6af22858d7c27145d1248cf0465ec4ab340b",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/pricing/items/23": {
+    "/pricing/items/27": {
       "sourceHash": "88b51e28b146035843dac3ed6966859640bc4438b8c5152858a28fefcdf3213e",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/pricing/items/24": {
+    "/pricing/items/28": {
       "sourceHash": "bc37f05a105f7e9203413af515eff2f63eae5b87aa2f5bf189875d3bb75cc595",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/pricing/items/25": {
+    "/pricing/items/29": {
       "sourceHash": "42de81e9d2504b5db6280e42c4402f54b07104445af4b2a6fa124709760a9767",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/pricing/items/26": {
+    "/pricing/items/30": {
       "sourceHash": "843e69448ffc5b85aa36d5da6b69463b482059af983a5dc109d205532578ce76",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/pricing/items/27": {
+    "/pricing/items/31": {
       "sourceHash": "7d338cd380dbadb3761485a3ade1af52c2ee7d8be088dea1c818eb303faae55c",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
-    "/pricing/items/28": {
+    "/pricing/items/32": {
       "sourceHash": "30cf9320d2c3b94e09dfeefd6e47edaaa374b675891341ef912bba13b4427f02",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     }
   },
-  "sourceHash": "3bd8d48b5f46edfcaa367ea34e29857c9f540625734c956f30135a2b75233420",
+  "sourceHash": "ebf2f80bbc406cd1dfb49baac28506573a5d9cb3e7b17d26d9b74a14c924e44d",
   "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }

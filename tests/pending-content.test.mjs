@@ -208,6 +208,40 @@ test("未知path、古いhash、不正locale、型違い、部分翻訳は待機
   }
 });
 
+test("翻訳待ちの日本語を改訂したら古いhashを拒否し、状態更新後も未翻訳を公開しない", () => {
+  const target = fixture();
+  try {
+    const path = "src/data/service-details/website.json";
+    const website = readJson(target, path);
+    website.heroLead += " 改訂した文章。";
+    writeJson(target, path, website);
+    assert.throws(
+      () => validatePendingContent(target, state),
+      /pending sourceHash is stale/u,
+    );
+    const next = createTranslationState(target, state);
+    validatePendingContent(target, next);
+    assert.notEqual(
+      next.pendingContent[websitePointer].sourceHash,
+      state.pendingContent[websitePointer].sourceHash,
+    );
+    assert.deepEqual(
+      next.pendingContent[websitePointer].locales,
+      translatedLocales,
+    );
+    assert.deepEqual(
+      getAvailableContentRouteLocales(
+        "/services/website/",
+        locales,
+        next.pendingContent,
+      ),
+      ["ja"],
+    );
+  } finally {
+    removeFixture(target);
+  }
+});
+
 test("Batchの模擬収集からpending解除まで進み、関連項目が揃った言語だけrouteが有効になる", () => {
   const target = fixture();
   try {
@@ -255,7 +289,7 @@ test("Batchの模擬収集からpending解除まで進み、関連項目が揃�
       );
       assert.equal(
         isContentUnavailable(
-          "/pricing/items/23",
+          "/pricing/items/27",
           locale,
           current.pendingContent,
         ),
@@ -287,11 +321,34 @@ test("既存の料金・サービスは配列位置を保ち、英語のラベ�
   assert.equal(tree.pricing.items[0].price, "月額3万円〜");
   assert.equal(tree.services.entryPoints[0].id, "development");
   assert.equal(tree.services.entryPoints[1].id, "it-advisor");
-  assert.equal(en.pricing.items.length, 23);
+  assert.equal(en.pricing.items.length, 27);
+  assert.deepEqual(
+    tree.pricing.items.slice(23, 27).map((item) => item.key),
+    [
+      "security-pre-release-review",
+      "security-web-api-assessment",
+      "security-remediation",
+      "security-ongoing-support",
+    ],
+  );
+  assert.deepEqual(
+    en.pricing.items.slice(0, 27),
+    readJson(root, "src/i18n/content/en.json").pricing.items.slice(0, 27),
+  );
+  assert.equal(tree.services.services[7].id, "security");
+  assert.equal(tree.services.services[8].id, "website");
+  assert.equal(
+    isContentUnavailable("/pricing/items/23", "en", state.pendingContent),
+    false,
+  );
+  assert.equal(
+    isContentUnavailable("/pricing/items/27", "en", state.pendingContent),
+    true,
+  );
   assert.equal(en.services.entryPoints.length, 2);
   assert.equal(en.contact.faqs.length, 3);
   assert.equal(
-    tree.pricing.items.slice(0, 23).every((item) => item.track !== "website"),
+    tree.pricing.items.slice(0, 27).every((item) => item.track !== "website"),
     true,
   );
   assert.equal(

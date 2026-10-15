@@ -35,7 +35,7 @@
   ],
   "philosophyEyebrow": "DESIGN PHILOSOPHY",
   "philosophyTitle": "見える部分と、見えない部分を、同じ精度で。",
-  "philosophyLead": "顧客との接点から、業務を支える仕組み、続けるための運用まで。現場・仕組み・運用を切り離さず、同じ精度で整えます。",
+  "philosophyLead": "Acecoreは「世界を次のステージへ」を掲げ、本質的でない負担を減らし、「やりたいこと」への挑戦を後押しする社会を目指しています。Systemsは、現場・仕組み・運用を一体で整え、技術でその一歩を支えます。",
   "designPrinciples": [
     {
       "number": "01",
@@ -83,6 +83,11 @@
       "href": "/guide/"
     },
     {
+      "title": "アプリの安全性を確認し、改善したい",
+      "body": "公開前の確認やWeb・APIの診断、診断報告を受けた後の修正まで相談したい。",
+      "href": "/services/security/"
+    },
+    {
       "title": "ホームページの制作や更新を任せたい",
       "body": "小規模事業者・店舗・教室向けに、文章の整理から公開、日々の文章・写真・お知らせの更新まで相談したい。",
       "href": "/services/website/"
@@ -92,5 +97,6 @@
   "ctaTitle": "作るものより先に、今の業務を聞かせてください。",
   "ctaBody": "要件が固まりきっていない段階でも相談できます。現状の流れ、制約、優先順位から一緒に整理します。",
   "ctaLabel": "相談方法を選ぶ",
-  "ctaHref": "/guide/"
+  "ctaHref": "/guide/",
+  "philosophyLinkLabel": "Acecoreの企業理念・目指す姿"
 }

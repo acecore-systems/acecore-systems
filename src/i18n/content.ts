@@ -6,6 +6,7 @@ import pricing from "../data/pricing.json";
 import privacy from "../data/privacy.json";
 import development from "../data/service-details/development.json";
 import operations from "../data/service-details/operations.json";
+import security from "../data/service-details/security.json";
 import siteFunctions from "../data/service-details/site-functions.json";
 import siteQuality from "../data/service-details/site-quality.json";
 import website from "../data/service-details/website.json";
@@ -41,6 +42,7 @@ const japaneseContent = {
   serviceDetails: {
     development,
     operations,
+    security,
     siteFunctions,
     siteQuality,
     website,
