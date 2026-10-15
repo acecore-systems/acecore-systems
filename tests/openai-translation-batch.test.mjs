@@ -407,3 +407,52 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(script, /gpt-6-luna/u);
   assert.match(script, /reasoning: \{ effort: "max" \}/u);
 });
+
+test("セキュリティサービスのBatch翻訳を専用の入れ子へ反映し、既存サービスを保つ", () => {
+  const sourcePath = "src/data/service-details/security.json";
+  const source = {
+    title: "安全性を確認する",
+    offerings: [
+      { id: "review", pricingKeys: ["security-review"], title: "確認する" },
+    ],
+  };
+  const request = createStructuredRequest(
+    { ...metadata, kind: "content", sourcePath },
+    source,
+  );
+  const entries = JSON.parse(request.body.input).entries;
+  const writes = new Map();
+  const previous = {
+    serviceDetails: { operations: { title: "Existing operations" } },
+  };
+  applyBatchTranslations(
+    [
+      batchResult(request, {
+        translations: entries.map((entry) => ({
+          id: entry.id,
+          text: entry.source
+            .replace("安全性を確認する", "Check security")
+            .replace("確認する", "Review"),
+        })),
+      }),
+    ],
+    sourceHash,
+    {
+      getSourceValue: () => source,
+      readFile: () => JSON.stringify(previous),
+      writeFile: (filePath, value) => {
+        writes.set(filePath, JSON.parse(value));
+        return true;
+      },
+    },
+  );
+  assert.deepEqual(writes.get("src/i18n/content/en.json"), {
+    serviceDetails: {
+      operations: previous.serviceDetails.operations,
+      security: {
+        title: "Check security",
+        offerings: [{ title: "Review" }],
+      },
+    },
+  });
+});

@@ -25,6 +25,7 @@ const CONTENT_FILES = new Set([
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
+  "src/data/service-details/security.json",
   "src/data/work-details/acecore-site-platform.json",
 ]);
 

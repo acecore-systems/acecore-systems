@@ -10,7 +10,8 @@ interface Props {
 }
 
 const locale = Astro.props.locale ?? "ja";
-const data = getLocalizedContent(locale).contact;
+const content = getLocalizedContent(locale);
+const data = content.contact;
 const formText = getContactFormText(locale);
 ---
 
@@ -57,6 +58,7 @@ const formText = getContactFormText(locale);
         method="post"
         data-consultation-suffix={formText.consultationSuffix}
         data-submitting-text={formText.submitting}
+        data-security-service-label={content.serviceDetails.security.title}
       >
         <input type="hidden" name="locale" value={locale} />
         <input type="hidden" name="submission_id" value="" />
@@ -209,6 +211,7 @@ const formText = getContactFormText(locale);
         "site-functions": { category: "Webサイト機能・品質改善について" },
         "site-quality": { category: "Webサイト機能・品質改善について" },
         operations: { category: "保守・運用改善について" },
+        security: { category: "Webサイト機能・品質改善について" },
         web: { category: "Webアプリ・管理画面について" },
         website: { category: "Webアプリ・管理画面について" },
         integration: { category: "データ連携・自動化について" },
@@ -233,6 +236,7 @@ const formText = getContactFormText(locale);
         integration: "データ連携・自動化について",
         automation: "データ連携・自動化について",
         operations: "保守・運用改善について",
+        security: "Webサイト機能・品質改善について",
         estimate: "見積り相談",
         pricing: "見積り相談",
         quote: "見積り相談",
@@ -258,7 +262,9 @@ const formText = getContactFormText(locale);
 
       if (subject && !subject.value.trim()) {
         const selectedLabel =
-          category?.selectedOptions[0]?.textContent?.trim() || "";
+          (serviceKey === "security" && form.dataset.securityServiceLabel) ||
+          category?.selectedOptions[0]?.textContent?.trim() ||
+          "";
         if (selectedLabel) {
           subject.value = `${selectedLabel} — ${form.dataset.consultationSuffix || ""}`;
         }

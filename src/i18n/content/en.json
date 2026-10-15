@@ -1,7 +1,7 @@
 {
   "contact": {
     "title": "Contact",
-    "description": "We welcome consultations about IT advisory services, AI adoption, deployment, business systems, Web apps, design and creative production, and automating existing operations—even before the requirements are finalized.",
+    "description": "We welcome consultations about IT advisory services, AI adoption, deployment, business systems, Web apps, design and creative production, and automating existing operations—even before the requirements are finalized. We also support Web/API security assessment and remediation.",
     "heroTitle": "You can talk to us before your requirements are finalized.",
     "heroLead": "Tell us about your current operations, challenges, tools, and preferred timing.",
     "formLead": "Initial consultations and estimates are free. We can also help organize the requirements before a formal estimate. We usually respond within 1–2 business days.",
@@ -241,6 +241,10 @@
       {
         "title": "You want to clarify challenges before defining requirements",
         "body": "You want to organize your goals, users, constraints, and priorities, then decide on a realistic way forward."
+      },
+      {
+        "title": "Check and improve your app’s security",
+        "body": "Get help with pre-release reviews, Web/API assessments and fixes after receiving a report."
       }
     ],
     "ctaEyebrow": "START WITH A CONVERSATION",
@@ -624,6 +628,26 @@
         "label": "Requirements and Technical Consultation",
         "price": "Custom estimate",
         "note": "Also available for pre-development workflow review, existing-system investigation, and architecture review."
+      },
+      {
+        "label": "Pre-release review",
+        "price": "Tailored quote",
+        "note": "Architecture, public exposure, secret management, dependencies and authentication design. Quoted after reviewing documentation and the environment."
+      },
+      {
+        "label": "Web & API vulnerability assessment",
+        "price": "Tailored quote",
+        "note": "Automated and manual checks within an agreed scope. Feasibility and cost depend on functions, requests, permissions and environments."
+      },
+      {
+        "label": "Remediation and verification",
+        "price": "Tailored quote",
+        "note": "Fixes, testing, release and verification, including findings from other providers. Retest scope, deadlines and counts are agreed when quoting."
+      },
+      {
+        "label": "Ongoing security support",
+        "price": "Tailored quote",
+        "note": "Updates, permission reviews, change checks and consultation. Targets, frequency, working hours and extra work are agreed individually."
       }
     ]
   },
@@ -1247,11 +1271,137 @@
       ],
       "ctaTitle": "Discuss website-quality priorities",
       "ctaBody": "Tell us the target URL and any concerns about search, speed, interaction, or safety."
+    },
+    "security": {
+      "title": "Web & API Security Assessment and Remediation Support",
+      "description": "For small businesses, small SaaS teams and owners of AI-built or outsourced Web apps: pre-release reviews, Web/API vulnerability assessments, remediation and ongoing support. We confirm feasibility and scope before providing a tailored quote.",
+      "heroEyebrow": "Security / Assessment and remediation",
+      "heroTitle": "From pre-release concerns\nto improvements after assessment.",
+      "heroLead": "Operate Web apps built in-house, with AI or by an external developer with greater confidence. We clarify what needs checking and combine assessment, fixes and verification to match your needs.",
+      "visual": {
+        "alt": "A business lead and engineer inspect the same website on a computer and smartphone",
+        "caption": "We review the user-facing screens and measurement results together to prioritize improvements."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "An operations desk with monitoring screens, backup equipment, a change checklist, and an incident log",
+          "caption": "We clarify architecture, permissions and change history to define the scope and responsibilities."
+        },
+        "process": {
+          "alt": "A business lead and engineer recheck the updated website on a computer and smartphone",
+          "caption": "We verify rendering and operation on multiple devices after changes and carry the findings into the next improvements."
+        }
+      },
+      "indexSummary": "Support from pre-release architecture reviews through Web/API assessment, fixes and verification.",
+      "indexTopics": [
+        "Pre-release review",
+        "Web & API assessment",
+        "Remediation",
+        "Ongoing support"
+      ],
+      "introTitle": "Get your app ready for release and operation.",
+      "introBody": "Support for small businesses, small SaaS teams and other Web app owners. Beyond working screens, we review authentication, permissions, data handling and public configuration, then prioritize fixes by business impact.",
+      "challenges": [
+        {
+          "title": "Unsure whether your app is ready to go live",
+          "body": "You want to check the architecture, public exposure and secret management of an AI-built or outsourced app."
+        },
+        {
+          "title": "Concerned about permissions and APIs after login",
+          "body": "You want to verify that each user can only access the intended information and actions."
+        },
+        {
+          "title": "You have an assessment report, but fixes are stalled",
+          "body": "You need to prioritize findings, including another provider's, and proceed through fixes, testing and post-release verification."
+        }
+      ],
+      "offeringsTitle": "4 types of support to fit your current stage",
+      "offeringsLead": "Choose individual services or a combination. We review your technology and needs, confirm feasibility and scope, then prepare a quote.",
+      "offerings": [
+        {
+          "title": "Pre-release review",
+          "body": "We review your app's architecture and release approach, then identify configuration and operational issues to address before release.",
+          "includes": [
+            "Architecture, public exposure and external services",
+            "Secret management and dependencies",
+            "Authentication, permissions and release procedures"
+          ],
+          "priceNote": "Quoted according to the available documentation and target environment."
+        },
+        {
+          "title": "Web & API vulnerability assessment",
+          "body": "We combine automated checks and manual assessment within the agreed scope to investigate Web apps and APIs. Feasibility for each target is confirmed when quoting.",
+          "includes": [
+            "Authentication, authorization and session management",
+            "Input handling, APIs and business logic",
+            "A report stating the assessed, unverified and excluded areas"
+          ],
+          "priceNote": "Quoted after reviewing functions, requests, permissions and environments."
+        },
+        {
+          "title": "Remediation and verification",
+          "body": "We carry out agreed fixes, testing, release and verification based on the findings. You can also consult us about remediation following another provider's report.",
+          "includes": [
+            "Fix plans based on impact and priority",
+            "Code and configuration changes with functional tests",
+            "Release procedures and verification of fixes"
+          ],
+          "priceNote": "Retest scope, deadlines and number of retests are agreed when quoting."
+        },
+        {
+          "title": "Ongoing security support",
+          "body": "We review dependencies, permissions, settings and procedures as your app changes. Consultation frequency and working hours are agreed for ongoing support.",
+          "includes": [
+            "Dependency updates and permission reviews",
+            "Checks for changes and a list of improvements",
+            "Consultation and work within agreed limits"
+          ],
+          "priceNote": "Targets, frequency, working hours and conditions for extra work are defined individually."
+        }
+      ],
+      "processTitle": "Agree on scope, then share findings and remaining issues.",
+      "processLead": "Penetration testing, 24-hour monitoring and emergency incident response are outside the standard scope. Feasibility is checked at intake.",
+      "process": [
+        {
+          "title": "Discuss and define the target",
+          "body": "Tell us about the app, its users, your concerns and timing. Please consult us only about systems you own or are authorized to manage."
+        },
+        {
+          "title": "Agree on scope in writing",
+          "body": "We agree in writing on targets, scope, environments, duration and required permissions. We clarify the test environment and potential impact before starting."
+        },
+        {
+          "title": "Assessment and reporting",
+          "body": "The report records assessed scope, unverified and excluded areas, impact, reproduction conditions and remediation priorities. We share findings and an improvement plan."
+        },
+        {
+          "title": "Remediation and verification",
+          "body": "Fixes and retests proceed with scope, deadlines and retest counts agreed when quoting. We also clarify remaining issues and future checks."
+        }
+      ],
+      "resourcesTitle": "Technical notes for secure release and operation",
+      "resourcesLead": "Read about implementation decisions for delivery settings, permissions and release workflows.",
+      "resources": [
+        {
+          "title": "Secure Static-Site Delivery with Cloudflare Pages",
+          "description": "Covers security headers, CSP, caching, and Pages delivery settings."
+        },
+        {
+          "title": "Sveltia CMS Implementation Guide",
+          "description": "An overview of the operational flow and permission design from editing through review, PR, and publication."
+        },
+        {
+          "title": "Architecture for Extending a Corporate Site with Astro + Cloudflare",
+          "description": "An overview of how to separate the static publishing foundation, dynamic features, CMS, and review and publishing flows."
+        }
+      ],
+      "ctaTitle": "Discuss your concerns and what to check",
+      "ctaBody": "Tell us about your app and concerns. You do not need to send passwords, API keys or production data in the initial form."
     }
   },
   "services": {
     "title": "Services",
-    "description": "Acecore Systems provides IT advisory services, AI adoption and operational improvement, deployment support, business-system development, Web apps and admin interfaces, design and creative production, CMS, search, data use, and existing-system improvement.",
+    "description": "Acecore Systems provides IT advisory services, AI adoption and operational improvement, deployment support, business-system development, Web apps and admin interfaces, design and creative production, CMS, search, data use, and existing-system improvement. We also support Web/API security assessment and remediation.",
     "heroTitle": "From organizing the problem\nto development, design, and operational improvement.",
     "heroLead": "Beyond one-time production and development, we emphasize design and improvement that help the solution take root in daily operations.",
     "entryPoints": [
@@ -1331,6 +1481,15 @@
           "Legacy-system assessment and phased migration",
           "Performance and UI improvements and incident investigation",
           "GitHub-based development and operational workflows"
+        ]
+      },
+      {
+        "title": "Web & API Security Assessment and Remediation Support",
+        "body": "For Web apps owned by small businesses and small SaaS teams, we support pre-release review, Web/API assessment, fixes and verification within an agreed scope.",
+        "examples": [
+          "Pre-release checks for AI-built or outsourced apps",
+          "Vulnerability assessments of authentication, permissions and APIs",
+          "Remediation and verification based on another provider’s report"
         ]
       }
     ],

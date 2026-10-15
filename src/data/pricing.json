@@ -187,6 +187,38 @@
       "price": "個別見積り",
       "note": "開発前の業務整理、既存システム調査、構成レビューにも対応します。",
       "detailUrl": "/services/operations/#discovery"
+    },
+    {
+      "key": "security-pre-release-review",
+      "track": "it-advisor",
+      "label": "セキュリティ公開前レビュー",
+      "price": "個別見積り",
+      "note": "構成、公開範囲、秘密管理、依存関係、認証設計など。確認資料と対象環境を伺って見積ります。",
+      "detailUrl": "/services/security/#pre-release-review"
+    },
+    {
+      "key": "security-web-api-assessment",
+      "track": "it-advisor",
+      "label": "Web・API脆弱性診断",
+      "price": "個別見積り",
+      "note": "合意した範囲の自動診断と手動確認。機能、リクエスト、権限、環境ごとの実施可否と費用を確認します。",
+      "detailUrl": "/services/security/#web-api-assessment"
+    },
+    {
+      "key": "security-remediation",
+      "track": "development",
+      "label": "セキュリティ改善実装・再確認",
+      "price": "個別見積り",
+      "note": "他社報告も含めた修正、テスト、公開、再確認。再診断の対象・期限・回数は見積り時に合意します。",
+      "detailUrl": "/services/security/#remediation"
+    },
+    {
+      "key": "security-ongoing-support",
+      "track": "it-advisor",
+      "label": "継続セキュリティ支援",
+      "price": "個別見積り",
+      "note": "更新、権限、変更時の確認と相談。対象、頻度、作業時間、追加対応の条件を個別に定めます。",
+      "detailUrl": "/services/security/#ongoing-support"
     }
   ]
 }

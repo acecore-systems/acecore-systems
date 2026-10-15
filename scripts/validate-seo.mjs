@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { load as loadHtml } from "cheerio";
 
 import { insightSlugs } from "../src/lib/insight-links.mjs";
 
@@ -32,6 +33,11 @@ const focusedServices = [
     route: "/services/operations/",
     pagePath: "dist/services/operations/index.html",
     data: readJson("src/data/service-details/operations.json"),
+  },
+  {
+    route: "/services/security/",
+    pagePath: "dist/services/security/index.html",
+    data: readJson("src/data/service-details/security.json"),
   },
 ];
 const guideData = readJson("src/data/guide.json");
@@ -505,8 +511,16 @@ for (const service of focusedServices) {
       `${service.route} ${key} visual`,
     );
   }
+  const serviceCard = loadHtml(services)(
+    `a.service-detail-index__item[href="${service.route}"]`,
+  );
+  assert.equal(
+    serviceCard.length,
+    1,
+    `services ${service.route}: exactly one detail card is required`,
+  );
   validateServiceVisual(
-    services,
+    serviceCard.html() ?? "",
     service.data.visual,
     `services ${service.route} card`,
   );
