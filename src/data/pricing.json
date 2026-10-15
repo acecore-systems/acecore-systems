@@ -219,6 +219,54 @@
       "price": "個別見積り",
       "note": "更新、権限、変更時の確認と相談。対象、頻度、作業時間、追加対応の条件を個別に定めます。",
       "detailUrl": "/services/security/#ongoing-support"
+    },
+    {
+      "key": "website-launch",
+      "track": "website",
+      "label": "開設プラン",
+      "price": "165,000円",
+      "note": "固定ページ5ページまで。標準デザイン、提供資料からの文章整理、スマートフォン対応、お知らせ、基本SEO、フォーム、公開・更新案内。 税込の目安。外部費用は実費別途、合意した制作範囲を超える追加要望は着手前に見積り。",
+      "detailUrl": "/services/website/#launch"
+    },
+    {
+      "key": "website-renewal",
+      "track": "website",
+      "label": "充実・リニューアルプラン",
+      "price": "330,000円〜",
+      "note": "固定ページ10ページまでを基準に、合意したヒアリングと文章・構成案。既存コンテンツの移行は別途範囲を見積ります。 税込の目安。外部費用は実費別途、合意した制作範囲を超える追加要望は着手前に見積り。",
+      "detailUrl": "/services/website/#renewal"
+    },
+    {
+      "key": "website-custom",
+      "track": "website",
+      "label": "個別制作・機能追加",
+      "price": "個別見積り",
+      "note": "独自デザイン、予約、決済、会員、多言語、大量の移行など。 税込の目安。外部費用は実費別途、合意した制作範囲を超える追加要望は着手前に見積り。",
+      "detailUrl": "/services/website/#custom"
+    },
+    {
+      "key": "website-care",
+      "track": "website",
+      "label": "ホームページ保守",
+      "price": "月額5,500円",
+      "note": "自動の稼働確認・バックアップ、定期点検、初期切り分け・所定の復元と連絡を月30分まで。内容更新は含みません。 税込の目安。外部費用は実費別途、時間超過は着手前に見積り。",
+      "detailUrl": "/services/website/#care"
+    },
+    {
+      "key": "website-updates",
+      "track": "website",
+      "label": "更新おまかせ",
+      "price": "月額11,000円",
+      "note": "保守月30分に、確認・やり取り・公開を含む文章・画像・お知らせの更新月60分を追加（合計月90分まで）。 税込の目安。外部費用は実費別途、時間超過は着手前に見積り。",
+      "detailUrl": "/services/website/#updates"
+    },
+    {
+      "key": "website-growth",
+      "track": "website",
+      "label": "活用・改善",
+      "price": "月額33,000円〜",
+      "note": "保守、更新、アクセス解析、改善、相談と連絡をすべて合計月3時間まで。 税込の目安。外部費用は実費別途、時間超過は着手前に見積り。",
+      "detailUrl": "/services/website/#growth"
     }
   ]
 }

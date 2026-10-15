@@ -37,6 +37,7 @@ const state = JSON.parse(
 );
 const pendingState = {
   ...state,
+  pendingContent: undefined,
   pendingInsights: {
     [slug]: {
       sourceHash: calculateInsightSourceHash(root, slug),

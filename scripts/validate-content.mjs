@@ -80,6 +80,7 @@ const cmsJsonPaths = [
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
+  "src/data/service-details/website.json",
   "src/data/service-details/security.json",
   "src/data/work-details/acecore-site-platform.json",
 ];
@@ -235,6 +236,11 @@ assert.deepEqual(
 
 const serviceSources = [
   {
+    route: "/services/website/",
+    page: "src/pages/services/website.astro",
+    data: "src/data/service-details/website.json",
+  },
+  {
     route: "/services/development/",
     page: "src/pages/services/development.astro",
     data: "src/data/service-details/development.json",
@@ -306,7 +312,7 @@ const requiredServiceTechnicalArticles = [
 ];
 const pricing = readJson("src/data/pricing.json");
 const pricingKeys = new Map();
-const consultationTracks = new Set(["development", "it-advisor"]);
+const consultationTracks = new Set(["development", "it-advisor", "website"]);
 const pricingTracks = new Set();
 
 for (const item of pricing.items) {
@@ -708,7 +714,7 @@ assert.equal(
 );
 assert.deepEqual(
   new Set(guideRoutes.map((route) => route.id)),
-  consultationTracks,
+  new Set(["development", "it-advisor"]),
   "src/data/guide.json: routes must separate development and IT advisor",
 );
 for (const [index, route] of guideRoutes.entries()) {
@@ -740,7 +746,7 @@ for (const [index, step] of guideJourney.entries()) {
 }
 assert.deepEqual(
   new Set(services.entryPoints.map((item) => item.id)),
-  new Set(["development", "it-advisor"]),
+  new Set(["development", "it-advisor", "website"]),
   "src/data/services.json: entryPoints must separate development and IT advisor",
 );
 for (const [index, entryPoint] of services.entryPoints.entries()) {

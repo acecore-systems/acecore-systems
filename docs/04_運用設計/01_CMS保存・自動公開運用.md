@@ -63,6 +63,7 @@ private keyはGitHubから取得したPKCS#1またはPKCS#8 PEMをProduction enc
 - `src/data/home.json`
 - `src/data/services.json`
 - `src/data/it-advisor.json`
+- `src/data/service-details/website.json`（ホームページ制作・更新サポート）
 - `src/data/pricing.json`
 - `src/data/guide.json`
 - `src/data/works.json`

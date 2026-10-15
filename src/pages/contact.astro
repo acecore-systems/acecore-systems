@@ -12,6 +12,7 @@ interface Props {
 const locale = Astro.props.locale ?? "ja";
 const content = getLocalizedContent(locale);
 const data = content.contact;
+const websiteTitle = content.serviceDetails.website?.title;
 const formText = getContactFormText(locale);
 ---
 
@@ -53,6 +54,9 @@ const formText = getContactFormText(locale);
       </aside>
       <form
         id="contact-form"
+        data-website-category={websiteTitle
+          ? "ホームページ制作・更新について"
+          : undefined}
         class="contact-form"
         action={site.contactFormAction}
         method="post"
@@ -83,7 +87,17 @@ const formText = getContactFormText(locale);
           <select id="category" name="お問い合わせ種別" required>
             <option value="">{formText.select}</option>
             {
-              formText.categoryOptions.map((option) => (
+              [
+                ...formText.categoryOptions,
+                ...(websiteTitle
+                  ? [
+                      {
+                        value: "ホームページ制作・更新について",
+                        label: websiteTitle,
+                      },
+                    ]
+                  : []),
+              ].map((option) => (
                 <option value={option.value}>{option.label}</option>
               ))
             }
@@ -213,7 +227,14 @@ const formText = getContactFormText(locale);
         operations: { category: "保守・運用改善について" },
         security: { category: "Webサイト機能・品質改善について" },
         web: { category: "Webアプリ・管理画面について" },
-        website: { category: "Webアプリ・管理画面について" },
+        website: {
+          category:
+            form.dataset.websiteCategory || "Webサイト機能・品質改善について",
+        },
+        homepage: {
+          category:
+            form.dataset.websiteCategory || "Webサイト機能・品質改善について",
+        },
         integration: { category: "データ連携・自動化について" },
         automation: { category: "データ連携・自動化について" },
         data: { category: "データ連携・自動化について" },
@@ -230,6 +251,10 @@ const formText = getContactFormText(locale);
         system: "業務システム開発について",
         "web-app": "Webアプリ・管理画面について",
         web: "Webアプリ・管理画面について",
+        website:
+          form.dataset.websiteCategory || "Webサイト機能・品質改善について",
+        homepage:
+          form.dataset.websiteCategory || "Webサイト機能・品質改善について",
         "site-functions": "Webサイト機能・品質改善について",
         "site-quality": "Webサイト機能・品質改善について",
         design: "デザイン・クリエイティブについて",

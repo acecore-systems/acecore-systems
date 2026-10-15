@@ -5,6 +5,8 @@ import ServiceVisual from "./ServiceVisual.astro";
 import site from "../data/site.json";
 import development from "../data/service-details/development.json";
 import siteFunctions from "../data/service-details/site-functions.json";
+import website from "../data/service-details/website.json";
+import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
@@ -13,13 +15,21 @@ type ServiceDetail = typeof siteFunctions & {
   handoff?: typeof development.handoff;
   visual?: typeof development.visual;
   sectionVisuals?: typeof development.sectionVisuals;
+  heroPrimaryCta?: string;
+  heroSecondaryCta?: string;
+  costExample?: typeof website.costExample;
+  termsTitle?: string;
+  terms?: typeof website.terms;
+  faqsTitle?: string;
+  faqs?: typeof website.faqs;
 };
 
 interface Props {
   data: ServiceDetail;
   canonicalPath: string;
   serviceKey: string;
-  consultationServiceKey?: "business-system" | "it-advisor" | "security";
+  consultationServiceKey?:
+    "business-system" | "it-advisor" | "website" | "security";
   locale?: Locale;
 }
 
@@ -44,6 +54,14 @@ const canonicalPath = getLocalizedUrl(canonicalInput, locale);
 const localizeHref = (href: string) =>
   href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 const serviceIndex = [
+  ...(getAvailableRouteLocales("/services/website/").includes(locale)
+    ? [
+        {
+          href: getLocalizedUrl("/services/website/", locale),
+          data: content.serviceDetails.website,
+        },
+      ]
+    : []),
   {
     href: getLocalizedUrl("/services/development/", locale),
     data: localizedDevelopment,
@@ -96,6 +114,19 @@ const contactHref = `${getLocalizedUrl("/contact/", locale)}?${new URLSearchPara
   },
 ).toString()}`;
 const jsonLd = [
+  ...(data.faqs?.length
+    ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: data.faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        },
+      ]
+    : []),
   {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -157,6 +188,21 @@ const jsonLd = [
       <p class="page-eyebrow">{data.heroEyebrow}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
+      {
+        data.heroPrimaryCta && (
+          <div class="home-actions">
+            <a
+              class="editorial-link editorial-link--primary"
+              href={contactHref}
+            >
+              {data.heroPrimaryCta}
+            </a>
+            <a class="editorial-link" href={`#${data.offerings[0].id}`}>
+              {data.heroSecondaryCta}
+            </a>
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -272,6 +318,59 @@ const jsonLd = [
     </div>
   </section>
 
+  {
+    data.costExample && (
+      <section
+        class="page-section website-cost-example"
+        aria-labelledby="website-cost-title"
+      >
+        <div class="container">
+          <aside class="editorial-cta">
+            <div class="editorial-cta__copy">
+              <>
+                <p class="editorial-eyebrow">Cost example</p>
+                <h2 id="website-cost-title">{data.costExample.title}</h2>
+                <p>{data.costExample.body}</p>
+              </>
+            </div>
+            <a
+              class="editorial-link editorial-link--primary"
+              href={contactHref}
+            >
+              {data.heroPrimaryCta}
+            </a>
+          </aside>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    data.terms?.length && (
+      <section
+        class="page-section page-section--muted"
+        aria-labelledby="website-terms-title"
+      >
+        <div class="container">
+          <header class="editorial-header">
+            <>
+              <p class="editorial-eyebrow">Scope & handover</p>
+              <h2 id="website-terms-title">{data.termsTitle}</h2>
+            </>
+          </header>
+          <div class="website-terms">
+            {data.terms.map((term) => (
+              <article>
+                <h3>{term.title}</h3>
+                <p>{term.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <section class="page-section" aria-labelledby="detail-process-title">
     <div class="container">
       <header class="editorial-header editorial-header--split">
@@ -303,6 +402,32 @@ const jsonLd = [
       </ol>
     </div>
   </section>
+
+  {
+    data.faqs?.length && (
+      <section
+        class="page-section page-section--muted"
+        aria-labelledby="website-faq-title"
+      >
+        <div class="container">
+          <header class="editorial-header">
+            <>
+              <p class="editorial-eyebrow">FAQ</p>
+              <h2 id="website-faq-title">{data.faqsTitle}</h2>
+            </>
+          </header>
+          <div class="website-terms">
+            {data.faqs.map((faq) => (
+              <article>
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <section
     class="page-section page-section--muted"
@@ -389,6 +514,32 @@ const jsonLd = [
 <style is:global>
   @layer theme, base, components, utilities;
   @layer components {
+    .website-terms {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line-strong);
+    }
+    .website-terms article {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.65fr) minmax(0, 1.35fr);
+      gap: 20px 48px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .website-terms h3 {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .website-terms p {
+      color: var(--ink-soft);
+      line-height: 1.9;
+    }
+    @media (max-width: 680px) {
+      .website-terms article {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
     .detail-related-list--grid .detail-related {
       border-bottom: 1px solid var(--line);
     }

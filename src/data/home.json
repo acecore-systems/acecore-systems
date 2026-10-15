@@ -86,6 +86,11 @@
       "title": "アプリの安全性を確認し、改善したい",
       "body": "公開前の確認やWeb・APIの診断、診断報告を受けた後の修正まで相談したい。",
       "href": "/services/security/"
+    },
+    {
+      "title": "ホームページの制作や更新を任せたい",
+      "body": "小規模事業者・店舗・教室向けに、文章の整理から公開、日々の文章・写真・お知らせの更新まで相談したい。",
+      "href": "/services/website/"
     }
   ],
   "ctaEyebrow": "START WITH A CONVERSATION",

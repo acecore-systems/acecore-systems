@@ -86,6 +86,7 @@ const collectionWritePaths = [
   "src/data/service-details/site-functions.json",
   "src/data/service-details/site-quality.json",
   "src/data/service-details/operations.json",
+  "src/data/service-details/website.json",
   "src/data/service-details/security.json",
   "src/data/work-details/acecore-site-platform.json",
 ];
@@ -274,6 +275,26 @@ test("CIと共有するsemantic ruleで必須配列・未知key・不正な相�
       JSON.stringify(value),
     );
   }
+});
+
+test("ホームページの費用例・対応条件・FAQ・一覧説明の欠落を直接公開しない", async () => {
+  const path = "src/data/service-details/website.json";
+  const website = JSON.parse(
+    await readFile(new URL(`../${path}`, import.meta.url), "utf8"),
+  );
+  for (const value of [
+    { ...website, terms: [] },
+    { ...website, faqs: [{ question: "質問" }] },
+    { ...website, costExample: { title: "費用" } },
+    { ...website, indexNavigation: {} },
+  ])
+    assert.equal(
+      validateCmsAddition(
+        path,
+        Buffer.from(JSON.stringify(value)).toString("base64"),
+      ).ok,
+      false,
+    );
 });
 
 test("CMS投影後もdesignサービスと料金項目の削除を拒否する", async () => {

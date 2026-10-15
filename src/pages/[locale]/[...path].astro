@@ -8,6 +8,8 @@ import PrivacyPage from "../privacy.astro";
 import ServicesPage from "../services.astro";
 import DevelopmentPage from "../services/development.astro";
 import ItAdvisorPage from "../services/it-advisor.astro";
+import WebsitePage from "../services/website.astro";
+import { getAvailableRouteLocales } from "../../lib/insight-links.mjs";
 import OperationsPage from "../services/operations.astro";
 import SecurityPage from "../services/security.astro";
 import SiteFunctionsPage from "../services/site-functions.astro";
@@ -21,6 +23,7 @@ const pages = {
   services: ServicesPage,
   development: DevelopmentPage,
   "it-advisor": ItAdvisorPage,
+  website: WebsitePage,
   operations: OperationsPage,
   security: SecurityPage,
   "site-functions": SiteFunctionsPage,
@@ -47,6 +50,7 @@ export function getStaticPaths() {
     { path: "services", pageKey: "services" },
     { path: "services/development", pageKey: "development" },
     { path: "services/it-advisor", pageKey: "it-advisor" },
+    { path: "services/website", pageKey: "website" },
     { path: "services/operations", pageKey: "operations" },
     { path: "services/security", pageKey: "security" },
     { path: "services/site-functions", pageKey: "site-functions" },
@@ -63,10 +67,14 @@ export function getStaticPaths() {
   return locales
     .filter((locale) => locale !== "ja")
     .flatMap((locale) =>
-      routes.map(({ path, pageKey }) => ({
-        params: { locale, path },
-        props: { locale, pageKey },
-      })),
+      routes
+        .filter(({ path }) =>
+          getAvailableRouteLocales(path ? `/${path}/` : "/").includes(locale),
+        )
+        .map(({ path, pageKey }) => ({
+          params: { locale, path },
+          props: { locale, pageKey },
+        })),
     );
 }
 

@@ -4,6 +4,7 @@ import site from "../data/site.json";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, htmlLangMap, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
+import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
 
 interface Props {
   locale?: Locale;
@@ -19,6 +20,16 @@ const canonicalPath = getLocalizedUrl("/pricing/", locale);
 const pageUrl = new URL(canonicalPath, site.siteUrl).href;
 const itemListId = `${pageUrl}#item-list`;
 const tracks = [
+  ...(getAvailableRouteLocales("/services/website/").includes(locale)
+    ? [
+        {
+          id: "website",
+          title: content.serviceDetails.website.title,
+          ctaLabel: content.serviceDetails.website.ctaTitle,
+          contactHref: `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams({ category: "service", service: "website", from: "systems-pricing", entry: "pricing-website-cta" }).toString()}`,
+        },
+      ]
+    : []),
   {
     id: "development",
     title: development.title,

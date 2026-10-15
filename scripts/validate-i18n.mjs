@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { validatePendingContent } from "./pending-content.mjs";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, extname, join } from "node:path";
@@ -50,6 +51,7 @@ const fixedRoutes = [
   "/",
   "/services/",
   "/services/development/",
+  "/services/website/",
   "/services/it-advisor/",
   "/services/operations/",
   "/services/security/",
@@ -76,6 +78,7 @@ const sourceFiles = {
     security: "src/data/service-details/security.json",
     siteFunctions: "src/data/service-details/site-functions.json",
     siteQuality: "src/data/service-details/site-quality.json",
+    website: "src/data/service-details/website.json",
   },
   services: "src/data/services.json",
   site: "src/data/site.json",
@@ -216,7 +219,23 @@ function assertProtectedTokens(source, translated, label) {
   );
 }
 
-function validateOverlayNode(source, translated, label, key = "", locale) {
+let pendingContent = {};
+function validateOverlayNode(
+  source,
+  translated,
+  label,
+  key = "",
+  locale,
+  pointer = "",
+) {
+  if (pendingContent[pointer]?.locales.includes(locale)) {
+    assert.equal(
+      translated,
+      undefined,
+      `${label}: pending node must be absent`,
+    );
+    return;
+  }
   if (isStableKey(key)) {
     assert.equal(
       translated,
@@ -257,7 +276,10 @@ function validateOverlayNode(source, translated, label, key = "", locale) {
     assert.equal(Array.isArray(translated), true, `${label}: array missing`);
     assert.equal(
       translated.length,
-      source.length,
+      source.filter(
+        (_, index) =>
+          !pendingContent[`${pointer}/${index}`]?.locales.includes(locale),
+      ).length,
       `${label}: array length differs from Japanese source`,
     );
     source.forEach((child, index) =>
@@ -267,6 +289,7 @@ function validateOverlayNode(source, translated, label, key = "", locale) {
         `${label}[${index}]`,
         "",
         locale,
+        `${pointer}/${index}`,
       ),
     );
     return;
@@ -293,6 +316,7 @@ function validateOverlayNode(source, translated, label, key = "", locale) {
         `${label}.${childKey}`,
         childKey,
         locale,
+        `${pointer}/${childKey}`,
       );
     }
   }
@@ -425,6 +449,7 @@ function validateSourceTranslations({
   validateLocaleRedirects("public/_redirects");
   const state = readJson("src/i18n/translation-state.json");
   const pendingInsights = validatePendingInsights(root, state);
+  pendingContent = validatePendingContent(root, state);
   const localesToValidate = onlyLocale ? [onlyLocale] : translatedLocales;
   const sourceTree = readSourceTree(sourceFiles);
   if (!articlesOnly) {
@@ -578,7 +603,7 @@ function validateSourceTranslations({
 
   if (articlesOnly) {
     console.log(
-      `i18n article validation passed: ${localesToValidate.length + 1} locales, ${insightSlugs.length} Japanese Insights, ${Object.keys(pendingInsights).length} awaiting translation`,
+      `i18n article validation passed: ${localesToValidate.length + 1} locales, ${insightSlugs.length} Japanese Insights, ${Object.keys(pendingInsights).length} Insights and ${Object.keys(pendingContent).length} fixed additions awaiting translation`,
     );
     return;
   }
@@ -626,7 +651,7 @@ function validateSourceTranslations({
   );
 
   console.log(
-    `i18n source validation passed: ${locales.length} locales, ${insightSlugs.length} Japanese Insights, ${Object.keys(pendingInsights).length} awaiting translation`,
+    `i18n source validation passed: ${locales.length} locales, ${insightSlugs.length} Japanese Insights, ${Object.keys(pendingInsights).length} Insights and ${Object.keys(pendingContent).length} fixed additions awaiting translation`,
   );
 }
 
@@ -847,7 +872,7 @@ function validateBuiltSite() {
         assert.equal(
           existsSync(path),
           false,
-          `${route}: pending article must not be published`,
+          `${route}: pending route must not be published`,
         );
         continue;
       }
@@ -855,6 +880,21 @@ function validateBuiltSite() {
       const html = readFileSync(path, "utf8");
       validateInternalLinks(html, route, locale);
       validateLocalReferences(html, route);
+      if (
+        locale !== "ja" &&
+        !getAvailableRouteLocales("/services/website/").includes(locale)
+      ) {
+        assert.equal(
+          html.includes("ホームページ制作・更新サポート"),
+          false,
+          `${route}: untranslated website release leaked`,
+        );
+        assert.equal(
+          html.includes(`href="/${locale}/services/website/`),
+          false,
+          `${route}: pending website link leaked`,
+        );
+      }
 
       if (baseRoute === "/contact/thanks/") {
         assert.equal(

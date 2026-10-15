@@ -10,12 +10,15 @@ import {
   calculateTranslationSourceHash,
   translatedLocales,
   translationSourcePaths,
+  structuredTranslationTargets,
 } from "./i18n-source-hash.mjs";
 import {
   fencedCodeBlocks,
   protectTranslationText,
   restoreTranslationText,
 } from "./translation-protected-text.mjs";
+
+import { getPendingContentSourcePaths } from "./pending-content.mjs";
 
 const API_BASE_URL = "https://api.openai.com/v1";
 const BATCH_ENDPOINT = "/v1/responses";
@@ -29,35 +32,7 @@ const BATCH_MARKER_PREFIX = "<!-- openai-translation-batch:";
 const BATCH_MARKER_SUFFIX = " -->";
 const ZERO_SHA = "0000000000000000000000000000000000000000";
 
-const sourceTargetPaths = new Map([
-  ["src/data/contact.json", ["contact"]],
-  ["src/data/guide.json", ["guide"]],
-  ["src/data/home.json", ["home"]],
-  ["src/data/it-advisor.json", ["itAdvisor"]],
-  ["src/data/pricing.json", ["pricing"]],
-  ["src/data/privacy.json", ["privacy"]],
-  [
-    "src/data/service-details/development.json",
-    ["serviceDetails", "development"],
-  ],
-  [
-    "src/data/service-details/operations.json",
-    ["serviceDetails", "operations"],
-  ],
-  ["src/data/service-details/security.json", ["serviceDetails", "security"]],
-  [
-    "src/data/service-details/site-functions.json",
-    ["serviceDetails", "siteFunctions"],
-  ],
-  [
-    "src/data/service-details/site-quality.json",
-    ["serviceDetails", "siteQuality"],
-  ],
-  ["src/data/services.json", ["services"]],
-  ["src/data/site.json", ["site"]],
-  ["src/data/work-details/acecore-site-platform.json", ["workDetail"]],
-  ["src/data/works.json", ["works"]],
-]);
+const sourceTargetPaths = structuredTranslationTargets;
 
 const stableKeys = new Set([
   "accent",
@@ -405,6 +380,7 @@ function areTranslationsCurrent(sourceHash) {
   if (!existsSync(statePath)) return false;
   const state = JSON.parse(readFileSync(statePath, "utf8"));
   return (
+    Object.keys(state.pendingContent ?? {}).length === 0 &&
     state.sourceHash === sourceHash &&
     Array.isArray(state.locales) &&
     translatedLocales.every((locale) => state.locales.includes(locale))
@@ -512,7 +488,15 @@ async function closeStalePullRequests(currentSourceHash) {
 async function submitBatch(options) {
   const eventBase = options.base ?? process.env.GITHUB_EVENT_BEFORE ?? null;
   const base = eventBase === ZERO_SHA ? null : eventBase;
-  const sourcePaths = listChangedSourcePaths(base, options.head);
+  const state = JSON.parse(
+    readFileSync("src/i18n/translation-state.json", "utf8"),
+  );
+  const sourcePaths = [
+    ...new Set([
+      ...listChangedSourcePaths(base, options.head),
+      ...getPendingContentSourcePaths(state),
+    ]),
+  ].sort();
   if (sourcePaths.length === 0) {
     console.log("No Japanese Systems source changes detected.");
     return;

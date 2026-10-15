@@ -4,6 +4,7 @@ import ServiceVisual from "../components/ServiceVisual.astro";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
+import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
 import site from "../data/site.json";
 
 interface Props {
@@ -17,10 +18,20 @@ const { itAdvisor } = content;
 const { development, siteFunctions, siteQuality, operations, security } =
   content.serviceDetails;
 const text = getUi(locale);
+const indexNavigation = content.serviceDetails.website?.indexNavigation;
 const localizeHref = (href: string) =>
   href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 
 const primaryServiceDetails = [
+  ...(getAvailableRouteLocales("/services/website/").includes(locale)
+    ? [
+        {
+          id: "website",
+          href: getLocalizedUrl("/services/website/", locale),
+          data: content.serviceDetails.website,
+        },
+      ]
+    : []),
   {
     id: "development",
     href: getLocalizedUrl("/services/development/", locale),
@@ -59,8 +70,8 @@ const serviceDetailGroups = [
   {
     id: "service-detail-primary",
     eyebrow: "Primary services",
-    title: text.primaryServicesTitle,
-    lead: text.primaryServicesLead,
+    title: indexNavigation?.primaryServicesTitle ?? text.primaryServicesTitle,
+    lead: indexNavigation?.primaryServicesLead ?? text.primaryServicesLead,
     className: "service-detail-index--primary",
     showVisuals: false,
     items: primaryServiceDetails,
@@ -96,9 +107,14 @@ const serviceDetailGroups = [
           <p class="editorial-eyebrow">Choose a route / 01</p>
           <h2 id="service-entry-title">{text.chooseScopeTitle}</h2>
         </div>
-        <p>{text.chooseScopeLead}</p>
+        <p>{indexNavigation?.chooseScopeLead ?? text.chooseScopeLead}</p>
       </header>
-      <div class="service-entry-points">
+      <div
+        class:list={[
+          "service-entry-points",
+          { "service-entry-points--three": data.entryPoints.length === 3 },
+        ]}
+      >
         {
           data.entryPoints.map((entry, index) => {
             const visual = entryVisuals.get(entry.id);
@@ -197,7 +213,7 @@ const serviceDetailGroups = [
           <p class="editorial-eyebrow">Detailed support / 03</p>
           <h2 id="service-detail-index-title">{text.serviceDetailsTitle}</h2>
         </div>
-        <p>{text.serviceDetailsLead}</p>
+        <p>{indexNavigation?.serviceDetailsLead ?? text.serviceDetailsLead}</p>
       </header>
       <div class="service-detail-groups">
         {
@@ -302,6 +318,10 @@ const serviceDetailGroups = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
       border-top: 1px solid var(--line-strong);
       border-bottom: 1px solid var(--line-strong);
+    }
+
+    .service-entry-points--three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .service-entry-point {
@@ -411,7 +431,7 @@ const serviceDetailGroups = [
     }
 
     .service-detail-index--primary {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     }
 
     .service-detail-index__item h4 {
@@ -424,6 +444,7 @@ const serviceDetailGroups = [
 
     @media (max-width: 860px) {
       .service-entry-points,
+      .service-entry-points--three,
       .service-detail-index--primary {
         grid-template-columns: 1fr;
       }

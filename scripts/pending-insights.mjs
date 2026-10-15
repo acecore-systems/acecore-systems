@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createPendingContentState } from "./pending-content.mjs";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -91,7 +92,9 @@ export function createTranslationState(root, previousState) {
       };
     }
   }
+  const pendingContent = createPendingContentState(root, previousState);
   return {
+    ...(Object.keys(pendingContent).length > 0 ? { pendingContent } : {}),
     sourceHash: calculateTranslationSourceHash(root, {
       excludedInsightSlugs: Object.keys(pendingInsights),
     }),

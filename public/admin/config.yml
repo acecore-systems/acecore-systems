@@ -552,6 +552,18 @@ collections:
       - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
       - { name: heroTitle, label: ヒーロータイトル, widget: string }
       - { name: heroLead, label: ヒーローリード, widget: text }
+      - {
+          name: heroPrimaryCta,
+          label: 主要CTA,
+          widget: string,
+          required: false,
+        }
+      - {
+          name: heroSecondaryCta,
+          label: 料金CTA,
+          widget: string,
+          required: false,
+        }
       - label: 支援イメージ
         name: visual
         widget: object
@@ -648,6 +660,47 @@ collections:
           - { name: href, label: URL, widget: string }
       - { name: ctaTitle, label: CTA見出し, widget: string }
       - { name: ctaBody, label: CTA本文, widget: text }
+      - label: ホームページ追加時のサービス一覧説明
+        name: indexNavigation
+        widget: object
+        required: false
+        fields:
+          - { name: chooseScopeLead, label: 入口の説明, widget: text }
+          - { name: serviceDetailsLead, label: 支援一覧の説明, widget: text }
+          - {
+              name: primaryServicesTitle,
+              label: 主要サービス見出し,
+              widget: string,
+            }
+          - { name: primaryServicesLead, label: 主要サービス説明, widget: text }
+      - label: 年間費用の例
+        name: costExample
+        widget: object
+        required: false
+        fields:
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+      - {
+          name: termsTitle,
+          label: 対応条件見出し,
+          widget: string,
+          required: false,
+        }
+      - label: 対応条件
+        name: terms
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: 見出し, widget: string }
+          - { name: body, label: 本文, widget: text }
+      - { name: faqsTitle, label: FAQ見出し, widget: string, required: false }
+      - label: よくある質問
+        name: faqs
+        widget: list
+        required: false
+        fields:
+          - { name: question, label: 質問, widget: string }
+          - { name: answer, label: 回答, widget: text }
   - name: work_details
     label: 実績詳細
     label_singular: 実績詳細
