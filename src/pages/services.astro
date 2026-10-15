@@ -26,7 +26,10 @@ const localizeHref = (href: string) =>
   locale={locale}
 >
   <section class="purpose-page-hero">
-    <div class="container"><h1>{data.heroTitle}</h1><p>{data.heroLead}</p></div>
+    <div class="container">
+      <p class="purpose-eyebrow">{text.services}</p>
+      <h1>{data.heroTitle}</h1><p>{data.heroLead}</p>
+    </div>
   </section>
   <section class="purpose-catalog" aria-label={text.services}>
     <div class="container purpose-catalog__layout">

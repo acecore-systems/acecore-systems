@@ -491,22 +491,35 @@ function validateImageAlts(html, label) {
     /<img\b(?![^>]*\balt\s*=)[^>]*>/u,
     `${label}: every rendered image must include an alt attribute`,
   );
-  assert.doesNotMatch(
-    html,
-    /<img\b[^>]*\balt\s*=\s*["']\s*["']/u,
-    `${label}: every rendered image must have a non-empty alt attribute`,
-  );
+  const $ = loadHtml(html);
+  const decorativeDeviceSources = new Set([
+    "/images/works/cherry-device-frame.webp",
+    "/images/works/cherry-mobile.jpg",
+  ]);
+  for (const image of $("img").toArray()) {
+    const element = $(image);
+    if (element.attr("alt")?.trim()) continue;
+    assert.equal(
+      element.attr("aria-hidden"),
+      "true",
+      `${label}: an empty alt is allowed only for an explicitly decorative image`,
+    );
+    assert.ok(
+      decorativeDeviceSources.has(element.attr("src")),
+      `${label}: content images must retain a non-empty alt attribute`,
+    );
+  }
 }
 
-function validateServiceVisual(html, visual, label) {
+function validateServiceVisual(html, visual, label, expectedCount = 1) {
   assert.equal(
     [...html.matchAll(/<img\b[^>]*>/gu)].filter(
       ([tag]) =>
         tag.includes(`src="${visual.src}"`) &&
         tag.includes(`alt="${visual.alt}"`),
     ).length,
-    1,
-    `${label}: matching service visual and alt must appear exactly once`,
+    expectedCount,
+    `${label}: matching service visual and alt must appear ${expectedCount} time(s)`,
   );
   assert.equal(
     html.includes(`alt="${visual.alt}"`),
@@ -634,6 +647,7 @@ for (const [label, html] of [
     html,
     { src: featuredWork.image, alt: featuredWork.imageAlt },
     `${label} selected work ${featuredWork.id}`,
+    label === "home" ? 2 : 1,
   );
   assert.equal(
     loadHtml(html)(`.purpose-work a[href="/works/#${featuredWork.id}"]`)

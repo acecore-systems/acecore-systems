@@ -42,13 +42,22 @@ const needs = [
   locale={locale}
 >
   <section class="purpose-home-hero">
-    <div class="container">
-      <p class="purpose-eyebrow">{home.heroEyebrow}</p>
-      <h1>{home.heroTitle}</h1>
-      <p class="purpose-home-hero__lead">{home.heroLead}</p>
-      <a class="purpose-button" href={localizeHref(home.primaryCtaHref)}
-        >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
-      >
+    <div class="container purpose-split-hero">
+      <div class="purpose-hero-copy">
+        <p class="purpose-eyebrow">{home.heroEyebrow}</p>
+        <h1>{home.heroTitle}</h1>
+        <p class="purpose-home-hero__lead">{home.heroLead}</p>
+        <div class="purpose-hero-actions">
+          <a class="purpose-button" href={localizeHref(home.primaryCtaHref)}
+            >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
+          >
+          <a
+            class="purpose-button purpose-button--secondary"
+            href={getLocalizedUrl("/contact/", locale)}>{text.purposeContact}</a
+          >
+        </div>
+      </div>
+      <PurposeWork locale={locale} compact hero />
     </div>
   </section>
   <section class="purpose-needs" aria-label={home.consultationTitle}>

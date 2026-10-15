@@ -6,8 +6,9 @@ import PurposeIcon from "./PurposeIcon.astro";
 interface Props {
   locale: Locale;
   compact?: boolean;
+  hero?: boolean;
 }
-const { locale, compact = false } = Astro.props;
+const { locale, compact = false, hero = false } = Astro.props;
 const { works } = getLocalizedContent(locale);
 const text = getUi(locale);
 const work = works.cases.find((item) => item.id === "case-cherry-homepage");
@@ -16,16 +17,65 @@ const href = `${getLocalizedUrl("/works/", locale)}#case-cherry-homepage`;
 
 {
   work && (
-    <figure class:list={["purpose-work", compact && "purpose-work--compact"]}>
-      <a class="purpose-work__image" href={href}>
-        <img
-          src={work.image}
-          alt={work.imageAlt}
-          width="1585"
-          height="892"
-          loading={compact ? "eager" : "lazy"}
-          decoding="async"
-        />
+    <figure
+      class:list={[
+        "purpose-work",
+        compact && "purpose-work--compact",
+        hero && "purpose-work--hero",
+      ]}
+    >
+      <a
+        class:list={["purpose-work__image", hero && "purpose-device-stage"]}
+        href={href}
+      >
+        {hero ? (
+          <>
+            <img
+              class="purpose-device-frame"
+              src="/images/works/cherry-device-frame.webp"
+              alt=""
+              aria-hidden="true"
+              width="1536"
+              height="1024"
+              decoding="async"
+            />
+            <img
+              class="purpose-device-screen"
+              src={work.image}
+              alt={work.imageAlt}
+              width="1585"
+              height="892"
+              decoding="async"
+            />
+            <img
+              class="purpose-device-phone-frame"
+              src="/images/works/cherry-device-frame.webp"
+              alt=""
+              aria-hidden="true"
+              width="1536"
+              height="1024"
+              decoding="async"
+            />
+            <img
+              class="purpose-device-phone-screen"
+              src="/images/works/cherry-mobile.jpg"
+              alt=""
+              aria-hidden="true"
+              width="375"
+              height="811"
+              decoding="async"
+            />
+          </>
+        ) : (
+          <img
+            src={work.image}
+            alt={work.imageAlt}
+            width="1585"
+            height="892"
+            loading={compact ? "eager" : "lazy"}
+            decoding="async"
+          />
+        )}
       </a>
       <figcaption>
         <span>

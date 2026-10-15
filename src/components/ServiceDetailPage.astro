@@ -191,59 +191,60 @@ const jsonLd = [
           <li aria-current="page">{data.title}</li>
         </ol>
       </nav>
-      <p class="page-eyebrow">
-        {serviceKey === "website" ? data.title : data.heroEyebrow}
-      </p>
-      <h1 class="page-title">{data.heroTitle}</h1>
-      <p class="page-lead">{data.heroLead}</p>
-      {
-        Boolean(data.heroBenefits?.length) && (
-          <ul class="purpose-hero-benefits">
-            {data.heroBenefits.map((benefit) => (
-              <li>
-                <PurposeIcon name="check" />
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        )
-      }
-      {
-        data.heroPrimaryCta && (
-          <div class="home-actions">
-            <a
-              class="editorial-link editorial-link--primary"
-              href={contactHref}
-            >
-              {data.heroPrimaryCta}
-            </a>
-            <a
-              class="editorial-link"
-              href={
-                serviceKey === "website"
-                  ? "#website-pricing-preview"
-                  : `#${data.offerings[0].id}`
-              }
-            >
-              {data.heroSecondaryCta}
-            </a>
-          </div>
-        )
-      }
+      <div class:list={[serviceKey === "website" && "purpose-split-hero"]}>
+        <div class="purpose-hero-copy">
+          <p class="page-eyebrow">
+            {serviceKey === "website" ? data.title : data.heroEyebrow}
+          </p>
+          <h1 class="page-title">{data.heroTitle}</h1>
+          <p class="page-lead">{data.heroLead}</p>
+          {
+            Boolean(data.heroBenefits?.length) && (
+              <ul class="purpose-hero-benefits">
+                {data.heroBenefits.map((benefit) => (
+                  <li>
+                    <PurposeIcon name="check" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+          {
+            data.heroPrimaryCta && (
+              <div class="home-actions">
+                <a
+                  class="editorial-link editorial-link--primary"
+                  href={contactHref}
+                >
+                  {data.heroPrimaryCta}
+                </a>
+                <a
+                  class="editorial-link"
+                  href={
+                    serviceKey === "website"
+                      ? "#website-pricing-preview"
+                      : `#${data.offerings[0].id}`
+                  }
+                >
+                  {data.heroSecondaryCta}
+                </a>
+              </div>
+            )
+          }
+        </div>
+        {
+          serviceKey === "website" && (
+            <PurposeWork locale={locale} compact hero />
+          )
+        }
+      </div>
     </div>
   </section>
 
   {
     serviceKey === "website" && (
       <>
-        <section
-          class="purpose-website-work"
-          aria-label={text.selectedWorkTitle}
-        >
-          <div class="container">
-            <PurposeWork locale={locale} compact />
-          </div>
-        </section>
         <nav class="purpose-detail-nav" aria-label={text.tableOfContents}>
           <a href="#detail-introduction-title">{text.purposeFeatures}</a>
           <a
