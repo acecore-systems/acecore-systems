@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "DESIGNPHILOSOPHIE",
     "philosophyTitle": "Sichtbares und Unsichtbares – mit derselben Präzision.",
-    "philosophyLead": "Vom Kundenkontakt über die Systeme, die den Arbeitsalltag unterstützen, bis hin zum laufenden Betrieb. Wir betrachten Praxis, Systeme und Betrieb als Einheit und gestalten sie mit derselben Präzision.",
+    "philosophyLead": "Acecores Philosophie lautet „Die Welt auf die nächste Stufe bringen“: unwesentliche Belastungen verringern und Menschen bei ihren Vorhaben unterstützen. Systems unterstützt diesen ersten Schritt mit Technologie und verbindet dabei Arbeitsalltag, Systeme und Betrieb.",
     "designPrinciples": [
       {
         "title": "Mit der Praxis beginnen",
@@ -246,7 +246,8 @@
     "ctaEyebrow": "MIT EINEM GESPRÄCH BEGINNEN",
     "ctaTitle": "Bevor wir festlegen, was entwickelt werden soll, erzählen Sie uns von Ihren aktuellen Abläufen.",
     "ctaBody": "Auch wenn die Anforderungen noch nicht vollständig feststehen, können Sie sich an uns wenden. Gemeinsam ordnen wir Ihre aktuellen Abläufe, Rahmenbedingungen und Prioritäten.",
-    "ctaLabel": "Beratungsform wählen"
+    "ctaLabel": "Beratungsform wählen",
+    "philosophyLinkLabel": "Acecores Philosophie und Vision"
   },
   "itAdvisor": {
     "title": "IT-Berater auf Abruf",
@@ -1350,7 +1351,9 @@
         "title": "Veröffentlichen/verbessern",
         "body": "Wir unterstützen Sie auch nach der Veröffentlichung weiterhin, einschließlich Fehlerbehebung, zusätzlichen Anfragen und betrieblichen Verbesserungen."
       }
-    ]
+    ],
+    "designContextNote": "Die Vorbereitungen für den Bereich Acecore Design sind von den derzeit angebotenen kreativen Leistungen zu unterscheiden. Systems nimmt Anfragen zu den auf dieser Seite beschriebenen Design- und Kreativleistungen entgegen.",
+    "designContextLinkLabel": "Über den Bereich Acecore Design"
   },
   "workDetail": {
     "title": "Funktionserweiterungen und Betriebsplattform der offiziellen Acecore-Website",

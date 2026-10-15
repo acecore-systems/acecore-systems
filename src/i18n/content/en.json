@@ -203,7 +203,7 @@
     ],
     "philosophyEyebrow": "DESIGN PHILOSOPHY",
     "philosophyTitle": "The visible and invisible, designed with equal precision.",
-    "philosophyLead": "From customer touchpoints to the systems that support day-to-day work and the operations that keep it running. We keep the work, the systems, and the operations connected, refining every part with equal precision.",
+    "philosophyLead": "Acecore’s philosophy is “Taking the world to the next stage”: reducing nonessential burdens and helping people pursue what they want to do. Systems supports that first step through technology, bringing work, systems, and operations together.",
     "designPrinciples": [
       {
         "title": "Start with the real work",
@@ -246,7 +246,8 @@
     "ctaEyebrow": "START WITH A CONVERSATION",
     "ctaTitle": "Before deciding what to build, tell us about your work today.",
     "ctaBody": "You can talk to us even before the requirements are fully defined. Together, we will organize your current workflow, constraints, and priorities.",
-    "ctaLabel": "Choose how to get in touch"
+    "ctaLabel": "Choose how to get in touch",
+    "philosophyLinkLabel": "Acecore’s philosophy and vision"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer",
@@ -1350,7 +1351,9 @@
         "title": "Launch and improvement",
         "body": "We continue supporting post-launch issue resolution, additional requests, and operational improvement."
       }
-    ]
+    ],
+    "designContextNote": "Preparations for the Acecore Design department are separate from the creative services currently open for consultation. Systems accepts inquiries about the design and creative work described on this page.",
+    "designContextLinkLabel": "About the Acecore Design department"
   },
   "workDetail": {
     "title": "Feature enhancements and operational foundation for the Acecore corporate site",
