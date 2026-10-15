@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
+import site from "../data/site.json";
 
 interface Props {
   locale?: Locale;
@@ -83,7 +84,14 @@ const localizeHref = (href: string) =>
           <p class="home-eyebrow">{home.philosophyEyebrow}</p>
           <h2 id="philosophy-title">{home.philosophyTitle}</h2>
         </div>
-        <p>{home.philosophyLead}</p>
+        <div>
+          <p>{home.philosophyLead}</p>
+          <a
+            class="editorial-link"
+            href={`${site.acecoreUrl}${getLocalizedUrl("/about/", locale)}#corporate-philosophy-heading`}
+            >{home.philosophyLinkLabel}</a
+          >
+        </div>
       </header>
       <ol class="principle-list">
         {
