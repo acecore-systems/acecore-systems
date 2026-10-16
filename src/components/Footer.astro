@@ -37,6 +37,12 @@ const footerLinks = content.site.footerLinks.map((item) => ({
       </a>
       <span>Systems for Operations</span>
       <p>{content.site.description}</p>
+      <p class="footer-image-credit" data-cast-scene-credit>
+        {content.site.footerImageDisclosure}{" "}
+        <a href="https://cast.acecore.net/"
+          >{content.site.footerImageCreditLabel}</a
+        >
+      </p>
     </div>
     <nav class="footer-links" aria-label={text.footerNavigation}>
       {footerLinks.map((item) => <a href={item.href}>{item.label}</a>)}
@@ -49,3 +55,17 @@ const footerLinks = content.site.footerLinks.map((item) => ({
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-brand .footer-image-credit {
+    margin-top: 16px;
+    font-size: 0.75rem;
+    line-height: 1.8;
+  }
+
+  .footer-image-credit a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

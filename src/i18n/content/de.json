@@ -1404,27 +1404,6 @@
     "description": "Leistungen von Acecore Systems: IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Entwicklung von Geschäftssystemen und Webanwendungen, Administrationsoberflächen, Design und Kreativleistungen, CMS, Suche, Datennutzung und Modernisierung bestehender Systeme. Wir bieten auch Web- und API-Sicherheitsprüfungen und Unterstützung bei der Behebung an.",
     "heroTitle": "Von der Klärung des Problems\nbis zu Entwicklung, Design und Betriebsverbesserung.",
     "heroLead": "Wir liefern nicht nur einmalig, sondern gestalten auch den Weg, auf dem die Lösung im Arbeitsalltag ankommt und weiter verbessert werden kann.",
-    "consultationProfiles": {
-      "title": "Sie können sich schon vor einem fertigen Briefing melden.",
-      "body": "Keine eigene IT-Fachkraft oder unklar, was zuerst entschieden werden muss? Wir klären gemeinsam, welche Unterstützung Sie benötigen.",
-      "aiLabel": "AI-generiertes Porträt",
-      "disclaimer": "Diese AI-generierten Porträts veranschaulichen die Informationen. Sie zeigen keine tatsächlichen Beschäftigten oder Kunden und sind keine Erfahrungsberichte.",
-      "sourceLabel": "Über die Porträtmotive",
-      "items": [
-        {
-          "title": "Eine Ansprechperson für den täglichen Betrieb finden",
-          "body": "Manuelle Aufgaben prüfen, Werkzeuge auswählen oder Fragen nach dem Start klären. Wir beginnen bei den vorhandenen Lösungen und ordnen Verbesserungen.",
-          "imageAlt": "AI-generierte erwachsene Frau als Illustration alltäglicher IT-Beratung",
-          "label": "IT-Beratung ansehen"
-        },
-        {
-          "title": "Aus einer Geschäftsidee ein funktionierendes System machen",
-          "body": "Die Aufgabe oder Idee steht, aber Funktionen und Vorgehen sind noch offen. Wir konkretisieren sie gemeinsam von Anforderungen bis zu Entwurf und Entwicklung.",
-          "imageAlt": "AI-generierter erwachsener Mann als Illustration der Entwicklungsberatung",
-          "label": "Entwicklungsablauf ansehen"
-        }
-      ]
-    },
     "entryPoints": [
       {
         "eyebrow": "Auftragsentwicklung / ENTWICKLUNG",
@@ -1740,6 +1719,8 @@
   },
   "site": {
     "description": "Acecore Systems ist ein Service von Acecore für IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Geschäftssysteme und Webanwendungen sowie Design und Kreativleistungen – von der Anforderungsklärung bis zur Betriebsverbesserung.",
+    "footerImageDisclosure": "Für illustrative Bilder mit Personen werden AI-generierte Materialien verwendet.",
+    "footerImageCreditLabel": "Über die Bildmaterialien",
     "nav": [
       {
         "label": "Support-Richtlinie"

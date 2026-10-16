@@ -5,7 +5,7 @@
   "heroTitle": "公開前の不安から、\n診断後の改善まで。",
   "heroLead": "自社やAI、外部の開発会社で作ったWebアプリを、安心して運用するために。確認すべき範囲を整理し、診断、修正、再確認まで必要な支援を組み合わせます。",
   "visual": {
-    "src": "/images/service-site-quality-overview.webp",
+    "src": "/images/cast/scenes-v1.0.0/systems--service-site-quality-overview--65bc068417ce7423b0b58f416c5659fd6c535a2536143cc89add9b36ef524bd5.webp",
     "alt": "担当者とエンジニアが同じWebサイトをパソコンとスマートフォンで点検する様子",
     "caption": "利用者の画面と計測結果を一緒に見て、改善の優先順位を決めます。"
   },
@@ -16,7 +16,7 @@
       "caption": "構成、権限、変更履歴を整理し、確認する範囲と責任を明確にします。"
     },
     "process": {
-      "src": "/images/service-site-quality-verification.webp",
+      "src": "/images/cast/scenes-v1.0.0/systems--service-site-quality-verification--4e0cbb2150ab29521dd1a26eac9742364d262e6cdcae9a538aaee510dcae7786.webp",
       "alt": "担当者とエンジニアが修正後のWebサイトをパソコンとスマートフォンで再確認する様子",
       "caption": "修正後の表示と操作を複数の端末で確かめ、次の改善につなげます。"
     }

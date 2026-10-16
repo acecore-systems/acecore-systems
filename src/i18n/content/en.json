@@ -1404,27 +1404,6 @@
     "description": "Acecore Systems provides IT advisory services, AI adoption and operational improvement, deployment support, business-system development, Web apps and admin interfaces, design and creative production, CMS, search, data use, and existing-system improvement. We also support Web/API security assessment and remediation.",
     "heroTitle": "From organizing the problem\nto development, design, and operational improvement.",
     "heroLead": "Beyond one-time production and development, we emphasize design and improvement that help the solution take root in daily operations.",
-    "consultationProfiles": {
-      "title": "You can ask before the brief is clear.",
-      "body": "No dedicated IT staff, or unsure what to decide first? We can help define the support you need from that starting point.",
-      "aiLabel": "AI-generated portrait",
-      "disclaimer": "These AI-generated portraits illustrate the information; they do not depict actual employees or customers, or present testimonials.",
-      "sourceLabel": "About the portrait assets",
-      "items": [
-        {
-          "title": "Find someone to discuss everyday operations with",
-          "body": "Review manual tasks, choose tools or work through concerns after launch. We start with what you already use and consider improvements in order.",
-          "imageAlt": "AI-generated adult woman illustrating everyday IT consultation",
-          "label": "Explore IT advisory support"
-        },
-        {
-          "title": "Turn a business idea into a working system",
-          "body": "You have a challenge or idea but the features and approach are still open. We help make it concrete through requirements, design and development.",
-          "imageAlt": "AI-generated adult man illustrating development consultation",
-          "label": "Explore the development process"
-        }
-      ]
-    },
     "entryPoints": [
       {
         "eyebrow": "Commissioned Development / DEVELOPMENT",
@@ -1740,6 +1719,8 @@
   },
   "site": {
     "description": "Acecore Systems is an Acecore service supporting IT advisory work, AI adoption and operational improvement, deployment, business systems and Web apps, and design and creative production from requirements through ongoing improvement.",
+    "footerImageDisclosure": "AI-generated materials are used in illustrative images containing people.",
+    "footerImageCreditLabel": "About the image materials",
     "nav": [
       {
         "label": "Approach"
