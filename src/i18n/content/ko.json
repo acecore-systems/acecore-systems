@@ -1704,6 +1704,8 @@
   },
   "site": {
     "description": "Acecore Systems는 Acecore가 제공하는 서비스로, 요구사항 정리부터 운영 개선까지 IT 자문, AI 도입·업무 개선, 배포, 업무 시스템·웹 앱 개발과 디자인·크리에이티브 제작을 지원합니다.",
+    "footerImageDisclosure": "인물이 포함된 예시 이미지에는 AI 생성 소재를 사용합니다.",
+    "footerImageCreditLabel": "이미지 소재 안내",
     "nav": [
       {
         "label": "지원 방침"

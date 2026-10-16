@@ -1689,6 +1689,8 @@
   },
   "site": {
     "description": "Acecore Systems 是 Acecore 提供的服务，从需求梳理到运营改善，支持 IT 顾问、AI 导入与业务改善、部署、业务系统与 Web 应用开发，以及设计与创意制作。",
+    "footerImageDisclosure": "含人物的示意图片使用了 AI 生成素材。",
+    "footerImageCreditLabel": "关于图片素材",
     "nav": [
       {
         "label": "支持方针"
