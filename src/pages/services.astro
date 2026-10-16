@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ServiceVisual from "../components/ServiceVisual.astro";
+import ConsultationProfiles from "../components/ConsultationProfiles.astro";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
@@ -147,6 +148,8 @@ const serviceDetailGroups = [
       </div>
     </div>
   </section>
+
+  <ConsultationProfiles locale={locale} />
 
   <section
     class="page-section page-section--services"
