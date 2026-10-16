@@ -1404,6 +1404,27 @@
     "description": "Acecore Systems propose du conseil IT, l’adoption de l’AI et l’amélioration opérationnelle, l’accompagnement au déploiement, le développement de systèmes métier, des applications Web et interfaces d’administration, du design et de la création, des CMS, la recherche, l’exploitation des données et l’amélioration des systèmes existants. Nous proposons aussi une évaluation de sécurité Web et API et un accompagnement des corrections.",
     "heroTitle": "De la structuration du problème\nau développement, au design et à l’amélioration opérationnelle.",
     "heroLead": "Au-delà d’une production ou d’un développement ponctuel, nous privilégions une conception et des améliorations qui permettent à la solution de s’inscrire dans les opérations quotidiennes.",
+    "consultationProfiles": {
+      "title": "Vous pouvez nous consulter avant de définir le projet.",
+      "body": "Sans équipe IT dédiée, ou sans savoir par quoi commencer ? Nous vous aidons à préciser l'accompagnement nécessaire dès cette étape.",
+      "aiLabel": "Portrait généré par AI",
+      "disclaimer": "Ces portraits générés par AI illustrent les informations. Ils ne représentent ni salariés ou clients réels, ni témoignages.",
+      "sourceLabel": "À propos des portraits",
+      "items": [
+        {
+          "title": "Avoir un interlocuteur pour le fonctionnement quotidien",
+          "body": "Revoir les tâches manuelles, choisir des outils ou lever les doutes après la mise en ligne. Nous partons de l'existant et ordonnons les améliorations.",
+          "imageAlt": "Femme adulte générée par AI illustrant les consultations IT du quotidien",
+          "label": "Découvrir le conseil IT"
+        },
+        {
+          "title": "Transformer une idée d'activité en système fonctionnel",
+          "body": "Le besoin ou l'idée existe, mais les fonctions et l'approche restent à définir. Nous les précisons ensemble, des exigences à la conception et au développement.",
+          "imageAlt": "Homme adulte généré par AI illustrant les consultations de développement",
+          "label": "Découvrir le processus de développement"
+        }
+      ]
+    },
     "entryPoints": [
       {
         "eyebrow": "Développement sur mesure / DEVELOPMENT",

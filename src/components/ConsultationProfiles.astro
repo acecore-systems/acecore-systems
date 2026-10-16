@@ -1,0 +1,157 @@
+---
+import castRelease from "../data/cast-release.json";
+import { getLocalizedContent } from "../i18n/content";
+import { getLocalizedUrl, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const data = getLocalizedContent(locale).services.consultationProfiles;
+const subjects = { operations: "acvc-001", project: "hatt" };
+const cards = data.items.map((item) => {
+  const subjectId = subjects[item.id as keyof typeof subjects];
+  const image = castRelease.assets.find(
+    (asset) => asset.subjectId === subjectId,
+  );
+  if (!image) throw new Error(`Missing approved cast portrait: ${subjectId}`);
+  return { ...item, image };
+});
+---
+
+<section class="page-section" aria-labelledby="consultation-profiles-title">
+  <div class="container">
+    <header class="editorial-header editorial-header--split">
+      <div>
+        <p class="editorial-eyebrow">Starting points</p>
+        <h2 id="consultation-profiles-title">{data.title}</h2>
+      </div>
+      <p>{data.body}</p>
+    </header>
+    <div class="consultation-profiles">
+      {
+        cards.map((item) => (
+          <article class="consultation-profile">
+            <figure>
+              <img
+                src={item.image.url}
+                alt={item.imageAlt}
+                width={item.image.width}
+                height={item.image.height}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>{data.aiLabel}</figcaption>
+            </figure>
+            <div class="consultation-profile__copy">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <a href={getLocalizedUrl(item.href, locale)}>
+                {item.label}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <p class="cast-disclosure">
+      {data.disclaimer}{" "}
+      <a href="https://cast.acecore.net/">{data.sourceLabel}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .consultation-profiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .consultation-profile {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 1.75rem 2rem 0;
+  }
+
+  .consultation-profile + .consultation-profile {
+    border-left: 1px solid var(--line);
+    padding-right: 0;
+    padding-left: 1.75rem;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+    font-size: 0.6875rem;
+    line-height: 1.6;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .consultation-profile__copy p {
+    margin: 0.75rem 0 1rem;
+    color: var(--ink-soft);
+    font-size: 0.875rem;
+    line-height: 1.85;
+  }
+
+  .consultation-profile__copy a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .cast-disclosure {
+    margin-top: 1rem;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    line-height: 1.8;
+  }
+
+  .cast-disclosure a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 860px) {
+    .consultation-profiles {
+      grid-template-columns: 1fr;
+    }
+
+    .consultation-profile,
+    .consultation-profile + .consultation-profile {
+      grid-template-columns: 6rem minmax(0, 1fr);
+      gap: 1.25rem;
+      padding: 1.5rem 0;
+      border-left: 0;
+    }
+
+    .consultation-profile + .consultation-profile {
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

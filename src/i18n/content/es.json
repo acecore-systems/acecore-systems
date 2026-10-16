@@ -1399,6 +1399,27 @@
     "description": "Servicios de Acecore Systems: asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web e interfaces de administración, diseño y producción creativa, CMS, búsqueda, datos y modernización. También ofrecemos evaluación de seguridad Web y API y apoyo a la remediación.",
     "heroTitle": "Desde organizar el problema\nhasta el desarrollo, el diseño y la mejora operativa.",
     "heroLead": "Además de trabajos puntuales, damos prioridad al diseño y la mejora que ayudan a integrar la solución en las operaciones.",
+    "consultationProfiles": {
+      "title": "Puedes consultar antes de tener un encargo definido.",
+      "body": "¿Sin personal IT dedicado o sin saber qué decidir primero? Te ayudamos a concretar el apoyo que necesitas desde ese punto de partida.",
+      "aiLabel": "Retrato generado con AI",
+      "disclaimer": "Estos retratos generados con AI ilustran la información. No representan a empleados o clientes reales ni son testimonios.",
+      "sourceLabel": "Acerca de los retratos",
+      "items": [
+        {
+          "title": "Contar con alguien para hablar de la operación diaria",
+          "body": "Revisar tareas manuales, elegir herramientas o resolver dudas tras el lanzamiento. Partimos de lo que ya usas y ordenamos las mejoras.",
+          "imageAlt": "Mujer adulta generada con AI que ilustra consultas IT cotidianas",
+          "label": "Ver asesoría IT"
+        },
+        {
+          "title": "Convertir una idea de negocio en un sistema funcional",
+          "body": "Hay un reto o una idea, pero faltan las funciones y el enfoque. Lo concretamos contigo desde los requisitos hasta el diseño y el desarrollo.",
+          "imageAlt": "Hombre adulto generado con AI que ilustra consultas de desarrollo",
+          "label": "Ver el proceso de desarrollo"
+        }
+      ]
+    },
     "entryPoints": [
       {
         "eyebrow": "Desarrollo por encargo / DEVELOPMENT",
