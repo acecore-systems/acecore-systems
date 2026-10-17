@@ -1,6 +1,8 @@
 import type { Locale } from "./config";
 
 type UiText = {
+  supportExamplesLabel: string;
+  companyInfoLabel: string;
   serviceFor: string;
   serviceDeliverables: string;
   serviceTerms: string;
@@ -122,6 +124,8 @@ type UiText = {
 
 export const ui: Record<Locale, UiText> = {
   ja: {
+    supportExamplesLabel: "具体的な対応例",
+    companyInfoLabel: "運営会社について",
     serviceFor: "こんなときに",
     serviceDeliverables: "主な対応",
     serviceTerms: "条件・対応範囲",
@@ -254,6 +258,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "トップへ戻る",
   },
   en: {
+    supportExamplesLabel: "Examples of support",
+    companyInfoLabel: "About our company",
     serviceFor: "When to choose this",
     serviceDeliverables: "What we help with",
     serviceTerms: "Terms and scope",
@@ -391,6 +397,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Return home",
   },
   "zh-cn": {
+    supportExamplesLabel: "具体支持示例",
+    companyInfoLabel: "运营公司信息",
     serviceFor: "适合这些情况",
     serviceDeliverables: "主要支持内容",
     serviceTerms: "条件与支持范围",
@@ -517,6 +525,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "返回首页",
   },
   es: {
+    supportExamplesLabel: "Ejemplos de asistencia",
+    companyInfoLabel: "Sobre la empresa",
     serviceFor: "Cuándo elegirlo",
     serviceDeliverables: "En qué ayudamos",
     serviceTerms: "Condiciones y alcance",
@@ -655,6 +665,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Volver al inicio",
   },
   pt: {
+    supportExamplesLabel: "Exemplos de suporte",
+    companyInfoLabel: "Sobre a empresa",
     serviceFor: "Quando escolher",
     serviceDeliverables: "Como ajudamos",
     serviceTerms: "Condições e escopo",
@@ -793,6 +805,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Voltar ao início",
   },
   fr: {
+    supportExamplesLabel: "Exemples d’accompagnement",
+    companyInfoLabel: "Notre entreprise",
     serviceFor: "Quand choisir ce service",
     serviceDeliverables: "Notre accompagnement",
     serviceTerms: "Conditions et périmètre",
@@ -930,6 +944,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Retour à l’accueil",
   },
   ko: {
+    supportExamplesLabel: "구체적인 지원 사례",
+    companyInfoLabel: "운영 회사 소개",
     serviceFor: "이럴 때 선택하세요",
     serviceDeliverables: "주요 지원 내용",
     serviceTerms: "조건 및 지원 범위",
@@ -1060,6 +1076,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "홈으로 돌아가기",
   },
   de: {
+    supportExamplesLabel: "Konkrete Unterstützung",
+    companyInfoLabel: "Über unser Unternehmen",
     serviceFor: "Wann dieser Service passt",
     serviceDeliverables: "Unsere Unterstützung",
     serviceTerms: "Bedingungen und Umfang",
@@ -1197,6 +1215,8 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Zur Startseite",
   },
   ru: {
+    supportExamplesLabel: "Примеры поддержки",
+    companyInfoLabel: "О нашей компании",
     serviceFor: "Когда выбрать услугу",
     serviceDeliverables: "С чем мы помогаем",
     serviceTerms: "Условия и объём работ",

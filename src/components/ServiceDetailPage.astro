@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import AnchorAliases from "./AnchorAliases.astro";
 import ServiceHandoff from "./ServiceHandoff.astro";
 import PurposeWork from "./PurposeWork.astro";
 import PurposeCaseCards from "./PurposeCaseCards.astro";
@@ -115,10 +116,31 @@ const jsonLd = [
   },
 ];
 const legacyScope = content.services.services.filter(
-  (service) =>
-    data.routeId === "development" &&
-    ["integration", "modernization"].includes(service.id),
+  (service) => service.detailUrl === canonicalInput,
 );
+const legacyEntry = content.services.entryPoints.find(
+  (entry) => entry.href === canonicalInput,
+);
+const legacySituations = content.home.consultationSituations.filter((item) =>
+  item.href.startsWith(canonicalInput),
+);
+const legacyDetailAliases = data.advisor
+  ? {
+      intro: ["advisor-introduction-title"],
+      pricing: ["advisor-plans-title"],
+      process: ["advisor-process-title"],
+      faq: ["advisor-faq-title"],
+      related: ["advisor-related-title"],
+      cta: ["advisor-cta-title"],
+    }
+  : {
+      intro: [],
+      pricing: [],
+      process: [],
+      faq: serviceKey === "website" ? ["website-faq-title"] : [],
+      related: [],
+      cta: [],
+    };
 const pricingAnchor =
   serviceKey === "website"
     ? "website-pricing-preview"
@@ -236,9 +258,9 @@ const pricingAnchor =
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">{text.serviceFor}</p><h2
-            id="detail-introduction-title"
-          >
+          <p class="purpose-eyebrow">{text.serviceFor}</p><AnchorAliases
+            ids={legacyDetailAliases.intro}
+          /><h2 id="detail-introduction-title">
             {data.introTitle}
           </h2><p>{data.introBody}</p>
         </div>
@@ -308,15 +330,17 @@ const pricingAnchor =
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">{text.scopeLabel} / {text.pricing}</p><h2
+          <p class="purpose-eyebrow">
+            {text.scopeLabel} / {text.pricing}
+          </p><AnchorAliases ids={legacyDetailAliases.pricing} /><h2
             id="detail-offerings-title"
           >
             {data.offeringsTitle}
-          </h2>{serviceKey !== "website" && <p>{data.offeringsLead}</p>}<p
-            class="selection-tax-note"
-          >
-            {content.pricing.heroLead}
-          </p>
+          </h2><p>{data.offeringsLead}</p>{
+            serviceKey !== "website" && (
+              <p class="selection-tax-note">{content.pricing.heroLead}</p>
+            )
+          }
         </div>
       </header>
       <div class="selection-offering-list">
@@ -359,6 +383,17 @@ const pricingAnchor =
                     <div>
                       <>
                         <p>{offering.body}</p>
+                        {data.advisor?.pricingSummaries.find(
+                          (item) => item.id === offering.id,
+                        )?.note && (
+                          <p>
+                            {
+                              data.advisor.pricingSummaries.find(
+                                (item) => item.id === offering.id,
+                              )?.note
+                            }
+                          </p>
+                        )}
                         <ul class="service-points">
                           {offering.includes.map((item) => (
                             <li>{item}</li>
@@ -392,21 +427,42 @@ const pricingAnchor =
         }
       </div>
       {
+        ["operations", "security"].includes(data.routeId) && (
+          <p class="selection-scope-note">
+            {data.sectionVisuals.scope.caption}
+          </p>
+        )
+      }
+      {
         data.advisor && (
           <p class="selection-contract-note">{data.advisor.priceNote}</p>
         )
       }
       {
-        legacyScope.length > 0 && (
+        (legacyScope.length > 0 ||
+          legacySituations.length > 0 ||
+          legacyEntry) && (
           <details class="purpose-disclosure">
             <>
               <summary>
                 <>
-                  <h3>{text.scopeLabel}</h3>
+                  <h3>{text.supportExamplesLabel}</h3>
                   <PurposeIcon name="chevron" />
                 </>
               </summary>
               <div class="purpose-disclosure__body selection-supplement-grid">
+                {legacyEntry && (
+                  <article class="selection-entry-example">
+                    <h4>{legacyEntry.title}</h4>
+                    <p>{legacyEntry.body}</p>
+                  </article>
+                )}
+                {legacySituations.map((item) => (
+                  <article>
+                    <h4>{item.title}</h4>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
                 {legacyScope.map((service) => (
                   <article>
                     <h4>{service.title}</h4>
@@ -427,7 +483,7 @@ const pricingAnchor =
         data.costExample && (
           <aside class="selection-cost-example">
             <>
-              <h3>{data.costExample.title}</h3>
+              <h3 id="website-cost-title">{data.costExample.title}</h3>
               <p>{data.costExample.body}</p>
             </>
           </aside>
@@ -439,7 +495,7 @@ const pricingAnchor =
             <>
               <summary>
                 <>
-                  <h3>{data.termsTitle}</h3>
+                  <h3 id="website-terms-title">{data.termsTitle}</h3>
                   <PurposeIcon name="chevron" />
                 </>
               </summary>
@@ -492,7 +548,9 @@ const pricingAnchor =
               <>
                 <summary>
                   <>
-                    <h3>{data.advisor.useCasesTitle}</h3>
+                    <h3 id="advisor-use-cases-title">
+                      {data.advisor.useCasesTitle}
+                    </h3>
                     <PurposeIcon name="chevron" />
                   </>
                 </summary>
@@ -515,7 +573,9 @@ const pricingAnchor =
               <>
                 <summary>
                   <>
-                    <h3>{data.advisor.governanceTitle}</h3>
+                    <h3 id="advisor-boundaries-title">
+                      {data.advisor.governanceTitle}
+                    </h3>
                     <PurposeIcon name="chevron" />
                   </>
                 </summary>
@@ -551,9 +611,9 @@ const pricingAnchor =
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">{text.processTitle}</p><h2
-            id="detail-process-title"
-          >
+          <p class="purpose-eyebrow">{text.processTitle}</p><AnchorAliases
+            ids={legacyDetailAliases.process}
+          /><h2 id="detail-process-title">
             {data.processTitle}
           </h2><p>{data.processLead}</p>
         </div>
@@ -570,6 +630,9 @@ const pricingAnchor =
           ))
         }
       </ol>
+      <p class="selection-process-note">
+        {data.sectionVisuals.process.caption}
+      </p>
     </div>
   </section>
   <section
@@ -579,7 +642,9 @@ const pricingAnchor =
     <div class="container selection-reading-width">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">FAQ</p><h2 id="detail-faq-title">
+          <p class="purpose-eyebrow">FAQ</p><AnchorAliases
+            ids={legacyDetailAliases.faq}
+          /><h2 id="detail-faq-title">
             {data.faqsTitle ?? text.serviceFaqTitle}
           </h2>{data.faqLead && <p>{data.faqLead}</p>}
         </div>
@@ -643,7 +708,11 @@ const pricingAnchor =
   >
     <div class="container">
       <header class="purpose-section-heading">
-        <h2 id="detail-related-title">{text.relatedSupport}</h2><a
+        <AnchorAliases ids={legacyDetailAliases.related} /><h2
+          id="detail-related-title"
+        >
+          {text.relatedSupport}
+        </h2><a
           class="purpose-text-link"
           href={getLocalizedUrl("/services/", locale)}
           >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
@@ -675,7 +744,11 @@ const pricingAnchor =
         aria-labelledby="detail-cta-title"
       >
         <div class="editorial-cta__copy">
-          <h2 id="detail-cta-title">{data.ctaTitle}</h2><p>{data.ctaBody}</p>
+          <AnchorAliases ids={legacyDetailAliases.cta} /><h2
+            id="detail-cta-title"
+          >
+            {data.ctaTitle}
+          </h2><p>{data.ctaBody}</p>
         </div><a
           class="editorial-link editorial-link--primary"
           href={contactHref}>{text.discussThis}</a
@@ -686,9 +759,16 @@ const pricingAnchor =
 </BaseLayout>
 <script>
   const revealLinkedDetails = () => {
-    const id = decodeURIComponent(location.hash.slice(1));
+    let id: string;
+    try {
+      id = decodeURIComponent(location.hash.slice(1));
+    } catch {
+      return;
+    }
     if (!id) return;
     const target = document.getElementById(id);
+    const parentDetails = target?.closest("details");
+    if (parentDetails instanceof HTMLDetailsElement) parentDetails.open = true;
     const details =
       target instanceof HTMLDetailsElement
         ? target

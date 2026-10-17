@@ -51,6 +51,10 @@ const footerLinks = content.site.footerLinks.map((item) => ({
       <a href={new URL(getLocalizedUrl("/", locale), site.acecoreUrl).href}
         >{text.operatedBy}</a
       >
+      <a
+        href={new URL(getLocalizedUrl("/about/", locale), site.acecoreUrl).href}
+        >{text.companyInfoLabel}</a
+      >
       <span>© {new Date().getFullYear()} {ACECORE_ORGANIZATION.legalName}</span>
     </div>
   </div>

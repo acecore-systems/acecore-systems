@@ -809,6 +809,137 @@ for (const route of [
   );
 }
 
+for (const service of [
+  { data: advisorData, html: advisorPage, route: advisorRoute },
+  { data: developmentData, html: developmentPage, route: developmentRoute },
+  ...focusedServices,
+]) {
+  const rendered = loadHtml(service.html)("main").text();
+  assert.ok(
+    rendered.includes(service.data.sectionVisuals.process.caption),
+    `${service.route}: published handover/verification summary missing`,
+  );
+}
+
+// Published descriptions, contract conditions and fragment links are compatibility boundaries.
+const homeData = readJson("src/data/home.json");
+for (const scope of serviceIndexData.services) {
+  const destination = scope.detailUrl ?? "/services/";
+  const rendered = loadHtml(read(`dist${destination}index.html`))(
+    "main",
+  ).text();
+  for (const field of [scope.body, ...scope.examples])
+    assert.ok(
+      rendered.includes(field),
+      `${destination}: published ${scope.id} scope/example is no longer readable`,
+    );
+}
+for (const situation of homeData.consultationSituations) {
+  const destination = new URL(situation.href, siteOrigin).pathname;
+  const rendered = loadHtml(read(`dist${destination}index.html`))(
+    "main",
+  ).text();
+  for (const field of [situation.title, situation.body])
+    assert.ok(
+      rendered.includes(field),
+      `${destination}: published consultation example is missing`,
+    );
+}
+for (const work of worksData.cases) {
+  const $ = loadHtml(worksPage);
+  const card = $(`[id="${work.id}"]`);
+  assert.equal(card.length, 1, `works: ${work.id} must remain addressable`);
+  for (const field of [
+    work.title,
+    work.summary,
+    work.challenge,
+    work.proposal,
+    work.result,
+  ])
+    assert.ok(
+      card.text().includes(field),
+      `works: ${work.id} published case content is missing`,
+    );
+  for (const field of [work.detailUrl, work.externalUrl].filter(Boolean))
+    assert.ok(
+      card
+        .find("a")
+        .toArray()
+        .some((node) => $(node).attr("href") === field),
+      `works: ${work.id} published destination is missing`,
+    );
+}
+const guideText = loadHtml(guidePage)("main").text();
+for (const tip of guideData.tips)
+  for (const field of [tip.title, tip.body, ...tip.points])
+    assert.ok(
+      guideText.includes(field),
+      `guide: preparation content missing: ${tip.title}`,
+    );
+for (const faq of guideData.faqs)
+  for (const field of [faq.question, faq.answer])
+    assert.ok(guideText.includes(field), "guide: published FAQ missing");
+const websiteData = focusedServices.find(
+  (service) => service.route === "/services/website/",
+).data;
+assert.ok(
+  loadHtml(read("dist/services/website/index.html"))("main")
+    .text()
+    .includes(websiteData.offeringsLead),
+  "website: separate monthly contract, tax and estimate conditions must remain explicit",
+);
+for (const summary of advisorData.pricingSummaries)
+  assert.ok(
+    loadHtml(advisorPage)("main").text().includes(summary.note),
+    `advisor: ${summary.id} engagement note missing`,
+  );
+const legacyFragments = {
+  "/": [
+    "layer-model-title",
+    "domain-title",
+    "customer-touchpoints",
+    "operations",
+    "it-foundation",
+    "consultation-title",
+    "home-cta-title",
+  ],
+  "/services/": [
+    "service-entry-title",
+    "service-entry-development",
+    "service-entry-it-advisor",
+    "service-entry-website",
+    "service-domains-title",
+    "service-detail-index-title",
+    "service-detail-primary-title",
+    "service-detail-supporting-title",
+    "service-cta-title",
+  ],
+  "/services/it-advisor/": [
+    "advisor-introduction-title",
+    "advisor-use-cases-title",
+    "advisor-plans-title",
+    "advisor-process-title",
+    "advisor-boundaries-title",
+    "advisor-faq-title",
+    "advisor-related-title",
+    "advisor-cta-title",
+  ],
+  "/services/website/": [
+    "website-cost-title",
+    "website-terms-title",
+    "website-faq-title",
+  ],
+};
+for (const [route, ids] of Object.entries(legacyFragments)) {
+  const $ = loadHtml(read(`dist${route}index.html`));
+  for (const id of ids)
+    assert.equal(
+      $(`[id="${id}"]`).length,
+      1,
+      `${route}#${id}: published fragment must resolve uniquely`,
+    );
+}
+
 console.log(
   "SEO validation passed: service routes, pricing placement, metadata, structured data, and visual coverage",
 );

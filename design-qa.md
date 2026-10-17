@@ -1,62 +1,69 @@
-# デザインQA: 実績あるサイトの構成を取り入れたサービス選択・比較の改善
+# デザインQA: 24公式サイトの参照を全体の選択・比較・相談へ反映
 
 final result: passed
 
-対象はPR143の追加改修。ユーザーの「内容は案3、デザインは案1」を維持し、今回の「成功しているサイトを徹底的に参考にする」を、サービスの選択・実績・料金条件・相談導線の改善へ反映した。未解消のP0/P1/P2はない。これはUIの受入結果であり、成約率の向上や本番公開の完了を意味しない。
+確認日: 2026-10-17 JST。既存PR143で「内容は案3・見た目は案1」を維持し、home・サービス一覧・全7詳細に加えて、実績・導入ガイド・料金・問い合わせ・運営会社への案内を改善した。親担当の独立した情報監査・ブラウザ受入と、実装担当の検証・差分レビューを実施。受入を妨げる未解消P0/P1/P2はない。UIによる成約/売上改善を測定したという意味ではない。
 
-## 参照・意図した差
+## 参照と採用判断
 
-- 視覚方向: [案1の原本](docs/design/purpose-ui-hybrid/visual-reference-option1.jpg)。濃紺の太字、白と薄青、鮮明な青の丸いCTA、実案件のPC/スマホ画像を継承。
-- 構造参考: [調査と根拠](docs/design/service-selection/research.md)、[実サイト比較ボード](docs/design/service-selection/reference-pattern-board.jpg)。STORESの目的からの選択、LIGの実績・範囲・価格の比較、JOYZOの対象と進め方、SmartHRの課題別入口を参考にした。
-- 参考企業の利用規模は事業実績の根拠であり、UIによる成功の因果関係ではない。競合の顧客数・保証・料金を自社の主張へ転用していない。
-- 案1は3ページの画像コンセプト。構成の完全複製ではなく、今回の要求に合わせて重複を除き、7サービスの独立URLと既存の価格・契約条件を維持した。
+[24公式サイトの根拠/採用・非採用](docs/design/expanded-benchmark/research.md)、[構造化台帳](docs/design/expanded-benchmark/sources.json)、[実画面の採取条件](docs/design/expanded-benchmark/visual-observations.json)を保存した。主要12サイトをin-app browserで深掘りし、追加3ページも取得。実装担当も比較ボード3枚を実見した。SmartHRの課題メニューを実際に開いた操作を含む。一部の画面外lazy画像は未読込で、全画像の完全監査とは扱わない。
 
-## 比較証拠・撮影条件
+STORESの初期/継続費用と準備・設定・引き継ぎ、LIG/GIGの大きな実績と実装意図、JOYZOの対象と契約範囲、IIJ等の管理対象と導入/FAQを採用。巨大メガメニュー、根拠のない顧客数・成果数値・保証・無料体験は追加していない。企業の事業規模は参照対象の根拠であり、UI成功の因果ではない。
 
-2026-10-17 JST、Codex in-app browser。最終標準buildの静的プレビュー `http://127.0.0.1:4322/` を使用。開発ツールバーなし。
+視覚基準は[承認済み案1](docs/design/purpose-ui-hybrid/visual-reference-option1.jpg)。白・薄青・濃紺の太字、鮮明な青のpill CTA、既存の実績画面とPC/スマホ合成を維持した。
 
-- [トップ・一覧・詳細の実装全体](docs/design/service-selection/implementation-final-board.jpg)
-- [トップ: 案1と改修結果](docs/design/service-selection/compare-home-final.jpg)
-- [サービス一覧: 案1と改修結果](docs/design/service-selection/compare-services-final.jpg)
-- [ホームページ制作: 案1と改修結果](docs/design/service-selection/compare-website-final.jpg)
-- [7サービスのdesktop](docs/design/service-selection/seven-services-desktop.jpg)
-- [7サービスのmobile](docs/design/service-selection/seven-services-mobile.jpg)
-- [320px・768px・英語・ドイツ語](docs/design/service-selection/responsive-edge-board.jpg)
-- [料金条件と更新プランの展開](docs/design/service-selection/pricing-mobile-final.jpg)
+## 実画面と5つの観点
 
-上記比較画像を実見した。案1原本1536×1024から各列 x6..510 / 518..1020 / 1027..1529、y90..1024を切り出し600px幅へ等比拡大。実装は1440×1000 CSS pxでフルページ撮影し、home全体、services先頭2400px、website先頭2350pxを同幅へ等比縮小して並置。画像の縦横比は維持した。別viewportのコンセプトとの定性的比較であり、ピクセル完全一致の主張ではない。
+親担当がローカル静的preview `http://127.0.0.1:4322/` をin-app browserで操作・撮影し、実装担当が比較証拠を照合した。
 
-実装フルページはhome1425×3123、services1425×4116、website1425×6592px。旧画面はそれぞれ5218、6873、12065px高。短縮は重複整理の確認値であり、UX成果の測定ではない。モバイルは390×844 CSS px、追加最小幅320×800、タブレット768×1024。スクロールバー分を除くdocument幅375/305/753pxとscrollWidthを比較した。
+1. 文字: 太字sansと16px本文を維持。見出しの禁則・自然な改行を保持。旧ID用の空要素がhome/関連見出しのflex余白を作らないよう見出し内へ配置し、親が実画面で受入確認した。
+2. 配置/余白: 実績は2列の大きな画面と結果を先に示し、課題/提案をカード内で開く。guideは小さな導入画像、選択経路、工程、準備チェック、FAQへ。料金は8群の目次と全33項目を表示。contactは案内/FAQと幅のあるフォームを分けた。
+3. 色: 既存の青白トークンと読みやすいフッターを共通維持。選択中の実績分類は背景と枠で示し、固定の偽activeは使わない。
+4. 画像: 全7実績の既存画像/altを保持し、実寸のwidth/heightと全体が見える比率へ。新しい顧客写真や未承認画像は追加しない。Cast権利manifest/チェックサム/allowlistを維持し、未使用素材の全掲載は強制しない。
+5. 内容: 旧具体例・契約/価格・FAQ・工程・実績事実を保持。画像captionだけの固有情報は本文に移設し、画像を装飾として残すためのhiddenギャラリーは作らない。
 
-## 必須5面の受入
+## 比較証拠
 
-1. 文字: 日本語の濃紺・太字階層と本文の読みやすさを保持。主要見出し・料金・条件文をdesktop/mobileで確認。長い見出しの句読点孤立、CTA末尾の孤立、料金見出しの一文字行を修正した。画像参照と同一書体であるとは断定しない。
-2. 配置と余白: トップの重複分類と巨大な重複実績を除去。サービス一覧は3目的・7サービス、詳細は対象・実績・価格/範囲・進め方・FAQ・相談の順。全7詳細で共通の余白と階層を確認。価格の詳細を閉じても主要条件は読める。
-3. 色: 白・薄青・濃紺・青を維持。フッターの白文字/淡色背景（旧約1.06:1）を濃紺文字へ修正。主要リンク・CTAの区別が見える。
-4. 画像: 既存の承認済み実績画像と機器合成を使用。詳細の縦に細く切れた実績画像を、上に画像・下に説明の構成へ変更。7詳細のロード済み画像に破損なし。Castの権利・チェックサム・禁止画像検査を維持し、不要な人物ギャラリーは追加しない。
-5. 内容: 既存の料金・契約条件を維持。5ページ/10ページ、保守30分、更新込み90分、税込・外部費用の区別を確認。サイト制作の一覧トピックを料金名から実作業へ修正し翻訳状態も更新。新しい成功数値や架空の顧客談は追加していない。
+- [最新home](docs/design/expanded-benchmark/final-home-desktop.jpg) — 最終アンカー配置補正後。
+- [実績: 旧本番と改修後](docs/design/expanded-benchmark/compare-works.jpg)
+- [導入ガイド: 旧本番と改修後](docs/design/expanded-benchmark/compare-guide.jpg)
+- [料金: 旧本番と改修後](docs/design/expanded-benchmark/compare-pricing.jpg)
+- [問い合わせ: 旧本番と改修後](docs/design/expanded-benchmark/compare-contact.jpg)
+- [全7詳細のmobile](docs/design/expanded-benchmark/new-seven-mobile-board.jpg) — 工程末尾のcaption本文復元前。復元後の同内容は親が静的HTMLで追加監査済み。
+- [mobile料金](docs/design/expanded-benchmark/final-pricing-mobile.jpg) / [mobile問い合わせ](docs/design/expanded-benchmark/final-contact-mobile.jpg)
+- [レスポンシブ計測](docs/design/expanded-benchmark/responsive-measurements.json)
 
-## 発見・修正・再確認の履歴
+比較元は旧本番 `033c6420ee41dc02eeab2c30924f06265b1cd032`。最終home画像は1280px通常幅、その他desktop比較は主に1440px、mobileは390px。追加320pxでworks/guide/pricing/contactの横はみ出しなし。390pxで全7詳細と主要ページの画像破損・横はみ出しなし。1440pxでhome/services/contactとdesktop/mobileナビ切替を確認。全スクロール位置・全実機の検査ではない。
 
-- 初期監査: トップの複数の分類、一覧の重複説明、詳細の長い重複料金と関連サービス列挙、淡いフッター上の白文字を確認。目的別入口・7サービス・共通詳細テンプレートへ整理。
-- 初回改修比較: 実績画像が細い縦窓へ切れていたため16:10の全体表示へ変更。プランを閉じると条件が消えたため、主要条件をsummaryへ常時表示。
-- モバイル再確認: 下部CTAの「い。」、料金見出しの「ト」、site-functions見出しの句読点が孤立。見出し幅・禁則と狭幅の文字サイズを調整して再撮影。
-- 固定AI案内: モバイルでは52×52pxへ縮小。主CTAと重なると非表示になる実装を確認。キーボードフォーカス中と開いているチャットは保持する。全スクロール位置の実機試験は行っていない。
-- 最終再確認: 全7詳細のdesktop/mobile比較、320px3ページ、768pxの日本語・英語・ドイツ語の共通テンプレートを確認。横はみ出しなし。旧根拠と比較履歴は既存purpose-ui/purpose-ui-hybrid資料に残る。
+## 独立した情報保全監査
 
-## 操作・自動検証
+- 旧本番の496 URL欠落0、旧16基幹ページのfragment ID欠落0。
+- 全33料金のlabel/price/note/詳細route/anchorが旧本番と一致。
+- 重要長文98項目を保持。829長文のうち791が完全一致、残38は見出し・画像説明・一覧ナビ等の意味対応を個別確認。
+- 旧9分類の本文/具体例を関連7詳細とdesign補足へ移設。データJSONだけに残した状態を保全と扱っていない。
+- 旧process caption7件とoperations/securityのscope caption2件を表示本文に復元。複数端末の表示/操作確認、監視/権限/更新の引き継ぎ、障害記録/変更履歴/責任範囲を保持。
+- websiteは月額別契約、税込/外部実費、契約前見積り、固定5ページまで/10ページまで、保守30分の更新なし/更新合計90分を保持。
+- source記事・works・guide・privacy・pricing JSONは旧本番比で不変。移設先と残38を含む表現差分の理由は[情報保全台帳](docs/design/expanded-benchmark/information-migration.md)に記載。
 
-- サービスカテゴリの絞込みとブラウザで戻る操作、mobileメニューの開閉。
-- 料金CTAから `#website-pricing-preview` へ移動（対象top約32px）。`#updates` の直リンクで更新プランが展開。
-- FAQの展開、ホームページ制作CTAから相談フォームへのサービス・件名の引き継ぎ。
-- 7詳細の相談URL/queryを確認。既存の広い相談分類とorigin情報を維持しており、7種類すべてを異なるフォーム選択肢へ増設したものではない。
-- 全7詳細でh1・画像・横はみ出しを検証。代表的な320/768pxと英独表示も確認。
-- 実装担当: 標準 `npm run build` 全体成功（506ページ）。Cast11、CMS84、検索45、AI7、問い合わせ2の検証、Cloudflare型・Pages/functions型、SEO、9言語内部リンク、追加翻訳33件、source i18n、全体format成功。最後の狭幅CSS調整はAstro生成とpostbuildで再確認。
+## 操作・回帰
 
-## 限界・公開境界
+worksフィルター7件→目的2件→ブラウザで戻る7件、課題/提案開閉、guide7チェックとFAQ、料金33項目/8群、mobileメニューと検索dialogの開閉を確認。旧 `#website-terms-title`、development `#web-app`、services `#design` が対応先へ届き、必要なdetailsを開く。
 
-ローカル相談フォームではCloudflare Turnstileのhostname制限による110200を確認。入力引継ぎまでの検証で、フォーム送信・CAPTCHA・外部サービスの受入は未検証。サービスページ自身の追加console障害は確認されていない。
+問い合わせはqueryなしで件名空欄→実サービス選択で補完→手入力後に別種別を選んでも手入力を保持。サービス/実績/料金からの `category/service/from/entry` は維持。問い合わせ送信は行っていない。
 
-既存website翻訳がpendingのため英独のwebsite詳細は未生成で、日本語のみの言語リンクを維持。存在する `/en/services/site-functions/` と `/de/services/site-functions/` で共通テンプレートを検証した。翻訳未生成ページを表示成功として扱っていない。既存の翻訳待ち、実機Safari、網羅的アクセシビリティ監査、成約率比較は残る。本番マージ・本番公開は対象外。Draft PRとGitHub連携プレビューでレビュー可能な状態にする。
+## 自動検証
 
-前回の受入記録は[案1と案3の統合時のQA](docs/design/purpose-ui-hybrid/qa-hybrid.md)に保存した。
+- 標準prebuild: Cast11・CMS84・検索45・AI7・問い合わせを通過。Cloudflare生成型/Pages/functions型、content/i18n sourceを通過。
+- 問い合わせ修正後は5testsを通過。未選択の案内を件名にしないこと、日本語の自然な補完、編集済み維持、英語ラベル保持を検証。
+- 最終実build/postbuild: 506ページ、検索/AI境界、Pagefind、376 vectors/56 pages、Cast使用1/登録11、SEO・全9言語の内部リンク/fragmentを通過。
+- SEO validatorを強化し、旧9分類全例/旧7相談例、全7実績事実/リンク、ガイド全準備項目/FAQ、7工程caption、website別契約、IT顧問注記、旧fragmentの一意性を検証。
+- 既存翻訳PR経路33testsを通過。日本語UI sourceHashを更新し、新UIラベルは全9言語に用意。有料翻訳Batchは投入していない。
+- 最終format/checkとPRのCI結果はcommit後の共有記録へ追記する。
+
+## 限界・公開手順
+
+ローカルcontactでTurnstile hostname制限による110200を確認。フォーム送信/CAPTCHA受入は未検証。websiteの既存翻訳pendingを維持し、未生成の英独website詳細を成功扱いしない。実機Safari、網羅的アクセシビリティ適合、売上/成約の測定は未実施。
+
+ユーザーはレビュー後のmerge・本番反映まで明示承認済み。実装担当がcommit/push/PR更新とCI/immutable previewを確認し、親担当が最終PRレビュー・mergeとGitHub連携の本番反映を担当する。本記録のローカルpassedだけで本番公開完了とは扱わない。Git Provider/source repo、github:push deployment成功、custom domain activeと本番HEADは反映後に確認する。
+
+前回のQAは[全7サービスの選択構成](docs/design/service-selection/qa-before-expanded.md)、[案1と案3の統合](docs/design/purpose-ui-hybrid/qa-hybrid.md)に保存した。

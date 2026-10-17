@@ -1,17 +1,20 @@
 ---
 import { getLocalizedUrl, type Locale } from "../i18n";
+import { getLocalizedContent } from "../i18n/content";
 import { getUi } from "../i18n/ui";
 import PurposeIcon from "./PurposeIcon.astro";
 interface Props {
   locale: Locale;
+  ctaId?: string;
 }
-const { locale } = Astro.props;
+const { locale, ctaId = "purpose-cta-title" } = Astro.props;
+const { home } = getLocalizedContent(locale);
 const text = getUi(locale);
 ---
 
-<aside class="purpose-callout">
+<aside class="purpose-callout" aria-labelledby={ctaId}>
   <div class="container purpose-callout__inner">
-    <p>{text.consultSpecificBody}</p>
+    <h2 id={ctaId}>{home.ctaTitle}</h2><p>{home.ctaBody}</p>
     <a class="purpose-button" href={getLocalizedUrl("/contact/", locale)}
       >{text.purposeContact}<PurposeIcon name="arrow" /></a
     >

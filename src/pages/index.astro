@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import AnchorAliases from "../components/AnchorAliases.astro";
 import PurposeIcon from "../components/PurposeIcon.astro";
 import PurposeWork from "../components/PurposeWork.astro";
 import PurposeCaseCards from "../components/PurposeCaseCards.astro";
@@ -12,26 +13,29 @@ interface Props {
   locale?: Locale;
 }
 const locale = Astro.props.locale ?? "ja";
-const { home, itAdvisor } = getLocalizedContent(locale);
+const { home } = getLocalizedContent(locale);
 const text = getUi(locale);
 const localizeHref = (href: string) =>
   href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
 const needs = [
   {
+    id: "customer-touchpoints",
     title: text.purposeWebsiteNeed,
     body: home.layers[0].body,
     icon: "monitor" as const,
     href: getLocalizedUrl("/services/", locale) + "#web",
   },
   {
+    id: "operations",
     title: text.purposeAutomationNeed,
     body: home.layers[1].body,
     icon: "settings" as const,
     href: getLocalizedUrl("/services/", locale) + "#work",
   },
   {
+    id: "it-foundation",
     title: text.purposeAdvisorNeed,
-    body: itAdvisor.indexSummary,
+    body: home.layers[2].body,
     icon: "users" as const,
     href: getLocalizedUrl("/services/it-advisor/", locale),
   },
@@ -67,7 +71,11 @@ const needs = [
   <section class="purpose-needs" aria-label={home.consultationTitle}>
     <div class="container">
       <header class="purpose-section-heading">
-        <h2>{text.chooseScopeTitle}</h2><a
+        <h2 id="home-needs-title">
+          <AnchorAliases
+            ids={["layer-model-title", "domain-title", "consultation-title"]}
+          />{text.chooseScopeTitle}
+        </h2><a
           class="purpose-text-link"
           href={getLocalizedUrl("/services/", locale)}
           >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
@@ -76,7 +84,7 @@ const needs = [
       <div class="purpose-needs__list">
         {
           needs.map((need) => (
-            <a class="purpose-need" href={need.href}>
+            <a class="purpose-need" id={need.id} href={need.href}>
               <PurposeIcon name={need.icon} />
               <span>
                 <>
@@ -144,5 +152,5 @@ const needs = [
       </ol>
     </div>
   </section>
-  <PurposeCallout locale={locale} />
+  <PurposeCallout locale={locale} ctaId="home-cta-title" />
 </BaseLayout>

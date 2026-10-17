@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import AnchorAliases from "../components/AnchorAliases.astro";
 import PurposeIcon from "../components/PurposeIcon.astro";
 import PurposeCallout from "../components/PurposeCallout.astro";
 import { getLocalizedContent } from "../i18n/content";
@@ -52,6 +53,15 @@ const legacyAliases = (href: string, id: string) =>
         }
       </nav>
       <div class="purpose-catalog__groups" id="all">
+        <AnchorAliases
+          ids={[
+            "service-entry-title",
+            "service-domains-title",
+            "service-detail-index-title",
+            "service-detail-primary-title",
+            "service-detail-supporting-title",
+          ]}
+        />
         <p class="purpose-catalog__price-note">{content.pricing.heroLead}</p>
         {
           groups.map((group) => (
@@ -76,7 +86,14 @@ const legacyAliases = (href: string, id: string) =>
                   >
                     <PurposeIcon name={item.icon} />
                     <div>
-                      {legacyAliases(item.href, item.id).map((id) => (
+                      {[
+                        ...(item.id === "development" ||
+                        item.id === "it-advisor" ||
+                        item.id === "website"
+                          ? ["service-entry-" + item.id]
+                          : []),
+                        ...legacyAliases(item.href, item.id),
+                      ].map((id) => (
                         <span
                           id={id}
                           class="purpose-anchor-alias"
@@ -182,7 +199,7 @@ const legacyAliases = (href: string, id: string) =>
       </ol>
     </div>
   </section>
-  <PurposeCallout locale={locale} />
+  <PurposeCallout locale={locale} ctaId="service-cta-title" />
 </BaseLayout>
 <script>
   const catalog = document.querySelector<HTMLElement>(".purpose-catalog");
@@ -207,6 +224,10 @@ const legacyAliases = (href: string, id: string) =>
       for (const group of groups)
         group.hidden =
           current !== "all" && group.dataset.serviceGroup !== current;
+      const target = document.getElementById(category);
+      const disclosure =
+        target?.closest("details") ?? target?.querySelector("details");
+      if (disclosure instanceof HTMLDetailsElement) disclosure.open = true;
     };
     for (const link of links)
       link.addEventListener("click", (event) => {

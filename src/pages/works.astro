@@ -1,4 +1,6 @@
 ---
+import PurposeIcon from "../components/PurposeIcon.astro";
+import PurposeCallout from "../components/PurposeCallout.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import site from "../data/site.json";
 import { getLocalizedContent } from "../i18n/content";
@@ -35,12 +37,32 @@ const contactHref = (work: (typeof data.cases)[number]) => {
     entry: "work-cta",
   }).toString()}`;
 };
+
+const purposes = [
+  { id: "all", label: text.purposeAll },
+  { id: "web", label: text.purposeWeb },
+  { id: "work", label: text.purposeWork },
+  { id: "operate", label: text.purposeOperate },
+];
+const casePurposes: Record<string, string[]> = {
+  "case-acecore-contact": ["web", "work"],
+  "case-acecore-store": ["web", "work"],
+  "case-acecore-site-platform": ["web", "operate"],
+  "case-aceserver": ["operate"],
+  "case-aceserver-portal": ["web", "operate"],
+  "case-cherry-homepage": ["web"],
+  "case-hatt-homepage": ["web"],
+};
+const imageDimensions: Record<string, [number, number]> = {
+  "case-acecore-store": [1536, 864],
+  "case-cherry-homepage": [1585, 892],
+};
 ---
 
 <BaseLayout
   title={data.title}
   description={data.description}
-  bodyClass="works-page"
+  bodyClass="works-page purpose-works"
   locale={locale}
 >
   <section class="page-hero page-hero--works">
@@ -50,86 +72,127 @@ const contactHref = (work: (typeof data.cases)[number]) => {
       <p class="page-lead">{data.heroLead}</p>
     </div>
   </section>
-
   <section
     class="page-section page-section--works"
     aria-labelledby="work-list-title"
   >
     <div class="container">
-      <header class="editorial-header">
-        <p class="editorial-eyebrow">Cases / 01</p>
+      <header class="purpose-section-heading">
         <h2 id="work-list-title">{text.casesTitle}</h2>
+        <a
+          class="purpose-text-link"
+          href={getLocalizedUrl("/services/", locale)}
+          >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
+        >
       </header>
-      <div class="work-list">
+      <nav class="experience-filters" aria-label={text.works}>
+        {
+          purposes.map((purpose) => (
+            <a
+              href={
+                getLocalizedUrl("/works/", locale) +
+                "?purpose=" +
+                purpose.id +
+                "#work-list-title"
+              }
+              data-work-filter={purpose.id}
+              aria-current={purpose.id === "all" ? "true" : undefined}
+            >
+              {purpose.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="experience-case-grid">
         {
           data.cases.map((work, index) => (
             <article
-              class:list={[
-                "work-case",
-                !work.image && "work-case--without-media",
-              ]}
+              class="experience-case"
               id={work.id}
+              data-case-purpose={casePurposes[work.id]?.join(" ")}
               aria-labelledby={`${work.id}-title`}
             >
-              <header class="work-case__header">
-                <p class="editorial-index">
-                  Case {String(index + 1).padStart(2, "0")}
-                </p>
-                <p class="work-case__category">{work.category}</p>
-                <h3 id={`${work.id}-title`}>{work.title}</h3>
-                <p class="work-case__summary">{work.summary}</p>
-              </header>
               {work.image && (
-                <figure class="work-case__media">
+                <figure class="experience-case__media">
                   <img
                     src={work.image}
                     alt={work.imageAlt || work.title}
-                    width="1536"
-                    height="1024"
+                    width={imageDimensions[work.id]?.[0] ?? 1536}
+                    height={imageDimensions[work.id]?.[1] ?? 1024}
                     loading="lazy"
+                    decoding="async"
                   />
                 </figure>
               )}
-              <div class="work-case__body">
-                <dl class="work-details">
-                  <div class="work-details__row">
-                    <dt>{text.challenge}</dt>
-                    <dd>{work.challenge}</dd>
-                  </div>
-                  <div class="work-details__row">
-                    <dt>{text.proposal}</dt>
-                    <dd>{work.proposal}</dd>
-                  </div>
-                  <div class="work-details__row">
-                    <dt>{text.result}</dt>
-                    <dd>{work.result}</dd>
-                  </div>
-                </dl>
-                <div class="work-case__links">
-                  <a
-                    class="editorial-link editorial-link--primary"
-                    href={contactHref(work)}
-                    aria-label={`${work.title}: ${text.discussThis}`}
-                  >
-                    {text.discussThis}
-                  </a>
+              <div class="experience-case__content">
+                <header>
+                  <p class="experience-case__category">
+                    <span>Case {String(index + 1).padStart(2, "0")}</span>
+                    {work.category}
+                  </p>
+                  <h3 id={`${work.id}-title`}>{work.title}</h3>
+                  <p class="experience-case__summary">{work.summary}</p>
+                </header>
+                <div class="experience-case__result">
+                  <>
+                    <h4>{text.result}</h4>
+                    <p>{work.result}</p>
+                  </>
+                </div>
+                <details class="experience-case__details">
+                  <summary>
+                    <>
+                      <span>
+                        {text.challenge} / {text.proposal}
+                      </span>
+                      <PurposeIcon name="chevron" />
+                    </>
+                  </summary>
+                  <dl>
+                    <>
+                      <div>
+                        <>
+                          <dt>{text.challenge}</dt>
+                          <dd>{work.challenge}</dd>
+                        </>
+                      </div>
+                      <div>
+                        <>
+                          <dt>{text.proposal}</dt>
+                          <dd>{work.proposal}</dd>
+                        </>
+                      </div>
+                    </>
+                  </dl>
+                </details>
+                <div class="experience-case__links">
                   {work.detailUrl && (
                     <a
-                      class="editorial-link"
+                      class="purpose-text-link"
                       href={localizeHref(work.detailUrl)}
                       aria-label={`${work.title}: ${text.caseDetails}`}
                     >
                       {text.caseDetails}
+                      <PurposeIcon name="arrow" />
                     </a>
                   )}
                   {work.externalUrl && (
                     <a
-                      class="editorial-link"
+                      class="purpose-text-link"
                       href={localizeHref(work.externalUrl)}
                     >
                       {work.externalLabel}
+                      <PurposeIcon name="arrow" />
                     </a>
                   )}
+                  <a
+                    class="purpose-text-link"
+                    href={contactHref(work)}
+                    aria-label={`${work.title}: ${text.discussThis}`}
+                  >
+                    {text.discussThis}
+                    <PurposeIcon name="arrow" />
+                  </a>
                 </div>
               </div>
             </article>
@@ -138,4 +201,52 @@ const contactHref = (work: (typeof data.cases)[number]) => {
       </div>
     </div>
   </section>
+  <PurposeCallout locale={locale} ctaId="works-cta-title" />
 </BaseLayout>
+<script>
+  const filters =
+    document.querySelectorAll<HTMLAnchorElement>("[data-work-filter]");
+  const cases = document.querySelectorAll<HTMLElement>("[data-case-purpose]");
+  const applyWorkFilter = () => {
+    const purpose =
+      new URLSearchParams(location.search).get("purpose") ?? "all";
+    let current = [...filters].some(
+      (link) => link.dataset.workFilter === purpose,
+    )
+      ? purpose
+      : "all";
+    let target: HTMLElement | null = null;
+    try {
+      target = document.getElementById(
+        decodeURIComponent(location.hash.slice(1)),
+      );
+    } catch {
+      /* Invalid fragments keep all cases available. */
+    }
+    if (
+      target?.matches("[data-case-purpose]") ||
+      target?.closest("[data-case-purpose]")
+    )
+      current = "all";
+    for (const link of filters) {
+      if (link.dataset.workFilter === current)
+        link.setAttribute("aria-current", "true");
+      else link.removeAttribute("aria-current");
+    }
+    for (const item of cases)
+      item.hidden =
+        current !== "all" &&
+        !item.dataset.casePurpose?.split(" ").includes(current);
+    const details = target?.closest("details");
+    if (details instanceof HTMLDetailsElement) details.open = true;
+  };
+  for (const link of filters)
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      history.pushState(null, "", link.href);
+      applyWorkFilter();
+    });
+  applyWorkFilter();
+  window.addEventListener("popstate", applyWorkFilter);
+  window.addEventListener("hashchange", applyWorkFilter);
+</script>

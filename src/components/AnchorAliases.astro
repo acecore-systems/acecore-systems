@@ -1,0 +1,12 @@
+---
+interface Props {
+  ids: string[];
+}
+const { ids } = Astro.props;
+---
+
+{
+  ids.map((id) => (
+    <span id={id} class="purpose-anchor-alias" aria-hidden="true" />
+  ))
+}

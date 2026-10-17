@@ -16,7 +16,12 @@ const websiteTitle = content.serviceDetails.website?.title;
 const formText = getContactFormText(locale);
 ---
 
-<BaseLayout title={data.title} description={data.description} locale={locale}>
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  bodyClass="purpose-contact"
+  locale={locale}
+>
   <section class="page-hero page-hero--contact">
     <div class="container page-hero__inner">
       <p class="page-eyebrow">{formText.eyebrow}</p>
@@ -169,6 +174,7 @@ const formText = getContactFormText(locale);
   </section>
 
   <script>
+    import { getConsultationSubject } from "../lib/contact-prefill";
     const form = document.querySelector<HTMLFormElement>("#contact-form");
 
     if (form) {
@@ -285,22 +291,26 @@ const formText = getContactFormText(locale);
         category.dispatchEvent(new Event("change", { bubbles: true }));
       }
 
-      if (subject && !subject.value.trim()) {
+      const prefillSubject = () => {
+        if (!subject || !category) return;
         const selectedLabel =
-          (serviceKey === "security" && form.dataset.securityServiceLabel) ||
-          category?.selectedOptions[0]?.textContent?.trim() ||
+          (serviceKey === "security" &&
+            category.value === service?.category &&
+            form.dataset.securityServiceLabel) ||
+          category.selectedOptions[0]?.textContent?.trim() ||
           "";
-        if (selectedLabel) {
-          const suffix = form.dataset.consultationSuffix || "";
-          const language = form.querySelector<HTMLInputElement>(
-            'input[name="locale"]',
-          )?.value;
-          subject.value =
-            language === "ja"
-              ? `${selectedLabel.replace(/について$/u, "")}${suffix}`
-              : [selectedLabel, suffix].filter(Boolean).join(" — ");
-        }
-      }
+        subject.value = getConsultationSubject({
+          currentValue: subject.value,
+          categoryValue: category.value,
+          selectedLabel,
+          suffix: form.dataset.consultationSuffix || "",
+          locale:
+            form.querySelector<HTMLInputElement>('input[name="locale"]')
+              ?.value || "",
+        });
+      };
+      prefillSubject();
+      category?.addEventListener("change", prefillSubject);
 
       const serviceInput =
         form.querySelector<HTMLInputElement>("#contact-service");

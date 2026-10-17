@@ -123,6 +123,16 @@ const jsonLd = [
     </div>
   </section>
 
+  <nav
+    class="container experience-jump-nav experience-price-nav"
+    aria-label={text.tableOfContents}
+  >
+    {
+      priceTracks.map((track) => (
+        <a href={"#price-track-" + track.id}>{track.title}</a>
+      ))
+    }
+  </nav>
   <section
     class="page-section page-section--pricing"
     aria-labelledby="price-list-title"
@@ -143,13 +153,13 @@ const jsonLd = [
               aria-labelledby={`price-track-${track.id}`}
             >
               <header class="price-track__header">
+                <h3 id={`price-track-${track.id}`}>{track.title}</h3>
                 <a
                   class="purpose-text-link"
                   href={getLocalizedUrl(track.href, locale)}
                 >
                   {text.viewSupportDetails}
                 </a>
-                <h3 id={`price-track-${track.id}`}>{track.title}</h3>
               </header>
               <ol class="price-list">
                 {track.items.map((item) => (
