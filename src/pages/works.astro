@@ -6,14 +6,43 @@ import site from "../data/site.json";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
+import { getContactFormText } from "../i18n/contact-form";
+import { getServiceCatalog } from "../lib/service-catalog";
+import { workServiceContexts } from "../lib/work-services";
 
 interface Props {
   locale?: Locale;
 }
 
 const locale = Astro.props.locale ?? "ja";
-const data = getLocalizedContent(locale).works;
+const content = getLocalizedContent(locale);
+const data = content.works;
 const text = getUi(locale);
+const serviceLinks = new Map(
+  getServiceCatalog(content, locale).flatMap((group) =>
+    group.items.map(
+      (service) =>
+        [
+          service.id,
+          {
+            title: service.data.title,
+            href: getLocalizedUrl(service.href, locale),
+          },
+        ] as const,
+    ),
+  ),
+);
+// A pending website translation must link to an available localized entry.
+if (!serviceLinks.has("website"))
+  serviceLinks.set("website", {
+    title: getContactFormText(locale).categories.website,
+    href: getLocalizedUrl("/services/#web", locale),
+  });
+const relatedServices = (id: string) =>
+  (workServiceContexts[id]?.relatedServices ?? []).flatMap((serviceId) => {
+    const service = serviceLinks.get(serviceId);
+    return service ? [service] : [];
+  });
 const localeAwareOrigins = new Set([
   site.acecoreUrl,
   "https://asv.acecore.net",
@@ -29,7 +58,10 @@ const localizeHref = (href: string) => {
 };
 const contactHref = (work: (typeof data.cases)[number]) => {
   const service =
-    work.consultationTrack === "it-advisor" ? "it-advisor" : "business-system";
+    workServiceContexts[work.id]?.consultationService ??
+    (work.consultationTrack === "it-advisor"
+      ? "it-advisor"
+      : "business-system");
   return `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams({
     category: "service",
     service,
@@ -44,15 +76,6 @@ const purposes = [
   { id: "work", label: text.purposeWork },
   { id: "operate", label: text.purposeOperate },
 ];
-const casePurposes: Record<string, string[]> = {
-  "case-acecore-contact": ["web", "work"],
-  "case-acecore-store": ["web", "work"],
-  "case-acecore-site-platform": ["web", "operate"],
-  "case-aceserver": ["operate"],
-  "case-aceserver-portal": ["web", "operate"],
-  "case-cherry-homepage": ["web"],
-  "case-hatt-homepage": ["web"],
-};
 const imageDimensions: Record<string, [number, number]> = {
   "case-acecore-store": [1536, 864],
   "case-cherry-homepage": [1585, 892],
@@ -109,7 +132,9 @@ const imageDimensions: Record<string, [number, number]> = {
             <article
               class="experience-case"
               id={work.id}
-              data-case-purpose={casePurposes[work.id]?.join(" ")}
+              data-case-purpose={workServiceContexts[work.id]?.purposes.join(
+                " ",
+              )}
               aria-labelledby={`${work.id}-title`}
             >
               {work.image && (
@@ -165,6 +190,19 @@ const imageDimensions: Record<string, [number, number]> = {
                     </>
                   </dl>
                 </details>
+                <div class="experience-case__services">
+                  <h4>{text.workRelatedServices}</h4>
+                  <ul>
+                    {relatedServices(work.id).map((service) => (
+                      <li>
+                        <a href={service.href}>
+                          {service.title}
+                          <PurposeIcon name="arrow" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div class="experience-case__links">
                   {work.detailUrl && (
                     <a

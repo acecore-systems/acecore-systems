@@ -85,7 +85,7 @@ const legacyAliases = (href: string, id: string) =>
                     href={getLocalizedUrl(item.href, locale)}
                   >
                     <PurposeIcon name={item.icon} />
-                    <div>
+                    <div class="purpose-service-row__content">
                       {[
                         ...(item.id === "development" ||
                         item.id === "it-advisor" ||
@@ -100,10 +100,12 @@ const legacyAliases = (href: string, id: string) =>
                           aria-hidden="true"
                         />
                       ))}
-                      <h3>{item.data.title}</h3>
-                      <p class="purpose-service-row__summary">
-                        {item.data.indexSummary}
-                      </p>
+                      <div class="purpose-service-row__intro">
+                        <h3>{item.data.title}</h3>
+                        <p class="purpose-service-row__summary">
+                          {item.data.indexSummary}
+                        </p>
+                      </div>
                       <dl class="purpose-service-facts">
                         <div>
                           <dt>{text.serviceFor}</dt>

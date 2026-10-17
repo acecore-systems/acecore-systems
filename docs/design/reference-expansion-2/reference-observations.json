@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-17",
+  "method": "Parent IAB fresh screenshots and rendered DOM; no form submissions",
+  "observations": [
+    {
+      "site": "thoughtbot",
+      "url": "https://thoughtbot.com/",
+      "files": ["ref-thoughtbot-home.png", "ref-thoughtbot-menu.png"],
+      "verified": "Services menu opened; four named service groups and all-services link"
+    },
+    {
+      "site": "thoughtbot",
+      "url": "https://thoughtbot.com/hire-us",
+      "file": "ref-thoughtbot-contact.png",
+      "limitation": "Embedded form not rendered; only introductory copy and layout confirmed"
+    },
+    {
+      "site": "Fueled",
+      "url": "https://fueled.com/wordpress/",
+      "file": "ref-fueled-wordpress.png",
+      "verified": "10up/services returned404; followed visible official WordPress link to current brand; outcomes tied to cases"
+    },
+    {
+      "site": "Atomic Object",
+      "url": "https://www.atomicobject.com/services",
+      "file": "ref-atomic-services.png",
+      "verified": "Six service rows, project examples and delivery stages visible"
+    },
+    {
+      "site": "Netguru",
+      "url": "https://www.netguru.com/services",
+      "file": "ref-netguru-services.png",
+      "verified": "Stages paired with related cases and service links"
+    },
+    {
+      "site": "Help Scout",
+      "url": "https://docs.helpscout.com/",
+      "file": "ref-helpscout-contact.png",
+      "limitation": "Original contact URL redirects to help center; no sales-form claim"
+    },
+    {
+      "site": "Fin (Intercom)",
+      "url": "https://fin.ai/about",
+      "file": "ref-intercom-contact.png",
+      "limitation": "Original intercom/contact redirects to company page; sales form not verified"
+    },
+    {
+      "site": "Basecamp",
+      "url": "https://basecamp.com/pricing",
+      "file": "ref-basecamp-pricing.png",
+      "limitation": "Initial Studio plan and conditions visible; radio selection attempt did not verify changed state"
+    },
+    {
+      "site": "Linear",
+      "url": "https://linear.app/contact",
+      "file": "ref-linear-contact.png",
+      "verified": "Sales/support/other branches"
+    },
+    {
+      "site": "Linear",
+      "url": "https://linear.app/contact/sales",
+      "file": "ref-linear-sales.png",
+      "verified": "Clicked Sales branch; short introduction and four-field form shown; no input or submission"
+    },
+    {
+      "site": "Webflow",
+      "url": "https://webflow.com/pricing",
+      "file": "ref-webflow-pricing.png",
+      "verified": "Site/platform/add-on/workspace separated; target and billing condition near plan"
+    },
+    {
+      "site": "Superside",
+      "url": "https://www.superside.com/pricing",
+      "file": "ref-superside-pricing.png",
+      "verified": "Three engagement styles separated by suited demand and scope"
+    },
+    {
+      "site": "WP Buffs",
+      "url": "https://wpbuffs.com/plans/",
+      "file": "ref-wpbuffs-plans.png",
+      "verified": "Maintenance/edit/advanced/custom purpose labels next to monthly price and scope"
+    }
+  ],
+  "limitations": [
+    "Not a complete accessibility or conversion audit",
+    "Some below-fold lazy media may not be loaded",
+    "Business evidence does not establish that UI caused success"
+  ]
+}

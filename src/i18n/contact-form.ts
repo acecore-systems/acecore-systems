@@ -6,6 +6,7 @@ export const contactCategoryValues = {
   system: "業務システム開発について",
   webApp: "Webアプリ・管理画面について",
   site: "Webサイト機能・品質改善について",
+  website: "ホームページ制作・更新について",
   design: "デザイン・クリエイティブについて",
   integration: "データ連携・自動化について",
   operations: "保守・運用改善について",
@@ -28,6 +29,7 @@ type ContactFormText = {
   email: string;
   subject: string;
   message: string;
+  messageHelp: string;
   submissionNote: string;
   validationError: string;
   submit: string;
@@ -45,6 +47,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "必須",
     select: "選択してください",
     categories: {
+      website: "ホームページ制作・更新サポート",
       general: contactCategoryValues.general,
       advisor: contactCategoryValues.advisor,
       system: contactCategoryValues.system,
@@ -60,6 +63,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "メールアドレス",
     subject: "件名",
     message: "お問い合わせ内容",
+    messageHelp:
+      "今の状況、希望すること、関連するURL、希望時期などを、分かる範囲でお知らせください。",
     submissionNote:
       "送信はAcecore共通窓口で受け付けます。送信後はこのサイトの完了画面へ移動します。",
     validationError:
@@ -77,6 +82,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "Required",
     select: "Select an option",
     categories: {
+      website: "Website creation and update support",
       general: "General service inquiry",
       advisor: "IT advisory, AI adoption, or deployment",
       system: "Business system development",
@@ -92,6 +98,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "Email address",
     subject: "Subject",
     message: "Message",
+    messageHelp:
+      "Tell us about your current situation, what you would like to achieve, any relevant URLs, and your preferred timing, as far as you know.",
     submissionNote:
       "Acecore’s shared contact desk receives this form. After submission, you will return to this site’s confirmation page.",
     validationError:
@@ -109,6 +117,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "必填",
     select: "请选择",
     categories: {
+      website: "网站制作与更新支持",
       general: "服务综合咨询",
       advisor: "IT 顾问、AI 导入或部署",
       system: "业务系统开发",
@@ -124,6 +133,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "电子邮箱",
     subject: "主题",
     message: "咨询内容",
+    messageHelp:
+      "请在了解的范围内说明当前情况、希望实现的目标、相关网址及期望时间。",
     submissionNote: "表单由 Acecore 统一窗口接收。发送后将返回本站的完成页面。",
     validationError: "发送前验证尚未完成，请稍候后重试。",
     submit: "发送",
@@ -139,6 +150,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "Obligatorio",
     select: "Selecciona una opción",
     categories: {
+      website: "Creación y actualización de sitios web",
       general: "Consulta general sobre servicios",
       advisor: "Asesoría IT, adopción de IA o despliegue",
       system: "Desarrollo de sistemas empresariales",
@@ -154,6 +166,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "Correo electrónico",
     subject: "Asunto",
     message: "Mensaje",
+    messageHelp:
+      "Cuéntanos lo que sepas sobre tu situación actual, tus objetivos, las URL relevantes y los plazos deseados.",
     submissionNote:
       "El formulario llega al punto de contacto común de Acecore. Tras enviarlo, volverás a la página de confirmación de este sitio.",
     validationError:
@@ -171,6 +185,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "Obrigatório",
     select: "Selecione uma opção",
     categories: {
+      website: "Criação e atualização de sites",
       general: "Consulta geral sobre serviços",
       advisor: "Consultoria de IT, adoção de IA ou implantação",
       system: "Desenvolvimento de sistemas empresariais",
@@ -186,6 +201,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "E-mail",
     subject: "Assunto",
     message: "Mensagem",
+    messageHelp:
+      "Conte o que souber sobre a situação atual, os objetivos, os URLs relevantes e o prazo desejado.",
     submissionNote:
       "O formulário é recebido pelo contato central da Acecore. Após o envio, você retornará à página de confirmação deste site.",
     validationError:
@@ -203,6 +220,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "Obligatoire",
     select: "Sélectionnez une option",
     categories: {
+      website: "Création et mise à jour de sites web",
       general: "Demande générale sur les services",
       advisor: "Conseil IT, adoption de l’IA ou déploiement",
       system: "Développement de systèmes métier",
@@ -218,6 +236,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "Adresse e-mail",
     subject: "Objet",
     message: "Message",
+    messageHelp:
+      "Décrivez, dans la mesure du possible, votre situation, vos objectifs, les URL utiles et le calendrier souhaité.",
     submissionNote:
       "Le formulaire est reçu par le point de contact commun d’Acecore. Après l’envoi, vous serez redirigé vers la page de confirmation de ce site.",
     validationError:
@@ -235,6 +255,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "필수",
     select: "선택하세요",
     categories: {
+      website: "홈페이지 제작 및 업데이트 지원",
       general: "서비스 전반 문의",
       advisor: "IT 자문, AI 도입, 배포",
       system: "업무 시스템 개발",
@@ -250,6 +271,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "이메일 주소",
     subject: "제목",
     message: "문의 내용",
+    messageHelp:
+      "알고 계신 범위에서 현재 상황, 원하는 결과, 관련 URL, 희망 일정을 알려 주세요.",
     submissionNote:
       "Acecore 공통 창구에서 접수하며, 전송 후 이 사이트의 완료 화면으로 돌아옵니다.",
     validationError:
@@ -267,6 +290,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "Erforderlich",
     select: "Option auswählen",
     categories: {
+      website: "Website-Erstellung und Aktualisierung",
       general: "Allgemeine Leistungsanfrage",
       advisor: "IT-Beratung, KI-Einführung oder Deployment",
       system: "Entwicklung von Geschäftssystemen",
@@ -282,6 +306,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "E-Mail-Adresse",
     subject: "Betreff",
     message: "Nachricht",
+    messageHelp:
+      "Beschreiben Sie, soweit bekannt, Ihre aktuelle Situation, Ihre Ziele, relevante URLs und den gewünschten Zeitrahmen.",
     submissionNote:
       "Das gemeinsame Acecore-Kontaktteam empfängt dieses Formular. Nach dem Senden gelangen Sie zur Bestätigungsseite dieser Website.",
     validationError:
@@ -299,6 +325,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     required: "Обязательно",
     select: "Выберите вариант",
     categories: {
+      website: "Создание и обновление сайтов",
       general: "Общий вопрос об услугах",
       advisor: "IT-консалтинг, внедрение ИИ или развёртывание",
       system: "Разработка бизнес-систем",
@@ -314,6 +341,8 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     email: "Электронная почта",
     subject: "Тема",
     message: "Сообщение",
+    messageHelp:
+      "По возможности расскажите о текущей ситуации, желаемом результате, соответствующих URL и предпочтительных сроках.",
     submissionNote:
       "Форма поступает в единый контактный центр Acecore. После отправки вы вернётесь на страницу подтверждения этого сайта.",
     validationError:

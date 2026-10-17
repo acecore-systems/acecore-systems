@@ -1,6 +1,12 @@
 import type { Locale } from "./config";
 
 type UiText = {
+  workRelatedServices: string;
+  websiteBuildTitle: string;
+  websiteBuildLead: string;
+  websiteSupportTitle: string;
+  websiteSupportLead: string;
+
   supportExamplesLabel: string;
   companyInfoLabel: string;
   serviceFor: string;
@@ -124,6 +130,11 @@ type UiText = {
 
 export const ui: Record<Locale, UiText> = {
   ja: {
+    workRelatedServices: "関連するサービス",
+    websiteBuildTitle: "初期制作・リニューアル",
+    websiteBuildLead: "新しく作る・作り直すときの制作プラン",
+    websiteSupportTitle: "公開後の保守・更新",
+    websiteSupportLead: "必要に応じて別契約で選ぶ月額サポート",
     supportExamplesLabel: "具体的な対応例",
     companyInfoLabel: "運営会社について",
     serviceFor: "こんなときに",
@@ -258,6 +269,11 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "トップへ戻る",
   },
   en: {
+    workRelatedServices: "Related services",
+    websiteBuildTitle: "Initial build and redesign",
+    websiteBuildLead: "Plans for a new website or a redesign",
+    websiteSupportTitle: "Maintenance and updates after launch",
+    websiteSupportLead: "Optional monthly support under a separate agreement",
     supportExamplesLabel: "Examples of support",
     companyInfoLabel: "About our company",
     serviceFor: "When to choose this",
@@ -397,6 +413,11 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Return home",
   },
   "zh-cn": {
+    workRelatedServices: "相关服务",
+    websiteBuildTitle: "初期制作与改版",
+    websiteBuildLead: "新建网站或重新设计的制作方案",
+    websiteSupportTitle: "上线后的维护与更新",
+    websiteSupportLead: "按需另行签约的月度支持",
     supportExamplesLabel: "具体支持示例",
     companyInfoLabel: "运营公司信息",
     serviceFor: "适合这些情况",
@@ -525,6 +546,12 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "返回首页",
   },
   es: {
+    workRelatedServices: "Servicios relacionados",
+    websiteBuildTitle: "Creación inicial y rediseño",
+    websiteBuildLead: "Planes para crear o rediseñar un sitio web",
+    websiteSupportTitle: "Mantenimiento y actualizaciones tras el lanzamiento",
+    websiteSupportLead:
+      "Soporte mensual opcional mediante un contrato independiente",
     supportExamplesLabel: "Ejemplos de asistencia",
     companyInfoLabel: "Sobre la empresa",
     serviceFor: "Cuándo elegirlo",
@@ -665,6 +692,11 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Volver al inicio",
   },
   pt: {
+    workRelatedServices: "Serviços relacionados",
+    websiteBuildTitle: "Criação inicial e reformulação",
+    websiteBuildLead: "Planos para criar ou reformular um site",
+    websiteSupportTitle: "Manutenção e atualizações após o lançamento",
+    websiteSupportLead: "Suporte mensal opcional com contrato separado",
     supportExamplesLabel: "Exemplos de suporte",
     companyInfoLabel: "Sobre a empresa",
     serviceFor: "Quando escolher",
@@ -805,6 +837,12 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Voltar ao início",
   },
   fr: {
+    workRelatedServices: "Services associés",
+    websiteBuildTitle: "Création initiale et refonte",
+    websiteBuildLead: "Formules pour créer ou refondre un site",
+    websiteSupportTitle: "Maintenance et mises à jour après le lancement",
+    websiteSupportLead:
+      "Accompagnement mensuel facultatif avec un contrat distinct",
     supportExamplesLabel: "Exemples d’accompagnement",
     companyInfoLabel: "Notre entreprise",
     serviceFor: "Quand choisir ce service",
@@ -944,6 +982,11 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Retour à l’accueil",
   },
   ko: {
+    workRelatedServices: "관련 서비스",
+    websiteBuildTitle: "신규 제작 및 리뉴얼",
+    websiteBuildLead: "새 사이트 제작 또는 리뉴얼을 위한 플랜",
+    websiteSupportTitle: "공개 후 유지보수 및 업데이트",
+    websiteSupportLead: "필요에 따라 별도 계약으로 선택하는 월간 지원",
     supportExamplesLabel: "구체적인 지원 사례",
     companyInfoLabel: "운영 회사 소개",
     serviceFor: "이럴 때 선택하세요",
@@ -1076,6 +1119,12 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "홈으로 돌아가기",
   },
   de: {
+    workRelatedServices: "Passende Leistungen",
+    websiteBuildTitle: "Erstellung und Neugestaltung",
+    websiteBuildLead: "Pakete für eine neue Website oder eine Neugestaltung",
+    websiteSupportTitle: "Wartung und Aktualisierung nach dem Start",
+    websiteSupportLead:
+      "Optionale monatliche Betreuung mit separater Vereinbarung",
     supportExamplesLabel: "Konkrete Unterstützung",
     companyInfoLabel: "Über unser Unternehmen",
     serviceFor: "Wann dieser Service passt",
@@ -1215,6 +1264,12 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Zur Startseite",
   },
   ru: {
+    workRelatedServices: "Связанные услуги",
+    websiteBuildTitle: "Создание и редизайн",
+    websiteBuildLead: "Планы для нового сайта или редизайна",
+    websiteSupportTitle: "Поддержка и обновления после запуска",
+    websiteSupportLead:
+      "Необязательная ежемесячная поддержка по отдельному договору",
     supportExamplesLabel: "Примеры поддержки",
     companyInfoLabel: "О нашей компании",
     serviceFor: "Когда выбрать услугу",

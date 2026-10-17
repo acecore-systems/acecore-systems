@@ -3,7 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import site from "../data/site.json";
 import { getLocalizedContent } from "../i18n/content";
 import { htmlLangMap, type Locale } from "../i18n";
-import { getContactFormText } from "../i18n/contact-form";
+import {
+  contactCategoryValues,
+  getContactFormText,
+} from "../i18n/contact-form";
 
 interface Props {
   locale?: Locale;
@@ -12,7 +15,6 @@ interface Props {
 const locale = Astro.props.locale ?? "ja";
 const content = getLocalizedContent(locale);
 const data = content.contact;
-const websiteTitle = content.serviceDetails.website?.title;
 const formText = getContactFormText(locale);
 ---
 
@@ -41,30 +43,14 @@ const formText = getContactFormText(locale);
           <h2 id="contact-form-title">{formText.formTitle}</h2>
           <p>{data.formLead}</p>
         </header>
-        <div class="contact-faq" aria-label={formText.faqLabel}>
-          {
-            data.faqs.map((faq, index) => (
-              <details class="contact-faq__item">
-                <summary>
-                  <span class="editorial-index">
-                    Q{String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span>{faq.question}</span>
-                </summary>
-                <p>{faq.answer}</p>
-              </details>
-            ))
-          }
-        </div>
       </aside>
       <form
         id="contact-form"
-        data-website-category={websiteTitle
-          ? "ホームページ制作・更新について"
-          : undefined}
+        data-website-category={contactCategoryValues.website}
         class="contact-form"
         action={site.contactFormAction}
         method="post"
+        aria-labelledby="contact-form-title"
         data-consultation-suffix={formText.consultationSuffix}
         data-submitting-text={formText.submitting}
         data-security-service-label={content.serviceDetails.security.title}
@@ -92,17 +78,7 @@ const formText = getContactFormText(locale);
           <select id="category" name="お問い合わせ種別" required>
             <option value="">{formText.select}</option>
             {
-              [
-                ...formText.categoryOptions,
-                ...(websiteTitle
-                  ? [
-                      {
-                        value: "ホームページ制作・更新について",
-                        label: websiteTitle,
-                      },
-                    ]
-                  : []),
-              ].map((option) => (
+              formText.categoryOptions.map((option) => (
                 <option value={option.value}>{option.label}</option>
               ))
             }
@@ -140,7 +116,14 @@ const formText = getContactFormText(locale);
             >{formText.message}
             <span class="field-required">{formText.required}</span></label
           >
-          <textarea id="message" name="お問い合わせ内容" required></textarea>
+          <p id="contact-message-help" class="contact-field__help">
+            {formText.messageHelp}
+          </p>
+          <textarea
+            id="message"
+            name="お問い合わせ内容"
+            aria-describedby="contact-message-help"
+            required></textarea>
         </div>
         <div
           id="turnstile-widget"
@@ -170,6 +153,21 @@ const formText = getContactFormText(locale);
           {formText.submit}
         </button>
       </form>
+      <aside class="contact-faq" aria-label={formText.faqLabel}>
+        {
+          data.faqs.map((faq, index) => (
+            <details class="contact-faq__item">
+              <summary>
+                <span class="editorial-index">
+                  Q{String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{faq.question}</span>
+              </summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))
+        }
+      </aside>
     </div>
   </section>
 

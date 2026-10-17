@@ -48,6 +48,28 @@ const offerings = data.offerings.map((offering) => ({
   ...offering,
   pricing: offering.pricingKeys.map(resolvePricing),
 }));
+const supportOfferingIds = new Set(["care", "updates", "growth"]);
+const offeringGroups =
+  serviceKey === "website"
+    ? [
+        {
+          id: "website-build-plans",
+          title: text.websiteBuildTitle,
+          lead: text.websiteBuildLead,
+          items: offerings.filter(
+            (offering) => !supportOfferingIds.has(offering.id),
+          ),
+        },
+        {
+          id: "website-support-plans",
+          title: text.websiteSupportTitle,
+          lead: text.websiteSupportLead,
+          items: offerings.filter((offering) =>
+            supportOfferingIds.has(offering.id),
+          ),
+        },
+      ]
+    : [{ id: "service-plans", title: "", lead: "", items: offerings }];
 const relatedIds = relatedServiceIds[data.routeId] ?? [];
 const relatedServices = getServiceCatalog(content, locale)
   .flatMap((group) => group.items)
@@ -343,89 +365,103 @@ const pricingAnchor =
           }
         </div>
       </header>
-      <div class="selection-offering-list">
-        {
-          offerings.map((offering, index) => (
-            <article class="selection-offering" id={offering.id}>
-              <details open={index === 0}>
-                <summary>
-                  <>
-                    <span class="selection-offering__number">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span class="selection-offering__copy">
-                      <span class="selection-offering__title">
-                        {offering.title}
-                      </span>
-                      <span class="selection-offering__scope">
-                        {offering.pricing
-                          .map((item) =>
-                            serviceKey === "website"
-                              ? item.note.split(" 税込の目安。")[0]
-                              : item.note,
-                          )
-                          .join(" / ")}
-                      </span>
-                    </span>
-                    <span class="selection-offering__prices">
-                      {offering.pricing.map((item) => (
-                        <span>
-                          <span>{item.label}</span>
-                          <strong>{item.price}</strong>
-                        </span>
-                      ))}
-                    </span>
-                    <PurposeIcon name="chevron" />
-                  </>
-                </summary>
-                <div class="selection-offering__body">
-                  <>
-                    <div>
+      {
+        offeringGroups.map((group) => (
+          <section
+            class="selection-offering-group"
+            id={group.id}
+            aria-labelledby={group.title ? group.id + "-title" : undefined}
+          >
+            {group.title && (
+              <header class="selection-offering-group__heading">
+                <h3 id={group.id + "-title"}>{group.title}</h3>
+                <p>{group.lead}</p>
+              </header>
+            )}
+            <div class="selection-offering-list">
+              {group.items.map((offering, index) => (
+                <article class="selection-offering" id={offering.id}>
+                  <details open={offering.id === offerings[0]?.id}>
+                    <summary>
                       <>
-                        <p>{offering.body}</p>
-                        {data.advisor?.pricingSummaries.find(
-                          (item) => item.id === offering.id,
-                        )?.note && (
-                          <p>
-                            {
-                              data.advisor.pricingSummaries.find(
-                                (item) => item.id === offering.id,
-                              )?.note
-                            }
-                          </p>
-                        )}
-                        <ul class="service-points">
-                          {offering.includes.map((item) => (
-                            <li>{item}</li>
+                        <span class="selection-offering__number">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span class="selection-offering__copy">
+                          <span class="selection-offering__title">
+                            {offering.title}
+                          </span>
+                          <span class="selection-offering__scope">
+                            {offering.pricing
+                              .map((item) =>
+                                serviceKey === "website"
+                                  ? item.note.split(" 税込の目安。")[0]
+                                  : item.note,
+                              )
+                              .join(" / ")}
+                          </span>
+                        </span>
+                        <span class="selection-offering__prices">
+                          {offering.pricing.map((item) => (
+                            <span>
+                              <span>{item.label}</span>
+                              <strong>{item.price}</strong>
+                            </span>
                           ))}
-                        </ul>
+                        </span>
+                        <PurposeIcon name="chevron" />
+                      </>
+                    </summary>
+                    <div class="selection-offering__body">
+                      <>
+                        <div>
+                          <>
+                            <p>{offering.body}</p>
+                            {data.advisor?.pricingSummaries.find(
+                              (item) => item.id === offering.id,
+                            )?.note && (
+                              <p>
+                                {
+                                  data.advisor.pricingSummaries.find(
+                                    (item) => item.id === offering.id,
+                                  )?.note
+                                }
+                              </p>
+                            )}
+                            <ul class="service-points">
+                              {offering.includes.map((item) => (
+                                <li>{item}</li>
+                              ))}
+                            </ul>
+                          </>
+                        </div>
+                        <aside>
+                          <h4>{text.serviceTerms}</h4>
+                          {offering.pricing.map((item) => (
+                            <p>{item.note}</p>
+                          ))}
+                          {offering.priceNote && <p>{offering.priceNote}</p>}
+                          <a
+                            class="purpose-text-link"
+                            href={
+                              getLocalizedUrl("/pricing/", locale) +
+                              "#" +
+                              offering.pricing[0].key
+                            }
+                          >
+                            {text.pricingCheck}
+                            <PurposeIcon name="arrow" />
+                          </a>
+                        </aside>
                       </>
                     </div>
-                    <aside>
-                      <h4>{text.serviceTerms}</h4>
-                      {offering.pricing.map((item) => (
-                        <p>{item.note}</p>
-                      ))}
-                      {offering.priceNote && <p>{offering.priceNote}</p>}
-                      <a
-                        class="purpose-text-link"
-                        href={
-                          getLocalizedUrl("/pricing/", locale) +
-                          "#" +
-                          offering.pricing[0].key
-                        }
-                      >
-                        {text.pricingCheck}
-                        <PurposeIcon name="arrow" />
-                      </a>
-                    </aside>
-                  </>
-                </div>
-              </details>
-            </article>
-          ))
-        }
-      </div>
+                  </details>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))
+      }
       {
         ["operations", "security"].includes(data.routeId) && (
           <p class="selection-scope-note">
