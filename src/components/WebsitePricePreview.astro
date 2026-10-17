@@ -1,0 +1,69 @@
+---
+import { getLocalizedContent } from "../i18n/content";
+import type { Locale } from "../i18n";
+import { getUi } from "../i18n/ui";
+import PurposeIcon from "./PurposeIcon.astro";
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const { pricing, serviceDetails } = getLocalizedContent(locale);
+const data = serviceDetails.website;
+const text = getUi(locale);
+const pricingByKey = new Map(pricing.items.map((item) => [item.key, item]));
+const plans = data.offerings.filter((offering) =>
+  ["launch", "renewal"].includes(offering.id),
+);
+const monthly = data.offerings.filter((offering) =>
+  ["care", "updates"].includes(offering.id),
+);
+---
+
+<section
+  class="purpose-pricing-preview"
+  id="website-pricing-preview"
+  aria-labelledby="website-pricing-preview-title"
+>
+  <div class="container">
+    <header class="purpose-section-heading">
+      <div>
+        <h2 id="website-pricing-preview-title">{text.pricing}</h2><p>
+          {pricing.heroLead}
+        </p>
+      </div><a class="purpose-text-link" href="#detail-offerings-title"
+        >{text.viewDetails}<PurposeIcon name="arrow" /></a
+      >
+    </header>
+    <div class="purpose-pricing-grid">
+      {
+        plans.map((plan) => (
+          <article class="purpose-price-card">
+            <h3>{plan.title}</h3>
+            <p class="purpose-price-card__amount">
+              {pricingByKey.get(plan.pricingKeys[0])?.price}
+            </p>
+            <p class="purpose-price-card__scope">
+              <PurposeIcon name="check" />
+              {plan.includes[0]}
+            </p>
+            <p>{plan.body}</p>
+          </article>
+        ))
+      }
+    </div>
+    <div class="purpose-monthly-prices">
+      {
+        monthly.map((plan) => (
+          <article>
+            <>
+              <h3>{plan.title}</h3>
+              <strong>{pricingByKey.get(plan.pricingKeys[0])?.price}</strong>
+              <p>{pricingByKey.get(plan.pricingKeys[0])?.note}</p>
+            </>
+          </article>
+        ))
+      }
+    </div>
+    <p class="purpose-price-caption">{data.offeringsLead}</p>
+  </div>
+</section>

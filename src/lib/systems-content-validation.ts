@@ -102,6 +102,15 @@ export function validateSystemsContentFiles(
 
     requireText(data.title, `${path}.title`, errors);
     requireText(data.description, `${path}.description`, errors);
+    if (data.heroBenefits !== undefined) {
+      if (!Array.isArray(data.heroBenefits)) {
+        errors.push(`${path}.heroBenefits: 配列が必要です。`);
+      } else {
+        data.heroBenefits.forEach((value, index) =>
+          requireText(value, `${path}.heroBenefits[${index}]`, errors),
+        );
+      }
+    }
     const challenges = requireNonEmptyArray(
       data.challenges,
       `${path}.challenges`,

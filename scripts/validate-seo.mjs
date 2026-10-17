@@ -344,50 +344,59 @@ for (const [label, html] of [
     true,
     `${label}: route to IT advisor missing`,
   );
-  assert.equal(
-    html.includes(`href="${developmentRoute}"`),
-    true,
-    `${label}: route to development missing`,
-  );
 }
-
-for (const expectedHref of [
-  "/services/development/#small-automation",
-  "/services/development/",
-  "/services/development/#integrated-system",
-]) {
-  assert.equal(
-    home.includes(`href="${expectedHref}"`),
-    true,
-    `home: direct development route ${expectedHref} missing`,
-  );
-}
-assert.deepEqual(
-  Array.from(
-    home.matchAll(/href="(\/services\/#[^"]+)"/g),
-    (match) => match[1],
-  ),
-  [],
-  "home: service-index anchors must not be used as pillar destinations",
-);
-for (const anchor of ["customer-touchpoints", "operations", "it-foundation"]) {
-  assert.equal(
-    home.includes(`href="#${anchor}"`),
-    true,
-    `home: pillar summary anchor ${anchor} missing`,
-  );
-  assert.equal(
-    home.includes(`class="domain-row" id="${anchor}"`),
-    true,
-    `home: pillar destination ${anchor} missing`,
-  );
-}
-
 assert.equal(
-  count(services, 'class="service-entry-point"'),
-  serviceIndexData.entryPoints.length,
-  "services: every service entry point must be rendered",
+  services.includes(`href="${developmentRoute}"`),
+  true,
+  "services: route to development missing",
 );
+const homeNeeds = loadHtml(home)(".purpose-needs a.purpose-need");
+assert.deepEqual(
+  homeNeeds.map((_, link) => loadHtml(link)("a").attr("href")).get(),
+  ["/services/#web", "/services/#work", advisorRoute],
+  "home: the three purpose routes must lead to the matching category or advisor",
+);
+assert.equal(
+  loadHtml(home)("#philosophy").length,
+  1,
+  "home: philosophy destination must remain available",
+);
+const homeCases = loadHtml(home)(".purpose-case-card");
+assert.equal(
+  homeCases.length,
+  3,
+  "home: three concrete case studies must be selectable",
+);
+for (const card of homeCases.toArray()) {
+  const element = loadHtml(card);
+  const href = element("h3 a").attr("href");
+  const work = worksData.cases.find((work) => href === `/works/#${work.id}`);
+  assert.ok(work, "home: case must reference a published case study");
+  assert.equal(
+    element("dd").text().trim(),
+    work.result,
+    "home: case result must match the existing evidence",
+  );
+}
+
+const catalogRoutes = new Set([
+  ...serviceIndexData.entryPoints.map((entry) => entry.href),
+  ...focusedServices.map((service) => service.route),
+]);
+const serviceRows = loadHtml(services)(
+  ".purpose-catalog a.purpose-service-row",
+);
+assert.equal(
+  serviceRows.length,
+  catalogRoutes.size,
+  "services: every distinct service needs a dedicated catalog row",
+);
+for (const route of catalogRoutes)
+  assert.equal(
+    serviceRows.filter(`[href="${route}"]`).length,
+    1,
+    `services: ${route} must be independently selectable`,
+  );
 assert.equal(
   services.includes(`id="${designService.id}"`),
   true,
@@ -426,7 +435,7 @@ for (const item of pricingData.items.filter(
   );
 }
 assert.equal(
-  home.includes('href="/services/website/"'),
+  home.includes('href="/services/#web"'),
   true,
   "home: website entry missing",
 );
@@ -478,22 +487,35 @@ function validateImageAlts(html, label) {
     /<img\b(?![^>]*\balt\s*=)[^>]*>/u,
     `${label}: every rendered image must include an alt attribute`,
   );
-  assert.doesNotMatch(
-    html,
-    /<img\b[^>]*\balt\s*=\s*["']\s*["']/u,
-    `${label}: every rendered image must have a non-empty alt attribute`,
-  );
+  const $ = loadHtml(html);
+  const decorativeDeviceSources = new Set([
+    "/images/works/cherry-device-frame.webp",
+    "/images/works/cherry-mobile.jpg",
+  ]);
+  for (const image of $("img").toArray()) {
+    const element = $(image);
+    if (element.attr("alt")?.trim()) continue;
+    assert.equal(
+      element.attr("aria-hidden"),
+      "true",
+      `${label}: an empty alt is allowed only for an explicitly decorative image`,
+    );
+    assert.ok(
+      decorativeDeviceSources.has(element.attr("src")),
+      `${label}: content images must retain a non-empty alt attribute`,
+    );
+  }
 }
 
-function validateServiceVisual(html, visual, label) {
+function validateServiceVisual(html, visual, label, expectedCount = 1) {
   assert.equal(
     [...html.matchAll(/<img\b[^>]*>/gu)].filter(
       ([tag]) =>
         tag.includes(`src="${visual.src}"`) &&
         tag.includes(`alt="${visual.alt}"`),
     ).length,
-    1,
-    `${label}: matching service visual and alt must appear exactly once`,
+    expectedCount,
+    `${label}: matching service visual and alt must appear ${expectedCount} time(s)`,
   );
   assert.equal(
     html.includes(`alt="${visual.alt}"`),
@@ -517,45 +539,26 @@ for (const [label, html] of [
 ]) {
   validateImageAlts(html, label);
 }
-validateServiceVisual(advisorPage, advisorData.visual, "IT advisor");
-validateServiceVisual(developmentPage, developmentData.visual, "development");
-for (const [key, visual] of Object.entries(advisorData.sectionVisuals)) {
-  validateServiceVisual(advisorPage, visual, `IT advisor ${key} visual`);
-}
-for (const [key, visual] of Object.entries(developmentData.sectionVisuals)) {
-  validateServiceVisual(developmentPage, visual, `development ${key} visual`);
-}
-validateServiceVisual(services, advisorData.visual, "services IT advisor card");
-validateServiceVisual(
-  services,
-  developmentData.visual,
-  "services development card",
-);
+// Generic artwork is optional; concrete case evidence is verified below.
 for (const service of focusedServices) {
-  validateServiceVisual(
-    service.html,
-    service.data.visual,
-    `${service.route} overview visual`,
-  );
-  for (const [key, visual] of Object.entries(service.data.sectionVisuals)) {
-    validateServiceVisual(
-      service.html,
-      visual,
-      `${service.route} ${key} visual`,
-    );
-  }
+  validateImageAlts(service.html, service.route);
   const serviceCard = loadHtml(services)(
-    `${service.route === "/services/website/" ? "a.service-entry-point" : "a.service-detail-index__item"}[href="${service.route}"]`,
+    `.purpose-catalog a.purpose-service-row[href="${service.route}"]`,
   );
   assert.equal(
     serviceCard.length,
     1,
-    `services ${service.route}: exactly one detail card is required`,
+    `services ${service.route}: exactly one catalog row is required`,
   );
-  validateServiceVisual(
-    serviceCard.html() ?? "",
-    service.data.visual,
-    `services ${service.route} card`,
+  assert.equal(
+    serviceCard.find("h3").text().trim(),
+    service.data.title,
+    `services ${service.route}: service title missing`,
+  );
+  assert.equal(
+    serviceCard.find(".purpose-service-row__summary").text().trim(),
+    service.data.indexSummary,
+    `services ${service.route}: service description missing`,
   );
 }
 
@@ -605,11 +608,29 @@ for (const work of worksData.cases) {
     `works ${work.id}`,
   );
 }
-for (const work of worksData.cases.slice(0, 2)) {
+const featuredWork = worksData.cases.find(
+  (work) => work.id === "case-cherry-homepage",
+);
+assert.ok(featuredWork, "the selected homepage case study must exist");
+for (const [label, html] of [
+  ["home", home],
+  [
+    "website",
+    focusedServices.find((service) => service.route === "/services/website/")
+      .html,
+  ],
+]) {
   validateServiceVisual(
-    home,
-    { src: work.image, alt: work.imageAlt },
-    `home selected work ${work.id}`,
+    html,
+    { src: featuredWork.image, alt: featuredWork.imageAlt },
+    `${label} selected work ${featuredWork.id}`,
+    1,
+  );
+  assert.equal(
+    loadHtml(html)(`.purpose-work a[href="/works/#${featuredWork.id}"]`)
+      .length > 0,
+    true,
+    `${label}: case study must link to the actual work`,
   );
 }
 for (const field of ["visual", "outcomesVisual", "scopeVisual"]) {
@@ -620,28 +641,80 @@ for (const field of ["visual", "outcomesVisual", "scopeVisual"]) {
   );
 }
 
-assert.equal(
-  count(advisorPage, "data-advisor-pricing-summary"),
-  2,
-  "IT advisor pricing must appear in exactly two summary blocks",
-);
-for (const summary of advisorData.pricingSummaries) {
-  const pricingItem = pricingByKey.get(summary.pricingKey);
-  assert.ok(pricingItem, `unknown advisor pricing key ${summary.pricingKey}`);
+for (const plan of advisorData.plans) {
+  const block = loadHtml(advisorPage)(`.selection-offering#${plan.id}`);
+  const item = pricingByKey.get(plan.pricingKey);
+  assert.ok(item, `unknown advisor pricing key ${plan.pricingKey}`);
   assert.equal(
-    count(advisorPage, `data-pricing-kind="${summary.id}"`),
-    2,
-    `IT advisor ${summary.id} price must appear at the beginning and end`,
+    block.length,
+    1,
+    `IT advisor ${plan.id}: unique scope and price block missing`,
   );
+  for (const required of [
+    item.price,
+    item.note,
+    plan.summary,
+    plan.boundary,
+    ...plan.includes,
+  ])
+    assert.ok(
+      block.text().includes(required),
+      `IT advisor ${plan.id}: a fee or contract condition is missing`,
+    );
   assert.equal(
-    count(advisorPage, pricingItem.price),
-    2,
-    `IT advisor ${summary.id} numeric price must appear exactly twice`,
-  );
-  assert.equal(
-    pricing.includes(`id="${summary.pricingKey}"`),
+    pricing.includes(`id="${plan.pricingKey}"`),
     true,
-    `pricing anchor ${summary.pricingKey} missing`,
+    `pricing anchor ${plan.pricingKey} missing`,
+  );
+}
+for (const service of [
+  { data: developmentData, html: developmentPage, route: developmentRoute },
+  ...focusedServices,
+]) {
+  const $ = loadHtml(service.html);
+  for (const offering of service.data.offerings) {
+    const block = $(`.selection-offering#${offering.id}`);
+    assert.equal(
+      block.length,
+      1,
+      `${service.route} ${offering.id}: unique offering is required`,
+    );
+    for (const required of [
+      offering.body,
+      ...offering.includes,
+      ...(offering.priceNote ? [offering.priceNote] : []),
+    ])
+      assert.ok(
+        block.text().includes(required),
+        `${service.route} ${offering.id}: scope or conditions missing`,
+      );
+    for (const key of offering.pricingKeys) {
+      const item = pricingByKey.get(key);
+      assert.ok(item, `unknown pricing key ${key}`);
+      assert.ok(
+        block.text().includes(item.price) && block.text().includes(item.note),
+        `${service.route} ${offering.id}: price and its conditions must stay together`,
+      );
+    }
+  }
+  for (const term of service.data.terms ?? [])
+    assert.ok(
+      $.text().includes(term.body),
+      `${service.route}: contract term missing`,
+    );
+}
+for (const item of pricingData.items) {
+  const target = new URL(item.detailUrl, siteOrigin);
+  const $ = loadHtml(read(`dist${target.pathname}index.html`));
+  assert.equal(
+    $("[id]").filter((_, node) => $(node).attr("id") === target.hash.slice(1))
+      .length,
+    1,
+    `pricing ${item.key}: detail anchor must resolve uniquely`,
+  );
+  assert.ok(
+    pricing.includes(item.price) && pricing.includes(item.note),
+    `pricing ${item.key}: price conditions missing`,
   );
 }
 
@@ -669,7 +742,7 @@ for (const offering of developmentData.offerings) {
   assert.ok(pricingItem, `unknown development pricing key ${offering.id}`);
   const offeringMatch = developmentPage.match(
     new RegExp(
-      `<article[^>]*class="detail-offering"[^>]*id="${offering.id}"[^>]*>([\\s\\S]*?)<\\/article>`,
+      `<article[^>]*class="selection-offering"[^>]*id="${offering.id}"[^>]*>([\\s\\S]*?)<\\/article>`,
     ),
   );
   assert.ok(offeringMatch, `development use case ${offering.id} missing`);
@@ -734,6 +807,137 @@ for (const route of [
     1,
     `${route}: route must appear once in sitemap output`,
   );
+}
+
+for (const service of [
+  { data: advisorData, html: advisorPage, route: advisorRoute },
+  { data: developmentData, html: developmentPage, route: developmentRoute },
+  ...focusedServices,
+]) {
+  const rendered = loadHtml(service.html)("main").text();
+  assert.ok(
+    rendered.includes(service.data.sectionVisuals.process.caption),
+    `${service.route}: published handover/verification summary missing`,
+  );
+}
+
+// Published descriptions, contract conditions and fragment links are compatibility boundaries.
+const homeData = readJson("src/data/home.json");
+for (const scope of serviceIndexData.services) {
+  const destination = scope.detailUrl ?? "/services/";
+  const rendered = loadHtml(read(`dist${destination}index.html`))(
+    "main",
+  ).text();
+  for (const field of [scope.body, ...scope.examples])
+    assert.ok(
+      rendered.includes(field),
+      `${destination}: published ${scope.id} scope/example is no longer readable`,
+    );
+}
+for (const situation of homeData.consultationSituations) {
+  const destination = new URL(situation.href, siteOrigin).pathname;
+  const rendered = loadHtml(read(`dist${destination}index.html`))(
+    "main",
+  ).text();
+  for (const field of [situation.title, situation.body])
+    assert.ok(
+      rendered.includes(field),
+      `${destination}: published consultation example is missing`,
+    );
+}
+for (const work of worksData.cases) {
+  const $ = loadHtml(worksPage);
+  const card = $(`[id="${work.id}"]`);
+  assert.equal(card.length, 1, `works: ${work.id} must remain addressable`);
+  for (const field of [
+    work.title,
+    work.summary,
+    work.challenge,
+    work.proposal,
+    work.result,
+  ])
+    assert.ok(
+      card.text().includes(field),
+      `works: ${work.id} published case content is missing`,
+    );
+  for (const field of [work.detailUrl, work.externalUrl].filter(Boolean))
+    assert.ok(
+      card
+        .find("a")
+        .toArray()
+        .some((node) => $(node).attr("href") === field),
+      `works: ${work.id} published destination is missing`,
+    );
+}
+const guideText = loadHtml(guidePage)("main").text();
+for (const tip of guideData.tips)
+  for (const field of [tip.title, tip.body, ...tip.points])
+    assert.ok(
+      guideText.includes(field),
+      `guide: preparation content missing: ${tip.title}`,
+    );
+for (const faq of guideData.faqs)
+  for (const field of [faq.question, faq.answer])
+    assert.ok(guideText.includes(field), "guide: published FAQ missing");
+const websiteData = focusedServices.find(
+  (service) => service.route === "/services/website/",
+).data;
+assert.ok(
+  loadHtml(read("dist/services/website/index.html"))("main")
+    .text()
+    .includes(websiteData.offeringsLead),
+  "website: separate monthly contract, tax and estimate conditions must remain explicit",
+);
+for (const summary of advisorData.pricingSummaries)
+  assert.ok(
+    loadHtml(advisorPage)("main").text().includes(summary.note),
+    `advisor: ${summary.id} engagement note missing`,
+  );
+const legacyFragments = {
+  "/": [
+    "layer-model-title",
+    "domain-title",
+    "customer-touchpoints",
+    "operations",
+    "it-foundation",
+    "consultation-title",
+    "home-cta-title",
+  ],
+  "/services/": [
+    "service-entry-title",
+    "service-entry-development",
+    "service-entry-it-advisor",
+    "service-entry-website",
+    "service-domains-title",
+    "service-detail-index-title",
+    "service-detail-primary-title",
+    "service-detail-supporting-title",
+    "service-cta-title",
+  ],
+  "/services/it-advisor/": [
+    "advisor-introduction-title",
+    "advisor-use-cases-title",
+    "advisor-plans-title",
+    "advisor-process-title",
+    "advisor-boundaries-title",
+    "advisor-faq-title",
+    "advisor-related-title",
+    "advisor-cta-title",
+  ],
+  "/services/website/": [
+    "website-cost-title",
+    "website-terms-title",
+    "website-faq-title",
+  ],
+};
+for (const [route, ids] of Object.entries(legacyFragments)) {
+  const $ = loadHtml(read(`dist${route}index.html`));
+  for (const id of ids)
+    assert.equal(
+      $(`[id="${id}"]`).length,
+      1,
+      `${route}#${id}: published fragment must resolve uniquely`,
+    );
 }
 
 console.log(

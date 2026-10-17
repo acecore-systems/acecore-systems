@@ -358,6 +358,47 @@ function initializeAiGuideChat(): void {
 
   root.dataset.initialized = "true";
 
+  // A floating helper must yield to the page's primary action on narrow screens.
+  const primaryActions = [
+    ...document.querySelectorAll<HTMLElement>(
+      "a.purpose-button, a.editorial-link--primary, .header-cta, button[type=submit]",
+    ),
+  ].filter((action) => !root.contains(action));
+  let actionFrame = 0;
+  const keepPrimaryActionsClear = () => {
+    actionFrame = 0;
+    if (
+      window.innerWidth > 680 ||
+      !panel.hidden ||
+      document.activeElement === toggle
+    ) {
+      root.classList.remove("is-over-primary-action");
+      return;
+    }
+    const floating = toggle.getBoundingClientRect();
+    const overlaps = primaryActions.some((action) => {
+      const rect = action.getBoundingClientRect();
+      return (
+        rect.width > 0 &&
+        rect.height > 0 &&
+        rect.bottom > floating.top - 8 &&
+        rect.top < floating.bottom + 8 &&
+        rect.right > floating.left - 8 &&
+        rect.left < floating.right + 8
+      );
+    });
+    root.classList.toggle("is-over-primary-action", overlaps);
+  };
+  const scheduleActionCheck = () => {
+    if (!actionFrame)
+      actionFrame = requestAnimationFrame(keepPrimaryActionsClear);
+  };
+  window.addEventListener("scroll", scheduleActionCheck, { passive: true });
+  window.addEventListener("resize", scheduleActionCheck, { passive: true });
+  toggle.addEventListener("focus", scheduleActionCheck);
+  toggle.addEventListener("blur", scheduleActionCheck);
+  scheduleActionCheck();
+
   const scrollToLatest = () => {
     messages.scrollTop = messages.scrollHeight;
   };
@@ -387,6 +428,7 @@ function initializeAiGuideChat(): void {
     panel.hidden = false;
     toggle.setAttribute("aria-expanded", "true");
     root.classList.add("is-open");
+    scheduleActionCheck();
     window.setTimeout(() => input.focus(), 0);
     scrollToLatest();
   };
@@ -398,6 +440,7 @@ function initializeAiGuideChat(): void {
     panel.hidden = true;
     toggle.setAttribute("aria-expanded", "false");
     root.classList.remove("is-open");
+    scheduleActionCheck();
     (lastFocusedElement || toggle).focus();
   };
 

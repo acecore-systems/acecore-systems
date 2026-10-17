@@ -1,0 +1,141 @@
+{
+  "checkedAt": "2026-10-17",
+  "method": "親担当がin-app browserで主要12サイトと追加3ページを取得。子担当が3比較ボードを実見。SmartHR課題メニューは親が実操作。画面外lazy画像に未読込があり、全画像の完全監査とは扱わない。",
+  "pages": [
+    {
+      "name": "stores",
+      "url": "https://stores.fun/omakase-start",
+      "title": "お店の初期設定を代行｜STORES おまかせスタート（ストアーズ）",
+      "w": 1265,
+      "h": 7591,
+      "images": 32,
+      "unloaded": 11
+    },
+    {
+      "name": "lig",
+      "url": "https://liginc.co.jp/solutions/design/website",
+      "title": "Web制作・ホームページ制作の実績と料金-株式会社LIG",
+      "w": 1265,
+      "h": 11389,
+      "images": 20,
+      "unloaded": 0
+    },
+    {
+      "name": "gig",
+      "url": "https://giginc.co.jp/service",
+      "title": "事業内容｜東京のWEB制作会社・ホームページ制作会社｜株式会社GIG",
+      "w": 1265,
+      "h": 4307,
+      "images": 7,
+      "unloaded": 0
+    },
+    {
+      "name": "joyzo",
+      "url": "https://service.joyzo.co.jp/system39/",
+      "title": "システム39｜kintoneアプリ開発が39万円・最短2週間で",
+      "w": 1265,
+      "h": 14016,
+      "images": 25,
+      "unloaded": 10
+    },
+    {
+      "name": "smarthr",
+      "url": "https://smarthr.jp/",
+      "title": "SmartHR（スマートHR）｜労務管理クラウド7年連続シェアNo.1",
+      "w": 1265,
+      "h": 13238,
+      "images": 109,
+      "unloaded": 95
+    },
+    {
+      "name": "kintone",
+      "url": "https://kintone.cybozu.co.jp/",
+      "title": "kintone（キントーン） | みんな、つかえる。業務アプリがつくれるサイボウズのノーコード・ローコードツール",
+      "w": 1265,
+      "h": 12507,
+      "images": 117,
+      "unloaded": 0
+    },
+    {
+      "name": "studio",
+      "url": "https://studio.design/ja/",
+      "title": "Studio｜ノーコードWeb制作プラットフォーム",
+      "w": 1265,
+      "h": 14243,
+      "images": 204,
+      "unloaded": 11
+    },
+    {
+      "name": "goope",
+      "url": "https://goope.jp/",
+      "title": "パソコンが苦手でも簡単。無料で試せるお店のホームページ作成｜グーペ",
+      "w": 1265,
+      "h": 8849,
+      "images": 52,
+      "unloaded": 15
+    },
+    {
+      "name": "freee",
+      "url": "https://www.freee.co.jp/",
+      "title": "クラウド会計ソフト｜freee",
+      "w": 1265,
+      "h": 7313,
+      "images": 119,
+      "unloaded": 101
+    },
+    {
+      "name": "iij",
+      "url": "https://www.iij.ad.jp/biz/uom/",
+      "title": "マルチクラウド/システム運用を自動化・効率化 - IIJ統合運用管理サービス（UOM）",
+      "w": 1265,
+      "h": 15079,
+      "images": 53,
+      "unloaded": 0
+    },
+    {
+      "name": "hennge",
+      "url": "https://hennge.com/jp/",
+      "title": "HENNGE株式会社",
+      "w": 1265,
+      "h": 3355,
+      "images": 24,
+      "unloaded": 11
+    },
+    {
+      "name": "shadan",
+      "url": "https://www.shadan-kun.com/",
+      "title": "クラウド型WAF『攻撃遮断くん』",
+      "w": 1265,
+      "h": 12438,
+      "images": 102,
+      "unloaded": 48
+    },
+    {
+      "name": "hennge-one",
+      "url": "https://hennge.com/jp/service/one/",
+      "title": "【国内シェアNo.1のクラウドセキュリティ】 HENNGE One | HENNGE株式会社（へんげ）　-テクノロジーの解放で世の中を変えていく",
+      "w": 1265,
+      "h": 6616,
+      "images": 79,
+      "unloaded": 77
+    },
+    {
+      "name": "shadan-cases",
+      "url": "https://www.shadan-kun.com/casestudy/",
+      "title": "導入事例 | クラウド型WAF『攻撃遮断くん』",
+      "w": 1265,
+      "h": 8614,
+      "images": 95,
+      "unloaded": 86
+    },
+    {
+      "name": "gig-works",
+      "url": "https://giginc.co.jp/works",
+      "title": "WEB制作実績｜東京のWEB制作会社・ホームページ制作会社｜株式会社GIG",
+      "w": 1265,
+      "h": 5181,
+      "images": 17,
+      "unloaded": 5
+    }
+  ]
+}
