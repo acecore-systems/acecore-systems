@@ -1,0 +1,39 @@
+---
+import monitor from "@tabler/icons/outline/device-desktop.svg?raw";
+import settings from "@tabler/icons/outline/settings.svg?raw";
+import users from "@tabler/icons/outline/users.svg?raw";
+import puzzle from "@tabler/icons/outline/puzzle.svg?raw";
+import chart from "@tabler/icons/outline/chart-bar.svg?raw";
+import bulb from "@tabler/icons/outline/bulb.svg?raw";
+import database from "@tabler/icons/outline/database.svg?raw";
+import shield from "@tabler/icons/outline/shield-check.svg?raw";
+import arrow from "@tabler/icons/outline/arrow-right.svg?raw";
+import chevron from "@tabler/icons/outline/chevron-right.svg?raw";
+import search from "@tabler/icons/outline/search.svg?raw";
+import check from "@tabler/icons/filled/circle-check.svg?raw";
+
+const icons = {
+  monitor,
+  settings,
+  users,
+  puzzle,
+  chart,
+  bulb,
+  database,
+  shield,
+  arrow,
+  chevron,
+  search,
+  check,
+};
+export type PurposeIconName = keyof typeof icons;
+interface Props {
+  name: PurposeIconName;
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+---
+
+<span class:list={["purpose-icon", className]} aria-hidden="true"
+  ><Fragment set:html={icons[name]} /></span
+>

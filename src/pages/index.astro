@@ -1,78 +1,119 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import AnchorAliases from "../components/AnchorAliases.astro";
+import PurposeIcon from "../components/PurposeIcon.astro";
+import PurposeWork from "../components/PurposeWork.astro";
+import PurposeCaseCards from "../components/PurposeCaseCards.astro";
+import PurposeCallout from "../components/PurposeCallout.astro";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
 import site from "../data/site.json";
-
 interface Props {
   locale?: Locale;
 }
-
 const locale = Astro.props.locale ?? "ja";
-const { home, works } = getLocalizedContent(locale);
+const { home } = getLocalizedContent(locale);
 const text = getUi(locale);
 const localizeHref = (href: string) =>
   href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
+const needs = [
+  {
+    id: "customer-touchpoints",
+    title: text.purposeWebsiteNeed,
+    body: home.layers[0].body,
+    icon: "monitor" as const,
+    href: getLocalizedUrl("/services/", locale) + "#web",
+  },
+  {
+    id: "operations",
+    title: text.purposeAutomationNeed,
+    body: home.layers[1].body,
+    icon: "settings" as const,
+    href: getLocalizedUrl("/services/", locale) + "#work",
+  },
+  {
+    id: "it-foundation",
+    title: text.purposeAdvisorNeed,
+    body: home.layers[2].body,
+    icon: "users" as const,
+    href: getLocalizedUrl("/services/it-advisor/", locale),
+  },
+];
 ---
 
 <BaseLayout
   title={home.title}
   description={home.description}
   image="/images/acecore-systems-og.webp"
-  bodyClass="home-page"
+  bodyClass="home-page purpose-home purpose-selection-home"
   locale={locale}
 >
-  <section class="home-hero">
-    <div class="home-hero__surface" aria-hidden="true"></div>
-    <div class="container home-hero__inner">
-      <p class="home-eyebrow">{home.heroEyebrow}</p>
-      <h1>{home.heroTitle}</h1>
-      <p class="home-hero__lead">{home.heroLead}</p>
-      <div class="home-actions">
-        <a
-          class="editorial-link editorial-link--primary"
-          href={localizeHref(home.primaryCtaHref)}
-        >
-          {home.primaryCta}
-        </a>
-        <a class="editorial-link" href={localizeHref(home.secondaryCtaHref)}
-          >{home.secondaryCta}</a
-        >
+  <section class="purpose-home-hero">
+    <div class="container purpose-split-hero">
+      <div class="purpose-hero-copy">
+        <p class="purpose-eyebrow">{home.heroEyebrow}</p>
+        <h1>{home.heroTitle}</h1>
+        <p class="purpose-home-hero__lead">{home.heroLead}</p>
+        <div class="purpose-hero-actions">
+          <a class="purpose-button" href={localizeHref(home.primaryCtaHref)}
+            >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
+          >
+          <a
+            class="purpose-button purpose-button--secondary"
+            href={getLocalizedUrl("/contact/", locale)}>{text.purposeContact}</a
+          >
+        </div>
       </div>
+      <PurposeWork locale={locale} compact hero />
     </div>
   </section>
-
-  <section class="layer-model" aria-labelledby="layer-model-title">
-    <h2 class="visually-hidden" id="layer-model-title">{home.layersTitle}</h2>
-    <p class="visually-hidden">{home.layersLead}</p>
-    <figure class="layer-model__visual">
-      <img
-        src="/images/quiet-infrastructure-section-v2-exact.webp"
-        alt={home.layersTitle}
-        width="1487"
-        height="372"
-        loading="eager"
-        decoding="async"
-      />
-      <figcaption class="container layer-model__overlay">
+  <section class="purpose-needs" aria-label={home.consultationTitle}>
+    <div class="container">
+      <header class="purpose-section-heading">
+        <h2 id="home-needs-title">
+          <AnchorAliases
+            ids={["layer-model-title", "domain-title", "consultation-title"]}
+          />{text.chooseScopeTitle}
+        </h2><a
+          class="purpose-text-link"
+          href={getLocalizedUrl("/services/", locale)}
+          >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
+        >
+      </header>
+      <div class="purpose-needs__list">
         {
-          home.layers.map((layer) => (
-            <div class="layer-model__row">
-              <p class="layer-model__label">{layer.label}</p>
-              <p class="layer-model__body">{layer.body}</p>
-            </div>
+          needs.map((need) => (
+            <a class="purpose-need" id={need.id} href={need.href}>
+              <PurposeIcon name={need.icon} />
+              <span>
+                <>
+                  <strong>{need.title}</strong>
+                  <span class="purpose-need__description">{need.body}</span>
+                </>
+              </span>
+              <PurposeIcon name="chevron" />
+            </a>
           ))
         }
-      </figcaption>
-    </figure>
-    <div class="layer-model__summary" aria-label={text.layerSummary}>
-      <div class="container layer-model__summary-inner">
-        {home.layers.map((layer) => <a href={`#${layer.id}`}>{layer.title}</a>)}
       </div>
     </div>
   </section>
-
+  <section class="purpose-selected-work" aria-labelledby="home-work-title">
+    <div class="container">
+      <header class="purpose-section-heading">
+        <div>
+          <h2 id="home-work-title">{text.works}</h2><p>
+            {text.selectedWorkLead}
+          </p>
+        </div>
+        <a class="purpose-text-link" href={getLocalizedUrl("/works/", locale)}
+          >{text.viewWorks}<PurposeIcon name="arrow" /></a
+        >
+      </header>
+      <PurposeCaseCards locale={locale} />
+    </div>
+  </section>
   <section
     class="home-section home-philosophy"
     id="philosophy"
@@ -81,15 +122,18 @@ const localizeHref = (href: string) =>
     <div class="container">
       <header class="home-section__header home-section__header--split">
         <div>
-          <p class="home-eyebrow">{home.philosophyEyebrow}</p>
-          <h2 id="philosophy-title">{home.philosophyTitle}</h2>
+          <p class="home-eyebrow">{home.philosophyEyebrow}</p><h2
+            id="philosophy-title"
+          >
+            {home.philosophyTitle}
+          </h2>
         </div>
         <div>
-          <p>{home.philosophyLead}</p>
-          <a
+          <p>{home.philosophyLead}</p><a
             class="editorial-link"
-            href={`${site.acecoreUrl}${getLocalizedUrl("/about/", locale)}#corporate-philosophy-heading`}
-            >{home.philosophyLinkLabel}</a
+            href={site.acecoreUrl +
+              getLocalizedUrl("/about/", locale) +
+              "#corporate-philosophy-heading"}>{home.philosophyLinkLabel}</a
           >
         </div>
       </header>
@@ -97,145 +141,16 @@ const localizeHref = (href: string) =>
         {
           home.designPrinciples.map((principle) => (
             <li class="principle-row">
-              <p class="editorial-index">{principle.number}</p>
-              <h3>{principle.title}</h3>
-              <p>{principle.body}</p>
+              <>
+                <p class="editorial-index">{principle.number}</p>
+                <h3>{principle.title}</h3>
+                <p>{principle.body}</p>
+              </>
             </li>
           ))
         }
       </ol>
     </div>
   </section>
-
-  <section class="home-section home-domains" aria-labelledby="domain-title">
-    <div class="container">
-      <header class="home-section__header">
-        <p class="home-eyebrow">DESIGN DOMAINS</p>
-        <h2 id="domain-title">{text.designDomainsTitle}</h2>
-        <p>{text.designDomainsLead}</p>
-      </header>
-      <div class="domain-list">
-        {
-          home.layers.map((layer, index) => (
-            <article class="domain-row" id={layer.id}>
-              <p class="editorial-index">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3>{layer.title}</h3>
-              <p>{layer.body}</p>
-              <a href={localizeHref(layer.detailHref)}>{text.viewDetails}</a>
-            </article>
-          ))
-        }
-      </div>
-      <div class="home-section__foot">
-        <a class="editorial-link" href={getLocalizedUrl("/services/", locale)}
-          >{text.viewAllServices}</a
-        >
-      </div>
-    </div>
-  </section>
-
-  <section
-    class="home-section home-consultation"
-    aria-labelledby="consultation-title"
-  >
-    <div class="container">
-      <header class="home-section__header home-section__header--split">
-        <div>
-          <p class="home-eyebrow">{home.consultationEyebrow}</p>
-          <h2 id="consultation-title">{home.consultationTitle}</h2>
-        </div>
-        <p>{home.consultationLead}</p>
-      </header>
-      <div class="consultation-list">
-        {
-          home.consultationSituations.map((situation, index) => (
-            <a class="consultation-row" href={localizeHref(situation.href)}>
-              <p class="editorial-index">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <div>
-                <h3>{situation.title}</h3>
-                <p>{situation.body}</p>
-              </div>
-              <span>{text.viewConsultationEntry}</span>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-work" aria-labelledby="home-work-title">
-    <div class="container">
-      <header class="home-section__header home-section__header--split">
-        <div>
-          <p class="home-eyebrow">SELECTED WORK</p>
-          <h2 id="home-work-title">{text.selectedWorkTitle}</h2>
-        </div>
-        <p>{text.selectedWorkLead}</p>
-      </header>
-      <div class="home-work__list">
-        {
-          works.cases.slice(0, 2).map((work, index) => (
-            <article class="home-work__row">
-              <p class="editorial-index">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <figure class="home-work__visual">
-                <img
-                  src={work.image}
-                  alt={work.imageAlt}
-                  width="1536"
-                  height="1024"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
-              <div>
-                <p class="home-work__category">{work.category}</p>
-                <h3>
-                  {work.detailUrl ? (
-                    <a
-                      class="home-work__title-link"
-                      href={localizeHref(work.detailUrl)}
-                    >
-                      {work.title}
-                    </a>
-                  ) : (
-                    work.title
-                  )}
-                </h3>
-              </div>
-              <p>{work.summary}</p>
-            </article>
-          ))
-        }
-      </div>
-      <div class="home-section__foot">
-        <a class="editorial-link" href={getLocalizedUrl("/works/", locale)}
-          >{text.viewWorks}</a
-        >
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-final-cta">
-    <div class="container">
-      <aside class="editorial-cta" aria-labelledby="home-cta-title">
-        <div class="editorial-cta__copy">
-          <p class="home-eyebrow">{home.ctaEyebrow}</p>
-          <h2 id="home-cta-title">{home.ctaTitle}</h2>
-          <p>{home.ctaBody}</p>
-        </div>
-        <a
-          class="editorial-link editorial-link--primary"
-          href={localizeHref(home.ctaHref)}
-        >
-          {home.ctaLabel}
-        </a>
-      </aside>
-    </div>
-  </section>
+  <PurposeCallout locale={locale} ctaId="home-cta-title" />
 </BaseLayout>

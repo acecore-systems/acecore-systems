@@ -11,19 +11,19 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @theme {
-  --color-paper: #f2f0ea;
-  --color-paper-soft: #f8f7f3;
-  --color-paper-deep: #e7e3da;
-  --color-paper-muted: #ebe8e0;
+  --color-paper: #ffffff;
+  --color-paper-soft: #f0f8ff;
+  --color-paper-deep: #e4f1ff;
+  --color-paper-muted: #f5f9fd;
   --color-surface: #ffffff;
-  --color-ink: #142235;
-  --color-ink-soft: #334255;
-  --color-muted: #6c746f;
-  --color-line: rgb(20 34 53 / 20%);
-  --color-line-strong: rgb(20 34 53 / 45%);
-  --color-control-border: rgb(20 34 53 / 58%);
-  --color-blue: #063f72;
-  --color-blue-deep: #062b4b;
+  --color-ink: #071333;
+  --color-ink-soft: #334666;
+  --color-muted: #536781;
+  --color-line: #e0e9f3;
+  --color-line-strong: #b7d2ed;
+  --color-control-border: #7b93af;
+  --color-blue: #005cff;
+  --color-blue-deep: #0048c9;
   --color-layer: #242827;
   --color-layer-blue: #071d31;
   --color-focus: #286eab;
@@ -37,11 +37,11 @@
   --spacing-measure-reading: 43ch;
   --ease-calm-out: cubic-bezier(0.22, 1, 0.36, 1);
   --font-display:
-    "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro",
-    "Noto Serif JP", serif;
+    "Yu Gothic UI", Meiryo, "Hiragino Sans", "Noto Sans JP", system-ui,
+    sans-serif;
   --font-sans:
-    "Yu Gothic", "Yu Gothic UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
-    "Noto Sans JP", Meiryo, system-ui, sans-serif;
+    "Yu Gothic UI", Meiryo, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", system-ui, sans-serif;
 }
 
 @layer base {
@@ -78,7 +78,7 @@
     font-family: var(--font-sans);
     background: var(--paper);
     color: var(--ink);
-    font-synthesis: none;
+    font-synthesis: weight;
     text-rendering: optimizeLegibility;
   }
 
@@ -87,7 +87,7 @@
   }
 
   html {
-    min-width: 320px;
+    min-width: 0;
     scroll-behavior: smooth;
     scroll-padding-top: 24px;
   }

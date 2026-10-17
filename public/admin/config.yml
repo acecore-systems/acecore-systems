@@ -558,6 +558,11 @@ collections:
       - { name: heroEyebrow, label: ヒーロー英字見出し, widget: string }
       - { name: heroTitle, label: ヒーロータイトル, widget: string }
       - { name: heroLead, label: ヒーローリード, widget: text }
+      - name: heroBenefits
+        label: ヒーローの特徴
+        widget: list
+        required: false
+        field: { name: item, label: 特徴, widget: string }
       - {
           name: heroPrimaryCta,
           label: 主要CTA,

@@ -1,4 +1,5 @@
 ---
+import PurposeIcon from "./PurposeIcon.astro";
 import { getLocalizedUrl, type Locale } from "../i18n";
 
 type GuideRoute = {
@@ -25,7 +26,10 @@ const { routes, locale } = Astro.props;
         <p class="editorial-eyebrow">{route.eyebrow}</p>
         <h3>{route.title}</h3>
         <p>{route.body}</p>
-        <span>{route.label}</span>
+        <span>
+          {route.label}
+          <PurposeIcon name="arrow" />
+        </span>
       </a>
     ))
   }
@@ -79,10 +83,6 @@ const { routes, locale } = Astro.props;
       font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.04em;
-    }
-
-    .guide-route-choice span::after {
-      content: " →";
     }
 
     @media (max-width: 720px) {

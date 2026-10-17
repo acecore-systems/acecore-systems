@@ -1,6 +1,26 @@
 import type { Locale } from "./config";
 
 type UiText = {
+  supportExamplesLabel: string;
+  companyInfoLabel: string;
+  serviceFor: string;
+  serviceDeliverables: string;
+  serviceTerms: string;
+  serviceFaqTitle: string;
+  serviceFaqPricing: string;
+  serviceFaqScope: string;
+  serviceFaqProcess: string;
+
+  purposeViewServices: string;
+  purposeAll: string;
+  purposeWeb: string;
+  purposeWork: string;
+  purposeOperate: string;
+  purposeWebsiteNeed: string;
+  purposeAutomationNeed: string;
+  purposeAdvisorNeed: string;
+  purposeFeatures: string;
+  purposeContact: string;
   skipToContent: string;
   officialSite: string;
   mainNavigation: string;
@@ -104,6 +124,26 @@ type UiText = {
 
 export const ui: Record<Locale, UiText> = {
   ja: {
+    supportExamplesLabel: "具体的な対応例",
+    companyInfoLabel: "運営会社について",
+    serviceFor: "こんなときに",
+    serviceDeliverables: "主な対応",
+    serviceTerms: "条件・対応範囲",
+    serviceFaqTitle: "よくある質問",
+    serviceFaqPricing: "費用と見積りはどのように決まりますか？",
+    serviceFaqScope: "どこまで対応を頼めますか？",
+    serviceFaqProcess: "どのような手順で進みますか？",
+
+    purposeViewServices: "サービスを見る",
+    purposeAll: "すべて",
+    purposeWeb: "Webを整える",
+    purposeWork: "仕事を効率化する",
+    purposeOperate: "安心して運用する",
+    purposeWebsiteNeed: "ホームページを作りたい・直したい",
+    purposeAutomationNeed: "毎日の手作業を減らしたい",
+    purposeAdvisorNeed: "ITの相談先がほしい",
+    purposeFeatures: "特徴",
+    purposeContact: "相談する",
     skipToContent: "本文へ移動",
     officialSite: "Acecore公式サイト",
     mainNavigation: "メインナビゲーション",
@@ -218,6 +258,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "トップへ戻る",
   },
   en: {
+    supportExamplesLabel: "Examples of support",
+    companyInfoLabel: "About our company",
+    serviceFor: "When to choose this",
+    serviceDeliverables: "What we help with",
+    serviceTerms: "Terms and scope",
+    serviceFaqTitle: "Frequently asked questions",
+    serviceFaqPricing: "How are fees and estimates determined?",
+    serviceFaqScope: "What support is included?",
+    serviceFaqProcess: "How does the work proceed?",
+
+    purposeViewServices: "View services",
+    purposeAll: "All services",
+    purposeWeb: "Improve your website",
+    purposeWork: "Make work simpler",
+    purposeOperate: "Keep IT running",
+    purposeWebsiteNeed: "Create or improve a website",
+    purposeAutomationNeed: "Reduce daily manual work",
+    purposeAdvisorNeed: "Find an IT partner",
+    purposeFeatures: "Features",
+    purposeContact: "Talk to us",
     skipToContent: "Skip to content",
     officialSite: "Acecore corporate site",
     mainNavigation: "Main navigation",
@@ -337,6 +397,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Return home",
   },
   "zh-cn": {
+    supportExamplesLabel: "具体支持示例",
+    companyInfoLabel: "运营公司信息",
+    serviceFor: "适合这些情况",
+    serviceDeliverables: "主要支持内容",
+    serviceTerms: "条件与支持范围",
+    serviceFaqTitle: "常见问题",
+    serviceFaqPricing: "费用和报价如何确定？",
+    serviceFaqScope: "可以提供哪些支持？",
+    serviceFaqProcess: "具体如何推进？",
+
+    purposeViewServices: "查看服务",
+    purposeAll: "全部",
+    purposeWeb: "完善网站",
+    purposeWork: "提高工作效率",
+    purposeOperate: "安心运营",
+    purposeWebsiteNeed: "创建或改进网站",
+    purposeAutomationNeed: "减少日常手动操作",
+    purposeAdvisorNeed: "寻找IT咨询伙伴",
+    purposeFeatures: "服务特色",
+    purposeContact: "咨询我们",
     skipToContent: "跳转到正文",
     officialSite: "Acecore 官方网站",
     mainNavigation: "主导航",
@@ -445,6 +525,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "返回首页",
   },
   es: {
+    supportExamplesLabel: "Ejemplos de asistencia",
+    companyInfoLabel: "Sobre la empresa",
+    serviceFor: "Cuándo elegirlo",
+    serviceDeliverables: "En qué ayudamos",
+    serviceTerms: "Condiciones y alcance",
+    serviceFaqTitle: "Preguntas frecuentes",
+    serviceFaqPricing: "¿Cómo se calculan los precios y presupuestos?",
+    serviceFaqScope: "¿Qué asistencia está incluida?",
+    serviceFaqProcess: "¿Cómo se desarrolla el trabajo?",
+
+    purposeViewServices: "Ver servicios",
+    purposeAll: "Todos",
+    purposeWeb: "Mejorar la web",
+    purposeWork: "Simplificar el trabajo",
+    purposeOperate: "Operar con tranquilidad",
+    purposeWebsiteNeed: "Crear o mejorar una web",
+    purposeAutomationNeed: "Reducir las tareas manuales",
+    purposeAdvisorNeed: "Encontrar apoyo informático",
+    purposeFeatures: "Características",
+    purposeContact: "Consultar",
     skipToContent: "Ir al contenido",
     officialSite: "Sitio corporativo de Acecore",
     mainNavigation: "Navegación principal",
@@ -565,6 +665,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Volver al inicio",
   },
   pt: {
+    supportExamplesLabel: "Exemplos de suporte",
+    companyInfoLabel: "Sobre a empresa",
+    serviceFor: "Quando escolher",
+    serviceDeliverables: "Como ajudamos",
+    serviceTerms: "Condições e escopo",
+    serviceFaqTitle: "Perguntas frequentes",
+    serviceFaqPricing: "Como são definidos os preços e orçamentos?",
+    serviceFaqScope: "Qual suporte está incluído?",
+    serviceFaqProcess: "Como o trabalho é conduzido?",
+
+    purposeViewServices: "Ver serviços",
+    purposeAll: "Todos",
+    purposeWeb: "Melhorar o site",
+    purposeWork: "Simplificar o trabalho",
+    purposeOperate: "Operar com segurança",
+    purposeWebsiteNeed: "Criar ou melhorar um site",
+    purposeAutomationNeed: "Reduzir tarefas manuais",
+    purposeAdvisorNeed: "Encontrar apoio de TI",
+    purposeFeatures: "Características",
+    purposeContact: "Fale conosco",
     skipToContent: "Ir para o conteúdo",
     officialSite: "Site institucional da Acecore",
     mainNavigation: "Navegação principal",
@@ -685,6 +805,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Voltar ao início",
   },
   fr: {
+    supportExamplesLabel: "Exemples d’accompagnement",
+    companyInfoLabel: "Notre entreprise",
+    serviceFor: "Quand choisir ce service",
+    serviceDeliverables: "Notre accompagnement",
+    serviceTerms: "Conditions et périmètre",
+    serviceFaqTitle: "Questions fréquentes",
+    serviceFaqPricing: "Comment les tarifs et devis sont-ils établis ?",
+    serviceFaqScope: "Quel accompagnement est inclus ?",
+    serviceFaqProcess: "Comment se déroule le travail ?",
+
+    purposeViewServices: "Voir les services",
+    purposeAll: "Tous",
+    purposeWeb: "Améliorer votre site",
+    purposeWork: "Simplifier le travail",
+    purposeOperate: "Assurer le fonctionnement",
+    purposeWebsiteNeed: "Créer ou améliorer un site",
+    purposeAutomationNeed: "Réduire les tâches manuelles",
+    purposeAdvisorNeed: "Trouver un partenaire informatique",
+    purposeFeatures: "Points forts",
+    purposeContact: "Nous contacter",
     skipToContent: "Aller au contenu",
     officialSite: "Site institutionnel Acecore",
     mainNavigation: "Navigation principale",
@@ -804,6 +944,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Retour à l’accueil",
   },
   ko: {
+    supportExamplesLabel: "구체적인 지원 사례",
+    companyInfoLabel: "운영 회사 소개",
+    serviceFor: "이럴 때 선택하세요",
+    serviceDeliverables: "주요 지원 내용",
+    serviceTerms: "조건 및 지원 범위",
+    serviceFaqTitle: "자주 묻는 질문",
+    serviceFaqPricing: "비용과 견적은 어떻게 정해지나요?",
+    serviceFaqScope: "어디까지 지원받을 수 있나요?",
+    serviceFaqProcess: "어떤 절차로 진행되나요?",
+
+    purposeViewServices: "서비스 보기",
+    purposeAll: "전체",
+    purposeWeb: "웹사이트 정비",
+    purposeWork: "업무 효율화",
+    purposeOperate: "안정적인 운영",
+    purposeWebsiteNeed: "홈페이지를 만들거나 개선하고 싶어요",
+    purposeAutomationNeed: "매일 반복하는 수작업을 줄이고 싶어요",
+    purposeAdvisorNeed: "IT 상담 파트너가 필요해요",
+    purposeFeatures: "특징",
+    purposeContact: "상담하기",
     skipToContent: "본문으로 이동",
     officialSite: "Acecore 공식 사이트",
     mainNavigation: "주요 내비게이션",
@@ -916,6 +1076,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "홈으로 돌아가기",
   },
   de: {
+    supportExamplesLabel: "Konkrete Unterstützung",
+    companyInfoLabel: "Über unser Unternehmen",
+    serviceFor: "Wann dieser Service passt",
+    serviceDeliverables: "Unsere Unterstützung",
+    serviceTerms: "Bedingungen und Umfang",
+    serviceFaqTitle: "Häufige Fragen",
+    serviceFaqPricing: "Wie werden Preise und Angebote ermittelt?",
+    serviceFaqScope: "Welche Unterstützung ist enthalten?",
+    serviceFaqProcess: "Wie läuft die Zusammenarbeit ab?",
+
+    purposeViewServices: "Leistungen ansehen",
+    purposeAll: "Alle",
+    purposeWeb: "Website verbessern",
+    purposeWork: "Arbeit vereinfachen",
+    purposeOperate: "IT zuverlässig betreiben",
+    purposeWebsiteNeed: "Eine Website erstellen oder verbessern",
+    purposeAutomationNeed: "Manuelle Arbeit reduzieren",
+    purposeAdvisorNeed: "Einen IT-Partner finden",
+    purposeFeatures: "Leistungen",
+    purposeContact: "Kontakt",
     skipToContent: "Zum Inhalt",
     officialSite: "Acecore-Unternehmensseite",
     mainNavigation: "Hauptnavigation",
@@ -1035,6 +1215,26 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Zur Startseite",
   },
   ru: {
+    supportExamplesLabel: "Примеры поддержки",
+    companyInfoLabel: "О нашей компании",
+    serviceFor: "Когда выбрать услугу",
+    serviceDeliverables: "С чем мы помогаем",
+    serviceTerms: "Условия и объём работ",
+    serviceFaqTitle: "Частые вопросы",
+    serviceFaqPricing: "Как определяются стоимость и смета?",
+    serviceFaqScope: "Какая поддержка включена?",
+    serviceFaqProcess: "Как проходит работа?",
+
+    purposeViewServices: "Посмотреть услуги",
+    purposeAll: "Все",
+    purposeWeb: "Улучшить сайт",
+    purposeWork: "Упростить работу",
+    purposeOperate: "Обеспечить работу ИТ",
+    purposeWebsiteNeed: "Создать или улучшить сайт",
+    purposeAutomationNeed: "Сократить ручную работу",
+    purposeAdvisorNeed: "Найти ИТ-партнёра",
+    purposeFeatures: "Особенности",
+    purposeContact: "Связаться",
     skipToContent: "Перейти к содержанию",
     officialSite: "Корпоративный сайт Acecore",
     mainNavigation: "Основная навигация",

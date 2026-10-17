@@ -1,0 +1,84 @@
+{
+  "observedAt": "2026-10-17T18:20:00+09:00",
+  "baseline": "https://299cb616.acecore-systems.pages.dev/",
+  "goal": "相談者が自分向けのサービスを選び、成果物と費用・条件を理解して相談フォームへ進める",
+  "viewport": { "desktop": [1440, 1000], "mobile": [390, 844] },
+  "findings": [
+    {
+      "severity": "P1",
+      "id": "footer-contrast",
+      "evidence": "01-current-home.jpg / 02-current-services.jpg / 05-current-contact.jpg",
+      "observed": "footerの背景rgb(245,249,253)に白いリンク・見出し。白とのコントラスト比1.06:1。",
+      "fix": "footer内の見出し・リンク・説明文の色を新しい明背景に合わせる。"
+    },
+    {
+      "severity": "P1",
+      "id": "duplicate-catalog",
+      "evidence": "02-current-services.jpg",
+      "observed": "7サービス・3目的の一覧のあと、分類の異なる旧9設計領域が再登場。一覧の高さ6873 CSS px。",
+      "fix": "7サービスを主たる比較単位とし、範囲・成果物・代表料金を同じ並びで示す。"
+    },
+    {
+      "severity": "P2",
+      "id": "home-repeated-entry",
+      "evidence": "01-current-home.jpg",
+      "observed": "3困りごと・3領域・7相談テーマが別々に並ぶ。実績画像もヒーローと巨大実績欄で反復。",
+      "fix": "入口をまとめ、事例は何を実装したか分かる情報を添える。旧philosophyリンクは保つ。"
+    },
+    {
+      "severity": "P2",
+      "id": "detail-price-duplication",
+      "evidence": "03-current-website.jpg",
+      "observed": "料金プレビューのあと、同じ制作・月額プランが長いセクションで繰り返される。画像を含め詳細全体12065px。",
+      "fix": "価格と適用条件を同じ比較単位へ統合し、詳細条件・FAQは読者が必要箇所を開ける配置へ。"
+    },
+    {
+      "severity": "P2",
+      "id": "unrelated-next-services",
+      "evidence": "03-current-website.jpg",
+      "observed": "ページ末尾に他の6サービスをすべて列挙し、相談前に選択肢が再拡大する。",
+      "fix": "関連性のある少数の次の支援だけを提示し、一覧へ戻るリンクを付ける。"
+    }
+  ],
+  "confirmedBaselineBehavior": [
+    "モバイル幅390pxで横はみ出しなし",
+    "websiteの相談CTAはcategory=service / service=website / from=systems-website / entry=service-detail-ctaを保持",
+    "到達フォームでホームページ制作・更新サポートが選択され、件名に反映。送信は実施していない"
+  ],
+  "comparators": [
+    {
+      "name": "STORES",
+      "urls": ["https://stores.jp/", "https://stores.jp/omakase-start"],
+      "evidence": ["10-stores-home.jpg", "11-stores-detail.jpg"],
+      "adopt": "用途が分かるカードから独立サービスへ。作業費と継続利用費を分離。導入前に用意するものと引継ぎを説明。",
+      "doNotAdopt": "販売していない無料トライアル、未確認の導入数。初期DOMと描画後で価格差を観測したため価格そのものは比較根拠へ転記しない。"
+    },
+    {
+      "name": "LIG",
+      "urls": ["https://liginc.co.jp/solutions/design/website"],
+      "evidence": ["13-lig-website.jpg"],
+      "adopt": "実績画像に制作意図を添える。範囲をコンパクトに整理。料金・ページ数・期間を同一カードで比較。",
+      "doNotAdopt": "高額受託会社の価格/制作期間を自社へ流用しない。黒背景のブランド表現は今回の青白の方向へ移植しない。"
+    },
+    {
+      "name": "JOYZO",
+      "urls": ["https://service.joyzo.co.jp/system39/"],
+      "evidence": ["12-joyzo-system39.jpg"],
+      "adopt": "相談対象と納品までの作業を具体的に示す。作業時間と価格条件の近接。",
+      "doNotAdopt": "定額・最短期間・無制限・無償サポートを自社の契約条件として追加しない。繰り返す大型CTAもそのまま移さない。"
+    },
+    {
+      "name": "SmartHR",
+      "urls": ["https://smarthr.jp/"],
+      "evidence": ["14-smarthr-home.jpg", "15-smarthr-navigation.jpg"],
+      "adopt": "課題と機能を区別した分類。実際に課題メニューとカテゴリタブを操作して、関連機能・事例への絞り込みを確認。",
+      "doNotAdopt": "多数の機能を持つSaaSの巨大メニューを7サービスのサイトへそのまま追加しない。"
+    }
+  ],
+  "evidenceLimits": [
+    "事業規模や公開事例は参照対象を選ぶ根拠であり、UIによる成約改善の因果を示さない。",
+    "競合のfullPageスクリーンショットには遅延読み込み画像が一部未描画。配置と実際に見えた領域のみ評価。未描画を競合の不具合と判定しない。",
+    "サービス・条件・顧客・成果の主張は自社既存コンテンツを正本とする。",
+    "閲覧とUI操作の監査であり、フォーム実送信・キーボード網羅監査・スクリーンリーダー試験は未実施。"
+  ]
+}
