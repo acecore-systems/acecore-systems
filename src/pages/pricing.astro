@@ -73,13 +73,11 @@ const priceTracks = [
   { id: "design", title: design.title, href: "/services/#design" },
 ].map((group) => ({
   ...group,
-  items: data.items
-    .map((item, index) => ({ ...item, index }))
-    .filter((item) =>
-      group.id === "design"
-        ? item.detailUrl === group.href
-        : item.detailUrl.startsWith(group.href),
-    ),
+  items: data.items.filter((item) =>
+    group.id === "design"
+      ? item.detailUrl === group.href
+      : item.detailUrl.startsWith(group.href),
+  ),
 }));
 const jsonLd = [
   {
@@ -162,11 +160,11 @@ const jsonLd = [
                 </a>
               </header>
               <ol class="price-list">
-                {track.items.map((item) => (
+                {track.items.map((item, index) => (
                   <li class="price-row" id={item.key}>
                     <div class="price-row__heading">
                       <p class="editorial-index">
-                        {String(item.index + 1).padStart(2, "0")}
+                        {String(index + 1).padStart(2, "0")}
                       </p>
                       <h4>{item.label}</h4>
                     </div>

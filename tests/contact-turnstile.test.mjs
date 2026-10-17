@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { getConsultationSubject } from "../src/lib/contact-prefill.ts";
+import { getContactFormText } from "../src/i18n/contact-form.ts";
 
 const contactPage = await readFile(
   new URL("../src/pages/contact.astro", import.meta.url),
@@ -68,4 +69,46 @@ test("翻訳済みの選択ラベルと相談接尾辞を保持する", () => {
     }),
     "Business system development — Consultation",
   );
+});
+
+test("ホームページ相談は全言語で既存受付valueを保ち、表示ラベルと入力ヘルプを用意する", () => {
+  const value = "ホームページ制作・更新について";
+  for (const locale of [
+    "ja",
+    "en",
+    "zh-cn",
+    "es",
+    "pt",
+    "fr",
+    "ko",
+    "de",
+    "ru",
+  ]) {
+    const copy = getContactFormText(locale);
+    const options = copy.categoryOptions.filter(
+      (option) => option.value === value,
+    );
+    assert.equal(
+      options.length,
+      1,
+      `${locale}: website category must be unique`,
+    );
+    assert.ok(options[0].label.trim(), `${locale}: website label is required`);
+    assert.ok(
+      copy.messageHelp.trim(),
+      `${locale}: persistent message help is required`,
+    );
+    if (locale !== "ja") {
+      assert.doesNotMatch(
+        options[0].label,
+        /[ぁ-ゖァ-ヺ]/u,
+        `${locale}: website label must be localized`,
+      );
+      assert.doesNotMatch(
+        copy.messageHelp,
+        /[ぁ-ゖァ-ヺ]/u,
+        `${locale}: message help must be localized`,
+      );
+    }
+  }
 });
