@@ -5,6 +5,7 @@ import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, htmlLangMap, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
 import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
+import { getServiceCatalog } from "../lib/service-catalog";
 
 interface Props {
   locale?: Locale;
@@ -57,11 +58,28 @@ const tracks = [
     ).toString()}`,
   },
 ] as const;
-const priceTracks = tracks.map((track) => ({
-  ...track,
+const serviceGroups = getServiceCatalog(content, locale).flatMap(
+  (group) => group.items,
+);
+const design = content.services.services.find(
+  (service) => service.id === "design",
+)!;
+const priceTracks = [
+  ...serviceGroups.map((service) => ({
+    id: service.id,
+    title: service.data.title,
+    href: service.href,
+  })),
+  { id: "design", title: design.title, href: "/services/#design" },
+].map((group) => ({
+  ...group,
   items: data.items
     .map((item, index) => ({ ...item, index }))
-    .filter((item) => item.track === track.id),
+    .filter((item) =>
+      group.id === "design"
+        ? item.detailUrl === group.href
+        : item.detailUrl.startsWith(group.href),
+    ),
 }));
 const jsonLd = [
   {
@@ -94,6 +112,7 @@ const jsonLd = [
   canonical={canonicalPath}
   jsonLd={jsonLd}
   mainEntityId={itemListId}
+  bodyClass="purpose-pricing"
   locale={locale}
 >
   <section class="page-hero page-hero--pricing">
@@ -124,7 +143,12 @@ const jsonLd = [
               aria-labelledby={`price-track-${track.id}`}
             >
               <header class="price-track__header">
-                <p class="editorial-eyebrow">{track.id}</p>
+                <a
+                  class="purpose-text-link"
+                  href={getLocalizedUrl(track.href, locale)}
+                >
+                  {text.viewSupportDetails}
+                </a>
                 <h3 id={`price-track-${track.id}`}>{track.title}</h3>
               </header>
               <ol class="price-list">
@@ -168,7 +192,7 @@ const jsonLd = [
         </div>
         <div class="price-cta__actions">
           {
-            priceTracks.map((track) => (
+            tracks.map((track) => (
               <a
                 class="editorial-link editorial-link--primary"
                 href={track.contactHref}

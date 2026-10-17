@@ -15,14 +15,20 @@ const content = getLocalizedContent(locale);
 const data = content.services;
 const text = getUi(locale);
 const groups = getServiceCatalog(content, locale);
-const localizeHref = (href: string) =>
-  href.startsWith("/") ? getLocalizedUrl(href, locale) : href;
+const pricingByKey = new Map(
+  content.pricing.items.map((item) => [item.key, item]),
+);
+const design = data.services.find((service) => service.id === "design")!;
+const legacyAliases = (href: string, id: string) =>
+  data.services
+    .filter((service) => service.detailUrl === href && service.id !== id)
+    .map((service) => service.id);
 ---
 
 <BaseLayout
   title={data.title}
   description={data.description}
-  bodyClass="purpose-services"
+  bodyClass="purpose-services purpose-selection-catalog"
   locale={locale}
 >
   <section class="purpose-page-hero">
@@ -46,6 +52,7 @@ const localizeHref = (href: string) =>
         }
       </nav>
       <div class="purpose-catalog__groups" id="all">
+        <p class="purpose-catalog__price-note">{content.pricing.heroLead}</p>
         {
           groups.map((group) => (
             <section
@@ -64,12 +71,46 @@ const localizeHref = (href: string) =>
                 {group.items.map((item) => (
                   <a
                     class="purpose-service-row"
+                    id={item.id}
                     href={getLocalizedUrl(item.href, locale)}
                   >
                     <PurposeIcon name={item.icon} />
                     <div>
+                      {legacyAliases(item.href, item.id).map((id) => (
+                        <span
+                          id={id}
+                          class="purpose-anchor-alias"
+                          aria-hidden="true"
+                        />
+                      ))}
                       <h3>{item.data.title}</h3>
-                      <p>{item.data.indexSummary}</p>
+                      <p class="purpose-service-row__summary">
+                        {item.data.indexSummary}
+                      </p>
+                      <dl class="purpose-service-facts">
+                        <div>
+                          <dt>{text.serviceFor}</dt>
+                          <dd>{item.data.challenges[0].title}</dd>
+                        </div>
+                        <div>
+                          <dt>{text.serviceDeliverables}</dt>
+                          <dd>{item.data.indexTopics.join(" / ")}</dd>
+                        </div>
+                        <div>
+                          <dt>{text.pricing}</dt>
+                          <dd class="purpose-service-facts__prices">
+                            {item.pricingKeys.map((key) => {
+                              const price = pricingByKey.get(key)!;
+                              return (
+                                <span>
+                                  <span>{price.label}</span>
+                                  <strong>{price.price}</strong>
+                                </span>
+                              );
+                            })}
+                          </dd>
+                        </div>
+                      </dl>
                     </div>
                     <PurposeIcon name="chevron" />
                   </a>
@@ -81,64 +122,33 @@ const localizeHref = (href: string) =>
       </div>
     </div>
   </section>
-  <PurposeCallout locale={locale} />
   <section
-    class="page-section purpose-detailed-scope"
-    aria-labelledby="service-domains-title"
+    class="page-section purpose-design-supplement"
+    id="design"
+    aria-labelledby="design-title"
   >
     <div class="container">
-      <header class="editorial-header">
-        <h2 id="service-domains-title">{text.serviceDomainsTitle}</h2>
-      </header>
-      <div class="service-list">
-        {
-          data.services.map((service, index) => (
-            <article class="service-row" id={service.id}>
-              <header class="service-row__header">
-                <>
-                  <p class="editorial-index">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3>{service.title}</h3>
-                </>
-              </header>
-              <div class="service-row__body">
-                <p class="service-row__description">{service.body}</p>
-                <ul class="service-points">
-                  {service.examples.map((example) => (
-                    <li>{example}</li>
-                  ))}
-                </ul>
-                {service.id === "design" && (
-                  <>
-                    <p class="service-row__description">
-                      {data.designContextNote}
-                    </p>
-                    <a
-                      class="service-row__detail"
-                      href={
-                        site.acecoreUrl +
-                        getLocalizedUrl("/services/", locale) +
-                        "#design"
-                      }
-                    >
-                      {data.designContextLinkLabel}
-                    </a>
-                  </>
-                )}
-                {service.detailUrl && (
-                  <a
-                    class="service-row__detail"
-                    href={localizeHref(service.detailUrl)}
-                  >
-                    {text.viewSupportDetails}
-                  </a>
-                )}
-              </div>
-            </article>
-          ))
-        }
-      </div>
+      <details class="purpose-disclosure">
+        <summary
+          ><h2 id="design-title">{design.title}</h2><PurposeIcon
+            name="chevron"
+          /></summary
+        >
+        <div class="purpose-disclosure__body">
+          <p>{design.body}</p>
+          <ul class="service-points">
+            {design.examples.map((example) => <li>{example}</li>)}
+          </ul>
+          <p>{data.designContextNote}</p>
+          <a
+            class="purpose-text-link"
+            href={site.acecoreUrl +
+              getLocalizedUrl("/services/", locale) +
+              "#design"}
+            >{data.designContextLinkLabel}<PurposeIcon name="arrow" /></a
+          >
+        </div>
+      </details>
     </div>
   </section>
   <section
@@ -151,7 +161,7 @@ const localizeHref = (href: string) =>
           {text.processLead}
         </p>
       </header>
-      <ol class="service-process">
+      <ol class="selection-process selection-process--four">
         {
           data.process.map((step, index) => (
             <li class="service-process__step">
@@ -172,6 +182,7 @@ const localizeHref = (href: string) =>
       </ol>
     </div>
   </section>
+  <PurposeCallout locale={locale} />
 </BaseLayout>
 <script>
   const catalog = document.querySelector<HTMLElement>(".purpose-catalog");

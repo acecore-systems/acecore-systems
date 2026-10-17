@@ -3,15 +3,27 @@ import { getAvailableRouteLocales } from "./insight-links.mjs";
 import type { Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
 import type { PurposeIconName } from "../components/PurposeIcon.astro";
+import { serviceSummaryKeys } from "./service-presentation";
 
 export function getServiceCatalog(content: LocalizedContent, locale: Locale) {
   const text = getUi(locale);
   const details = content.serviceDetails;
   const item = (
     id: string,
-    data: { title: string; indexSummary: string },
+    data: {
+      title: string;
+      indexSummary: string;
+      indexTopics: string[];
+      challenges: { title: string; body: string }[];
+    },
     icon: PurposeIconName,
-  ) => ({ id, data, icon, href: `/services/${id}/` });
+  ) => ({
+    id,
+    data,
+    icon,
+    href: `/services/${id}/`,
+    pricingKeys: serviceSummaryKeys[id] ?? [],
+  });
   return [
     {
       id: "web",

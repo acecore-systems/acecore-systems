@@ -291,7 +291,14 @@ const formText = getContactFormText(locale);
           category?.selectedOptions[0]?.textContent?.trim() ||
           "";
         if (selectedLabel) {
-          subject.value = `${selectedLabel} — ${form.dataset.consultationSuffix || ""}`;
+          const suffix = form.dataset.consultationSuffix || "";
+          const language = form.querySelector<HTMLInputElement>(
+            'input[name="locale"]',
+          )?.value;
+          subject.value =
+            language === "ja"
+              ? `${selectedLabel.replace(/について$/u, "")}${suffix}`
+              : [selectedLabel, suffix].filter(Boolean).join(" — ");
         }
       }
 

@@ -1,6 +1,14 @@
 import type { Locale } from "./config";
 
 type UiText = {
+  serviceFor: string;
+  serviceDeliverables: string;
+  serviceTerms: string;
+  serviceFaqTitle: string;
+  serviceFaqPricing: string;
+  serviceFaqScope: string;
+  serviceFaqProcess: string;
+
   purposeViewServices: string;
   purposeAll: string;
   purposeWeb: string;
@@ -114,6 +122,14 @@ type UiText = {
 
 export const ui: Record<Locale, UiText> = {
   ja: {
+    serviceFor: "こんなときに",
+    serviceDeliverables: "主な対応",
+    serviceTerms: "条件・対応範囲",
+    serviceFaqTitle: "よくある質問",
+    serviceFaqPricing: "費用と見積りはどのように決まりますか？",
+    serviceFaqScope: "どこまで対応を頼めますか？",
+    serviceFaqProcess: "どのような手順で進みますか？",
+
     purposeViewServices: "サービスを見る",
     purposeAll: "すべて",
     purposeWeb: "Webを整える",
@@ -238,6 +254,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "トップへ戻る",
   },
   en: {
+    serviceFor: "When to choose this",
+    serviceDeliverables: "What we help with",
+    serviceTerms: "Terms and scope",
+    serviceFaqTitle: "Frequently asked questions",
+    serviceFaqPricing: "How are fees and estimates determined?",
+    serviceFaqScope: "What support is included?",
+    serviceFaqProcess: "How does the work proceed?",
+
     purposeViewServices: "View services",
     purposeAll: "All services",
     purposeWeb: "Improve your website",
@@ -367,6 +391,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Return home",
   },
   "zh-cn": {
+    serviceFor: "适合这些情况",
+    serviceDeliverables: "主要支持内容",
+    serviceTerms: "条件与支持范围",
+    serviceFaqTitle: "常见问题",
+    serviceFaqPricing: "费用和报价如何确定？",
+    serviceFaqScope: "可以提供哪些支持？",
+    serviceFaqProcess: "具体如何推进？",
+
     purposeViewServices: "查看服务",
     purposeAll: "全部",
     purposeWeb: "完善网站",
@@ -485,6 +517,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "返回首页",
   },
   es: {
+    serviceFor: "Cuándo elegirlo",
+    serviceDeliverables: "En qué ayudamos",
+    serviceTerms: "Condiciones y alcance",
+    serviceFaqTitle: "Preguntas frecuentes",
+    serviceFaqPricing: "¿Cómo se calculan los precios y presupuestos?",
+    serviceFaqScope: "¿Qué asistencia está incluida?",
+    serviceFaqProcess: "¿Cómo se desarrolla el trabajo?",
+
     purposeViewServices: "Ver servicios",
     purposeAll: "Todos",
     purposeWeb: "Mejorar la web",
@@ -615,6 +655,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Volver al inicio",
   },
   pt: {
+    serviceFor: "Quando escolher",
+    serviceDeliverables: "Como ajudamos",
+    serviceTerms: "Condições e escopo",
+    serviceFaqTitle: "Perguntas frequentes",
+    serviceFaqPricing: "Como são definidos os preços e orçamentos?",
+    serviceFaqScope: "Qual suporte está incluído?",
+    serviceFaqProcess: "Como o trabalho é conduzido?",
+
     purposeViewServices: "Ver serviços",
     purposeAll: "Todos",
     purposeWeb: "Melhorar o site",
@@ -745,6 +793,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Voltar ao início",
   },
   fr: {
+    serviceFor: "Quand choisir ce service",
+    serviceDeliverables: "Notre accompagnement",
+    serviceTerms: "Conditions et périmètre",
+    serviceFaqTitle: "Questions fréquentes",
+    serviceFaqPricing: "Comment les tarifs et devis sont-ils établis ?",
+    serviceFaqScope: "Quel accompagnement est inclus ?",
+    serviceFaqProcess: "Comment se déroule le travail ?",
+
     purposeViewServices: "Voir les services",
     purposeAll: "Tous",
     purposeWeb: "Améliorer votre site",
@@ -874,6 +930,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Retour à l’accueil",
   },
   ko: {
+    serviceFor: "이럴 때 선택하세요",
+    serviceDeliverables: "주요 지원 내용",
+    serviceTerms: "조건 및 지원 범위",
+    serviceFaqTitle: "자주 묻는 질문",
+    serviceFaqPricing: "비용과 견적은 어떻게 정해지나요?",
+    serviceFaqScope: "어디까지 지원받을 수 있나요?",
+    serviceFaqProcess: "어떤 절차로 진행되나요?",
+
     purposeViewServices: "서비스 보기",
     purposeAll: "전체",
     purposeWeb: "웹사이트 정비",
@@ -996,6 +1060,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "홈으로 돌아가기",
   },
   de: {
+    serviceFor: "Wann dieser Service passt",
+    serviceDeliverables: "Unsere Unterstützung",
+    serviceTerms: "Bedingungen und Umfang",
+    serviceFaqTitle: "Häufige Fragen",
+    serviceFaqPricing: "Wie werden Preise und Angebote ermittelt?",
+    serviceFaqScope: "Welche Unterstützung ist enthalten?",
+    serviceFaqProcess: "Wie läuft die Zusammenarbeit ab?",
+
     purposeViewServices: "Leistungen ansehen",
     purposeAll: "Alle",
     purposeWeb: "Website verbessern",
@@ -1125,6 +1197,14 @@ export const ui: Record<Locale, UiText> = {
     returnHome: "Zur Startseite",
   },
   ru: {
+    serviceFor: "Когда выбрать услугу",
+    serviceDeliverables: "С чем мы помогаем",
+    serviceTerms: "Условия и объём работ",
+    serviceFaqTitle: "Частые вопросы",
+    serviceFaqPricing: "Как определяются стоимость и смета?",
+    serviceFaqScope: "Какая поддержка включена?",
+    serviceFaqProcess: "Как проходит работа?",
+
     purposeViewServices: "Посмотреть услуги",
     purposeAll: "Все",
     purposeWeb: "Улучшить сайт",
