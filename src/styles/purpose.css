@@ -796,15 +796,19 @@ body {
     display: block;
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1279px) {
   .desktop-nav {
     display: none;
   }
   .mobile-menu {
     display: block;
   }
-  .header-inner {
-    grid-template-columns: minmax(0, 1fr) auto auto auto;
+  .header-inner,
+  html:not([lang="ja"]) .header-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .mobile-menu {
+    justify-self: end;
   }
 }
 @media (max-width: 1000px) {
@@ -1077,7 +1081,7 @@ body {
 @media (max-width: 380px) {
   .header-inner,
   html:not([lang="ja"]) .header-inner {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
   .header-inner > .language-switcher {
     display: none;

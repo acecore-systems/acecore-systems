@@ -24,16 +24,17 @@ STORESの初期/継続費用と準備・設定・引き継ぎ、LIG/GIGの大き
 
 ## 比較証拠
 
-- [最新home](docs/design/expanded-benchmark/final-home-desktop.jpg) — 最終アンカー配置補正後。
+- [最新home](docs/design/expanded-benchmark/final-home-desktop.jpg) — 最終アンカー配置・ヘッダー境界補正後。
 - [実績: 旧本番と改修後](docs/design/expanded-benchmark/compare-works.jpg)
 - [導入ガイド: 旧本番と改修後](docs/design/expanded-benchmark/compare-guide.jpg)
 - [料金: 旧本番と改修後](docs/design/expanded-benchmark/compare-pricing.jpg)
 - [問い合わせ: 旧本番と改修後](docs/design/expanded-benchmark/compare-contact.jpg)
 - [全7詳細のmobile](docs/design/expanded-benchmark/new-seven-mobile-board.jpg) — 工程末尾のcaption本文復元前。復元後の同内容は親が静的HTMLで追加監査済み。
 - [mobile料金](docs/design/expanded-benchmark/final-pricing-mobile.jpg) / [mobile問い合わせ](docs/design/expanded-benchmark/final-contact-mobile.jpg)
+- [1260/1440pxヘッダー境界](docs/design/expanded-benchmark/final-header-boundaries.jpg)
 - [レスポンシブ計測](docs/design/expanded-benchmark/responsive-measurements.json)
 
-比較元は旧本番 `033c6420ee41dc02eeab2c30924f06265b1cd032`。最終home画像は1280px通常幅、その他desktop比較は主に1440px、mobileは390px。追加320pxでworks/guide/pricing/contactの横はみ出しなし。390pxで全7詳細と主要ページの画像破損・横はみ出しなし。1440pxでhome/services/contactとdesktop/mobileナビ切替を確認。全スクロール位置・全実機の検査ではない。
+比較元は旧本番 `033c6420ee41dc02eeab2c30924f06265b1cd032`。最終home画像は1440px、その他desktop比較も主に1440px、mobileは390px。追加320pxでworks/guide/pricing/contactの横はみ出しなし。390pxで全7詳細と主要ページの画像破損・横はみ出しなし。1440pxでhome/services/contactとdesktop/mobileナビ切替を確認。全スクロール位置・全実機の検査ではない。
 
 ## 独立した情報保全監査
 
@@ -49,6 +50,8 @@ STORESの初期/継続費用と準備・設定・引き継ぎ、LIG/GIGの大き
 
 worksフィルター7件→目的2件→ブラウザで戻る7件、課題/提案開閉、guide7チェックとFAQ、料金33項目/8群、mobileメニューと検索dialogの開閉を確認。旧 `#website-terms-title`、development `#web-app`、services `#design` が対応先へ届き、必要なdetailsを開く。
 
+共通ヘッダーの1201〜1279pxでmenuが残幅へ伸びる不整合を修正。旧globalと同じ1279pxで2列へ切り替え、非表示の言語/CTA用列を残さずmenuを右へ揃える。日本語/他言語に同じ境界を適用する。親が1260pxでmenu幅88px/右端/ナビ非表示、1440pxでナビ表示/menu非表示、双方横はみ出しなしを静的previewで再確認した。
+
 問い合わせはqueryなしで件名空欄→実サービス選択で補完→手入力後に別種別を選んでも手入力を保持。サービス/実績/料金からの `category/service/from/entry` は維持。問い合わせ送信は行っていない。
 
 ## 自動検証
@@ -58,7 +61,7 @@ worksフィルター7件→目的2件→ブラウザで戻る7件、課題/提�
 - 最終実build/postbuild: 506ページ、検索/AI境界、Pagefind、376 vectors/56 pages、Cast使用1/登録11、SEO・全9言語の内部リンク/fragmentを通過。
 - SEO validatorを強化し、旧9分類全例/旧7相談例、全7実績事実/リンク、ガイド全準備項目/FAQ、7工程caption、website別契約、IT顧問注記、旧fragmentの一意性を検証。
 - 既存翻訳PR経路33testsを通過。日本語UI sourceHashを更新し、新UIラベルは全9言語に用意。有料翻訳Batchは投入していない。
-- 最終format/checkとPRのCI結果はcommit後の共有記録へ追記する。
+- 最終format/checkとdiff空白検査を通過。commit後のGitHub CI/共有previewはPRのチェック結果と照合する。
 
 ## 限界・公開手順
 
