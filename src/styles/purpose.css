@@ -30,10 +30,16 @@ body {
   width: 30px;
   height: 30px;
 }
+.brand-name,
+.footer-brand__identity strong {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
 .brand-name {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: 1.5rem;
-  font-weight: 600;
 }
 .parent-brand-link {
   margin: 0 0 0 39px;
@@ -772,7 +778,6 @@ body {
   gap: 32px 64px;
 }
 .footer-brand__identity strong {
-  font-family: Georgia, "Times New Roman", serif;
   font-size: 1.5rem;
 }
 .footer-brand p {
