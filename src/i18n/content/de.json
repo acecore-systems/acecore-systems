@@ -1719,6 +1719,8 @@
   },
   "site": {
     "description": "Acecore Systems ist ein Service von Acecore für IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Geschäftssysteme und Webanwendungen sowie Design und Kreativleistungen – von der Anforderungsklärung bis zur Betriebsverbesserung.",
+    "footerImageDisclosure": "Für illustrative Bilder mit Personen werden AI-generierte Materialien verwendet.",
+    "footerImageCreditLabel": "Über die Bildmaterialien",
     "nav": [
       {
         "label": "Support-Richtlinie"

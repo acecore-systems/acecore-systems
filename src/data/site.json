@@ -1,6 +1,8 @@
 {
   "name": "Acecore Systems",
   "description": "Acecore Systemsは、IT顧問、AI導入・業務改善、デプロイ、業務システム・Webアプリ開発、デザイン・クリエイティブ制作を、要件整理から運用改善まで支援するAcecoreのサービスです。",
+  "footerImageDisclosure": "人物を含むイメージ画像にはAI生成素材を使用しています。",
+  "footerImageCreditLabel": "画像素材について",
   "siteUrl": "https://systems.acecore.net",
   "acecoreUrl": "https://acecore.net",
   "contactFormAction": "https://acecore.net/api/contact",

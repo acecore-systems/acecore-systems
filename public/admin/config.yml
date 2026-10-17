@@ -28,6 +28,12 @@ collections:
         fields:
           - { name: name, label: サイト名, widget: string }
           - { name: description, label: サイト説明, widget: text }
+          - { name: footerImageDisclosure, label: AI画像の説明, widget: text }
+          - {
+              name: footerImageCreditLabel,
+              label: 画像素材リンクの文言,
+              widget: string,
+            }
           - { name: siteUrl, label: サイトURL, widget: string }
           - { name: acecoreUrl, label: Acecore URL, widget: string }
           - { name: contactFormAction, label: フォーム送信先, widget: string }

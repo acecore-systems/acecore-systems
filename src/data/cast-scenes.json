@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "scenes-v1.1.0",
+  "site": "systems",
+  "siteOrigin": "https://systems.acecore.net",
+  "catalogUrl": "https://cast.acecore.net/",
+  "manifest": {
+    "url": "https://cast.acecore.net/releases/scenes-v1.1.0/consumer-manifest.json",
+    "sha256": "7f985a4b96ee848d1022579309672e225d084087d6cd452b26aadcf2806886f9",
+    "snapshot": "vendor/cast/scenes-v1.1.0/consumer-manifest.json"
+  },
+  "assets": [
+    {
+      "id": "systems--guide-discovery-workshop",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--guide-discovery-workshop--2c3293fafaae6daecf4c6ac6ff55e8fcd5e44cbb17293d6fbbc90e881b430003.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--guide-discovery-workshop--2c3293fafaae6daecf4c6ac6ff55e8fcd5e44cbb17293d6fbbc90e881b430003.webp",
+      "sha256": "2c3293fafaae6daecf4c6ac6ff55e8fcd5e44cbb17293d6fbbc90e881b430003",
+      "bytes": 167656,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-development-overview-v2",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-development-overview-v2--254d64cc4f808aef9a8f8cee14564e9c4e9ccb44624dbd694b222088322319e1.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-development-overview-v2--254d64cc4f808aef9a8f8cee14564e9c4e9ccb44624dbd694b222088322319e1.webp",
+      "sha256": "254d64cc4f808aef9a8f8cee14564e9c4e9ccb44624dbd694b222088322319e1",
+      "bytes": 183266,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-development-release",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-development-release--6a3a64dbb574d2ebce422de8ac709d491794418c174336cd035fcef6af7188c5.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-development-release--6a3a64dbb574d2ebce422de8ac709d491794418c174336cd035fcef6af7188c5.webp",
+      "sha256": "6a3a64dbb574d2ebce422de8ac709d491794418c174336cd035fcef6af7188c5",
+      "bytes": 173844,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-it-advisor-operations",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-it-advisor-operations--dcea0fdf969e76aa4fbc621148eb6f8db41f74386c2d0654bc1a4309bd090152.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-it-advisor-operations--dcea0fdf969e76aa4fbc621148eb6f8db41f74386c2d0654bc1a4309bd090152.webp",
+      "sha256": "dcea0fdf969e76aa4fbc621148eb6f8db41f74386c2d0654bc1a4309bd090152",
+      "bytes": 196416,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-it-advisor-overview-v2",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-it-advisor-overview-v2--81cfad4a13ab2f81440e8362190a34d550c47bb2fd175b8acf2399e18a35ac36.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-it-advisor-overview-v2--81cfad4a13ab2f81440e8362190a34d550c47bb2fd175b8acf2399e18a35ac36.webp",
+      "sha256": "81cfad4a13ab2f81440e8362190a34d550c47bb2fd175b8acf2399e18a35ac36",
+      "bytes": 155378,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-operations-overview",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-operations-overview--73d6c222f68c848b32d2f73eba71c453c4196e8ed1e5172f952d8bf7a42c5217.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-operations-overview--73d6c222f68c848b32d2f73eba71c453c4196e8ed1e5172f952d8bf7a42c5217.webp",
+      "sha256": "73d6c222f68c848b32d2f73eba71c453c4196e8ed1e5172f952d8bf7a42c5217",
+      "bytes": 162140,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-operations-review",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-operations-review--7d86d0d0e625ca79be075c1f7f15a5fc5cb62b5cc1780824ac36e34088cf018c.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-operations-review--7d86d0d0e625ca79be075c1f7f15a5fc5cb62b5cc1780824ac36e34088cf018c.webp",
+      "sha256": "7d86d0d0e625ca79be075c1f7f15a5fc5cb62b5cc1780824ac36e34088cf018c",
+      "bytes": 157428,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-site-functions-overview",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-site-functions-overview--094faf665eca4706f43557b9ff9de47d3eb11c40dc4caf39b6032c647c948f2a.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-site-functions-overview--094faf665eca4706f43557b9ff9de47d3eb11c40dc4caf39b6032c647c948f2a.webp",
+      "sha256": "094faf665eca4706f43557b9ff9de47d3eb11c40dc4caf39b6032c647c948f2a",
+      "bytes": 137566,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-site-functions-publish",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-site-functions-publish--126f6225a62f7ae344a10369cf1b6d1a6036247f04e5532aea1e8bd63da84943.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-site-functions-publish--126f6225a62f7ae344a10369cf1b6d1a6036247f04e5532aea1e8bd63da84943.webp",
+      "sha256": "126f6225a62f7ae344a10369cf1b6d1a6036247f04e5532aea1e8bd63da84943",
+      "bytes": 192826,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-site-quality-overview",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-site-quality-overview--1cc87003c9511235d4280b1e3179352a921c75f1a2bd100b60e4b942d1a3a1f1.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-site-quality-overview--1cc87003c9511235d4280b1e3179352a921c75f1a2bd100b60e4b942d1a3a1f1.webp",
+      "sha256": "1cc87003c9511235d4280b1e3179352a921c75f1a2bd100b60e4b942d1a3a1f1",
+      "bytes": 154620,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    },
+    {
+      "id": "systems--service-site-quality-verification",
+      "localPath": "/images/cast/scenes-v1.1.0/systems--service-site-quality-verification--ad942617836dbc1716fc8ddc2a13910cf12b92843b880ace92b4430f163c2ee3.webp",
+      "sourceUrl": "https://cast.acecore.net/releases/scenes-v1.1.0/assets/systems--service-site-quality-verification--ad942617836dbc1716fc8ddc2a13910cf12b92843b880ace92b4430f163c2ee3.webp",
+      "sha256": "ad942617836dbc1716fc8ddc2a13910cf12b92843b880ace92b4430f163c2ee3",
+      "bytes": 174072,
+      "width": 1536,
+      "height": 1024,
+      "mimeType": "image/webp"
+    }
+  ]
+}
