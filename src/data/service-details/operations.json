@@ -5,7 +5,7 @@
   "heroTitle": "公開後に迷わない、\n運用の境界をつくる。",
   "heroLead": "何を監視するか、誰が判断するか、どこから追加開発になるかを最初に整理し、日常の変更と障害時の対応を続けられる形にします。",
   "visual": {
-    "src": "/images/cast/scenes-v1.0.0/systems--service-operations-overview--769aeb2e0741575f25556c99e74c2af4caf5f0c5c66c25524c0f3a63e81f27f2.webp",
+    "src": "/images/cast/scenes-v1.1.0/systems--service-operations-overview--73d6c222f68c848b32d2f73eba71c453c4196e8ed1e5172f952d8bf7a42c5217.webp",
     "alt": "担当者とエンジニアが稼働状況と変更依頼を確認する様子",
     "caption": "日々の変更と障害時の対応を、担当者が迷わず進められる形に整えます。"
   },
@@ -16,7 +16,7 @@
       "caption": "監視、バックアップ、変更受付、障害記録の対象と責任範囲を明確にします。"
     },
     "process": {
-      "src": "/images/cast/scenes-v1.0.0/systems--service-operations-review--e04c63c4e81f90780642902b35bbf50c98a4beff7e56a78ba94315c3ee921875.webp",
+      "src": "/images/cast/scenes-v1.1.0/systems--service-operations-review--7d86d0d0e625ca79be075c1f7f15a5fc5cb62b5cc1780824ac36e34088cf018c.webp",
       "alt": "担当者とエンジニアが運用履歴と改善候補を確認する様子",
       "caption": "運用履歴を振り返り、保守で扱う内容と追加開発に分けて優先順位を更新します。"
     }
