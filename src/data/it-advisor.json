@@ -5,7 +5,7 @@
   "heroTitle": "AIで作って、\n止まっていませんか。",
   "heroLead": "自社やAIで作ったコード・試作の確認から、本番公開、社内定着、運用改善まで。専任のIT担当者を置くほどではない企業に、必要なときに相談できるエンジニアが伴走します。",
   "visual": {
-    "src": "/images/cast/scenes-v1.1.0/systems--service-it-advisor-overview-v2--81cfad4a13ab2f81440e8362190a34d550c47bb2fd175b8acf2399e18a35ac36.webp",
+    "src": "/images/cast/scenes-v1.2.0/systems--service-it-advisor-overview-v2--81cfad4a13ab2f81440e8362190a34d550c47bb2fd175b8acf2399e18a35ac36.webp",
     "alt": "事業担当者とIT顧問が既存アプリとクラウドの公開状況を確認する様子",
     "caption": "できているものを出発点に、構成・安全性・公開条件を確認し、運用できる状態へつなぎます。"
   },
@@ -16,7 +16,7 @@
       "caption": "既存アプリの構成、公開設定、権限、残るリスクを整理し、本番化に進める状態か確認します。"
     },
     "process": {
-      "src": "/images/cast/scenes-v1.1.0/systems--service-it-advisor-operations--dcea0fdf969e76aa4fbc621148eb6f8db41f74386c2d0654bc1a4309bd090152.webp",
+      "src": "/images/cast/scenes-v1.2.0/systems--service-it-advisor-operations--b5e156f7a8fc4814f4d633547e4d7c08a532a050223d97c8b8c734f74a9ad06f.webp",
       "alt": "公開済みのアプリの稼働状況を事業担当者とIT顧問が確認する様子",
       "caption": "公開して終わりではなく、監視・権限・更新方法を引き継ぎ、継続的に判断できる状態へ整えます。"
     }

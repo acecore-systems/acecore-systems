@@ -5,7 +5,7 @@
   "heroTitle": "本業に集中できる、\nホームページを。",
   "heroLead": "お店や事業の魅力を伝えるホームページを、文章の整理から公開後の更新までお手伝いします。小規模事業者・店舗・教室など、業種を問わずご相談いただけます。",
   "visual": {
-    "src": "/images/cast/scenes-v1.1.0/systems--service-site-functions-overview--094faf665eca4706f43557b9ff9de47d3eb11c40dc4caf39b6032c647c948f2a.webp",
+    "src": "/images/cast/scenes-v1.2.0/systems--service-site-functions-overview--543dfab182501ade82d725823a433113d28445df7ea7c659a92ba58619c5407b.webp",
     "alt": "編集画面とホームページを確認する担当者の制作イメージ",
     "caption": "伝えたい内容を整理し、見やすいページと続けやすい更新方法を整えます。"
   },
@@ -16,7 +16,7 @@
       "caption": "事業紹介、サービス・料金、アクセス、お問い合わせ。必要な情報と導線をひとつにまとめます。"
     },
     "process": {
-      "src": "/images/cast/scenes-v1.1.0/systems--service-site-functions-publish--126f6225a62f7ae344a10369cf1b6d1a6036247f04e5532aea1e8bd63da84943.webp",
+      "src": "/images/cast/scenes-v1.2.0/systems--service-site-functions-publish--e67a58b65de32a4d23be71ac9177f6b02ad732b9cd6ddd8d2d4b0486163534a5.webp",
       "alt": "担当者とエンジニアがパソコンとスマートフォンで表示を確認する制作イメージ",
       "caption": "内容と表示を一緒に確認し、公開後に更新する方法までお伝えします。"
     }
