@@ -5,7 +5,7 @@
   "heroTitle": "いまのサイトを活かしながら、\n必要な機能だけを足す。",
   "heroLead": "全面リニューアルを前提にせず、更新、検索、問い合わせ、発信の詰まりを見つけ、既存構成に合う方法で機能を追加します。",
   "visual": {
-    "src": "/images/cast/scenes-v1.1.0/systems--service-site-functions-overview--094faf665eca4706f43557b9ff9de47d3eb11c40dc4caf39b6032c647c948f2a.webp",
+    "src": "/images/cast/scenes-v1.2.0/systems--service-site-functions-overview--543dfab182501ade82d725823a433113d28445df7ea7c659a92ba58619c5407b.webp",
     "alt": "担当者がCMSの編集画面と更新後のWebサイトを確認している様子",
     "caption": "既存サイトを活かし、更新する人が扱える編集画面と公開フローを整えます。"
   },
@@ -16,7 +16,7 @@
       "caption": "必要な機能を選び、現在の構成と日々の運用に合う形で組み合わせます。"
     },
     "process": {
-      "src": "/images/cast/scenes-v1.1.0/systems--service-site-functions-publish--126f6225a62f7ae344a10369cf1b6d1a6036247f04e5532aea1e8bd63da84943.webp",
+      "src": "/images/cast/scenes-v1.2.0/systems--service-site-functions-publish--e67a58b65de32a4d23be71ac9177f6b02ad732b9cd6ddd8d2d4b0486163534a5.webp",
       "alt": "担当者とエンジニアがパソコンとスマートフォンで追加機能を確認する様子",
       "caption": "確認できる単位で追加し、公開前後のチェック方法まで共有します。"
     }
