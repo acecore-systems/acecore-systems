@@ -1,7 +1,7 @@
 {
   "pendingContent": {
     "/serviceDetails/website": {
-      "sourceHash": "4241f1876ea204368851bced6c08c2e3e012b5c7653dc67bc614c5458f3e34e7",
+      "sourceHash": "0efa3c461a5665b8da4a4c19b015ee60d5b324ae35fe93381c365e2c5adc12af",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/services/entryPoints/2": {
@@ -45,6 +45,6 @@
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     }
   },
-  "sourceHash": "927703d7965fdb45795c5abd1b8002aad8989a164c8804f751f0f4eac10e9ce4",
+  "sourceHash": "80411af38b103337230556170cb4453ca3477bb9528c69de51a2af5061398f43",
   "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }

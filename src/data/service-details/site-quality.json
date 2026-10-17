@@ -5,7 +5,7 @@
   "heroTitle": "速さ、伝わりやすさ、安全性を、\n別々にしない。",
   "heroLead": "検索エンジン、利用者、運用担当者のどれか一つだけに偏らず、現在の構成と計測結果を確認して改善の優先順位を決めます。",
   "visual": {
-    "src": "/images/cast/scenes-v1.0.0/systems--service-site-quality-overview--65bc068417ce7423b0b58f416c5659fd6c535a2536143cc89add9b36ef524bd5.webp",
+    "src": "/images/cast/scenes-v1.1.0/systems--service-site-quality-overview--1cc87003c9511235d4280b1e3179352a921c75f1a2bd100b60e4b942d1a3a1f1.webp",
     "alt": "担当者とエンジニアが同じWebサイトをパソコンとスマートフォンで点検する様子",
     "caption": "利用者の画面と計測結果を一緒に見て、改善の優先順位を決めます。"
   },
@@ -16,7 +16,7 @@
       "caption": "SEO、速度、アクセシビリティ、安全性を横断して影響範囲を確認します。"
     },
     "process": {
-      "src": "/images/cast/scenes-v1.0.0/systems--service-site-quality-verification--4e0cbb2150ab29521dd1a26eac9742364d262e6cdcae9a538aaee510dcae7786.webp",
+      "src": "/images/cast/scenes-v1.1.0/systems--service-site-quality-verification--ad942617836dbc1716fc8ddc2a13910cf12b92843b880ace92b4430f163c2ee3.webp",
       "alt": "担当者とエンジニアが修正後のWebサイトをパソコンとスマートフォンで再確認する様子",
       "caption": "修正後の表示と操作を複数の端末で確かめ、次の改善につなげます。"
     }
