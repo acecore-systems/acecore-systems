@@ -1,22 +1,24 @@
 ---
-title: "Cloudflare Pages の静的配信と Functions のセキュリティヘッダー"
-description: "Cloudflare Pages の静的配信と Functions の応答を区別し、_headers、CSP、現行構成の確認方法を整理します。"
+title: "Cloudflare Pagesのセキュリティヘッダー設定：_headersとFunctionsの違い"
+description: "Cloudflare
+  Pagesでセキュリティヘッダーが反映されないときの切り分け方を解説。静的アセットの_headersとFunctionsのResponseの違い、現行設定\
+  の確認先、公開後の確認項目を整理します。"
 date: 2026-03-15T00:00
 author: gui
 tags: ["技術", "Cloudflare", "セキュリティ"]
 image: "/images/insights/covers/cloudflare-pages-security-cover-v2.webp"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-20T09:59:18Z"
 ---
 
-Cloudflare PagesでCSPやキャッシュ設定が効かないときは、対象URLが静的アセットかFunctions応答かを最初に確かめます。[Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/)に合わせて設定場所を選び、成功応答だけでなくエラー応答のヘッダーも確認すれば、API追加後の設定漏れを見つけやすくなります。
+Cloudflare PagesでCSPやキャッシュの設定が反映されない場合、まず確認するのは、応答が静的アセットかPages Functionsかです。この記事では、`_headers`とFunctionの`Response`の適用範囲、現行設定の確認先、公開後に確認する項目を整理します。成功応答だけでなくエラー応答のヘッダーも確認すると、API追加後の設定漏れを見つけやすくなります。
 
-この記事は、2026年3月にお問い合わせを外部フォームへ移して Cloudflare Pages の静的配信へ戻した経緯を記録しています。その後、サイト構成は変わりました。**2026年9月時点の Acecore 公式サイトは、静的ページに加えて Pages Functions を使用**し、お問い合わせ、コメント、検索、AI案内、CMS の API を同じサイトで扱います。以下は当時の選定理由と、現在も使えるヘッダー設計の境界を整理したものです。
+この記事は、2026年3月にお問い合わせを外部フォームへ移し、Cloudflare Pagesの静的配信へ戻した経緯を記録しています。その後、サイト構成は変わりました。**2026年9月時点のAcecore公式サイトは、静的ページに加えてPages Functionsを使用**し、お問い合わせ、コメント、検索、AI案内、CMSのAPIを同じサイトで扱います。以下では当時の選定理由と、現在も使えるヘッダー設定の境界を説明します。
 
-## 静的ページと Functions を分けて考える
+## Cloudflare Pagesのヘッダーは静的応答とFunctionsでどう違う？
 
-`public/_headers` は、Pages が配信する**静的アセットの応答**に適用されます。Cloudflare の公式資料は、URL パターンが一致していても Pages Functions が生成した応答には適用されないと明記しています。API 応答に必要な CORS、キャッシュ、セキュリティヘッダーは、Function 側の `Response` に設定します。
+`public/_headers`は、Pagesが配信する**静的アセットの応答**に適用されます。[Cloudflare DocsのHeaders公開ソース](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/pages/configuration/headers.mdx)では、`_headers`のルールが静的アセットの応答に適用されると説明されています。また、[Cloudflare Pages: Headers](https://developers.cloudflare.com/pages/configuration/headers/)では、URLパターンが一致していてもPages Functionsが生成した応答には適用されないとされています。API応答に必要なCORS、キャッシュ、セキュリティヘッダーは、Function側の`Response`に設定します。
 
-このため「`_headers` を一度書けばサイトのすべてのページと API に効く」と考えるのは危険です。静的 HTML と `/api/*` の両方について、実際のレスポンスヘッダーを別々に確認します。
+このため、「`_headers`を一度書けばサイトのすべてのページとAPIに効く」とは限りません。静的HTMLと`/api/*`の両方について、実際のレスポンスヘッダーを別々に確認します。
 
 <figure class="article-diagram" data-layout="boundary" data-tone="teal" data-count="2" aria-labelledby="diagram-cloudflare-pages-security">
   <figcaption>
@@ -37,14 +39,14 @@ Cloudflare PagesでCSPやキャッシュ設定が効かないときは、対象U
   </ol>
 </figure>
 
-## 現在の設定を確認する場所
+## 現行のヘッダー設定はどこで確認する？
 
-[現行の `_headers`](https://github.com/acecore-systems/acecore-net/blob/main/public/_headers)では、HTML は再検証、ハッシュ付き `_astro/` アセットは長期キャッシュに分けています。管理画面には通常ページと別の CSP を指定し、`X-Frame-Options` は `SAMEORIGIN` です。古い記事に載っていた `form-action https://ssgform.com`、HTMLの1時間キャッシュ、`DENY` を、現在の値としてコピーしないでください。
+[現行の`_headers`](https://github.com/acecore-systems/acecore-net/blob/main/public/_headers)では、HTMLは再検証、ハッシュ付き`_astro/`アセットは長期キャッシュに分けています。管理画面には通常ページと別のCSPを指定し、`X-Frame-Options`は`SAMEORIGIN`です。古い記事に載っていた`form-action https://ssgform.com`、HTMLの1時間キャッシュ、`DENY`を、現在の値としてコピーしないでください。
 
-現在の動的経路は[Pages Functions のコード](https://github.com/acecore-systems/acecore-net/tree/main/functions)で確認できます。CSP に許可する外部ドメインも、実際に読み込むスクリプト、画像、フレーム、通信先に合わせて検査します。掲載した設定をそのまま別サイトへ移植しないでください。
+現在の動的経路は[Pages Functionsのコード](https://github.com/acecore-systems/acecore-net/tree/main/functions)で確認できます。CSPに許可する外部ドメインも、実際に読み込むスクリプト、画像、フレーム、通信先に合わせて検査します。掲載した設定をそのまま別サイトへ移植しないでください。
 
-## デプロイと確認
+## デプロイ後に何を確認する？
 
-公式サイトは GitHub に連携した Cloudflare Pages で `main` を公開します。[現在の Node バージョン](https://github.com/acecore-systems/acecore-net/blob/main/.node-version)は `.node-version` に、ビルド手順は `package.json` に置き、CI は `npm run build` で検証します。2026年3月当時の「Node.js 22 / npx astro build」という表は、現行の公開手順ではありません。
+公式サイトはGitHubに連携したCloudflare Pagesで`main`を公開します。[現在のNodeバージョン](https://github.com/acecore-systems/acecore-net/blob/main/.node-version)は`.node-version`に、ビルド手順は`package.json`に置き、CIは`npm run build`で検証します。2026年3月当時の「Node.js 22 / npx astro build」という表は、現行の公開手順ではありません。
 
-公開を確認するときは、PRのプレビュー、mainのビルド、Pagesの本番デプロイ、公開URLのヘッダーと本文を別々に確認します。Cloudflare の[Pagesヘッダー公式資料](https://developers.cloudflare.com/pages/configuration/headers/)も参照してください。
+公開を確認するときは、PRのプレビュー、mainのビルド、Pagesの本番デプロイ、公開URLのヘッダーと本文を別々に確認します。[Cloudflare PagesのHeaders公式資料](https://developers.cloudflare.com/pages/configuration/headers/)では、`_headers`の設定について確認できます。
