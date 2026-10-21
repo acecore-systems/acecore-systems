@@ -21,43 +21,41 @@ const cases = ids.flatMap((id) => works.find((work) => work.id === id) ?? []);
 ---
 
 <div class="purpose-case-grid">
-  {
-    cases.map((work) => (
-      <article class="purpose-case-card">
+  {cases.map((work) => (
+    <article class="purpose-case-card">
+      <a
+        class="purpose-case-card__image"
+        href={getLocalizedUrl("/works/", locale) + "#" + work.id}
+      >
+        <img
+          src={work.image}
+          alt={work.imageAlt}
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <div class="purpose-case-card__body">
+        <p class="purpose-case-card__category">{work.category}</p>
+        <h3>
+          <a href={getLocalizedUrl("/works/", locale) + "#" + work.id}>
+            {work.title}
+          </a>
+        </h3>
+        <p>{work.summary}</p>
+        <dl>
+          <>
+            <dt>{text.result}</dt>
+            <dd>{work.result}</dd>
+          </>
+        </dl>
         <a
-          class="purpose-case-card__image"
+          class="purpose-text-link"
           href={getLocalizedUrl("/works/", locale) + "#" + work.id}
         >
-          <img
-            src={work.image}
-            alt={work.imageAlt}
-            loading="lazy"
-            decoding="async"
-          />
+          {text.caseDetails}
+          <PurposeIcon name="arrow" />
         </a>
-        <div class="purpose-case-card__body">
-          <p class="purpose-case-card__category">{work.category}</p>
-          <h3>
-            <a href={getLocalizedUrl("/works/", locale) + "#" + work.id}>
-              {work.title}
-            </a>
-          </h3>
-          <p>{work.summary}</p>
-          <dl>
-            <>
-              <dt>{text.result}</dt>
-              <dd>{work.result}</dd>
-            </>
-          </dl>
-          <a
-            class="purpose-text-link"
-            href={getLocalizedUrl("/works/", locale) + "#" + work.id}
-          >
-            {text.caseDetails}
-            <PurposeIcon name="arrow" />
-          </a>
-        </div>
-      </article>
-    ))
-  }
+      </div>
+    </article>
+  ))}
 </div>

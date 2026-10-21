@@ -31,47 +31,45 @@ const text = getUi(locale);
 const resolvedTitle = title ?? text.pricingGuideTitle;
 ---
 
-{
-  placement === "hero" ? (
-    <dl
-      class="advisor-price-summary advisor-price-summary--hero"
-      data-advisor-pricing-summary
-      aria-label={resolvedTitle}
-    >
-      {items.map((item) => (
-        <div data-pricing-kind={item.id}>
-          <dt>{item.label}</dt>
-          <dd>{item.price}</dd>
-        </div>
-      ))}
-    </dl>
-  ) : (
-    <aside
-      class="advisor-price-summary advisor-price-summary--closing"
-      data-advisor-pricing-summary
-      aria-label={resolvedTitle}
-    >
-      <header class="advisor-price-summary__header">
-        <p class="editorial-eyebrow">{eyebrow}</p>
-        <h2>{resolvedTitle}</h2>
-      </header>
-      <div class="advisor-price-summary__items">
-        {items.map((item) => (
-          <a
-            class="advisor-price-summary__item"
-            data-pricing-kind={item.id}
-            href={`${getLocalizedUrl("/pricing/", locale)}#${item.pricingKey}`}
-          >
-            <div class="advisor-price-summary__value">
-              <p>{item.label}</p>
-              <strong>{item.price}</strong>
-            </div>
-            <p class="advisor-price-summary__note">{item.note}</p>
-            <span>{text.pricingCheck}</span>
-          </a>
-        ))}
+{placement === "hero" ? (
+  <dl
+    class="advisor-price-summary advisor-price-summary--hero"
+    data-advisor-pricing-summary
+    aria-label={resolvedTitle}
+  >
+    {items.map((item) => (
+      <div data-pricing-kind={item.id}>
+        <dt>{item.label}</dt>
+        <dd>{item.price}</dd>
       </div>
-      <p class="advisor-price-summary__disclaimer">{priceNote}</p>
-    </aside>
-  )
-}
+    ))}
+  </dl>
+) : (
+  <aside
+    class="advisor-price-summary advisor-price-summary--closing"
+    data-advisor-pricing-summary
+    aria-label={resolvedTitle}
+  >
+    <header class="advisor-price-summary__header">
+      <p class="editorial-eyebrow">{eyebrow}</p>
+      <h2>{resolvedTitle}</h2>
+    </header>
+    <div class="advisor-price-summary__items">
+      {items.map((item) => (
+        <a
+          class="advisor-price-summary__item"
+          data-pricing-kind={item.id}
+          href={`${getLocalizedUrl("/pricing/", locale)}#${item.pricingKey}`}
+        >
+          <div class="advisor-price-summary__value">
+            <p>{item.label}</p>
+            <strong>{item.price}</strong>
+          </div>
+          <p class="advisor-price-summary__note">{item.note}</p>
+          <span>{text.pricingCheck}</span>
+        </a>
+      ))}
+    </div>
+    <p class="advisor-price-summary__disclaimer">{priceNote}</p>
+  </aside>
+)}

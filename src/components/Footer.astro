@@ -39,23 +39,28 @@ const footerLinks = content.site.footerLinks.map((item) => ({
       <p>{content.site.description}</p>
       <p class="footer-image-credit" data-cast-scene-credit>
         {content.site.footerImageDisclosure}{" "}
-        <a href="https://cast.acecore.net/"
-          >{content.site.footerImageCreditLabel}</a
-        >
+        <a href="https://cast.acecore.net/">
+          {content.site.footerImageCreditLabel}
+        </a>
       </p>
     </div>
     <nav class="footer-links" aria-label={text.footerNavigation}>
-      {footerLinks.map((item) => <a href={item.href}>{item.label}</a>)}
+      {footerLinks.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
     </nav>
     <div class="footer-meta">
-      <a href={new URL(getLocalizedUrl("/", locale), site.acecoreUrl).href}
-        >{text.operatedBy}</a
-      >
+      <a href={new URL(getLocalizedUrl("/", locale), site.acecoreUrl).href}>
+        {text.operatedBy}
+      </a>
       <a
         href={new URL(getLocalizedUrl("/about/", locale), site.acecoreUrl).href}
-        >{text.companyInfoLabel}</a
       >
-      <span>© {new Date().getFullYear()} {ACECORE_ORGANIZATION.legalName}</span>
+        {text.companyInfoLabel}
+      </a>
+      <span>
+        © {new Date().getFullYear()} {ACECORE_ORGANIZATION.legalName}
+      </span>
     </div>
   </div>
 </footer>

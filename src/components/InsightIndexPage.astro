@@ -90,49 +90,44 @@ const jsonLd = [
       </header>
 
       <ol class="insight-index-list">
-        {
-          insights.map((entry) => {
-            const image = entry.data.uploadedImage ?? entry.data.image;
+        {insights.map((entry) => {
+          const image = entry.data.uploadedImage ?? entry.data.image;
 
-            return (
-              <li>
-                <a
-                  href={getLocalizedInsightHref(
-                    getInsightSlug(entry.id),
-                    locale,
-                  )}
+          return (
+            <li>
+              <a
+                href={getLocalizedInsightHref(getInsightSlug(entry.id), locale)}
+              >
+                <div
+                  class:list={{
+                    "insight-index-list__media": true,
+                    "insight-index-list__media--placeholder": !image,
+                  }}
+                  aria-hidden={!image}
                 >
-                  <div
-                    class:list={{
-                      "insight-index-list__media": true,
-                      "insight-index-list__media--placeholder": !image,
-                    }}
-                    aria-hidden={!image}
+                  {image && (
+                    <img src={image} alt="" loading="lazy" decoding="async" />
+                  )}
+                </div>
+                <div class="insight-index-list__content">
+                  <time
+                    class="insight-index-list__date"
+                    datetime={entry.data.date.toISOString()}
                   >
-                    {image && (
-                      <img src={image} alt="" loading="lazy" decoding="async" />
-                    )}
-                  </div>
-                  <div class="insight-index-list__content">
-                    <time
-                      class="insight-index-list__date"
-                      datetime={entry.data.date.toISOString()}
-                    >
-                      {formatDate(entry.data.date)}
-                    </time>
-                    <h3>{entry.data.title}</h3>
-                    <p>{entry.data.description}</p>
-                    <ul aria-label={text.tags}>
-                      {entry.data.tags?.map((tag) => (
-                        <li>{tag}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </a>
-              </li>
-            );
-          })
-        }
+                    {formatDate(entry.data.date)}
+                  </time>
+                  <h3>{entry.data.title}</h3>
+                  <p>{entry.data.description}</p>
+                  <ul aria-label={text.tags}>
+                    {entry.data.tags?.map((tag) => (
+                      <li>{tag}</li>
+                    ))}
+                  </ul>
+                </div>
+              </a>
+            </li>
+          );
+        })}
       </ol>
     </div>
   </section>

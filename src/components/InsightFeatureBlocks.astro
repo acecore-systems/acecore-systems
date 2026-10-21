@@ -159,163 +159,159 @@ const labels: Record<
 const text = labels[locale];
 ---
 
-{
-  placement === "before" && (
-    <>
-      {callout && (
-        <aside class="insight-callout" data-tone={callout.type}>
-          {callout.title && <h2>{callout.title}</h2>}
-          <p>{callout.text}</p>
-        </aside>
-      )}
+{placement === "before" && (
+  <>
+    {callout && (
+      <aside class="insight-callout" data-tone={callout.type}>
+        {callout.title && <h2>{callout.title}</h2>}
+        <p>{callout.text}</p>
+      </aside>
+    )}
 
-      {insightGrid && (
-        <section
-          class="insight-feature insight-feature--grid"
-          aria-labelledby="insight-grid-title"
-        >
-          {insightGrid.eyebrow && (
-            <p class="insight-feature__eyebrow">{insightGrid.eyebrow}</p>
-          )}
-          <h2 id="insight-grid-title">{insightGrid.title}</h2>
-          {insightGrid.description && <p>{insightGrid.description}</p>}
-          <ul>
-            {insightGrid.items.map((item) => (
-              <li>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-    </>
-  )
-}
+    {insightGrid && (
+      <section
+        class="insight-feature insight-feature--grid"
+        aria-labelledby="insight-grid-title"
+      >
+        {insightGrid.eyebrow && (
+          <p class="insight-feature__eyebrow">{insightGrid.eyebrow}</p>
+        )}
+        <h2 id="insight-grid-title">{insightGrid.title}</h2>
+        {insightGrid.description && <p>{insightGrid.description}</p>}
+        <ul>
+          {insightGrid.items.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </>
+)}
 
-{
-  placement === "after" && (
-    <>
-      {processFigure && (
-        <section
-          class="insight-feature insight-feature--process"
-          aria-labelledby="insight-process-title"
-        >
-          {processFigure.eyebrow && (
-            <p class="insight-feature__eyebrow">{processFigure.eyebrow}</p>
-          )}
-          <h2 id="insight-process-title">{processFigure.title}</h2>
-          {processFigure.description && <p>{processFigure.description}</p>}
-          <ol>
-            {processFigure.steps.map((step, index) => (
-              <li>
-                <span aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
-
-      {compareTable && (
-        <section
-          class="insight-feature insight-feature--compare"
-          aria-labelledby="insight-compare-title"
-        >
-          <h2 id="insight-compare-title">
-            {compareTable.title ?? text.comparison}
-          </h2>
-          <div>
-            {[compareTable.before, compareTable.after].map((column) => (
-              <section>
-                <h3>{column.label}</h3>
-                <ul>
-                  {column.items.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {statBar && (
-        <section
-          class="insight-feature insight-feature--stats"
-          aria-label={text.keyPoints}
-        >
-          <dl>
-            {statBar.items.map((item) => (
+{placement === "after" && (
+  <>
+    {processFigure && (
+      <section
+        class="insight-feature insight-feature--process"
+        aria-labelledby="insight-process-title"
+      >
+        {processFigure.eyebrow && (
+          <p class="insight-feature__eyebrow">{processFigure.eyebrow}</p>
+        )}
+        <h2 id="insight-process-title">{processFigure.title}</h2>
+        {processFigure.description && <p>{processFigure.description}</p>}
+        <ol>
+          {processFigure.steps.map((step, index) => (
+            <li>
+              <span aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               <div>
-                <dt>{item.label}</dt>
-                <dd>{item.value}</dd>
-                {item.description && <p>{item.description}</p>}
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
               </div>
-            ))}
-          </dl>
-        </section>
-      )}
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
 
-      {checklist && (
-        <section
-          class="insight-feature insight-feature--checklist"
-          aria-labelledby="insight-checklist-title"
-        >
-          <h2 id="insight-checklist-title">
-            {checklist.title ?? text.checklist}
-          </h2>
-          <ul>
-            {checklist.items.map((item) => (
-              <li>
-                <span aria-hidden="true">{item.checked ? "✓" : "—"}</span>
-                <span>{item.text}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+    {compareTable && (
+      <section
+        class="insight-feature insight-feature--compare"
+        aria-labelledby="insight-compare-title"
+      >
+        <h2 id="insight-compare-title">
+          {compareTable.title ?? text.comparison}
+        </h2>
+        <div>
+          {[compareTable.before, compareTable.after].map((column) => (
+            <section>
+              <h3>{column.label}</h3>
+              <ul>
+                {column.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </section>
+    )}
 
-      {linkCards && (
-        <section
-          class="insight-feature insight-feature--links"
-          aria-labelledby="insight-links-title"
-        >
-          <h2 id="insight-links-title">{text.relatedPages}</h2>
-          <ul>
-            {linkCards.map((item) => (
-              <li>
-                <a href={resolveInsightHref(item.href, locale)}>
-                  <strong>{item.title}</strong>
-                  {item.description && <span>{item.description}</span>}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+    {statBar && (
+      <section
+        class="insight-feature insight-feature--stats"
+        aria-label={text.keyPoints}
+      >
+        <dl>
+          {statBar.items.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+              {item.description && <p>{item.description}</p>}
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
 
-      {faq && (
-        <section
-          class="insight-feature insight-feature--faq"
-          aria-labelledby="insight-faq-title"
-        >
-          <h2 id="insight-faq-title">{faq.title ?? text.faq}</h2>
-          <div>
-            {faq.items.map((item) => (
-              <details>
-                <summary>{item.question}</summary>
-                <p>{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      )}
-    </>
-  )
-}
+    {checklist && (
+      <section
+        class="insight-feature insight-feature--checklist"
+        aria-labelledby="insight-checklist-title"
+      >
+        <h2 id="insight-checklist-title">
+          {checklist.title ?? text.checklist}
+        </h2>
+        <ul>
+          {checklist.items.map((item) => (
+            <li>
+              <span aria-hidden="true">{item.checked ? "✓" : "—"}</span>
+              <span>{item.text}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {linkCards && (
+      <section
+        class="insight-feature insight-feature--links"
+        aria-labelledby="insight-links-title"
+      >
+        <h2 id="insight-links-title">{text.relatedPages}</h2>
+        <ul>
+          {linkCards.map((item) => (
+            <li>
+              <a href={resolveInsightHref(item.href, locale)}>
+                <strong>{item.title}</strong>
+                {item.description && <span>{item.description}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {faq && (
+      <section
+        class="insight-feature insight-feature--faq"
+        aria-labelledby="insight-faq-title"
+      >
+        <h2 id="insight-faq-title">{faq.title ?? text.faq}</h2>
+        <div>
+          {faq.items.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+  </>
+)}

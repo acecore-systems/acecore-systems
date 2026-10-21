@@ -33,19 +33,18 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
   <section class="page-hero page-hero--guide">
     <div class="container page-hero__inner experience-guide-hero">
       <div>
-        <p class="page-eyebrow">{text.guide}</p><h1 class="page-title">
-          {data.heroTitle}
-        </h1><p class="page-lead">{data.heroLead}</p>
+        <p class="page-eyebrow">{text.guide}</p>
+        <h1 class="page-title">{data.heroTitle}</h1>
+        <p class="page-lead">{data.heroLead}</p>
       </div>
       <ServiceVisual {...data.visual} variant="section" />
     </div>
   </section>
   <nav class="container experience-jump-nav" aria-label={text.tableOfContents}>
-    <a href="#guide-routes">{text.chooseScopeTitle}</a><a
-      href="#guide-journey-title">{text.processTitle}</a
-    ><a href="#guide-tips-title">{data.tipsTitle}</a><a href="#guide-faq-title"
-      >{text.serviceFaqTitle}</a
-    >
+    <a href="#guide-routes">{text.chooseScopeTitle}</a>
+    <a href="#guide-journey-title">{text.processTitle}</a>
+    <a href="#guide-tips-title">{data.tipsTitle}</a>
+    <a href="#guide-faq-title">{text.serviceFaqTitle}</a>
   </nav>
   <section
     class="page-section guide-route-section"
@@ -55,37 +54,33 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">01 / {text.services}</p><h2
-            id="guide-routes-title"
-          >
-            {
-              data.routeTitle === data.heroTitle
-                ? text.chooseScopeTitle
-                : data.routeTitle
-            }
-          </h2><p>{data.routeLead}</p>
+          <p class="purpose-eyebrow">01 / {text.services}</p>
+          <h2 id="guide-routes-title">
+            {data.routeTitle === data.heroTitle
+              ? text.chooseScopeTitle
+              : data.routeTitle}
+          </h2>
+          <p>{data.routeLead}</p>
         </div>
       </header>
       <GuideRouteChoices routes={data.routes} locale={locale} />
-      {
-        websiteEntry && (
-          <a
-            class="experience-guide-website"
-            href={getLocalizedUrl(websiteEntry.href, locale)}
-          >
-            <>
-              <PurposeIcon name="monitor" />
-              <div>
-                <>
-                  <h3>{websiteEntry.title}</h3>
-                  <p>{websiteEntry.body}</p>
-                </>
-              </div>
-              <PurposeIcon name="arrow" />
-            </>
-          </a>
-        )
-      }
+      {websiteEntry && (
+        <a
+          class="experience-guide-website"
+          href={getLocalizedUrl(websiteEntry.href, locale)}
+        >
+          <>
+            <PurposeIcon name="monitor" />
+            <div>
+              <>
+                <h3>{websiteEntry.title}</h3>
+                <p>{websiteEntry.body}</p>
+              </>
+            </div>
+            <PurposeIcon name="arrow" />
+          </>
+        </a>
+      )}
     </div>
   </section>
   <section
@@ -95,61 +90,52 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <h2 id="guide-intro-title">{data.introTitle}</h2><p>
-            {data.introBody}
-          </p>
+          <h2 id="guide-intro-title">{data.introTitle}</h2>
+          <p>{data.introBody}</p>
         </div>
       </header>
       <ol class="experience-perspectives">
-        {
-          data.insights.map((item, index) => (
-            <li>
-              <>
-                <span class="experience-step-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </>
-            </li>
-          ))
-        }
-      </ol>
-      {
-        guideSituations.map((item) => (
-          <article class="experience-guide-situation">
+        {data.insights.map((item, index) => (
+          <li>
             <>
+              <span class="experience-step-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
               <h3>{item.title}</h3>
               <p>{item.body}</p>
             </>
-          </article>
-        ))
-      }
+          </li>
+        ))}
+      </ol>
+      {guideSituations.map((item) => (
+        <article class="experience-guide-situation">
+          <>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </>
+        </article>
+      ))}
     </div>
   </section>
   <section class="page-section" aria-labelledby="guide-journey-title">
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">02 / {text.processTitle}</p><h2
-            id="guide-journey-title"
-          >
-            {data.journeyTitle}
-          </h2><p>{data.journeyLead}</p>
+          <p class="purpose-eyebrow">02 / {text.processTitle}</p>
+          <h2 id="guide-journey-title">{data.journeyTitle}</h2>
+          <p>{data.journeyLead}</p>
         </div>
       </header>
       <ol class="selection-process selection-process--four">
-        {
-          data.journey.map((step, index) => (
-            <li>
-              <>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </>
-            </li>
-          ))
-        }
+        {data.journey.map((step, index) => (
+          <li>
+            <>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </>
+          </li>
+        ))}
       </ol>
     </div>
   </section>
@@ -160,43 +146,39 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
     <div class="container selection-reading-width">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">03 / Checklist</p><h2
-            id="guide-tips-title"
-          >
-            {data.tipsTitle}
-          </h2><p>{data.tipsLead}</p>
+          <p class="purpose-eyebrow">03 / Checklist</p>
+          <h2 id="guide-tips-title">{data.tipsTitle}</h2>
+          <p>{data.tipsLead}</p>
         </div>
       </header>
       <ol class="experience-checklist">
-        {
-          data.tips.map((tip, index) => (
-            <li>
-              <details open={index === 0}>
-                <>
-                  <summary>
-                    <>
-                      <span class="experience-step-number">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <h3>{tip.title}</h3>
-                      <PurposeIcon name="chevron" />
-                    </>
-                  </summary>
-                  <div class="experience-checklist__body">
-                    <>
-                      <p>{tip.body}</p>
-                      <ul class="service-points">
-                        {tip.points.map((point) => (
-                          <li>{point}</li>
-                        ))}
-                      </ul>
-                    </>
-                  </div>
-                </>
-              </details>
-            </li>
-          ))
-        }
+        {data.tips.map((tip, index) => (
+          <li>
+            <details open={index === 0}>
+              <>
+                <summary>
+                  <>
+                    <span class="experience-step-number">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3>{tip.title}</h3>
+                    <PurposeIcon name="chevron" />
+                  </>
+                </summary>
+                <div class="experience-checklist__body">
+                  <>
+                    <p>{tip.body}</p>
+                    <ul class="service-points">
+                      {tip.points.map((point) => (
+                        <li>{point}</li>
+                      ))}
+                    </ul>
+                  </>
+                </div>
+              </>
+            </details>
+          </li>
+        ))}
       </ol>
     </div>
   </section>
@@ -204,27 +186,24 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
     <div class="container selection-reading-width">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">FAQ</p><h2 id="guide-faq-title">
-            {data.faqTitle}
-          </h2>
+          <p class="purpose-eyebrow">FAQ</p>
+          <h2 id="guide-faq-title">{data.faqTitle}</h2>
         </div>
       </header>
       <div class="selection-faq">
-        {
-          data.faqs.map((item) => (
-            <details>
-              <>
-                <summary>
-                  <>
-                    <span>{item.question}</span>
-                    <PurposeIcon name="chevron" />
-                  </>
-                </summary>
-                <p>{item.answer}</p>
-              </>
-            </details>
-          ))
-        }
+        {data.faqs.map((item) => (
+          <details>
+            <>
+              <summary>
+                <>
+                  <span>{item.question}</span>
+                  <PurposeIcon name="chevron" />
+                </>
+              </summary>
+              <p>{item.answer}</p>
+            </>
+          </details>
+        ))}
       </div>
     </div>
   </section>
@@ -238,13 +217,12 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
         aria-labelledby="guide-insights-title"
       >
         <div class="editorial-cta__copy">
-          <h2 id="guide-insights-title">{text.guideInsightsTitle}</h2><p>
-            {text.guideInsightsBody}
-          </p>
-        </div><a
-          class="editorial-link"
-          href={getLocalizedUrl("/insights/", locale)}>{text.insights}</a
-        >
+          <h2 id="guide-insights-title">{text.guideInsightsTitle}</h2>
+          <p>{text.guideInsightsBody}</p>
+        </div>
+        <a class="editorial-link" href={getLocalizedUrl("/insights/", locale)}>
+          {text.insights}
+        </a>
       </aside>
     </div>
   </section>
@@ -252,11 +230,12 @@ const websiteEntry = getAvailableRouteLocales("/services/website/").includes(
     <div class="container">
       <aside class="editorial-cta guide-cta" aria-labelledby="guide-cta-title">
         <div class="editorial-cta__copy">
-          <h2 id="guide-cta-title">{data.ctaTitle}</h2><p>{data.ctaBody}</p>
-        </div><a
-          class="editorial-link editorial-link--primary"
-          href="#guide-routes">{data.ctaLabel}</a
-        >
+          <h2 id="guide-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href="#guide-routes">
+          {data.ctaLabel}
+        </a>
       </aside>
     </div>
   </section>

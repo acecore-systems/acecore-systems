@@ -177,16 +177,20 @@ const pricingAnchor =
   canonical={canonicalPath}
   jsonLd={jsonLd}
   mainEntityId={serviceEntityId}
-  bodyClass={"service-detail-page selection-detail" +
+  bodyClass={
+    "service-detail-page selection-detail" +
     (serviceKey === "website" ? " service-detail-page--website" : "") +
-    (data.advisor ? " it-advisor-page" : "")}
+    (data.advisor ? " it-advisor-page" : "")
+  }
   locale={locale}
 >
   <section class="page-hero page-hero--detail selection-hero">
     <div class="container page-hero__inner">
       <nav class="breadcrumb" aria-label={text.breadcrumbNavigation}>
         <ol>
-          <li><a href={getLocalizedUrl("/", locale)}>{text.home}</a></li>
+          <li>
+            <a href={getLocalizedUrl("/", locale)}>{text.home}</a>
+          </li>
           <li>
             <a href={getLocalizedUrl("/services/", locale)}>{text.services}</a>
           </li>
@@ -198,80 +202,78 @@ const pricingAnchor =
           <p class="page-eyebrow">{data.title}</p>
           <h1 class="page-title">{data.heroTitle}</h1>
           <p class="page-lead">{data.heroLead}</p>
-          {
-            data.heroBenefits.length > 0 && (
-              <ul class="purpose-hero-benefits">
-                {data.heroBenefits.map((benefit) => (
+          {data.heroBenefits.length > 0 && (
+            <ul class="purpose-hero-benefits">
+              {data.heroBenefits.map((benefit) => (
+                <li>
+                  <PurposeIcon name="check" />
+                  {benefit}
+                </li>
+              ))}
+            </ul>
+          )}
+          <div class="home-actions">
+            <a
+              class="editorial-link editorial-link--primary"
+              href={contactHref}
+            >
+              {data.heroPrimaryCta ?? text.discussThis}
+            </a>
+            <a class="editorial-link" href={"#" + pricingAnchor}>
+              {data.heroSecondaryCta ?? text.pricingGuideTitle}
+            </a>
+          </div>
+          {data.advisor && (
+            <dl class="selection-audience">
+              <>
+                <div>
+                  <>
+                    <dt>{data.advisor.audienceLabel}</dt>
+                    <dd>{data.advisor.audienceValue}</dd>
+                  </>
+                </div>
+                <div>
+                  <>
+                    <dt>{data.advisor.engagementLabel}</dt>
+                    <dd>{data.advisor.engagementValue}</dd>
+                  </>
+                </div>
+              </>
+            </dl>
+          )}
+        </div>
+        {serviceKey === "website" ? (
+          <PurposeWork locale={locale} compact hero />
+        ) : (
+          <aside class="selection-hero-summary">
+            <>
+              <p class="purpose-eyebrow">{text.serviceDeliverables}</p>
+              <ul>
+                {data.indexTopics.map((topic) => (
                   <li>
                     <PurposeIcon name="check" />
-                    {benefit}
+                    {topic}
                   </li>
                 ))}
               </ul>
-            )
-          }
-          <div class="home-actions">
-            <a class="editorial-link editorial-link--primary" href={contactHref}
-              >{data.heroPrimaryCta ?? text.discussThis}</a
-            >
-            <a class="editorial-link" href={"#" + pricingAnchor}
-              >{data.heroSecondaryCta ?? text.pricingGuideTitle}</a
-            >
-          </div>
-          {
-            data.advisor && (
-              <dl class="selection-audience">
-                <>
-                  <div>
-                    <>
-                      <dt>{data.advisor.audienceLabel}</dt>
-                      <dd>{data.advisor.audienceValue}</dd>
-                    </>
-                  </div>
-                  <div>
-                    <>
-                      <dt>{data.advisor.engagementLabel}</dt>
-                      <dd>{data.advisor.engagementValue}</dd>
-                    </>
-                  </div>
-                </>
-              </dl>
-            )
-          }
-        </div>
-        {
-          serviceKey === "website" ? (
-            <PurposeWork locale={locale} compact hero />
-          ) : (
-            <aside class="selection-hero-summary">
-              <>
-                <p class="purpose-eyebrow">{text.serviceDeliverables}</p>
-                <ul>
-                  {data.indexTopics.map((topic) => (
-                    <li>
-                      <PurposeIcon name="check" />
-                      {topic}
-                    </li>
-                  ))}
-                </ul>
-                <p>{data.indexSummary}</p>
-                <a class="purpose-text-link" href={"#" + pricingAnchor}>
-                  {text.scopeLabel} / {text.pricing}
-                  <PurposeIcon name="arrow" />
-                </a>
-              </>
-            </aside>
-          )
-        }
+              <p>{data.indexSummary}</p>
+              <a class="purpose-text-link" href={"#" + pricingAnchor}>
+                {text.scopeLabel} / {text.pricing}
+                <PurposeIcon name="arrow" />
+              </a>
+            </>
+          </aside>
+        )}
       </div>
     </div>
   </section>
   <nav class="purpose-detail-nav" aria-label={text.services}>
-    <a href="#detail-introduction-title">{text.serviceFor}</a><a
-      href={"#" + pricingAnchor}>{text.scopeLabel} / {text.pricing}</a
-    ><a href="#detail-process-title">{text.processTitle}</a><a
-      href="#detail-faq-title">{data.faqsTitle ?? text.serviceFaqTitle}</a
-    >
+    <a href="#detail-introduction-title">{text.serviceFor}</a>
+    <a href={"#" + pricingAnchor}>
+      {text.scopeLabel} / {text.pricing}
+    </a>
+    <a href="#detail-process-title">{text.processTitle}</a>
+    <a href="#detail-faq-title">{data.faqsTitle ?? text.serviceFaqTitle}</a>
   </nav>
   <section
     class="page-section selection-introduction"
@@ -280,70 +282,63 @@ const pricingAnchor =
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">{text.serviceFor}</p><AnchorAliases
-            ids={legacyDetailAliases.intro}
-          /><h2 id="detail-introduction-title">
-            {data.introTitle}
-          </h2><p>{data.introBody}</p>
+          <p class="purpose-eyebrow">{text.serviceFor}</p>
+          <AnchorAliases ids={legacyDetailAliases.intro} />
+          <h2 id="detail-introduction-title">{data.introTitle}</h2>
+          <p>{data.introBody}</p>
         </div>
       </header>
       <div class="selection-challenges">
-        {
-          data.challenges.map((challenge) => (
-            <article>
-              <>
-                <h3>{challenge.title}</h3>
-                <p>{challenge.body}</p>
-              </>
-            </article>
-          ))
-        }
+        {data.challenges.map((challenge) => (
+          <article>
+            <>
+              <h3>{challenge.title}</h3>
+              <p>{challenge.body}</p>
+            </>
+          </article>
+        ))}
       </div>
-      {
-        data.handoff && (
-          <ServiceHandoff
-            {...data.handoff}
-            href={localizeHref(data.handoff.href)}
-          />
-        )
-      }
+      {data.handoff && (
+        <ServiceHandoff
+          {...data.handoff}
+          href={localizeHref(data.handoff.href)}
+        />
+      )}
     </div>
   </section>
-  {
-    serviceKey === "website" && (
-      <section
-        class="page-section selection-evidence"
-        aria-labelledby="detail-evidence-title"
-      >
-        <div class="container">
-          <>
-            <header class="purpose-section-heading">
-              <>
-                <div>
-                  <>
-                    <p class="purpose-eyebrow">{text.works}</p>
-                    <h2 id="detail-evidence-title">{text.selectedWorkTitle}</h2>
-                    <p>{text.selectedWorkLead}</p>
-                  </>
-                </div>
-                <a
-                  class="purpose-text-link"
-                  href={getLocalizedUrl("/works/", locale)}
-                >
-                  {text.viewWorks}
-                  <PurposeIcon name="arrow" />
-                </a>
-              </>
-            </header>
-            <PurposeCaseCards
-              locale={locale}
-              ids={["case-hatt-homepage", "case-acecore-site-platform"]}
-            />
-          </>
-        </div>
-      </section>
-    )
-  }
+  {serviceKey === "website" && (
+    <section
+      class="page-section selection-evidence"
+      aria-labelledby="detail-evidence-title"
+    >
+      <div class="container">
+        <>
+          <header class="purpose-section-heading">
+            <>
+              <div>
+                <>
+                  <p class="purpose-eyebrow">{text.works}</p>
+                  <h2 id="detail-evidence-title">{text.selectedWorkTitle}</h2>
+                  <p>{text.selectedWorkLead}</p>
+                </>
+              </div>
+              <a
+                class="purpose-text-link"
+                href={getLocalizedUrl("/works/", locale)}
+              >
+                {text.viewWorks}
+                <PurposeIcon name="arrow" />
+              </a>
+            </>
+          </header>
+          <PurposeCaseCards
+            locale={locale}
+            ids={["case-hatt-homepage", "case-acecore-site-platform"]}
+          />
+        </>
+      </div>
+    </section>
+  )}
   <section
     class="page-section selection-offerings"
     id={pricingAnchor}
@@ -354,292 +349,272 @@ const pricingAnchor =
         <div>
           <p class="purpose-eyebrow">
             {text.scopeLabel} / {text.pricing}
-          </p><AnchorAliases ids={legacyDetailAliases.pricing} /><h2
-            id="detail-offerings-title"
-          >
-            {data.offeringsTitle}
-          </h2><p>{data.offeringsLead}</p>{
-            serviceKey !== "website" && (
-              <p class="selection-tax-note">{content.pricing.heroLead}</p>
-            )
-          }
+          </p>
+          <AnchorAliases ids={legacyDetailAliases.pricing} />
+          <h2 id="detail-offerings-title">{data.offeringsTitle}</h2>
+          <p>{data.offeringsLead}</p>
+          {serviceKey !== "website" && (
+            <p class="selection-tax-note">{content.pricing.heroLead}</p>
+          )}
         </div>
       </header>
-      {
-        offeringGroups.map((group) => (
-          <section
-            class="selection-offering-group"
-            id={group.id}
-            aria-labelledby={group.title ? group.id + "-title" : undefined}
-          >
-            {group.title && (
-              <header class="selection-offering-group__heading">
-                <h3 id={group.id + "-title"}>{group.title}</h3>
-                <p>{group.lead}</p>
-              </header>
-            )}
-            <div class="selection-offering-list">
-              {group.items.map((offering, index) => (
-                <article class="selection-offering" id={offering.id}>
-                  <details open={offering.id === offerings[0]?.id}>
-                    <summary>
-                      <>
-                        <span class="selection-offering__number">
-                          {String(index + 1).padStart(2, "0")}
+      {offeringGroups.map((group) => (
+        <section
+          class="selection-offering-group"
+          id={group.id}
+          aria-labelledby={group.title ? group.id + "-title" : undefined}
+        >
+          {group.title && (
+            <header class="selection-offering-group__heading">
+              <h3 id={group.id + "-title"}>{group.title}</h3>
+              <p>{group.lead}</p>
+            </header>
+          )}
+          <div class="selection-offering-list">
+            {group.items.map((offering, index) => (
+              <article class="selection-offering" id={offering.id}>
+                <details open={offering.id === offerings[0]?.id}>
+                  <summary>
+                    <>
+                      <span class="selection-offering__number">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span class="selection-offering__copy">
+                        <span class="selection-offering__title">
+                          {offering.title}
                         </span>
-                        <span class="selection-offering__copy">
-                          <span class="selection-offering__title">
-                            {offering.title}
+                        <span class="selection-offering__scope">
+                          {offering.pricing
+                            .map((item) =>
+                              serviceKey === "website"
+                                ? item.note.split(" 税込の目安。")[0]
+                                : item.note,
+                            )
+                            .join(" / ")}
+                        </span>
+                      </span>
+                      <span class="selection-offering__prices">
+                        {offering.pricing.map((item) => (
+                          <span>
+                            <span>{item.label}</span>
+                            <strong>{item.price}</strong>
                           </span>
-                          <span class="selection-offering__scope">
-                            {offering.pricing
-                              .map((item) =>
-                                serviceKey === "website"
-                                  ? item.note.split(" 税込の目安。")[0]
-                                  : item.note,
-                              )
-                              .join(" / ")}
-                          </span>
-                        </span>
-                        <span class="selection-offering__prices">
-                          {offering.pricing.map((item) => (
-                            <span>
-                              <span>{item.label}</span>
-                              <strong>{item.price}</strong>
-                            </span>
-                          ))}
-                        </span>
-                        <PurposeIcon name="chevron" />
-                      </>
-                    </summary>
-                    <div class="selection-offering__body">
-                      <>
-                        <div>
-                          <>
-                            <p>{offering.body}</p>
-                            {data.advisor?.pricingSummaries.find(
-                              (item) => item.id === offering.id,
-                            )?.note && (
-                              <p>
-                                {
-                                  data.advisor.pricingSummaries.find(
-                                    (item) => item.id === offering.id,
-                                  )?.note
-                                }
-                              </p>
-                            )}
-                            <ul class="service-points">
-                              {offering.includes.map((item) => (
-                                <li>{item}</li>
-                              ))}
-                            </ul>
-                          </>
-                        </div>
-                        <aside>
-                          <h4>{text.serviceTerms}</h4>
-                          {offering.pricing.map((item) => (
-                            <p>{item.note}</p>
-                          ))}
-                          {offering.priceNote && <p>{offering.priceNote}</p>}
-                          <a
-                            class="purpose-text-link"
-                            href={
-                              getLocalizedUrl("/pricing/", locale) +
-                              "#" +
-                              offering.pricing[0].key
-                            }
-                          >
-                            {text.pricingCheck}
-                            <PurposeIcon name="arrow" />
-                          </a>
-                        </aside>
-                      </>
-                    </div>
-                  </details>
+                        ))}
+                      </span>
+                      <PurposeIcon name="chevron" />
+                    </>
+                  </summary>
+                  <div class="selection-offering__body">
+                    <>
+                      <div>
+                        <>
+                          <p>{offering.body}</p>
+                          {data.advisor?.pricingSummaries.find(
+                            (item) => item.id === offering.id,
+                          )?.note && (
+                            <p>
+                              {
+                                data.advisor.pricingSummaries.find(
+                                  (item) => item.id === offering.id,
+                                )?.note
+                              }
+                            </p>
+                          )}
+                          <ul class="service-points">
+                            {offering.includes.map((item) => (
+                              <li>{item}</li>
+                            ))}
+                          </ul>
+                        </>
+                      </div>
+                      <aside>
+                        <h4>{text.serviceTerms}</h4>
+                        {offering.pricing.map((item) => (
+                          <p>{item.note}</p>
+                        ))}
+                        {offering.priceNote && <p>{offering.priceNote}</p>}
+                        <a
+                          class="purpose-text-link"
+                          href={
+                            getLocalizedUrl("/pricing/", locale) +
+                            "#" +
+                            offering.pricing[0].key
+                          }
+                        >
+                          {text.pricingCheck}
+                          <PurposeIcon name="arrow" />
+                        </a>
+                      </aside>
+                    </>
+                  </div>
+                </details>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+      {["operations", "security"].includes(data.routeId) && (
+        <p class="selection-scope-note">{data.sectionVisuals.scope.caption}</p>
+      )}
+      {data.advisor && (
+        <p class="selection-contract-note">{data.advisor.priceNote}</p>
+      )}
+      {(legacyScope.length > 0 ||
+        legacySituations.length > 0 ||
+        legacyEntry) && (
+        <details class="purpose-disclosure">
+          <>
+            <summary>
+              <>
+                <h3>{text.supportExamplesLabel}</h3>
+                <PurposeIcon name="chevron" />
+              </>
+            </summary>
+            <div class="purpose-disclosure__body selection-supplement-grid">
+              {legacyEntry && (
+                <article class="selection-entry-example">
+                  <h4>{legacyEntry.title}</h4>
+                  <p>{legacyEntry.body}</p>
+                </article>
+              )}
+              {legacySituations.map((item) => (
+                <article>
+                  <h4>{item.title}</h4>
+                  <p>{item.body}</p>
                 </article>
               ))}
-            </div>
-          </section>
-        ))
-      }
-      {
-        ["operations", "security"].includes(data.routeId) && (
-          <p class="selection-scope-note">
-            {data.sectionVisuals.scope.caption}
-          </p>
-        )
-      }
-      {
-        data.advisor && (
-          <p class="selection-contract-note">{data.advisor.priceNote}</p>
-        )
-      }
-      {
-        (legacyScope.length > 0 ||
-          legacySituations.length > 0 ||
-          legacyEntry) && (
-          <details class="purpose-disclosure">
-            <>
-              <summary>
-                <>
-                  <h3>{text.supportExamplesLabel}</h3>
-                  <PurposeIcon name="chevron" />
-                </>
-              </summary>
-              <div class="purpose-disclosure__body selection-supplement-grid">
-                {legacyEntry && (
-                  <article class="selection-entry-example">
-                    <h4>{legacyEntry.title}</h4>
-                    <p>{legacyEntry.body}</p>
-                  </article>
-                )}
-                {legacySituations.map((item) => (
-                  <article>
-                    <h4>{item.title}</h4>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-                {legacyScope.map((service) => (
-                  <article>
-                    <h4>{service.title}</h4>
-                    <p>{service.body}</p>
-                    <ul class="service-points">
-                      {service.examples.map((example) => (
-                        <li>{example}</li>
-                      ))}
-                    </ul>
-                  </article>
-                ))}
-              </div>
-            </>
-          </details>
-        )
-      }
-      {
-        data.costExample && (
-          <aside class="selection-cost-example">
-            <>
-              <h3 id="website-cost-title">{data.costExample.title}</h3>
-              <p>{data.costExample.body}</p>
-            </>
-          </aside>
-        )
-      }
-      {
-        data.terms.length > 0 && (
-          <details class="purpose-disclosure selection-terms">
-            <>
-              <summary>
-                <>
-                  <h3 id="website-terms-title">{data.termsTitle}</h3>
-                  <PurposeIcon name="chevron" />
-                </>
-              </summary>
-              <div class="purpose-disclosure__body">
-                {data.terms.map((term) => (
-                  <article>
-                    <h4>{term.title}</h4>
-                    <p>{term.body}</p>
-                  </article>
-                ))}
-              </div>
-            </>
-          </details>
-        )
-      }
-    </div>
-  </section>
-  {
-    data.advisor && (
-      <section
-        class="page-section selection-advisor-scope"
-        aria-labelledby="advisor-support-title"
-      >
-        <div class="container">
-          <>
-            <header class="purpose-section-heading">
-              <div>
-                <>
-                  <h2 id="advisor-support-title">
-                    {data.advisor.supportTitle}
-                  </h2>
-                  <p>{data.advisor.supportLead}</p>
-                </>
-              </div>
-            </header>
-            <div class="selection-support-grid">
-              {data.advisor.supportAreas.map((area) => (
-                <article id={area.id}>
-                  <h3>{area.title}</h3>
-                  <p>{area.body}</p>
+              {legacyScope.map((service) => (
+                <article>
+                  <h4>{service.title}</h4>
+                  <p>{service.body}</p>
                   <ul class="service-points">
-                    {area.includes.map((item) => (
-                      <li>{item}</li>
+                    {service.examples.map((example) => (
+                      <li>{example}</li>
                     ))}
                   </ul>
                 </article>
               ))}
             </div>
-            <details class="purpose-disclosure">
-              <>
-                <summary>
-                  <>
-                    <h3 id="advisor-use-cases-title">
-                      {data.advisor.useCasesTitle}
-                    </h3>
-                    <PurposeIcon name="chevron" />
-                  </>
-                </summary>
-                <div class="purpose-disclosure__body">
-                  <>
-                    <p>{data.advisor.useCasesLead}</p>
-                    <div class="selection-supplement-grid">
-                      {data.advisor.useCases.map((item) => (
-                        <article>
-                          <h4>{item.title}</h4>
-                          <p>{item.body}</p>
-                        </article>
-                      ))}
-                    </div>
-                  </>
-                </div>
-              </>
-            </details>
-            <details class="purpose-disclosure">
-              <>
-                <summary>
-                  <>
-                    <h3 id="advisor-boundaries-title">
-                      {data.advisor.governanceTitle}
-                    </h3>
-                    <PurposeIcon name="chevron" />
-                  </>
-                </summary>
-                <div class="purpose-disclosure__body">
-                  <>
-                    <p>{data.advisor.governanceLead}</p>
-                    <h4>{text.securityResponsibility}</h4>
-                    <ul class="service-points">
-                      {data.advisor.governance.map((item) => (
-                        <li>{item}</li>
-                      ))}
-                    </ul>
-                    <h4>{data.advisor.excludedTitle}</h4>
-                    <p>{data.advisor.excludedLead}</p>
-                    <ul class="service-points">
-                      {data.advisor.excluded.map((item) => (
-                        <li>{item}</li>
-                      ))}
-                    </ul>
-                  </>
-                </div>
-              </>
-            </details>
           </>
-        </div>
-      </section>
-    )
-  }
+        </details>
+      )}
+      {data.costExample && (
+        <aside class="selection-cost-example">
+          <>
+            <h3 id="website-cost-title">{data.costExample.title}</h3>
+            <p>{data.costExample.body}</p>
+          </>
+        </aside>
+      )}
+      {data.terms.length > 0 && (
+        <details class="purpose-disclosure selection-terms">
+          <>
+            <summary>
+              <>
+                <h3 id="website-terms-title">{data.termsTitle}</h3>
+                <PurposeIcon name="chevron" />
+              </>
+            </summary>
+            <div class="purpose-disclosure__body">
+              {data.terms.map((term) => (
+                <article>
+                  <h4>{term.title}</h4>
+                  <p>{term.body}</p>
+                </article>
+              ))}
+            </div>
+          </>
+        </details>
+      )}
+    </div>
+  </section>
+  {data.advisor && (
+    <section
+      class="page-section selection-advisor-scope"
+      aria-labelledby="advisor-support-title"
+    >
+      <div class="container">
+        <>
+          <header class="purpose-section-heading">
+            <div>
+              <>
+                <h2 id="advisor-support-title">{data.advisor.supportTitle}</h2>
+                <p>{data.advisor.supportLead}</p>
+              </>
+            </div>
+          </header>
+          <div class="selection-support-grid">
+            {data.advisor.supportAreas.map((area) => (
+              <article id={area.id}>
+                <h3>{area.title}</h3>
+                <p>{area.body}</p>
+                <ul class="service-points">
+                  {area.includes.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <details class="purpose-disclosure">
+            <>
+              <summary>
+                <>
+                  <h3 id="advisor-use-cases-title">
+                    {data.advisor.useCasesTitle}
+                  </h3>
+                  <PurposeIcon name="chevron" />
+                </>
+              </summary>
+              <div class="purpose-disclosure__body">
+                <>
+                  <p>{data.advisor.useCasesLead}</p>
+                  <div class="selection-supplement-grid">
+                    {data.advisor.useCases.map((item) => (
+                      <article>
+                        <h4>{item.title}</h4>
+                        <p>{item.body}</p>
+                      </article>
+                    ))}
+                  </div>
+                </>
+              </div>
+            </>
+          </details>
+          <details class="purpose-disclosure">
+            <>
+              <summary>
+                <>
+                  <h3 id="advisor-boundaries-title">
+                    {data.advisor.governanceTitle}
+                  </h3>
+                  <PurposeIcon name="chevron" />
+                </>
+              </summary>
+              <div class="purpose-disclosure__body">
+                <>
+                  <p>{data.advisor.governanceLead}</p>
+                  <h4>{text.securityResponsibility}</h4>
+                  <ul class="service-points">
+                    {data.advisor.governance.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                  <h4>{data.advisor.excludedTitle}</h4>
+                  <p>{data.advisor.excludedLead}</p>
+                  <ul class="service-points">
+                    {data.advisor.excluded.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </>
+              </div>
+            </>
+          </details>
+        </>
+      </div>
+    </section>
+  )}
   <section
     class="page-section selection-process-section"
     aria-labelledby="detail-process-title"
@@ -647,24 +622,22 @@ const pricingAnchor =
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">{text.processTitle}</p><AnchorAliases
-            ids={legacyDetailAliases.process}
-          /><h2 id="detail-process-title">
-            {data.processTitle}
-          </h2><p>{data.processLead}</p>
+          <p class="purpose-eyebrow">{text.processTitle}</p>
+          <AnchorAliases ids={legacyDetailAliases.process} />
+          <h2 id="detail-process-title">{data.processTitle}</h2>
+          <p>{data.processLead}</p>
         </div>
-      </header><ol class="selection-process">
-        {
-          data.process.map((step, index) => (
-            <li>
-              <>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </>
-            </li>
-          ))
-        }
+      </header>
+      <ol class="selection-process">
+        {data.process.map((step, index) => (
+          <li>
+            <>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </>
+          </li>
+        ))}
       </ol>
       <p class="selection-process-note">
         {data.sectionVisuals.process.caption}
@@ -678,98 +651,95 @@ const pricingAnchor =
     <div class="container selection-reading-width">
       <header class="purpose-section-heading">
         <div>
-          <p class="purpose-eyebrow">FAQ</p><AnchorAliases
-            ids={legacyDetailAliases.faq}
-          /><h2 id="detail-faq-title">
+          <p class="purpose-eyebrow">FAQ</p>
+          <AnchorAliases ids={legacyDetailAliases.faq} />
+          <h2 id="detail-faq-title">
             {data.faqsTitle ?? text.serviceFaqTitle}
-          </h2>{data.faqLead && <p>{data.faqLead}</p>}
+          </h2>
+          {data.faqLead && <p>{data.faqLead}</p>}
         </div>
-      </header><div class="selection-faq">
-        {
-          faqs.map((faq) => (
-            <details>
-              <>
-                <summary>
-                  <>
-                    <span>{faq.question}</span>
-                    <PurposeIcon name="chevron" />
-                  </>
-                </summary>
-                <p>{faq.answer}</p>
-              </>
-            </details>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-  {
-    data.resources.length > 0 && (
-      <section
-        class="page-section selection-resources"
-        aria-labelledby="detail-resources-title"
-      >
-        <div class="container">
-          <details class="purpose-disclosure">
+      </header>
+      <div class="selection-faq">
+        {faqs.map((faq) => (
+          <details>
             <>
               <summary>
                 <>
-                  <h2 id="detail-resources-title">{data.resourcesTitle}</h2>
+                  <span>{faq.question}</span>
                   <PurposeIcon name="chevron" />
                 </>
               </summary>
-              <div class="purpose-disclosure__body">
-                <>
-                  <p>{data.resourcesLead}</p>
-                  <div class="selection-resource-grid">
-                    {data.resources.map((resource) => (
-                      <a href={localizeHref(resource.href)}>
-                        <h3>{resource.title}</h3>
-                        <p>{resource.description}</p>
-                        <span>{text.readTechnicalNote}</span>
-                      </a>
-                    ))}
-                  </div>
-                </>
-              </div>
+              <p>{faq.answer}</p>
             </>
           </details>
-        </div>
-      </section>
-    )
-  }
+        ))}
+      </div>
+    </div>
+  </section>
+  {data.resources.length > 0 && (
+    <section
+      class="page-section selection-resources"
+      aria-labelledby="detail-resources-title"
+    >
+      <div class="container">
+        <details class="purpose-disclosure">
+          <>
+            <summary>
+              <>
+                <h2 id="detail-resources-title">{data.resourcesTitle}</h2>
+                <PurposeIcon name="chevron" />
+              </>
+            </summary>
+            <div class="purpose-disclosure__body">
+              <>
+                <p>{data.resourcesLead}</p>
+                <div class="selection-resource-grid">
+                  {data.resources.map((resource) => (
+                    <a href={localizeHref(resource.href)}>
+                      <h3>{resource.title}</h3>
+                      <p>{resource.description}</p>
+                      <span>{text.readTechnicalNote}</span>
+                    </a>
+                  ))}
+                </div>
+              </>
+            </div>
+          </>
+        </details>
+      </div>
+    </section>
+  )}
   <section
     class="page-section selection-related"
     aria-labelledby="detail-related-title"
   >
     <div class="container">
       <header class="purpose-section-heading">
-        <AnchorAliases ids={legacyDetailAliases.related} /><h2
-          id="detail-related-title"
-        >
-          {text.relatedSupport}
-        </h2><a
+        <AnchorAliases ids={legacyDetailAliases.related} />
+        <h2 id="detail-related-title">{text.relatedSupport}</h2>
+        <a
           class="purpose-text-link"
           href={getLocalizedUrl("/services/", locale)}
-          >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
         >
-      </header><div class="selection-related-grid">
-        {
-          relatedServices.map((service) => (
-            <a href={getLocalizedUrl(service.href, locale)}>
-              <>
-                <PurposeIcon name={service.icon} />
-                <div>
-                  <>
-                    <h3>{service.data.title}</h3>
-                    <p>{service.data.indexSummary}</p>
-                  </>
-                </div>
-                <PurposeIcon name="chevron" />
-              </>
-            </a>
-          ))
-        }
+          {text.purposeViewServices}
+          <PurposeIcon name="arrow" />
+        </a>
+      </header>
+      <div class="selection-related-grid">
+        {relatedServices.map((service) => (
+          <a href={getLocalizedUrl(service.href, locale)}>
+            <>
+              <PurposeIcon name={service.icon} />
+              <div>
+                <>
+                  <h3>{service.data.title}</h3>
+                  <p>{service.data.indexSummary}</p>
+                </>
+              </div>
+              <PurposeIcon name="chevron" />
+            </>
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -780,15 +750,13 @@ const pricingAnchor =
         aria-labelledby="detail-cta-title"
       >
         <div class="editorial-cta__copy">
-          <AnchorAliases ids={legacyDetailAliases.cta} /><h2
-            id="detail-cta-title"
-          >
-            {data.ctaTitle}
-          </h2><p>{data.ctaBody}</p>
-        </div><a
-          class="editorial-link editorial-link--primary"
-          href={contactHref}>{text.discussThis}</a
-        >
+          <AnchorAliases ids={legacyDetailAliases.cta} />
+          <h2 id="detail-cta-title">{data.ctaTitle}</h2>
+          <p>{data.ctaBody}</p>
+        </div>
+        <a class="editorial-link editorial-link--primary" href={contactHref}>
+          {text.discussThis}
+        </a>
       </aside>
     </div>
   </section>

@@ -61,37 +61,34 @@ const isCurrent = (href: string) =>
       <a
         class="parent-brand-link"
         href={new URL(getLocalizedUrl("/", locale), site.acecoreUrl).href}
-        >{text.officialSite}</a
       >
+        {text.officialSite}
+      </a>
     </div>
     <nav class="nav desktop-nav" aria-label={text.mainNavigation}>
-      {
-        desktopNav.map((item) => (
-          <a
-            href={item.href}
-            aria-current={isCurrent(item.href) ? "page" : undefined}
-          >
-            {item.label}
-          </a>
-        ))
-      }
+      {desktopNav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isCurrent(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
     <LanguageSwitcher locale={locale} />
     <div class="header-actions">
-      {
-        locale === "ja" && (
-          <button
-            class="header-search"
-            type="button"
-            aria-haspopup="dialog"
-            aria-controls="site-search-dialog"
-            data-search-open
-          >
-            <PurposeIcon name="search" />
-            <span class="visually-hidden">検索</span>
-          </button>
-        )
-      }
+      {locale === "ja" && (
+        <button
+          class="header-search"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="site-search-dialog"
+          data-search-open
+        >
+          <PurposeIcon name="search" />
+          <span class="visually-hidden">検索</span>
+        </button>
+      )}
       <a
         class="header-cta"
         href={contactHref}
@@ -103,53 +100,47 @@ const isCurrent = (href: string) =>
     <details class="mobile-menu">
       <summary>{text.menu}</summary>
       <nav aria-label={text.mobileNavigation}>
-        {
-          nav.map((item) => (
-            <a
-              href={item.href}
-              aria-current={isCurrent(item.href) ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          ))
-        }
-        {
-          locale === "ja" && (
-            <button
-              class="mobile-menu__search"
-              type="button"
-              aria-haspopup="dialog"
-              aria-controls="site-search-dialog"
-              data-search-open
-            >
-              サイト内を検索
-            </button>
-          )
-        }
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isCurrent(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+        {locale === "ja" && (
+          <button
+            class="mobile-menu__search"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="site-search-dialog"
+            data-search-open
+          >
+            サイト内を検索
+          </button>
+        )}
         <a
           class="mobile-menu__cta"
           href={contactHref}
-          aria-current={currentPath.startsWith(contactHref)
-            ? "page"
-            : undefined}
+          aria-current={
+            currentPath.startsWith(contactHref) ? "page" : undefined
+          }
         >
           {text.contact}
         </a>
         <div class="mobile-language-links" aria-label={text.languageSelector}>
-          {
-            locales
-              .filter((targetLocale) => availableLocales.includes(targetLocale))
-              .map((targetLocale) => (
-                <a
-                  href={getLocalizedUrl(currentPath, targetLocale)}
-                  lang={htmlLangMap[targetLocale]}
-                  hreflang={htmlLangMap[targetLocale]}
-                  aria-current={targetLocale === locale ? "page" : undefined}
-                >
-                  {localeLabels[targetLocale]}
-                </a>
-              ))
-          }
+          {locales
+            .filter((targetLocale) => availableLocales.includes(targetLocale))
+            .map((targetLocale) => (
+              <a
+                href={getLocalizedUrl(currentPath, targetLocale)}
+                lang={htmlLangMap[targetLocale]}
+                hreflang={htmlLangMap[targetLocale]}
+                aria-current={targetLocale === locale ? "page" : undefined}
+              >
+                {localeLabels[targetLocale]}
+              </a>
+            ))}
         </div>
       </nav>
     </details>

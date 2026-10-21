@@ -20,19 +20,17 @@ const { routes, locale } = Astro.props;
 ---
 
 <div class="guide-route-choices">
-  {
-    routes.map((route) => (
-      <a class="guide-route-choice" href={getLocalizedUrl(route.href, locale)}>
-        <p class="editorial-eyebrow">{route.eyebrow}</p>
-        <h3>{route.title}</h3>
-        <p>{route.body}</p>
-        <span>
-          {route.label}
-          <PurposeIcon name="arrow" />
-        </span>
-      </a>
-    ))
-  }
+  {routes.map((route) => (
+    <a class="guide-route-choice" href={getLocalizedUrl(route.href, locale)}>
+      <p class="editorial-eyebrow">{route.eyebrow}</p>
+      <h3>{route.title}</h3>
+      <p>{route.body}</p>
+      <span>
+        {route.label}
+        <PurposeIcon name="arrow" />
+      </span>
+    </a>
+  ))}
 </div>
 
 <style is:global>

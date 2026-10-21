@@ -16,5 +16,7 @@ const { eyebrow, title, body, label, href } = Astro.props;
     <h2>{title}</h2>
     <p>{body}</p>
   </div>
-  <a class="editorial-link service-handoff__link" href={href}>{label}</a>
+  <a class="editorial-link service-handoff__link" href={href}>
+    {label}
+  </a>
 </aside>

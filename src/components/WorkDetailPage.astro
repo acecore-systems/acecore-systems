@@ -101,8 +101,12 @@ const jsonLd = [
     <div class="container page-hero__inner work-detail-hero__inner">
       <nav class="breadcrumb" aria-label={text.breadcrumbNavigation}>
         <ol>
-          <li><a href={getLocalizedUrl("/", locale)}>{text.home}</a></li>
-          <li><a href={getLocalizedUrl("/works/", locale)}>{text.works}</a></li>
+          <li>
+            <a href={getLocalizedUrl("/", locale)}>{text.home}</a>
+          </li>
+          <li>
+            <a href={getLocalizedUrl("/works/", locale)}>{text.works}</a>
+          </li>
           <li aria-current="page">{data.title}</li>
         </ol>
       </nav>
@@ -131,14 +135,12 @@ const jsonLd = [
           <p>{data.overviewBody}</p>
         </header>
         <dl class="work-detail-facts">
-          {
-            data.facts.map((fact) => (
-              <div>
-                <dt>{fact.label}</dt>
-                <dd>{fact.value}</dd>
-              </div>
-            ))
-          }
+          {data.facts.map((fact) => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
         </dl>
       </div>
       <div class="work-detail-outcomes">
@@ -147,14 +149,12 @@ const jsonLd = [
           <h3>{data.outcomesTitle}</h3>
         </header>
         <ul>
-          {
-            data.outcomes.map((outcome) => (
-              <li>
-                <p>{outcome.label}</p>
-                <p>{outcome.body}</p>
-              </li>
-            ))
-          }
+          {data.outcomes.map((outcome) => (
+            <li>
+              <p>{outcome.label}</p>
+              <p>{outcome.body}</p>
+            </li>
+          ))}
         </ul>
       </div>
       <ServiceVisual {...data.outcomesVisual} variant="section" />
@@ -172,15 +172,13 @@ const jsonLd = [
         <h2 id="work-story-title">{text.sustainableShape}</h2>
       </header>
       <div class="work-story">
-        {
-          data.story.map((item) => (
-            <article class="work-story__item">
-              <p class="editorial-index">{item.label}</p>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))
-        }
+        {data.story.map((item) => (
+          <article class="work-story__item">
+            <p class="editorial-index">{item.label}</p>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -200,26 +198,24 @@ const jsonLd = [
       </header>
       <ServiceVisual {...data.scopeVisual} variant="section" />
       <div class="detail-offering-list">
-        {
-          data.scope.map((item, index) => (
-            <article class="detail-offering">
-              <header class="detail-offering__header">
-                <p class="editorial-index">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3>{item.title}</h3>
-              </header>
-              <div class="detail-offering__body">
-                <p>{item.body}</p>
-                <ul class="service-points">
-                  {item.items.map((point) => (
-                    <li>{point}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))
-        }
+        {data.scope.map((item, index) => (
+          <article class="detail-offering">
+            <header class="detail-offering__header">
+              <p class="editorial-index">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{item.title}</h3>
+            </header>
+            <div class="detail-offering__body">
+              <p>{item.body}</p>
+              <ul class="service-points">
+                {item.items.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -234,16 +230,14 @@ const jsonLd = [
         <h2 id="work-related-title">{text.supportInThisCase}</h2>
       </header>
       <ul class="work-related-links">
-        {
-          relatedServices.map((service) => (
-            <li>
-              <a href={service.href}>
-                <span>{service.title}</span>
-                <span>{text.viewSupport} →</span>
-              </a>
-            </li>
-          ))
-        }
+        {relatedServices.map((service) => (
+          <li>
+            <a href={service.href}>
+              <span>{service.title}</span>
+              <span>{text.viewSupport} →</span>
+            </a>
+          </li>
+        ))}
       </ul>
       <aside
         class="editorial-cta service-cta work-detail-next__cta"
@@ -275,20 +269,18 @@ const jsonLd = [
         <p>{data.resourcesLead}</p>
       </header>
       <div class="detail-resource-list">
-        {
-          data.resources.map((resource, index) => (
-            <a class="detail-resource" href={localizeHref(resource.href)}>
-              <p class="editorial-index">
-                Note {String(index + 1).padStart(2, "0")}
-              </p>
-              <div>
-                <h3>{resource.title}</h3>
-                <p>{resource.description}</p>
-              </div>
-              <span>{text.readTechnicalNote}</span>
-            </a>
-          ))
-        }
+        {data.resources.map((resource, index) => (
+          <a class="detail-resource" href={localizeHref(resource.href)}>
+            <p class="editorial-index">
+              Note {String(index + 1).padStart(2, "0")}
+            </p>
+            <div>
+              <h3>{resource.title}</h3>
+              <p>{resource.description}</p>
+            </div>
+            <span>{text.readTechnicalNote}</span>
+          </a>
+        ))}
       </div>
       <div class="work-detail-external">
         <a
