@@ -14,9 +14,11 @@ const text = getUi(locale);
 
 <aside class="purpose-callout" aria-labelledby={ctaId}>
   <div class="container purpose-callout__inner">
-    <h2 id={ctaId}>{home.ctaTitle}</h2><p>{home.ctaBody}</p>
-    <a class="purpose-button" href={getLocalizedUrl("/contact/", locale)}
-      >{text.purposeContact}<PurposeIcon name="arrow" /></a
-    >
+    <h2 id={ctaId}>{home.ctaTitle}</h2>
+    <p>{home.ctaBody}</p>
+    <a class="purpose-button" href={getLocalizedUrl("/contact/", locale)}>
+      {text.purposeContact}
+      <PurposeIcon name="arrow" />
+    </a>
   </div>
 </aside>

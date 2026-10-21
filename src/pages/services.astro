@@ -35,22 +35,21 @@ const legacyAliases = (href: string, id: string) =>
   <section class="purpose-page-hero">
     <div class="container">
       <p class="purpose-eyebrow">{text.services}</p>
-      <h1>{data.heroTitle}</h1><p>{data.heroLead}</p>
+      <h1>{data.heroTitle}</h1>
+      <p>{data.heroLead}</p>
     </div>
   </section>
   <section class="purpose-catalog" aria-label={text.services}>
     <div class="container purpose-catalog__layout">
       <nav class="purpose-category-rail" aria-label={text.services}>
-        <a href="#all" data-service-category="all" aria-current="page"
-          >{text.purposeAll}</a
-        >
-        {
-          groups.map((group) => (
-            <a href={"#" + group.id} data-service-category={group.id}>
-              {group.title}
-            </a>
-          ))
-        }
+        <a href="#all" data-service-category="all" aria-current="page">
+          {text.purposeAll}
+        </a>
+        {groups.map((group) => (
+          <a href={"#" + group.id} data-service-category={group.id}>
+            {group.title}
+          </a>
+        ))}
       </nav>
       <div class="purpose-catalog__groups" id="all">
         <AnchorAliases
@@ -63,81 +62,79 @@ const legacyAliases = (href: string, id: string) =>
           ]}
         />
         <p class="purpose-catalog__price-note">{content.pricing.heroLead}</p>
-        {
-          groups.map((group) => (
-            <section
-              class="purpose-catalog-group"
-              id={group.id}
-              data-service-group={group.id}
-              aria-labelledby={group.id + "-title"}
-            >
-              <header>
-                <>
-                  <h2 id={group.id + "-title"}>{group.title}</h2>
-                  <p>{group.lead}</p>
-                </>
-              </header>
-              <div class="purpose-service-rows">
-                {group.items.map((item) => (
-                  <a
-                    class="purpose-service-row"
-                    id={item.id}
-                    href={getLocalizedUrl(item.href, locale)}
-                  >
-                    <PurposeIcon name={item.icon} />
-                    <div class="purpose-service-row__content">
-                      {[
-                        ...(item.id === "development" ||
-                        item.id === "it-advisor" ||
-                        item.id === "website"
-                          ? ["service-entry-" + item.id]
-                          : []),
-                        ...legacyAliases(item.href, item.id),
-                      ].map((id) => (
-                        <span
-                          id={id}
-                          class="purpose-anchor-alias"
-                          aria-hidden="true"
-                        />
-                      ))}
-                      <div class="purpose-service-row__intro">
-                        <h3>{item.data.title}</h3>
-                        <p class="purpose-service-row__summary">
-                          {item.data.indexSummary}
-                        </p>
-                      </div>
-                      <dl class="purpose-service-facts">
-                        <div>
-                          <dt>{text.serviceFor}</dt>
-                          <dd>{item.data.challenges[0].title}</dd>
-                        </div>
-                        <div>
-                          <dt>{text.serviceDeliverables}</dt>
-                          <dd>{item.data.indexTopics.join(" / ")}</dd>
-                        </div>
-                        <div>
-                          <dt>{text.pricing}</dt>
-                          <dd class="purpose-service-facts__prices">
-                            {item.pricingKeys.map((key) => {
-                              const price = pricingByKey.get(key)!;
-                              return (
-                                <span>
-                                  <span>{price.label}</span>
-                                  <strong>{price.price}</strong>
-                                </span>
-                              );
-                            })}
-                          </dd>
-                        </div>
-                      </dl>
+        {groups.map((group) => (
+          <section
+            class="purpose-catalog-group"
+            id={group.id}
+            data-service-group={group.id}
+            aria-labelledby={group.id + "-title"}
+          >
+            <header>
+              <>
+                <h2 id={group.id + "-title"}>{group.title}</h2>
+                <p>{group.lead}</p>
+              </>
+            </header>
+            <div class="purpose-service-rows">
+              {group.items.map((item) => (
+                <a
+                  class="purpose-service-row"
+                  id={item.id}
+                  href={getLocalizedUrl(item.href, locale)}
+                >
+                  <PurposeIcon name={item.icon} />
+                  <div class="purpose-service-row__content">
+                    {[
+                      ...(item.id === "development" ||
+                      item.id === "it-advisor" ||
+                      item.id === "website"
+                        ? ["service-entry-" + item.id]
+                        : []),
+                      ...legacyAliases(item.href, item.id),
+                    ].map((id) => (
+                      <span
+                        id={id}
+                        class="purpose-anchor-alias"
+                        aria-hidden="true"
+                      />
+                    ))}
+                    <div class="purpose-service-row__intro">
+                      <h3>{item.data.title}</h3>
+                      <p class="purpose-service-row__summary">
+                        {item.data.indexSummary}
+                      </p>
                     </div>
-                    <PurposeIcon name="chevron" />
-                  </a>
-                ))}
-              </div>
-            </section>
-          ))
-        }
+                    <dl class="purpose-service-facts">
+                      <div>
+                        <dt>{text.serviceFor}</dt>
+                        <dd>{item.data.challenges[0].title}</dd>
+                      </div>
+                      <div>
+                        <dt>{text.serviceDeliverables}</dt>
+                        <dd>{item.data.indexTopics.join(" / ")}</dd>
+                      </div>
+                      <div>
+                        <dt>{text.pricing}</dt>
+                        <dd class="purpose-service-facts__prices">
+                          {item.pricingKeys.map((key) => {
+                            const price = pricingByKey.get(key)!;
+                            return (
+                              <span>
+                                <span>{price.label}</span>
+                                <strong>{price.price}</strong>
+                              </span>
+                            );
+                          })}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                  <PurposeIcon name="chevron" />
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   </section>
@@ -148,24 +145,29 @@ const legacyAliases = (href: string, id: string) =>
   >
     <div class="container">
       <details class="purpose-disclosure">
-        <summary
-          ><h2 id="design-title">{design.title}</h2><PurposeIcon
-            name="chevron"
-          /></summary
-        >
+        <summary>
+          <h2 id="design-title">{design.title}</h2>
+          <PurposeIcon name="chevron" />
+        </summary>
         <div class="purpose-disclosure__body">
           <p>{design.body}</p>
           <ul class="service-points">
-            {design.examples.map((example) => <li>{example}</li>)}
+            {design.examples.map((example) => (
+              <li>{example}</li>
+            ))}
           </ul>
           <p>{data.designContextNote}</p>
           <a
             class="purpose-text-link"
-            href={site.acecoreUrl +
+            href={
+              site.acecoreUrl +
               getLocalizedUrl("/services/", locale) +
-              "#design"}
-            >{data.designContextLinkLabel}<PurposeIcon name="arrow" /></a
+              "#design"
+            }
           >
+            {data.designContextLinkLabel}
+            <PurposeIcon name="arrow" />
+          </a>
         </div>
       </details>
     </div>
@@ -176,28 +178,25 @@ const legacyAliases = (href: string, id: string) =>
   >
     <div class="container">
       <header class="editorial-header">
-        <h2 id="service-process-title">{text.processTitle}</h2><p>
-          {text.processLead}
-        </p>
+        <h2 id="service-process-title">{text.processTitle}</h2>
+        <p>{text.processLead}</p>
       </header>
       <ol class="selection-process selection-process--four">
-        {
-          data.process.map((step, index) => (
-            <li class="service-process__step">
-              <>
-                <p class="editorial-index">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <div class="service-process__content">
-                  <>
-                    <h3>{step.title}</h3>
-                    <p>{step.body}</p>
-                  </>
-                </div>
-              </>
-            </li>
-          ))
-        }
+        {data.process.map((step, index) => (
+          <li class="service-process__step">
+            <>
+              <p class="editorial-index">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <div class="service-process__content">
+                <>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </>
+              </div>
+            </>
+          </li>
+        ))}
       </ol>
     </div>
   </section>

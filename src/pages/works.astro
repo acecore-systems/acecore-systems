@@ -105,137 +105,133 @@ const imageDimensions: Record<string, [number, number]> = {
         <a
           class="purpose-text-link"
           href={getLocalizedUrl("/services/", locale)}
-          >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
         >
+          {text.purposeViewServices}
+          <PurposeIcon name="arrow" />
+        </a>
       </header>
       <nav class="experience-filters" aria-label={text.works}>
-        {
-          purposes.map((purpose) => (
-            <a
-              href={
-                getLocalizedUrl("/works/", locale) +
-                "?purpose=" +
-                purpose.id +
-                "#work-list-title"
-              }
-              data-work-filter={purpose.id}
-              aria-current={purpose.id === "all" ? "true" : undefined}
-            >
-              {purpose.label}
-            </a>
-          ))
-        }
+        {purposes.map((purpose) => (
+          <a
+            href={
+              getLocalizedUrl("/works/", locale) +
+              "?purpose=" +
+              purpose.id +
+              "#work-list-title"
+            }
+            data-work-filter={purpose.id}
+            aria-current={purpose.id === "all" ? "true" : undefined}
+          >
+            {purpose.label}
+          </a>
+        ))}
       </nav>
       <div class="experience-case-grid">
-        {
-          data.cases.map((work, index) => (
-            <article
-              class="experience-case"
-              id={work.id}
-              data-case-purpose={workServiceContexts[work.id]?.purposes.join(
-                " ",
-              )}
-              aria-labelledby={`${work.id}-title`}
-            >
-              {work.image && (
-                <figure class="experience-case__media">
-                  <img
-                    src={work.image}
-                    alt={work.imageAlt || work.title}
-                    width={imageDimensions[work.id]?.[0] ?? 1536}
-                    height={imageDimensions[work.id]?.[1] ?? 1024}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              )}
-              <div class="experience-case__content">
-                <header>
-                  <p class="experience-case__category">
-                    <span>Case {String(index + 1).padStart(2, "0")}</span>
-                    {work.category}
-                  </p>
-                  <h3 id={`${work.id}-title`}>{work.title}</h3>
-                  <p class="experience-case__summary">{work.summary}</p>
-                </header>
-                <div class="experience-case__result">
+        {data.cases.map((work, index) => (
+          <article
+            class="experience-case"
+            id={work.id}
+            data-case-purpose={workServiceContexts[work.id]?.purposes.join(" ")}
+            aria-labelledby={`${work.id}-title`}
+          >
+            {work.image && (
+              <figure class="experience-case__media">
+                <img
+                  src={work.image}
+                  alt={work.imageAlt || work.title}
+                  width={imageDimensions[work.id]?.[0] ?? 1536}
+                  height={imageDimensions[work.id]?.[1] ?? 1024}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            )}
+            <div class="experience-case__content">
+              <header>
+                <p class="experience-case__category">
+                  <span>Case {String(index + 1).padStart(2, "0")}</span>
+                  {work.category}
+                </p>
+                <h3 id={`${work.id}-title`}>{work.title}</h3>
+                <p class="experience-case__summary">{work.summary}</p>
+              </header>
+              <div class="experience-case__result">
+                <>
+                  <h4>{text.result}</h4>
+                  <p>{work.result}</p>
+                </>
+              </div>
+              <details class="experience-case__details">
+                <summary>
                   <>
-                    <h4>{text.result}</h4>
-                    <p>{work.result}</p>
+                    <span>
+                      {text.challenge} / {text.proposal}
+                    </span>
+                    <PurposeIcon name="chevron" />
                   </>
-                </div>
-                <details class="experience-case__details">
-                  <summary>
-                    <>
-                      <span>
-                        {text.challenge} / {text.proposal}
-                      </span>
-                      <PurposeIcon name="chevron" />
-                    </>
-                  </summary>
-                  <dl>
-                    <>
-                      <div>
-                        <>
-                          <dt>{text.challenge}</dt>
-                          <dd>{work.challenge}</dd>
-                        </>
-                      </div>
-                      <div>
-                        <>
-                          <dt>{text.proposal}</dt>
-                          <dd>{work.proposal}</dd>
-                        </>
-                      </div>
-                    </>
-                  </dl>
-                </details>
-                <div class="experience-case__services">
-                  <h4>{text.workRelatedServices}</h4>
-                  <ul>
-                    {relatedServices(work.id).map((service) => (
-                      <li>
-                        <a href={service.href}>
-                          {service.title}
-                          <PurposeIcon name="arrow" />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div class="experience-case__links">
-                  {work.detailUrl && (
-                    <a
-                      class="purpose-text-link"
-                      href={localizeHref(work.detailUrl)}
-                      aria-label={`${work.title}: ${text.caseDetails}`}
-                    >
-                      {text.caseDetails}
-                      <PurposeIcon name="arrow" />
-                    </a>
-                  )}
-                  {work.externalUrl && (
-                    <a
-                      class="purpose-text-link"
-                      href={localizeHref(work.externalUrl)}
-                    >
-                      {work.externalLabel}
-                      <PurposeIcon name="arrow" />
-                    </a>
-                  )}
+                </summary>
+                <dl>
+                  <>
+                    <div>
+                      <>
+                        <dt>{text.challenge}</dt>
+                        <dd>{work.challenge}</dd>
+                      </>
+                    </div>
+                    <div>
+                      <>
+                        <dt>{text.proposal}</dt>
+                        <dd>{work.proposal}</dd>
+                      </>
+                    </div>
+                  </>
+                </dl>
+              </details>
+              <div class="experience-case__services">
+                <h4>{text.workRelatedServices}</h4>
+                <ul>
+                  {relatedServices(work.id).map((service) => (
+                    <li>
+                      <a href={service.href}>
+                        {service.title}
+                        <PurposeIcon name="arrow" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div class="experience-case__links">
+                {work.detailUrl && (
                   <a
                     class="purpose-text-link"
-                    href={contactHref(work)}
-                    aria-label={`${work.title}: ${text.discussThis}`}
+                    href={localizeHref(work.detailUrl)}
+                    aria-label={`${work.title}: ${text.caseDetails}`}
                   >
-                    {text.discussThis}
+                    {text.caseDetails}
                     <PurposeIcon name="arrow" />
                   </a>
-                </div>
+                )}
+                {work.externalUrl && (
+                  <a
+                    class="purpose-text-link"
+                    href={localizeHref(work.externalUrl)}
+                  >
+                    {work.externalLabel}
+                    <PurposeIcon name="arrow" />
+                  </a>
+                )}
+                <a
+                  class="purpose-text-link"
+                  href={contactHref(work)}
+                  aria-label={`${work.title}: ${text.discussThis}`}
+                >
+                  {text.discussThis}
+                  <PurposeIcon name="arrow" />
+                </a>
               </div>
-            </article>
-          ))
-        }
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>

@@ -148,26 +148,20 @@ const pagefindMainAttributes =
     <meta name="description" content={localizedDescription} />
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
-    {
-      alternateUrls.map((alternate) => (
-        <link
-          rel="alternate"
-          hreflang={htmlLangMap[alternate.locale]}
-          href={alternate.url}
-        />
-      ))
-    }
-    {
-      canonical && (
-        <link
-          rel="alternate"
-          hreflang="x-default"
-          href={
-            alternateUrls.find((alternate) => alternate.locale === "ja")?.url
-          }
-        />
-      )
-    }
+    {alternateUrls.map((alternate) => (
+      <link
+        rel="alternate"
+        hreflang={htmlLangMap[alternate.locale]}
+        href={alternate.url}
+      />
+    ))}
+    {canonical && (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={alternateUrls.find((alternate) => alternate.locale === "ja")?.url}
+      />
+    )}
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -178,28 +172,22 @@ const pagefindMainAttributes =
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={localizedDescription} />
     <meta property="og:type" content={ogType} />
-    {
-      publishedTime && (
-        <meta property="article:published_time" content={publishedTime} />
-      )
-    }
-    {
-      modifiedTime && (
-        <meta property="article:modified_time" content={modifiedTime} />
-      )
-    }
+    {publishedTime && (
+      <meta property="article:published_time" content={publishedTime} />
+    )}
+    {modifiedTime && (
+      <meta property="article:modified_time" content={modifiedTime} />
+    )}
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:locale" content={ogLocaleMap[locale]} />
-    {
-      locales
-        .filter((targetLocale) => targetLocale !== locale)
-        .map((targetLocale) => (
-          <meta
-            property="og:locale:alternate"
-            content={ogLocaleMap[targetLocale]}
-          />
-        ))
-    }
+    {locales
+      .filter((targetLocale) => targetLocale !== locale)
+      .map((targetLocale) => (
+        <meta
+          property="og:locale:alternate"
+          content={ogLocaleMap[targetLocale]}
+        />
+      ))}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -208,10 +196,9 @@ const pagefindMainAttributes =
     <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#ffffff" />
     <script type="application/ld+json" set:html={serializedJsonLd} />
-    {
-      site.ga4Id && (
-        <script is:inline define:vars={{ ga4Id: site.ga4Id }}>
-          {`
+    {site.ga4Id && <script is:inline define:vars={{ ga4Id: site.ga4Id }}>
+      {
+        `
             window.dataLayer = window.dataLayer || [];
             window.gtag = window.gtag || function () {
               window.dataLayer.push(arguments);
@@ -249,13 +236,14 @@ const pagefindMainAttributes =
                 passive: true,
               });
             });
-          `}
-        </script>
-      )
-    }
+          `;
+      }
+    </script>}
   </head>
   <body class:list={[bodyClass, "bg-paper text-ink font-sans"]}>
-    <a class="skip-link" href="#main">{text.skipToContent}</a>
+    <a class="skip-link" href="#main">
+      {text.skipToContent}
+    </a>
     <Header locale={locale} />
     {locale === "ja" && <SearchModal />}
     <main id="main" {...pagefindMainAttributes}>

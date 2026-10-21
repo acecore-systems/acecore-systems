@@ -56,13 +56,16 @@ const needs = [
         <h1>{home.heroTitle}</h1>
         <p class="purpose-home-hero__lead">{home.heroLead}</p>
         <div class="purpose-hero-actions">
-          <a class="purpose-button" href={localizeHref(home.primaryCtaHref)}
-            >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
-          >
+          <a class="purpose-button" href={localizeHref(home.primaryCtaHref)}>
+            {text.purposeViewServices}
+            <PurposeIcon name="arrow" />
+          </a>
           <a
             class="purpose-button purpose-button--secondary"
-            href={getLocalizedUrl("/contact/", locale)}>{text.purposeContact}</a
+            href={getLocalizedUrl("/contact/", locale)}
           >
+            {text.purposeContact}
+          </a>
         </div>
       </div>
       <PurposeWork locale={locale} compact hero />
@@ -74,28 +77,30 @@ const needs = [
         <h2 id="home-needs-title">
           <AnchorAliases
             ids={["layer-model-title", "domain-title", "consultation-title"]}
-          />{text.chooseScopeTitle}
-        </h2><a
+          />
+          {text.chooseScopeTitle}
+        </h2>
+        <a
           class="purpose-text-link"
           href={getLocalizedUrl("/services/", locale)}
-          >{text.purposeViewServices}<PurposeIcon name="arrow" /></a
         >
+          {text.purposeViewServices}
+          <PurposeIcon name="arrow" />
+        </a>
       </header>
       <div class="purpose-needs__list">
-        {
-          needs.map((need) => (
-            <a class="purpose-need" id={need.id} href={need.href}>
-              <PurposeIcon name={need.icon} />
-              <span>
-                <>
-                  <strong>{need.title}</strong>
-                  <span class="purpose-need__description">{need.body}</span>
-                </>
-              </span>
-              <PurposeIcon name="chevron" />
-            </a>
-          ))
-        }
+        {needs.map((need) => (
+          <a class="purpose-need" id={need.id} href={need.href}>
+            <PurposeIcon name={need.icon} />
+            <span>
+              <>
+                <strong>{need.title}</strong>
+                <span class="purpose-need__description">{need.body}</span>
+              </>
+            </span>
+            <PurposeIcon name="chevron" />
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -103,13 +108,13 @@ const needs = [
     <div class="container">
       <header class="purpose-section-heading">
         <div>
-          <h2 id="home-work-title">{text.works}</h2><p>
-            {text.selectedWorkLead}
-          </p>
+          <h2 id="home-work-title">{text.works}</h2>
+          <p>{text.selectedWorkLead}</p>
         </div>
-        <a class="purpose-text-link" href={getLocalizedUrl("/works/", locale)}
-          >{text.viewWorks}<PurposeIcon name="arrow" /></a
-        >
+        <a class="purpose-text-link" href={getLocalizedUrl("/works/", locale)}>
+          {text.viewWorks}
+          <PurposeIcon name="arrow" />
+        </a>
       </header>
       <PurposeCaseCards locale={locale} />
     </div>
@@ -122,33 +127,33 @@ const needs = [
     <div class="container">
       <header class="home-section__header home-section__header--split">
         <div>
-          <p class="home-eyebrow">{home.philosophyEyebrow}</p><h2
-            id="philosophy-title"
-          >
-            {home.philosophyTitle}
-          </h2>
+          <p class="home-eyebrow">{home.philosophyEyebrow}</p>
+          <h2 id="philosophy-title">{home.philosophyTitle}</h2>
         </div>
         <div>
-          <p>{home.philosophyLead}</p><a
+          <p>{home.philosophyLead}</p>
+          <a
             class="editorial-link"
-            href={site.acecoreUrl +
+            href={
+              site.acecoreUrl +
               getLocalizedUrl("/about/", locale) +
-              "#corporate-philosophy-heading"}>{home.philosophyLinkLabel}</a
+              "#corporate-philosophy-heading"
+            }
           >
+            {home.philosophyLinkLabel}
+          </a>
         </div>
       </header>
       <ol class="principle-list">
-        {
-          home.designPrinciples.map((principle) => (
-            <li class="principle-row">
-              <>
-                <p class="editorial-index">{principle.number}</p>
-                <h3>{principle.title}</h3>
-                <p>{principle.body}</p>
-              </>
-            </li>
-          ))
-        }
+        {home.designPrinciples.map((principle) => (
+          <li class="principle-row">
+            <>
+              <p class="editorial-index">{principle.number}</p>
+              <h3>{principle.title}</h3>
+              <p>{principle.body}</p>
+            </>
+          </li>
+        ))}
       </ol>
     </div>
   </section>

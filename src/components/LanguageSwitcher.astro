@@ -31,21 +31,19 @@ const text = getUi(locale);
     <span>{localeLabels[locale]}</span>
   </summary>
   <ul aria-label={text.languageSelector}>
-    {
-      locales
-        .filter((targetLocale) => availableLocales.includes(targetLocale))
-        .map((targetLocale) => (
-          <li>
-            <a
-              href={getLocalizedUrl(currentPath, targetLocale)}
-              lang={htmlLangMap[targetLocale]}
-              hreflang={htmlLangMap[targetLocale]}
-              aria-current={targetLocale === locale ? "page" : undefined}
-            >
-              {localeLabels[targetLocale]}
-            </a>
-          </li>
-        ))
-    }
+    {locales
+      .filter((targetLocale) => availableLocales.includes(targetLocale))
+      .map((targetLocale) => (
+        <li>
+          <a
+            href={getLocalizedUrl(currentPath, targetLocale)}
+            lang={htmlLangMap[targetLocale]}
+            hreflang={htmlLangMap[targetLocale]}
+            aria-current={targetLocale === locale ? "page" : undefined}
+          >
+            {localeLabels[targetLocale]}
+          </a>
+        </li>
+      ))}
   </ul>
 </details>

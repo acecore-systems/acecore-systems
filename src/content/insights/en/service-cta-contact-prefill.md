@@ -261,17 +261,15 @@ The form select outputs an option for each service.
   <option value="サービス全般について">
     {t(locale, "pages.contact.formCategoryService")}
   </option>
-  {
-    serviceCategoryOptions.map((option) => (
-      <option
-        value={option.value}
-        data-service-key={option.key}
-        data-service-subject={option.subject}
-      >
-        {option.label}
-      </option>
-    ))
-  }
+  {serviceCategoryOptions.map((option) => (
+    <option
+      value={option.value}
+      data-service-key={option.key}
+      data-service-subject={option.subject}
+    >
+      {option.label}
+    </option>
+  ))}
 </select>
 ```
 

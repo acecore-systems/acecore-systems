@@ -143,10 +143,13 @@ const jsonLd = [
       <div class="container insight-article__header-inner">
         <nav class="breadcrumb" aria-label={text.breadcrumbNavigation}>
           <ol>
-            <li><a href={getLocalizedUrl("/", locale)}>{text.home}</a></li>
             <li>
-              <a href={getLocalizedUrl("/insights/", locale)}>{text.insights}</a
-              >
+              <a href={getLocalizedUrl("/", locale)}>{text.home}</a>
+            </li>
+            <li>
+              <a href={getLocalizedUrl("/insights/", locale)}>
+                {text.insights}
+              </a>
             </li>
             <li aria-current="page">{entry.data.title}</li>
           </ol>
@@ -160,37 +163,31 @@ const jsonLd = [
             {text.published}
             {formatDate(entry.data.date)}
           </time>
-          {
-            entry.data.lastUpdated && (
-              <time datetime={entry.data.lastUpdated.toISOString()}>
-                {text.updated} {formatDate(entry.data.lastUpdated)}
-              </time>
-            )
-          }
+          {entry.data.lastUpdated && (
+            <time datetime={entry.data.lastUpdated.toISOString()}>
+              {text.updated} {formatDate(entry.data.lastUpdated)}
+            </time>
+          )}
         </div>
-        {
-          entry.data.tags && (
-            <ul class="insight-tags" aria-label={text.tags}>
-              {entry.data.tags.map((tag) => (
-                <li>{tag}</li>
-              ))}
-            </ul>
-          )
-        }
-        {
-          articleImage && (
-            <figure class="insight-article__cover">
-              <img
-                src={articleImage}
-                alt={entry.data.title}
-                width="1600"
-                height="900"
-                decoding="async"
-                fetchpriority="high"
-              />
-            </figure>
-          )
-        }
+        {entry.data.tags && (
+          <ul class="insight-tags" aria-label={text.tags}>
+            {entry.data.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        )}
+        {articleImage && (
+          <figure class="insight-article__cover">
+            <img
+              src={articleImage}
+              alt={entry.data.title}
+              width="1600"
+              height="900"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </figure>
+        )}
       </div>
     </header>
 
@@ -203,20 +200,18 @@ const jsonLd = [
           locale={locale}
         />
 
-        {
-          tocHeadings.length > 0 && (
-            <details class="insight-toc">
-              <summary>{text.tableOfContents}</summary>
-              <ol>
-                {tocHeadings.map((heading) => (
-                  <li data-depth={heading.depth}>
-                    <a href={`#${heading.slug}`}>{heading.text}</a>
-                  </li>
-                ))}
-              </ol>
-            </details>
-          )
-        }
+        {tocHeadings.length > 0 && (
+          <details class="insight-toc">
+            <summary>{text.tableOfContents}</summary>
+            <ol>
+              {tocHeadings.map((heading) => (
+                <li data-depth={heading.depth}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </details>
+        )}
 
         <div class="insight-prose">
           <Content />
@@ -233,19 +228,14 @@ const jsonLd = [
           locale={locale}
         />
 
-        {
-          author && (
-            <aside
-              class="insight-author"
-              aria-labelledby="insight-author-title"
-            >
-              <p class="editorial-eyebrow">Author</p>
-              <h2 id="insight-author-title">{authorName}</h2>
-              {authorBio && <p>{authorBio}</p>}
-              {authorUrl && <a href={authorUrl}>{text.authorProfile}</a>}
-            </aside>
-          )
-        }
+        {author && (
+          <aside class="insight-author" aria-labelledby="insight-author-title">
+            <p class="editorial-eyebrow">Author</p>
+            <h2 id="insight-author-title">{authorName}</h2>
+            {authorBio && <p>{authorBio}</p>}
+            {authorUrl && <a href={authorUrl}>{text.authorProfile}</a>}
+          </aside>
+        )}
       </div>
     </div>
   </article>
@@ -259,9 +249,9 @@ const jsonLd = [
           <p>{text.nextStepBody}</p>
         </div>
         <div>
-          <a class="editorial-link" href={getLocalizedUrl("/guide/", locale)}
-            >{text.viewGuide}</a
-          >
+          <a class="editorial-link" href={getLocalizedUrl("/guide/", locale)}>
+            {text.viewGuide}
+          </a>
           <a
             class="editorial-link editorial-link--primary"
             href={`${getLocalizedUrl("/contact/", locale)}?category=service&from=systems-insight&entry=${slug}`}

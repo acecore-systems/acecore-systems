@@ -71,31 +71,29 @@ const formText = getContactFormText(locale);
           />
         </div>
         <div class="contact-field">
-          <label for="category"
-            >{formText.category}
-            <span class="field-required">{formText.required}</span></label
-          >
+          <label for="category">
+            {formText.category}
+            <span class="field-required">{formText.required}</span>
+          </label>
           <select id="category" name="お問い合わせ種別" required>
             <option value="">{formText.select}</option>
-            {
-              formText.categoryOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))
-            }
+            {formText.categoryOptions.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
           </select>
         </div>
         <div class="contact-field">
-          <label for="name"
-            >{formText.name}
-            <span class="field-required">{formText.required}</span></label
-          >
+          <label for="name">
+            {formText.name}
+            <span class="field-required">{formText.required}</span>
+          </label>
           <input id="name" name="お名前" autocomplete="name" required />
         </div>
         <div class="contact-field">
-          <label for="email"
-            >{formText.email}
-            <span class="field-required">{formText.required}</span></label
-          >
+          <label for="email">
+            {formText.email}
+            <span class="field-required">{formText.required}</span>
+          </label>
           <input
             id="email"
             name="メールアドレス"
@@ -105,17 +103,17 @@ const formText = getContactFormText(locale);
           />
         </div>
         <div class="contact-field">
-          <label for="subject"
-            >{formText.subject}
-            <span class="field-required">{formText.required}</span></label
-          >
+          <label for="subject">
+            {formText.subject}
+            <span class="field-required">{formText.required}</span>
+          </label>
           <input id="subject" name="件名" required />
         </div>
         <div class="contact-field">
-          <label for="message"
-            >{formText.message}
-            <span class="field-required">{formText.required}</span></label
-          >
+          <label for="message">
+            {formText.message}
+            <span class="field-required">{formText.required}</span>
+          </label>
           <p id="contact-message-help" class="contact-field__help">
             {formText.messageHelp}
           </p>
@@ -123,7 +121,8 @@ const formText = getContactFormText(locale);
             id="message"
             name="お問い合わせ内容"
             aria-describedby="contact-message-help"
-            required></textarea>
+            required
+          ></textarea>
         </div>
         <div
           id="turnstile-widget"
@@ -133,11 +132,8 @@ const formText = getContactFormText(locale);
           data-language={htmlLangMap[locale]}
           data-action="systems-contact"
           data-cdata="acecore-systems"
-        >
-        </div>
-        <p class="contact-form__note">
-          {formText.submissionNote}
-        </p>
+        ></div>
+        <p class="contact-form__note">{formText.submissionNote}</p>
         <p
           id="contact-form-status"
           class="contact-form__status"
@@ -154,19 +150,17 @@ const formText = getContactFormText(locale);
         </button>
       </form>
       <aside class="contact-faq" aria-label={formText.faqLabel}>
-        {
-          data.faqs.map((faq, index) => (
-            <details class="contact-faq__item">
-              <summary>
-                <span class="editorial-index">
-                  Q{String(index + 1).padStart(2, "0")}
-                </span>
-                <span>{faq.question}</span>
-              </summary>
-              <p>{faq.answer}</p>
-            </details>
-          ))
-        }
+        {data.faqs.map((faq, index) => (
+          <details class="contact-faq__item">
+            <summary>
+              <span class="editorial-index">
+                Q{String(index + 1).padStart(2, "0")}
+              </span>
+              <span>{faq.question}</span>
+            </summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
       </aside>
     </div>
   </section>

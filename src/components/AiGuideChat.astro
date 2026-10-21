@@ -42,7 +42,9 @@ const privacyUrl = getLocalizedUrl("/privacy/", locale);
       <div>
         <p class="ai-guide__eyebrow">{text.eyebrow}</p>
         <h2 id="systems-ai-guide-title">{text.title}</h2>
-        <p id="systems-ai-guide-lead" class="ai-guide__lead">{text.lead}</p>
+        <p id="systems-ai-guide-lead" class="ai-guide__lead">
+          {text.lead}
+        </p>
       </div>
       <button
         class="ai-guide__close"
@@ -72,17 +74,11 @@ const privacyUrl = getLocalizedUrl("/privacy/", locale);
     </div>
 
     <div class="ai-guide__prompts" aria-label={text.title}>
-      {
-        text.quickPrompts.map((prompt) => (
-          <button
-            type="button"
-            data-ai-guide-prompt={prompt}
-            aria-label={prompt}
-          >
-            {prompt}
-          </button>
-        ))
-      }
+      {text.quickPrompts.map((prompt) => (
+        <button type="button" data-ai-guide-prompt={prompt} aria-label={prompt}>
+          {prompt}
+        </button>
+      ))}
     </div>
 
     <form class="ai-guide__form" data-ai-guide-form>
@@ -101,16 +97,18 @@ const privacyUrl = getLocalizedUrl("/privacy/", locale);
           enterkeyhint="send"
           placeholder={text.placeholder}
           aria-describedby="systems-ai-guide-character-limit systems-ai-guide-disclosure"
-          data-ai-guide-input></textarea>
-        <button type="submit" data-ai-guide-submit>{text.send}</button>
+          data-ai-guide-input
+        ></textarea>
+        <button type="submit" data-ai-guide-submit>
+          {text.send}
+        </button>
       </div>
       <p
         class="visually-hidden"
         role="status"
         aria-live="polite"
         data-ai-guide-status
-      >
-      </p>
+      ></p>
     </form>
 
     <footer class="ai-guide__footer">

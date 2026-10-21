@@ -34,6 +34,6 @@ interface Props {
 const { name, class: className } = Astro.props;
 ---
 
-<span class:list={["purpose-icon", className]} aria-hidden="true"
-  ><Fragment set:html={icons[name]} /></span
->
+<span class:list={["purpose-icon", className]} aria-hidden="true">
+  <Fragment set:html={icons[name]} />
+</span>

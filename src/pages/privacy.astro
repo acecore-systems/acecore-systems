@@ -32,29 +32,27 @@ const text = getUi(locale);
         <h2 id="privacy-sections-title">{text.privacyHandlingTitle}</h2>
       </header>
       <div class="editorial-list">
-        {
-          data.sections.map((section, index) => (
-            <article class="editorial-row">
-              <header class="editorial-row__header">
-                <p class="editorial-index">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3>{section.title}</h3>
-              </header>
-              <div class="editorial-row__body">
-                <p>{section.body}</p>
-                {index === data.sections.length - 1 && (
-                  <a
-                    class="editorial-link"
-                    href={getLocalizedUrl("/contact/", locale)}
-                  >
-                    {text.contactFormLink}
-                  </a>
-                )}
-              </div>
-            </article>
-          ))
-        }
+        {data.sections.map((section, index) => (
+          <article class="editorial-row">
+            <header class="editorial-row__header">
+              <p class="editorial-index">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3>{section.title}</h3>
+            </header>
+            <div class="editorial-row__body">
+              <p>{section.body}</p>
+              {index === data.sections.length - 1 && (
+                <a
+                  class="editorial-link"
+                  href={getLocalizedUrl("/contact/", locale)}
+                >
+                  {text.contactFormLink}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
