@@ -10,6 +10,17 @@ on:
       - src/i18n/contact-form.ts
       - src/i18n/ui.ts
   workflow_dispatch:
+    inputs:
+      retry_batch_id:
+        description: "既存の完了Batchで検証に失敗した最大10件だけを再翻訳する（通常投入は空欄）"
+        required: false
+        default: ""
+        type: string
+      retry_dry_run:
+        description: "再試行対象の件数確認だけ行い、新しいBatchは作らない"
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -18,6 +29,9 @@ permissions:
 jobs:
   submit:
     runs-on: ubuntu-latest
+    concurrency:
+      group: openai-translation-batch-submit
+      cancel-in-progress: false
 
     steps:
       - name: Check out repository
@@ -35,6 +49,7 @@ jobs:
         run: npm ci
 
       - name: Wait for consecutive source edits
+        if: github.event_name != 'workflow_dispatch' || inputs.retry_batch_id == ''
         run: sleep 900
 
       - name: Use current main as the source version
@@ -48,9 +63,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          RETRY_BATCH_ID: ${{ inputs.retry_batch_id }}
+          RETRY_DRY_RUN: ${{ inputs.retry_dry_run }}
         run: |
           if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
             echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was submitted."
             exit 0
           fi
-          node --experimental-strip-types scripts/openai-translation-batch.mjs submit --head=HEAD
+          if [ -n "$RETRY_BATCH_ID" ]; then
+            retry_args=(--batch-id="$RETRY_BATCH_ID")
+            if [ "$RETRY_DRY_RUN" = "true" ]; then
+              retry_args+=(--dry-run)
+            fi
+            node --experimental-strip-types scripts/openai-translation-batch.mjs retry "${retry_args[@]}"
+          else
+            node --experimental-strip-types scripts/openai-translation-batch.mjs submit --head=HEAD
+          fi

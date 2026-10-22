@@ -4,14 +4,20 @@ import test from "node:test";
 
 import {
   applyBatchTranslations,
+  assertRetryBatch,
   createInsightRequest,
   createStructuredRequest,
   decodeMetadata,
   getSourceHashFromPullRequestBody,
   getSourceMarker,
   hashText,
+  findExistingRetry,
   isTranslationPullRequestCurrent,
   replaceLocaleObject,
+  mergeBatchRetry,
+  planBatchRetry,
+  parseArgs,
+  retryBatch,
   selectCompletedBatch,
   validateInsightTranslation,
 } from "../scripts/openai-translation-batch.mjs";
@@ -19,6 +25,10 @@ import {
   protectTranslationText,
   restoreTranslationText,
 } from "../scripts/translation-protected-text.mjs";
+import {
+  calculateTranslationSourceHash,
+  translatedLocales,
+} from "../scripts/i18n-source-hash.mjs";
 
 const insightFixture = [
   "---",
@@ -85,6 +95,352 @@ test("保護tokenの省略・複製・改変・追加を拒否する", () => {
       /en: fixture: (unknown or duplicated|protected token is missing or changed)/u,
     );
   }
+});
+
+test("実バッチで追加された既知inline CODE tokenのbacktickだけを除いて復元する", () => {
+  // service-cta-contact-prefill.md の実失敗は、同じ行のこれら3 tokenに
+  // backtickを追加し、復元後にinline code間の本文までcodeとして検出した。
+  const source = `${insightFixture}URLには \`Webサイト制作・運用について\` ではなく \`web\` や \`server\` を使う。\n`;
+  const { text, tokens } = protectTranslationText(source);
+  let translated = text;
+  for (const [token, original] of tokens) {
+    if (/^`[^`\r\n]+`$/u.test(original))
+      translated = translated.replace(token, `\u0060${token}\u0060`);
+  }
+  assert.equal(restoreTranslationText(source, translated), source);
+  validateInsightTranslation(
+    source,
+    restoreTranslationText(source, translated),
+  );
+  const doubleDelimited = `${insightFixture}Use \`\`literal\`\` here.\n`;
+  assert.equal(
+    restoreTranslationText(
+      doubleDelimited,
+      protectTranslationText(doubleDelimited).text,
+    ),
+    doubleDelimited,
+  );
+});
+
+test("複数tokenを囲むcodeや数値tokenのcode化・fence追加は曖昧なまま拒否する", () => {
+  const source = `${insightFixture}Use \`web\` and \`server\`.\n`;
+  const { text, tokens } = protectTranslationText(source);
+  const inline = [...tokens]
+    .filter(([, value]) => /^`[^`\r\n]+`$/u.test(value))
+    .map(([token]) => token);
+  const number = [...tokens].find(([, value]) => value === "0")[0];
+  const fence = [...tokens].find(([, value]) => value.startsWith("```"))[0];
+  for (const invalid of [
+    text.replace(
+      `${inline[0]} and ${inline[1]}`,
+      `\u0060${inline[0]} and ${inline[1]}\u0060`,
+    ),
+    text.replace(number, `\u0060${number}\u0060`),
+    text.replace(fence, `\u0060\u0060\u0060\n${fence}\n\u0060\u0060\u0060`),
+  ]) {
+    assert.throws(
+      () =>
+        validateInsightTranslation(
+          source,
+          restoreTranslationText(source, invalid),
+        ),
+      /inline code changed|fenced code|ambiguous formatting/u,
+    );
+  }
+});
+
+const retryMetadata = {
+  ...metadata,
+  sourcePath: "src/content/insights/service-cta-contact-prefill.md",
+};
+test("再試行は明示batch IDだけを受け付け、dry-runを通常投入へ混ぜない", () => {
+  assert.equal(
+    parseArgs(["retry", "--batch-id=batch_parent", "--dry-run"]).dryRun,
+    true,
+  );
+  for (const args of [
+    ["retry"],
+    ["retry", "--batch-id=batch_x;echo_unsafe"],
+    ["collect", "--batch-id=batch_parent"],
+    ["submit", "--dry-run"],
+  ]) {
+    assert.throws(() => parseArgs(args), /batch|dry-run/u);
+  }
+});
+
+test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/createを呼ばない", async () => {
+  const currentHash = calculateTranslationSourceHash(process.cwd());
+  const requests = translatedLocales.map((locale) =>
+    createInsightRequest(
+      { ...retryMetadata, sourceHash: currentHash, locale },
+      insightFixture,
+    ),
+  );
+  const outputs = requests.map((request) =>
+    batchResult(request, { markdown: "invalid" }),
+  );
+  for (const locale of ["en", "fr", "es"]) {
+    outputs.push(
+      batchResult(
+        createStructuredRequest(
+          {
+            ...retryMetadata,
+            kind: "content",
+            sourcePath: "src/data/pricing.json",
+            sourceHash: currentHash,
+            locale,
+          },
+          { label: "確認" },
+        ),
+        {},
+      ),
+    );
+  }
+  const parent = {
+    id: "batch_parent",
+    status: "completed",
+    output_file_id: "file-parent",
+    request_counts: { total: 11, completed: 11, failed: 0 },
+    metadata: {
+      translation_system: "acecore-systems-v1",
+      repository: "acecore-systems/acecore-systems",
+      source_hash: currentHash,
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  const originalKey = process.env.OPENAI_TRANSLATION_API_KEY;
+  const originalRepository = process.env.GITHUB_REPOSITORY;
+  const methods = [];
+  let batches = [parent];
+  globalThis.fetch = async (url, init = {}) => {
+    const method = init.method ?? "GET";
+    methods.push(method);
+    assert.equal(
+      method,
+      "GET",
+      "dry-run must not upload a file or create a Batch",
+    );
+    if (url.endsWith("/batches/batch_parent")) return Response.json(parent);
+    if (url.endsWith("/batches?limit=100"))
+      return Response.json({ data: batches });
+    if (url.endsWith("/files/file-parent/content"))
+      return new Response(
+        outputs.map((output) => JSON.stringify(output)).join("\n"),
+      );
+    throw new Error("Unexpected mock request");
+  };
+  process.env.OPENAI_TRANSLATION_API_KEY = "test-key-not-a-credential";
+  process.env.GITHUB_REPOSITORY = "acecore-systems/acecore-systems";
+  try {
+    await retryBatch({ batchId: parent.id, dryRun: true });
+    await assert.rejects(
+      () => retryBatch({ batchId: parent.id, dryRun: false }),
+      /limited to 10/u,
+    );
+    batches = [
+      parent,
+      {
+        ...parent,
+        id: "batch_child",
+        status: "in_progress",
+        metadata: {
+          ...parent.metadata,
+          retry_of: parent.id,
+          retry_identities_hash: "a".repeat(64),
+          retry_request_count: "10",
+        },
+      },
+    ];
+    await retryBatch({ batchId: parent.id, dryRun: false });
+    assert.ok(methods.length > 0);
+    assert.deepEqual([...new Set(methods)], ["GET"]);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined)
+      delete process.env.OPENAI_TRANSLATION_API_KEY;
+    else process.env.OPENAI_TRANSLATION_API_KEY = originalKey;
+    if (originalRepository === undefined) delete process.env.GITHUB_REPOSITORY;
+    else process.env.GITHUB_REPOSITORY = originalRepository;
+  }
+});
+function retryFixture() {
+  const goodRequest = createInsightRequest(retryMetadata, insightFixture);
+  const badRequest = createInsightRequest(
+    { ...retryMetadata, locale: "fr" },
+    insightFixture,
+  );
+  const masked = JSON.parse(badRequest.body.input).markdown;
+  const good = batchResult(goodRequest, { markdown: masked });
+  const bad = batchResult(badRequest, {
+    markdown: masked.replace(/\{ACECORE_KEEP_[^}]+\}/u, ""),
+  });
+  const readers = { readFile: () => insightFixture };
+  return { good, bad, badRequest, masked, readers };
+}
+
+test("再試行は正常結果を保持して不正identityだけを作り、全件一致と厳格検証後に結合する", () => {
+  const { good, bad, badRequest, masked, readers } = retryFixture();
+  const plan = planBatchRetry([good, bad], sourceHash, readers);
+  assert.equal(plan.requests.length, 1);
+  assert.equal(plan.retainedCount, 1);
+  assert.equal(decodeMetadata(plan.requests[0].custom_id).locale, "fr");
+  const repaired = batchResult(badRequest, { markdown: masked });
+  const combined = mergeBatchRetry(
+    [good, bad],
+    [repaired],
+    sourceHash,
+    plan.identitiesHash,
+    readers,
+  );
+  assert.equal(combined[0], good);
+  assert.equal(combined[1], repaired);
+  const writes = [];
+  applyBatchTranslations(combined, sourceHash, {
+    ...readers,
+    writeFile: (...args) => writes.push(args),
+  });
+  assert.equal(writes.length, 2);
+  for (const [outputs, expectedHash] of [
+    [[], plan.identitiesHash],
+    [[repaired, repaired], plan.identitiesHash],
+    [[good], plan.identitiesHash],
+    [[bad], plan.identitiesHash],
+    [[repaired], "b".repeat(64)],
+  ])
+    assert.throws(
+      () =>
+        mergeBatchRetry(
+          [good, bad],
+          outputs,
+          sourceHash,
+          expectedHash,
+          readers,
+        ),
+      /Retry|protected token/u,
+    );
+  assert.throws(
+    () => planBatchRetry([good, good], sourceHash, readers),
+    /duplicate/u,
+  );
+  assert.throws(
+    () => planBatchRetry([good], "b".repeat(64), readers),
+    /source identity/u,
+  );
+});
+
+test("再試行親子はrepo・sourceHash・完了件数を固定し、循環・多段と他repoを拒否する", () => {
+  const parent = {
+    id: "batch_parent",
+    status: "completed",
+    request_counts: { total: 48, completed: 48, failed: 0 },
+    metadata: {
+      translation_system: "acecore-systems-v1",
+      repository: "acecore-systems/acecore-systems",
+      source_hash: sourceHash,
+    },
+  };
+  assertRetryBatch(parent, sourceHash);
+  const child = {
+    ...parent,
+    id: "batch_child",
+    request_counts: { total: 1, completed: 1, failed: 0 },
+    metadata: {
+      ...parent.metadata,
+      retry_of: parent.id,
+      retry_identities_hash: "a".repeat(64),
+      retry_request_count: "1",
+    },
+  };
+  assertRetryBatch(child, sourceHash, { parentId: parent.id });
+  for (const invalid of [
+    { ...parent, status: "in_progress" },
+    { ...parent, request_counts: { total: 48, completed: 47, failed: 1 } },
+    { ...parent, metadata: { ...parent.metadata, repository: "other/repo" } },
+    {
+      ...parent,
+      metadata: { ...parent.metadata, source_hash: "b".repeat(64) },
+    },
+    child,
+  ])
+    assert.throws(() => assertRetryBatch(invalid, sourceHash), /Retry batch/u);
+  assert.throws(
+    () => assertRetryBatch(child, sourceHash, { parentId: child.id }),
+    /Retry batch/u,
+  );
+  assert.equal(
+    findExistingRetry(
+      [{ ...child, status: "in_progress" }],
+      parent.id,
+      sourceHash,
+    ).id,
+    child.id,
+  );
+  assert.equal(findExistingRetry([child], parent.id, "b".repeat(64)), null);
+  assert.equal(
+    selectCompletedBatch([parent, child], new Set(), {
+      currentSourceHash: sourceHash,
+      translationsCurrent: false,
+    }).id,
+    child.id,
+  );
+  assert.equal(
+    selectCompletedBatch(
+      [parent, { ...child, status: "in_progress" }],
+      new Set(),
+      { currentSourceHash: sourceHash, translationsCurrent: false },
+    ),
+    null,
+  );
+  assert.equal(
+    selectCompletedBatch(
+      [
+        parent,
+        {
+          ...child,
+          metadata: { ...child.metadata, source_hash: "b".repeat(64) },
+        },
+      ],
+      new Set(),
+      { currentSourceHash: sourceHash, translationsCurrent: false },
+    ).id,
+    parent.id,
+  );
+  for (const status of ["failed", "expired", "cancelled"]) {
+    assert.throws(
+      () =>
+        selectCompletedBatch([parent, { ...child, status }], new Set(), {
+          currentSourceHash: sourceHash,
+          translationsCurrent: false,
+        }),
+      /needs attention/u,
+    );
+  }
+  assert.throws(
+    () =>
+      selectCompletedBatch(
+        [
+          parent,
+          {
+            ...child,
+            metadata: { ...child.metadata, retry_request_count: "99" },
+          },
+        ],
+        new Set(),
+        { currentSourceHash: sourceHash, translationsCurrent: false },
+      ),
+    /metadata is invalid/u,
+  );
+  assert.equal(
+    selectCompletedBatch(
+      [
+        parent,
+        { ...child, metadata: { ...child.metadata, repository: "other/repo" } },
+      ],
+      new Set(),
+      { currentSourceHash: sourceHash, translationsCurrent: false },
+    ).id,
+    parent.id,
+  );
 });
 
 test("長いbacktick fenceとtilde fenceも一括保護し、内部の3連backtickをコードのまま保つ", () => {
@@ -387,6 +743,9 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(submit, /sleep 900/u);
   assert.match(submit, /OPENAI_TRANSLATION_API_KEY/u);
   assert.match(submit, /openai-translation-batch\.mjs submit/u);
+  assert.match(submit, /RETRY_BATCH_ID: \$\{\{ inputs\.retry_batch_id \}\}/u);
+  assert.match(submit, /retry_args=\(--batch-id="\$RETRY_BATCH_ID"\)/u);
+  assert.match(submit, /retry_dry_run:[\s\S]*default: true/u);
   assert.match(collect, /translation\/openai\//u);
   assert.match(collect, /actions\/create-github-app-token@v3/u);
   assert.match(

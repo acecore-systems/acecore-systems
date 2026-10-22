@@ -86,8 +86,8 @@ export function restoreTranslationText(
   translated,
   label = "Translation",
 ) {
-  const { tokens } = protectTranslationText(source);
-  const output = normalizeText(translated);
+  const { text: protectedSource, tokens } = protectTranslationText(source);
+  let output = normalizeText(translated);
   const seen = new Set();
   for (const token of output.match(markerPattern) ?? []) {
     if (!tokens.has(token) || seen.has(token)) {
@@ -97,6 +97,35 @@ export function restoreTranslationText(
   }
   if (seen.size !== tokens.size) {
     throw new Error(`${label}: protected token is missing or changed`);
+  }
+  // A CODE marker already owns its original delimiters. Remove only a single
+  // extra, isolated pair around one known inline-code marker. Never infer lost
+  // tokens, unwrap prose/multiple markers, or alter fenced-code formatting.
+  output = output.replace(
+    /(?<!`)`(\{ACECORE_KEEP_[^{}\r\n]*\})`(?!`)/gu,
+    (wrapped, token) => {
+      const original = tokens.get(token);
+      return original &&
+        /^`[^`\r\n]+`$/u.test(original) &&
+        !protectedSource.includes(`\u0060${token}`) &&
+        !protectedSource.includes(`${token}\u0060`)
+        ? token
+        : wrapped;
+    },
+  );
+  for (const token of tokens.keys()) {
+    const originalIndex = protectedSource.indexOf(token);
+    const translatedIndex = output.indexOf(token);
+    const before = (text, index) => /`*$/u.exec(text.slice(0, index))[0].length;
+    const after = (text, index) =>
+      /^`*/u.exec(text.slice(index + token.length))[0].length;
+    if (
+      before(output, translatedIndex) >
+        before(protectedSource, originalIndex) ||
+      after(output, translatedIndex) > after(protectedSource, originalIndex)
+    ) {
+      throw new Error(`${label}: ambiguous formatting around protected token`);
+    }
   }
   return output.replace(markerPattern, (token) => tokens.get(token));
 }
