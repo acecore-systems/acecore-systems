@@ -1,122 +1,122 @@
 ---
-title: "Projeto técnico para levar o contexto de um CTA de serviço ao formulário de contato"
-description: "Projeto de implementação para levar ao formulário o contexto lido em uma página de serviço. Abrange mini CTAs em Astro, contrato de parâmetros de URL, seleção inicial da categoria, prefill do assunto, URLs multilíngues, medição com GA e verificação do HTML gerado."
+title: "Projeto técnico para transferir o contexto do CTA de serviço para o formulário de contato"
+description: "Este é um projeto de implementação para transferir ao formulário de contato o contexto que o usuário estava lendo na página de serviços. Organizamos a solução para que possa ser reutilizada em outros sites: mini CTAs em um site Astro, contrato de parâmetros da URL, seleção inicial do tipo de contato, preenchimento prévio do assunto, URLs multilíngues, mensuração no GA e verificação do HTML gerado."
 date: 2026-06-07T13:00
 lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
-tags: ["Tecnologia", "Site", "Serviços", "Astro", "CMS"]
+tags: ["Tecnologia", "Sites", "Serviços", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
 callout:
   type: info
-  title: Ponto principal deste artigo
-  text: Um CTA de serviço é uma jornada fraca quando apenas envia o usuário ao formulário. Passar pela URL o contexto do serviço que ele estava lendo e inicializar no formulário a categoria e o assunto reduz ao mesmo tempo a dúvida no preenchimento e o trabalho de triagem de quem recebe.
+  title: Pontos principais deste artigo
+  text: Um CTA na página de serviços é um ponto de entrada fraco se apenas direcionar o usuário ao formulário. Ao passar pela URL o contexto do serviço que ele estava lendo e inicializar no formulário o tipo de contato e o assunto, é possível reduzir ao mesmo tempo a indecisão durante o preenchimento e o trabalho de classificação do lado que recebe as consultas.
 processFigure:
-  title: Fluxo para passar o contexto do CTA de serviço ao formulário
+  title: Fluxo de transferência do contexto do CTA de serviço para o formulário
   steps:
-    - title: Service
-      description: Atribuir um service key ao CTA de cada seção de serviço.
+    - title: Serviço
+      description: Adicionar uma chave de serviço ao CTA de cada seção de serviço.
       icon: i-lucide-panels-top-left
       accent: brand
     - title: URL
-      description: Passar pelo contrato de URL, como /contact/?category=service&service=web#contact-form.
+      description: Passar os dados por meio de um contrato de URL, como /contact/?category=service&service=web#contact-form.
       icon: i-lucide-link
       accent: amber
-    - title: Form
-      description: Inicializar no formulário a categoria e o assunto correspondentes.
+    - title: Formulário
+      description: Inicializar no formulário o tipo de contato e o assunto correspondentes.
       icon: i-lucide-file-input
       accent: emerald
-    - title: Ops
-      description: A equipe receptora identifica o contexto do serviço apenas pela categoria.
+    - title: Operações
+      description: A equipe que recebe as consultas consegue identificar o contexto do serviço apenas pelo tipo de contato.
       icon: i-lucide-inbox
       accent: slate
 compareTable:
-  title: Diferença ao conectar o CTA ao formulário
+  title: Diferenças ao conectar o CTA ao formulário
   before:
-    label: Apenas enviar ao formulário
+    label: Ao apenas direcionar para o formulário
     items:
-      - O usuário precisa selecionar novamente o mesmo serviço
-      - O assunto fica vazio e a natureza da consulta não fica clara
-      - A equipe receptora precisa ler a mensagem para identificar o serviço
-      - A medição de cada CTA de serviço fica ambígua
+      - O usuário seleciona novamente no formulário o nome do mesmo serviço
+      - O assunto fica em branco e é difícil entender qual é a consulta
+      - A equipe que recebe as consultas tem dificuldade para identificar o serviço sem ler o corpo da mensagem
+      - Fica impreciso medir a eficácia dos CTAs por serviço
   after:
-    label: Levar o contexto adiante
+    label: Ao transferir o contexto
     items:
-      - A categoria pode ser pré-selecionada pelo service key do CTA
-      - O nome do serviço pode preencher o assunto e organizar a consulta
-      - A equipe receptora classifica a consulta olhando a categoria
-      - O GA label e os parâmetros de URL facilitam a análise por CTA
+      - É possível selecionar inicialmente o tipo de contato com base na chave de serviço do CTA
+      - Inserir o nome do serviço no assunto ajuda a organizar o conteúdo da consulta
+      - A equipe que recebe as consultas pode classificar o contato apenas pelo tipo de contato
+      - É mais fácil verificar os resultados por CTA usando o label do GA e os parâmetros da URL
 checklist:
-  title: Verificação de projeto para adoção
+  title: Checklist de projeto para a implementação
   items:
-    - text: Usar nos parâmetros de URL apenas service keys curtos e estáveis
-    - text: Usar valores operacionalmente estáveis no envio, não textos exibidos ao usuário
-    - text: Fazer fallback para consultas gerais diante de um service key desconhecido
-    - text: Preencher o assunto somente quando estiver vazio
-    - text: Antes de adicionar campos hidden, confirmar se a categoria existente já permite a classificação
-    - text: Gerar no servidor a URL de contato de cada locale
-    - text: Adicionar GA label e location ao CTA para medir seu desempenho
-    - text: Após o build, verificar no HTML as quantidades de CTA e option e a presença ou ausência de campos hidden
+    - text: Usar apenas chaves de serviço curtas e estáveis nos parâmetros da URL
+    - text: Definir o valor recebido pelo formulário como um valor operacionalmente estável, não como o texto exibido ao usuário
+    - text: Fazer chaves de serviço desconhecidas retornarem à categoria de serviços em geral
+    - text: Preencher o assunto inicialmente apenas quando estiver em branco
+    - text: Antes de adicionar campos ocultos, confirmar se o tipo de contato existente permite classificar as consultas
+    - text: Gerar no servidor uma URL de contato para cada locale
+    - text: Adicionar ao CTA um label e um location do GA para possibilitar a mensuração dos resultados
+    - text: Verificar após o build a quantidade de CTAs e opções no HTML gerado, além da presença ou ausência de campos ocultos
 linkCards:
   - href: /services/
     title: Serviços
-    description: Entrada da jornada que contém CTAs específicos por serviço.
+    description: Página de entrada do fluxo com CTAs específicos para cada serviço.
     icon: i-lucide-panels-top-left
   - href: /contact/
     title: Contato
-    description: Formulário que recebe os parâmetros de URL e inicializa categoria e assunto.
+    description: Formulário que recebe parâmetros da URL e inicializa o tipo e o assunto.
     icon: i-lucide-message-square
   - href: /blog/astro-ai-contact-chat/
-    title: Projeto técnico do chat de atendimento com IA
-    description: Artigo relacionado sobre uma jornada conversacional que organiza o destino da consulta.
+    title: Projeto técnico de um chat com IA para consultas
+    description: Artigo relacionado sobre um fluxo que organiza o destino de uma consulta por meio de uma conversa.
     icon: i-lucide-sparkles
 faq:
   title: Perguntas frequentes
   items:
-    - question: Por que não enviar o serviço-alvo em um campo hidden?
-      answer: "Em junho de 2026, a classificação usava apenas a categoria existente e evitava campos ocultos extras. O formulário atual da Systems também guarda service, from e entry em campos ocultos para integração."
-    - question: É seguro se os parâmetros da URL forem alterados?
-      answer: Um service key desconhecido faz fallback para consultas gerais. O valor enviado é escolhido entre os option do formulário, portanto o valor da URL não é usado diretamente.
-    - question: Como tratar isso em um site multilíngue?
-      answer: Gere o destino do CTA para cada locale e traduza os rótulos exibidos no formulário. Manter os valores enviados em classificações japonesas estáveis ajuda a evitar variação na operação receptora.
+    - question: Por que não enviar o serviço sobre o qual o usuário quer conversar em um campo oculto?
+      answer: "Na época, em 6/2026, a classificação era feita apenas com os tipos de contato existentes, sem adicionar campos ocultos. Atualmente, o formulário do Acecore Systems salva service, from e entry em campos ocultos de integração, separadamente do valor de classificação."
+    - question: É seguro se os parâmetros da URL forem adulterados?
+      answer: Chaves de serviço desconhecidas retornam à categoria de serviços em geral. Como o valor enviado é selecionado entre as opções do formulário, a URL não é usada diretamente como valor recebido.
+    - question: Como isso funciona em um site multilíngue?
+      answer: O destino dos links dos CTAs é gerado para cada locale, e os rótulos exibidos no formulário são traduzidos. Por outro lado, usar valores recebidos com nomes de classificação estáveis em japonês ajuda a manter as operações da equipe que recebe as consultas consistentes.
 ---
 
-> **Atualização de setembro de 2026:** Os exemplos `ServiceSectionActions` e `service=web` registram o projeto do site corporativo em junho de 2026. Hoje, os [CTAs de serviço da Acecore Systems](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) passam `category`, `service`, `from` e `entry`; o [formulário](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) valida chaves curtas e pré-seleciona categoria e assunto. Ele também usa campos ocultos para medição e integração; não copie a antiga escolha de dispensá-los como contrato atual. Valores de URL ainda precisam ser mapeados para opções permitidas.
+> **Adicionado em 9/2026:** Os exemplos de `ServiceSectionActions` e `service=web` abaixo registram a estrutura usada no site oficial da Acecore em 6/2026. Atualmente, no Acecore Systems, os [CTAs dos detalhes dos serviços](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) incluem `category`, `service`, `from` e `entry`; o [formulário de contato](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) valida uma chave de serviço curta e inicializa o tipo e o assunto. Hoje também são usados campos ocultos para mensuração e integração; portanto, não copie como especificação atual o projeto abaixo de «não usar campos ocultos». O princípio de não confiar nos valores da URL e associá-los às opções do formulário continua válido.
 
-Quando alguém que lê uma página de serviço pensa “quero consultar sobre isto”, apenas enviar essa pessoa ao formulário faz perder parte do contexto.
+Quando alguém que leu a página de serviços pensa «Quero conversar sobre este conteúdo», simplesmente direcionar essa pessoa ao formulário de contato faz com que parte do contexto se perca.
 
-O usuário precisa escolher novamente o tipo de serviço e escrever o assunto. A equipe receptora também não consegue saber facilmente se a consulta é sobre produção web, operação de servidores ou Aceserver antes de ler a mensagem.
+O usuário precisa selecionar novamente o tipo de serviço no formulário e escrever o assunto por conta própria. A equipe que recebe o contato também tem dificuldade para saber, sem ler a mensagem, se a consulta é sobre desenvolvimento web, operação de servidores ou Aceserver.
 
-No site da Acecore, melhoramos essa jornada no [PR que leva o alvo do CTA de serviço ao formulário](https://github.com/acecore-systems/acecore-net/pull/100). Este artigo organiza a solução não só como registro de implementação em Astro, mas como projeto de jornada reutilizável em outros sites.
+No site da Acecore, aprimoramos esse fluxo por meio do [PR para transferir o serviço em questão do CTA de serviço para o formulário de contato](https://github.com/acecore-systems/acecore-net/pull/100). Neste artigo, organizamos a solução não apenas como um registro de implementação em Astro, mas também como um projeto de fluxo que pode ser usado em outros sites.
 
 ## Validar a inicialização do formulário a partir de um CTA
 
-Teste uma chave válida, outra desconhecida e voltar após escrever o assunto. Verifique opções permitidas e preservação do assunto, mantendo o mesmo contrato nas URLs por idioma. Não inclua dados pessoais nem texto livre na URL; passe contexto com identificadores curtos.
+Teste uma chave de serviço válida, uma chave desconhecida e a ação de voltar quando o assunto já estiver preenchido. Confirme se o tipo é associado a uma opção permitida e se o assunto não é sobrescrito; use o mesmo contrato de valores também nas URLs de cada locale. Não inclua dados pessoais nem texto livre na URL; transmita o contexto da consulta apenas com identificadores curtos.
 
-[MDN URLSearchParams：Ler parâmetros de URL](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+[MDN URLSearchParams: especificação para ler parâmetros da URL](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
-## O objetivo não é apenas reduzir o preenchimento
+## O objetivo não é reduzir o preenchimento do formulário
 
-A finalidade não é simplesmente preencher campos automaticamente para o formulário parecer mais fácil.
+O objetivo desta implementação não é apenas facilitar o preenchimento automático dos campos do formulário.
 
-O essencial é levar corretamente o contexto criado na página de serviço ao formulário e à operação receptora.
+O ponto principal é transferir corretamente para o formulário de contato e para a operação de recebimento o contexto que surgiu na página de serviços.
 
-| Perspectiva         | O que deve melhorar                                       |
-| ------------------- | --------------------------------------------------------- |
-| Usuário             | Evitar que selecione novamente o serviço que estava lendo |
-| Formulário          | Inicializar categoria e assunto de acordo com a consulta  |
-| Equipe receptora    | Facilitar a classificação apenas pela categoria           |
-| Medição             | Rastrear de qual CTA de serviço a consulta começou        |
-| Jornada multilíngue | Enviar para a URL de contato correspondente ao locale     |
+| Perspectiva       | O que queremos melhorar                                                        |
+| ----------------- | ------------------------------------------------------------------------------ |
+| Usuário           | Reduzir o trabalho de selecionar novamente o serviço que estava lendo          |
+| Formulário        | Inicializar o tipo de contato e o assunto de acordo com o conteúdo da consulta |
+| Equipe que recebe | Facilitar a classificação do serviço em questão apenas pelo tipo de contato    |
+| Mensuração        | Facilitar a identificação do CTA de serviço que iniciou a consulta             |
+| Fluxo multilíngue | Direcionar para uma URL de contato adequada ao locale                          |
 
-Embora pareça um pequeno mini CTA, o projeto abrange CTA, URL, formulário, tradução, medição e operação receptora.
+Visualmente, trata-se de um pequeno mini CTA, mas o projeto abrange o CTA, a URL, o formulário, as traduções, a mensuração e as operações de recebimento.
 
-## Separar responsabilidades em um componente de CTA
+## Extrair as responsabilidades para um componente de CTA
 
-Colocamos um CTA “Consultar sobre este serviço” ao final de cada seção.
+Adicione ao final de cada seção de serviço um CTA com o texto «Conversar sobre este serviço».
 
-É melhor evitar escrever diretamente em cada seção a mesma geração de link e os mesmos atributos de GA. Com sete serviços, a lógica se repete sete vezes e alguma cópia pode ficar desatualizada quando a redação ou a URL mudar.
+O primeiro problema a evitar é escrever repetidamente a geração do mesmo link e os atributos do GA em cada seção da página de serviços. Se houver 7 serviços, o mesmo padrão aparecerá 7 vezes. Isso facilita deixar algo passar quando for preciso alterar o texto ou as especificações da URL.
 
-Por isso criamos `ServiceSectionActions` para centralizar o CTA.
+Por isso, criamos `ServiceSectionActions` para reunir os CTAs de contato.
 
 ```astro
 ---
@@ -148,38 +148,38 @@ const contactUrl = `${u("/contact/")}?category=service&service=${encodeURICompon
 </a>
 ```
 
-O componente tem três responsabilidades:
+Este componente tem 3 responsabilidades.
 
-- Gerar uma URL de contato de acordo com o locale
-- Colocar o service key em um parâmetro de URL
-- Manter label e location usados na medição do GA
+- Gerar uma URL de contato adequada ao locale
+- Incluir a chave de serviço nos parâmetros da URL
+- Adicionar um label e um location para a mensuração no GA
 
-O CTA é um ponto de ação e também um ponto de medição. Mantemos `data-ga-label` e `data-ga-location` para ver depois de qual serviço a consulta começou.
+O CTA é um ponto de ação do usuário e, por isso, também é um ponto de mensuração, além de um elemento da interface. Mantemos `data-ga-label` e `data-ga-location` para identificar posteriormente de qual serviço começou cada consulta.
 
-## Transformar os parâmetros de URL no contrato com o formulário
+## Usar os parâmetros da URL como contrato com o formulário
 
-Os valores são passados por parâmetros de URL.
+Os valores passados do CTA para o formulário de contato são enviados por parâmetros da URL.
 
 ```txt
 /contact/?category=service&service=web#contact-form
 ```
 
-O ponto importante é não usar o texto exibido na URL.
+O importante aqui é não usar na URL um «texto exibido».
 
-Um rótulo como `Webサイト制作・運用について` sofre efeitos de tradução, variações de redação e futuras mudanças de nome. Na URL, coloque apenas um service key curto como `web` ou `server`.
+Textos exibidos como `Webサイト制作・運用について` são afetados por traduções, variações de grafia e futuras mudanças de nome. Na URL, inclua apenas uma chave de serviço curta, como `web` ou `server`.
 
-| Parâmetro  | Papel                                                |
-| ---------- | ---------------------------------------------------- |
-| `category` | Indica a entrada para tratar uma consulta de serviço |
-| `service`  | Key estável que representa o serviço-alvo            |
-| hash       | Usado para rolar até o formulário                    |
+| Parâmetro  | Papel                                                                  |
+| ---------- | ---------------------------------------------------------------------- |
+| `category` | Indica a entrada que deve ser tratada como uma consulta sobre serviços |
+| `service`  | Chave estável que identifica o serviço em questão                      |
+| hash       | Usado para rolar até a posição do formulário                           |
 
-O usuário pode editar os parâmetros. Por isso o formulário não usa o valor da URL diretamente no envio; ele o mapeia para um option existente.
+Como o usuário pode editar os parâmetros da URL, o formulário não deve usar o valor da URL diretamente como valor enviado. Em vez disso, deve mapeá-lo para uma opção existente.
 
 <figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
   <figcaption>
-    <strong id="diagram-service-cta-contact-prefill">Do contexto validado do contato ao registro administrativo</strong>
-    <span>Mostra as etapas implementadas; o acompanhamento completo de clientes reais ainda não foi verificado.</span>
+    <strong id="diagram-service-cta-contact-prefill">Fluxo de transferência do recebimento de consultas para os registros de gestão</strong>
+    <span>Mostra as etapas de implementação do fluxo. O contato com clientes reais e a conclusão do atendimento precisam ser verificados separadamente.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
@@ -189,8 +189,8 @@ O usuário pode editar os parâmetros. Por isso o formulário não usa o valor d
           <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
         </svg>
       </span>
-      <strong>Resolver o contexto do CTA</strong>
-      <span>Mapear uma service key estável para a URL localizada e uma opção permitida do formulário.</span>
+      <strong>Ler o contexto do CTA</strong>
+      <span>Associar uma chave de serviço estável à URL de exibição multilíngue e à lista de opções permitidas no formulário.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -199,8 +199,8 @@ O usuário pode editar os parâmetros. Por isso o formulário não usa o valor d
           <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
         </svg>
       </span>
-      <strong>Validar dados e permissões</strong>
-      <span>Preencher o assunto apenas quando estiver vazio; a API também verifica a identidade do usuário e as permissões de operação.</span>
+      <strong>Validar a entrada e as permissões</strong>
+      <span>Preencher o assunto inicialmente apenas se estiver em branco e verificar também na API a identidade do usuário e as permissões de operação.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -209,15 +209,15 @@ O usuário pode editar os parâmetros. Por isso o formulário não usa o valor d
           <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
         </svg>
       </span>
-      <strong>Criar o registro de entrada</strong>
-      <span>Registrar a solicitação no histórico e nas tarefas seguintes; a conclusão do atendimento é outro estado.</span>
+      <strong>Transferir para os registros de recebimento</strong>
+      <span>Refletir o conteúdo recebido no histórico do CRM e nas tarefas subsequentes, registrando a conclusão efetiva do atendimento pelo responsável como um estado separado.</span>
     </li>
   </ol>
 </figure>
 
 ## Manter uma tabela de classificação no formulário
 
-O formulário mantém as categorias por serviço em um array.
+No formulário de contato, mantenha as classificações por serviço em um array.
 
 ```ts
 const serviceCategoryOptions = [
@@ -236,22 +236,22 @@ const serviceCategoryOptions = [
 ];
 ```
 
-`key`, `value`, `label` e `subject` têm papéis diferentes.
+`key`, `value`, `label` e `subject` têm funções diferentes.
 
-| Campo     | Papel                                                        |
-| --------- | ------------------------------------------------------------ |
-| `key`     | Identificador estável para procurar pelo parâmetro da URL    |
-| `value`   | Categoria recebida pela equipe quando o formulário é enviado |
-| `label`   | Option traduzido mostrado na tela                            |
-| `subject` | Nome do serviço usado para inicializar o assunto             |
+| Campo     | Papel                                                                               |
+| --------- | ----------------------------------------------------------------------------------- |
+| `key`     | Identificador estável usado para localizar o serviço a partir dos parâmetros da URL |
+| `value`   | Tipo de contato enviado à equipe que recebe as consultas                            |
+| `label`   | Opção traduzida exibida na tela                                                     |
+| `subject` | Nome do serviço usado para preencher inicialmente o assunto                         |
 
-Em um site multilíngue, `label` é traduzido para o locale. Já `value` é usado na classificação da equipe receptora e permanece como valor japonês estável.
+Em um site multilíngue, traduza `label` de acordo com o locale. Por outro lado, como `value` é usado pela equipe que recebe as consultas para fazer a classificação, usamos um valor estável em japonês.
 
-A decisão varia conforme o produto. Se o CRM ou formulário externo aceitar classificações multilíngues, value também pode variar por locale. Para simplificar a operação receptora, separar rótulo exibido e valor enviado é mais fácil de administrar.
+Isso depende do produto. Se o CRM ou o formulário externo oferecer suporte a classificações multilíngues, os valores também podem variar por locale. Quando o objetivo é simplificar as operações da equipe que recebe as consultas, é mais fácil trabalhar separando o rótulo exibido do valor recebido.
 
-## Adicionar atributos data aos option
+## Adicionar atributos data às opções
 
-O select gera um option para cada serviço.
+O campo select do formulário exibe opções específicas para cada serviço.
 
 ```astro
 <select id="category" name="category" required>
@@ -273,13 +273,13 @@ O select gera um option para cada serviço.
 </select>
 ```
 
-`data-service-key` é comparado com `service` na URL. `data-service-subject` é usado para criar o assunto.
+`data-service-key` é usado para comparar com `service` da URL. `data-service-subject` é usado para criar o assunto.
 
-Também aqui não colocamos o valor da URL diretamente em `category.value`. Escolher sempre um option do select evita que um service key desconhecido ou um valor inválido entre nos dados enviados.
+O importante aqui é não inserir diretamente o valor da URL em `category.value`. Selecionar sempre entre as opções do campo select evita que uma chave de serviço desconhecida ou um valor inválido seja incluído no valor recebido.
 
-## Fazer o prefill no cliente
+## Preencher previamente no lado do cliente
 
-Um pequeno script inicializa o formulário após o carregamento.
+A inicialização do formulário é feita por um pequeno script executado depois que a página é carregada.
 
 ```js
 function initContactServicePrefill() {
@@ -322,33 +322,33 @@ function initContactServicePrefill() {
 }
 ```
 
-Há quatro pontos:
+Os principais pontos da implementação são estes 4.
 
-- Verificar `data-service-prefill-initialized` para evitar inicialização dupla
-- Processar somente quando `category=service`
-- Fazer fallback para `サービス全般について` diante de um service key desconhecido
-- Preencher o assunto somente quando estiver vazio
+- Verificar `data-service-prefill-initialized` para evitar uma inicialização duplicada
+- Executar o processamento apenas quando `category=service`
+- Fazer chaves de serviço desconhecidas retornarem à opção «Serviços em geral»
+- Preencher o assunto inicialmente apenas quando estiver em branco
 
-O último ponto é importante. Se a navegação de retorno ou o preenchimento do navegador conservar o assunto, sobrescrevê-lo piora a experiência.
+O último ponto, «apenas quando estiver em branco», é importante. Se o usuário já tiver um assunto preenchido ao voltar à página ou por meio do preenchimento automático do navegador, sobrescrevê-lo sem permissão prejudica a experiência.
 
-Com Astro View Transitions ou navegação no cliente, também inicializamos em `astro:page-load`.
+Se houver View Transitions do Astro ou navegação no cliente, inicialize não apenas no carregamento normal, mas também em `astro:page-load`.
 
 ```js
 document.addEventListener("astro:page-load", initContactServicePrefill);
 initContactServicePrefill();
 ```
 
-## Ir ao formulário usando o hash
+## Ir até o formulário com hash
 
-A URL do CTA inclui `#contact-form`.
+Adicionamos `#contact-form` à URL do CTA.
 
 ```txt
 /contact/?category=service&service=web#contact-form
 ```
 
-Como a página pode ter FAQ, LINE, explicações e outros meios de contato, é natural levar diretamente ao formulário quem veio de um CTA de serviço.
+A página de contato também tem FAQ, LINE, textos explicativos e outros meios de contato além do formulário. Por isso, é mais natural que usuários vindos de um CTA de serviço sejam direcionados diretamente à posição do formulário.
 
-Quando o formulário também é inicializado, é preciso cuidar do momento da rolagem. Usamos `requestAnimationFrame` para rolar após o elemento ser renderizado.
+No entanto, ao inicializar o formulário, é preciso prestar um pouco de atenção ao momento da rolagem. Como queremos rolar depois que o elemento for renderizado, usamos `requestAnimationFrame`.
 
 ```js
 if (window.location.hash === "#contact-form") {
@@ -358,57 +358,57 @@ if (window.location.hash === "#contact-form") {
 }
 ```
 
-É um comportamento pequeno, mas o usuário se perde quando a intenção do CTA e a posição visível não coincidem. URL, seleção inicial e posição de rolagem são tratadas em conjunto.
+Ir até a posição do formulário é um comportamento pequeno, mas, se a posição exibida não corresponder à intenção do CTA, o usuário pode ficar em dúvida. No projeto do fluxo, consideramos em conjunto a URL, a seleção inicial e a posição de rolagem.
 
-## Decidir não aumentar campos hidden
+## Decidir não adicionar campos ocultos
 
-Não adicionamos um campo hidden `相談対象サービス`.
+Desta vez, não adicionamos um campo oculto para `相談対象サービス`.
 
-Queríamos identificar o serviço apenas pela categoria.
+O motivo foi permitir identificar o serviço em questão apenas pelo tipo de contato.
 
-Adicionar campos também adiciona verificações:
+Adicionar campos ao formulário também aumenta o número de pontos a verificar.
 
-- Se aparece no e-mail de notificação
-- Se requer uma coluna no painel ou planilha
-- Se afeta modelos de resposta automática
-- Se é tratado por CRM ou Webhook
-- Como separar nomes multilíngues e valores recebidos
+- Se o campo deve aparecer no e-mail de notificação
+- Se é preciso adicionar uma coluna à tela de administração ou à planilha
+- Se há impacto nos modelos de resposta automática existentes
+- Se o campo será usado na integração com CRM ou por webhook
+- Como separar o nome exibido traduzido do valor recebido
 
-Se os campos existentes expressam a informação, não adicionar outro estabiliza a operação. Dividimos `お問い合わせ種別` entre consultas gerais e categorias específicas.
+Se as informações necessárias puderem ser representadas por campos existentes, a operação tende a ser mais estável sem adicionar campos. Desta vez, dividimos `お問い合わせ種別` entre «serviços em geral» e os tipos específicos de cada serviço, permitindo que a equipe que recebe as consultas os identifique.
 
-Um hidden pode ser adequado quando é necessário selecionar vários serviços, guardar um ID de campanha ou usar um campo separado no CRM.
+Naturalmente, também pode ser apropriado adicionar campos ocultos se houver requisitos como selecionar vários serviços ao mesmo tempo, salvar um ID de campanha publicitária ou usar um campo separado no CRM.
 
-## Abordagem para sites multilíngues
+## Como lidar com sites multilíngues
 
-Separar três valores evita confusão.
+Ao criar esse fluxo em um site multilíngue, separar 3 tipos de valores evita confusão.
 
-| Tipo           | Exemplo                       | Depende do locale   |
-| -------------- | ----------------------------- | ------------------- |
-| URL key        | `web`, `server`, `aceserver`  | Não                 |
-| Rótulo exibido | `About Website Design`, etc.  | Sim                 |
-| Valor enviado  | `Webサイト制作・運用について` | Depende da operação |
+| Tipo           | Exemplo                       | Depende do locale     |
+| -------------- | ----------------------------- | --------------------- |
+| Chave da URL   | `web`, `server`, `aceserver`  | Não                   |
+| Rótulo exibido | `About Website Design` etc.   | Sim                   |
+| Valor recebido | `Webサイト制作・運用について` | Depende das operações |
 
-É mais estável não traduzir a URL key, usada ao compartilhar, medir e comparar no formulário.
+As chaves da URL são mais estáveis quando não são traduzidas. Isso facilita compartilhar links, analisar os dados e fazer a correspondência no formulário.
 
-O rótulo exibido sempre é traduzido porque é o texto visto pelo usuário.
+Os rótulos exibidos devem sempre ser traduzidos, pois são os textos que o usuário vê no formulário.
 
-O valor enviado segue a operação. Aqui usamos valores japoneses estáveis. Separar a exibição multilíngue da operação interna posterior facilita o gerenciamento.
+Os valores recebidos devem seguir as operações. Neste caso, usamos valores estáveis em japonês. Separar a exibição multilíngue das operações internas após o recebimento facilita o uso do formulário.
 
-O fluxo de tradução também é descrito em [Como operar um blog multilíngue com Sveltia CMS](/blog/copilot-translation-pipeline/).
+Também apresentamos o próprio fluxo de tradução em [Como gerenciar um blog multilíngue com o Sveltia CMS](/blog/copilot-translation-pipeline/).
 
 ## Verificar o HTML gerado
 
-Não basta olhar o componente. Após o build, confirme que os links e option foram gerados.
+Para esse tipo de implementação, não basta verificar apenas o componente. É preciso confirmar no HTML após o build se os links e as opções foram realmente gerados.
 
-Verificamos:
+Os pontos verificados foram os seguintes.
 
-- Sete CTAs específicos em `/services/`
-- Cada CTA contém `?category=service&service=...#contact-form`
-- Sete option com `data-service-key` em `/contact/`
-- `サービス全般について` e categorias específicas aparecem
-- Nenhum hidden `相談対象サービス` aparece
+- Há 7 CTAs específicos para cada serviço em `/services/`
+- Cada CTA tem `?category=service&service=...#contact-form`
+- Há 7 opções com `data-service-key` em `/contact/`
+- Estão presentes a opção «Serviços em geral» e os tipos específicos de cada serviço
+- Não há campos ocultos para `相談対象サービス`
 
-Por exemplo, use `rg`.
+Por exemplo, é possível verificar isso no HTML gerado com `rg`.
 
 ```powershell
 rg -n "category=service&service=.*#contact-form" dist\services\index.html
@@ -416,43 +416,43 @@ rg -n "data-service-key" dist\contact\index.html
 rg -n "相談対象サービス" dist\contact\index.html
 ```
 
-A última verificação confirma a ausência do que decidimos não adicionar. Mudanças em formulários devem conferir tanto o que foi incluído quanto o que foi deliberadamente omitido.
+A última verificação serve para confirmar que aquilo que não deveria aparecer realmente não aparece. Ao alterar um formulário, devemos verificar não apenas o que foi adicionado, mas também o que decidimos não adicionar.
 
-## Divisão de papéis com o chat de IA
+## Dividir as funções com o chat de IA
 
-Esta jornada combina com o [projeto técnico do chat de atendimento com IA](/blog/astro-ai-contact-chat/), mas os papéis são diferentes.
+Este fluxo combina bem com o [projeto técnico de um chat com IA para consultas](/blog/astro-ai-contact-chat/), mas as funções são diferentes.
 
-| Jornada        | No que é boa                                  |
-| -------------- | --------------------------------------------- |
-| Chat de IA     | Organiza por conversa qual serviço consultar  |
-| CTA de serviço | Leva ao formulário o contexto do serviço lido |
-| Formulário     | Recebe a consulta formal e mantém o registro  |
+| Fluxo          | O que faz melhor                                                         |
+| -------------- | ------------------------------------------------------------------------ |
+| Chat de IA     | Organizar em uma conversa qual serviço é o mais adequado para a consulta |
+| CTA de serviço | Transferir para o formulário o contexto do serviço que está sendo lido   |
+| Formulário     | Receber o conteúdo formal da consulta e manter um registro               |
 
-O chat é forte quando o usuário ainda está indeciso. Para quem já terminou a página e decidiu consultar aquele serviço, ir diretamente ao formulário é mais natural.
+O chat de IA é um fluxo adequado para quando o usuário ainda está em dúvida. Por outro lado, para alguém que terminou de ler a página de serviços e decidiu «Conversar sobre este serviço», é mais natural direcionar diretamente ao formulário, sem inserir uma conversa no caminho.
 
-Ao adicionar jornadas, não dê a todas o mesmo papel. Use conversa, CTA e formulário conforme o estado do usuário.
+Ao adicionar fluxos, é importante que eles não desempenhem todos a mesma função. Use conversas, CTAs e formulários de acordo com a situação do usuário.
 
 ## Resumo
 
-Levar o contexto da página ao formulário tem mais efeito do que a pequena mudança visual sugere.
+A implementação que transfere o contexto da página de serviços para o formulário de contato pode ter um efeito maior do que parece.
 
-Os pontos importantes foram:
+Os pontos importantes deste projeto foram:
 
-- Transformar o CTA em componente e centralizar URL e atributos de medição
-- Usar service key estável na URL em vez do texto exibido
-- Mapear service key para um option no formulário
-- Separar valor enviado, rótulo e nome usado no assunto
-- Fazer fallback para consultas gerais diante de service key desconhecido
-- Preencher o assunto apenas quando vazio
-- Classificar pela categoria sem adicionar hidden
-- Verificar após o build quantidades de links e option e ausência de campos desnecessários
+- Transformar o CTA em componente e reunir a geração da URL e os atributos de mensuração
+- Usar na URL uma chave de serviço estável, não o texto exibido
+- Mapear no formulário a chave de serviço para uma opção
+- Separar o valor recebido, o rótulo exibido e o nome do serviço usado no assunto
+- Fazer chaves de serviço desconhecidas retornarem à categoria de serviços em geral
+- Preencher o assunto inicialmente apenas quando estiver em branco
+- Permitir a classificação pelo tipo de contato sem adicionar campos ocultos
+- Verificar no HTML gerado após o build a quantidade de links e opções e a ausência de campos desnecessários
 
-Melhorar um formulário não é apenas reduzir campos. Levar o contexto que o usuário estava lendo até a equipe receptora facilita o atendimento real.
+Melhorar um formulário de contato não significa apenas reduzir o número de campos. Transferir até a equipe que recebe as consultas o contexto que o usuário estava lendo, sem perdê-lo, facilita o atendimento de fato.
 
-## Atualização de 6 de outubro de 2026: do formulário de contato ao registro administrativo
+## Atualização em 6/10/2026: Do recebimento do contato aos registros de gestão
 
-Em uma integração anonimizada, o recebimento de uma solicitação, sua inclusão no histórico e nas tarefas do CRM e a conclusão do atendimento pela equipe foram tratados como estados distintos. Os valores de URL e o caminho de contato são validados, e os valores do caminho são associados a um enum estável. Conhecer a URL da interface administrativa não concede permissão para alterar histórico ou tarefas.
+Em uma atualização de integração anonimizada, tratamos o recebimento de uma consulta, o registro no histórico e nas tarefas do CRM e a conclusão do atendimento pelo responsável como estados separados. Validamos a entrada da URL e a rota de contato, associando o valor da rota a um enum estável. Saber a URL da tela de administração, por si só, não concede permissão para alterar históricos ou tarefas.
 
-A API também verifica a pessoa usuária e suas permissões, e não mistura dados de clientes com a busca pública ou respostas de IA pública. Mesmo com a implementação do recebimento e do registro concluída, não se afirma que o contato com clientes reais até a conclusão do atendimento foi testado de ponta a ponta.
+A API também verifica a identidade do usuário e as permissões de operação, e não mistura dados de clientes em pesquisas públicas nem em respostas de IA públicas. Mesmo que a implementação do recebimento e dos registros esteja concluída, isso não significa que tenha sido feita uma validação completa, do contato com clientes reais até a conclusão da atividade.
 
-O prefill do formulário é distinguido da informação inserida pela pessoa. Quando a solicitação exige retorno, o canal de contato preferido é obrigatório e escolhido em uma lista fixa, sendo encaminhado à tarefa subsequente. Os requisitos da interface e da API, bem como as permissões da equipe para leitura e acréscimo, são alinhados; após uma alteração no banco de dados, o schema e as constraints são verificados. As verificações necessárias em produção permanecem separadas da cópia de todo o banco de dados de clientes reais para um ambiente de desenvolvimento.
+Diferenciamos dados preenchidos previamente de dados inseridos pelo próprio usuário. Para recebimentos que exigem retorno, o meio de contato preferido é uma opção fixa obrigatória, encaminhada para as tarefas subsequentes. Alinhamos os requisitos obrigatórios da interface e da API, bem como as permissões de visualização e inclusão dos responsáveis, e verificamos o schema e as constraints após as alterações no banco de dados. Também distinguimos a validação necessária em produção da cópia de todos os bancos de dados de clientes reais para o ambiente de desenvolvimento.

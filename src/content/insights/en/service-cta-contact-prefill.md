@@ -1,6 +1,6 @@
 ---
-title: "Technical design for carrying service CTA context into a contact form"
-description: "An implementation design for carrying the context a visitor was reading on a service page into the contact form. It covers mini CTAs in an Astro site, the URL parameter contract, initial form-category selection, subject prefill, multilingual URLs, GA measurement, and generated-HTML checks in a reusable form."
+title: "Technical Design for Carrying Context from Service CTAs into the Contact Form"
+description: "An implementation design for carrying the context a user was reading on a service page into the contact form. It organizes reusable patterns for other sites, covering mini CTAs on Astro sites, the URL parameter contract, initial inquiry-type selection, subject prefill, multilingual URLs, GA measurement, and generated HTML verification."
 date: 2026-06-07T13:00
 lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
@@ -8,115 +8,115 @@ tags: ["Technology", "Website", "Services", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
 callout:
   type: info
-  title: Key point of this article
-  text: A CTA on a service page is a weak journey if it merely sends visitors to a form. Passing the service context they were reading through the URL, then initializing the inquiry category and subject in the form, reduces uncertainty during entry and sorting work on the receiving side at the same time.
+  title: Key Takeaways
+  text: A CTA on a service page is a weak path if it only sends users to a form. Pass the service context they were reading through the URL, then initialize the inquiry type and subject on the form. This reduces both hesitation during entry and triage work for the receiving team.
 processFigure:
-  title: Flow for passing context from a service CTA to the form
+  title: Flow for Passing Context from a Service CTA to the Form
   steps:
     - title: Service
-      description: Give the CTA in each service section a service key.
+      description: Give each service section's CTA a service key.
       icon: i-lucide-panels-top-left
       accent: brand
     - title: URL
-      description: Pass it through a URL contract such as /contact/?category=service&service=web#contact-form.
+      description: Pass it through a URL contract, such as /contact/?category=service&service=web#contact-form.
       icon: i-lucide-link
       accent: amber
     - title: Form
-      description: Initially populate the matching inquiry category and subject in the form.
+      description: Initialize the matching inquiry type and subject in the form.
       icon: i-lucide-file-input
       accent: emerald
     - title: Ops
-      description: The receiving team can identify the service context from the inquiry category alone.
+      description: The receiving team can identify the service context from the inquiry type alone.
       icon: i-lucide-inbox
       accent: slate
 compareTable:
-  title: Difference when connecting a CTA to a form
+  title: What Changes When CTAs and Forms Are Connected
   before:
-    label: Merely sending visitors to the form
+    label: When simply sending users to the form
     items:
-      - The visitor must select the same service name again in the form
-      - The subject remains blank, making the nature of the inquiry unclear
-      - The receiving team must read the message before identifying the relevant service
-      - Measurement of each service CTA remains ambiguous
+      - Users have to select the same service name again in the form
+      - The subject is left blank, making it difficult to tell what the inquiry is about
+      - The receiving team has to read the message to identify the target service
+      - It is difficult to measure the effectiveness of CTAs for individual services
   after:
-    label: Carrying the context forward
+    label: When context is carried forward
     items:
-      - The inquiry category can be preselected from the CTA service key
-      - The service name can be placed in the subject to organize the inquiry
-      - The receiving team can classify it by looking at the inquiry category
-      - The GA label and URL parameters make each CTA easier to review
+      - The inquiry type can be selected initially from the CTA's service key
+      - The service name can be added to the subject to organize the inquiry
+      - The receiving team can classify the inquiry by its type
+      - GA labels and URL parameters make it easier to review each CTA's performance
 checklist:
-  title: Design checklist for adoption
+  title: Implementation Design Checklist
   items:
     - text: Use only short, stable service keys in URL parameters
-    - text: Use operationally stable values, rather than user-facing labels, as submitted form values
-    - text: Fall back to general service inquiries for an unknown service key
+    - text: Use operationally stable values for submitted form values, not user-facing labels
+    - text: Fall back to general services for unknown service keys
     - text: Prefill the subject only when it is blank
-    - text: Before adding hidden fields, check whether the existing inquiry category can provide the classification
-    - text: Generate the contact URL for each locale on the server
-    - text: Add a GA label and location to each CTA so its performance can be measured
-    - text: Check the CTA count, option count, and absence or presence of hidden fields in the generated HTML after the build
+    - text: Before adding hidden fields, check whether existing inquiry types can provide the classification
+    - text: Generate locale-specific contact URLs on the server side
+    - text: Attach a GA label and location to each CTA so its performance can be measured
+    - text: After the build, verify the number of CTAs and options, and whether hidden fields are present, in the generated HTML
 linkCards:
   - href: /services/
     title: Services
-    description: The entry point to the journey containing service-specific CTAs.
+    description: The entry point for pathways with CTAs for individual services.
     icon: i-lucide-panels-top-left
   - href: /contact/
     title: Contact
-    description: The form that receives URL parameters and initializes the category and subject.
+    description: A form that accepts URL parameters and initializes the inquiry type and subject.
     icon: i-lucide-message-square
   - href: /blog/astro-ai-contact-chat/
-    title: Technical design of an inquiry AI chat
-    description: A related article about a conversational journey that helps visitors identify where to ask.
+    title: Technical Design for an AI Contact Chat
+    description: A related article about a path that uses conversation to clarify where to direct an inquiry.
     icon: i-lucide-sparkles
 faq:
-  title: Frequently asked questions
+  title: Frequently Asked Questions
   items:
-    - question: Why not send the target service in a hidden field?
-      answer: "In June 2026, the design classified inquiries using only the existing category and avoided extra hidden fields. The current Systems form also stores service, from, and entry in hidden fields for integration."
-    - question: Is it safe if someone tampers with the URL parameters?
-      answer: An unknown service key falls back to general service inquiries. Because the submitted value is selected from the options in the form, the URL value itself is never used directly as a submitted value.
+    - question: Why not send the service being asked about in a hidden field?
+      answer: "As of 2026 6, the design classified inquiries using only the existing inquiry type and did not add hidden fields. The current Systems form stores service, from, and entry in integration hidden fields, separately from the classification value."
+    - question: Is it safe if URL parameters are tampered with?
+      answer: Unknown service keys fall back to general services. Since the submitted value is selected from the form's options, the URL value is not used directly as the submitted value.
     - question: How should this work on a multilingual site?
-      answer: Generate CTA destinations for each locale and translate the labels displayed in the form. Meanwhile, keeping submitted values aligned to stable Japanese classification names helps the receiving operation remain consistent.
+      answer: Generate a locale-specific destination URL for each CTA and translate the labels shown in the form. At the same time, using stable Japanese values for submissions helps keep operations consistent for the receiving team.
 ---
 
-> **September 2026 update:** The `ServiceSectionActions` and `service=web` examples below document the corporate site’s June 2026 design. Today, [Acecore Systems service CTAs](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) pass `category`, `service`, `from`, and `entry`; the [contact form](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) validates short service keys and preselects a category and subject. It also uses hidden fields for measurement and integration, so do not copy the earlier “no hidden fields” choice as the current contract. Mapping untrusted URL values to allowed form options remains important.
+> **Added in 2026 9:** The examples below for `ServiceSectionActions` and `service=web` document the configuration used on the official Acecore site in 2026 6. On the current Acecore Systems site, the [service detail CTAs](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) add `category`, `service`, `from`, and `entry`, and the [contact form](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) validates a short service key and initializes the inquiry type and subject. The current implementation also uses hidden fields for measurement and integrations, so do not copy the design below that avoids hidden fields as the current specification. The principle of not trusting URL values and mapping them to the form's choices remains valid.
 
-When a visitor reading a service page decides, "I want to ask about this," simply sending them to a contact form loses some of the context.
+When a user reading a service page thinks, I want to ask about this, simply sending them to the contact form loses some of the context.
 
-The visitor must reselect the service type in the form and write the subject again. The receiving team also cannot easily tell whether the message concerns website production, server operations, or Aceserver until they read the body.
+The user has to select the service type again in the form and write the subject again. The receiving team also has difficulty determining whether the inquiry is about web development, server operations, or Aceserver until they read the message.
 
-On the Acecore website, we improved this journey in the [PR that carries the target of a service CTA into the contact form](https://github.com/acecore-systems/acecore-net/pull/100). This article presents it not only as an Astro implementation record, but also as a journey design that can be reused on other websites.
+On the Acecore site, we improved this path with a [PR to carry inquiry context from a service CTA to the contact form](https://github.com/acecore-systems/acecore-net/pull/100). This article organizes the approach not only as an implementation record for Astro, but also as a pathway design that can be used on other websites.
 
-## Validate form initialization from one CTA
+## Verify Form Initialization from a Single CTA
 
-Test a valid service key, an unknown key, and back navigation after entering a subject. Check mapping to allowed options and preservation of the typed subject, using the same value contract across locale URLs. Keep personal data and free text out of URLs; pass context with short identifiers.
+Test a valid service key, an unknown key, and a back-navigation case where the subject is already filled in. Confirm that the type maps to an approved option and that the subject is not overwritten; use the same value contract for locale-specific URLs. Do not put personal information or free-form text in URLs. Pass context using only short identifiers.
 
-[MDN URLSearchParams：Reading URL parameters](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+[MDN URLSearchParams: URL parameter reading specification](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
-## The goal is not merely to reduce form entry
+## The Goal Is Not Merely to Reduce Form Entry
 
-The purpose of this implementation is not simply to make the form appear easier by filling fields automatically.
+The goal of this implementation is not just to autofill form fields and make the process feel easier.
 
-The essential goal is to pass the context created on the service page correctly into both the contact form and the receiving operation.
+The real goal is to pass the context created on the service page accurately to the contact form and the operations that handle incoming inquiries.
 
-| Perspective          | What should improve                                                   |
-| -------------------- | --------------------------------------------------------------------- |
-| Visitor              | Reduce the need to select the service they were reading again         |
-| Form                 | Initialize the inquiry category and subject to match the consultation |
-| Receiving team       | Make the target easier to classify from the inquiry category alone    |
-| Measurement          | Make it easier to trace which service CTA started the inquiry         |
-| Multilingual journey | Send the visitor to a contact URL matching the locale                 |
+| Perspective       | What to Improve                                                               |
+| ----------------- | ----------------------------------------------------------------------------- |
+| User              | Reduce the effort of selecting the service they were just reading about again |
+| Form              | Initialize the inquiry type and subject to match the inquiry                  |
+| Receiving team    | Make it easier to classify the inquiry by its type alone                      |
+| Measurement       | Make it easier to track which service CTA started the inquiry                 |
+| Multilingual path | Send users to a contact URL that matches their locale                         |
 
-Although it appears as a small mini CTA, the design scope spans the CTA, URL, form, translation, measurement, and receiving operation.
+These may look like small mini CTAs, but the design spans the CTA, URL, form, translation, measurement, and intake operations.
 
-## Isolate responsibilities in a CTA component
+## Separate Responsibilities into a CTA Component
 
-Place a "Contact us about this service" CTA at the end of each service section.
+Place a CTA at the end of each service section that says, Consult us about this service.
 
-The first thing to avoid is writing the same link generation and GA attributes directly into every section of the service page. If there are seven services, the same implementation appears seven times. That makes omissions likely when the wording or URL specification changes.
+The first thing to avoid is hardcoding the same link generation and GA attributes into every section of the service page. If there are 7 services, the same pattern appears 7 times. This makes it easy to miss a section when changing the wording or URL specification.
 
-We therefore created `ServiceSectionActions` to centralize the contact CTA.
+So we created an `ServiceSectionActions` to consolidate the contact CTAs.
 
 ```astro
 ---
@@ -148,38 +148,38 @@ const contactUrl = `${u("/contact/")}?category=service&service=${encodeURICompon
 </a>
 ```
 
-This component has three responsibilities:
+This component has 3 responsibilities.
 
-- Generate a contact URL matching the locale
-- Put the service key into a URL parameter
-- Carry the label and location used for GA measurement
+- Generate a contact URL that matches the locale
+- Add the service key to the URL parameters
+- Add a label and location for GA measurement
 
-Because a CTA is a user action point, it is also a measurement point, not just UI. We retain `data-ga-label` and `data-ga-location` so we can later see which service initiated the inquiry.
+A CTA is a point of user action, so it is also a measurement point, not just UI. We keep `data-ga-label` and `data-ga-location` so we can later see which service an inquiry started from.
 
-## Make URL parameters the contract with the form
+## Make URL Parameters the Contract with the Form
 
-The values passed from the CTA to the contact form are URL parameters.
+We used URL parameters to pass values from the CTA to the contact form.
 
 ```txt
 /contact/?category=service&service=web#contact-form
 ```
 
-The important point is not to put a display label in the URL.
+The important point here is not to put display text in the URL.
 
-A label such as `Webサイト制作・運用について` is affected by translation, differences in wording, and future name changes. Put only a short service key such as `web` or `server` in the URL.
+Display text such as `Webサイト制作・運用について` is affected by translation, variations in wording, and future name changes. Put only a short service key such as `web` or `server` in the URL.
 
-| Parameter  | Role                                                       |
-| ---------- | ---------------------------------------------------------- |
-| `category` | Indicates the entry point for processing a service inquiry |
-| `service`  | A stable key representing the target service               |
-| hash       | Used to scroll to the form                                 |
+| Parameter  | Role                                                          |
+| ---------- | ------------------------------------------------------------- |
+| `category` | Indicates the entry point for processing as a service inquiry |
+| `service`  | Stable key identifying the target service                     |
+| hash       | Used to scroll to the form                                    |
 
-Users can edit URL parameters. For that reason, the form does not use a URL value directly as a submitted value; instead, it maps the value to an existing option.
+Users can edit URL parameters. That is why the form does not use the URL value directly as the submitted value, but maps it to an existing option.
 
 <figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
   <figcaption>
-    <strong id="diagram-service-cta-contact-prefill">From validated inquiry context to management records</strong>
-    <span>This shows implementation stages; completion of real customer follow-up remains unverified.</span>
+    <strong id="diagram-service-cta-contact-prefill">Flow for Passing an Inquiry to a Management Record</strong>
+    <span>This shows the implementation stages of the path. Actual contact with customers and completion of handling must be verified separately.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
@@ -189,8 +189,8 @@ Users can edit URL parameters. For that reason, the form does not use a URL valu
           <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
         </svg>
       </span>
-      <strong>Resolve the CTA context</strong>
-      <span>Map a stable service key to the localized URL and an allowlisted form option.</span>
+      <strong>Read CTA Context</strong>
+      <span>Map a stable service key to the multilingual display URL and the allowlist of approved form options.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -199,8 +199,8 @@ Users can edit URL parameters. For that reason, the form does not use a URL valu
           <path d="M12 2l8 3v6c0 5-3 8-8 11-5-3-8-6-8-11V5z M8 12l3 3 5-6"/>
         </svg>
       </span>
-      <strong>Validate input and permission</strong>
-      <span>Only prefill the subject when blank; the API also checks user identity and operation permission.</span>
+      <strong>Validate Input and Permissions</strong>
+      <span>Prefill the subject only if it is blank, and verify the user's identity and operation permissions in the API as well.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -209,15 +209,15 @@ Users can edit URL parameters. For that reason, the form does not use a URL valu
           <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
         </svg>
       </span>
-      <strong>Pass into intake records</strong>
-      <span>Write the request to history and follow-up tasks; operator completion is a separate state.</span>
+      <strong>Pass It to the Intake Record</strong>
+      <span>Record the intake in the CRM history and follow-up tasks, and track the assignee's actual completion of handling as a separate status.</span>
     </li>
   </ol>
 </figure>
 
-## Keep a classification table on the form side
+## Maintain a Classification Table on the Form Side
 
-The contact form keeps service classifications in an array.
+The contact form maintains service-specific classifications in an array.
 
 ```ts
 const serviceCategoryOptions = [
@@ -236,22 +236,22 @@ const serviceCategoryOptions = [
 ];
 ```
 
-`key`, `value`, `label`, and `subject` each have a different role.
+`key`, `value`, `label`, and `subject` each have different roles.
 
-| Field     | Role                                                                            |
-| --------- | ------------------------------------------------------------------------------- |
-| `key`     | A stable identifier used to look up the URL parameter                           |
-| `value`   | The inquiry category delivered to the receiving team when the form is submitted |
-| `label`   | The translated option displayed on screen                                       |
-| `subject` | The service name used to initialize the subject                                 |
+| Field     | Role                                                |
+| --------- | --------------------------------------------------- |
+| `key`     | Stable identifier used to look up the URL parameter |
+| `value`   | Inquiry type received when the form is submitted    |
+| `label`   | Translated option shown on screen                   |
+| `subject` | Service name used for the initial subject value     |
 
-On a multilingual site, `label` is translated for the locale. Meanwhile, because `value` is used for classification by the receiving team, we keep it as a stable Japanese value.
+On multilingual sites, `label` is translated to match the locale. By contrast, `value` is used by the receiving team for classification, so it was kept as a stable Japanese value.
 
-This decision varies by product. If a CRM or external form supports multilingual classifications, `value` can also vary by locale. When the goal is to keep receiving operations simple, as in this case, separating the display label from the submitted value is easier to manage.
+This is a decision that can vary by product. If the CRM or external form supports multilingual classifications, the value can also vary by locale. When the goal is to keep operations simple for the receiving team, separating the display label from the submitted value is easier to manage.
 
-## Put data attributes on each option
+## Add Data Attributes to the Options
 
-The form select outputs an option for each service.
+The form's select outputs options for each service.
 
 ```astro
 <select id="category" name="category" required>
@@ -273,13 +273,13 @@ The form select outputs an option for each service.
 </select>
 ```
 
-`data-service-key` is used to compare the option with `service` in the URL. `data-service-subject` is used to create the subject.
+`data-service-key` is used to match the URL's `service`. `data-service-subject` is used to build the subject.
 
-Again, the important point is not to place the URL value directly in `category.value`. Always selecting an option already present in the select prevents an unknown service key or an invalid value from entering the submitted value.
+The key point here is not to put the URL value directly into `category.value`. By always selecting an option from the select, unknown service keys and invalid values are kept out of the submitted value.
 
-## Prefill on the client
+## Prefill on the Client Side
 
-A small script initializes the form after the page loads.
+Form initialization is handled by a small script that runs after the page loads.
 
 ```js
 function initContactServicePrefill() {
@@ -322,23 +322,23 @@ function initContactServicePrefill() {
 }
 ```
 
-There are four implementation points:
+The implementation has the following 4 key points.
 
-- Check `data-service-prefill-initialized` to avoid initializing twice
-- Run the process only when `category=service`
-- Fall back to `サービス全般について` for an unknown service key
+- Check `data-service-prefill-initialized` to avoid double initialization
+- Run only when `category=service`
+- Fall back to About services in general for an unknown service key
 - Prefill the subject only when it is blank
 
-The final point—only filling an empty subject—is important. If browser autofill or a back navigation has retained a subject, overwriting it without permission creates a poor experience.
+The last point, only prefilling the subject when it is blank, is important. If the subject has a value because the user navigated back or the browser autofilled it, overwriting it without permission makes for a poor experience.
 
-When using Astro View Transitions or client navigation, initialize on `astro:page-load` as well as on the normal initial load.
+If you use Astro View Transitions or client-side navigation, initialize not only on a normal initial page load but also on `astro:page-load`.
 
 ```js
 document.addEventListener("astro:page-load", initContactServicePrefill);
 initContactServicePrefill();
 ```
 
-## Move to the form with the hash
+## Use a Hash to Move to the Form
 
 The CTA URL includes `#contact-form`.
 
@@ -346,9 +346,9 @@ The CTA URL includes `#contact-form`.
 /contact/?category=service&service=web#contact-form
 ```
 
-Because a contact page can also contain FAQs, LINE, explanatory text, and other contact methods, it is more natural for visitors from a service CTA to move directly to the form.
+The contact page includes FAQs, LINE, explanatory text, and contact methods other than the form. It is more natural for users arriving from a service CTA to go directly to the form.
 
-When the form performs initialization, however, the scroll timing needs some attention. We use `requestAnimationFrame` so scrolling happens after the element has rendered.
+However, when initializing the form, pay some attention to scroll timing. Since scrolling should happen after the element is rendered, we use `requestAnimationFrame`.
 
 ```js
 if (window.location.hash === "#contact-form") {
@@ -358,57 +358,57 @@ if (window.location.hash === "#contact-form") {
 }
 ```
 
-Moving to the form is a small behavior, but visitors become confused when the CTA's intent and the visible form position do not match. Journey design treats the URL, initial selection, and scroll position as a single unit.
+Moving to the form is a small behavior, but users can get lost if the CTA's intent and the form's position do not line up. In pathway design, consider the URL, initial selection, and scroll position together.
 
-## Why we did not add a hidden field
+## The Decision Not to Add Hidden Fields
 
-We did not add a hidden `相談対象サービス` field in this implementation.
+This time, we did not add a `相談対象サービス` hidden field.
 
-The reason was to make the target service identifiable from the inquiry category alone.
+The reason was that we wanted the target service to be identifiable from the inquiry type alone.
 
-Adding form fields also adds checks:
+Adding form fields also increases the number of things to check.
 
 - Whether to include the field in notification emails
-- Whether to add a column to an admin screen or spreadsheet
-- Whether it affects existing automatic-reply templates
-- Whether it is handled by CRM integration or webhooks
-- How multilingual display names and submitted values should be separated
+- Whether to add a column to the admin screen or spreadsheet
+- Whether it affects existing autoresponder templates
+- Whether to handle it in CRM integrations or webhooks
+- How to distinguish multilingual display names from submitted values
 
-If existing fields can express the required information, not adding another field makes operations more stable. Here, we split `お問い合わせ種別` into general service inquiries and service-specific categories, allowing the receiving team to identify the target.
+If the required information can be expressed using existing fields, operations are more stable when you do not add fields. In this case, we split `お問い合わせ種別` only into About services in general and service-specific types, allowing the receiving team to identify the service.
 
-Of course, a hidden field may be appropriate when the requirements include selecting multiple services, retaining an advertising campaign ID, or using a separate CRM field.
+Of course, if the requirements include selecting multiple services at once, saving an advertising campaign ID, or using a separate field in the CRM, adding hidden fields may be appropriate.
 
-## Approach for multilingual sites
+## Considerations for Multilingual Sites
 
-When creating this journey on a multilingual site, separating three values avoids confusion.
+When building this path on a multilingual site, it helps to think about 3 types of values separately.
 
-| Type            | Example                       | Locale-dependent      |
-| --------------- | ----------------------------- | --------------------- |
-| URL key         | `web`, `server`, `aceserver`  | No                    |
-| Display label   | `About Website Design`, etc.  | Yes                   |
-| Submitted value | `Webサイト制作・運用について` | Depends on operations |
+| Type            | Example                        | Locale-dependent      |
+| --------------- | ------------------------------ | --------------------- |
+| URL key         | `web`, `server`, `aceserver`   | No                    |
+| Display label   | Such as `About Website Design` | Yes                   |
+| Submitted value | `Webサイト制作・運用について`  | Depends on operations |
 
-It is more stable not to translate the URL key because links are shared, measured, and matched on the form side.
+URL keys are more stable when they are not translated. They are used to share links, analyze traffic, and look up values on the form side.
 
-Always translate the display label because it is what visitors see in the form.
+Display labels must always be translated because they are the text users see in the form.
 
-Set the submitted value according to operations. We use stable Japanese values in this implementation. Designing multilingual display separately from post-submission internal operations makes the form easier to manage.
+Submitted values should match operational needs. In this case, we used stable Japanese values. The form is easier to manage when translated display text and internal operations after submission are designed separately.
 
-The translation flow itself is also described in [How to operate a multilingual blog with Sveltia CMS](/blog/copilot-translation-pipeline/).
+The translation workflow itself is also covered in [How to Run a Multilingual Blog with Sveltia CMS](/blog/copilot-translation-pipeline/).
 
-## Check the generated HTML
+## Verify the Generated HTML
 
-Inspecting only the component is insufficient for this type of implementation. Check the HTML after the build to confirm that the links and options are actually generated.
+For this type of implementation, looking only at the component is not enough. After the build, check the generated HTML to confirm that the links and options are actually output.
 
-We checked the following:
+The checks in this case were as follows.
 
-- Seven service-specific CTAs appear on `/services/`
-- Every CTA contains `?category=service&service=...#contact-form`
-- Seven options with `data-service-key` appear on `/contact/`
-- General service inquiries and the service-specific categories are present
-- No hidden `相談対象サービス` field is present
+- `/services/` contains 7 service-specific CTAs
+- Each CTA has `?category=service&service=...#contact-form`
+- `/contact/` contains 7 options with `data-service-key`
+- About services in general and service-specific types are present
+- The `相談対象サービス` hidden field is absent
 
-For example, use `rg` against the generated HTML.
+For example, you can check the generated HTML with `rg`.
 
 ```powershell
 rg -n "category=service&service=.*#contact-form" dist\services\index.html
@@ -416,43 +416,43 @@ rg -n "data-service-key" dist\contact\index.html
 rg -n "相談対象サービス" dist\contact\index.html
 ```
 
-The final check verifies that something which must not appear is absent. A form change should verify not only what was added, but also what the design deliberately chose not to add.
+The final check is to make sure that things that should not appear are absent. When modifying a form, verify not only what you added, but also what you decided not to add.
 
-## Division of roles with the AI chat
+## How This Fits with an AI Chat
 
-This journey works well with the [technical design for the inquiry AI chat](/blog/astro-ai-contact-chat/), but their roles differ.
+This path works well alongside [Technical Design for an AI Contact Chat](/blog/astro-ai-contact-chat/). However, they serve different roles.
 
-| Journey     | What it does well                                            |
-| ----------- | ------------------------------------------------------------ |
-| AI chat     | Uses conversation to help determine which service to consult |
-| Service CTA | Passes the context of the service being read into the form   |
-| Form        | Receives the formal inquiry and keeps a record               |
+| Path        | What It Does Well                                                    |
+| ----------- | -------------------------------------------------------------------- |
+| AI chat     | Uses conversation to clarify which service the user should ask about |
+| Service CTA | Passes the context of the service being read to the form             |
+| Form        | Receives the formal inquiry and creates a record                     |
 
-The AI chat is strong when visitors are still uncertain. By contrast, once someone has finished reading a service page and decided to ask about that service, sending them directly to the form without another conversation is more natural.
+An AI chat is a strong path when users are still unsure. On the other hand, for users who have finished reading a service page and decided to ask about that service, sending them directly to the form without an intervening conversation is more natural.
 
-When adding journeys, do not give all of them the same role. Use conversation, CTAs, and forms according to the visitor's state.
+When adding paths, it is important not to make them all serve the same role. Use conversation, CTAs, and forms to match the user's situation.
 
 ## Summary
 
-Carrying context from a service page into a contact form is more effective than its small visual change suggests.
+Passing context from a service page to the contact form can have a greater impact than its appearance suggests.
 
-The important design points were:
+The key points in this design were as follows.
 
-- Componentize the CTA to centralize URL generation and measurement attributes
-- Put a stable service key in the URL instead of a display label
+- Turn the CTA into a component to consolidate URL generation and measurement attributes
+- Put a stable service key in the URL, not display text
 - Map the service key to an option on the form side
 - Separate the submitted value, display label, and service name used for the subject
-- Fall back to general service inquiries for an unknown service key
+- Fall back to general services for unknown service keys
 - Prefill the subject only when it is blank
-- Classify using the inquiry category without adding another hidden field
-- Verify the link count, option count, and absence of unnecessary fields in generated HTML after the build
+- Classify inquiries by type without adding hidden fields
+- After the build, verify the number of links and options, and confirm that unnecessary fields are absent, in the generated HTML
 
-Improving a contact form is not merely about reducing input fields. Carrying the context the visitor was reading all the way to the receiving team makes real inquiry handling easier.
+Improving a contact form is not just about reducing the number of fields. Passing along the context users were reading without losing it before it reaches the receiving team makes it easier to handle real inquiries.
 
-## October 6, 2026 update: from inquiry intake to management records
+## Added on 2026-10-6: From Inquiry Intake to Management Records
 
-The anonymized integration treats inquiry receipt, CRM history and tasks, and an operator’s completed response as separate states. Validate URL input and inquiry channels, mapping channel values to a stable enum. Knowing a management URL does not authorize changes to history or tasks.
+In an anonymized integration update, we treated inquiry intake, updates to CRM history and tasks, and the assignee's completion of handling as separate states. We validated URL input and inquiry routes, and mapped route values to stable enums. Merely knowing the admin-page URL does not grant permission to change history or tasks.
 
-Verify identity and operation permissions in the API too; do not mix customer information into public search or public AI answers. Completed intake and recording code does not demonstrate the whole real-customer workflow through contact and resolution.
+At the API level, we also verify the user and their permissions, and do not feed customer information into public search or public AI responses. Even when intake and record-keeping implementation is complete, that does not mean we claim end-to-end validation from contacting an actual customer through completing the work.
 
-Distinguish form prefill from user input. For inquiries requiring a callback, a required fixed-choice contact preference passes to follow-up tasks. Align required fields and staff read/append permissions in both UI and API; check schema and constraints after database changes. Necessary production verification is distinct from cloning the entire customer database for development.
+Distinguish form-prefilled values from user-entered values, and for inquiries that require a callback, carry the preferred contact channel forward into follow-up tasks as a required fixed choice. Align required-field rules in the UI and API with the assignee's read and update permissions, and verify the schema and constraints after DB changes. Separate necessary production verification from replicating the entire database of real customer data into a development environment.

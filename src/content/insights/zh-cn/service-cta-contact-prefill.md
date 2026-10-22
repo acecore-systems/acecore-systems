@@ -1,6 +1,6 @@
 ---
-title: "将服务CTA上下文传递到咨询表单的技术设计"
-description: "这是将用户在服务页面中阅读的上下文传递到咨询表单的实现设计。内容涵盖Astro网站中的迷你CTA、URL参数契约、表单类别的初始选择、主题prefill、多语言URL、GA计量和生成HTML检查，可复用于其他网站。"
+title: "从服务 CTA 到咨询表单的上下文传递技术设计"
+description: "这是一份将用户在服务页面阅读的上下文传递到咨询表单的实现设计。我们以可复用于其他网站的方式，梳理 Astro 网站中的迷你 CTA、URL 参数契约、表单类型的默认选择、主题预填、多语言 URL、GA 衡量，以及生成 HTML 的检查。"
 date: 2026-06-07T13:00
 lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
@@ -9,114 +9,114 @@ image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit
 callout:
   type: info
   title: 本文要点
-  text: 服务页面的CTA若只是把用户送到表单，导流仍然较弱。通过URL传递用户正在阅读的服务上下文，并在表单侧初始化咨询类别与主题，可同时减少填写时的犹豫和接收方的分类工作。
+  text: 服务页面上的 CTA 如果只是将用户送到表单，导流效果就不够理想。通过 URL 传递用户正在阅读的服务上下文，并在表单侧预先设置咨询类型和主题，可以同时减少用户填写时的困惑和接收端的分类工作。
 processFigure:
-  title: 从服务CTA向表单传递上下文的流程
+  title: 从服务 CTA 向表单传递上下文的流程
   steps:
-    - title: Service
-      description: 为各服务区块的CTA设置service key。
+    - title: 服务
+      description: 为每个服务版块的 CTA 配置 service key（服务标识）。
       icon: i-lucide-panels-top-left
       accent: brand
     - title: URL
-      description: 通过 /contact/?category=service&service=web#contact-form 这样的URL契约传递。
+      description: 通过 URL 契约传递，例如 /contact/?category=service&service=web#contact-form。
       icon: i-lucide-link
       accent: amber
-    - title: Form
-      description: 在表单中初始填入相应的咨询类别与主题。
+    - title: 表单
+      description: 在表单侧预先填入相应的咨询类型和主题。
       icon: i-lucide-file-input
       accent: emerald
-    - title: Ops
-      description: 接收方只看咨询类别即可判断服务上下文。
+    - title: 运营
+      description: 接收端只需查看咨询类型即可判断服务上下文。
       icon: i-lucide-inbox
       accent: slate
 compareTable:
-  title: 连接CTA与表单时的区别
+  title: CTA 与表单的连接方式对比
   before:
-    label: 只发送到表单
+    label: 仅跳转到表单时
     items:
       - 用户需要在表单中重新选择同一个服务名称
-      - 主题为空，难以看出咨询内容
-      - 接收方必须阅读正文才能判断目标服务
-      - 各服务CTA的效果测量不够明确
+      - 主题为空，难以了解咨询内容
+      - 接收端往往要阅读正文才能判断目标服务
+      - 难以清楚衡量各服务 CTA 的效果
   after:
-    label: 继承上下文
+    label: 传递上下文时
     items:
-      - 可根据CTA的service key初始选择咨询类别
-      - 可把服务名称放入主题，整理咨询内容
-      - 接收方查看咨询类别即可分类
-      - 可通过GA label和URL参数按CTA确认效果
+      - 可以根据 CTA 的 service key 默认选择咨询类型
+      - 在主题中填入服务名称，便于整理咨询内容
+      - 接收端查看咨询类型即可进行分类
+      - 可通过 GA label 和 URL 参数更方便地逐个 CTA 查看效果
 checklist:
-  title: 导入时的设计检查
+  title: 上线时的设计检查清单
   items:
-    - text: URL参数只使用短且稳定的service key
-    - text: 表单接收值使用运营上稳定的值，而非面向用户的显示文案
-    - text: 未知service key回退到服务综合咨询
-    - text: 仅在主题为空时进行初始填入
-    - text: 增加hidden字段前，确认现有咨询类别是否足以分类
-    - text: 在服务器侧按locale生成咨询URL
-    - text: 为CTA添加GA label和location，以便测量效果
-    - text: build后在生成HTML中检查CTA数量、option数量及hidden字段的有无
+    - text: URL 参数只使用简短且稳定的 service key
+    - text: 表单接收值应使用运营上稳定的值，而不是面向用户显示的文案
+    - text: 未知的 service key 应回退到服务综合咨询
+    - text: 仅在主题为空时预填
+    - text: 增加 hidden 字段前，先确认是否可以通过现有咨询类型进行分类
+    - text: 在服务器端生成各 locale 对应的咨询 URL
+    - text: 为 CTA 添加 GA label 和 location，以便衡量效果
+    - text: 检查构建后的 HTML 中 CTA 数量、option 数量以及 hidden 字段是否存在
 linkCards:
   - href: /services/
     title: 服务
-    description: 放置各服务CTA的导流入口。
+    description: 放置各服务专属 CTA 的导流入口。
     icon: i-lucide-panels-top-left
   - href: /contact/
     title: 联系我们
-    description: 接收URL参数并初始化类别与主题的表单。
+    description: 接收 URL 参数并预先设置类型和主题的表单。
     icon: i-lucide-message-square
   - href: /blog/astro-ai-contact-chat/
-    title: 咨询AI聊天的技术设计
-    description: 通过对话帮助用户整理咨询方向的相关文章。
+    title: 咨询 AI 聊天的技术设计
+    description: 介绍通过对话梳理咨询方向的相关文章。
     icon: i-lucide-sparkles
 faq:
   title: 常见问题
   items:
-    - question: 为什么不通过hidden字段发送目标服务？
-      answer: "2026年6月的方案只使用现有咨询类别分类，避免增加hidden字段。当前Systems表单还通过hidden字段保存service、from和entry用于集成。"
-    - question: URL参数被篡改也没关系吗？
-      answer: 未知service key会回退到服务综合咨询。发送值从表单侧的option中选择，因此不会把URL值直接当作接收值。
-    - question: 多语言网站应如何处理？
-      answer: 按locale生成CTA链接，并翻译表单显示标签。另一方面，将接收值统一为稳定的日语分类名称，可减少接收方运营上的偏差。
+    - question: 为什么不通过 hidden 字段发送咨询对象服务？
+      answer: "截至2026年6月，当时的设计只通过现有咨询类型进行分类，不增加 hidden 字段。目前的 Systems 表单会将 service、from、entry 与分类值分别保存到用于集成的 hidden 字段中。"
+    - question: 即使 URL 参数被篡改也没问题吗？
+      answer: 未知的 service key 会回退到服务综合咨询。发送值会从表单侧的 option 中选择，因此不会将 URL 值直接作为接收值。
+    - question: 多语言网站应该如何处理？
+      answer: 按 locale 生成 CTA 链接目标，并翻译表单显示标签。另一方面，如果接收值统一为稳定的日语分类名称，接收端的运营就不容易出现偏差。
 ---
 
-> **2026年9月更新:** 下面的 `ServiceSectionActions` 和 `service=web` 示例记录了2026年6月企业网站的方案。现在[Acecore Systems的服务CTA](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro)传递 `category`、`service`、`from` 和 `entry`；[联系表单](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro)验证简短的服务键，并预选类别与主题。当前还使用hidden字段进行统计和集成，因此不要把旧文“不使用hidden字段”的选择当作现行约定。URL参数仍须映射到允许的表单选项。
+> **2026年9月补充：** 以下 `ServiceSectionActions` 和 `service=web` 的示例，记录了2026年6月 Acecore 官方网站使用的结构。目前的 Acecore Systems 中，[服务详情页 CTA](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro)会附带 `category`、`service`、`from`、`entry`，[咨询表单](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro)会验证简短的 service key，并预先设置类型和主题。目前还会使用用于衡量和集成的 hidden 字段，因此请勿将下文中“不使用 hidden 字段”的设计照搬为当前规格。不信任 URL 中的值、而是将其映射到表单侧选项的原则仍然有效。
 
-当阅读服务页面的用户产生“想就这项内容咨询”的想法时，如果只是把他们送到咨询表单，会丢失一部分上下文。
+用户阅读服务页面后，如果想要“就这里介绍的内容进行咨询”，仅仅将他们送到咨询表单，多少会丢失一些上下文。
 
-用户需要在表单中重新选择服务类型，并再次填写主题。接收方在阅读正文之前，也难以判断这是“网站制作”“服务器运营”还是“Aceserver”的咨询。
+用户需要在表单中重新选择服务类型，还得自己重新填写主题。接收端也很难在阅读正文之前判断“这是 Web 制作方面的咨询”“服务器运维方面的咨询”，还是“Aceserver 方面的咨询”。
 
-Acecore网站通过[把服务CTA的咨询对象传递到咨询表单的PR](https://github.com/acecore-systems/acecore-net/pull/100) 改善了这条导流。本文不仅记录Astro中的实现，也将其整理为可供其他网站使用的导流设计。
+Acecore 的网站通过[从服务 CTA 向咨询表单传递咨询对象的 PR](https://github.com/acecore-systems/acecore-net/pull/100)优化了这一导流流程。本文不仅整理 Astro 的实现记录，也将其归纳为可供其他网站采用的导流设计。
 
-## 从一个CTA验证表单初始化
+## 用一个 CTA 验证表单初始化
 
-测试有效service key、未知key和已输入主题后返回的操作。确认映射到允许的选项且不覆盖已有主题，各语言URL沿用相同值契约。URL不应包含个人信息或自由文本，只用短标识符传递咨询上下文。
+使用有效的 service key、未知 key，以及已填写主题后返回的情形进行测试。确认类型是否映射到允许的选项、主题是否不会被覆盖，并在各语言的 URL 中使用相同的值契约。URL 中不要放入个人信息或自由文本，只通过简短标识符传递咨询上下文。
 
-[MDN URLSearchParams：URL参数读取规范](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+[MDN URLSearchParams：URL 参数读取规范](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
-## 目的不只是减少表单输入
+## 目的不只是减少表单填写
 
-这一实现并不只是为了自动填写字段，让表单看起来更轻松。
+这项实现的目的并不只是自动填写表单项目，让填写过程看起来更轻松。
 
-本质是把服务页面中产生的上下文正确传递到咨询表单和接收运营中。
+核心在于将服务页面上形成的上下文，准确传递到咨询表单和接收端的运营流程中。
 
-| 视角       | 希望改善的内容                         |
-| ---------- | -------------------------------------- |
-| 用户       | 减少再次选择刚才阅读的服务的麻烦       |
-| 表单       | 按咨询内容初始化咨询类别和主题         |
-| 接收方     | 只根据咨询类别就能更容易地分类目标服务 |
-| 测量       | 更容易追踪咨询从哪个服务CTA开始        |
-| 多语言导流 | 发送到符合locale的咨询URL              |
+| 角度       | 希望改善的内容                               |
+| ---------- | -------------------------------------------- |
+| 用户       | 减少再次选择正在阅读的服务的麻烦             |
+| 表单       | 根据咨询内容预先设置咨询类型和主题           |
+| 接收端     | 只查看咨询类型也能更轻松地对咨询对象进行分类 |
+| 数据分析   | 更容易追踪咨询是从哪个服务 CTA 发起的        |
+| 多语言导流 | 跳转至符合 locale 的咨询 URL                 |
 
-从外观上看它只是一个小型CTA，但设计范围横跨CTA、URL、表单、翻译、测量和接收运营。
+外观上这只是一个小型 CTA，但设计范围涉及 CTA、URL、表单、翻译、数据衡量和接收端运营等多个环节。
 
-## 将职责拆分到CTA组件
+## 将职责拆分到 CTA 组件
 
-在每个服务区块末尾放置“咨询此服务”的CTA。
+在每个服务版块的末尾放置“咨询此服务”CTA。
 
-首先应避免在服务页面的每个区块中直接重复编写相同的链接生成和GA属性。如果有7项服务，同一种写法就会出现7次，日后修改文案或URL规范时容易遗漏。
+首先要避免的是在服务页面的各个版块中重复硬编码相同的链接生成逻辑和 GA 属性。如果有7项服务，同样的写法就会出现7次。今后想修改文案或 URL 规范时，很容易遗漏。
 
-因此我们创建了集中管理咨询CTA的 `ServiceSectionActions`。
+因此，我们创建了一个集中处理咨询 CTA 的 `ServiceSectionActions`。
 
 ```astro
 ---
@@ -148,38 +148,38 @@ const contactUrl = `${u("/contact/")}?category=service&service=${encodeURICompon
 </a>
 ```
 
-该组件有三项职责：
+这个组件负责3件事。
 
-- 生成符合locale的咨询URL
-- 将service key放入URL参数
-- 保存GA测量使用的label与location
+- 生成符合 locale 的咨询 URL
+- 将 service key 放入 URL 参数
+- 添加用于 GA 衡量的 label 和 location
 
-CTA既是用户的行动点，也是测量点，而不只是UI。保留 `data-ga-label` 和 `data-ga-location`，可以在之后确认咨询从哪项服务开始。
+CTA 是用户采取行动的触点，因此不仅是 UI，也是数据衡量触点。我们保留 `data-ga-label` 和 `data-ga-location`，以便之后查看“咨询是从哪个服务发起的”。
 
-## 将URL参数作为与表单的契约
+## 将 URL 参数作为与表单之间的契约
 
-从CTA传递到咨询表单的值使用URL参数。
+从 CTA 传递到咨询表单的值使用 URL 参数。
 
 ```txt
 /contact/?category=service&service=web#contact-form
 ```
 
-关键是不把“显示文案”放入URL。
+这里的重点是，不要把“显示文案”放进 URL。
 
-`Webサイト制作・運用について` 这样的显示文案会受到翻译、写法差异和未来名称变更的影响。URL中只放 `web` 或 `server` 这样的短service key。
+像 `Webサイト制作・運用について` 这样的显示文案会受到翻译、写法不一致和未来名称变更的影响。URL 中只放入 `web` 或 `server` 这样简短的 service key。
 
-| 参数       | 作用                     |
-| ---------- | ------------------------ |
-| `category` | 表示按服务咨询处理的入口 |
-| `service`  | 表示目标服务的稳定key    |
-| hash       | 用于滚动到表单位置       |
+| 参数       | 作用                   |
+| ---------- | ---------------------- |
+| `category` | 表示这是服务咨询的入口 |
+| `service`  | 表示目标服务的稳定 key |
+| hash       | 用于滚动到表单位置     |
 
-URL参数可以由用户编辑。因此表单不会直接把URL值作为发送值，而是把它映射到已有option。
+用户可以编辑 URL 参数。因此，表单侧不会将 URL 值直接作为发送值，而是映射到现有的 option。
 
 <figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
   <figcaption>
-    <strong id="diagram-service-cta-contact-prefill">从经过验证的咨询上下文到管理记录</strong>
-    <span>此图展示实现阶段；真实客户联系与处理完成情况仍需单独验证。</span>
+    <strong id="diagram-service-cta-contact-prefill">将咨询受理信息传递到管理记录的流程</strong>
+    <span>展示链路的实现阶段。是否已联系实际客户并完成处理，仍需另行确认。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
@@ -189,8 +189,8 @@ URL参数可以由用户编辑。因此表单不会直接把URL值作为发送�
           <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
         </svg>
       </span>
-      <strong>解析 CTA 上下文</strong>
-      <span>将稳定的 service key 映射到本地化 URL 和允许的表单选项。</span>
+      <strong>读取 CTA 上下文</strong>
+      <span>将稳定的 service key 映射到多语言显示 URL 和表单已允许选项的 allowlist。</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -200,7 +200,7 @@ URL参数可以由用户编辑。因此表单不会直接把URL值作为发送�
         </svg>
       </span>
       <strong>验证输入与权限</strong>
-      <span>仅在主题为空时预填；API 还会验证用户身份和操作权限。</span>
+      <span>仅在主题为空时预填，并在 API 中验证使用者身份和操作权限。</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -210,14 +210,14 @@ URL参数可以由用户编辑。因此表单不会直接把URL值作为发送�
         </svg>
       </span>
       <strong>写入受理记录</strong>
-      <span>将受理内容写入 CRM 历史并创建后续任务；负责人处理完成属于另一状态。</span>
+      <span>将受理内容同步到 CRM 历史记录和后续任务，并将负责人实际完成处理记录为独立状态。</span>
     </li>
   </ol>
 </figure>
 
 ## 在表单侧维护分类表
 
-咨询表单以数组保存各服务分类。
+在咨询表单侧，通过数组维护各服务的分类。
 
 ```ts
 const serviceCategoryOptions = [
@@ -236,22 +236,22 @@ const serviceCategoryOptions = [
 ];
 ```
 
-`key`、`value`、`label` 和 `subject` 各有不同作用。
+`key`、`value`、`label`、`subject` 分别承担不同作用。
 
-| 字段      | 作用                            |
-| --------- | ------------------------------- |
-| `key`     | 用于根据URL参数查找的稳定标识符 |
-| `value`   | 表单发送时交给接收方的咨询类别  |
-| `label`   | 显示在画面上的已翻译选项        |
-| `subject` | 用于初始填写主题的服务名称      |
+| 字段      | 作用                              |
+| --------- | --------------------------------- |
+| `key`     | 用于根据 URL 参数查找的稳定标识符 |
+| `value`   | 表单提交时发送给接收端的咨询类型  |
+| `label`   | 显示在界面上的已翻译选项          |
+| `subject` | 用于预填主题的服务名称            |
 
-多语言网站的 `label` 按locale翻译。另一方面，`value` 用于接收方分类，所以我们将它统一为稳定的日语值。
+在多语言网站中，`label` 会根据 locale 翻译。另一方面，`value` 用于接收端分类，因此统一为稳定的日语值。
 
-这个判断会因产品而异。如果CRM或外部表单支持多语言分类，也可以让value按locale变化。像本例这样希望简化接收运营时，分开显示标签与接收值更容易管理。
+这一点会因产品而有不同的取舍。如果 CRM 或外部表单支持多语言分类，value 也可以按 locale 设置。如果像本例一样希望简化接收端运营，将显示标签和接收值分开会更容易处理。
 
-## 为option设置data属性
+## 为 option 添加 data 属性
 
-表单select输出各服务的option。
+在表单的 select 中输出各服务对应的 option。
 
 ```astro
 <select id="category" name="category" required>
@@ -273,13 +273,13 @@ const serviceCategoryOptions = [
 </select>
 ```
 
-`data-service-key` 用于与URL中的 `service` 比较，`data-service-subject` 用于生成主题。
+`data-service-key` 用于与 URL 中的 `service` 对照。`data-service-subject` 用于生成主题。
 
-这里的重点同样是不要把URL值直接放入 `category.value`。必须从select中的option选择，避免未知service key或非法值混入接收值。
+这里的要点同样是不要将 URL 值直接放入 `category.value`。始终从 select 内的 option 中选择，避免将未知的 service key 或非法值混入接收值。
 
-## 在客户端执行prefill
+## 在客户端进行预填
 
-页面加载后，用一段小脚本初始化表单。
+表单初始化通过页面加载后运行的一小段脚本完成。
 
 ```js
 function initContactServicePrefill() {
@@ -322,33 +322,33 @@ function initContactServicePrefill() {
 }
 ```
 
-实现上有四个要点：
+实现上的要点有以下4项。
 
-- 检查 `data-service-prefill-initialized`，避免重复初始化
+- 为避免重复初始化，检查 `data-service-prefill-initialized`
 - 仅在 `category=service` 时处理
-- 未知service key回退到 `サービス全般について`
-- 仅当主题为空时初始填写
+- 未知的 service key 回退到“服务综合咨询”
+- 仅在主题为空时预填
 
-最后一点非常重要。若用户通过返回操作或浏览器自动填充保留了主题，擅自覆盖会损害体验。
+最后一点“仅在主题为空时”非常重要。如果用户通过返回操作或浏览器自动填充保留了主题，擅自覆盖就会破坏使用体验。
 
-使用Astro View Transitions或客户端导航时，除了通常的初次加载，还应在 `astro:page-load` 时初始化。
+如果使用 Astro 的 View Transitions 或客户端导航，除了常规的初次加载，也要在 `astro:page-load` 时进行初始化。
 
 ```js
 document.addEventListener("astro:page-load", initContactServicePrefill);
 initContactServicePrefill();
 ```
 
-## 使用hash移动到表单位置
+## 使用 hash 跳转到表单位置
 
-CTA的URL包含 `#contact-form`。
+CTA 的 URL 中附加了 `#contact-form`。
 
 ```txt
 /contact/?category=service&service=web#contact-form
 ```
 
-咨询页面可能还包含FAQ、LINE、说明文字和其他联系方式，因此从服务CTA进入的用户直接移动到表单更自然。
+咨询页面上除了表单，还有 FAQ、LINE、说明文字和其他联系方式。因此，从服务 CTA 跳转而来的用户直接前往表单位置会更自然。
 
-不过，如果表单侧要初始化，需要稍微注意滚动时机。为了在元素渲染后滚动，我们使用 `requestAnimationFrame`。
+不过，如果需要在表单侧进行初始化，就要稍微留意滚动时机。为了在元素渲染后再滚动，我们使用了 `requestAnimationFrame`。
 
 ```js
 if (window.location.hash === "#contact-form") {
@@ -358,57 +358,57 @@ if (window.location.hash === "#contact-form") {
 }
 ```
 
-移动到表单只是很小的行为，但若CTA的意图与表单显示位置不一致，用户会感到迷惑。导流设计应把URL、初始选择和滚动位置作为一个整体考虑。
+跳转到表单位置只是一个小动作，但 CTA 的意图和表单显示位置不一致时，用户就会感到困惑。设计导流流程时，应将 URL、默认选择和滚动位置作为整体考虑。
 
-## 不增加hidden字段的判断
+## 决定不增加 hidden 字段
 
-本次没有增加 `相談対象サービス` 的hidden字段。
+本次没有添加 `相談対象サービス` hidden 字段。
 
-原因是希望只通过咨询类别就能判断目标服务。
+原因是希望只通过咨询类型就能判断目标服务。
 
-增加表单字段时，以下检查点也会增加：
+增加表单字段后，也会增加以下检查事项。
 
 - 是否显示在通知邮件中
-- 是否在管理界面或电子表格中增加列
-- 是否影响现有自动回复模板
-- CRM联动或Webhook是否处理该字段
-- 如何区分多语言显示名称与接收值
+- 是否要在管理界面或电子表格中增加一列
+- 是否会影响现有的自动回复模板
+- 是否要在 CRM 集成或 Webhook 中处理
+- 如何区分多语言显示名称和接收值
 
-如果现有字段能够表达所需信息，不增加字段会使运营更稳定。这次我们把 `お問い合わせ種別` 分为“服务综合”和各服务类别，使接收方能够判断。
+如果现有字段能够表达所需信息，不增加字段会让运营更加稳定。本次只将 `お問い合わせ種別` 区分为“服务综合咨询”和各服务类别，让接收端能够进行判断。
 
-当然，如果需要同时选择多个服务、保存广告活动ID或在CRM中使用独立字段，也可以选择增加hidden字段。
+当然，如果有同时选择多个服务、保存广告活动 ID，或在 CRM 中使用独立字段等需求，也可以考虑增加 hidden 字段。
 
-## 多语言网站的思路
+## 多语言网站的处理方式
 
-在多语言网站中构建这条导流时，把三个值分开考虑即可避免混乱。
+为多语言网站设计这类导流流程时，将3类值分开考虑，就不会混乱。
 
-| 类型     | 示例                          | 是否依赖locale |
-| -------- | ----------------------------- | -------------- |
-| URL key  | `web`, `server`, `aceserver`  | 否             |
-| 显示标签 | `About Website Design` 等     | 是             |
-| 接收值   | `Webサイト制作・運用について` | 取决于运营     |
+| 类型     | 示例                          | 是否依赖 locale |
+| -------- | ----------------------------- | --------------- |
+| URL key  | `web`, `server`, `aceserver`  | 否              |
+| 显示标签 | `About Website Design` 等     | 是              |
+| 接收值   | `Webサイト制作・運用について` | 视运营需要      |
 
-URL key不翻译更稳定，因为它用于共享链接、分析以及表单侧匹配。
+URL key 不翻译会更稳定，因为需要共享链接、进行分析并在表单侧进行匹配。
 
 显示标签必须翻译，因为这是用户在表单中看到的文案。
 
-接收值应配合运营。本次统一为稳定的日语值。将多语言显示与提交后的内部运营分开设计，可使表单更易处理。
+接收值则应根据运营方式决定。本次采用了稳定的日语值。将多语言显示与接收后的内部运营视为不同事项来设计，表单就会更易于处理。
 
-翻译流程本身也在[使用Sveltia CMS运营多语言博客的方法](/blog/copilot-translation-pipeline/)中介绍。
+关于翻译流程，[如何使用 Sveltia CMS 运营多语言博客](/blog/copilot-translation-pipeline/) 中也有介绍。
 
-## 检查生成HTML
+## 检查生成的 HTML
 
-这种实现只看组件还不够。应在build后的HTML中确认链接和option是否实际输出。
+此类实现只检查组件还不够。需要在构建后的 HTML 中确认链接和 option 是否已实际输出。
 
-本次检查的内容如下：
+本次检查了以下内容。
 
-- `/services/` 中输出7个服务CTA
-- 各CTA包含 `?category=service&service=...#contact-form`
-- `/contact/` 中输出7个带 `data-service-key` 的option
-- 输出 `サービス全般について` 和各服务类别
-- 未输出 `相談対象サービス` 的hidden字段
+- `/services/` 中输出了7个服务专属 CTA
+- 各 CTA 都带有 `?category=service&service=...#contact-form`
+- `/contact/` 中输出了7个带有 `data-service-key` 的 option
+- 已输出“服务综合咨询”和各服务类别
+- 未输出 `相談対象サービス` hidden 字段
 
-例如，可以对生成HTML使用 `rg` 检查。
+例如，可以使用 `rg` 检查生成的 HTML。
 
 ```powershell
 rg -n "category=service&service=.*#contact-form" dist\services\index.html
@@ -416,43 +416,43 @@ rg -n "data-service-key" dist\contact\index.html
 rg -n "相談対象サービス" dist\contact\index.html
 ```
 
-最后一项是检查不应出现的内容确实没有出现。修改表单时，不仅要检查新增内容，也要检查设计上决定不添加的内容。
+最后一项检查是确认不应出现的内容确实没有出现。改造表单时，不仅要检查新增的内容，也要检查那些决定不新增的内容。
 
-## 与AI聊天的职责分工
+## 与 AI 聊天的分工
 
-这条导流与[咨询AI聊天的技术设计](/blog/astro-ai-contact-chat/)很契合，但两者职责不同。
+这条导流流程与[咨询 AI 聊天的技术设计](/blog/astro-ai-contact-chat/) 相辅相成。不过，两者的作用不同。
 
-| 导流    | 擅长的事情                       |
-| ------- | -------------------------------- |
-| AI聊天  | 通过对话整理应咨询哪项服务       |
-| 服务CTA | 把正在阅读的服务上下文传递到表单 |
-| 表单    | 正式接收咨询内容并留下记录       |
+| 导流方式 | 擅长的事情                       |
+| -------- | -------------------------------- |
+| AI 聊天  | 通过对话梳理应该咨询哪项服务     |
+| 服务 CTA | 将正在阅读的服务上下文传递到表单 |
+| 表单     | 接收正式的咨询内容并保留记录     |
 
-AI聊天适合仍在犹豫的用户。相反，对于读完服务页面并决定“咨询这项服务”的用户，不经对话直接送到表单更自然。
+AI 聊天适合用户仍在犹豫的阶段。另一方面，对于读完服务页面并决定“咨询这项服务”的用户，不插入对话、直接跳转表单会更自然。
 
-增加导流时，不要让所有导流承担相同角色。应根据用户状态分别使用对话、CTA和表单。
+增加导流方式时，重要的是不要让所有方式承担相同的作用。应根据用户所处的阶段灵活使用对话、CTA 和表单。
 
 ## 总结
 
-将服务页面的上下文传递到咨询表单，其效果比视觉上的小变化更大。
+从服务页面向咨询表单传递上下文的实现，效果远比外观看起来更加显著。
 
-本次设计中的重点如下：
+本次设计的重点如下。
 
-- 将CTA组件化，集中URL生成与计量属性
-- URL使用稳定的service key而非显示文案
-- 在表单侧把service key映射到option
-- 区分接收值、显示标签和主题用服务名称
-- 未知service key回退到服务综合咨询
-- 仅当主题为空时初始填写
-- 不增加hidden字段，而是用咨询类别分类
-- build后在生成HTML中检查链接数、option数和不必要字段不存在
+- 将 CTA 组件化，集中处理 URL 生成和衡量属性
+- URL 中放入稳定的 service key，而不是显示文案
+- 在表单侧将 service key 映射到 option
+- 将接收值、显示标签和用于主题的服务名称区分开
+- 未知的 service key 回退到服务综合咨询
+- 仅在主题为空时预填
+- 不增加 hidden 字段，通过咨询类型进行分类
+- 在构建后的 HTML 中确认链接数量、option 数量以及不需要的字段确实不存在
 
-改善咨询表单不只是减少输入栏。把用户正在阅读的上下文完整传递到接收方，才能真正让咨询处理更轻松。
+改进咨询表单不只是减少输入栏。将用户正在阅读的上下文一路传递到接收端，才能让实际咨询处理更加轻松。
 
 ## 2026年10月6日补充：从咨询受理到管理记录
 
-匿名化的集成改进把咨询接收、CRM历史与任务记录、负责人处理完成作为不同状态。验证URL输入和咨询渠道，把渠道值映射到稳定enum。知道管理界面URL并不授予修改历史或任务的权限。
+在匿名化的集成改造中，我们将咨询受理、写入 CRM 历史记录和任务、负责人完成处理作为不同状态来处理。对 URL 输入和咨询来源路径进行验证，并将来源路径的值映射到稳定的 enum。仅仅知道管理界面的 URL，并不意味着拥有修改历史记录或任务的权限。
 
-API也验证身份与操作权限，不把客户信息混入公开搜索或公开AI答案。受理与记录代码完成，并不证明真实客户的联系到业务完成全流程已通过。
+在 API 中也会确认使用者身份和操作权限，不将客户信息混入公开搜索或公开 AI 回答的素材。即使咨询受理或记录的实现已经完成，也不能据此声称已端到端验证从联系实际客户到业务处理完成的全流程。
 
-区分表单prefill与用户输入。需要回访时，以必填固定选项记录希望的联系渠道并传入后续任务。对齐UI和API的必填要求及负责人读取、追加权限，数据库修改后检查schema和constraint。必要的生产验证与为开发克隆全部客户数据库是不同事项。
+区分表单预填与用户本人填写的内容。对于需要回电的受理事项，将首选联系方式设置为必填的固定选项，并传递到后续任务。统一 UI 和 API 的必填条件，以及负责人的查看和追加权限；数据库变更后，确认 schema 和 constraint。还要将必要的生产环境验证与把实际客户的全部 DB 复制到开发环境区分开来。

@@ -1,122 +1,122 @@
 ---
-title: "Technisches Design zur Übergabe des Kontexts eines Service-CTA an das Kontaktformular"
-description: "Implementierungsdesign, das den auf einer Serviceseite gelesenen Kontext an das Kontaktformular übergibt. Behandelt werden Mini-CTAs in Astro, der URL-Parameter-Vertrag, die anfängliche Kategorieauswahl, Subject-Prefill, mehrsprachige URLs, GA-Messung und Prüfung des generierten HTML."
+title: "Technische Konzeption zur Übergabe des Kontexts von Service-CTAs an das Kontaktformular"
+description: "Implementierungskonzept zur Übernahme des Kontexts, den Nutzer auf einer Serviceseite gelesen haben, in das Kontaktformular. Von Mini-CTAs und dem URL-Parameter-Vertrag auf Astro-Websites über die Vorauswahl der Anfragekategorie, die Vorbefüllung des Betreffs, mehrsprachige URLs und GA-Tracking bis zur Prüfung des generierten HTML – klar strukturiert und auch auf anderen Websites einsetzbar."
 date: 2026-06-07T13:00
 lastUpdated: "2026-10-09T15:00:00+09:00"
 author: gui
-tags: ["Technologie", "Website", "Services", "Astro", "CMS"]
+tags: ["Technik", "Websites", "Dienstleistungen", "Astro", "CMS"]
 image: https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop&q=80
 callout:
   type: info
-  title: Kernaussage dieses Artikels
-  text: Ein CTA auf einer Serviceseite ist ein schwacher Weg, wenn er lediglich zum Formular führt. Wird der gelesene Servicekontext über die URL übergeben und werden Kategorie und Betreff im Formular initialisiert, sinken gleichzeitig die Unsicherheit bei der Eingabe und der Sortieraufwand beim empfangenden Team.
+  title: Das Wichtigste auf einen Blick
+  text: Ein CTA auf einer Serviceseite ist als Handlungsweg wenig hilfreich, wenn er Nutzer nur zum Formular weiterleitet. Wird der Kontext des gelesenen Services per URL übermittelt und werden im Formular Anfragekategorie und Betreff vorausgefüllt, sinken zugleich die Unsicherheit beim Ausfüllen und der Aufwand für die Zuordnung auf der Empfängerseite.
 processFigure:
-  title: Ablauf zur Übergabe des Kontexts vom Service-CTA an das Formular
+  title: Ablauf der Kontextübergabe vom Service-CTA an das Formular
   steps:
-    - title: Service
-      description: Dem CTA jedes Serviceabschnitts einen service key geben.
+    - title: Dienstleistung
+      description: Jeder CTA in einem Serviceabschnitt erhält einen Service-Key.
       icon: i-lucide-panels-top-left
       accent: brand
     - title: URL
-      description: Über einen URL-Vertrag wie /contact/?category=service&service=web#contact-form übergeben.
+      description: Die Übergabe erfolgt über einen URL-Vertrag wie /contact/?category=service&service=web#contact-form.
       icon: i-lucide-link
       accent: amber
-    - title: Form
-      description: Passende Anfragekategorie und passenden Betreff im Formular initialisieren.
+    - title: Formular
+      description: Das Formular wählt die passende Anfragekategorie voraus und trägt einen Betreff ein.
       icon: i-lucide-file-input
       accent: emerald
-    - title: Ops
-      description: Das empfangende Team erkennt den Servicekontext allein an der Anfragekategorie.
+    - title: Betrieb
+      description: Die Empfängerseite erkennt den Servicekontext allein anhand der Anfragekategorie.
       icon: i-lucide-inbox
       accent: slate
 compareTable:
-  title: Unterschied bei der Verbindung von CTA und Formular
+  title: Was sich ändert, wenn CTA und Formular verbunden werden
   before:
-    label: Nur zum Formular weiterleiten
+    label: Bei einer einfachen Weiterleitung zum Formular
     items:
-      - Der Nutzer muss denselben Servicenamen erneut auswählen
-      - Der Betreff bleibt leer und der Inhalt der Anfrage ist schwer erkennbar
-      - Das empfangende Team muss die Nachricht lesen, um den Service zu bestimmen
-      - Die Wirkung einzelner Service-CTAs bleibt schwer messbar
+      - Der Nutzer wählt im Formular denselben Service erneut aus
+      - Der Betreff bleibt leer, sodass der Anlass der Anfrage schwer erkennbar ist
+      - Die Empfängerseite kann den betreffenden Service erst schwer erkennen, wenn sie den Nachrichtentext liest
+      - Die Wirkung von Service-CTAs lässt sich nur ungenau messen
   after:
-    label: Kontext weitergeben
+    label: Bei der Übernahme des Kontexts
     items:
-      - Die Anfragekategorie kann über den service key des CTA vorausgewählt werden
-      - Der Servicename kann den Betreff füllen und die Anfrage strukturieren
-      - Das empfangende Team kann anhand der Kategorie klassifizieren
-      - GA label und URL-Parameter erleichtern die Auswertung pro CTA
+      - Die Anfragekategorie kann anhand des Service-Keys im CTA vorausgewählt werden
+      - Der Service-Name im Betreff hilft, den Anfrageinhalt einzuordnen
+      - Die Empfängerseite kann anhand der Anfragekategorie klassifizieren
+      - Mit GA-Label und URL-Parametern lässt sich der Erfolg je CTA leicht nachvollziehen
 checklist:
-  title: Designprüfung bei der Einführung
+  title: Prüfliste für die Einführung
   items:
-    - text: In URL-Parametern nur kurze, stabile service keys verwenden
-    - text: Als Formularwerte betrieblich stabile Werte statt sichtbarer Nutzertexte verwenden
-    - text: Bei unbekanntem service key auf allgemeine Serviceanfragen zurückfallen
-    - text: Den Betreff nur dann vorausfüllen, wenn er leer ist
-    - text: Vor zusätzlichen hidden-Feldern prüfen, ob die bestehende Kategorie zur Klassifizierung reicht
-    - text: Die Kontakt-URL für jede locale serverseitig erzeugen
-    - text: Dem CTA GA label und location für die Wirkungsmessung geben
-    - text: Nach dem build Anzahl der CTA und option sowie Vorhandensein oder Fehlen von hidden-Feldern im HTML prüfen
+    - text: URL-Parameter auf kurze, stabile Service-Keys beschränken
+    - text: Für den Empfangswert im Formular keinen Anzeigetext für Nutzer, sondern einen im Betrieb stabilen Wert verwenden
+    - text: Unbekannte Service-Keys auf allgemeine Serviceanfragen zurückfallen lassen
+    - text: Den Betreff nur vorausfüllen, wenn er leer ist
+    - text: Vor dem Hinzufügen weiterer Hidden-Felder prüfen, ob sich die Anfrage bereits über die bestehende Anfragekategorie klassifizieren lässt
+    - text: Anfrage-URLs je Locale serverseitig generieren
+    - text: CTAs mit GA-Label und Position versehen, damit sich ihre Wirkung messen lässt
+    - text: Im generierten HTML nach dem Build die Anzahl der CTAs und Optionen sowie das Vorhandensein von Hidden-Feldern prüfen
 linkCards:
   - href: /services/
-    title: Services
-    description: Einstieg in den Weg mit servicespezifischen CTAs.
+    title: Dienstleistungen
+    description: Einstieg in die Nutzerführung mit CTAs für einzelne Services.
     icon: i-lucide-panels-top-left
   - href: /contact/
     title: Kontakt
-    description: Formular, das URL-Parameter empfängt und Kategorie sowie Betreff initialisiert.
+    description: Ein Formular, das URL-Parameter entgegennimmt und Anfragekategorie und Betreff vorausfüllt.
     icon: i-lucide-message-square
   - href: /blog/astro-ai-contact-chat/
-    title: Technisches Design des Anfrage-KI-Chats
-    description: Verwandter Artikel über einen dialogbasierten Weg zur Einordnung des Anliegens.
+    title: Technische Konzeption eines KI-Chats für Anfragen
+    description: Ein verwandter Artikel über eine Nutzerführung, die im Gespräch das passende Angebot ermittelt.
     icon: i-lucide-sparkles
 faq:
   title: Häufig gestellte Fragen
   items:
-    - question: Warum wird der Zielservice nicht in einem hidden-Feld gesendet?
-      answer: "Im Juni 2026 wurde nur mit der vorhandenen Kategorie klassifiziert, ohne zusätzliche versteckte Felder. Das aktuelle Systems-Formular speichert service, from und entry zusätzlich in versteckten Feldern für die Integration."
-    - question: Ist eine Manipulation der URL-Parameter unproblematisch?
-      answer: Ein unbekannter service key fällt auf allgemeine Serviceanfragen zurück. Der gesendete Wert wird aus den option des Formulars gewählt; der URL-Wert selbst wird daher nicht direkt gesendet.
-    - question: Wie funktioniert das auf einer mehrsprachigen Website?
-      answer: CTA-Ziele werden pro locale erzeugt und sichtbare Formularlabels übersetzt. Stabile japanische Klassifikationswerte als gesendete Werte halten den Empfangsbetrieb konsistent.
+    - question: Warum wird der angefragte Service nicht über ein Hidden-Feld übermittelt?
+      answer: "Zum damaligen Stand (2026-6) wurden Anfragen nur anhand der bestehenden Anfragekategorie klassifiziert; deshalb wurde kein zusätzliches Hidden-Feld hinzugefügt. Das aktuelle Formular von Acecore Systems speichert service, from und entry als zusätzliche Hidden-Felder zur Weiterverarbeitung, getrennt vom Klassifizierungswert."
+    - question: Sind manipulierbare URL-Parameter ein Problem?
+      answer: Unbekannte Service-Keys fallen auf allgemeine Serviceanfragen zurück. Da der übermittelte Wert aus den Formularoptionen ausgewählt wird, wird der URL-Wert nicht direkt als Empfangswert verwendet.
+    - question: Wie funktioniert das auf mehrsprachigen Websites?
+      answer: CTA-Ziele werden je Locale generiert und die sichtbaren Formularbezeichnungen übersetzt. Die Empfangswerte werden dagegen auf stabile japanische Kategorienamen ausgerichtet, damit die Abläufe auf der Empfängerseite konsistent bleiben.
 ---
 
-> **Aktualisierung vom September 2026:** Die Beispiele `ServiceSectionActions` und `service=web` dokumentieren das Unternehmenssite-Design vom Juni 2026. Heute übergeben [Acecore-Systems-Service-CTAs](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) `category`, `service`, `from` und `entry`; das [Kontaktformular](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) prüft kurze Service-Keys und belegt Kategorie und Betreff vor. Es nutzt auch versteckte Felder für Messung und Integration. Übernehmen Sie die damalige Entscheidung ohne versteckte Felder nicht als aktuellen Vertrag. URL-Werte müssen weiterhin erlaubten Formularoptionen zugeordnet werden.
+> **Nachtrag (2026-9):** Die folgenden Beispiele für `ServiceSectionActions` und `service=web` dokumentieren die Implementierung, die im Zeitraum 2026-6 auf der offiziellen Acecore-Website verwendet wurde. Im aktuellen Acecore Systems enthalten die [CTAs auf den Servicedetailseiten](https://github.com/acecore-systems/acecore-systems/blob/main/src/components/ServiceDetailPage.astro) die Werte `category`, `service`, `from` und `entry`; das [Kontaktformular](https://github.com/acecore-systems/acecore-systems/blob/main/src/pages/contact.astro) prüft den kurzen Service-Key und initialisiert Anfragekategorie und Betreff. Da aktuell auch Hidden-Felder für Tracking und Integrationen verwendet werden, sollte die folgende Konzeption, auf Hidden-Felder zu verzichten, nicht als aktuelle Spezifikation übernommen werden. Der Grundsatz bleibt jedoch gültig, URL-Werten nicht zu vertrauen, sondern sie den Optionen im Formular zuzuordnen.
 
-Wenn ein Besucher auf einer Serviceseite denkt „dazu möchte ich eine Anfrage stellen“, geht ein Teil des Kontexts verloren, wenn er lediglich zum Kontaktformular weitergeleitet wird.
+Wenn Nutzer nach dem Lesen einer Serviceseite denken: „Zu diesem Thema möchte ich beraten werden“, geht etwas Kontext verloren, wenn sie einfach nur zum Kontaktformular weitergeleitet werden.
 
-Er muss den Servicetyp erneut auswählen und den Betreff schreiben. Auch das empfangende Team kann vor dem Lesen der Nachricht kaum erkennen, ob es um Webproduktion, Serverbetrieb oder Aceserver geht.
+Im Formular müssen sie den Service erneut auswählen und den Betreff selbst schreiben. Auch die Empfängerseite kann schwer erkennen, ob es um Webentwicklung, Serverbetrieb oder Aceserver geht, bevor sie den Nachrichtentext gelesen hat.
 
-Auf der Acecore-Website haben wir diesen Weg mit dem [PR zur Übergabe des Serviceziels an das Kontaktformular](https://github.com/acecore-systems/acecore-net/pull/100) verbessert. Dieser Artikel beschreibt die Lösung sowohl als Astro-Implementierung als auch als wiederverwendbares Journey-Design.
+Auf der Acecore-Website haben wir diese Nutzerführung mit der [PR zur Übernahme des angefragten Services vom Service-CTA ins Kontaktformular](https://github.com/acecore-systems/acecore-net/pull/100) verbessert. Dieser Artikel dokumentiert nicht nur die Implementierung mit Astro, sondern ordnet sie auch als ein Konzept für Nutzerführungen ein, das sich auf anderen Websites einsetzen lässt.
 
-## Formularinitialisierung anhand eines CTA prüfen
+## Die Formularinitialisierung anhand eines einzelnen CTA prüfen
 
-Testen Sie gültige und unbekannte Schlüssel sowie Zurücknavigation nach Betreffeingabe. Prüfen Sie zulässige Optionen und Erhalt des Betreffs mit demselben Wertevertrag in Sprach-URLs. Übergeben Sie Kontext über kurze Kennungen; personenbezogene Daten und Freitext gehören nicht in URLs.
+Testen Sie einen gültigen Service-Key, einen unbekannten Key und die Rückkehr mit bereits ausgefülltem Betreff. Prüfen Sie, ob die Anfragekategorie einer zugelassenen Option zugeordnet und der Betreff nicht überschrieben wird; verwenden Sie auch bei Locale-spezifischen URLs denselben Wertevertrag. Die URL enthält keine personenbezogenen Daten oder frei formulierten Inhalte, sondern nur eine kurze Kennung, die den Kontext der Anfrage übermittelt.
 
-[MDN URLSearchParams：URL-Parameter lesen](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+[MDN URLSearchParams: Spezifikation zum Lesen von URL-Parametern](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 
-## Das Ziel ist nicht nur weniger Formulareingabe
+## Ziel ist nicht, die Formulareingaben zu reduzieren
 
-Der Zweck besteht nicht einfach darin, Felder automatisch auszufüllen und das Formular leichter wirken zu lassen.
+Das Ziel dieser Implementierung ist nicht nur, Formularfelder automatisch auszufüllen, damit die Bedienung einfacher wirkt.
 
-Entscheidend ist, den auf der Serviceseite entstandenen Kontext korrekt an Formular und Empfangsbetrieb weiterzugeben.
+Entscheidend ist vielmehr, den auf der Serviceseite entstandenen Kontext korrekt an das Kontaktformular und die Abläufe auf der Empfängerseite weiterzugeben.
 
-| Perspektive        | Gewünschte Verbesserung                                  |
-| ------------------ | -------------------------------------------------------- |
-| Nutzer             | Den gelesenen Service nicht erneut auswählen müssen      |
-| Formular           | Kategorie und Betreff passend zur Anfrage initialisieren |
-| Empfang            | Das Ziel allein anhand der Kategorie klassifizieren      |
-| Messung            | Erkennen, von welchem Service-CTA die Anfrage begann     |
-| Mehrsprachiger Weg | Zur Kontakt-URL der passenden locale führen              |
+| Aspekt                      | Gewünschte Verbesserung                                            |
+| --------------------------- | ------------------------------------------------------------------ |
+| Nutzer                      | Den gelesenen Service nicht noch einmal auswählen müssen           |
+| Formular                    | Anfragekategorie und Betreff passend zum Anliegen vorausfüllen     |
+| Empfängerseite              | Das Anliegen anhand der Anfragekategorie leichter einordnen        |
+| Messung                     | Nachvollziehen, über welchen Service-CTA eine Anfrage begonnen hat |
+| Mehrsprachige Nutzerführung | Zur passenden Anfrage-URL für die jeweilige Locale weiterleiten    |
 
-Optisch handelt es sich nur um einen kleinen CTA, doch das Design umfasst CTA, URL, Formular, Übersetzung, Messung und Empfangsbetrieb.
+Optisch ist es nur ein kleiner CTA. Doch bei der Konzeption geht es um CTA, URL, Formular, Übersetzung, Messung und die Abläufe auf der Empfängerseite.
 
-## Verantwortlichkeiten in eine CTA-Komponente auslagern
+## Zuständigkeiten in eine CTA-Komponente auslagern
 
-Am Ende jedes Serviceabschnitts steht ein CTA „Zu diesem Service beraten lassen“.
+Am Ende jedes Serviceabschnitts wird ein CTA mit der Aufschrift „Zu diesem Service beraten lassen“ platziert.
 
-Die gleiche Linkerzeugung und dieselben GA-Attribute sollten nicht in jedem Abschnitt direkt wiederholt werden. Bei sieben Services erscheint dieselbe Logik siebenmal und kann beim Ändern von Text oder URL-Spezifikation teilweise vergessen werden.
+Zunächst sollte man vermeiden, die gleiche Linkgenerierung und dieselben GA-Attribute in jedem Abschnitt der Serviceseite fest einzutragen. Bei 7 Services erscheint dieselbe Schreibweise 7-mal. Änderungen an Text oder URL-Spezifikation werden dann leicht an einzelnen Stellen übersehen.
 
-Deshalb bündelt `ServiceSectionActions` den Kontakt-CTA.
+Deshalb haben wir `ServiceSectionActions` erstellt, um Kontakt-CTAs zusammenzufassen.
 
 ```astro
 ---
@@ -148,38 +148,38 @@ const contactUrl = `${u("/contact/")}?category=service&service=${encodeURICompon
 </a>
 ```
 
-Die Komponente hat drei Aufgaben:
+Diese Komponente hat 3 Aufgaben:
 
-- Eine zur locale passende Kontakt-URL erzeugen
-- Den service key in einen URL-Parameter setzen
-- label und location für die GA-Messung tragen
+- Eine Anfrage-URL für die jeweilige Locale generieren
+- Den Service-Key in die URL-Parameter einfügen
+- Ein Label und eine Position für das GA-Tracking festlegen
 
-Ein CTA ist Aktions- und Messpunkt, nicht nur UI. `data-ga-label` und `data-ga-location` bleiben erhalten, damit später sichtbar ist, von welchem Service die Anfrage ausging.
+Ein CTA ist ein Interaktionspunkt für Nutzer und zugleich ein Messpunkt. `data-ga-label` und `data-ga-location` bleiben erhalten, damit sich später nachvollziehen lässt, von welchem Service aus eine Anfrage begonnen wurde.
 
-## URL-Parameter als Vertrag mit dem Formular
+## URL-Parameter als Vertrag mit dem Formular festlegen
 
-Die Werte werden über URL-Parameter übergeben.
+Die Werte, die vom CTA an das Kontaktformular übergeben werden, werden über URL-Parameter weitergegeben.
 
 ```txt
 /contact/?category=service&service=web#contact-form
 ```
 
-Wichtig ist, keinen sichtbaren Anzeigetext in die URL zu setzen.
+Wichtig ist, dass die Werte in der URL keine Anzeigetexte sind.
 
-Ein Label wie `Webサイト制作・運用について` wird von Übersetzung, Schreibvarianten und künftigen Namensänderungen beeinflusst. In die URL gehört nur ein kurzer service key wie `web` oder `server`.
+Anzeigetexte wie `Webサイト制作・運用について` können von Übersetzungen, abweichenden Schreibweisen und späteren Namensänderungen betroffen sein. In die URL kommen nur kurze Service-Keys wie `web` oder `server`.
 
-| Parameter  | Rolle                                                         |
-| ---------- | ------------------------------------------------------------- |
-| `category` | Kennzeichnet den Einstieg zur Verarbeitung als Serviceanfrage |
-| `service`  | Stabiler key für den Zielservice                              |
-| hash       | Dient zum Scrollen zum Formular                               |
+| Parameter  | Funktion                                                     |
+| ---------- | ------------------------------------------------------------ |
+| `category` | Kennzeichnet den Einstieg zur Bearbeitung als Serviceanfrage |
+| `service`  | Stabiler Key für den betreffenden Service                    |
+| Hash       | Dient zum Scrollen zur Formularposition                      |
 
-URL-Parameter können vom Nutzer bearbeitet werden. Das Formular übernimmt den URL-Wert deshalb nicht direkt, sondern ordnet ihn einem vorhandenen option zu.
+URL-Parameter können von Nutzern bearbeitet werden. Deshalb wird der URL-Wert im Formular nicht direkt als übermittelter Wert verwendet, sondern einer vorhandenen Option zugeordnet.
 
 <figure class="article-diagram" data-layout="flow" data-tone="teal" data-count="3" aria-labelledby="diagram-service-cta-contact-prefill">
   <figcaption>
-    <strong id="diagram-service-cta-contact-prefill">Vom geprüften Anfragekontext zum Verwaltungsdatensatz</strong>
-    <span>Die Abbildung zeigt Implementierungsschritte; ein abgeschlossener Kontakt mit echten Kunden ist nicht belegt.</span>
+    <strong id="diagram-service-cta-contact-prefill">Ablauf der Übertragung einer eingegangenen Anfrage in den Verwaltungsdatensatz</strong>
+    <span>Das Diagramm zeigt die Implementierungsphasen des Ablaufs. Die Kontaktaufnahme mit realen Kunden und der Abschluss der Bearbeitung müssen separat geprüft werden.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
@@ -189,8 +189,8 @@ URL-Parameter können vom Nutzer bearbeitet werden. Das Formular übernimmt den 
           <path d="M4 5h16v14H4z M4 7l8 6 8-6"/>
         </svg>
       </span>
-      <strong>CTA-Kontext auflösen</strong>
-      <span>Einen stabilen service key der lokalisierten URL und einer erlaubten Formularoption zuordnen.</span>
+      <strong>Den CTA-Kontext auswerten</strong>
+      <span>Einen stabilen Service-Key der mehrsprachigen Anzeige-URL und einer Positivliste zulässiger Formularoptionen zuordnen.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -200,7 +200,7 @@ URL-Parameter können vom Nutzer bearbeitet werden. Das Formular übernimmt den 
         </svg>
       </span>
       <strong>Eingaben und Berechtigungen prüfen</strong>
-      <span>Den Betreff nur vorbelegen, wenn er leer ist; die API prüft außerdem die Identität des Nutzers und die Aktionsberechtigung.</span>
+      <span>Den Betreff nur bei leerem Feld vorausfüllen und auch in der API die Identität des Nutzers sowie dessen Berechtigung für die Aktion prüfen.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
@@ -209,15 +209,15 @@ URL-Parameter können vom Nutzer bearbeitet werden. Das Formular übernimmt den 
           <path d="M6 3h9l4 4v14H6z M15 3v5h4 M9 12h6 M9 16h6"/>
         </svg>
       </span>
-      <strong>In die Annahmeakte übernehmen</strong>
-      <span>Anfrage, Verlauf und Folgeaufgaben erfassen; der Abschluss durch das Team bleibt ein eigener Status.</span>
+      <strong>In den Verwaltungsdatensatz übertragen</strong>
+      <span>Die Anfrage in der CRM-Historie und den nachfolgenden Aufgaben festhalten; den tatsächlichen Abschluss der Bearbeitung durch die zuständige Person als separaten Status dokumentieren.</span>
     </li>
   </ol>
 </figure>
 
-## Klassifikationstabelle im Formular
+## Die Kategorisierungstabelle im Formular hinterlegen
 
-Das Kontaktformular führt die Servicekategorien in einem Array.
+Im Kontaktformular wird eine Zuordnungstabelle für die einzelnen Services als Array hinterlegt.
 
 ```ts
 const serviceCategoryOptions = [
@@ -236,22 +236,22 @@ const serviceCategoryOptions = [
 ];
 ```
 
-`key`, `value`, `label` und `subject` haben unterschiedliche Rollen.
+`key`, `value`, `label` und `subject` haben jeweils unterschiedliche Aufgaben.
 
-| Feld      | Rolle                                                 |
-| --------- | ----------------------------------------------------- |
-| `key`     | Stabiler Bezeichner zum Finden über den URL-Parameter |
-| `value`   | Anfragekategorie, die beim Senden beim Team ankommt   |
-| `label`   | Übersetzter option, der auf dem Bildschirm erscheint  |
-| `subject` | Servicename zur Initialisierung des Betreffs          |
+| Feld      | Funktion                                                                          |
+| --------- | --------------------------------------------------------------------------------- |
+| `key`     | Stabiler Bezeichner, über den der Eintrag anhand des URL-Parameters gefunden wird |
+| `value`   | Anfragekategorie, die beim Absenden des Formulars die Empfängerseite erreicht     |
+| `label`   | Übersetzte Option, die auf der Benutzeroberfläche angezeigt wird                  |
+| `subject` | Service-Name für die Vorbefüllung des Betreffs                                    |
 
-Auf einer mehrsprachigen Website wird `label` für die locale übersetzt. `value` dient der Klassifikation im Empfang und bleibt daher ein stabiler japanischer Wert.
+Auf mehrsprachigen Websites wird `label` an die jeweilige Locale angepasst. `value` dient dagegen der Klassifizierung auf der Empfängerseite; deshalb haben wir dafür einen stabilen japanischen Wert verwendet.
 
-Die Entscheidung hängt vom Produkt ab. Unterstützt das CRM mehrsprachige Klassifikationen, kann value ebenfalls nach locale variieren. Für einen einfachen Empfangsbetrieb ist die Trennung von sichtbarem Label und gesendetem Wert leichter zu verwalten.
+Das hängt vom jeweiligen Produkt ab. Wenn CRM oder externe Formulare mehrsprachige Kategorien unterstützen, kann auch der Wert je Locale unterschiedlich sein. Soll wie in diesem Fall der Betrieb auf der Empfängerseite einfach bleiben, ist es übersichtlicher, Anzeigebezeichnung und Empfangswert getrennt zu behandeln.
 
-## Data-Attribute an option setzen
+## Datenattribute an den Optionen hinterlegen
 
-Der select gibt pro Service einen option aus.
+Im Select-Feld des Formulars werden die Optionen für die einzelnen Services ausgegeben.
 
 ```astro
 <select id="category" name="category" required>
@@ -273,13 +273,13 @@ Der select gibt pro Service einen option aus.
 </select>
 ```
 
-`data-service-key` wird mit `service` in der URL verglichen. `data-service-subject` dient zur Erstellung des Betreffs.
+`data-service-key` wird verwendet, um den URL-Parameter `service` abzugleichen. `data-service-subject` dient zum Erstellen des Betreffs.
 
-Auch hier wird der URL-Wert nicht direkt in `category.value` eingesetzt. Die Auswahl eines vorhandenen option verhindert, dass unbekannte service keys oder ungültige Werte in die gesendeten Daten gelangen.
+Wichtig ist auch hier, den URL-Wert nicht direkt in `category.value` einzusetzen. Die Auswahl erfolgt immer anhand einer Option im Select-Feld. So gelangen keine unbekannten Service-Keys oder ungültigen Werte in den Empfangswert.
 
-## Prefill im Client
+## Werte clientseitig vorausfüllen
 
-Ein kleines Skript initialisiert das Formular nach dem Laden.
+Die Formularinitialisierung erfolgt über ein kleines Skript nach dem Laden der Seite.
 
 ```js
 function initContactServicePrefill() {
@@ -322,23 +322,23 @@ function initContactServicePrefill() {
 }
 ```
 
-Vier Punkte sind wichtig:
+Bei der Implementierung sind 4 Punkte wichtig:
 
-- `data-service-prefill-initialized` prüfen, um doppelte Initialisierung zu vermeiden
-- Nur bei `category=service` verarbeiten
-- Bei unbekanntem service key auf `サービス全般について` zurückfallen
-- Den Betreff nur initialisieren, wenn er leer ist
+- Zum Vermeiden einer doppelten Initialisierung `data-service-prefill-initialized` prüfen
+- Nur fortfahren, wenn `category=service` gilt
+- Unbekannte Service-Keys auf „Allgemeine Serviceanfragen“ zurückfallen lassen
+- Den Betreff nur vorausfüllen, wenn er leer ist
 
-Der letzte Punkt ist entscheidend. Hat eine Zurück-Navigation oder Browser-Autovervollständigung den Betreff erhalten, verschlechtert ein Überschreiben die Erfahrung.
+Der letzte Punkt – den Betreff nur bei einem leeren Feld vorauszufüllen – ist wichtig. Wenn ein Betreff durch die Zurück-Navigation oder die automatische Browservervollständigung bereits vorhanden ist, verschlechtert ein ungefragtes Überschreiben die Nutzererfahrung.
 
-Bei Astro View Transitions oder Clientnavigation wird zusätzlich bei `astro:page-load` initialisiert.
+Bei Astro View Transitions oder Client-Navigation muss die Initialisierung nicht nur beim ersten Laden, sondern auch bei `astro:page-load` ausgeführt werden.
 
 ```js
 document.addEventListener("astro:page-load", initContactServicePrefill);
 initContactServicePrefill();
 ```
 
-## Mit dem hash zum Formular springen
+## Mit einem Hash zur Formularposition springen
 
 Die CTA-URL enthält `#contact-form`.
 
@@ -346,9 +346,9 @@ Die CTA-URL enthält `#contact-form`.
 /contact/?category=service&service=web#contact-form
 ```
 
-Da eine Kontaktseite auch FAQ, LINE, Erklärungen und andere Kontaktwege enthalten kann, ist der direkte Sprung zum Formular für Besucher eines Service-CTA natürlicher.
+Auf der Kontaktseite gibt es neben dem Formular auch FAQs, LINE, erklärende Texte und weitere Kontaktmöglichkeiten. Deshalb ist es für Nutzer, die über einen Service-CTA kommen, natürlicher, direkt zur Formularposition zu springen.
 
-Bei der Formularinitialisierung muss der Scrollzeitpunkt beachtet werden. `requestAnimationFrame` sorgt dafür, dass erst nach dem Rendern gescrollt wird.
+Wenn die Initialisierung im Formular erfolgt, muss allerdings der Zeitpunkt des Scrollens berücksichtigt werden. Da erst nach dem Rendern des Elements gescrollt werden soll, verwenden wir `requestAnimationFrame`.
 
 ```js
 if (window.location.hash === "#contact-form") {
@@ -358,57 +358,57 @@ if (window.location.hash === "#contact-form") {
 }
 ```
 
-Es ist nur ein kleines Verhalten, doch wenn CTA-Absicht und sichtbare Formularposition auseinanderliegen, entsteht Unsicherheit. URL, Vorauswahl und Scrollposition werden gemeinsam gestaltet.
+Der Sprung zur Formularposition ist eine kleine Interaktion. Wenn aber die Absicht des CTA und die Position des Formulars nicht zusammenpassen, sind Nutzer leicht irritiert. Bei der Konzeption der Nutzerführung betrachten wir deshalb URL, Vorauswahl und Scrollposition gemeinsam.
 
-## Warum kein weiteres hidden-Feld
+## Bewusst auf zusätzliche Hidden-Felder verzichten
 
-Wir haben kein hidden-Feld `相談対象サービス` hinzugefügt.
+In dieser Implementierung haben wir kein Hidden-Feld `相談対象サービス` hinzugefügt.
 
-Der Zielservice sollte allein über die Anfragekategorie erkennbar sein.
+Der Grund war, dass der betreffende Service anhand der Anfragekategorie allein erkennbar sein sollte.
 
-Zusätzliche Felder erzeugen zusätzliche Prüfungen:
+Mit zusätzlichen Formularfeldern kommen auch weitere Fragen hinzu:
 
-- Soll es in der Benachrichtigungs-E-Mail erscheinen?
-- Braucht die Verwaltungsoberfläche oder Tabelle eine weitere Spalte?
-- Beeinflusst es bestehende Auto-Reply-Vorlagen?
-- Wird es in CRM oder Webhook verarbeitet?
-- Wie werden mehrsprachige Anzeigenamen und Empfangswerte getrennt?
+- Soll das Feld in der Benachrichtigungs-E-Mail erscheinen?
+- Muss die Verwaltung oder Tabelle um eine Spalte erweitert werden?
+- Wirkt sich das auf bestehende Vorlagen für automatische Antworten aus?
+- Wird das Feld in CRM-Integrationen oder Webhooks verwendet?
+- Wie werden mehrsprachige Anzeigebezeichnungen und Empfangswerte voneinander abgegrenzt?
 
-Können vorhandene Felder die Information ausdrücken, bleibt der Betrieb stabiler, wenn kein neues hinzukommt. `お問い合わせ種別` wird in allgemeine und servicespezifische Kategorien geteilt.
+Wenn sich die benötigten Informationen mit vorhandenen Feldern abbilden lassen, ist der Betrieb ohne zusätzliche Felder stabiler. In diesem Fall wurde `お問い合わせ種別` lediglich in „Allgemeine Serviceanfragen“ und servicespezifische Kategorien unterteilt, sodass die Empfängerseite die Anliegen einordnen kann.
 
-Ein hidden-Feld kann sinnvoll sein, wenn mehrere Services gewählt, eine Kampagnen-ID gespeichert oder ein eigenes CRM-Feld verwendet werden soll.
+Natürlich kann es sinnvoll sein, Hidden-Felder hinzuzufügen, wenn mehrere Services gleichzeitig ausgewählt werden sollen, eine Kampagnen-ID gespeichert werden muss oder CRM ein separates Feld benötigt.
 
-## Ansatz für mehrsprachige Websites
+## Überlegungen zu mehrsprachigen Websites
 
-Die Trennung von drei Werten verhindert Verwirrung.
+Bei der Umsetzung dieser Nutzerführung auf einer mehrsprachigen Website lassen sich Missverständnisse vermeiden, wenn man 3 Arten von Werten getrennt betrachtet.
 
-| Typ              | Beispiel                      | Von locale abhängig |
-| ---------------- | ----------------------------- | ------------------- |
-| URL key          | `web`, `server`, `aceserver`  | Nein                |
-| Sichtbares Label | `About Website Design` usw.   | Ja                  |
-| Gesendeter Wert  | `Webサイト制作・運用について` | Je nach Betrieb     |
+| Art                | Beispiel                            | Locale-abhängig      |
+| ------------------ | ----------------------------------- | -------------------- |
+| URL-Key            | `web`, `server`, `aceserver`        | Nein                 |
+| Anzeigebezeichnung | zum Beispiel `About Website Design` | Ja                   |
+| Empfangswert       | `Webサイト制作・運用について`       | Abhängig vom Betrieb |
 
-Der URL key wird besser nicht übersetzt, weil er beim Teilen, Messen und Abgleichen im Formular verwendet wird.
+URL-Keys bleiben stabiler, wenn sie nicht übersetzt werden. So lassen sich Links teilen, auswerten und im Formular abgleichen.
 
-Das sichtbare Label wird immer übersetzt, da der Nutzer es im Formular liest.
+Anzeigebezeichnungen müssen übersetzt werden, weil Nutzer diese Texte im Formular sehen.
 
-Der gesendete Wert richtet sich nach dem Betrieb. Hier nutzen wir stabile japanische Werte. Mehrsprachige Anzeige und interne Verarbeitung nach dem Senden getrennt zu gestalten erleichtert die Verwaltung.
+Die Empfangswerte richten sich nach den Abläufen. In diesem Fall haben wir stabile japanische Werte verwendet. Wenn mehrsprachige Anzeige und interne Abläufe nach dem Empfang getrennt konzipiert werden, lässt sich das Formular leichter handhaben.
 
-Der Übersetzungsfluss wird auch in [Mehrsprachige Blogs mit Sveltia CMS betreiben](/blog/copilot-translation-pipeline/) beschrieben.
+Den Übersetzungsablauf stellen wir auch unter [Mehrsprachige Blogs mit Sveltia CMS verwalten](/blog/copilot-translation-pipeline/) vor.
 
-## Generiertes HTML prüfen
+## Das generierte HTML überprüfen
 
-Nur die Komponente zu betrachten reicht nicht. Nach dem build muss geprüft werden, ob Links und option tatsächlich ausgegeben wurden.
+Bei einer solchen Implementierung reicht es nicht, nur die Komponenten anzusehen. Im HTML nach dem Build muss geprüft werden, ob Links und Optionen tatsächlich ausgegeben werden.
 
-Wir prüften:
+Wir haben folgende Punkte geprüft:
 
-- Sieben servicespezifische CTA in `/services/`
+- Auf `/services/` erscheinen 7 servicebezogene CTAs
 - Jeder CTA enthält `?category=service&service=...#contact-form`
-- Sieben option mit `data-service-key` in `/contact/`
-- `サービス全般について` und servicespezifische Kategorien sind vorhanden
-- Kein hidden-Feld `相談対象サービス` ist vorhanden
+- In `/contact/` erscheinen `data-service-key`-markierte Optionen, und zwar 7
+- „Allgemeine Serviceanfragen“ und die servicebezogenen Kategorien werden angezeigt
+- Das Hidden-Feld `相談対象サービス` wird nicht ausgegeben
 
-Zum Beispiel lässt sich `rg` verwenden.
+Das generierte HTML lässt sich zum Beispiel mit `rg` überprüfen.
 
 ```powershell
 rg -n "category=service&service=.*#contact-form" dist\services\index.html
@@ -416,43 +416,43 @@ rg -n "data-service-key" dist\contact\index.html
 rg -n "相談対象サービス" dist\contact\index.html
 ```
 
-Die letzte Prüfung bestätigt die Abwesenheit dessen, was nicht hinzugefügt werden sollte. Bei Formularänderungen werden sowohl Ergänzungen als auch bewusst ausgelassene Elemente geprüft.
+Die letzte Prüfung stellt sicher, dass nichts erscheint, was nicht erscheinen soll. Bei Formularänderungen wird also nicht nur geprüft, was hinzugefügt wurde, sondern auch, was bewusst nicht hinzugefügt wurde.
 
-## Rollenverteilung mit dem KI-Chat
+## Aufgabenverteilung zwischen KI-Chat und CTA
 
-Der Weg passt zum [technischen Design des Anfrage-KI-Chats](/blog/astro-ai-contact-chat/), doch die Rollen unterscheiden sich.
+Diese Nutzerführung ergänzt das [technische Konzept eines KI-Chats für Anfragen](/blog/astro-ai-contact-chat/) gut. Die beiden Ansätze haben jedoch unterschiedliche Aufgaben.
 
-| Weg         | Stärke                                                      |
-| ----------- | ----------------------------------------------------------- |
-| KI-Chat     | Im Dialog klären, welcher Service passt                     |
-| Service-CTA | Den Kontext des gelesenen Service an das Formular übergeben |
-| Formular    | Die offizielle Anfrage empfangen und dokumentieren          |
+| Nutzerführung | Besonders geeignet für                                                 |
+| ------------- | ---------------------------------------------------------------------- |
+| KI-Chat       | Im Gespräch klären, an welchen Service sich die Anfrage richten sollte |
+| Service-CTA   | Den Kontext des gerade gelesenen Services an das Formular übergeben    |
+| Formular      | Das konkrete Anliegen annehmen und dokumentieren                       |
 
-Der KI-Chat hilft, solange der Nutzer noch unsicher ist. Hat er die Serviceseite gelesen und sich entschieden, ist die direkte Weiterleitung ohne zusätzlichen Dialog natürlicher.
+Ein KI-Chat eignet sich besonders, wenn Nutzer noch unsicher sind. Wer dagegen eine Serviceseite zu Ende gelesen und sich entschieden hat, sich zu genau diesem Service beraten zu lassen, sollte ohne Umweg über ein Gespräch direkt zum Formular gelangen können.
 
-Mehr Wege sollten nicht alle dieselbe Rolle erhalten. Dialog, CTA und Formular werden je nach Zustand des Nutzers eingesetzt.
+Wichtig ist, nicht jeder Nutzerführung dieselbe Aufgabe zu geben. Je nach Situation des Nutzers kommen Gespräch, CTA oder Formular zum Einsatz.
 
 ## Zusammenfassung
 
-Die Kontextübergabe von der Serviceseite zum Formular wirkt stärker, als die kleine sichtbare Änderung vermuten lässt.
+Die Übernahme des Kontexts von der Serviceseite ins Kontaktformular bringt mehr, als es auf den ersten Blick scheint.
 
-Wichtige Punkte waren:
+Wichtig an dieser Konzeption waren folgende Punkte:
 
-- CTA als Komponente ausführen und URL-Erzeugung sowie Messattribute bündeln
-- Stabilen service key statt Anzeigetext in der URL verwenden
-- service key im Formular einem option zuordnen
-- Gesendeten Wert, Label und Servicenamen für den Betreff trennen
-- Bei unbekanntem service key auf allgemeine Anfragen zurückfallen
-- Betreff nur vorausfüllen, wenn er leer ist
-- Ohne weiteres hidden-Feld über die Kategorie klassifizieren
-- Nach dem build Link- und option-Anzahl sowie das Fehlen unnötiger Felder prüfen
+- CTAs als Komponenten umsetzen und URL-Erstellung und Messattribute bündeln
+- Einen stabilen Service-Key statt einer Anzeigebezeichnung in die URL schreiben
+- Den Service-Key im Formular einer Option zuordnen
+- Empfangswert, Anzeigebezeichnung und Service-Name für den Betreff voneinander trennen
+- Unbekannte Service-Keys auf allgemeine Serviceanfragen zurückfallen lassen
+- Den Betreff nur vorausfüllen, wenn er leer ist
+- Anhand der Anfragekategorie klassifizieren, statt zusätzliche Hidden-Felder anzulegen
+- Im generierten HTML nach dem Build Linkanzahl, Anzahl der Optionen und das Fehlen unnötiger Felder prüfen
 
-Formularverbesserung bedeutet nicht nur weniger Eingabefelder. Wird der gelesene Kontext bis zum empfangenden Team übertragen, wird die tatsächliche Bearbeitung einfacher.
+Bei der Verbesserung eines Kontaktformulars geht es nicht nur darum, Eingabefelder zu reduzieren. Wenn der Kontext, den Nutzer gelesen haben, bis zur Empfängerseite erhalten bleibt, wird die tatsächliche Bearbeitung der Anfragen einfacher.
 
-## Ergänzung vom 6. Oktober 2026: Vom Kontaktformular zum Verwaltungsdatensatz
+## Nachtrag (2026-10-6): Von der Anfrageannahme zum Verwaltungsdatensatz
 
-In einer anonymisierten Integration wurden der Eingang einer Anfrage, ihre Übernahme in CRM-Verlauf und Aufgaben sowie der Abschluss der Bearbeitung durch das Team als getrennte Zustände behandelt. URL-Werte und Kontaktwege werden geprüft; die Kanalwerte werden einem stabilen Enum zugeordnet. Die URL der Administrationsoberfläche zu kennen, berechtigt nicht dazu, Verlauf oder Aufgaben zu ändern.
+Bei einer anonymisierten Anpassung der Integration haben wir den Eingang einer Anfrage, die Übernahme in CRM-Verlauf und -Aufgaben sowie den Abschluss der Bearbeitung durch die zuständige Person als getrennte Zustände behandelt. URL-Eingaben und Anfragewege werden validiert; die Werte des Anfragewegs werden auf ein stabiles Enum abgebildet. Allein die Kenntnis der URL der Verwaltungsoberfläche berechtigt nicht dazu, Verlaufsdaten oder Aufgaben zu ändern.
 
-Auch die API prüft die nutzende Person und ihre Berechtigungen. Kundendaten werden weder in die öffentliche Suche noch in öffentliche KI-Antworten übernommen. Eine abgeschlossene Implementierung von Annahme und Erfassung bedeutet nicht, dass der vollständige Ablauf vom Kontakt mit echten Kunden bis zum Abschluss der Bearbeitung getestet wurde.
+Auch die API prüft die Identität der Nutzer und ihre Aktionsberechtigungen. Kundendaten werden weder in öffentliche Suchfunktionen noch als Grundlage öffentlicher KI-Antworten eingespeist. Selbst wenn die Implementierung der Anfrageannahme und -erfassung abgeschlossen ist, behaupten wir nicht, den vollständigen Ablauf vom Kontakt mit realen Kunden bis zur Erledigung des Vorgangs durchgängig getestet zu haben.
 
-Die Formularvorbelegung wird von den Eingaben der Person getrennt. Ist ein Rückruf erforderlich, wird der bevorzugte Kontaktweg als verpflichtende feste Auswahl erfasst und an die nachfolgende Aufgabe übergeben. Die Pflichtangaben in Oberfläche und API sowie die Lese- und Ergänzungsrechte des Teams werden aufeinander abgestimmt; nach einer Datenbankänderung werden Schema und Constraints geprüft. Notwendige Prüfungen in der Produktion bleiben davon getrennt, die gesamte Datenbank echter Kunden in eine Entwicklungsumgebung zu kopieren.
+Wir unterscheiden zwischen vorausgefüllten Formularwerten und Angaben, die Nutzer selbst eingegeben haben. Bei Anfragen mit gewünschtem Rückruf übernehmen wir den bevorzugten Kontaktweg als verpflichtende feste Auswahl in nachfolgende Aufgaben. Die Pflichtfeldregeln in Benutzeroberfläche und API sowie die Berechtigungen der Mitarbeitenden zum Anzeigen und Ergänzen werden aufeinander abgestimmt; nach DB-Änderungen prüfen wir Schema und Constraints. Notwendige Prüfungen in der Produktionsumgebung werden klar davon getrennt, eine vollständige Datenbank mit echten Kundendaten in eine Entwicklungsumgebung zu kopieren.

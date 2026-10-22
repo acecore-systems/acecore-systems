@@ -1,22 +1,26 @@
 {
   "contact": {
-    "title": "Contact",
-    "description": "We welcome consultations about IT advisory services, AI adoption, deployment, business systems, Web apps, design and creative production, and automating existing operations—even before the requirements are finalized. We also support Web/API security assessment and remediation.",
-    "heroTitle": "You can talk to us before your requirements are finalized.",
-    "heroLead": "Tell us about your current operations, challenges, tools, and preferred timing.",
-    "formLead": "Initial consultations and estimates are free. We can also help organize the requirements before a formal estimate. We usually respond within 1–2 business days.",
+    "title": "Contact Us",
+    "description": "We welcome inquiries—even before your requirements are finalized—about IT advisory, AI implementation, deployment, business systems, web apps, design and creative work, automation of existing operations, and Web/API security assessments and improvement support.",
+    "heroTitle": "You can reach out even if your requirements aren’t finalized yet.",
+    "heroLead": "Tell us about your current operations, challenges, the tools you use, and your desired timeline.",
+    "formLead": "Your initial consultation and estimate are free. We can also help you clarify your needs before preparing a formal estimate. We typically respond within 1–2 business days.",
     "faqs": [
       {
-        "question": "Can I contact you even if I have not decided what to build?",
-        "answer": "Yes. We can organize the requirements together, starting from your current operations, problems, and time-consuming manual work."
+        "question": "Can I reach out even if I haven’t decided what needs to be built?",
+        "answer": "Yes. We’ll work with you to assess your current operations, challenges, and time-consuming manual tasks."
       },
       {
-        "question": "Can I request only a small improvement?",
-        "answer": "Yes. We can start with a small scope, such as improving an existing form, CSV export, notifications, or automated aggregation."
+        "question": "Can I ask you to make a small improvement?",
+        "answer": "Yes. We can handle small-scale improvements, such as updating existing forms, adding CSV exports or notifications, and automating data aggregation."
       },
       {
-        "question": "Can you also advise on an existing system?",
-        "answer": "Yes. We can review hard-to-maintain screens, legacy systems, Excel-based operations, and integrations with external services."
+        "question": "Can I get advice on an existing system?",
+        "answer": "Yes. We can help improve hard-to-maintain interfaces, outdated systems, Excel-based workflows, and integrations with external services."
+      },
+      {
+        "question": "Can I ask you about building or updating a website?",
+        "answer": "Yes. We support website development and ongoing maintenance and updates for small businesses, shops, and educational providers. Select “Website Development and Update Support” in the form below, and tell us about your current site and what you’d like to accomplish."
       }
     ]
   },
@@ -175,83 +179,87 @@
     "ctaLabel": "Choose a path"
   },
   "home": {
-    "title": "Business Systems & App Development",
-    "description": "Acecore Systems provides end-to-end support—from IT advisory, AI adoption, and business process improvement through deployment, web app development, data utilization, and operational improvement.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
-    "heroTitle": "For work that never stops,\nthere is quiet design behind it.",
-    "heroLead": "From websites and customer journeys for bookings and inquiries to organizing day-to-day work and managing operations after launch.\nEven if you are not sure where to start, we will help clarify your current situation and priorities and propose a realistic way forward.",
-    "primaryCta": "Discuss your project",
+    "title": "IT support for small shops, schools, and businesses",
+    "description": "Acecore Systems is a development service that provides end-to-end support—from IT consulting, AI implementation, and workflow improvement to deployment, web app development, putting your data to work, and improving operations.",
+    "heroEyebrow": "Your IT partner for small shops, schools, and businesses",
+    "heroTitle": "Let's start with what's\ntroubling you right now.",
+    "heroLead": "From your website to your day-to-day work,\nwe'll help you get things in order, starting where you need it most.",
+    "primaryCta": "Explore our services",
     "secondaryCta": "Talk to an IT advisor",
-    "layersTitle": "Put the right systems in place, starting with your goals.",
-    "layersLead": "Customer touchpoints, day-to-day operations, and the IT foundation that supports them. We put the right pieces in place where they are needed, in a practical and sustainable way.",
+    "layersTitle": "Build the right systems, starting with your goals.",
+    "layersLead": "From customer touchpoints and day-to-day operations to the IT infrastructure that supports them, we make improvements where you need them, in a practical and manageable way.",
     "layers": [
       {
-        "label": "Customer",
-        "title": "Connect with customers",
-        "body": "Websites, reservation flows, and inquiry forms—the first points of contact—\nare designed to make the next step clear."
+        "label": "Customers",
+        "title": "Connect with your customers",
+        "body": "We make your first points of contact—your website, booking system, inquiry form, and more—easy for customers to use."
       },
       {
         "label": "Operations",
-        "title": "Streamline operations",
-        "body": "Internal apps, tools, integrations, and automation\nreduce the burden of manual work and routine checks."
+        "title": "Make everyday work run smoothly",
+        "body": "Internal apps, tools, integrations, and automation help reduce manual work and repetitive checks."
       },
       {
-        "label": "Foundation",
+        "label": "Infrastructure",
         "title": "Strengthen your IT foundation",
-        "body": "An IT advisor you can turn to for launch, operations, and technical decisions—without having to hire a dedicated specialist.\nWe help move your company's IT forward."
+        "body": "An IT advisor you can turn to for launches, ongoing operations, and technical decisions—without hiring a dedicated in-house specialist. We help take your company's IT to the next level."
       }
     ],
     "philosophyEyebrow": "DESIGN PHILOSOPHY",
-    "philosophyTitle": "The visible and invisible, designed with equal precision.",
-    "philosophyLead": "Acecore’s philosophy is “Taking the world to the next stage”: reducing nonessential burdens and helping people pursue what they want to do. Systems supports that first step through technology, bringing work, systems, and operations together.",
+    "philosophyTitle": "The same precision in what’s visible—and what isn’t.",
+    "philosophyLead": "Acecore is guided by the vision “Move the world to the next stage.” We aim to create a society that reduces unnecessary burdens and supports people as they pursue what they want to do. Acecore Systems brings together the people on the ground, systems, and day-to-day operations, using technology to support that next step.",
     "designPrinciples": [
       {
-        "title": "Start with the real work",
-        "body": "Before deciding on features, we clarify who decides what, when those decisions are made, and where the difficulties lie."
+        "title": "Start with the people doing the work",
+        "body": "Before deciding on features, we clarify who needs to make decisions, when they need to make them, and where they are running into difficulties."
       },
       {
-        "title": "Design the unseen, too.",
-        "body": "We treat data, permissions, integrations, and exception handling as one connected system."
+        "title": "Design what’s behind the scenes, too",
+        "body": "We consider data, permissions, integrations, and exception handling as parts of one connected system."
       },
       {
-        "title": "Design for change",
-        "body": "We avoid overbuilding from the start, begin with what is needed, and create a system that can evolve through use."
+        "title": "Plan for change",
+        "body": "Rather than overbuilding from the outset, we start with what's needed and make it easy to keep improving through day-to-day use."
       }
     ],
     "consultationEyebrow": "WHEN TO TALK",
     "consultationTitle": "You can talk to us at any stage.",
-    "consultationLead": "You do not need to have decided what to build. Starting with your current work and the challenges you face, we will work with you to identify the systems you need.",
+    "consultationLead": "You don't need to know exactly what you want built. We'll work with you to understand your current workflows and challenges, then figure out what systems will help.",
     "consultationSituations": [
       {
-        "title": "Cannot deploy an app built with AI",
-        "body": "The code is done, but you are stuck on decisions about the domain, cloud infrastructure, security, and operations."
+        "title": "Can't publish an app built with AI",
+        "body": "The code is ready, but we're stuck on decisions about the domain, cloud hosting, security, and ongoing operations."
       },
       {
-        "title": "Data re-entry and manual work are piling up",
-        "body": "You want to organize work scattered across spreadsheets, paper, and email, and decide where to start putting a system in place."
+        "title": "More and more work is done by hand",
+        "body": "We want to organize work spread across spreadsheets, paper, and email, and figure out what to systematize first."
       },
       {
-        "title": "Your current system does not fit the way you work",
-        "body": "You want to address usability issues and reliance on individual know-how, then improve it step by step to fit your workflow."
+        "title": "Our current system doesn't fit the way we work",
+        "body": "We want to address usability issues and overreliance on individual know-how, then gradually adapt the system to the way work actually gets done."
       },
       {
-        "title": "Your data and tools are fragmented",
-        "body": "You want to connect multiple services and data sources to reduce duplicate entry and missed checks."
+        "title": "Our data and tools are disconnected",
+        "body": "We want to connect multiple services and datasets to reduce duplicate data entry and missed checks."
       },
       {
-        "title": "You want to clarify challenges before defining requirements",
-        "body": "You want to organize your goals, users, constraints, and priorities, then decide on a realistic way forward."
+        "title": "We need to clarify our challenges before defining requirements",
+        "body": "We want to clarify our goals, users, constraints, and priorities, then decide on a practical way forward."
       },
       {
-        "title": "Check and improve your app’s security",
-        "body": "Get help with pre-release reviews, Web/API assessments and fixes after receiving a report."
+        "title": "We want to assess and improve app security",
+        "body": "We'd like help with pre-launch reviews, web and API security assessments, and making fixes based on the findings."
+      },
+      {
+        "title": "We need help creating or updating our website",
+        "body": "For small businesses, local shops, schools, and studios, we can help with everything from refining your website copy and launching the site to keeping text, photos, and announcements up to date."
       }
     ],
     "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Before deciding what to build, tell us about your work today.",
-    "ctaBody": "You can talk to us even before the requirements are fully defined. Together, we will organize your current workflow, constraints, and priorities.",
-    "ctaLabel": "Choose how to get in touch",
-    "philosophyLinkLabel": "Acecore’s philosophy and vision"
+    "ctaTitle": "Before deciding what to build, tell us about your day-to-day work.",
+    "ctaBody": "You can talk to us even before your requirements are fully defined. We'll work with you to map your current workflows, constraints, and priorities.",
+    "ctaLabel": "Choose how you'd like to get in touch",
+    "philosophyLinkLabel": "Acecore's corporate philosophy and vision"
   },
   "itAdvisor": {
     "title": "IT Advisor Engineer",
@@ -509,145 +517,175 @@
     "ctaLabel": "Consult an IT Advisor Engineer"
   },
   "pricing": {
-    "title": "Pricing Guide",
-    "description": "Pricing guidance and assumptions for Acecore Systems services, including IT advisory services, AI adoption, deployment support, business systems, Web apps, design and creative production, AI chat, CMS, SEO, and security improvements.",
-    "heroTitle": "Start sustainably with the scope you need.",
-    "heroLead": "Prices are tax-inclusive estimates. External service fees, license fees, server costs, and changes after formal requirements are confirmed separately.",
+    "title": "Pricing Overview",
+    "description": "An overview of indicative pricing and assumptions for Acecore Systems services, including IT advisory, AI implementation, deployment support, business systems, web apps, design and creative services, AI chat, CMS, SEO, and security improvements.",
+    "heroTitle": "Start with what you need, at a pace that works for you.",
+    "heroLead": "Prices are indicative and include tax. Fees for external services, licenses, and servers, along with any changes after requirements are finalized, will be confirmed separately.",
     "items": [
       {
-        "label": "IT Advisory Engineer — Light",
-        "price": "From ¥30,000/month",
-        "note": "Includes 1–2 consultations per month, AI and IT tool selection, initial setup, and small-scale launch support for up to 1 concurrent project. Work-hour limits and additional fees are stated before the contract."
+        "label": "IT Advisory Engineer — Lite",
+        "price": "From 3 × ten thousand yen per month",
+        "note": "Includes 1–2 consultations per month, AI and IT tool selection, initial setup, and small-scale launch support for up to 1 project in progress at a time. Work-hour limits and any additional fees will be clearly stated before the contract is signed."
       },
       {
         "label": "IT Advisory Engineer — Standard",
-        "price": "From ¥100,000/month",
-        "note": "Within the consultation and work-hour limits agreed in the contract: deployment, debugging and testing, status reports, and reviews of usage and improvement candidates. 24-hour monitoring and immediate incident response are not included."
+        "price": "From 10 × ten thousand yen per month",
+        "note": "Deployments, debugging and testing, status reports, and reviews of usage and potential improvements, all within the consultation and work-hour limits agreed at contract signing. 24-hour monitoring and immediate incident response are not included."
       },
       {
-        "label": "One-Time Deployment Support",
-        "price": "From ¥50,000",
-        "note": "For 1 existing Web app in 1 environment: recommended environment selection, initial domain, SSL, VPS or cloud setup, launch, operation checks, and handover. Code changes, migration, CI/CD, monitoring and backup design, and ongoing operations are estimated separately."
+        "label": "One-Off Deployment Support",
+        "price": "From 5 × ten thousand yen",
+        "note": "Based on 1 existing web app in 1 environment, the service includes selecting a recommended setup; initial configuration of the domain, SSL, and VPS or cloud; launch; functional testing; and handover. Code changes, migrations, CI/CD, monitoring and backup design, and ongoing operations are quoted separately."
       },
       {
-        "label": "AI Operational Improvement Starter Package",
-        "price": "Approx. ¥150,000",
-        "note": "A 90-minute interview, workflow review, 3 AI candidates, a simple prototype of 1 candidate, cost-effectiveness estimate, and concise AI usage rules. The estimated duration is 2–3 weeks."
+        "label": "AI Workflow Improvement Starter Package",
+        "price": "Approx. 15 × ten thousand yen",
+        "note": "A 90-minute discovery session, workflow mapping, identification of 3 AI opportunities, a simple prototype for 1 selected opportunity, a cost-effectiveness estimate, and basic AI usage guidelines. Typical duration: 2–3 weeks."
       },
       {
-        "label": "Production AI and Business System Implementation",
-        "price": "From ¥500,000",
-        "note": "Production build after a PoC, existing-system integration, permissions, approvals, audit logs, testing, launch, and operational handover. Estimated according to requirements."
+        "label": "Full AI and Business System Implementation",
+        "price": "From 50 × ten thousand yen",
+        "note": "Production build following a PoC, integration with existing systems, permissions, approvals and audit logs, testing, launch, and operational handover. Quoted based on requirements."
       },
       {
-        "label": "Small-Scale Automation and Operational Assistance",
-        "price": "From ¥300,000",
-        "note": "Small-scale automation of existing data entry, aggregation, notifications, and checking work."
+        "label": "Small-Scale Automation and Workflow Support",
+        "price": "From 30 × ten thousand yen",
+        "note": "We automate existing data entry, aggregation, notifications, and review tasks on a small scale."
       },
       {
         "label": "Internal Business Tool",
-        "price": "From ¥500,000",
-        "note": "A small- to medium-sized tool with an admin screen, forms, lists, CSV export, permissions, and related features."
+        "price": "From 50 × ten thousand yen",
+        "note": "A small to medium-sized tool with features such as an admin dashboard, forms, lists, CSV export, and permissions."
       },
       {
-        "label": "Medium-Sized Web App",
-        "price": "From ¥1,500,000",
-        "note": "A Web app with multiple users, membership features, approval flows, and external integrations."
+        "label": "Mid-Sized Web Application",
+        "price": "From 150 × ten thousand yen",
+        "note": "A web app with multiple users, membership features, approval workflows, and external integrations."
       },
       {
-        "label": "Design and Creative",
-        "price": "From ¥20,000",
-        "note": "Typical guidance: logos ¥50,000–¥150,000; flyers and banners ¥20,000–¥120,000; brand design and Web integration from ¥100,000."
+        "label": "Design and Creative Services",
+        "price": "From 2 × ten thousand yen",
+        "note": "Logos: 5–15 × ten thousand yen; flyers and banners: 2–12 × ten thousand yen; brand identity and web integration: from 10 × ten thousand yen."
       },
       {
-        "label": "Inquiry AI Chat",
-        "price": "From ¥80,000",
-        "note": "Add an inquiry AI chat to a static or service site, including answer scope, rate limits, Origin checks, and safe link rendering."
+        "label": "AI Inquiry Chatbot",
+        "price": "From 8 × ten thousand yen",
+        "note": "We integrate an AI inquiry chatbot into a static or service website, setting up its response scope, rate limits, Origin checks, and safe link rendering."
       },
       {
-        "label": "Blog Comment Feature",
-        "price": "From ¥80,000",
-        "note": "Use Cloudflare Pages Functions, D1, and Turnstile to provide posting, storage, spam prevention, and deletion operations without an external comment service."
+        "label": "Blog Commenting Feature",
+        "price": "From 8 × ten thousand yen",
+        "note": "Using Cloudflare Pages Functions, D1, and Turnstile, we set up posting, storage, spam protection, and comment removal workflows without relying on an external commenting service."
       },
       {
-        "label": "CMS Editing Interface",
-        "price": "From ¥50,000",
-        "note": "Add a Sveltia CMS admin interface for updating the blog, fixed pages, announcements, and settings from a browser."
+        "label": "CMS Editing Interface Setup",
+        "price": "From 5 × ten thousand yen",
+        "note": "Add an admin interface powered by Sveltia CMS so you can update blog posts, static pages, announcements, and settings in a browser."
       },
       {
-        "label": "Blog and Article Foundation",
-        "price": "From ¥50,000",
-        "note": "Build the foundation for ongoing publishing, including article lists, detail pages, tags, related articles, RSS, and search journeys."
+        "label": "Blog and Content Platform",
+        "price": "From 5 × ten thousand yen",
+        "note": "We build the foundation for ongoing publishing, including post listings, detail pages, tags, related posts, RSS, and search navigation."
       },
       {
         "label": "Multilingual Blog Operations",
-        "price": "From ¥80,000",
-        "note": "Establish multilingual blog operations covering a Japanese source, translation PRs, hreflang, sitemap, and RSS."
+        "price": "From 8 × ten thousand yen",
+        "note": "Set up multilingual blog operations, including Japanese source content, translation PRs, hreflang, sitemaps, and RSS."
       },
       {
         "label": "SEO and Structured Data",
-        "price": "From ¥50,000",
-        "note": "Organize information communicated to search engines, including OGP, JSON-LD, sitemap, RSS, and canonical."
+        "price": "From 5 × ten thousand yen",
+        "note": "Organize the information presented to search engines, including OGP, JSON-LD, sitemaps, RSS, and canonical URLs."
       },
       {
         "label": "Pagefind Site Search",
-        "price": "From ¥30,000",
+        "price": "From 3 × ten thousand yen",
         "note": "Add Pagefind search to a static site, including the search UI, URL parameters, and cache settings."
       },
       {
-        "label": "Page-Speed Improvement",
-        "price": "From ¥50,000",
-        "note": "Review images, CSS, fonts, lazy loading, and measurements to improve Core Web Vitals."
+        "label": "Page Speed Improvements",
+        "price": "From 5 × ten thousand yen",
+        "note": "We review images, CSS, fonts, lazy loading, and measurement results, then work to improve Core Web Vitals."
       },
       {
-        "label": "Accessibility Improvement",
-        "price": "From ¥50,000",
-        "note": "Review contrast, aria attributes, focus, form validation, and related areas, and make corrections toward WCAG AA."
+        "label": "Accessibility Improvements",
+        "price": "From 5 × ten thousand yen",
+        "note": "We review contrast, aria attributes, focus, and form validation, then make improvements targeting WCAG AA."
       },
       {
-        "label": "Security Headers/CSP",
-        "price": "From ¥30,000",
-        "note": "Organize Cloudflare Pages _headers, CSP, and delivery settings around the admin interface to improve launch security."
+        "label": "Security Headers/CSP Configuration",
+        "price": "From 3 × ten thousand yen",
+        "note": "We organize Cloudflare Pages _headers, CSP, and delivery settings around the admin interface to move toward a more secure public-facing setup."
       },
       {
         "label": "CTA and Form Integration",
-        "price": "From ¥30,000",
-        "note": "Carry the category, subject, and context from a service CTA into the contact form to improve the consultation journey."
+        "price": "From 3 × ten thousand yen",
+        "note": "Carry the type, subject, and context from service CTAs through to the inquiry form to improve the path to consultation."
       },
       {
-        "label": "Integrated Systems and Core-System Integration",
-        "price": "From ¥2,500,000",
-        "note": "An operational foundation connecting multiple departments and existing systems, designed for phased rollout."
+        "label": "Integrated Systems and Core Business System Integration",
+        "price": "From 250 × ten thousand yen",
+        "note": "A business platform connected to multiple departments and existing systems, designed for phased implementation."
       },
       {
-        "label": "Maintenance and Improvement",
-        "price": "From ¥30,000/month",
-        "note": "Minor changes, consultation, monitoring, improvement proposals, priority handling for additional development, and related support."
+        "label": "Maintenance and Improvements",
+        "price": "From 3 × ten thousand yen per month",
+        "note": "Includes minor fixes, consultations, monitoring, improvement recommendations, and priority handling of additional development."
       },
       {
-        "label": "Requirements and Technical Consultation",
-        "price": "Custom estimate",
-        "note": "Also available for pre-development workflow review, existing-system investigation, and architecture review."
+        "label": "Requirements Definition and Technical Consultation",
+        "price": "Custom quote",
+        "note": "We can also help organize workflows before development, investigate existing systems, and review architecture."
       },
       {
-        "label": "Pre-release review",
-        "price": "Tailored quote",
-        "note": "Architecture, public exposure, secret management, dependencies and authentication design. Quoted after reviewing documentation and the environment."
+        "label": "Pre-Launch Security Review",
+        "price": "Custom quote",
+        "note": "Review of architecture, exposure scope, secrets management, dependencies, authentication design, and more. We will prepare a quote after reviewing the relevant materials and target environment."
       },
       {
-        "label": "Web & API vulnerability assessment",
-        "price": "Tailored quote",
-        "note": "Automated and manual checks within an agreed scope. Feasibility and cost depend on functions, requests, permissions and environments."
+        "label": "Web and API Vulnerability Assessment",
+        "price": "Custom quote",
+        "note": "Automated scans and manual checks within an agreed scope. We will confirm feasibility and pricing based on the features, requests, permissions, and environments involved."
       },
       {
-        "label": "Remediation and verification",
-        "price": "Tailored quote",
-        "note": "Fixes, testing, release and verification, including findings from other providers. Retest scope, deadlines and counts are agreed when quoting."
+        "label": "Security Remediation and Retesting",
+        "price": "Custom quote",
+        "note": "Remediation based on reports from us or another provider, followed by testing, launch, and rechecks. The scope, deadline, and number of retests will be agreed when preparing the quote."
       },
       {
-        "label": "Ongoing security support",
-        "price": "Tailored quote",
-        "note": "Updates, permission reviews, change checks and consultation. Targets, frequency, working hours and extra work are agreed individually."
+        "label": "Ongoing Security Support",
+        "price": "Custom quote",
+        "note": "Reviews and consultations for updates, permissions, and changes. Scope, frequency, work hours, and conditions for additional support are agreed individually."
+      },
+      {
+        "label": "Launch Plan",
+        "price": "¥165,000",
+        "note": "Up to 5 static pages. Includes standard design, content organization based on materials you provide, mobile-friendly layouts, announcements, basic SEO, a form, launch, and update guidance. Indicative price, including tax. External costs are billed at cost; requests beyond the agreed scope will be quoted before work begins."
+      },
+      {
+        "label": "Enhanced Website and Redesign Plan",
+        "price": "From ¥330,000",
+        "note": "Designed for up to 10 static pages and includes agreed discovery plus content and site-structure proposals. Migration of existing content is scoped and quoted separately. Indicative price, including tax. External costs are billed at cost; requests beyond the agreed scope will be quoted before work begins."
+      },
+      {
+        "label": "Custom Development and Feature Additions",
+        "price": "Custom quote",
+        "note": "Custom design, booking, payments, memberships, multilingual support, large-scale migrations, and more. Indicative price, including tax. External costs are billed at cost; requests beyond the agreed scope will be quoted before work begins."
+      },
+      {
+        "label": "Website Maintenance",
+        "price": "¥5,500 per month",
+        "note": "Automated uptime checks and backups, routine inspections, initial triage, standard restoration, and communication, up to 30 minutes per month. Content updates are not included. Indicative price, including tax. External costs are billed at cost; any time beyond the included limit will be quoted before work begins."
+      },
+      {
+        "label": "Updates, Handled for You",
+        "price": "¥11,000 per month",
+        "note": "Includes 30 minutes of maintenance per month, plus 60 minutes per month for content, image, and announcement updates, including review, coordination, and publishing (up to 90 minutes total per month). Indicative price, including tax. External costs are billed at cost; any time beyond the included limit will be quoted before work begins."
+      },
+      {
+        "label": "Ongoing Use and Improvement",
+        "price": "From ¥33,000 per month",
+        "note": "Maintenance, updates, web analytics, improvements, consultations, and communication, totaling up to 3 hours per month. Indicative price, including tax. External costs are billed at cost; any time beyond the included limit will be quoted before work begins."
       }
     ]
   },
@@ -1397,122 +1435,354 @@
       ],
       "ctaTitle": "Discuss your concerns and what to check",
       "ctaBody": "Tell us about your app and concerns. You do not need to send passwords, API keys or production data in the initial form."
+    },
+    "website": {
+      "title": "Website Design & Update Support",
+      "description": "Website design for small businesses, shops, and teaching studios, with support for updates after launch. Projects start at 165,000 yen, maintenance is 5,500 yen per month, and plans with updates start at 11,000 yen per month. We explain indicative prices, including tax, and what each plan covers.",
+      "heroEyebrow": "WEBSITE / PRODUCTION & SUPPORT",
+      "heroTitle": "A website that lets you\nfocus on your business.",
+      "heroLead": "We help you create a website that showcases what makes your shop or business special—from organizing the copy to making updates after launch. We welcome inquiries from small businesses, shops, teaching studios, and organizations across all industries.",
+      "heroBenefits": [
+        "Get help organizing your content",
+        "Get help with updates after launch"
+      ],
+      "visual": {
+        "alt": "Concept image of a team member reviewing an editing screen and a website",
+        "caption": "We organize the information you want to share, create easy-to-navigate pages, and set up a manageable way to keep them updated."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Concept image of an editing screen and contact form displayed on a computer and smartphone",
+          "caption": "Bring together the information and pathways your visitors need: an introduction to your business, services and pricing, directions, and contact details."
+        },
+        "process": {
+          "alt": "Concept image of a project manager and engineer reviewing a website on a computer and smartphone",
+          "caption": "We review the content and display with you, then show you how to make updates after launch."
+        }
+      },
+      "indexSummary": "We build a complete website, from your business introduction to your contact form. After launch, choose maintenance only or support that also covers updates to copy, images, and announcements.",
+      "indexTopics": [
+        "Content planning",
+        "Mobile-friendly design",
+        "News & contact forms",
+        "Maintenance & updates"
+      ],
+      "introTitle": "Clarify your message, with support you can rely on after launch.",
+      "introBody": "Whether you’re creating your first website or refreshing an outdated one, we organize the information your customers need: an introduction to your business, services and pricing, directions, contact details, and more. After launch, choose whether to make updates yourself or leave them to us.",
+      "challenges": [
+        {
+          "title": "Not sure what to include",
+          "body": "You’re unsure what to say about your business or shop, how to organize the information, or how much detail to provide."
+        },
+        {
+          "title": "Hard to use on a smartphone",
+          "body": "You want to update the layout and contact pathways on an older website to better suit today’s customers."
+        },
+        {
+          "title": "No time for day-to-day updates",
+          "body": "You need to update your hours, pricing, photos, or announcements, but a busy schedule keeps pushing it back."
+        }
+      ],
+      "offeringsTitle": "Website plans and flexible post-launch support",
+      "offeringsLead": "Website production is priced as a one-time project, while monthly support is a separate agreement you can choose as needed. All prices include tax. Domain, server, paid-service, and other third-party costs are billed separately at cost. We’ll provide a quote for the confirmed scope and price before you sign.",
+      "offerings": [
+        {
+          "title": "Launch Plan",
+          "body": "For those who want to bring essential information together clearly and get a website they can confidently direct customers to.",
+          "includes": [
+            "Up to 5 static pages using a standard design, including a contact page",
+            "Page planning for your company or shop introduction, services and pricing, directions, and more",
+            "Copy organization based on the facts, text, and photos you provide",
+            "Mobile-friendly design, editable announcements, basic SEO, and a contact form",
+            "Publishing and guidance on how to make updates, plus up to 2 rounds of consolidated content and design revisions"
+          ],
+          "priceNote": "A news listing, article detail pages, and a standard privacy notice are included separately from the static-page count. New interviews, photography, and custom design are quoted separately."
+        },
+        {
+          "title": "Enhanced & Redesign Plan",
+          "body": "For those who want to showcase their services and examples, or rethink their website’s content and structure.",
+          "includes": [
+            "Up to 10 static pages based on a standard structure, including a contact page",
+            "Interviews and draft copy and page structure within the agreed scope",
+            "Page planning tailored to your goals, such as service details, case studies, and recruitment information",
+            "The same core features as the Launch Plan, plus guidance on publishing and making updates",
+            "Up to 2 rounds of consolidated content and design revisions"
+          ],
+          "priceNote": "Migration of existing pages, articles, images, or URLs is scoped separately after we review the quantity and condition. Interviews and photography are not included."
+        },
+        {
+          "title": "Custom Design & Feature Add-ons",
+          "body": "If you need a design tailored to your business or features such as booking and payments, we’ll start by clarifying your goals and how you plan to operate the site.",
+          "includes": [
+            "Custom design, booking, payment, and membership features",
+            "Multilingual websites or migration of a large number of pages and articles",
+            "Review of your existing website structure and recommendations for necessary additional features"
+          ],
+          "priceNote": "We’ll provide an individual quote after confirming the features, third-party services, data requirements, and operating approach."
+        },
+        {
+          "title": "Maintenance Plan",
+          "body": "For those who will update their own content but want regular technical checks taken care of.",
+          "includes": [
+            "Automated uptime checks, backups, and regular inspections",
+            "Initial troubleshooting of issues and restoration from backups agreed in advance",
+            "Up to 30 minutes per month in total for inspections, troubleshooting, restoration, and related communication"
+          ],
+          "priceNote": "Updates to copy, images, or announcements are not included. This plan does not guarantee recovery from outages at third-party providers, 24-hour support, or an immediate response."
+        },
+        {
+          "title": "Managed Updates Plan",
+          "body": "For those who want a single point of contact for changes to business hours, pricing, photos, and announcements.",
+          "includes": [
+            "Maintenance Plan coverage (up to 30 minutes per month)",
+            "Replacing copy or images on existing pages and publishing announcements",
+            "Up to 60 minutes per month for updates, including review, communication, confirmation requests, and publishing (up to 90 minutes per month combined with maintenance)"
+          ],
+          "priceNote": "New pages, design changes, new features, and long-form original copy are quoted separately. You provide the photos and factual information to be published."
+        },
+        {
+          "title": "Ongoing Improvement Plan",
+          "body": "For those who want to make gradual improvements to their presentation and user pathways based on visitor activity, in addition to regular updates.",
+          "includes": [
+            "Maintenance and updates to copy, images, and announcements",
+            "Review of website analytics and identification of improvement opportunities",
+            "Page improvements and consultations within the agreed scope",
+            "Up to 3 hours per month combined for maintenance, updates, analysis, consultations, and related communication"
+          ],
+          "priceNote": "Analysis begins after the required tracking setup is in place. Ad management, ongoing article production, and major overhauls are quoted separately."
+        }
+      ],
+      "costExample": {
+        "title": "Example costs for your first 1 year",
+        "body": "Launch Plan: 165,000 yen + Managed Updates Plan: 11,000 yen × 12 months = 297,000 yen (tax included). Domain, server, paid-service, and other third-party costs are extra. You can also ask us about website production without a monthly support plan."
+      },
+      "termsTitle": "Know what’s included before you get started",
+      "terms": [
+        {
+          "title": "Production scope and revision rounds",
+          "body": "Before work begins, we’ll agree on the page structure, content, delivery date, and price. The initial content and design review includes up to 2 rounds of consolidated revisions. Pages or structural changes added after the structure is approved will be quoted separately before work begins."
+        },
+        {
+          "title": "Monthly work allowance",
+          "body": "Reviews and communication count toward each plan’s time allowance, and unused time does not carry over to the next month. Before starting work that exceeds the limit, we’ll confirm the scope, cost, and timing."
+        },
+        {
+          "title": "Response and work schedule",
+          "body": "We aim to send an initial response within 2 business days. Completion dates for revisions are coordinated based on the request and available work time. Same-day service, 24-hour staffed monitoring, and emergency response are not included."
+        },
+        {
+          "title": "Continuing support and cancellation",
+          "body": "There is no minimum contract term for monthly support. As a general rule, if you contact us by the 20th of the month, support ends at the end of that month; if you contact us on or after the 21st, it ends at the end of the following month. No prorated refunds are given for cancellations mid-month. We’ll confirm the applicable terms before you sign."
+        },
+        {
+          "title": "Your data and handover",
+          "body": "Where possible, domains and external accounts will be set up in your name. When support ends, we’ll provide your copy and images, along with the website source code and exported data specified in the agreement. We’ll confirm in advance whether external services can be transferred and whether third-party licenses apply. Migration to a different hosting or publishing destination is quoted separately."
+        }
+      ],
+      "processTitle": "From planning your content to updates after launch.",
+      "processLead": "Tell us about your current website, the content you want to include, your preferred timing, and your budget.",
+      "process": [
+        {
+          "title": "Consultation & content planning",
+          "body": "We’ll clarify who you want to reach and what you want to communicate, which pages you need, what copy and photos are available, and who will handle updates."
+        },
+        {
+          "title": "Proposal & quote",
+          "body": "We’ll agree on the production scope, third-party costs, revision rounds, launch requirements, monthly support options, and handover approach."
+        },
+        {
+          "title": "Production & review",
+          "body": "We’ll build the website based on the agreed structure, then review the content, display, and forms on computers and smartphones."
+        },
+        {
+          "title": "Launch & update guidance",
+          "body": "Once you approve the content, we’ll publish the site and show you how to edit announcements and access the site’s management information."
+        },
+        {
+          "title": "Ongoing support as needed",
+          "body": "We’ll provide regular checks, updates, and improvements within the scope and time allowance of your selected plan."
+        }
+      ],
+      "faqsTitle": "Frequently asked questions about website design and updates",
+      "faqs": [
+        {
+          "question": "Can I work with you if I don’t run a shop or teaching studio?",
+          "answer": "Yes. We work with small businesses, shops, teaching studios, and other organizations across all industries. We’ll make recommendations based on the information you need to share and how you plan to update the site."
+        },
+        {
+          "question": "Can we talk even if I don’t have all the copy or photos ready?",
+          "answer": "Yes. For the Launch Plan, we organize the copy based on the facts and materials you provide. If you’d like us to draft copy based on interviews, we’ll define the scope under the Enhanced & Redesign Plan. Interviews and photography are quoted separately."
+        },
+        {
+          "question": "Can I hire you just to build a website or just to handle updates?",
+          "answer": "Yes, you can hire us for production only. For maintenance or updates to an existing site, we’ll review its structure and access permissions and quote any initial setup work that may be needed."
+        },
+        {
+          "question": "Will my search ranking or number of inquiries increase?",
+          "answer": "We set up basic SEO and easy-to-use pathways, but we can’t guarantee search rankings, traffic, sales, or the number of inquiries. We’ll consider improvements based on the data available."
+        },
+        {
+          "question": "Are CMS, SEO, and contact form fees charged separately?",
+          "answer": "The standard CMS for announcements, basic SEO, and contact form are included in the production fee, with no separate feature charges. Additional features listed separately are quoted based on scope when your requirements go beyond the standard package."
+        }
+      ],
+      "resourcesTitle": "How we approach website design and operation",
+      "resourcesLead": "Our technical guides also cover CMS selection, information for search engines, and contact pathway design.",
+      "resources": [
+        {
+          "title": "How to choose a CMS that’s easy to update",
+          "description": "How to choose and structure a CMS based on who will edit it, what information it manages, and how content will be published."
+        },
+        {
+          "title": "Foundational design for sharing information with search engines",
+          "description": "How to organize page information, structured data, sitemaps, and more."
+        },
+        {
+          "title": "Connect visitors’ questions to your contact form",
+          "description": "Designing a pathway that carries visitors’ questions from your services pages through to your contact form."
+        }
+      ],
+      "ctaTitle": "Let’s talk about your website, starting with where it is today.",
+      "ctaBody": "Whether you want a new site, a refresh of an older one, or help with updates, get in touch. Let us know your current website URL and what you have in mind, if available.",
+      "heroPrimaryCta": "Discuss your website",
+      "heroSecondaryCta": "View production and support pricing",
+      "indexNavigation": {
+        "chooseScopeLead": "Whether you need a website built or updated, a new system developed from the ground up, or help launching and operating an existing app, you can start with the service that best fits your needs.",
+        "serviceDetailsLead": "Explore three ways to get started—website design and updates, custom software development, and IT consulting—as well as focused support you can commission on its own.",
+        "primaryServicesTitle": "Three core services to get you started",
+        "primaryServicesLead": "Choose the service that fits your goal: a website for your shop or business, business-system development, or launch and operations support for an existing app."
+      }
     }
   },
   "services": {
     "title": "Services",
-    "description": "Acecore Systems provides IT advisory services, AI adoption and operational improvement, deployment support, business-system development, Web apps and admin interfaces, design and creative production, CMS, search, data use, and existing-system improvement. We also support Web/API security assessment and remediation.",
-    "heroTitle": "From organizing the problem\nto development, design, and operational improvement.",
-    "heroLead": "Beyond one-time production and development, we emphasize design and improvement that help the solution take root in daily operations.",
+    "description": "Acecore Systems offers IT advisory, AI implementation and business process improvement, deployment support, business system development, web apps and admin dashboards, design and creative services, CMS, search, data solutions, legacy system improvements, and web/API security assessments and remediation support.",
+    "heroTitle": "The right services for your challenges.",
+    "heroLead": "Tell us what you want to accomplish or what challenges you’re facing, and we’ll recommend the right IT support.",
     "entryPoints": [
       {
-        "eyebrow": "Commissioned Development / DEVELOPMENT",
-        "title": "You want one team to take the project from concept through development and launch",
-        "body": "For teams that have a project idea or problem to solve and want a single contact to handle requirements, design, development, and launch.",
-        "label": "View commissioned development"
+        "eyebrow": "Custom Development / DEVELOPMENT",
+        "title": "Want one partner to take your project from concept through development and launch?",
+        "body": "For those with a project idea or a challenge to solve who want a single point of contact for everything from requirements gathering and design through development and launch.",
+        "label": "Explore custom development"
       },
       {
-        "eyebrow": "IT Advisor Engineer / ADVISORY",
-        "title": "You develop in-house or with AI, but want support through launch and operations",
-        "body": "For teams that already have a system or app but are blocked by deployment, technical decisions, security, or post-launch operations.",
-        "label": "View IT Advisor Engineer"
+        "eyebrow": "IT Advisory / ADVISORY",
+        "title": "Building in-house or with AI, but need support through launch and operations?",
+        "body": "For those who already have a system or app but need support with deployment, technical decisions, security, or post-launch operations.",
+        "label": "Explore IT advisory"
+      },
+      {
+        "eyebrow": "Website Design & Development / WEBSITE",
+        "title": "Want your business website handled from creation through updates?",
+        "body": "For businesses that want to clearly present what they do, their services and pricing, location, and contact information. Choose the level of support you need for updates after launch.",
+        "label": "Explore website development and updates"
       }
     ],
     "services": [
       {
-        "title": "IT advisory, launch, and operational support",
-        "body": "For small and medium-sized businesses without a dedicated IT specialist, an engineer supports app launches, tool selection, and cloud and IT infrastructure decisions for solutions built in-house or with AI.",
+        "title": "IT Advisory, Launch & Operations Support",
+        "body": "For small and midsize businesses without dedicated IT staff, an engineer provides ongoing support with launching apps built in-house or with AI, selecting tools, and making decisions about cloud services and IT infrastructure.",
         "examples": [
-          "Architecture review, deployment, and handover for apps built with AI",
-          "Workflow organization, AI and existing-service selection, and existing PoC evaluation",
-          "Technology selection, security, and second opinions on external vendors"
+          "Architecture reviews, deployment, and handover for apps built with AI",
+          "Workflow analysis, selection of AI tools and existing services, and evaluation of existing PoCs",
+          "Technology selection, security guidance, and second opinions on external vendors"
         ]
       },
       {
-        "title": "Business-system development",
-        "body": "We design and develop systems around each workplace's workflow, including ordering, inventory, customer management, applications, reservations, daily reports, and inspections.",
+        "title": "Business System Development",
+        "body": "We design and build systems tailored to each team’s workflows, including order management, inventory, customer management, internal requests, reservations, daily reports, and inspections.",
         "examples": [
-          "Design and development of business-management systems, CRM, and ERP",
-          "Phased migration from existing Excel and paper processes",
-          "Operational design covering permissions, approvals, history, and notifications"
+          "Design and development of business management systems, CRM, and ERP",
+          "Phased migration from existing Excel spreadsheets and paper-based processes",
+          "Operational workflows covering permissions, approvals, history, and notifications"
         ]
       },
       {
-        "title": "Web apps and admin interfaces",
-        "body": "We build Web apps for internal and external use, member features, reservation and application forms, CMS interfaces, dashboards, and more.",
+        "title": "Web Apps & Admin Panels",
+        "body": "We build web apps for internal and external use, including member-facing features, booking and registration forms, CMSs, and dashboards.",
         "examples": [
-          "Admin interfaces, member pages, and form features",
-          "Search, lists, details, CSV export, and notifications",
-          "Interface design that is easy to use on smartphones"
+          "Admin panels, member pages, and forms",
+          "Search, listings and detail pages, CSV exports, and notifications",
+          "Interfaces designed for easy use on smartphones"
         ]
       },
       {
-        "title": "Design and creative production",
-        "body": "We produce a wide range of creative work, including logo design, print materials, banners, and character design. We focus on accurately expressing what each customer wants to communicate. Combined with Web production, we can handle everything from design through launch.",
+        "title": "Design & Creative Services",
+        "body": "We create a wide range of creative assets, including logo designs, print materials, banners, and character designs. Our focus is on giving clear, effective form to what you want to communicate. Combined with website development, we can handle everything from design through launch.",
         "examples": [
-          "Logo and brand-identity design",
+          "Logo and brand identity design",
           "Print materials such as business cards, brochures, and posters",
-          "Web banners and social-media creative",
+          "Web banners and social media assets",
           "Character design and illustration"
         ]
       },
       {
-        "title": "CMS, AI, search, and form enhancements",
-        "body": "We add features to existing and static sites, including inquiry AI chat, CMS editing, comments, search, form integration, article operations, and multilingual operations.",
+        "title": "CMS, AI, Search & Form Enhancements",
+        "body": "We add features to existing websites and static sites, including AI chat for inquiries, CMS editing interfaces, comments, search, form integrations, and tools for managing articles and multilingual content.",
         "examples": [
-          "Sveltia CMS editing for fixed pages, blogs, and settings",
-          "Inquiry AI chat, comment posting, and carrying CTA context into forms",
-          "Pagefind search and operations for articles, tags, related content, RSS, and multilingual pages"
+          "Editing interfaces for static pages, blogs, and site settings using Sveltia CMS",
+          "AI chat for inquiries, comment posting, and passing context from CTAs to forms",
+          "Pagefind search, plus management of articles, tags, related articles, RSS, and multilingual pages"
         ]
       },
       {
-        "title": "Data use and external integrations",
-        "body": "We connect existing services, APIs, spreadsheets, email, chat notifications, and other tools to reduce duplicate entry and missed checks.",
+        "title": "Data & Integrations",
+        "body": "We connect existing services, APIs, spreadsheets, email, and chat notifications to reduce duplicate data entry and prevent missed checks.",
         "examples": [
-          "API design, external-service integration, and Webhook integration",
-          "Database design, aggregation, and reporting",
-          "Notification, backup, and monitoring systems"
+          "API design, external service integrations, and Webhook integrations",
+          "Database design, data aggregation, and reporting",
+          "Systems for notifications, backups, and monitoring"
         ]
       },
       {
-        "title": "Improvement and modernization",
-        "body": "We organize aging systems, person-dependent tools, and hard-to-maintain interfaces into a form that remains easier to improve.",
+        "title": "System Improvements & Modernization",
+        "body": "We streamline outdated systems, tools that rely on individual know-how, and hard-to-maintain interfaces, making them easier to update and maintain going forward.",
         "examples": [
-          "Legacy-system assessment and phased migration",
-          "Performance and UI improvements and incident investigation",
-          "GitHub-based development and operational workflows"
+          "Modernizing legacy systems and migrating in phases",
+          "Performance and UI improvements, plus troubleshooting",
+          "Establishing GitHub-based development and operations workflows"
         ]
       },
       {
-        "title": "Web & API Security Assessment and Remediation Support",
-        "body": "For Web apps owned by small businesses and small SaaS teams, we support pre-release review, Web/API assessment, fixes and verification within an agreed scope.",
+        "title": "Web & API Security Assessments and Remediation",
+        "body": "For web apps used by small and midsize businesses and small SaaS providers, we support pre-launch reviews, web and API security assessments, remediation, and follow-up checks within an agreed scope.",
         "examples": [
-          "Pre-release checks for AI-built or outsourced apps",
-          "Vulnerability assessments of authentication, permissions and APIs",
-          "Remediation and verification based on another provider’s report"
+          "Pre-launch checks for apps built using AI or developed by external contractors",
+          "Vulnerability assessments covering authentication, access controls, and APIs",
+          "Implementing fixes and conducting follow-up reviews based on another provider’s assessment report"
+        ]
+      },
+      {
+        "title": "Website Development & Update Support",
+        "body": "We build websites that take visitors from learning about your business to getting in touch. After launch, choose maintenance-only support or help updating text, images, and announcements.",
+        "examples": [
+          "Complete websites for small businesses, shops, and lesson studios",
+          "Content organization, mobile-friendly design, announcements, and contact forms",
+          "Post-launch checkups and updates to text, images, and announcements"
         ]
       }
     ],
     "process": [
       {
-        "title": "Interview",
-        "body": "We organize the goals, problematic workflows, users, deadlines, and budget range."
+        "title": "Discovery",
+        "body": "We clarify your goals, the workflows causing difficulties, your users, timeline, and budget range."
       },
       {
-        "title": "Requirements and proposal",
-        "body": "We separate the required features, screens, data, permissions, and visibility scope and set priorities."
+        "title": "Requirements & Proposal",
+        "body": "We define the required features, screens, data, access permissions, and release scope, then prioritize them."
       },
       {
-        "title": "Design and development",
-        "body": "We implement in small, reviewable increments to resolve interface and operational issues early."
+        "title": "Design & Development",
+        "body": "We build in small, reviewable increments, addressing any issues with the interface or workflows early."
       },
       {
-        "title": "Launch and improvement",
-        "body": "We continue supporting post-launch issue resolution, additional requests, and operational improvement."
+        "title": "Launch & Improvement",
+        "body": "We continue to support you with post-launch bug fixes, additional requests, and operational improvements."
       }
     ],
-    "designContextNote": "Preparations for the Acecore Design department are separate from the creative services currently open for consultation. Systems accepts inquiries about the design and creative work described on this page.",
-    "designContextLinkLabel": "About the Acecore Design department"
+    "designContextNote": "Plans and preparations for the Acecore Design division are separate from the design projects we currently accept. Inquiries about the design and creative services featured on this page are handled by Systems.",
+    "designContextLinkLabel": "About the Acecore Design division"
   },
   "workDetail": {
     "title": "Feature enhancements and operational foundation for the Acecore corporate site",
