@@ -16,7 +16,7 @@
 
 ## 必要環境
 
-- Node.js 24.18.0 以上（`.node-version` を参照）
+- Node.js 24.22.1 以上（`.node-version` を参照）
 - npm
 
 ## 開発
