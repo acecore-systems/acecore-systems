@@ -318,7 +318,7 @@ test("既存の料金・サービスは配列位置を保ち、英語のラベ�
   removeFixture(target);
   assert.equal(tree.pricing.items[0].key, "it-advisor-light");
   assert.match(en.pricing.items[0].label, /IT Advisory/iu);
-  assert.equal(tree.pricing.items[0].price, "月額3万円〜");
+  assert.equal(tree.pricing.items[0].price, "月額49,500円〜");
   assert.equal(tree.services.entryPoints[0].id, "development");
   assert.equal(tree.services.entryPoints[1].id, "it-advisor");
   assert.equal(en.pricing.items.length, 27);

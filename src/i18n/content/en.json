@@ -402,7 +402,7 @@
           "Support for small-scale launches and improvements within the agreed work capacity",
           "Technical review and a second opinion on external vendor proposals"
         ],
-        "boundary": "The base allowance is 2 hours per month for Light and 8 hours for Standard, including all consultation, research, work, checks, and communication. Unused time does not roll over; additional time and substantial new development are quoted before work starts."
+        "boundary": "The base allowance is 4 hours per month for Light and 12 hours for Standard, including all consultation, research, work, checks, and communication. Unused time does not roll over; additional time and substantial new development are quoted before work starts."
       },
       {
         "title": "One-time — Spot Support",
@@ -516,13 +516,13 @@
     "items": [
       {
         "label": "IT Advisory Engineer — Light",
-        "price": "From ¥30,000/month",
-        "note": "Includes 1–2 consultations per month, AI and IT tool selection, initial setup, and small-scale launch support for up to 1 concurrent project. Work-hour limits and additional fees are stated before the contract. Up to 2 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
+        "price": "From ¥49,500/month",
+        "note": "Includes 1–2 consultations per month, AI and IT tool selection, initial setup, and small-scale launch support for up to 1 concurrent project. Work-hour limits and additional fees are stated before the contract. Up to 4 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
       },
       {
         "label": "IT Advisory Engineer — Standard",
-        "price": "From ¥100,000/month",
-        "note": "Within the consultation and work-hour limits agreed in the contract: deployment, debugging and testing, status reports, and reviews of usage and improvement candidates. 24-hour monitoring and immediate incident response are not included. Up to 8 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
+        "price": "From ¥102,300/month",
+        "note": "Within the consultation and work-hour limits agreed in the contract: deployment, debugging and testing, status reports, and reviews of usage and improvement candidates. 24-hour monitoring and immediate incident response are not included. Up to 12 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
       },
       {
         "label": "One-Time Deployment Support",

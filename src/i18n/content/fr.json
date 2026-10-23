@@ -402,7 +402,7 @@
           "Accompagnement des lancements et améliorations à petite échelle dans la capacité de travail convenue",
           "Examen technique et second avis sur les propositions de prestataires externes"
         ],
-        "boundary": "Le forfait de base comprend 2 heures par mois pour Light et 8 heures pour Standard, couvrant tous les conseils, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout dépassement et nouveau développement conséquent font l’objet d’un devis préalable."
+        "boundary": "Le forfait de base comprend 4 heures par mois pour Light et 12 heures pour Standard, couvrant tous les conseils, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout dépassement et nouveau développement conséquent font l’objet d’un devis préalable."
       },
       {
         "title": "Ponctuel — Spot Support",
@@ -516,13 +516,13 @@
     "items": [
       {
         "label": "IT Advisory Engineer — Light",
-        "price": "À partir de ¥30 000/mois",
-        "note": "Comprend 1–2 consultations par mois, le choix des outils AI et IT, leur configuration initiale et l’accompagnement d’un lancement à petite échelle pour 1 projet simultané au maximum. La limite d’heures et les frais supplémentaires sont précisés avant la signature du contrat. Jusqu’à 2 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
+        "price": "À partir de ¥49 500/mois",
+        "note": "Comprend 1–2 consultations par mois, le choix des outils AI et IT, leur configuration initiale et l’accompagnement d’un lancement à petite échelle pour 1 projet simultané au maximum. La limite d’heures et les frais supplémentaires sont précisés avant la signature du contrat. Jusqu’à 4 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
       },
       {
         "label": "IT Advisory Engineer — Standard",
-        "price": "À partir de ¥100 000/mois",
-        "note": "Dans les limites de consultations et d’heures convenues au contrat : déploiement, débogage et tests, comptes rendus de situation, suivi de l’utilisation et recherche d’améliorations. La supervision permanente (24 h) et la réponse immédiate aux incidents ne sont pas incluses. Jusqu’à 8 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
+        "price": "À partir de ¥102 300/mois",
+        "note": "Dans les limites de consultations et d’heures convenues au contrat : déploiement, débogage et tests, comptes rendus de situation, suivi de l’utilisation et recherche d’améliorations. La supervision permanente (24 h) et la réponse immédiate aux incidents ne sont pas incluses. Jusqu’à 12 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
       },
       {
         "label": "Accompagnement ponctuel au déploiement",
