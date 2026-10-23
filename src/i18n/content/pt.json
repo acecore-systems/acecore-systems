@@ -402,7 +402,7 @@
           "Suporte a lançamentos e melhorias de pequena escala dentro da capacidade acordada",
           "Revisão técnica e segunda opinião sobre propostas de fornecedores externos"
         ],
-        "boundary": "A franquia básica é de 2 horas mensais no Light e 8 horas no Standard, incluindo todas as consultas, pesquisas, trabalhos, verificações e comunicação. O tempo não utilizado não acumula; o tempo adicional e novos desenvolvimentos de maior porte são orçados antes do início."
+        "boundary": "A franquia básica é de 4 horas mensais no Light e 12 horas no Standard, incluindo todas as consultas, pesquisas, trabalhos, verificações e comunicação. O tempo não utilizado não acumula; o tempo adicional e novos desenvolvimentos de maior porte são orçados antes do início."
       },
       {
         "title": "Pontual — Suporte específico",
@@ -516,13 +516,13 @@
     "items": [
       {
         "label": "Engenheiro consultor de TI — Light",
-        "price": "A partir de ¥30,000/mês",
-        "note": "Inclui 1 a 2 consultas por mês, seleção de ferramentas de AI e TI, configuração inicial e suporte a lançamentos de pequena escala para até 1 projeto simultâneo. O limite de horas e os custos adicionais são informados antes do contrato. Até 2 horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
+        "price": "A partir de ¥49,500/mês",
+        "note": "Inclui 1 a 2 consultas por mês, seleção de ferramentas de AI e TI, configuração inicial e suporte a lançamentos de pequena escala para até 1 projeto simultâneo. O limite de horas e os custos adicionais são informados antes do contrato. Até 4 horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
       },
       {
         "label": "Engenheiro consultor de TI — Standard",
-        "price": "A partir de ¥100,000/mês",
-        "note": "Dentro do número de consultas e do limite de horas definidos no contrato: implantação, depuração e testes, relatórios de andamento e análise do uso e de possíveis melhorias. Monitoramento 24 horas e resposta imediata a incidentes não estão incluídos. Até 8 horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
+        "price": "A partir de ¥102,300/mês",
+        "note": "Dentro do número de consultas e do limite de horas definidos no contrato: implantação, depuração e testes, relatórios de andamento e análise do uso e de possíveis melhorias. Monitoramento 24 horas e resposta imediata a incidentes não estão incluídos. Até 12 horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
       },
       {
         "label": "Suporte pontual à implantação",

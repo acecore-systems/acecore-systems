@@ -402,7 +402,7 @@
           "Kleine Veröffentlichungen und Verbesserungsunterstützung innerhalb des vereinbarten Arbeitsrahmens",
           "Technische Bestätigung und Zweitmeinung zu Vorschlägen externer Anbieter"
         ],
-        "boundary": "Das Grundkontingent beträgt 2 Stunden pro Monat für Light und 8 Stunden für Standard, einschließlich aller Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; Mehrarbeit und umfangreiche Neuentwicklung werden vor Beginn separat angeboten."
+        "boundary": "Das Grundkontingent beträgt 4 Stunden pro Monat für Light und 12 Stunden für Standard, einschließlich aller Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; Mehrarbeit und umfangreiche Neuentwicklung werden vor Beginn separat angeboten."
       },
       {
         "title": "Einzelaufnahme – Spot-Unterstützung",
@@ -516,13 +516,13 @@
     "items": [
       {
         "label": "IT Advisor Engineer Light",
-        "price": "Ab 30.000 Yen pro Monat",
-        "note": "1–2 Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens 1 kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt. Insgesamt bis zu 2 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
+        "price": "Ab 49.500 Yen pro Monat",
+        "note": "1–2 Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens 1 kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt. Insgesamt bis zu 4 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
         "label": "IT Advisor Engineer Standard",
-        "price": "Ab 100.000 Yen pro Monat",
-        "note": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine 24-Stunden-Überwachung und sofortige Fehlerbehebung. Insgesamt bis zu 8 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
+        "price": "Ab 102.300 Yen pro Monat",
+        "note": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine 24-Stunden-Überwachung und sofortige Fehlerbehebung. Insgesamt bis zu 12 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
         "label": "Unterstützung für die Spot-Bereitstellung",

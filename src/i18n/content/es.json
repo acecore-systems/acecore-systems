@@ -402,7 +402,7 @@
           "Pequeños lanzamientos y mejoras dentro de la capacidad acordada",
           "Revisión técnica y segunda opinión sobre proveedores externos"
         ],
-        "boundary": "La cobertura básica es de 2 horas al mes para Light y 8 horas para Standard, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; el tiempo adicional y el desarrollo nuevo de mayor alcance se presupuestan antes de comenzar."
+        "boundary": "La cobertura básica es de 4 horas al mes para Light y 12 horas para Standard, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; el tiempo adicional y el desarrollo nuevo de mayor alcance se presupuestan antes de comenzar."
       },
       {
         "title": "Puntual — Soporte específico",
@@ -516,13 +516,13 @@
     "items": [
       {
         "label": "Ingeniero asesor de IT — Light",
-        "price": "Desde ¥30.000/mes",
-        "note": "Incluye 1–2 consultas al mes, selección de herramientas de AI e IT, configuración inicial y soporte para un lanzamiento pequeño con hasta 1 proyecto simultáneo. Los límites de horas y los costes adicionales se indican antes del contrato. Hasta 2 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
+        "price": "Desde ¥49.500/mes",
+        "note": "Incluye 1–2 consultas al mes, selección de herramientas de AI e IT, configuración inicial y soporte para un lanzamiento pequeño con hasta 1 proyecto simultáneo. Los límites de horas y los costes adicionales se indican antes del contrato. Hasta 4 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
       },
       {
         "label": "Ingeniero asesor de IT — Standard",
-        "price": "Desde ¥100.000/mes",
-        "note": "Dentro de los límites de consultas y horas acordados: despliegue, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión durante 24 horas ni respuesta inmediata a incidentes. Hasta 8 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
+        "price": "Desde ¥102.300/mes",
+        "note": "Dentro de los límites de consultas y horas acordados: despliegue, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión durante 24 horas ni respuesta inmediata a incidentes. Hasta 12 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
       },
       {
         "label": "Soporte puntual de despliegue",

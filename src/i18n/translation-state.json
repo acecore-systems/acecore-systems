@@ -1,7 +1,7 @@
 {
   "pendingContent": {
     "/serviceDetails/website": {
-      "sourceHash": "c1917e5f85454d6942e0bae053df2495add2a07e3f25f298cba77eff452a8a3c",
+      "sourceHash": "c1a551f5a6bdbdef5a21a7ee123bf4adf25193350d734242d55cd4ba5ae0dc93",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/services/entryPoints/2": {
@@ -21,7 +21,7 @@
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/pricing/items/27": {
-      "sourceHash": "88b51e28b146035843dac3ed6966859640bc4438b8c5152858a28fefcdf3213e",
+      "sourceHash": "5628ae62cfc866fc49e8f4e5df7316e41c0f9d45dba1a821bb2678dc0c0d31b2",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/pricing/items/28": {
@@ -37,7 +37,7 @@
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/pricing/items/31": {
-      "sourceHash": "c313a4f60a251e3c2aa764d004e6eb7da9a664d4202a069b2e2faa9156e01a29",
+      "sourceHash": "367fde2521bdf550d4532d7cc9e722995ee96511b255d8946493bb6b741e33de",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/pricing/items/32": {
@@ -45,6 +45,6 @@
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     }
   },
-  "sourceHash": "bd4f77f079fc5bb967f1aeef43c5dc0899c1e470d31e91f22cd9af1098b81d6b",
+  "sourceHash": "41586b9805a2ab70803aa0d06842ca86a8bbcefe4d3ab963e7b75648a43e4179",
   "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }
