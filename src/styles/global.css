@@ -12,18 +12,18 @@
 
 @theme {
   --color-paper: #ffffff;
-  --color-paper-soft: #f0f8ff;
-  --color-paper-deep: #e4f1ff;
+  --color-paper-soft: #eef4ff;
+  --color-paper-deep: #e2ecff;
   --color-paper-muted: #f5f9fd;
   --color-surface: #ffffff;
-  --color-ink: #071333;
+  --color-ink: #071f3e;
   --color-ink-soft: #334666;
   --color-muted: #536781;
   --color-line: #e0e9f3;
   --color-line-strong: #b7d2ed;
   --color-control-border: #7b93af;
-  --color-blue: #005cff;
-  --color-blue-deep: #0048c9;
+  --color-blue: #0656d9;
+  --color-blue-deep: #0446b5;
   --color-layer: #242827;
   --color-layer-blue: #071d31;
   --color-focus: #286eab;
