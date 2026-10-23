@@ -1,6 +1,6 @@
 # Systemsのブランドカラー
 
-2026-10-23承認。[Acecore共通の正本と見本](https://github.com/acecore-systems/acecore-net/blob/ac9361aea0249cc0bcb76596119dacd7e80be873/docs/03_詳細設計/07_ブランドカラーと球状グラデーション.md)を配色・ロゴ・UI変更の開始時に必ず読む。このリンクは承認版のcommit permalinkであり、branch整理後も維持される。今後の正本は [mainの同文書](https://github.com/acecore-systems/acecore-net/blob/main/docs/03_詳細設計/07_ブランドカラーと球状グラデーション.md)（net PR314マージ後）とする。現時点ではDraftで、本番未反映。
+2026-10-23承認。[Acecore共通の正本と見本](https://github.com/acecore-systems/acecore-net/blob/ea3bb22f244316ea7dcb4a8aa9bf72c83067285a/docs/03_詳細設計/07_ブランドカラーと球状グラデーション.md)を配色・ロゴ・UI変更の開始時に必ず読む。このリンクは承認版のcommit permalinkであり、branch整理後も維持される。今後の正本は [mainの同文書](https://github.com/acecore-systems/acecore-net/blob/main/docs/03_詳細設計/07_ブランドカラーと球状グラデーション.md)（net PR314マージ後）とする。現時点ではDraftで、本番未反映。
 
 - 共通青は`#0656d9`、Systemsは紫`#8950c5`、Schoolsは緑`#39a86b`、Designsは黄・橙・ピンク・紫の多色。
 - サイトの`src/styles/brand.css`へ承認見本の`--paint`・`--sphere-paint`・文字用濃色・washを移植した。独立した似た色や重複overrideを追加しない。
@@ -14,3 +14,5 @@
 同日追補: テーマ色は適度に使う。通常の巨大Hero・h1/h2/h3・長文・料金数値は原則中立色、白い面を主体とする。色は球・名称・小さいラベル・リンク・主要CTA・選択状態・要所の罫線へ絞り、通常の表枠やカード区切りを一律に着色しない。全UIで一貫させることは全要素を着色する意味ではない。
 
 同日追補（外周）: 元のpath・clip座標・形状・余白・中央球を保持し、外周にも左上の光による控えめな陰影を付ける。白背景では黒系と薄色、濃背景では外周全体を白〜淡い灰青にする。文書imgは背景に応じて`/logo.svg`（明背景）または`/logo-on-dark.svg`（濃背景）を明示選択し、OS外観では切り替えない。`/favicon.svg`のみブラウザのdark/light外観へ追従する。濃背景のOGにも薄色版を使い、白い下地や全白filterだけで代用しない。
+
+同日最新追補（外周の質感）: 金属的な反射筋・白い光沢・矢印の折り目を避け、3停止点で広く柔らかな陰影へ整える。リングには穏やかな曲面、矢印には面全体の単調な濃淡を残し、単色の平面へ戻さない。拡大時の厚みと小サイズの静かな輪郭を両立し、中央球・path/clip・背景別の選択は保持する。狭い光沢を持つ旧比較は履歴とし、公開比較とOGは最新仕様へ同期する。
