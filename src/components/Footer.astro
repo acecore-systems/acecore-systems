@@ -33,7 +33,16 @@ const footerLinks = content.site.footerLinks.map((item) => ({
           width="38"
           height="38"
         />
-        <strong>{site.name}</strong>
+        <strong>
+          {site.name === "Acecore Systems" ? (
+            <>
+              <span class="brand-corporate-name">Acecore</span>{" "}
+              <span class="brand-service-name">Systems</span>
+            </>
+          ) : (
+            site.name
+          )}
+        </strong>
       </a>
       <span>Systems for Operations</span>
       <p>{content.site.description}</p>

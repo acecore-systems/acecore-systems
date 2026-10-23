@@ -56,7 +56,16 @@ const isCurrent = (href: string) =>
           width="32"
           height="32"
         />
-        <span class="brand-name">{site.name}</span>
+        <span class="brand-name">
+          {site.name === "Acecore Systems" ? (
+            <>
+              <span class="brand-corporate-name">Acecore</span>{" "}
+              <span class="brand-service-name">Systems</span>
+            </>
+          ) : (
+            site.name
+          )}
+        </span>
       </a>
       <a
         class="parent-brand-link"

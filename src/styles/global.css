@@ -9,12 +9,13 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
+@import "./brand.css";
 
 @theme {
   --color-paper: #ffffff;
-  --color-paper-soft: #eef4ff;
-  --color-paper-deep: #e2ecff;
-  --color-paper-muted: #f5f9fd;
+  --color-paper-soft: var(--wash);
+  --color-paper-deep: color-mix(in srgb, var(--wash) 88%, var(--system-purple));
+  --color-paper-muted: color-mix(in srgb, var(--wash) 35%, white);
   --color-surface: #ffffff;
   --color-ink: #20252b;
   --color-ink-soft: #4b535c;
@@ -22,11 +23,11 @@
   --color-line: #e0e9f3;
   --color-line-strong: #b7d2ed;
   --color-control-border: #7b93af;
-  --color-blue: #0656d9;
-  --color-blue-deep: #0446b5;
+  --color-blue: var(--ink-accent);
+  --color-blue-deep: color-mix(in srgb, var(--ink-accent) 80%, #00022b);
   --color-layer: #242827;
   --color-layer-blue: #071d31;
-  --color-focus: #0656d9;
+  --color-focus: var(--ink-accent);
   --color-white: #ffffff;
   --container-content: 70rem;
   --spacing-page-gutter: 20px;
@@ -1277,7 +1278,7 @@
   .editorial-header h2,
   .editorial-cta h2 {
     margin-top: 18px;
-    color: var(--ink);
+    color: var(--brand-neutral);
     font-family: var(--font-display);
     font-size: clamp(2.25rem, 3.35vw, 3.5rem);
     font-weight: 500;
@@ -1369,7 +1370,7 @@
   .work-case h3,
   .work-story__item h3,
   .editorial-row h3 {
-    color: var(--ink);
+    color: var(--brand-neutral);
     font-family: var(--font-sans);
     font-size: clamp(1.35rem, 2vw, 1.85rem);
     font-weight: 500;
@@ -1501,7 +1502,7 @@
   .home-work .home-section__header > p,
   .home-work__row h3,
   .home-work .editorial-link {
-    color: var(--white);
+    color: var(--brand-neutral);
   }
 
   .home-work .home-section__header > p {
@@ -1971,7 +1972,7 @@
   }
 
   .detail-offering__price p {
-    color: var(--blue);
+    color: var(--brand-neutral);
     font-family: var(--font-sans);
     font-size: 1.05rem;
   }
@@ -1982,7 +1983,7 @@
   }
 
   .detail-offering__price .detail-offering__price-note {
-    color: var(--muted);
+    color: var(--brand-neutral);
     font-family: var(--font-sans);
     font-size: 0.75rem;
     line-height: 1.7;
@@ -1999,7 +2000,7 @@
   .detail-price-note {
     max-width: 780px;
     margin: 24px 0 0 auto;
-    color: var(--muted);
+    color: var(--brand-neutral);
     font-size: 0.76rem;
     line-height: 1.8;
   }
@@ -2121,7 +2122,7 @@
   .service-handoff h2,
   .advisor-price-summary h2 {
     margin-top: 18px;
-    color: var(--ink);
+    color: var(--brand-neutral);
     font-family: var(--font-display);
     font-size: clamp(2rem, 3vw, 3.1rem);
     font-weight: 500;
@@ -2220,7 +2221,7 @@
   }
 
   .advisor-price-summary--hero dt {
-    color: var(--muted);
+    color: var(--brand-neutral);
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -2228,7 +2229,7 @@
 
   .advisor-price-summary--hero dd {
     margin-top: 8px;
-    color: var(--blue);
+    color: var(--brand-neutral);
     font-family: var(--font-sans);
     font-size: clamp(1.05rem, 1.5vw, 1.35rem);
     line-height: 1.5;
@@ -2272,14 +2273,14 @@
   }
 
   .advisor-price-summary__value > p {
-    color: var(--muted);
+    color: var(--brand-neutral);
     font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.08em;
   }
 
   .advisor-price-summary__value strong {
-    color: var(--blue);
+    color: var(--brand-neutral);
     font-family: var(--font-sans);
     font-size: clamp(1.45rem, 2.6vw, 2rem);
     font-weight: 500;
@@ -2288,14 +2289,14 @@
 
   .advisor-price-summary__note {
     margin-top: 20px;
-    color: var(--ink-soft);
+    color: var(--brand-neutral);
     font-size: 0.9rem;
     line-height: 1.8;
   }
 
   .advisor-price-summary__item > span {
     margin-top: 24px;
-    color: var(--blue);
+    color: var(--brand-neutral);
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -2309,7 +2310,7 @@
   .advisor-price-summary__disclaimer {
     max-width: 900px;
     margin-top: 20px;
-    color: var(--muted);
+    color: var(--brand-neutral);
     font-size: 0.76rem;
     line-height: 1.8;
   }
@@ -2810,7 +2811,7 @@
   /* Pricing */
 
   .price-list__caption {
-    color: var(--muted);
+    color: var(--brand-neutral);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -2847,7 +2848,7 @@
   }
 
   .price-row__note {
-    color: var(--ink-soft);
+    color: var(--brand-neutral);
     line-height: 1.8;
   }
 
@@ -2858,7 +2859,7 @@
 
   .price-row__detail {
     width: fit-content;
-    color: var(--blue);
+    color: var(--brand-neutral);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -2870,7 +2871,7 @@
   }
 
   .price-row__amount {
-    color: var(--blue);
+    color: var(--brand-neutral);
     font-family: var(--font-sans);
     font-size: 1.25rem;
     text-align: right;
@@ -3248,7 +3249,7 @@
     min-height: 44px;
     gap: 12px;
     align-items: center;
-    color: var(--white);
+    color: var(--brand-neutral);
     text-decoration: none;
   }
 
@@ -3260,7 +3261,7 @@
 
   .footer-brand strong {
     display: block;
-    color: var(--white);
+    color: var(--brand-neutral);
     font-family: var(--font-display);
     font-size: 1.75rem;
     font-weight: 500;
@@ -3286,13 +3287,13 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-content: start;
-    border-top: 1px solid rgba(255, 255, 255, 0.32);
+    border-top: 1px solid var(--line);
   }
 
   .footer-links a {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid var(--line);
     padding-block: 14px;
-    color: var(--white);
+    color: var(--brand-neutral);
     font-size: 0.84rem;
     text-decoration: none;
   }
@@ -3309,7 +3310,7 @@
     grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 1px solid var(--line);
     padding-top: 24px;
     color: #aab9c5;
     font-size: 0.76rem;
