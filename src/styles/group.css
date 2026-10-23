@@ -481,14 +481,16 @@ main h3 {
   color: var(--blue);
 }
 .site-footer {
-  background: var(--ink);
+  background: var(--blue-deep);
   padding-block: 72px 32px;
 }
 .footer-brand__identity strong {
   font-size: clamp(28px, 3vw, 40px);
 }
 .footer-brand__logo {
-  filter: brightness(0) invert(1);
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
 }
 .footer-brand p,
 .footer-brand > span,

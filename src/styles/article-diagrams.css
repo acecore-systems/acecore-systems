@@ -1,29 +1,29 @@
 /* Explanatory figures keep their labels as real text at every viewport size. */
 .article-diagram {
-  --diagram-accent: #246f83;
-  --diagram-soft: #e9f4f5;
+  --diagram-accent: var(--blue);
+  --diagram-soft: var(--paper-soft);
   margin: 2.5em 0;
-  border: 1px solid #cfdee2;
+  border: 1px solid var(--line);
   border-radius: 12px;
   padding: clamp(18px, 3vw, 28px);
-  background: #f7faf9;
+  background: var(--paper-soft);
   color: #172e3b;
   line-height: 1.6;
 }
 
 .article-diagram[data-tone="violet"] {
-  --diagram-accent: #68519d;
-  --diagram-soft: #f1ecfa;
+  --diagram-accent: var(--blue);
+  --diagram-soft: var(--paper-soft);
 }
 
 .article-diagram[data-tone="amber"] {
-  --diagram-accent: #966115;
-  --diagram-soft: #fbf1df;
+  --diagram-accent: var(--blue);
+  --diagram-soft: var(--paper-soft);
 }
 
 .article-diagram[data-tone="green"] {
-  --diagram-accent: #287352;
-  --diagram-soft: #e8f5ed;
+  --diagram-accent: var(--blue);
+  --diagram-soft: var(--paper-soft);
 }
 
 .article-diagram > figcaption {
@@ -66,7 +66,7 @@
   align-items: flex-start;
   gap: 12px;
   margin: 0;
-  border: 1px solid #c8dade;
+  border: 1px solid var(--line);
   border-top: 3px solid var(--diagram-accent);
   border-radius: 7px;
   padding: 18px;
@@ -129,15 +129,15 @@
 .article-diagram[data-layout="compare"]
   .article-diagram__nodes
   > li:first-child {
-  border-top-color: #a56d22;
-  background: #fffcf5;
+  border-top-color: var(--blue);
+  background: var(--paper-soft);
 }
 
 .article-diagram[data-layout="compare"]
   .article-diagram__nodes
   > li:last-child {
-  border-top-color: #287352;
-  background: #f6fcf8;
+  border-top-color: var(--blue-deep);
+  background: var(--paper-deep);
 }
 
 .article-diagram[data-layout="boundary"] .article-diagram__nodes > li {

@@ -16,9 +16,9 @@
   --color-paper-deep: #e2ecff;
   --color-paper-muted: #f5f9fd;
   --color-surface: #ffffff;
-  --color-ink: #071f3e;
-  --color-ink-soft: #334666;
-  --color-muted: #536781;
+  --color-ink: #20252b;
+  --color-ink-soft: #4b535c;
+  --color-muted: #59616a;
   --color-line: #e0e9f3;
   --color-line-strong: #b7d2ed;
   --color-control-border: #7b93af;
@@ -26,7 +26,7 @@
   --color-blue-deep: #0446b5;
   --color-layer: #242827;
   --color-layer-blue: #071d31;
-  --color-focus: #286eab;
+  --color-focus: #0656d9;
   --color-white: #ffffff;
   --container-content: 70rem;
   --spacing-page-gutter: 20px;
