@@ -402,7 +402,7 @@
           "Pequeños lanzamientos y mejoras dentro de la capacidad acordada",
           "Revisión técnica y segunda opinión sobre proveedores externos"
         ],
-        "boundary": "La frecuencia, el límite de horas, la acumulación y el periodo mínimo se fijan antes del contrato. El nuevo desarrollo y las grandes integraciones se presupuestan por separado."
+        "boundary": "La cobertura básica es de 2 horas al mes para Light y 8 horas para Standard, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; el tiempo adicional y el desarrollo nuevo de mayor alcance se presupuestan antes de comenzar."
       },
       {
         "title": "Puntual — Soporte específico",
@@ -413,7 +413,7 @@
           "Configuración y lanzamiento con acceso temporal y mínimo mediante invitación",
           "Entrega de comprobaciones, arquitectura y derechos de acceso"
         ],
-        "boundary": "El alcance base es el primer lanzamiento de 1 aplicación Web existente en 1 entorno. Cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan aparte. El presupuesto indica comprobaciones y retrabajo; el cliente paga servicios externos."
+        "boundary": "El alcance base es el primer lanzamiento de 1 aplicación Web existente en 1 entorno. Cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan aparte. El presupuesto indica comprobaciones y retrabajo; el cliente paga servicios externos. El alcance básico es una configuración estándar con hasta 4 horas en total para reuniones, configuración, comprobaciones, entrega y comunicación. Las configuraciones complejas y el tiempo adicional se presupuestan antes de comenzar."
       }
     ],
     "priceNote": "Los precios mostrados son estimaciones con impuestos incluidos. El alcance y precio finales se confirman tras una revisión. No incluyen servicios externos, licencias, dominio, servidor ni trabajo adicional tras definir requisitos.",
@@ -517,42 +517,42 @@
       {
         "label": "Ingeniero asesor de IT — Light",
         "price": "Desde ¥30.000/mes",
-        "note": "Incluye 1–2 consultas al mes, selección de herramientas de AI e IT, configuración inicial y soporte para un lanzamiento pequeño con hasta 1 proyecto simultáneo. Los límites de horas y los costes adicionales se indican antes del contrato."
+        "note": "Incluye 1–2 consultas al mes, selección de herramientas de AI e IT, configuración inicial y soporte para un lanzamiento pequeño con hasta 1 proyecto simultáneo. Los límites de horas y los costes adicionales se indican antes del contrato. Hasta 2 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
       },
       {
         "label": "Ingeniero asesor de IT — Standard",
         "price": "Desde ¥100.000/mes",
-        "note": "Dentro de los límites de consultas y horas acordados: despliegue, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión durante 24 horas ni respuesta inmediata a incidentes."
+        "note": "Dentro de los límites de consultas y horas acordados: despliegue, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión durante 24 horas ni respuesta inmediata a incidentes. Hasta 8 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
       },
       {
         "label": "Soporte puntual de despliegue",
         "price": "Desde ¥50.000",
-        "note": "Para 1 aplicación Web existente en 1 entorno: selección del entorno recomendado, configuración inicial de dominio, SSL, VPS o nube, lanzamiento, comprobaciones y entrega. Los cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan por separado."
+        "note": "Para 1 aplicación Web existente en 1 entorno: selección del entorno recomendado, configuración inicial de dominio, SSL, VPS o nube, lanzamiento, comprobaciones y entrega. Los cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan por separado. El alcance básico es una configuración estándar con hasta 4 horas en total para reuniones, configuración, comprobaciones, entrega y comunicación. Las configuraciones complejas y el tiempo adicional se presupuestan antes de comenzar."
       },
       {
         "label": "Paquete inicial de mejora operativa con AI",
         "price": "Aprox. ¥150.000",
-        "note": "Entrevista de 90 minutos, revisión del flujo, 3 candidatos de AI, prototipo sencillo de 1 candidato, estimación de rentabilidad y reglas breves de uso de AI. Duración estimada: 2–3 semanas."
+        "note": "Entrevista de 90 minutos, revisión del flujo, 3 candidatos de AI, prototipo sencillo de 1 candidato, estimación de rentabilidad y reglas breves de uso de AI. Duración estimada: 2–3 semanas. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
       },
       {
         "label": "Implementación de producción de AI y sistemas empresariales",
         "price": "Desde ¥500.000",
-        "note": "Construcción de producción tras un PoC, integración con sistemas existentes, permisos, aprobaciones, registros de auditoría, pruebas, lanzamiento y entrega operativa. Se presupuesta según los requisitos."
+        "note": "Construcción de producción tras un PoC, integración con sistemas existentes, permisos, aprobaciones, registros de auditoría, pruebas, lanzamiento y entrega operativa. Se presupuesta según los requisitos. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
       },
       {
         "label": "Automatización a pequeña escala y asistencia operativa",
         "price": "Desde ¥300.000",
-        "note": "Automatización a pequeña escala de tareas existentes de entrada, cálculo, notificación y comprobación."
+        "note": "Automatización a pequeña escala de tareas existentes de entrada, cálculo, notificación y comprobación. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
       },
       {
         "label": "Herramienta empresarial interna",
         "price": "Desde ¥500.000",
-        "note": "Herramienta pequeña o mediana con interfaz de administración, formularios, listas, exportación CSV y permisos."
+        "note": "Herramienta pequeña o mediana con interfaz de administración, formularios, listas, exportación CSV y permisos. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
       },
       {
         "label": "Aplicación Web mediana",
         "price": "Desde ¥1.500.000",
-        "note": "Aplicación Web con varios usuarios, funciones de membresía, flujos de aprobación e integraciones externas."
+        "note": "Aplicación Web con varios usuarios, funciones de membresía, flujos de aprobación e integraciones externas. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
       },
       {
         "label": "Diseño y producción creativa",
@@ -562,67 +562,67 @@
       {
         "label": "Chat de consultas con AI",
         "price": "Desde ¥80.000",
-        "note": "Añadimos un chat de consultas con AI a un sitio estático o de servicio, con alcance de respuestas, límites de uso, comprobaciones de Origin y representación segura de enlaces."
+        "note": "Añadimos un chat de consultas con AI a un sitio estático o de servicio, con alcance de respuestas, límites de uso, comprobaciones de Origin y representación segura de enlaces. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Comentarios de blog",
         "price": "Desde ¥80.000",
-        "note": "Con Cloudflare Pages Functions, D1 y Turnstile, ofrecemos publicación, almacenamiento, prevención de spam y eliminación sin depender de un servicio externo de comentarios."
+        "note": "Con Cloudflare Pages Functions, D1 y Turnstile, ofrecemos publicación, almacenamiento, prevención de spam y eliminación sin depender de un servicio externo de comentarios. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Interfaz de edición CMS",
         "price": "Desde ¥50.000",
-        "note": "Añadimos una interfaz de Sveltia CMS para actualizar blogs, páginas fijas, anuncios y ajustes desde el navegador."
+        "note": "Añadimos una interfaz de Sveltia CMS para actualizar blogs, páginas fijas, anuncios y ajustes desde el navegador. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Base para blogs y artículos",
         "price": "Desde ¥50.000",
-        "note": "Creamos la base para publicar de forma continua: listas, páginas de detalle, etiquetas, artículos relacionados, RSS y recorridos de búsqueda."
+        "note": "Creamos la base para publicar de forma continua: listas, páginas de detalle, etiquetas, artículos relacionados, RSS y recorridos de búsqueda. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Operación de blog multilingüe",
         "price": "Desde ¥80.000",
-        "note": "Establecemos operaciones multilingües que abarcan la fuente japonesa, PR de traducción, hreflang, sitemap y RSS."
+        "note": "Establecemos operaciones multilingües que abarcan la fuente japonesa, PR de traducción, hreflang, sitemap y RSS. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "SEO y datos estructurados",
         "price": "Desde ¥50.000",
-        "note": "Organizamos la información para buscadores, incluidos OGP, JSON-LD, sitemap, RSS y canonical."
+        "note": "Organizamos la información para buscadores, incluidos OGP, JSON-LD, sitemap, RSS y canonical. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Búsqueda interna con Pagefind",
         "price": "Desde ¥30.000",
-        "note": "Añadimos Pagefind a un sitio estático, incluida la interfaz de búsqueda, los parámetros URL y la caché."
+        "note": "Añadimos Pagefind a un sitio estático, incluida la interfaz de búsqueda, los parámetros URL y la caché. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Mejora de velocidad",
         "price": "Desde ¥50.000",
-        "note": "Revisamos imágenes, CSS, fuentes, carga diferida y mediciones para mejorar Core Web Vitals."
+        "note": "Revisamos imágenes, CSS, fuentes, carga diferida y mediciones para mejorar Core Web Vitals. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Mejora de accesibilidad",
         "price": "Desde ¥50.000",
-        "note": "Revisamos contraste, atributos aria, foco y validación de formularios y corregimos hacia WCAG AA."
+        "note": "Revisamos contraste, atributos aria, foco y validación de formularios y corregimos hacia WCAG AA. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Cabeceras de seguridad/CSP",
         "price": "Desde ¥30.000",
-        "note": "Organizamos _headers de Cloudflare Pages, CSP y ajustes de entrega de la interfaz de administración para mejorar la seguridad."
+        "note": "Organizamos _headers de Cloudflare Pages, CSP y ajustes de entrega de la interfaz de administración para mejorar la seguridad. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Integración de CTA y formulario",
         "price": "Desde ¥30.000",
-        "note": "Transferimos categoría, asunto y contexto desde una CTA de servicio al formulario para mejorar el recorrido de consulta."
+        "note": "Transferimos categoría, asunto y contexto desde una CTA de servicio al formulario para mejorar el recorrido de consulta. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
         "label": "Sistemas integrados e integración con sistemas centrales",
         "price": "Desde ¥2.500.000",
-        "note": "Base operativa que conecta varios departamentos y sistemas existentes, diseñada para un despliegue por fases."
+        "note": "Base operativa que conecta varios departamentos y sistemas existentes, diseñada para un despliegue por fases. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
       },
       {
         "label": "Mantenimiento y mejora",
         "price": "Desde ¥30.000/mes",
-        "note": "Cambios menores, consultas, supervisión, propuestas de mejora y atención prioritaria al desarrollo adicional."
+        "note": "Cambios menores, consultas, supervisión, propuestas de mejora y atención prioritaria al desarrollo adicional. Hasta 2 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
       },
       {
         "label": "Requisitos y consulta técnica",
@@ -878,7 +878,7 @@
         }
       ],
       "offeringsTitle": "Alcance acordado antes de operar",
-      "offeringsLead": "Contrato y presupuesto incluyen solo lo necesario según la importancia y estructura del sistema.",
+      "offeringsLead": "Contrato y presupuesto incluyen solo lo necesario según la importancia y estructura del sistema. La cobertura mensual básica es de 2 horas en total para mantenimiento, supervisión, cambios, mejoras y comunicación relacionada, sin un cupo independiente por concepto. El tiempo no se acumula; las horas adicionales y el nuevo desarrollo se presupuestan antes de empezar.",
       "offerings": [
         {
           "title": "Requisitos y revisión de entrega",

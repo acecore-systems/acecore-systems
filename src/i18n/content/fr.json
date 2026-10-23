@@ -402,7 +402,7 @@
           "Accompagnement des lancements et améliorations à petite échelle dans la capacité de travail convenue",
           "Examen technique et second avis sur les propositions de prestataires externes"
         ],
-        "boundary": "La fréquence des échanges, les limites horaires, le report éventuel et la durée minimale d’engagement sont fixés avant la signature du contrat. Les nouveaux développements d’envergure et les intégrations importantes font l’objet d’un devis distinct au titre du développement sur mesure."
+        "boundary": "Le forfait de base comprend 2 heures par mois pour Light et 8 heures pour Standard, couvrant tous les conseils, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout dépassement et nouveau développement conséquent font l’objet d’un devis préalable."
       },
       {
         "title": "Ponctuel — Spot Support",
@@ -413,7 +413,7 @@
           "Configuration et lancement au moyen d’un accès temporaire et limité au strict nécessaire, accordé par une invitation dédiée depuis le compte du client",
           "Transmission des contrôles opérationnels, des informations d’architecture et des droits d’accès"
         ],
-        "boundary": "Le périmètre de base couvre le premier lancement de 1 application Web existante dans 1 environnement. Les modifications du code, la migration des données, CI/CD, la conception de la supervision et des sauvegardes, ainsi que l’exploitation continue font l’objet d’un devis distinct. Le devis précise les conditions des contrôles opérationnels et des reprises ; les frais de services externes sont à la charge du client."
+        "boundary": "Le périmètre de base couvre le premier lancement de 1 application Web existante dans 1 environnement. Les modifications du code, la migration des données, CI/CD, la conception de la supervision et des sauvegardes, ainsi que l’exploitation continue font l’objet d’un devis distinct. Le devis précise les conditions des contrôles opérationnels et des reprises ; les frais de services externes sont à la charge du client. Le périmètre de base correspond à une configuration standard, avec 4 heures au total au maximum pour les réunions, la configuration, les vérifications, la transmission et les échanges. Toute configuration complexe ou durée supplémentaire fait l’objet d’un devis préalable."
       }
     ],
     "priceNote": "Les prix affichés sont des estimations TTC. Le périmètre et le prix définitifs sont confirmés dans un devis individuel après un premier examen. Les frais de services externes, de licences, de domaines et de serveurs, ainsi que les travaux supplémentaires demandés après la finalisation des besoins, ne sont pas inclus.",
@@ -517,42 +517,42 @@
       {
         "label": "IT Advisory Engineer — Light",
         "price": "À partir de ¥30 000/mois",
-        "note": "Comprend 1–2 consultations par mois, le choix des outils AI et IT, leur configuration initiale et l’accompagnement d’un lancement à petite échelle pour 1 projet simultané au maximum. La limite d’heures et les frais supplémentaires sont précisés avant la signature du contrat."
+        "note": "Comprend 1–2 consultations par mois, le choix des outils AI et IT, leur configuration initiale et l’accompagnement d’un lancement à petite échelle pour 1 projet simultané au maximum. La limite d’heures et les frais supplémentaires sont précisés avant la signature du contrat. Jusqu’à 2 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
       },
       {
         "label": "IT Advisory Engineer — Standard",
         "price": "À partir de ¥100 000/mois",
-        "note": "Dans les limites de consultations et d’heures convenues au contrat : déploiement, débogage et tests, comptes rendus de situation, suivi de l’utilisation et recherche d’améliorations. La supervision permanente (24 h) et la réponse immédiate aux incidents ne sont pas incluses."
+        "note": "Dans les limites de consultations et d’heures convenues au contrat : déploiement, débogage et tests, comptes rendus de situation, suivi de l’utilisation et recherche d’améliorations. La supervision permanente (24 h) et la réponse immédiate aux incidents ne sont pas incluses. Jusqu’à 8 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
       },
       {
         "label": "Accompagnement ponctuel au déploiement",
         "price": "À partir de ¥50 000",
-        "note": "Pour 1 application Web existante dans 1 environnement : choix de l’environnement recommandé, configuration initiale du domaine, de SSL, du VPS ou du cloud, lancement, contrôles opérationnels et transmission. Les modifications du code, la migration, CI/CD, la conception de la supervision et des sauvegardes, ainsi que l’exploitation continue font l’objet d’un devis distinct."
+        "note": "Pour 1 application Web existante dans 1 environnement : choix de l’environnement recommandé, configuration initiale du domaine, de SSL, du VPS ou du cloud, lancement, contrôles opérationnels et transmission. Les modifications du code, la migration, CI/CD, la conception de la supervision et des sauvegardes, ainsi que l’exploitation continue font l’objet d’un devis distinct. Le périmètre de base correspond à une configuration standard, avec 4 heures au total au maximum pour les réunions, la configuration, les vérifications, la transmission et les échanges. Toute configuration complexe ou durée supplémentaire fait l’objet d’un devis préalable."
       },
       {
         "label": "Pack de démarrage pour l’amélioration opérationnelle par l’AI",
         "price": "Environ ¥150 000",
-        "note": "Un entretien de 90 minutes, l’analyse du flux de travail, 3 usages possibles de l’AI, un prototype simple de 1 usage, une estimation du rapport coût-efficacité et des règles d’utilisation simplifiées de l’AI. Durée indicative : 2–3 semaines."
+        "note": "Un entretien de 90 minutes, l’analyse du flux de travail, 3 usages possibles de l’AI, un prototype simple de 1 usage, une estimation du rapport coût-efficacité et des règles d’utilisation simplifiées de l’AI. Durée indicative : 2–3 semaines. Le montant est indicatif pour une configuration minimale. Les processus, écrans, autorisations, intégrations et données à migrer sont convenus avant l’établissement du devis individuel."
       },
       {
         "label": "Mise en œuvre d’une AI de production et d’un système métier",
         "price": "À partir de ¥500 000",
-        "note": "Réalisation de production après un PoC, intégration aux systèmes existants, droits, approbations, journaux d’audit, tests, lancement et transmission opérationnelle. Estimation selon les besoins."
+        "note": "Réalisation de production après un PoC, intégration aux systèmes existants, droits, approbations, journaux d’audit, tests, lancement et transmission opérationnelle. Estimation selon les besoins. Le montant est indicatif pour une configuration minimale. Les processus, écrans, autorisations, intégrations et données à migrer sont convenus avant l’établissement du devis individuel."
       },
       {
         "label": "Automatisation et assistance opérationnelle à petite échelle",
         "price": "À partir de ¥300 000",
-        "note": "Automatisation à petite échelle de la saisie de données existante, de l’agrégation, des notifications et des tâches de contrôle."
+        "note": "Automatisation à petite échelle de la saisie de données existante, de l’agrégation, des notifications et des tâches de contrôle. Le montant est indicatif pour une configuration minimale. Les processus, écrans, autorisations, intégrations et données à migrer sont convenus avant l’établissement du devis individuel."
       },
       {
         "label": "Outil métier interne",
         "price": "À partir de ¥500 000",
-        "note": "Outil de petite ou moyenne taille comprenant un écran d’administration, des formulaires, des listes, un export CSV, des droits et des fonctions associées."
+        "note": "Outil de petite ou moyenne taille comprenant un écran d’administration, des formulaires, des listes, un export CSV, des droits et des fonctions associées. Le montant est indicatif pour une configuration minimale. Les processus, écrans, autorisations, intégrations et données à migrer sont convenus avant l’établissement du devis individuel."
       },
       {
         "label": "Application Web de taille moyenne",
         "price": "À partir de ¥1 500 000",
-        "note": "Application Web avec plusieurs utilisateurs, gestion des membres, circuits d’approbation et intégrations externes."
+        "note": "Application Web avec plusieurs utilisateurs, gestion des membres, circuits d’approbation et intégrations externes. Le montant est indicatif pour une configuration minimale. Les processus, écrans, autorisations, intégrations et données à migrer sont convenus avant l’établissement du devis individuel."
       },
       {
         "label": "Design et création",
@@ -562,67 +562,67 @@
       {
         "label": "Chat AI pour les demandes",
         "price": "À partir de ¥80 000",
-        "note": "Ajout d’un chat AI à un site statique ou à un site de service, avec définition du périmètre des réponses, limitation du débit, contrôles Origin et affichage sécurisé des liens."
+        "note": "Ajout d’un chat AI à un site statique ou à un site de service, avec définition du périmètre des réponses, limitation du débit, contrôles Origin et affichage sécurisé des liens. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Fonction de commentaires pour le blog",
         "price": "À partir de ¥80 000",
-        "note": "Utilisation de Cloudflare Pages Functions, D1 et Turnstile pour gérer la publication, le stockage, la lutte contre le spam et la suppression sans recourir à un service de commentaires externe."
+        "note": "Utilisation de Cloudflare Pages Functions, D1 et Turnstile pour gérer la publication, le stockage, la lutte contre le spam et la suppression sans recourir à un service de commentaires externe. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Interface d’édition CMS",
         "price": "À partir de ¥50 000",
-        "note": "Ajout d’une interface d’administration Sveltia CMS permettant de mettre à jour depuis un navigateur le blog, les pages fixes, les annonces et les réglages."
+        "note": "Ajout d’une interface d’administration Sveltia CMS permettant de mettre à jour depuis un navigateur le blog, les pages fixes, les annonces et les réglages. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Socle pour le blog et les articles",
         "price": "À partir de ¥50 000",
-        "note": "Création du socle nécessaire à une publication régulière : listes d’articles, pages de détail, tags, articles associés, RSS et parcours de recherche."
+        "note": "Création du socle nécessaire à une publication régulière : listes d’articles, pages de détail, tags, articles associés, RSS et parcours de recherche. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Gestion multilingue du blog",
         "price": "À partir de ¥80 000",
-        "note": "Mise en place d’un processus multilingue couvrant la source japonaise, les PR de traduction, hreflang, le sitemap et RSS."
+        "note": "Mise en place d’un processus multilingue couvrant la source japonaise, les PR de traduction, hreflang, le sitemap et RSS. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "SEO et données structurées",
         "price": "À partir de ¥50 000",
-        "note": "Structuration des informations destinées aux moteurs de recherche, notamment OGP, JSON-LD, le sitemap, RSS et canonical."
+        "note": "Structuration des informations destinées aux moteurs de recherche, notamment OGP, JSON-LD, le sitemap, RSS et canonical. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Recherche sur site Pagefind",
         "price": "À partir de ¥30 000",
-        "note": "Ajout de la recherche Pagefind à un site statique, y compris l’interface de recherche, les paramètres d’URL et les réglages de cache."
+        "note": "Ajout de la recherche Pagefind à un site statique, y compris l’interface de recherche, les paramètres d’URL et les réglages de cache. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Amélioration de la vitesse des pages",
         "price": "À partir de ¥50 000",
-        "note": "Examen des images, de CSS, des polices, du chargement différé et des mesures afin d’améliorer les Core Web Vitals."
+        "note": "Examen des images, de CSS, des polices, du chargement différé et des mesures afin d’améliorer les Core Web Vitals. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Amélioration de l’accessibilité",
         "price": "À partir de ¥50 000",
-        "note": "Examen du contraste, des attributs aria, du focus, de la validation des formulaires et des sujets associés, puis corrections visant le niveau WCAG AA."
+        "note": "Examen du contraste, des attributs aria, du focus, de la validation des formulaires et des sujets associés, puis corrections visant le niveau WCAG AA. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "En-têtes de sécurité/CSP",
         "price": "À partir de ¥30 000",
-        "note": "Organisation des fichiers _headers de Cloudflare Pages, de CSP et des réglages de diffusion autour de l’interface d’administration afin de renforcer la sécurité au lancement."
+        "note": "Organisation des fichiers _headers de Cloudflare Pages, de CSP et des réglages de diffusion autour de l’interface d’administration afin de renforcer la sécurité au lancement. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Intégration des CTA et des formulaires",
         "price": "À partir de ¥30 000",
-        "note": "Transmission de la catégorie, de l’objet et du contexte depuis le CTA d’un service vers le formulaire de contact afin de fluidifier le parcours de consultation."
+        "note": "Transmission de la catégorie, de l’objet et du contexte depuis le CTA d’un service vers le formulaire de contact afin de fluidifier le parcours de consultation. L’estimation couvre 1 mise en place, vérification ou amélioration standard sur 1 site existant. Les fonctions sur mesure, la création d’un site complet, la migration et l’exploitation continue sont chiffrées séparément."
       },
       {
         "label": "Systèmes intégrés et connexion au système central",
         "price": "À partir de ¥2 500 000",
-        "note": "Socle opérationnel reliant plusieurs services et systèmes existants, conçu pour un déploiement progressif."
+        "note": "Socle opérationnel reliant plusieurs services et systèmes existants, conçu pour un déploiement progressif. Le montant est indicatif pour une configuration minimale. Les processus, écrans, autorisations, intégrations et données à migrer sont convenus avant l’établissement du devis individuel."
       },
       {
         "label": "Maintenance et amélioration",
         "price": "À partir de ¥30 000/mois",
-        "note": "Modifications mineures, conseil, supervision, propositions d’amélioration, traitement prioritaire des développements supplémentaires et accompagnement associé."
+        "note": "Modifications mineures, conseil, supervision, propositions d’amélioration, traitement prioritaire des développements supplémentaires et accompagnement associé. Jusqu’à 2 heures par mois au total, comprenant conseil, recherches, travaux, vérifications et échanges. Les heures inutilisées ne sont pas reportées ; tout travail supplémentaire fait l’objet d’un devis préalable."
       },
       {
         "label": "Définition des besoins et conseil technique",
@@ -878,7 +878,7 @@
         }
       ],
       "offeringsTitle": "Un périmètre convenu avant le début des opérations",
-      "offeringsLead": "Le contrat et le devis ne comprennent que les éléments nécessaires au regard de l’importance du système cible et de son organisation opérationnelle.",
+      "offeringsLead": "Le contrat et le devis ne comprennent que les éléments nécessaires au regard de l’importance du système cible et de son organisation opérationnelle. Le forfait mensuel de base comprend 2 heures au total pour la maintenance, la surveillance, les changements, les améliorations et les échanges associés, sans quota distinct par rubrique. Les heures inutilisées ne sont pas reportées ; tout dépassement et nouveau développement font l’objet d’un devis préalable.",
       "offerings": [
         {
           "title": "Examen des besoins et de la transmission",

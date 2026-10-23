@@ -402,7 +402,7 @@
           "Kleine Veröffentlichungen und Verbesserungsunterstützung innerhalb des vereinbarten Arbeitsrahmens",
           "Technische Bestätigung und Zweitmeinung zu Vorschlägen externer Anbieter"
         ],
-        "boundary": "Beratungshäufigkeit, maximale Arbeitszeit, Übertrag und Mindestvertragslaufzeit werden vor Vertragsunterzeichnung festgelegt. Vollständige Neuentwicklungen und groß angelegte Kooperationen werden separat als Auftragsentwicklung veranschlagt."
+        "boundary": "Das Grundkontingent beträgt 2 Stunden pro Monat für Light und 8 Stunden für Standard, einschließlich aller Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; Mehrarbeit und umfangreiche Neuentwicklung werden vor Beginn separat angeboten."
       },
       {
         "title": "Einzelaufnahme – Spot-Unterstützung",
@@ -413,7 +413,7 @@
           "Erstellen und veröffentlichen Sie mit eingeschränkten Berechtigungen und eingeschränkten Berechtigungen, die durch exklusive Einladung vom Kundenkonto gewährt werden",
           "Betriebsbestätigung, Konfigurationsinformationen, Vererbung von Zugriffsrechten"
         ],
-        "boundary": "Der Grundumfang ist die erste Veröffentlichung von 1 bestehenden Webanwendung in 1 Umgebung. Codeänderungen, Datenmigration, CI/CD, Monitoring- und Backup-Design sowie der laufende Betrieb werden separat angeboten. Abnahme- und Nacharbeitsbedingungen stehen im Angebot; externe Gebühren trägt der Kunde."
+        "boundary": "Der Grundumfang ist die erste Veröffentlichung von 1 bestehenden Webanwendung in 1 Umgebung. Codeänderungen, Datenmigration, CI/CD, Monitoring- und Backup-Design sowie der laufende Betrieb werden separat angeboten. Abnahme- und Nacharbeitsbedingungen stehen im Angebot; externe Gebühren trägt der Kunde. Der Grundumfang ist eine Standardkonfiguration mit insgesamt bis zu 4 Stunden für Besprechungen, Einrichtung, Prüfungen, Übergabe und Kommunikation. Komplexe Konfigurationen und zusätzliche Zeit werden vor Beginn separat angeboten."
       }
     ],
     "priceNote": "Der angezeigte Betrag ist ein Richtwert inklusive Steuern. Die offizielle Spanne und Menge wird durch einen individuellen Kostenvoranschlag nach vorheriger Bestätigung ermittelt. Gebühren für die Nutzung externer Dienste, Lizenzgebühren, Domänen-/Servergebühren und zusätzlicher Aufwand nach Festlegung der Anforderungen sind nicht enthalten.",
@@ -517,42 +517,42 @@
       {
         "label": "IT Advisor Engineer Light",
         "price": "Ab 30.000 Yen pro Monat",
-        "note": "1–2 Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens 1 kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt."
+        "note": "1–2 Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens 1 kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt. Insgesamt bis zu 2 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
         "label": "IT Advisor Engineer Standard",
         "price": "Ab 100.000 Yen pro Monat",
-        "note": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine 24-Stunden-Überwachung und sofortige Fehlerbehebung."
+        "note": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine 24-Stunden-Überwachung und sofortige Fehlerbehebung. Insgesamt bis zu 8 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
         "label": "Unterstützung für die Spot-Bereitstellung",
         "price": "Ab 50.000 Yen",
-        "note": "Grundumfang sind 1 bestehende Webanwendung und 1 Umgebung: Auswahl der empfohlenen Umgebung, Ersteinrichtung von Domain, SSL, VPS oder Cloud, Veröffentlichung, Funktionsprüfung und Übergabe. Codeänderungen, Migration, CI/CD, Monitoring- und Backup-Design sowie laufender Betrieb werden separat angeboten."
+        "note": "Grundumfang sind 1 bestehende Webanwendung und 1 Umgebung: Auswahl der empfohlenen Umgebung, Ersteinrichtung von Domain, SSL, VPS oder Cloud, Veröffentlichung, Funktionsprüfung und Übergabe. Codeänderungen, Migration, CI/CD, Monitoring- und Backup-Design sowie laufender Betrieb werden separat angeboten. Der Grundumfang ist eine Standardkonfiguration mit insgesamt bis zu 4 Stunden für Besprechungen, Einrichtung, Prüfungen, Übergabe und Kommunikation. Komplexe Konfigurationen und zusätzliche Zeit werden vor Beginn separat angeboten."
       },
       {
         "label": "Starterpaket zur AI-Geschäftsverbesserung",
         "price": "Geschätzte 150.000 Yen",
-        "note": "90-minütiges Gespräch, Prozessaufnahme, 3 AI-Kandidaten, einfacher Prototyp für 1 Kandidaten, Aufwand-Nutzen-Schätzung und kompakte AI-Nutzungsregeln. Der Richtwert für die Dauer beträgt 2–3 Wochen."
+        "note": "90-minütiges Gespräch, Prozessaufnahme, 3 AI-Kandidaten, einfacher Prototyp für 1 Kandidaten, Aufwand-Nutzen-Schätzung und kompakte AI-Nutzungsregeln. Der Richtwert für die Dauer beträgt 2–3 Wochen. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
       },
       {
         "label": "Haupteinführung in AI/Geschäftssystem",
         "price": "Ab 500.000 Yen",
-        "note": "Post-PoC-Produktionsaufbau, bestehende Systemverknüpfung, Autoritäts-/Genehmigungs-/Auditprotokolle, Tests, Veröffentlichung und Betriebsübernahme. Wir unterbreiten Ihnen ein Angebot entsprechend Ihren Anforderungen."
+        "note": "Post-PoC-Produktionsaufbau, bestehende Systemverknüpfung, Autoritäts-/Genehmigungs-/Auditprotokolle, Tests, Veröffentlichung und Betriebsübernahme. Wir unterbreiten Ihnen ein Angebot entsprechend Ihren Anforderungen. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
       },
       {
         "label": "Kleine Automatisierung/Geschäftsunterstützung",
         "price": "Ab 300.000 Yen",
-        "note": "Kleine Automatisierung bestehender Eingabe-, Aggregations-, Benachrichtigungs- und Bestätigungsarbeiten."
+        "note": "Kleine Automatisierung bestehender Eingabe-, Aggregations-, Benachrichtigungs- und Bestätigungsarbeiten. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
       },
       {
         "label": "Interne Geschäftstools",
         "price": "Ab 500.000 Yen",
-        "note": "Ein kleines bis mittelgroßes Tool mit Admin-Bildschirm, Formularen, Listen, CSV-Ausgabe, Berechtigungen usw."
+        "note": "Ein kleines bis mittelgroßes Tool mit Admin-Bildschirm, Formularen, Listen, CSV-Ausgabe, Berechtigungen usw. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
       },
       {
         "label": "Mittelgroße Webanwendung",
         "price": "Ab 1.500.000 Yen",
-        "note": "Eine Web-App, die mehrere Benutzer, Mitgliedschaftsfunktionen, Genehmigungsabläufe und externe Verknüpfungen umfasst."
+        "note": "Eine Web-App, die mehrere Benutzer, Mitgliedschaftsfunktionen, Genehmigungsabläufe und externe Verknüpfungen umfasst. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
       },
       {
         "label": "Design/Kreativ",
@@ -562,67 +562,67 @@
       {
         "label": "Anfrage-AI-Chat",
         "price": "Ab 80.000 Yen",
-        "note": "Integrieren Sie den AI-Chat für Anfragen in statische Websites und Service-Websites und ordnen Sie den Antwortbereich, das Ratenlimit, die Herkunftsprüfung und das Erstellen sicherer Links."
+        "note": "Integrieren Sie den AI-Chat für Anfragen in statische Websites und Service-Websites und ordnen Sie den Antwortbereich, das Ratenlimit, die Herkunftsprüfung und das Erstellen sicherer Links. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Blog-Kommentarfunktion",
         "price": "Ab 80.000 Yen",
-        "note": "Verwenden Sie Cloudflare Pages Functions, D1, Turnstile, um Posting-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren, die nicht auf externe Kommentardienste angewiesen sind."
+        "note": "Verwenden Sie Cloudflare Pages Functions, D1, Turnstile, um Posting-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren, die nicht auf externe Kommentardienste angewiesen sind. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Einführung des CMS-Bearbeitungsbildschirms",
         "price": "Ab 50.000 Yen",
-        "note": "Sveltia CMS fügt einen Verwaltungsbildschirm hinzu, mit dem Sie Blogs, feste Seiten, Ankündigungen und Einstellungselemente über den Browser aktualisieren können."
+        "note": "Sveltia CMS fügt einen Verwaltungsbildschirm hinzu, mit dem Sie Blogs, feste Seiten, Ankündigungen und Einstellungselemente über den Browser aktualisieren können. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Blog-/Artikelbasis",
         "price": "Ab 50.000 Yen",
-        "note": "Wir bereiten die notwendige Infrastruktur für die kontinuierliche Verbreitung vor, wie z. B. Artikellisten, Detailseiten, Tags, verwandte Artikel, RSS und Suchkanäle."
+        "note": "Wir bereiten die notwendige Infrastruktur für die kontinuierliche Verbreitung vor, wie z. B. Artikellisten, Detailseiten, Tags, verwandte Artikel, RSS und Suchkanäle. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Mehrsprachiger Blog-Betrieb",
         "price": "Ab 80.000 Yen",
-        "note": "Wir bereiten einen mehrsprachigen Blog-Vorgang vor, einschließlich japanischer Quellen, übersetzter PR, Hreflang, Sitemap und RSS."
+        "note": "Wir bereiten einen mehrsprachigen Blog-Vorgang vor, einschließlich japanischer Quellen, übersetzter PR, Hreflang, Sitemap und RSS. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "SEO/strukturierte Daten",
         "price": "Ab 50.000 Yen",
-        "note": "Informationen organisieren, die an Suchmaschinen wie OGP, JSON-LD, Sitemap, RSS, Canonical usw. übermittelt werden sollen."
+        "note": "Informationen organisieren, die an Suchmaschinen wie OGP, JSON-LD, Sitemap, RSS, Canonical usw. übermittelt werden sollen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Pagefind-Site-Suche",
         "price": "Ab 30.000 Yen",
-        "note": "Fügen Sie der statischen Site die Suche Pagefind hinzu und ordnen Sie die Suchoberfläche, URL-Parameter und Cache-Einstellungen an."
+        "note": "Fügen Sie der statischen Site die Suche Pagefind hinzu und ordnen Sie die Suchoberfläche, URL-Parameter und Cache-Einstellungen an. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Verbesserte Anzeigegeschwindigkeit",
         "price": "Ab 50.000 Yen",
-        "note": "Wir werden Core Web Vitals weiter verbessern, indem wir Bilder, CSS, Schriftarten, Lazy Loading und Messergebnisse überprüfen."
+        "note": "Wir werden Core Web Vitals weiter verbessern, indem wir Bilder, CSS, Schriftarten, Lazy Loading und Messergebnisse überprüfen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Verbesserung der Barrierefreiheit",
         "price": "Ab 50.000 Yen",
-        "note": "Überprüfen Sie Kontrast, Arienattribute, Fokus, Formularvalidierung usw. und korrigieren Sie sie, um WCAG AA zu erreichen."
+        "note": "Überprüfen Sie Kontrast, Arienattribute, Fokus, Formularvalidierung usw. und korrigieren Sie sie, um WCAG AA zu erreichen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Sicherheitsheader/CSP",
         "price": "Ab 30.000 Yen",
-        "note": "Wir werden die Verteilungseinstellungen rund um die _Header, den CSP und den Verwaltungsbildschirm von Cloudflare Pages organisieren, um es näher an einen sicheren Veröffentlichungsstatus zu bringen."
+        "note": "Wir werden die Verteilungseinstellungen rund um die _Header, den CSP und den Verwaltungsbildschirm von Cloudflare Pages organisieren, um es näher an einen sicheren Veröffentlichungsstatus zu bringen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "CTA/Formularverknüpfung",
         "price": "Ab 30.000 Yen",
-        "note": "Übernehmen Sie Typ, Betreff und Kontext vom Service-CTA auf das Anfrageformular, um den Beratungsablauf zu verbessern."
+        "note": "Übernehmen Sie Typ, Betreff und Kontext vom Service-CTA auf das Anfrageformular, um den Beratungsablauf zu verbessern. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Integrierte System-/Kernzusammenarbeit",
         "price": "Ab 2.500.000 Yen",
-        "note": "Eine Geschäftsplattform, die mehrere Abteilungen und bestehende Systeme verbindet. Konzipiert für eine schrittweise Einführung."
+        "note": "Eine Geschäftsplattform, die mehrere Abteilungen und bestehende Systeme verbindet. Konzipiert für eine schrittweise Einführung. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
       },
       {
         "label": "Wartung/Verbesserung",
         "price": "Ab 30.000 Yen pro Monat",
-        "note": "Kleinere Korrekturen, Beratung, Überwachung, Verbesserungsvorschläge, vorrangige Reaktion für zusätzliche Entwicklung usw."
+        "note": "Kleinere Korrekturen, Beratung, Überwachung, Verbesserungsvorschläge, vorrangige Reaktion für zusätzliche Entwicklung usw. Insgesamt bis zu 2 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
         "label": "Anforderungen Organisation/technische Beratung",
@@ -878,7 +878,7 @@
         }
       ],
       "offeringsTitle": "Umfang muss vor der Inbetriebnahme vereinbart werden",
-      "offeringsLead": "Nur die notwendigen Punkte werden entsprechend der Bedeutung und Struktur des Zielsystems im Vertrag/Kostenvoranschlag berücksichtigt.",
+      "offeringsLead": "Nur die notwendigen Punkte werden entsprechend der Bedeutung und Struktur des Zielsystems im Vertrag/Kostenvoranschlag berücksichtigt. Das monatliche Grundkontingent umfasst insgesamt 2 Stunden für Wartung, Überwachung, Änderungen, Verbesserungen und zugehörige Kommunikation, ohne eigenes Kontingent je Position. Ungenutzte Zeit wird nicht übertragen; Mehrarbeit und Neuentwicklung werden vor Beginn separat angeboten.",
       "offerings": [
         {
           "title": "Bedarfsorganisation/Übertragungsbestätigung",
