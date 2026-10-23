@@ -177,7 +177,7 @@
   "home": {
     "title": "Business Systems & App Development",
     "description": "Acecore Systems provides end-to-end support—from IT advisory, AI adoption, and business process improvement through deployment, web app development, data utilization, and operational improvement.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
+    "heroEyebrow": "Your partner in taking on new challenges",
     "heroTitle": "For work that never stops,\nthere is quiet design behind it.",
     "heroLead": "From websites and customer journeys for bookings and inquiries to organizing day-to-day work and managing operations after launch.\nEven if you are not sure where to start, we will help clarify your current situation and priorities and propose a realistic way forward.",
     "primaryCta": "Discuss your project",
@@ -206,16 +206,16 @@
     "philosophyLead": "Acecore’s philosophy is “Taking the world to the next stage”: reducing nonessential burdens and helping people pursue what they want to do. Systems supports that first step through technology, bringing work, systems, and operations together.",
     "designPrinciples": [
       {
-        "title": "Start with the real work",
-        "body": "Before deciding on features, we clarify who decides what, when those decisions are made, and where the difficulties lie."
+        "title": "Clarify what you want to achieve",
+        "body": "We work with you to clarify even a vague wish to make things better. You do not need a concrete idea: start by discussing what might be possible."
       },
       {
-        "title": "Design the unseen, too.",
-        "body": "We treat data, permissions, integrations, and exception handling as one connected system."
+        "title": "Make no compromises behind the scenes",
+        "body": "We go beyond improving appearances or making things work better today. We build future extensibility and ease of maintenance into the system as a whole."
       },
       {
-        "title": "Design for change",
-        "body": "We avoid overbuilding from the start, begin with what is needed, and create a system that can evolve through use."
+        "title": "Provide a process you can feel confident in",
+        "body": "We share work in progress throughout production so that improvements you notice only once things take shape can be identified early."
       }
     ],
     "consultationEyebrow": "WHEN TO TALK",
@@ -248,7 +248,7 @@
       }
     ],
     "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Before deciding what to build, tell us about your work today.",
+    "ctaTitle": "Tell us what you want to build, or simply what is troubling you.",
     "ctaBody": "You can talk to us even before the requirements are fully defined. Together, we will organize your current workflow, constraints, and priorities.",
     "ctaLabel": "Choose how to get in touch",
     "philosophyLinkLabel": "Acecore’s philosophy and vision"
@@ -402,7 +402,7 @@
           "Support for small-scale launches and improvements within the agreed work capacity",
           "Technical review and a second opinion on external vendor proposals"
         ],
-        "boundary": "Consultation frequency, work-hour limits, carryover, and the minimum contract term are finalized before the contract. Full-scale new development and large integrations are estimated separately as commissioned development."
+        "boundary": "The base allowance is 2 hours per month for Light and 8 hours for Standard, including all consultation, research, work, checks, and communication. Unused time does not roll over; additional time and substantial new development are quoted before work starts."
       },
       {
         "title": "One-time — Spot Support",
@@ -413,7 +413,7 @@
           "Setup and launch using time-limited, least-privilege access granted through a dedicated invitation from the customer's account",
           "Handover of operational checks, architecture information, and access rights"
         ],
-        "boundary": "The base scope is the first launch of 1 existing Web app in 1 environment. Code changes, data migration, CI/CD, monitoring and backup design, and ongoing operations are estimated separately. The estimate states the conditions for operational checks and rework, and external service fees are paid by the customer."
+        "boundary": "The base scope is the first launch of 1 existing Web app in 1 environment. Code changes, data migration, CI/CD, monitoring and backup design, and ongoing operations are estimated separately. The estimate states the conditions for operational checks and rework, and external service fees are paid by the customer. The basic scope is a standard configuration with up to 4 hours in total for meetings, setup, checks, handover, and communication. Complex configurations or additional time are quoted before work starts."
       }
     ],
     "priceNote": "Displayed prices are tax-inclusive estimates. The final scope and price are confirmed in an individual estimate after an initial review. External service fees, license fees, domain and server costs, and additional work after requirements are finalized are not included.",
@@ -512,47 +512,47 @@
     "title": "Pricing Guide",
     "description": "Pricing guidance and assumptions for Acecore Systems services, including IT advisory services, AI adoption, deployment support, business systems, Web apps, design and creative production, AI chat, CMS, SEO, and security improvements.",
     "heroTitle": "Start sustainably with the scope you need.",
-    "heroLead": "Prices are tax-inclusive estimates. External service fees, license fees, server costs, and changes after formal requirements are confirmed separately.",
+    "heroLead": "Amounts are indicative and include tax. We will provide an individual estimate after the requirements are finalized. Please be open about your budget, too.",
     "items": [
       {
         "label": "IT Advisory Engineer — Light",
         "price": "From ¥30,000/month",
-        "note": "Includes 1–2 consultations per month, AI and IT tool selection, initial setup, and small-scale launch support for up to 1 concurrent project. Work-hour limits and additional fees are stated before the contract."
+        "note": "Includes 1–2 consultations per month, AI and IT tool selection, initial setup, and small-scale launch support for up to 1 concurrent project. Work-hour limits and additional fees are stated before the contract. Up to 2 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
       },
       {
         "label": "IT Advisory Engineer — Standard",
         "price": "From ¥100,000/month",
-        "note": "Within the consultation and work-hour limits agreed in the contract: deployment, debugging and testing, status reports, and reviews of usage and improvement candidates. 24-hour monitoring and immediate incident response are not included."
+        "note": "Within the consultation and work-hour limits agreed in the contract: deployment, debugging and testing, status reports, and reviews of usage and improvement candidates. 24-hour monitoring and immediate incident response are not included. Up to 8 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
       },
       {
         "label": "One-Time Deployment Support",
         "price": "From ¥50,000",
-        "note": "For 1 existing Web app in 1 environment: recommended environment selection, initial domain, SSL, VPS or cloud setup, launch, operation checks, and handover. Code changes, migration, CI/CD, monitoring and backup design, and ongoing operations are estimated separately."
+        "note": "For 1 existing Web app in 1 environment: recommended environment selection, initial domain, SSL, VPS or cloud setup, launch, operation checks, and handover. Code changes, migration, CI/CD, monitoring and backup design, and ongoing operations are estimated separately. The basic scope is a standard configuration with up to 4 hours in total for meetings, setup, checks, handover, and communication. Complex configurations or additional time are quoted before work starts."
       },
       {
         "label": "AI Operational Improvement Starter Package",
         "price": "Approx. ¥150,000",
-        "note": "A 90-minute interview, workflow review, 3 AI candidates, a simple prototype of 1 candidate, cost-effectiveness estimate, and concise AI usage rules. The estimated duration is 2–3 weeks."
+        "note": "A 90-minute interview, workflow review, 3 AI candidates, a simple prototype of 1 candidate, cost-effectiveness estimate, and concise AI usage rules. The estimated duration is 2–3 weeks. The amount is indicative of a minimum configuration. We agree on the workflows, screens, permissions, integrations, and migration scope before providing an individual estimate."
       },
       {
         "label": "Production AI and Business System Implementation",
         "price": "From ¥500,000",
-        "note": "Production build after a PoC, existing-system integration, permissions, approvals, audit logs, testing, launch, and operational handover. Estimated according to requirements."
+        "note": "Production build after a PoC, existing-system integration, permissions, approvals, audit logs, testing, launch, and operational handover. Estimated according to requirements. The amount is indicative of a minimum configuration. We agree on the workflows, screens, permissions, integrations, and migration scope before providing an individual estimate."
       },
       {
         "label": "Small-Scale Automation and Operational Assistance",
         "price": "From ¥300,000",
-        "note": "Small-scale automation of existing data entry, aggregation, notifications, and checking work."
+        "note": "Small-scale automation of existing data entry, aggregation, notifications, and checking work. The amount is indicative of a minimum configuration. We agree on the workflows, screens, permissions, integrations, and migration scope before providing an individual estimate."
       },
       {
         "label": "Internal Business Tool",
         "price": "From ¥500,000",
-        "note": "A small- to medium-sized tool with an admin screen, forms, lists, CSV export, permissions, and related features."
+        "note": "A small- to medium-sized tool with an admin screen, forms, lists, CSV export, permissions, and related features. The amount is indicative of a minimum configuration. We agree on the workflows, screens, permissions, integrations, and migration scope before providing an individual estimate."
       },
       {
         "label": "Medium-Sized Web App",
         "price": "From ¥1,500,000",
-        "note": "A Web app with multiple users, membership features, approval flows, and external integrations."
+        "note": "A Web app with multiple users, membership features, approval flows, and external integrations. The amount is indicative of a minimum configuration. We agree on the workflows, screens, permissions, integrations, and migration scope before providing an individual estimate."
       },
       {
         "label": "Design and Creative",
@@ -562,67 +562,67 @@
       {
         "label": "Inquiry AI Chat",
         "price": "From ¥80,000",
-        "note": "Add an inquiry AI chat to a static or service site, including answer scope, rate limits, Origin checks, and safe link rendering."
+        "note": "Add an inquiry AI chat to a static or service site, including answer scope, rate limits, Origin checks, and safe link rendering. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Blog Comment Feature",
         "price": "From ¥80,000",
-        "note": "Use Cloudflare Pages Functions, D1, and Turnstile to provide posting, storage, spam prevention, and deletion operations without an external comment service."
+        "note": "Use Cloudflare Pages Functions, D1, and Turnstile to provide posting, storage, spam prevention, and deletion operations without an external comment service. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "CMS Editing Interface",
         "price": "From ¥50,000",
-        "note": "Add a Sveltia CMS admin interface for updating the blog, fixed pages, announcements, and settings from a browser."
+        "note": "Add a Sveltia CMS admin interface for updating the blog, fixed pages, announcements, and settings from a browser. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Blog and Article Foundation",
         "price": "From ¥50,000",
-        "note": "Build the foundation for ongoing publishing, including article lists, detail pages, tags, related articles, RSS, and search journeys."
+        "note": "Build the foundation for ongoing publishing, including article lists, detail pages, tags, related articles, RSS, and search journeys. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Multilingual Blog Operations",
         "price": "From ¥80,000",
-        "note": "Establish multilingual blog operations covering a Japanese source, translation PRs, hreflang, sitemap, and RSS."
+        "note": "Establish multilingual blog operations covering a Japanese source, translation PRs, hreflang, sitemap, and RSS. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "SEO and Structured Data",
         "price": "From ¥50,000",
-        "note": "Organize information communicated to search engines, including OGP, JSON-LD, sitemap, RSS, and canonical."
+        "note": "Organize information communicated to search engines, including OGP, JSON-LD, sitemap, RSS, and canonical. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Pagefind Site Search",
         "price": "From ¥30,000",
-        "note": "Add Pagefind search to a static site, including the search UI, URL parameters, and cache settings."
+        "note": "Add Pagefind search to a static site, including the search UI, URL parameters, and cache settings. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Page-Speed Improvement",
         "price": "From ¥50,000",
-        "note": "Review images, CSS, fonts, lazy loading, and measurements to improve Core Web Vitals."
+        "note": "Review images, CSS, fonts, lazy loading, and measurements to improve Core Web Vitals. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Accessibility Improvement",
         "price": "From ¥50,000",
-        "note": "Review contrast, aria attributes, focus, form validation, and related areas, and make corrections toward WCAG AA."
+        "note": "Review contrast, aria attributes, focus, form validation, and related areas, and make corrections toward WCAG AA. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Security Headers/CSP",
         "price": "From ¥30,000",
-        "note": "Organize Cloudflare Pages _headers, CSP, and delivery settings around the admin interface to improve launch security."
+        "note": "Organize Cloudflare Pages _headers, CSP, and delivery settings around the admin interface to improve launch security. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "CTA and Form Integration",
         "price": "From ¥30,000",
-        "note": "Carry the category, subject, and context from a service CTA into the contact form to improve the consultation journey."
+        "note": "Carry the category, subject, and context from a service CTA into the contact form to improve the consultation journey. The estimate covers 1 standard implementation, review, or improvement on 1 existing site. Custom features, a complete new website, migration, and ongoing operation are quoted separately."
       },
       {
         "label": "Integrated Systems and Core-System Integration",
         "price": "From ¥2,500,000",
-        "note": "An operational foundation connecting multiple departments and existing systems, designed for phased rollout."
+        "note": "An operational foundation connecting multiple departments and existing systems, designed for phased rollout. The amount is indicative of a minimum configuration. We agree on the workflows, screens, permissions, integrations, and migration scope before providing an individual estimate."
       },
       {
         "label": "Maintenance and Improvement",
         "price": "From ¥30,000/month",
-        "note": "Minor changes, consultation, monitoring, improvement proposals, priority handling for additional development, and related support."
+        "note": "Minor changes, consultation, monitoring, improvement proposals, priority handling for additional development, and related support. Up to 2 hours per month in total, including consultation, research, work, checks, and communication. Unused time does not roll over; additional work is quoted before it starts."
       },
       {
         "label": "Requirements and Technical Consultation",
@@ -878,7 +878,7 @@
         }
       ],
       "offeringsTitle": "Scope agreed before operations begin",
-      "offeringsLead": "The contract and estimate include only the items needed for the target system's importance and operating structure.",
+      "offeringsLead": "The contract and estimate include only the items needed for the target system's importance and operating structure. The monthly base allowance is 2 hours in total for maintenance, monitoring, changes, improvements, and related communication. There is no separate allowance for each item. Unused time does not roll over; additional time and new development are quoted before work starts.",
       "offerings": [
         {
           "title": "Requirements and handover review",
@@ -1402,7 +1402,7 @@
   "services": {
     "title": "Services",
     "description": "Acecore Systems provides IT advisory services, AI adoption and operational improvement, deployment support, business-system development, Web apps and admin interfaces, design and creative production, CMS, search, data use, and existing-system improvement. We also support Web/API security assessment and remediation.",
-    "heroTitle": "From organizing the problem\nto development, design, and operational improvement.",
+    "heroTitle": "Services that fit you.",
     "heroLead": "Beyond one-time production and development, we emphasize design and improvement that help the solution take root in daily operations.",
     "entryPoints": [
       {
@@ -1500,11 +1500,11 @@
       },
       {
         "title": "Requirements and proposal",
-        "body": "We separate the required features, screens, data, permissions, and visibility scope and set priorities."
+        "body": "We propose the functions, screens, and data together, then review your concerns and priorities."
       },
       {
         "title": "Design and development",
-        "body": "We implement in small, reviewable increments to resolve interface and operational issues early."
+        "body": "You can also review versions during development and incorporate newly discovered issues."
       },
       {
         "title": "Launch and improvement",

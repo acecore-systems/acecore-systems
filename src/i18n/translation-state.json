@@ -1,7 +1,7 @@
 {
   "pendingContent": {
     "/serviceDetails/website": {
-      "sourceHash": "cee8e59d3d0d211d9f7962ea16dda56aeed0f6767612514d7b073b6944ad7043",
+      "sourceHash": "c1917e5f85454d6942e0bae053df2495add2a07e3f25f298cba77eff452a8a3c",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/services/entryPoints/2": {
@@ -37,7 +37,7 @@
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/pricing/items/31": {
-      "sourceHash": "7d338cd380dbadb3761485a3ade1af52c2ee7d8be088dea1c818eb303faae55c",
+      "sourceHash": "c313a4f60a251e3c2aa764d004e6eb7da9a664d4202a069b2e2faa9156e01a29",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     },
     "/pricing/items/32": {
@@ -45,6 +45,6 @@
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
     }
   },
-  "sourceHash": "7ab9b9a44486cb7a9c6a6e5df189f23e3c87fc9d5574b8937f81802c2b872bc3",
+  "sourceHash": "bd4f77f079fc5bb967f1aeef43c5dc0899c1e470d31e91f22cd9af1098b81d6b",
   "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }
