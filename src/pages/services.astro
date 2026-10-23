@@ -20,10 +20,20 @@ const pricingByKey = new Map(
   content.pricing.items.map((item) => [item.key, item]),
 );
 const design = data.services.find((service) => service.id === "design")!;
-const legacyAliases = (href: string, id: string) =>
-  data.services
-    .filter((service) => service.detailUrl === href && service.id !== id)
-    .map((service) => service.id);
+const legacyAliases = (routeId: string, id: string) =>
+  id !== routeId
+    ? []
+    : [
+        ...data.services
+          .filter(
+            (service) =>
+              service.detailUrl === `/services/${routeId}/` &&
+              service.id !== id,
+          )
+          .map((service) => service.id),
+        ...(routeId === "site-quality" ? ["site-functions"] : []),
+        ...(routeId === "operations" ? ["operate", "operate-title"] : []),
+      ];
 ---
 
 <BaseLayout
@@ -62,6 +72,15 @@ const legacyAliases = (href: string, id: string) =>
           ]}
         />
         <p class="purpose-catalog__price-note">{content.pricing.heroLead}</p>
+        <p>
+          <a
+            class="purpose-text-link"
+            href={getLocalizedUrl("/pricing/", locale)}
+          >
+            {text.pricingCheck}
+            <PurposeIcon name="arrow" />
+          </a>
+        </p>
         {groups.map((group) => (
           <section
             class="purpose-catalog-group"
@@ -90,7 +109,7 @@ const legacyAliases = (href: string, id: string) =>
                       item.id === "website"
                         ? ["service-entry-" + item.id]
                         : []),
-                      ...legacyAliases(item.href, item.id),
+                      ...legacyAliases(item.routeId, item.id),
                     ].map((id) => (
                       <span
                         id={id}
@@ -133,6 +152,17 @@ const legacyAliases = (href: string, id: string) =>
                 </a>
               ))}
             </div>
+            {group.id === "web" && (
+              <p>
+                <a
+                  class="purpose-text-link"
+                  href={getLocalizedUrl("/services/site-functions/", locale)}
+                >
+                  {content.serviceDetails.siteFunctions.title}
+                  <PurposeIcon name="arrow" />
+                </a>
+              </p>
+            )}
           </section>
         ))}
       </div>

@@ -177,7 +177,7 @@
   "home": {
     "title": "Entwicklung von Unternehmenssoftware und Apps",
     "description": "Acecore Systems unterstützt Sie als Entwicklungsdienstleister ganzheitlich – von der IT-Beratung, der Einführung von AI-Lösungen und der Optimierung von Geschäftsprozessen über Deployment und Web-App-Entwicklung bis hin zur Nutzung von Daten und zur Optimierung des laufenden Betriebs.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEME FÜR BETRIEBLICHE ABLÄUFE",
+    "heroEyebrow": "Ihr Partner für neue Herausforderungen",
     "heroTitle": "Hinter Abläufen, die einfach weiterlaufen,\nsteckt ruhiges Design.",
     "heroLead": "Von der Website über die Nutzerführung bei Buchungen und Anfragen bis hin zur Strukturierung des Arbeitsalltags und zum Betrieb nach dem Launch.\nAuch wenn noch nicht feststeht, womit Sie beginnen sollten, schaffen wir Klarheit über Ihre Ausgangslage und Prioritäten und schlagen ein Vorgehen vor, das sich realistisch umsetzen lässt.",
     "primaryCta": "Entwicklung anfragen",
@@ -206,16 +206,16 @@
     "philosophyLead": "Acecores Philosophie lautet „Die Welt auf die nächste Stufe bringen“: unwesentliche Belastungen verringern und Menschen bei ihren Vorhaben unterstützen. Systems unterstützt diesen ersten Schritt mit Technologie und verbindet dabei Arbeitsalltag, Systeme und Betrieb.",
     "designPrinciples": [
       {
-        "title": "Mit der Praxis beginnen",
-        "body": "Bevor wir Funktionen festlegen, klären wir, wer wann welche Entscheidungen trifft und wo die Schwierigkeiten liegen."
+        "title": "Klären, was Sie erreichen möchten",
+        "body": "Wir ordnen gemeinsam mit Ihnen auch den noch vagen Wunsch, etwas zu verbessern. Eine konkrete Idee ist nicht nötig: Beginnen wir mit einem Gespräch darüber, was möglich ist."
       },
       {
-        "title": "Auch das Unsichtbare mitdenken",
-        "body": "Wir betrachten Daten, Berechtigungen, Integrationen und Ausnahmebehandlungen als ein zusammenhängendes System."
+        "title": "Auch im Hintergrund keine Kompromisse eingehen",
+        "body": "Wir verbessern nicht nur das Erscheinungsbild und denken über die heutigen Anforderungen hinaus. Künftige Erweiterbarkeit und einfache Wartung fließen in das gesamte System ein."
       },
       {
-        "title": "Veränderung von Anfang an mitdenken",
-        "body": "Wir beginnen mit dem nötigen Umfang, statt von Anfang an zu viel zu bauen, und schaffen eine Lösung, die sich im laufenden Betrieb weiterentwickeln lässt."
+        "title": "Einen nachvollziehbaren Prozess bieten",
+        "body": "Wir teilen regelmäßig Zwischenstände, damit Verbesserungen, die erst beim Entstehen des Ergebnisses sichtbar werden, früh erkannt werden können."
       }
     ],
     "consultationEyebrow": "WANN EIN GESPRÄCH SINNVOLL IST",
@@ -248,7 +248,7 @@
       }
     ],
     "ctaEyebrow": "MIT EINEM GESPRÄCH BEGINNEN",
-    "ctaTitle": "Bevor wir festlegen, was entwickelt werden soll, erzählen Sie uns von Ihren aktuellen Abläufen.",
+    "ctaTitle": "Erzählen Sie uns, was Sie entwickeln möchten, oder einfach, wo Sie Schwierigkeiten haben.",
     "ctaBody": "Auch wenn die Anforderungen noch nicht vollständig feststehen, können Sie sich an uns wenden. Gemeinsam ordnen wir Ihre aktuellen Abläufe, Rahmenbedingungen und Prioritäten.",
     "ctaLabel": "Beratungsform wählen",
     "philosophyLinkLabel": "Acecores Philosophie und Vision"
@@ -512,7 +512,7 @@
     "title": "Preisrahmen",
     "description": "Preisrahmen und Annahmen von Acecore Systems für IT-Beratung, AI-Einführung, Deployment-Unterstützung, Geschäftssysteme, Webanwendungen, Design und Kreativleistungen, AI-Chat, CMS, SEO und Sicherheitsverbesserungen.",
     "heroTitle": "Mit dem wirklich benötigten Umfang sinnvoll starten.",
-    "heroLead": "Die Beträge sind Richtwerte inklusive Steuern. Externe Dienste, Lizenzen, Serverkosten und zusätzliche Arbeiten nach der verbindlichen Anforderungsklärung werden separat abgestimmt.",
+    "heroLead": "Die Beträge sind Richtwerte einschließlich Steuern. Nach der verbindlichen Klärung der Anforderungen erstellen wir ein individuelles Angebot. Sprechen Sie auch offen über Ihr Budget.",
     "items": [
       {
         "label": "IT Advisor Engineer Light",
@@ -1402,7 +1402,7 @@
   "services": {
     "title": "Leistungen",
     "description": "Leistungen von Acecore Systems: IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Entwicklung von Geschäftssystemen und Webanwendungen, Administrationsoberflächen, Design und Kreativleistungen, CMS, Suche, Datennutzung und Modernisierung bestehender Systeme. Wir bieten auch Web- und API-Sicherheitsprüfungen und Unterstützung bei der Behebung an.",
-    "heroTitle": "Von der Klärung des Problems\nbis zu Entwicklung, Design und Betriebsverbesserung.",
+    "heroTitle": "Leistungen, die zu Ihnen passen.",
     "heroLead": "Wir liefern nicht nur einmalig, sondern gestalten auch den Weg, auf dem die Lösung im Arbeitsalltag ankommt und weiter verbessert werden kann.",
     "entryPoints": [
       {
@@ -1499,12 +1499,12 @@
         "body": "Organisieren Sie den Zweck, das Problem, das Sie haben, Benutzer, Fristen und Budget."
       },
       {
-        "title": "Anforderungsvereinbarung/Vorschlag",
-        "body": "Teilen Sie die erforderlichen Funktionen, Bildschirme, Daten, Berechtigungen und Offenlegungsbereiche auf und legen Sie Prioritäten fest."
+        "title": "Anforderungen und Vorschlag",
+        "body": "Wir schlagen Funktionen, Oberflächen und Daten im Zusammenhang vor und klären Bedenken sowie Prioritäten."
       },
       {
         "title": "Design und Entwicklung",
-        "body": "Wir werden es in kleinen, leicht zu überprüfenden Einheiten implementieren und jegliche Unannehmlichkeiten mit dem Bildschirm oder der Bedienung schnell beseitigen."
+        "body": "Sie können auch Versionen während der Entwicklung prüfen und neu entdeckte Probleme einfließen lassen."
       },
       {
         "title": "Veröffentlichen/verbessern",

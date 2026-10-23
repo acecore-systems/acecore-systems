@@ -177,7 +177,7 @@
   "home": {
     "title": "Desarrollo de sistemas y aplicaciones empresariales",
     "description": "Acecore Systems ofrece un servicio de desarrollo integral que abarca desde la asesoría de TI, la implementación de AI y la mejora de procesos hasta el despliegue, el desarrollo de aplicaciones web, el aprovechamiento de datos y la mejora operativa.",
-    "heroEyebrow": "ACECORE SYSTEMS — SISTEMAS PARA LAS OPERACIONES",
+    "heroEyebrow": "Tu aliado para afrontar nuevos retos",
     "heroTitle": "En las operaciones que no se detienen,\nhay un diseño discreto.",
     "heroLead": "Desde el sitio web y los canales de reserva y contacto hasta la organización del trabajo diario y la gestión posterior a la puesta en marcha.\nAunque todavía no esté claro por dónde empezar, ordenamos la situación actual y las prioridades, y proponemos una forma de avanzar realista.",
     "primaryCta": "Consultar sobre desarrollo",
@@ -206,16 +206,16 @@
     "philosophyLead": "La filosofía de Acecore es «Llevar el mundo a la siguiente etapa»: reducir las cargas no esenciales y ayudar a las personas a perseguir sus aspiraciones. Systems apoya ese primer paso con tecnología, integrando el trabajo, los sistemas y su operación.",
     "designPrinciples": [
       {
-        "title": "Empezar por la realidad operativa",
-        "body": "Antes de definir las funcionalidades, analizamos quién decide qué y cuándo, y dónde surgen las dificultades."
+        "title": "Aclarar lo que quieres lograr",
+        "body": "Organizamos contigo incluso una idea vaga de querer mejorar las cosas. No necesitas una propuesta concreta: podemos empezar hablando de lo que es posible hacer."
       },
       {
         "title": "Cuidar también lo que no se ve",
-        "body": "Consideramos los datos, los permisos, las integraciones y la gestión de excepciones como un único sistema."
+        "body": "No nos limitamos a mejorar la apariencia ni a resolver solo las necesidades actuales. Integramos la capacidad de ampliación futura y la facilidad de mantenimiento en el conjunto del sistema."
       },
       {
-        "title": "Diseñar para el cambio",
-        "body": "Sin sobredimensionar desde el principio, empezamos por lo necesario y lo diseñamos para poder mejorarlo con el uso."
+        "title": "Ofrecer un proceso que inspire confianza",
+        "body": "Compartimos los avances durante la producción para detectar pronto las mejoras que solo se hacen evidentes cuando el resultado empieza a tomar forma."
       }
     ],
     "consultationEyebrow": "CUÁNDO CONSULTAR",
@@ -248,7 +248,7 @@
       }
     ],
     "ctaEyebrow": "EMPECEMOS CON UNA CONVERSACIÓN",
-    "ctaTitle": "Antes de decidir qué construir, cuéntenos cómo funcionan hoy sus operaciones.",
+    "ctaTitle": "Cuéntanos qué quieres crear o, simplemente, qué dificultades tienes.",
     "ctaBody": "Puede consultarnos incluso si los requisitos aún no están completamente definidos. Juntos ponemos en orden el flujo actual, las restricciones y las prioridades.",
     "ctaLabel": "Elegir una forma de consulta",
     "philosophyLinkLabel": "Filosofía y visión de Acecore"
@@ -512,7 +512,7 @@
     "title": "Guía de precios",
     "description": "Orientación de precios y condiciones de los servicios de Acecore Systems, incluidos asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, chat de AI, CMS, SEO y mejoras de seguridad.",
     "heroTitle": "Comience de forma sostenible con el alcance que necesita.",
-    "heroLead": "Los importes son estimaciones con impuestos incluidos. Las tarifas de servicios externos, licencias, servidores y cambios posteriores a la definición formal de requisitos se confirman por separado.",
+    "heroLead": "Los importes son orientativos e incluyen impuestos. Prepararemos un presupuesto individual una vez definidos los requisitos. Cuéntanos también con franqueza cuál es tu presupuesto.",
     "items": [
       {
         "label": "Ingeniero asesor de IT — Light",
@@ -1397,7 +1397,7 @@
   "services": {
     "title": "Servicios",
     "description": "Servicios de Acecore Systems: asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web e interfaces de administración, diseño y producción creativa, CMS, búsqueda, datos y modernización. También ofrecemos evaluación de seguridad Web y API y apoyo a la remediación.",
-    "heroTitle": "Desde organizar el problema\nhasta el desarrollo, el diseño y la mejora operativa.",
+    "heroTitle": "Servicios que se adaptan a ti.",
     "heroLead": "Además de trabajos puntuales, damos prioridad al diseño y la mejora que ayudan a integrar la solución en las operaciones.",
     "entryPoints": [
       {
@@ -1495,11 +1495,11 @@
       },
       {
         "title": "Requisitos y propuesta",
-        "body": "Separamos funciones, pantallas, datos, permisos y visibilidad y fijamos prioridades."
+        "body": "Proponemos de forma conjunta las funciones, pantallas y datos, y revisamos las inquietudes y prioridades."
       },
       {
         "title": "Diseño y desarrollo",
-        "body": "Implementamos en unidades pequeñas para resolver pronto problemas de interfaz y operación."
+        "body": "Puedes revisar las versiones durante el desarrollo e incorporar los nuevos problemas que se descubran."
       },
       {
         "title": "Lanzamiento y mejora",

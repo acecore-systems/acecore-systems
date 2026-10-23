@@ -7,7 +7,7 @@ import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
 import { getContactFormText } from "../i18n/contact-form";
-import { getServiceCatalog } from "../lib/service-catalog";
+import { getServiceDetails } from "../lib/service-catalog";
 import { workServiceContexts } from "../lib/work-services";
 
 interface Props {
@@ -19,17 +19,15 @@ const content = getLocalizedContent(locale);
 const data = content.works;
 const text = getUi(locale);
 const serviceLinks = new Map(
-  getServiceCatalog(content, locale).flatMap((group) =>
-    group.items.map(
-      (service) =>
-        [
-          service.id,
-          {
-            title: service.data.title,
-            href: getLocalizedUrl(service.href, locale),
-          },
-        ] as const,
-    ),
+  getServiceDetails(content, locale).map(
+    (service) =>
+      [
+        service.id,
+        {
+          title: service.data.title,
+          href: getLocalizedUrl(service.href, locale),
+        },
+      ] as const,
   ),
 );
 // A pending website translation must link to an available localized entry.

@@ -5,7 +5,7 @@ import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, htmlLangMap, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
 import { getAvailableRouteLocales } from "../lib/insight-links.mjs";
-import { getServiceCatalog } from "../lib/service-catalog";
+import { getServiceDetails } from "../lib/service-catalog";
 
 interface Props {
   locale?: Locale;
@@ -58,9 +58,7 @@ const tracks = [
     ).toString()}`,
   },
 ] as const;
-const serviceGroups = getServiceCatalog(content, locale).flatMap(
-  (group) => group.items,
-);
+const serviceGroups = getServiceDetails(content, locale);
 const design = content.services.services.find(
   (service) => service.id === "design",
 )!;
@@ -118,6 +116,9 @@ const jsonLd = [
       <p class="page-eyebrow">{text.pricingEyebrow}</p>
       <h1 class="page-title">{data.heroTitle}</h1>
       <p class="page-lead">{data.heroLead}</p>
+      <a class="purpose-text-link" href={getLocalizedUrl("/services/", locale)}>
+        {text.purposeViewServices}
+      </a>
     </div>
   </section>
 

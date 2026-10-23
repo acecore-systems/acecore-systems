@@ -9,7 +9,7 @@ import site from "../data/site.json";
 import { getLocalizedContent } from "../i18n/content";
 import { getLocalizedUrl, type Locale } from "../i18n";
 import { getUi } from "../i18n/ui";
-import { getServiceCatalog } from "../lib/service-catalog";
+import { getServiceDetails } from "../lib/service-catalog";
 import {
   presentService,
   relatedServiceIds,
@@ -71,9 +71,9 @@ const offeringGroups =
       ]
     : [{ id: "service-plans", title: "", lead: "", items: offerings }];
 const relatedIds = relatedServiceIds[data.routeId] ?? [];
-const relatedServices = getServiceCatalog(content, locale)
-  .flatMap((group) => group.items)
-  .filter((service) => relatedIds.includes(service.id));
+const relatedServices = getServiceDetails(content, locale).filter((service) =>
+  relatedIds.includes(service.id),
+);
 const contactHref = `${getLocalizedUrl("/contact/", locale)}?${new URLSearchParams({ category: "service", service: consultationServiceKey, from: `systems-${serviceKey}`, entry: "service-detail-cta" }).toString()}`;
 const faqs = data.faqs.length
   ? data.faqs

@@ -104,21 +104,6 @@ const needs = [
       </div>
     </div>
   </section>
-  <section class="purpose-selected-work" aria-labelledby="home-work-title">
-    <div class="container">
-      <header class="purpose-section-heading">
-        <div>
-          <h2 id="home-work-title">{text.works}</h2>
-          <p>{text.selectedWorkLead}</p>
-        </div>
-        <a class="purpose-text-link" href={getLocalizedUrl("/works/", locale)}>
-          {text.viewWorks}
-          <PurposeIcon name="arrow" />
-        </a>
-      </header>
-      <PurposeCaseCards locale={locale} />
-    </div>
-  </section>
   <section
     class="home-section home-philosophy"
     id="philosophy"
@@ -155,6 +140,21 @@ const needs = [
           </li>
         ))}
       </ol>
+    </div>
+  </section>
+  <section class="purpose-selected-work" aria-labelledby="home-work-title">
+    <div class="container">
+      <header class="purpose-section-heading">
+        <div>
+          <h2 id="home-work-title">{text.works}</h2>
+          <p>{text.selectedWorkLead}</p>
+        </div>
+        <a class="purpose-text-link" href={getLocalizedUrl("/works/", locale)}>
+          {text.viewWorks}
+          <PurposeIcon name="arrow" />
+        </a>
+      </header>
+      <PurposeCaseCards locale={locale} />
     </div>
   </section>
   <PurposeCallout locale={locale} ctaId="home-cta-title" />

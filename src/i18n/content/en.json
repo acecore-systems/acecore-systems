@@ -177,7 +177,7 @@
   "home": {
     "title": "Business Systems & App Development",
     "description": "Acecore Systems provides end-to-end support—from IT advisory, AI adoption, and business process improvement through deployment, web app development, data utilization, and operational improvement.",
-    "heroEyebrow": "ACECORE SYSTEMS — SYSTEMS FOR OPERATIONS",
+    "heroEyebrow": "Your partner in taking on new challenges",
     "heroTitle": "For work that never stops,\nthere is quiet design behind it.",
     "heroLead": "From websites and customer journeys for bookings and inquiries to organizing day-to-day work and managing operations after launch.\nEven if you are not sure where to start, we will help clarify your current situation and priorities and propose a realistic way forward.",
     "primaryCta": "Discuss your project",
@@ -206,16 +206,16 @@
     "philosophyLead": "Acecore’s philosophy is “Taking the world to the next stage”: reducing nonessential burdens and helping people pursue what they want to do. Systems supports that first step through technology, bringing work, systems, and operations together.",
     "designPrinciples": [
       {
-        "title": "Start with the real work",
-        "body": "Before deciding on features, we clarify who decides what, when those decisions are made, and where the difficulties lie."
+        "title": "Clarify what you want to achieve",
+        "body": "We work with you to clarify even a vague wish to make things better. You do not need a concrete idea: start by discussing what might be possible."
       },
       {
-        "title": "Design the unseen, too.",
-        "body": "We treat data, permissions, integrations, and exception handling as one connected system."
+        "title": "Make no compromises behind the scenes",
+        "body": "We go beyond improving appearances or making things work better today. We build future extensibility and ease of maintenance into the system as a whole."
       },
       {
-        "title": "Design for change",
-        "body": "We avoid overbuilding from the start, begin with what is needed, and create a system that can evolve through use."
+        "title": "Provide a process you can feel confident in",
+        "body": "We share work in progress throughout production so that improvements you notice only once things take shape can be identified early."
       }
     ],
     "consultationEyebrow": "WHEN TO TALK",
@@ -248,7 +248,7 @@
       }
     ],
     "ctaEyebrow": "START WITH A CONVERSATION",
-    "ctaTitle": "Before deciding what to build, tell us about your work today.",
+    "ctaTitle": "Tell us what you want to build, or simply what is troubling you.",
     "ctaBody": "You can talk to us even before the requirements are fully defined. Together, we will organize your current workflow, constraints, and priorities.",
     "ctaLabel": "Choose how to get in touch",
     "philosophyLinkLabel": "Acecore’s philosophy and vision"
@@ -512,7 +512,7 @@
     "title": "Pricing Guide",
     "description": "Pricing guidance and assumptions for Acecore Systems services, including IT advisory services, AI adoption, deployment support, business systems, Web apps, design and creative production, AI chat, CMS, SEO, and security improvements.",
     "heroTitle": "Start sustainably with the scope you need.",
-    "heroLead": "Prices are tax-inclusive estimates. External service fees, license fees, server costs, and changes after formal requirements are confirmed separately.",
+    "heroLead": "Amounts are indicative and include tax. We will provide an individual estimate after the requirements are finalized. Please be open about your budget, too.",
     "items": [
       {
         "label": "IT Advisory Engineer — Light",
@@ -1402,7 +1402,7 @@
   "services": {
     "title": "Services",
     "description": "Acecore Systems provides IT advisory services, AI adoption and operational improvement, deployment support, business-system development, Web apps and admin interfaces, design and creative production, CMS, search, data use, and existing-system improvement. We also support Web/API security assessment and remediation.",
-    "heroTitle": "From organizing the problem\nto development, design, and operational improvement.",
+    "heroTitle": "Services that fit you.",
     "heroLead": "Beyond one-time production and development, we emphasize design and improvement that help the solution take root in daily operations.",
     "entryPoints": [
       {
@@ -1500,11 +1500,11 @@
       },
       {
         "title": "Requirements and proposal",
-        "body": "We separate the required features, screens, data, permissions, and visibility scope and set priorities."
+        "body": "We propose the functions, screens, and data together, then review your concerns and priorities."
       },
       {
         "title": "Design and development",
-        "body": "We implement in small, reviewable increments to resolve interface and operational issues early."
+        "body": "You can also review versions during development and incorporate newly discovered issues."
       },
       {
         "title": "Launch and improvement",

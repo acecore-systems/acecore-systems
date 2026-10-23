@@ -379,24 +379,77 @@ for (const card of homeCases.toArray()) {
   );
 }
 
-const catalogRoutes = new Set([
-  ...serviceIndexData.entryPoints.map((entry) => entry.href),
-  ...focusedServices.map((service) => service.route),
-]);
-const serviceRows = loadHtml(services)(
-  ".purpose-catalog a.purpose-service-row",
+const catalogEntries = [
+  ["web", "website", "WEBサイト作成", "/services/website/"],
+  ["web", "site-quality", "WEBサイト引き継ぎ/改善", "/services/site-quality/"],
+  ["web", "web-system", "WEBシステム作成", "/services/development/#web-app"],
+  [
+    "work",
+    "development",
+    "社内ツールの開発",
+    "/services/development/#internal-tool",
+  ],
+  ["work", "operations", "社内インフラの整備", "/services/operations/"],
+  ["advisory", "it-advisor", "IT顧問エンジニア", advisorRoute],
+  ["other", "own-app", "自社アプリ開発", developmentRoute],
+  [
+    "other",
+    "security",
+    "Web・APIセキュリティ診断・改善支援",
+    "/services/security/",
+  ],
+];
+const servicesDom = loadHtml(services);
+assert.equal(servicesDom(".purpose-catalog a.purpose-service-row").length, 8);
+assert.deepEqual(
+  servicesDom("[data-service-category]")
+    .map((_, link) => servicesDom(link).text().trim())
+    .get(),
+  ["すべて", "自社サイト", "業務効率化", "総合的なIT支援", "その他の支援"],
+  "services: category rail must match the requested scope",
+);
+for (const [group, id, title, href] of catalogEntries) {
+  const row = servicesDom(
+    `[data-service-group="${group}"] a.purpose-service-row#${id}`,
+  );
+  assert.equal(row.length, 1, `services: ${id} must be in ${group}`);
+  assert.equal(row.find("h3").text().trim(), title);
+  assert.equal(row.attr("href"), href);
+}
+for (const id of [
+  "site-functions",
+  "operate",
+  "business-system",
+  "web-app",
+  "integration",
+  "modernization",
+])
+  assert.equal(
+    servicesDom(`[id="${id}"]`).length,
+    1,
+    `services: legacy ${id} anchor missing or duplicated`,
+  );
+assert.equal(
+  servicesDom('a[href="/services/site-functions/"]').length,
+  1,
+  "services: site function support must remain reachable",
 );
 assert.equal(
-  serviceRows.length,
-  catalogRoutes.size,
-  "services: every distinct service needs a dedicated catalog row",
+  servicesDom('.purpose-catalog a[href="/pricing/"]').length,
+  1,
+  "services: detailed pricing must remain reachable",
 );
-for (const route of catalogRoutes)
+for (const item of pricingData.items)
   assert.equal(
-    serviceRows.filter(`[href="${route}"]`).length,
+    loadHtml(pricing)(`[id="${item.key}"]`).length,
     1,
-    `services: ${route} must be independently selectable`,
+    `pricing: ${item.key} must appear exactly once`,
   );
+assert.ok(
+  home.indexOf('id="philosophy"') <
+    home.indexOf('class="purpose-selected-work"'),
+  "home: design philosophy must precede selected work",
+);
 assert.equal(
   services.includes(`id="${designService.id}"`),
   true,
@@ -542,6 +595,7 @@ for (const [label, html] of [
 // Generic artwork is optional; concrete case evidence is verified below.
 for (const service of focusedServices) {
   validateImageAlts(service.html, service.route);
+  if (service.route === "/services/site-functions/") continue;
   const serviceCard = loadHtml(services)(
     `.purpose-catalog a.purpose-service-row[href="${service.route}"]`,
   );
@@ -549,11 +603,6 @@ for (const service of focusedServices) {
     serviceCard.length,
     1,
     `services ${service.route}: exactly one catalog row is required`,
-  );
-  assert.equal(
-    serviceCard.find("h3").text().trim(),
-    service.data.title,
-    `services ${service.route}: service title missing`,
   );
   assert.equal(
     serviceCard.find(".purpose-service-row__summary").text().trim(),
