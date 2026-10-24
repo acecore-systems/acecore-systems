@@ -492,11 +492,6 @@ main h3 {
 .footer-brand__identity strong {
   font-size: clamp(28px, 3vw, 40px);
 }
-.footer-brand__logo {
-  background: white;
-  border-radius: 50%;
-  padding: 4px;
-}
 .footer-brand p,
 .footer-brand > span,
 .footer-meta,
