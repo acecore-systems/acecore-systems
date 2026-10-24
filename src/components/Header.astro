@@ -1,4 +1,5 @@
 ---
+import BrandName from "./BrandName.astro";
 import site from "../data/site.json";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import PurposeIcon from "./PurposeIcon.astro";
@@ -51,12 +52,14 @@ const isCurrent = (href: string) =>
       >
         <img
           class="brand-logo"
-          src="/favicon.svg"
+          src="/logo.svg"
           alt={`${site.name} ロゴ`}
           width="32"
           height="32"
         />
-        <span class="brand-name">{site.name}</span>
+        <span class="brand-name">
+          <BrandName name={site.name} />
+        </span>
       </a>
       <a
         class="parent-brand-link"

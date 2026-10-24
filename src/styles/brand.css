@@ -1,0 +1,43 @@
+/* Logo and color rollout only; layout and typography remain in the existing styles. */
+:root {
+  --brand-blue: #0656d9;
+  --brand-system: #6334a4;
+  --brand-school: #176b45;
+  --brand-design: #8146ae;
+}
+.brand-word {
+  white-space: nowrap;
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
+}
+.brand-word-corporate > .brand-initial {
+  color: var(--brand-blue);
+  -webkit-text-fill-color: var(--brand-blue);
+}
+.brand-word-systems > .brand-initial {
+  color: var(--brand-system);
+  -webkit-text-fill-color: var(--brand-system);
+}
+.brand-word-schools > .brand-initial {
+  color: var(--brand-school);
+  -webkit-text-fill-color: var(--brand-school);
+}
+.brand-word-designs > .brand-initial {
+  display: inline-block;
+  background: radial-gradient(
+    ellipse 110% 160% at -10% 0%,
+    #986000 0%,
+    #b33e71 35%,
+    #8146ae 65%,
+    #0656d9 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.footer-brand__logo {
+  border-radius: 0;
+  padding: 0;
+  filter: none;
+}
