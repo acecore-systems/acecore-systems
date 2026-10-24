@@ -456,8 +456,7 @@ main h3 {
 
 .purpose-callout {
   background: var(--wash);
-  border-block: 5px solid transparent;
-  border-image: var(--paint-edge) 1;
+  border: 0;
   color: var(--brand-neutral);
 }
 .purpose-callout__inner {
@@ -484,10 +483,9 @@ main h3 {
   color: var(--blue);
 }
 .site-footer {
-  background:
-    linear-gradient(white, white) padding-box,
-    var(--paint) border-box;
-  border-block: 8px solid transparent;
+  position: relative;
+  background: white;
+  border: 0;
   color: var(--brand-neutral);
   padding-block: 72px 32px;
 }
@@ -722,4 +720,13 @@ body:has(.mobile-menu[open], .language-switcher[open]) .ai-guide {
   background:
     linear-gradient(white, white) padding-box,
     var(--paint) border-box;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--paint-edge);
+  pointer-events: none;
 }

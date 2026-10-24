@@ -16,7 +16,9 @@
     var(--paint) border-box;
 }
 .brand-corporate-name {
-  color: var(--brand);
+  color: #0656d9;
+  -webkit-text-fill-color: #0656d9;
+  background: none;
 }
 .brand-service-name {
   color: var(--ink-accent);
@@ -44,6 +46,7 @@
     #0656d9 100%
   );
   --logo-on-theme: #ffffff;
+  --logo-center: #0656d9;
   --logo-theme-background: radial-gradient(
     ellipse 120% 135% at 0% 0%,
     #8950c5 0%,
