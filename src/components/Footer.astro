@@ -1,4 +1,5 @@
 ---
+import BrandName from "./BrandName.astro";
 import site from "../data/site.json";
 import { ACECORE_ORGANIZATION } from "../data/organization.ts";
 import { getLocalizedUrl, type Locale } from "../i18n";
@@ -28,12 +29,14 @@ const footerLinks = content.site.footerLinks.map((item) => ({
       >
         <img
           class="footer-brand__logo"
-          src="/favicon.svg"
+          src="/logo.svg"
           alt={`${site.name} ロゴ`}
           width="38"
           height="38"
         />
-        <strong>{site.name}</strong>
+        <strong>
+          <BrandName name={site.name} />
+        </strong>
       </a>
       <span>Systems for Operations</span>
       <p>{content.site.description}</p>

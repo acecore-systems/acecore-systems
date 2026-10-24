@@ -12,21 +12,21 @@
 
 @theme {
   --color-paper: #ffffff;
-  --color-paper-soft: #f0f8ff;
-  --color-paper-deep: #e4f1ff;
-  --color-paper-muted: #f5f9fd;
+  --color-paper-soft: #f7f2fc;
+  --color-paper-deep: #eee5f8;
+  --color-paper-muted: #faf8fc;
   --color-surface: #ffffff;
-  --color-ink: #071333;
-  --color-ink-soft: #334666;
-  --color-muted: #536781;
-  --color-line: #e0e9f3;
-  --color-line-strong: #b7d2ed;
-  --color-control-border: #7b93af;
-  --color-blue: #005cff;
-  --color-blue-deep: #0048c9;
+  --color-ink: #20252b;
+  --color-ink-soft: #42484f;
+  --color-muted: #59616a;
+  --color-line: #e2dce8;
+  --color-line-strong: #c9b7db;
+  --color-control-border: #9a88ae;
+  --color-blue: #8950c5;
+  --color-blue-deep: #6334a4;
   --color-layer: #242827;
-  --color-layer-blue: #071d31;
-  --color-focus: #286eab;
+  --color-layer-blue: #362047;
+  --color-focus: #8950c5;
   --color-white: #ffffff;
   --container-content: 70rem;
   --spacing-page-gutter: 20px;
@@ -2858,7 +2858,7 @@
 
   .price-row__detail {
     width: fit-content;
-    color: var(--blue);
+    color: var(--ink);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -2870,7 +2870,7 @@
   }
 
   .price-row__amount {
-    color: var(--blue);
+    color: var(--ink);
     font-family: var(--font-sans);
     font-size: 1.25rem;
     text-align: right;
