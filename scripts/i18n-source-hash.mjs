@@ -70,7 +70,7 @@ export const translationSourcePaths = [
 
 export function calculateTranslationSourceHash(
   repositoryRoot,
-  { excludedInsightSlugs = [] } = {},
+  { excludedInsightSlugs = [], sourceOverrides = new Map() } = {},
 ) {
   const excludedPaths = new Set(
     excludedInsightSlugs.map((slug) => `src/content/insights/${slug}.md`),
@@ -81,10 +81,10 @@ export function calculateTranslationSourceHash(
     hash.update(relativePath);
     hash.update("\0");
     hash.update(
-      readFileSync(join(repositoryRoot, relativePath), "utf8").replace(
-        /\r\n/gu,
-        "\n",
-      ),
+      (
+        sourceOverrides.get(relativePath) ??
+        readFileSync(join(repositoryRoot, relativePath), "utf8")
+      ).replace(/\r\n/gu, "\n"),
     );
     hash.update("\0");
   }

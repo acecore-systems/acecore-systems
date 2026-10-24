@@ -19,3 +19,7 @@
 ## ロゴ・カラー先行導入
 
 UI・ロゴの変更前に [ブランドカラーガイド](docs/brand-color-guidelines.md) を読む。全面刷新は後続Draftであり、このbranchでは既存構成を保持する。
+
+## 日本語SEO改訂の例外
+
+週次SEOは日本語の改訂・校閲・Draft PRまでとし、[翻訳引き継ぎ手順](docs/seo-translation-handoff.md)に従って統合後の既存自動翻訳へ渡す。8言語の同時改訂は要求しない。元訳のhashは保持し、翻訳待ち宣言と実原稿を照合する。

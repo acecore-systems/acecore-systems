@@ -1,3 +1,7 @@
+import {
+  translationBaseline,
+  pendingSourceOverrides,
+} from "./stage-seo-translation.mjs";
 import assert from "node:assert/strict";
 import { validatePendingContent } from "./pending-content.mjs";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -449,6 +453,11 @@ function validateSourceTranslations({
   validateLocaleRedirects("public/_redirects");
   const state = readJson("src/i18n/translation-state.json");
   const pendingInsights = validatePendingInsights(root, state);
+  const translationStateCurrent =
+    state.sourceHash ===
+    calculateTranslationSourceHash(root, {
+      excludedInsightSlugs: Object.keys(pendingInsights),
+    });
   pendingContent = validatePendingContent(root, state);
   const localesToValidate = onlyLocale ? [onlyLocale] : translatedLocales;
   const sourceTree = readSourceTree(sourceFiles);
@@ -522,8 +531,10 @@ function validateSourceTranslations({
     for (const slug of availableSlugs) {
       const sourcePath = `src/content/insights/${slug}.md`;
       const translatedPath = `src/content/insights/${locale}/${slug}.md`;
-      const source = read(sourcePath);
       const translated = read(translatedPath);
+      const source = translationStateCurrent
+        ? read(sourcePath)
+        : translationBaseline(root, sourcePath, locale, translated);
       const sourceFrontmatter = getFrontmatter(source);
       const translatedFrontmatter = getFrontmatter(translated);
 
@@ -619,9 +630,14 @@ function validateSourceTranslations({
     excludedInsightSlugs: Object.keys(pendingInsights),
   });
   assert.equal(
-    state.sourceHash,
-    sourceHash,
-    "translation-state sourceHash is stale",
+    state.sourceHash === sourceHash ||
+      state.sourceHash ===
+        calculateTranslationSourceHash(root, {
+          excludedInsightSlugs: Object.keys(pendingInsights),
+          sourceOverrides: pendingSourceOverrides(root),
+        }),
+    true,
+    "translation-state sourceHash is stale without an exact pending revision",
   );
   assert.deepEqual(
     [...state.locales].sort(),
