@@ -178,8 +178,11 @@ test("中央API、25秒timeout、安全なDOM描画を実装する", () => {
   assert.doesNotMatch(script, /innerHTML|insertAdjacentHTML|eval\(/u);
   assert.match(component, /maxlength="800"/u);
   assert.match(
-    component,
-    /\.ai-guide__composer textarea\s*\{[^}]*font-size:\s*16px;/u,
+    readFileSync(
+      new URL("../src/styles/shared-chat.css", import.meta.url),
+      "utf8",
+    ),
+    /\.ac-chat__input-row textarea\s*\{[^}]*font-size:\s*16px;/u,
   );
   assert.match(component, /role="dialog"/u);
   assert.match(component, /role="log"/u);

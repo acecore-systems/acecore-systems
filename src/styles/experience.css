@@ -86,7 +86,7 @@
   border: 1px solid var(--line);
   border-radius: 18px;
   background: #fff;
-  scroll-margin-top: 32px;
+  scroll-margin-top: 112px;
 }
 .experience-case[hidden] {
   display: none;
@@ -362,7 +362,7 @@
 }
 .purpose-pricing .price-track__header h3 {
   font-weight: 800;
-  scroll-margin-top: 48px;
+  scroll-margin-top: 112px;
 }
 .purpose-pricing .price-track__header .purpose-text-link {
   font-size: 0.9rem;

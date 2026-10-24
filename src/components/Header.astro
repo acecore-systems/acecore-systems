@@ -1,5 +1,5 @@
 ---
-import BrandName from "./BrandName.astro";
+import BrandWord from "./BrandWord.astro";
 import site from "../data/site.json";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import PurposeIcon from "./PurposeIcon.astro";
@@ -58,7 +58,14 @@ const isCurrent = (href: string) =>
           height="32"
         />
         <span class="brand-name">
-          <BrandName name={site.name} />
+          {site.name === "Acecore Systems" ? (
+            <>
+              <BrandWord word="Acecore" kind="corporate" />{" "}
+              <BrandWord word="Systems" kind="service" />
+            </>
+          ) : (
+            site.name
+          )}
         </span>
       </a>
       <a
@@ -72,7 +79,13 @@ const isCurrent = (href: string) =>
       {desktopNav.map((item) => (
         <a
           href={item.href}
-          aria-current={isCurrent(item.href) ? "page" : undefined}
+          aria-current={
+            isCurrent(item.href)
+              ? currentPath === item.href
+                ? "page"
+                : "location"
+              : undefined
+          }
         >
           {item.label}
         </a>
@@ -106,7 +119,13 @@ const isCurrent = (href: string) =>
         {nav.map((item) => (
           <a
             href={item.href}
-            aria-current={isCurrent(item.href) ? "page" : undefined}
+            aria-current={
+              isCurrent(item.href)
+                ? currentPath === item.href
+                  ? "page"
+                  : "location"
+                : undefined
+            }
           >
             {item.label}
           </a>
@@ -151,6 +170,10 @@ const isCurrent = (href: string) =>
 </header>
 
 <script>
+  const menus = document.querySelectorAll<HTMLDetailsElement>(
+    ".mobile-menu, .language-switcher",
+  );
+  const closeMenus = () => menus.forEach((menu) => (menu.open = false));
   for (const menu of document.querySelectorAll<HTMLDetailsElement>(
     ".mobile-menu",
   )) {
@@ -158,4 +181,23 @@ const isCurrent = (href: string) =>
       link.addEventListener("click", () => menu.removeAttribute("open"));
     }
   }
+  for (const menu of menus) {
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        event.preventDefault();
+        event.stopPropagation();
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
+      }
+    });
+  }
+  document.addEventListener("click", (event) => {
+    for (const menu of menus) {
+      if (event.target instanceof Node && !menu.contains(event.target))
+        menu.open = false;
+    }
+  });
+  window
+    .matchMedia("(min-width: 1400px)")
+    .addEventListener("change", closeMenus);
 </script>
