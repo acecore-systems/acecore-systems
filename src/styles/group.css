@@ -522,8 +522,6 @@ main h3 {
   border-color: var(--line);
   padding-top: 28px;
 }
-.ai-guide__toggle,
-.ai-guide__panel,
 .search-dialog,
 .search-dialog__close {
   border-radius: 0;
@@ -701,8 +699,7 @@ body:has(.mobile-menu[open], .language-switcher[open]) .ai-guide {
 .header-cta,
 .purpose-button,
 .editorial-link--primary,
-.search-form button,
-.ai-guide__toggle {
+.search-form button {
   background: var(--brand-control);
   border: 3px solid transparent;
   color: var(--ink-accent);
@@ -710,8 +707,7 @@ body:has(.mobile-menu[open], .language-switcher[open]) .ai-guide {
 .header-cta:hover,
 .purpose-button:hover,
 .editorial-link--primary:hover,
-.search-form button:hover,
-.ai-guide__toggle:hover {
+.search-form button:hover {
   background:
     linear-gradient(white, white) padding-box,
     var(--paint) border-box;
@@ -724,4 +720,34 @@ body:has(.mobile-menu[open], .language-switcher[open]) .ai-guide {
   height: 4px;
   background: var(--paint-edge);
   pointer-events: none;
+}
+
+/* Keyboard and touch treatment also covers article-native disclosure controls. */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--ink-accent);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.header-search {
+  min-width: 44px;
+}
+main [id] {
+  scroll-margin-top: 112px;
+}
+.insight-article :is(.insight-prose, .insight-body, .prose) summary,
+.insight-article summary {
+  min-height: 44px;
+  padding-block: 10px;
+  cursor: pointer;
+}
+
+.purpose-button.purpose-button--secondary {
+  background: white;
+  border: 1px solid #8996a4;
+  color: #20252b;
+}
+.purpose-button.purpose-button--secondary:hover {
+  background: #f3f5f7;
+  border-color: #20252b;
+  color: #20252b;
 }
