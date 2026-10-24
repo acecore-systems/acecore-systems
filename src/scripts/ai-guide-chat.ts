@@ -268,11 +268,12 @@ function createMessageElement({
   const label = document.createElement("p");
   const body = document.createElement("div");
 
-  message.className = `ai-guide__message ai-guide__message--${role}`;
+  message.className = `ai-guide__message ai-guide__message--${role} ac-chat__message`;
+  message.dataset.role = role;
   if (error) message.classList.add("ai-guide__message--error");
   label.className = "ai-guide__message-label";
   label.textContent = role === "assistant" ? assistantLabel : visitorLabel;
-  body.className = "ai-guide__message-body";
+  body.className = "ai-guide__message-body ac-chat__bubble";
   appendMarkdownContent(body, content);
   message.append(label, body);
 
@@ -288,7 +289,7 @@ function createLoadingElement(
   const body = document.createElement("div");
 
   message.className =
-    "ai-guide__message ai-guide__message--assistant ai-guide__message--loading";
+    "ai-guide__message ai-guide__message--assistant ai-guide__message--loading ac-chat__message";
   message.setAttribute("aria-hidden", "true");
   label.className = "ai-guide__message-label";
   label.textContent = assistantLabel;
@@ -355,6 +356,7 @@ function initializeAiGuideChat(): void {
   let conversation: AiGuideMessage[] = [];
   let requestController: AbortController | null = null;
   let lastFocusedElement: HTMLElement | null = null;
+  let firstOpen = true;
 
   root.dataset.initialized = "true";
 
@@ -422,7 +424,8 @@ function initializeAiGuideChat(): void {
 
   const openPanel = () => {
     lastFocusedElement =
-      document.activeElement instanceof HTMLElement
+      document.activeElement instanceof HTMLElement &&
+      document.activeElement !== document.body
         ? document.activeElement
         : toggle;
     panel.hidden = false;
@@ -430,7 +433,8 @@ function initializeAiGuideChat(): void {
     root.classList.add("is-open");
     scheduleActionCheck();
     window.setTimeout(() => input.focus(), 0);
-    scrollToLatest();
+    if (firstOpen) messages.scrollTop = 0;
+    firstOpen = false;
   };
 
   const closePanel = () => {
@@ -450,9 +454,16 @@ function initializeAiGuideChat(): void {
   });
   close.addEventListener("click", closePanel);
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !panel.hidden) {
+    if (event.key === "Escape" && !event.isComposing && !panel.hidden) {
       event.preventDefault();
       closePanel();
+    }
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+      event.preventDefault();
+      form.requestSubmit();
     }
   });
 

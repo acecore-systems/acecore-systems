@@ -244,7 +244,7 @@
   .insight-prose h2,
   .insight-prose h3,
   .insight-prose h4 {
-    scroll-margin-top: 32px;
+    scroll-margin-top: 112px;
     font-weight: 600;
     line-height: 1.5;
     text-wrap: balance;

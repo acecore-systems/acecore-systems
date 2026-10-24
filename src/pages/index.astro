@@ -56,14 +56,14 @@ const needs = [
         <h1>{home.heroTitle}</h1>
         <p class="purpose-home-hero__lead">{home.heroLead}</p>
         <div class="purpose-hero-actions">
-          <a class="purpose-button" href={localizeHref(home.primaryCtaHref)}>
+          <a
+            class="purpose-button purpose-button--secondary"
+            href={localizeHref(home.primaryCtaHref)}
+          >
             {text.purposeViewServices}
             <PurposeIcon name="arrow" />
           </a>
-          <a
-            class="purpose-button purpose-button--secondary"
-            href={getLocalizedUrl("/contact/", locale)}
-          >
+          <a class="purpose-button" href={getLocalizedUrl("/contact/", locale)}>
             {text.purposeContact}
           </a>
         </div>
