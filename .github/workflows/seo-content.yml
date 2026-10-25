@@ -38,7 +38,7 @@ jobs:
       - name: サイト依存関係を再現
         run: npm ci
       - name: SEO Draft PRを作成
-        uses: acecore-systems/cms-ai/seo-runner@966382f876ee12ada72ff946ae25594cdb79e0fa
+        uses: acecore-systems/cms-ai/seo-runner@887bee4e4ae4c271cf54f347a13a2e8259adfcaf
         with:
           run-id: ${{ inputs.run_id }}
           job-id: ${{ inputs.job_id }}
