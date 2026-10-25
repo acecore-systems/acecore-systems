@@ -78,7 +78,7 @@ faq:
 
 Astroで日本語ブログを多言語化し、翻訳記事のURL、言語切替、sitemapやhreflangを破綻させずに運用したい人に向けた実装記録です。まず代表記事で本文・メタ情報・言語切替をそろえ、未翻訳ページへ誘導しないことを確認します。[Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)をURL設計の基準にし、UI翻訳と記事翻訳を分けて段階的に増やしてください。下の件数と旧CMS構成は導入時の事例です。
 
-> **2026年9月26日追記:** 本文のAstro 7.1.3、UnoCSS、記事件数、Copilot翻訳は2026年7月時点の記録です。[現行の依存宣言](https://github.com/acecore-systems/acecore-net/blob/main/package.json)はAstro ^7.3.3とTailwind CSS 4.3.3で、翻訳運用は[OpenAI Batchへの更新記事](/insights/copilot-translation-pipeline/)にまとめました。以下の実装例や数値を現在の設定として使う前に、現行ソースと公開ページを確認してください。
+> **2026年9月26日追記:** 本文のAstro 7.1.3、記事件数、Copilot翻訳は2026年7月時点の記録です。[現行の依存宣言](https://github.com/acecore-systems/acecore-net/blob/main/package.json)はAstro ^7.3.3とTailwind CSS 4.3.3で、翻訳運用は[OpenAI Batchへの更新記事](/insights/copilot-translation-pipeline/)にまとめました。以下の実装例や数値を現在の設定として使う前に、現行ソースと公開ページを確認してください。
 
 ## 2026年7月時点の実装記録
 
@@ -109,7 +109,7 @@ Astro の `prefixDefaultLocale: false` を採用し、日本語はルート直�
 
 すべての言語で同じスラッグを使用するため、言語切り替え時の URL 対応がシンプルです。
 
-翻訳運用を継続するための Copilot 自動化は、[Sveltia CMSで多言語ブログを運用する方法](/blog/copilot-translation-pipeline/)にまとめています。
+翻訳運用を継続するための Copilot 自動化は、[Sveltia CMSで多言語ブログを運用する方法](/insights/copilot-translation-pipeline/)にまとめています。
 
 ## Astroのi18n基盤を設定する
 
@@ -374,7 +374,7 @@ content:
   "id": "hatt",
   "name": "ハット",
   "bio": "代表取締役。Web制作・サーバー運用…",
-  "skills": ["TypeScript", "Astro", "..."]
+  "skills": ["TypeScript", "Astro", "..."],
   "i18n": {
     "en": {
       "name": "Hatt",
