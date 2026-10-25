@@ -1,8 +1,11 @@
 ---
-title: "Astro 7 サイトを9言語対応に ― ブログ翻訳と多言語アーキテクチャ"
-description: "Astroのブログを多言語化するなら、まず代表記事で本文・メタ情報・言語切替をそろえ、未翻訳ページへ誘導しないことを確認します。"
+title: "Astroブログを9言語対応にする方法 ― 翻訳・URL・hreflangの実装記録"
+description:
+  "Astroのブログを9言語化した実装記録です。prefixDefaultLocaleによるURL設計、翻訳ファイルの配置、未翻訳ロ\
+  ケールで記事URL・sitemap・hreflangを生成しない条件、Viewコンポーネントによる表示切替、OG画像・CMS・RSSの注意点を、2026年\
+  7月時点の構成と現行差分を分けて説明し、同じ構成を検討する際の判断材料を示します。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-25T06:10:55Z"
 author: gui
 tags: ["技術", "Astro", "i18n", "Webサイト"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -57,16 +60,23 @@ faq:
   title: よくある質問
   items:
     - question: なぜ9言語を選んだのですか？
-      answer: "グローバルなリーチを最大化するため、世界の主要言語圏をカバーしました。英語・中国語・スペイン語・ポルトガル語でインターネット人口の大部分をカバーし、フランス語・ドイツ語・ロシア語・韓国語で残る主要市場を補完しています。"
+      answer:
+        "グローバルなリーチを最大化するため、世界の主要言語圏をカバーしました。英語・中国語・スペイン語・ポルトガル語でインターネット人口の大部分をカ\
+        バーし、フランス語・ドイツ語・ロシア語・韓国語で残る主要市場を補完しています。"
     - question: 翻訳の品質はどのように担保していますか？
-      answer: "GitHub Copilot による AI 翻訳を採用しています。英語版を中間言語として作成し、そこから各言語に翻訳することで品質のばらつきを抑えています。フロントマターのタグ値は日本語のまま保持し、URL・コードブロック・画像パスは変更しない方針です。 これは2026年7月時点の方式です。現行の翻訳生成はOpenAI Batchを利用しています。"
+      answer: "GitHub Copilot による AI
+        翻訳を採用しています。英語版を中間言語として作成し、そこから各言語に翻訳することで品質のばらつきを抑えています。フロントマターのタグ値は日本語\
+        のまま保持し、URL・コードブロック・画像パスは変更しない方針です。 これは2026年7月時点の方式です。現行の翻訳生成はOpenAI
+        Batchを利用しています。"
     - question: 翻訳記事が存在しない場合はどうなりますか？
       answer: "翻訳ファイルが無いロケールの記事URLは生成しません。日本語版は元のURLで公開を続け、言語切り替えでは対象ロケールのブログ一覧へ移動します。"
     - question: 新しい記事を追加したら翻訳も必要ですか？
-      answer: "日本語版の公開に翻訳は必須ではありません。翻訳を追加する場合は、対応する言語ディレクトリに同名のMarkdownファイルを配置すると、その言語の記事URL・sitemap・hreflangが生成対象になります。"
+      answer:
+        "日本語版の公開に翻訳は必須ではありません。翻訳を追加する場合は、対応する言語ディレクトリに同名のMarkdownファイルを配置すると、その言\
+        語の記事URL・sitemap・hreflangが生成対象になります。"
 ---
 
-Astroのブログを多言語化するなら、まず代表記事で本文・メタ情報・言語切替をそろえ、未翻訳ページへ誘導しないことを確認します。[Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)をURL設計の基準にし、UI翻訳と記事翻訳を分けて段階的に増やしてください。下の件数と旧CMS構成は導入時の事例です。
+Astroで日本語ブログを多言語化し、翻訳記事のURL、言語切替、sitemapやhreflangを破綻させずに運用したい人に向けた実装記録です。まず代表記事で本文・メタ情報・言語切替をそろえ、未翻訳ページへ誘導しないことを確認します。[Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)をURL設計の基準にし、UI翻訳と記事翻訳を分けて段階的に増やしてください。下の件数と旧CMS構成は導入時の事例です。
 
 > **2026年9月26日追記:** 本文のAstro 7.1.3、UnoCSS、記事件数、Copilot翻訳は2026年7月時点の記録です。[現行の依存宣言](https://github.com/acecore-systems/acecore-net/blob/main/package.json)はAstro ^7.3.3とTailwind CSS 4.3.3で、翻訳運用は[OpenAI Batchへの更新記事](/insights/copilot-translation-pipeline/)にまとめました。以下の実装例や数値を現在の設定として使う前に、現行ソースと公開ページを確認してください。
 
@@ -74,9 +84,7 @@ Astroのブログを多言語化するなら、まず代表記事で本文・メ
 
 Acecore公式サイトを日本語のみから9言語対応にアップグレードしました。初回対応時はブログ記事21本×8言語＝168本を翻訳し、2026年7月29日時点では日本語記事29本・翻訳208本の計237本、ビルド出力は652ページです。翻訳が未追加のロケールには記事URLを生成せず、実在する言語版だけを公開します。
 
-## 多言語化の方針
-
-### スコープの決定
+## 多言語化の方針とURL設計
 
 多言語化にあたり、以下の3つのスコープを段階的に対応しました。
 
@@ -103,7 +111,7 @@ Astro の `prefixDefaultLocale: false` を採用し、日本語はルート直�
 
 翻訳運用を継続するための Copilot 自動化は、[Sveltia CMSで多言語ブログを運用する方法](/blog/copilot-translation-pipeline/)にまとめています。
 
-## i18n 基盤の実装
+## Astroのi18n基盤を設定する
 
 ### Astro の i18n 設定
 
@@ -151,11 +159,11 @@ const { locale } = Astro.params;
 
 この設計により、日本語用ルート（`/about`）と多言語ルート（`/en/about`）でロジックの重複がゼロになります。
 
-## ブログ記事のコンテンツ多言語化
+## ブログ記事を言語別ディレクトリで翻訳する
 
 ### ディレクトリ構造
 
-翻訳記事は言語コードのサブディレクトリに配置します。Astro の glob ローダーが `**/*.md` パターンで自動的に再帰検出します。
+翻訳記事は言語コードのサブディレクトリに配置します。Astro の glob ローダーが `**/*.md` パターンで自動的に再帰検出します。Astroの[Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/)では、`glob()`ローダーの`pattern`に`**/*.md`のようなglobstarを指定でき、Markdownなどをディレクトリから読み込めると説明されています。
 
 ```
 src/content/blog/
@@ -283,7 +291,7 @@ const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale));
 ---
 ```
 
-## ビルド時の注意点
+## ビルド時に起きたYAMLとOG画像のトラブル
 
 ### YAML フロントマターのエスケープ
 
@@ -387,7 +395,7 @@ export function getLocalizedAuthor(author: Author, locale: Locale) {
 }
 ```
 
-## 多言語サイトの SEO 対策
+## 多言語SEOの実装
 
 多言語化の SEO メリットを最大化するため、検索エンジンが各言語版を正しく認識・インデックスするための仕組みを整備しました。
 
@@ -450,7 +458,7 @@ export const getStaticPaths = () =>
 
 ## まとめ
 
-現在使用している Astro 7.1.3 の組み込み i18n 機能を活用することで、静的サイトでも多言語対応を実現しています。
+2026年7月時点の実装では、Astro 7.1.3 の組み込み i18n 機能を活用することで、静的サイトでも多言語対応を実現しています。
 
 - **i18n 基盤**：Astro の `prefixDefaultLocale: false` で日本語はプレフィックスなし
 - **UI 翻訳**：View コンポーネントパターンでロジック重複ゼロ
