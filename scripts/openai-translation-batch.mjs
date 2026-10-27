@@ -136,10 +136,18 @@ export function parseArgs(argv) {
     processedBatches: new Set(),
     batchId: null,
     dryRun: false,
+    maxRetryRequests: 10,
   };
   for (const argument of argv.slice(1)) {
     if (argument === "--dry-run") {
       options.dryRun = true;
+    } else if (argument.startsWith("--max-retry-requests=")) {
+      const value = argument.slice("--max-retry-requests=".length);
+      if (command !== "retry" || !/^(?:[1-9]|1[0-9]|20)$/u.test(value))
+        throw new Error(
+          "max-retry-requests requires retry and an integer from 1 to 20",
+        );
+      options.maxRetryRequests = Number(value);
     } else if (argument.startsWith("--batch-id=")) {
       options.batchId = argument.slice("--batch-id=".length);
       if (!/^batch_[A-Za-z0-9_-]{1,100}$/u.test(options.batchId)) {
@@ -1117,7 +1125,7 @@ function assertRetryLink(batch) {
     !/^batch_[A-Za-z0-9_-]{1,100}$/u.test(batch.metadata?.retry_of ?? "") ||
     batch.id === batch.metadata.retry_of ||
     !/^[a-f0-9]{64}$/u.test(batch.metadata.retry_identities_hash ?? "") ||
-    !/^(?:[1-9]|10)$/u.test(batch.metadata.retry_request_count ?? "")
+    !/^(?:[1-9]|1[0-9]|20)$/u.test(batch.metadata.retry_request_count ?? "")
   ) {
     throw new Error(
       "Translation retry metadata is invalid; recovery needs attention",
@@ -1143,6 +1151,13 @@ function assertRetryLink(batch) {
 }
 
 export async function retryBatch(options) {
+  const maxRetryRequests = options.maxRetryRequests ?? 10;
+  if (
+    !Number.isInteger(maxRetryRequests) ||
+    maxRetryRequests < 1 ||
+    maxRetryRequests > 20
+  )
+    throw new Error("max-retry-requests must be an integer from 1 to 20");
   const sourceHash = calculateTranslationSourceHash(process.cwd());
   const repository =
     process.env.GITHUB_REPOSITORY ?? "acecore-systems/acecore-systems";
@@ -1182,9 +1197,9 @@ export async function retryBatch(options) {
     console.log("Dry run only; no input file uploaded or new Batch created.");
     return;
   }
-  if (plan.requests.length > 10)
+  if (plan.requests.length > maxRetryRequests)
     throw new Error(
-      "Explicit retry is limited to 10 invalid requests; no new batch submitted",
+      `Explicit retry is limited to ${maxRetryRequests} invalid requests; no new batch submitted`,
     );
   const inputFile = await uploadBatchInput(
     `${plan.requests.map((request) => JSON.stringify(request)).join("\n")}\n`,

@@ -212,9 +212,19 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
   const originalRepository = process.env.GITHUB_REPOSITORY;
   const methods = [];
   let batches = [parent];
+  let allowSubmission = false;
   globalThis.fetch = async (url, init = {}) => {
     const method = init.method ?? "GET";
     methods.push(method);
+    if (allowSubmission && method === "POST") {
+      if (url.endsWith("/files")) return Response.json({ id: "file-retry" });
+      if (url.endsWith("/batches")) {
+        const payload = JSON.parse(init.body);
+        assert.equal(payload.metadata.retry_request_count, "11");
+        assert.equal(payload.metadata.retry_of, parent.id);
+        return Response.json({ id: "batch_retry" });
+      }
+    }
     assert.equal(
       method,
       "GET",
@@ -237,6 +247,15 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
       () => retryBatch({ batchId: parent.id, dryRun: false }),
       /limited to 10/u,
     );
+    allowSubmission = true;
+    await retryBatch({
+      batchId: parent.id,
+      dryRun: false,
+      maxRetryRequests: 11,
+    });
+    assert.equal(methods.filter((method) => method === "POST").length, 2);
+    methods.length = 0;
+    allowSubmission = false;
     batches = [
       parent,
       {
@@ -247,7 +266,7 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
           ...parent.metadata,
           retry_of: parent.id,
           retry_identities_hash: "a".repeat(64),
-          retry_request_count: "10",
+          retry_request_count: "17",
         },
       },
     ];
@@ -261,6 +280,38 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
     else process.env.OPENAI_TRANSLATION_API_KEY = originalKey;
     if (originalRepository === undefined) delete process.env.GITHUB_REPOSITORY;
     else process.env.GITHUB_REPOSITORY = originalRepository;
+  }
+});
+test("再試行上限は既定10、明示指定のみ1〜20で、API呼出し前に不正値を拒否する", async () => {
+  assert.equal(
+    parseArgs(["retry", "--batch-id=batch_parent"]).maxRetryRequests,
+    10,
+  );
+  assert.equal(
+    parseArgs(["retry", "--batch-id=batch_parent", "--max-retry-requests=17"])
+      .maxRetryRequests,
+    17,
+  );
+  for (const value of ["0", "21", "1.5", "01", "NaN", "Infinity", ""]) {
+    assert.throws(
+      () =>
+        parseArgs([
+          "retry",
+          "--batch-id=batch_parent",
+          `--max-retry-requests=${value}`,
+        ]),
+      /max-retry-requests/u,
+    );
+  }
+  assert.throws(
+    () => parseArgs(["submit", "--max-retry-requests=17"]),
+    /max-retry-requests/u,
+  );
+  for (const value of [0, 21, 1.5, NaN, Infinity, "17"]) {
+    await assert.rejects(
+      () => retryBatch({ batchId: "batch_parent", maxRetryRequests: value }),
+      /max-retry-requests/u,
+    );
   }
 });
 function retryFixture() {
@@ -744,7 +795,10 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.match(submit, /OPENAI_TRANSLATION_API_KEY/u);
   assert.match(submit, /openai-translation-batch\.mjs submit/u);
   assert.match(submit, /RETRY_BATCH_ID: \$\{\{ inputs\.retry_batch_id \}\}/u);
-  assert.match(submit, /retry_args=\(--batch-id="\$RETRY_BATCH_ID"\)/u);
+  assert.match(
+    submit,
+    /retry_args=\(--batch-id="\$RETRY_BATCH_ID" --max-retry-requests="\$\{RETRY_MAX_REQUESTS:-10\}"\)/u,
+  );
   assert.match(submit, /retry_dry_run:[\s\S]*default: true/u);
   assert.match(collect, /translation\/openai\//u);
   assert.match(collect, /actions\/create-github-app-token@v3/u);
