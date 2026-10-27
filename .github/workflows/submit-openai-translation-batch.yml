@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       retry_batch_id:
-        description: "既存の完了Batchで検証に失敗した最大10件だけを再翻訳する（通常投入は空欄）"
+        description: "既存の完了Batchで検証に失敗した分だけを再翻訳する（通常投入は空欄）"
         required: false
         default: ""
         type: string
@@ -21,6 +21,11 @@ on:
         required: false
         default: true
         type: boolean
+      retry_max_requests:
+        description: "dry-runで件数を確認した後の再試行上限（既定10、最大20）"
+        required: false
+        default: "10"
+        type: string
 
 permissions:
   contents: read
@@ -65,13 +70,14 @@ jobs:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
           RETRY_BATCH_ID: ${{ inputs.retry_batch_id }}
           RETRY_DRY_RUN: ${{ inputs.retry_dry_run }}
+          RETRY_MAX_REQUESTS: ${{ inputs.retry_max_requests }}
         run: |
           if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
             echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was submitted."
             exit 0
           fi
           if [ -n "$RETRY_BATCH_ID" ]; then
-            retry_args=(--batch-id="$RETRY_BATCH_ID")
+            retry_args=(--batch-id="$RETRY_BATCH_ID" --max-retry-requests="${RETRY_MAX_REQUESTS:-10}")
             if [ "$RETRY_DRY_RUN" = "true" ]; then
               retry_args+=(--dry-run)
             fi
