@@ -2,6 +2,8 @@
 
 このリポジトリは、Acecore Systems 公式ホームページのソースコードです。
 
+技術記事とブランドの変更時は [AGENTS.md](AGENTS.md) の方針を確認してください。
+
 - 本番サイト: https://systems.acecore.net
 - 公開方式: Cloudflare Pages
 - 対象言語: 日本語、英語、簡体字中国語、スペイン語、ポルトガル語、フランス語、韓国語、ドイツ語、ロシア語
