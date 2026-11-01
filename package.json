@@ -37,22 +37,22 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "@tabler/icons": "3.49.0",
-    "astro": "^7.4.2",
+    "@tabler/icons": "3.50.0",
+    "astro": "^7.4.4",
     "graphql": "^17.0.2",
-    "jose": "^6.2.13",
+    "jose": "^6.2.14",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261022.1",
+    "@cloudflare/workers-types": "^5.20261029.1",
     "@tailwindcss/vite": "4.3.3",
     "cheerio": "^1.2.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.1",
+    "prettier-plugin-astro": "^1.1.2",
     "tailwindcss": "4.3.3",
     "typescript": "^7.0.2",
-    "wrangler": "^4.152.0"
+    "wrangler": "^4.156.0"
   },
   "overrides": {
     "sharp": "$sharp"
