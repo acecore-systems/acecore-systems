@@ -2,7 +2,7 @@
 title: "在 Astro 网站中加入咨询 AI 聊天的技术设计"
 description: "这是 2026 年 6 月的参考设计。面向 Astro + Cloudflare Pages 静态网站，使用 OpenAI Responses API 加入咨询 AI 聊天的技术设计。整理 API 边界、站内信息上下文、提示词控制、按 locale 生成 URL、Origin 检查、限流以及安全的 Markdown 链接渲染。"
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["技术", "Cloudflare", "网站", "AI", "服务"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -294,7 +294,7 @@ IP 基础限流可以作为第一层刹车。在 Cloudflare 环境中，可以�
 - `https://acecore.net`
 - 官方 LINE
 - 必要时的 `mailto:info@acecore.net`
-- 必要时的 `tel:05088902788`
+- 必要时的 `tel:0120987370`
 
 验证前一定要对 URL 执行 `trim()`。AI 可能输出 `[Services]( /services/ )` 这种前后有空格的链接。
 
@@ -307,7 +307,7 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
   if (href.startsWith("https://acecore.net/")) return href;
   if (href.startsWith("https://lin.ee/")) return href;
   if (href === "mailto:info@acecore.net") return href;
-  if (href === "tel:05088902788") return href;
+  if (href === "tel:0120987370") return href;
 
   return null;
 }

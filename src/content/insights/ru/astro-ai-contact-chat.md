@@ -2,7 +2,7 @@
 title: "Технический дизайн AI-чата для обращений на сайте Astro"
 description: "Эталонная архитектура по состоянию на июнь 2026 года. Практический дизайн AI-чата для обращений на статическом сайте Astro + Cloudflare Pages с OpenAI Responses API. Рассмотрены граница API, контекст сайта, управление prompt, URL по locale, проверка Origin, rate limit и безопасный рендеринг Markdown-ссылок."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Технологии", "Cloudflare", "Веб-сайт", "AI", "Услуги"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -263,7 +263,7 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
   if (href.startsWith("https://acecore.net/")) return href;
   if (href.startsWith("https://lin.ee/")) return href;
   if (href === "mailto:info@acecore.net") return href;
-  if (href === "tel:05088902788") return href;
+  if (href === "tel:0120987370") return href;
 
   return null;
 }
