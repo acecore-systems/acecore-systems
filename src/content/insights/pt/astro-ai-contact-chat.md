@@ -2,7 +2,7 @@
 title: "Design técnico para adicionar um chat de IA de contato a um site Astro"
 description: "Projeto de referência de junho de 2026. Guia prático para adicionar um chat de IA de contato a um site estático Astro + Cloudflare Pages com a OpenAI Responses API. Cobre fronteiras de API, contexto do site, controle de prompt, URLs por locale, verificação de Origin, rate limit e renderização segura de links Markdown."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Tecnologia", "Cloudflare", "Site", "AI", "Serviços"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -263,7 +263,7 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
   if (href.startsWith("https://acecore.net/")) return href;
   if (href.startsWith("https://lin.ee/")) return href;
   if (href === "mailto:info@acecore.net") return href;
-  if (href === "tel:05088902788") return href;
+  if (href === "tel:0120987370") return href;
 
   return null;
 }

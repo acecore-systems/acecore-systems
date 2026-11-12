@@ -2,7 +2,7 @@
 title: "AI 채팅 답변의 Markdown 링크를 안전하게 렌더링하는 구현 설계"
 description: "AI 채팅 답변에 포함된 Markdown 링크를 안전한 HTML로 바꾸는 구현 메모입니다. 공백을 허용하는 파싱, href trim, 허용 목록 검증, DOM 렌더링, fallback, 테스트 케이스를 나누면 다른 사이트에도 재사용하기 쉽습니다."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["기술", "웹사이트", "AI", "보안", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -155,14 +155,14 @@ AI가 어떤 URL을 보여도 되는지는 사이트마다 다릅니다.
 | 같은 origin | `https://acecore.net/...` | 허용                       |
 | 공식 LINE   | `https://lin.ee/...`      | 공식 채널이면 허용         |
 | mailto      | `mailto:info@acecore.net` | 고정 주소만 허용           |
-| tel         | `tel:05088902788`         | 고정 번호만 허용           |
+| tel         | `tel:0120987370`          | 고정 번호만 허용           |
 | 기타 외부   | 임의 URL                  | 기본적으로 링크화하지 않음 |
 
 ```js
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 

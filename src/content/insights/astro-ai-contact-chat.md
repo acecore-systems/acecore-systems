@@ -2,7 +2,7 @@
 title: "Astroサイトに問い合わせAIチャットを組み込む技術設計"
 description: "2026年6月時点の参照設計です。Astro + Cloudflare Pages 構成の静的サイトに、OpenAI Responses API を使った問い合わせAIチャットを組み込むための技術設計です。API境界、サイト内コンテキスト、プロンプト制御、locale別URL、Originチェック、レート制限、安全なMarkdownリンク描画まで、他サイトでも転用しやすい形で整理します。"
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["技術", "Cloudflare", "Webサイト", "AI", "サービス"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -309,7 +309,7 @@ AI回答にリンクを含められると、サービス案内としては便利
 - `https://acecore.net`
 - 公式LINE
 - 必要時の `mailto:info@acecore.net`
-- 必要時の `tel:05088902788`
+- 必要時の `tel:0120987370`
 
 このとき、URLは必ず `trim()` してから判定します。AIは `[サービス一覧]( /services/ )` のように、URL前後へ空白を含めて返すことがあります。
 
@@ -322,7 +322,7 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
   if (href.startsWith("https://acecore.net/")) return href;
   if (href.startsWith("https://lin.ee/")) return href;
   if (href === "mailto:info@acecore.net") return href;
-  if (href === "tel:05088902788") return href;
+  if (href === "tel:0120987370") return href;
 
   return null;
 }

@@ -2,7 +2,7 @@
 title: "Rendre en sécurité les liens Markdown dans les réponses de chat IA"
 description: "Note technique sur la conversion sécurisée des liens Markdown dans les réponses IA. En séparant parsing tolérant aux espaces, trim de href, allowlist, rendu DOM, fallback et tests, le même modèle devient réutilisable."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Technologie", "Site web", "AI", "Sécurité", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -155,14 +155,14 @@ Chaque site doit décider quelles URLs son IA peut afficher.
 | Même origin     | `https://acecore.net/...` | Autoriser                          |
 | LINE officiel   | `https://lin.ee/...`      | Autoriser si le canal est officiel |
 | mailto          | `mailto:info@acecore.net` | Adresse fixe uniquement            |
-| tel             | `tel:05088902788`         | Numéro fixe uniquement             |
+| tel             | `tel:0120987370`          | Numéro fixe uniquement             |
 | Autres externes | Toute URL                 | Ne pas lier par défaut             |
 
 ```js
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 
