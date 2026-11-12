@@ -91,7 +91,7 @@ const baseJsonLd = [
     url: acecoreHomeUrl,
     logo: new URL("/favicon.svg", site.acecoreUrl).href,
     email: site.email,
-    telephone: site.phone,
+    telephone: `+81-${site.phone.slice(1)}`,
   },
   {
     "@context": "https://schema.org",
