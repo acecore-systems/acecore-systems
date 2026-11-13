@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 
 import {
@@ -29,6 +32,12 @@ import {
   calculateTranslationSourceHash,
   translatedLocales,
 } from "../scripts/i18n-source-hash.mjs";
+import {
+  assertRecoveryIntroduction,
+  findPreviousRecoveryAttempt,
+  recovery,
+  shouldSubmitRecovery,
+} from "../scripts/guard-openai-translation-recovery.mjs";
 
 const insightFixture = [
   "---",
@@ -222,7 +231,12 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
         const payload = JSON.parse(init.body);
         assert.equal(payload.metadata.retry_request_count, "11");
         assert.equal(payload.metadata.retry_of, parent.id);
-        return Response.json({ id: "batch_retry" });
+        return Response.json({
+          id: "batch_retry",
+          status: "validating",
+          input_file_id: payload.input_file_id,
+          metadata: payload.metadata,
+        });
       }
     }
     assert.equal(
@@ -313,6 +327,478 @@ test("再試行上限は既定10、明示指定のみ1〜20で、API呼出し前
       /max-retry-requests/u,
     );
   }
+});
+
+test("保存planとreceiptのCLI引数はretryの正しい段階だけで使用する", () => {
+  assert.equal(
+    parseArgs([
+      "retry",
+      "--batch-id=batch_parent",
+      "--dry-run",
+      "--plan-path=/tmp/plan.json",
+    ]).planPath,
+    "/tmp/plan.json",
+  );
+  assert.equal(
+    parseArgs([
+      "retry",
+      "--batch-id=batch_parent",
+      "--expected-plan-path=/tmp/plan.json",
+      "--receipt-path=/tmp/receipt.json",
+    ]).expectedPlanPath,
+    "/tmp/plan.json",
+  );
+  for (const args of [
+    ["collect", "--plan-path=/tmp/plan.json"],
+    ["retry", "--batch-id=batch_parent", "--plan-path=/tmp/plan.json"],
+    ["retry", "--batch-id=batch_parent", "--expected-plan-path=/tmp/plan.json"],
+    [
+      "retry",
+      "--batch-id=batch_parent",
+      "--dry-run",
+      "--receipt-path=/tmp/receipt.json",
+    ],
+    ["retry", "--batch-id=batch_parent", "--dry-run", "--plan-path="],
+  ])
+    assert.throws(() => parseArgs(args), /retry|path|dry-run/u);
+});
+
+test("保存したdry-run計画と現在mainを照合して不正分のみ送り、曖昧なPOSTはreceiptで再送を止める", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "systems-retry-receipt-"));
+  const planPath = join(directory, "plan.json");
+  const receiptPath = join(directory, "receipt.json");
+  const currentHash = calculateTranslationSourceHash(process.cwd());
+  const currentCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+    encoding: "utf8",
+  }).trim();
+  const source = await readFile(retryMetadata.sourcePath, "utf8");
+  const requests = ["en", "fr"].map((locale) =>
+    createInsightRequest(
+      { ...retryMetadata, sourceHash: currentHash, locale },
+      source,
+    ),
+  );
+  const outputs = [
+    batchResult(requests[0], {
+      markdown: JSON.parse(requests[0].body.input).markdown,
+    }),
+    batchResult(requests[1], { markdown: "invalid" }),
+  ];
+  const parent = {
+    id: "batch_parent",
+    status: "completed",
+    output_file_id: "file-parent",
+    request_counts: { total: 2, completed: 2, failed: 0 },
+    metadata: {
+      translation_system: "acecore-systems-v1",
+      repository: recovery.repository,
+      source_hash: currentHash,
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  const originalEnv = Object.fromEntries(
+    ["OPENAI_TRANSLATION_API_KEY", "GITHUB_TOKEN", "GITHUB_REPOSITORY"].map(
+      (key) => [key, process.env[key]],
+    ),
+  );
+  Object.assign(process.env, {
+    OPENAI_TRANSLATION_API_KEY: "test-key",
+    GITHUB_TOKEN: "test-github-token",
+    GITHUB_REPOSITORY: recovery.repository,
+  });
+  const posts = [];
+  let mode = "success";
+  let mainCommit = currentCommit;
+  let existing = null;
+  let pageTwo = false;
+  globalThis.fetch = async (url, init = {}) => {
+    if ((init.method ?? "GET") === "GET") {
+      if (url.endsWith("/batches/batch_parent")) return Response.json(parent);
+      if (url.endsWith("/batches?limit=100"))
+        return Response.json(
+          pageTwo
+            ? {
+                data: Array.from({ length: 100 }, (_, index) => ({
+                  id: `batch_other${index}`,
+                })),
+                has_more: true,
+                last_id: "batch_other99",
+              }
+            : { data: existing ? [parent, existing] : [parent] },
+        );
+      if (url.endsWith("/batches?limit=100&after=batch_other99"))
+        return Response.json({ data: [existing], has_more: false });
+      if (url.endsWith("/files/file-parent/content"))
+        return new Response(
+          outputs.map((output) => JSON.stringify(output)).join("\n"),
+        );
+      if (url.endsWith("/git/ref/heads/main"))
+        return Response.json({ object: { sha: mainCommit } });
+      throw new Error("Unexpected mock GET");
+    }
+    assert.equal(
+      JSON.parse(await readFile(receiptPath, "utf8")).state,
+      "attempting",
+      "persist the receipt before any POST",
+    );
+    posts.push(url);
+    if (url.endsWith("/files")) {
+      const lines = (await init.body.get("file").text())
+        .trim()
+        .split("\n")
+        .map(JSON.parse);
+      assert.equal(lines.length, 1);
+      assert.equal(decodeMetadata(lines[0].custom_id).locale, "fr");
+      if (mode === "upload_lost") throw new Error("Upload response lost");
+      return Response.json({ id: "file-retry" });
+    }
+    if (url.endsWith("/batches")) {
+      if (mode === "create_lost")
+        throw new Error("Batch accepted but response lost");
+      const payload = JSON.parse(init.body);
+      return Response.json({
+        id: "batch_retry",
+        status: "validating",
+        input_file_id: payload.input_file_id,
+        metadata: {
+          ...payload.metadata,
+          retry_of:
+            mode === "bad_receipt" ? "batch_wrong" : payload.metadata.retry_of,
+        },
+      });
+    }
+    throw new Error("Unexpected mock POST");
+  };
+  try {
+    const plan = await retryBatch({
+      batchId: parent.id,
+      dryRun: true,
+      planPath,
+    });
+    assert.equal(plan.invalidCount, 1);
+    assert.equal(plan.retainedCount, 1);
+    assert.equal(plan.failures.length, 1);
+    assert.match(plan.failures[0].identity, /"fr"/u);
+    assert.deepEqual(posts, []);
+    for (const changed of [
+      { sourceHash: "b".repeat(64) },
+      { sourceCommit: "b".repeat(40) },
+      { outputFileId: "file-other" },
+      { invalidCount: 2 },
+      { identities: [plan.identities[0].replace('"fr"', '"en"')] },
+    ]) {
+      await writeFile(planPath, JSON.stringify({ ...plan, ...changed }));
+      await assert.rejects(
+        () =>
+          retryBatch({
+            batchId: parent.id,
+            expectedPlanPath: planPath,
+            receiptPath,
+          }),
+        /plan.*changed/u,
+      );
+      assert.deepEqual(posts, []);
+    }
+    await writeFile(planPath, JSON.stringify(plan));
+    mainCommit = "b".repeat(40);
+    await assert.rejects(
+      () =>
+        retryBatch({
+          batchId: parent.id,
+          expectedPlanPath: planPath,
+          receiptPath,
+        }),
+      /Current main/u,
+    );
+    assert.deepEqual(posts, []);
+    mainCommit = currentCommit;
+    const receipt = await retryBatch({
+      batchId: parent.id,
+      expectedPlanPath: planPath,
+      receiptPath,
+    });
+    assert.equal(receipt.state, "submitted");
+    assert.equal(receipt.requestCount, 1);
+    assert.equal(receipt.retainedCount, 1);
+    assert.equal(receipt.retryBatchId, "batch_retry");
+    assert.equal(posts.length, 2);
+    for (const failure of ["upload_lost", "create_lost", "bad_receipt"]) {
+      await rm(receiptPath);
+      mode = failure;
+      posts.length = 0;
+      await assert.rejects(
+        () =>
+          retryBatch({
+            batchId: parent.id,
+            expectedPlanPath: planPath,
+            receiptPath,
+          }),
+        /do not resend automatically/u,
+      );
+      const uncertain = JSON.parse(await readFile(receiptPath, "utf8"));
+      assert.equal(uncertain.state, "unknown");
+      assert.equal(uncertain.error, "submission_response_unconfirmed");
+      assert.equal(
+        uncertain.phase,
+        failure === "upload_lost" ? "before_upload" : "before_batch_create",
+      );
+      const count = posts.length;
+      await assert.rejects(
+        () =>
+          retryBatch({
+            batchId: parent.id,
+            expectedPlanPath: planPath,
+            receiptPath,
+          }),
+        /receipt already exists/u,
+      );
+      assert.equal(posts.length, count, "do not replay an uncertain POST");
+    }
+    await rm(receiptPath);
+    posts.length = 0;
+    existing = {
+      ...parent,
+      id: "batch_child",
+      status: "in_progress",
+      metadata: {
+        ...parent.metadata,
+        retry_of: parent.id,
+        retry_identities_hash: plan.identitiesHash,
+        retry_request_count: "1",
+      },
+    };
+    pageTwo = true;
+    const noOp = await retryBatch({
+      batchId: parent.id,
+      expectedPlanPath: planPath,
+      receiptPath,
+    });
+    assert.equal(noOp.state, "existing_retry");
+    assert.equal(noOp.retryBatchId, "batch_child");
+    assert.deepEqual(
+      posts,
+      [],
+      "a child beyond the first 100 results still blocks submission",
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    for (const [key, value] of Object.entries(originalEnv)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("限定recoveryは固定64件の1〜20不正分だけを期限内の初回に送信できる", () => {
+  const identities = [
+    '["insight","en","src/content/insights/astro-ai-contact-chat.md"]',
+  ];
+  const plan = {
+    version: 1,
+    state: "planned",
+    repository: recovery.repository,
+    batchId: recovery.batchId,
+    sourceHash: recovery.sourceHash,
+    sourceCommit: "a".repeat(40),
+    originalCount: 64,
+    invalidCount: 1,
+    retainedCount: 63,
+    identities,
+    identitiesHash: hashText(JSON.stringify(identities)),
+  };
+  const beforeDeadline = {
+    now: Date.parse("2026-11-13T12:00:00Z"),
+    runAttempt: "1",
+  };
+  assert.equal(shouldSubmitRecovery(plan, beforeDeadline), true);
+  for (const changed of [
+    { batchId: "batch_other" },
+    { sourceHash: "b".repeat(64) },
+    { originalCount: 65 },
+    { invalidCount: 0 },
+    { invalidCount: 21, retainedCount: 43 },
+    { identitiesHash: "b".repeat(64) },
+  ])
+    assert.throws(
+      () => shouldSubmitRecovery({ ...plan, ...changed }, beforeDeadline),
+      /Recovery/u,
+    );
+  assert.throws(
+    () => shouldSubmitRecovery(plan, { ...beforeDeadline, runAttempt: "2" }),
+    /rerun/u,
+  );
+  assert.throws(
+    () =>
+      shouldSubmitRecovery(plan, {
+        ...beforeDeadline,
+        now: Date.parse(recovery.notAfter),
+      }),
+    /expired/u,
+  );
+  assert.equal(
+    shouldSubmitRecovery(
+      {
+        ...plan,
+        state: "no_retry_needed",
+        invalidCount: 0,
+        retainedCount: 64,
+        identities: [],
+        identitiesHash: hashText("[]"),
+      },
+      { now: Infinity, runAttempt: "2" },
+    ),
+    false,
+  );
+  assert.equal(
+    shouldSubmitRecovery(
+      {
+        ...plan,
+        state: "existing_retry",
+        retryBatchId: "batch_existing",
+        retryStatus: "completed",
+      },
+      { now: Infinity, runAttempt: "2" },
+    ),
+    false,
+  );
+});
+
+test("recovery workflowの初回追加だけを許可し、後続pushや存在しないbeforeを拒否する", async () => {
+  const directory = await mkdtemp(
+    join(tmpdir(), "systems-recovery-introduction-"),
+  );
+  const git = (args) =>
+    execFileSync("git", args, {
+      cwd: directory,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+    }).trim();
+  const commit = () =>
+    git([
+      "-c",
+      "user.name=Test",
+      "-c",
+      "user.email=test@example.invalid",
+      "commit",
+      "-m",
+      "fixture",
+    ]);
+  try {
+    git(["init", "--initial-branch=main"]);
+    await writeFile(join(directory, "README.md"), "fixture\n");
+    git(["add", "README.md"]);
+    commit();
+    const before = git(["rev-parse", "HEAD"]);
+    await mkdir(join(directory, ".github/workflows"), { recursive: true });
+    await writeFile(join(directory, recovery.workflowPath), "name: fixture\n");
+    git(["add", recovery.workflowPath]);
+    commit();
+    const event = {
+      eventName: "push",
+      ref: "refs/heads/main",
+      event: { before },
+    };
+    assertRecoveryIntroduction(event, git);
+    assert.throws(
+      () =>
+        assertRecoveryIntroduction(
+          { ...event, event: { before: git(["rev-parse", "HEAD"]) } },
+          git,
+        ),
+      /already existed/u,
+    );
+    assert.throws(() =>
+      assertRecoveryIntroduction(
+        { ...event, event: { before: "f".repeat(40) } },
+        git,
+      ),
+    );
+    assert.throws(
+      () =>
+        assertRecoveryIntroduction(
+          { ...event, event: { before: "0".repeat(40) } },
+          git,
+        ),
+      /initial workflow/u,
+    );
+    assert.throws(
+      () =>
+        assertRecoveryIntroduction(
+          { ...event, eventName: "workflow_dispatch" },
+          git,
+        ),
+      /initial workflow/u,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("過去intentを全pageで照会し、期限切れartifact・API異常・反復pageも送信許可にしない", async () => {
+  const first = {
+    artifacts: Array.from({ length: 100 }, (_, index) => ({
+      id: index,
+      name: `other-${index}`,
+    })),
+  };
+  let count = 0;
+  const prior = { id: 101, name: recovery.artifactName, expired: true };
+  assert.equal(
+    await findPreviousRecoveryAttempt(async () =>
+      ++count === 1 ? first : { artifacts: [prior] },
+    ),
+    prior,
+  );
+  assert.equal(count, 2);
+  await assert.rejects(
+    () =>
+      findPreviousRecoveryAttempt(async () => {
+        throw new Error("403");
+      }),
+    /403/u,
+  );
+  await assert.rejects(
+    () => findPreviousRecoveryAttempt(async () => ({})),
+    /verify/u,
+  );
+  await assert.rejects(
+    () => findPreviousRecoveryAttempt(async () => first),
+    /pagination repeated/u,
+  );
+  assert.equal(
+    await findPreviousRecoveryAttempt(async () => ({ artifacts: [] })),
+    null,
+  );
+});
+
+test("recovery workflowは永続intent upload成功後だけ既存CLIを起動する", async () => {
+  const workflow = await readFile(
+    ".github/workflows/recover-openai-translation-batch-20261112.yml",
+    "utf8",
+  );
+  assert.match(
+    workflow,
+    /group: recovery-batch_6af507b520cc81908cd77c5a125eae27/u,
+  );
+  assert.match(workflow, /group: openai-translation-batch-submit/u);
+  assert.match(
+    workflow,
+    /steps\.guard\.outputs\.submit == 'true' && steps\.intent\.outcome == 'success'/u,
+  );
+  assert.match(
+    workflow,
+    /--expected-plan-path="\$RETRY_PLAN_PATH" --receipt-path="\$RETRY_RECEIPT_PATH"/u,
+  );
+  assert.ok(
+    workflow.indexOf("Persist intent before any provider POST") <
+      workflow.indexOf("Retry only the verified invalid identities"),
+  );
+  assert.equal((workflow.match(/if-no-files-found: error/gu) ?? []).length, 3);
+  assert.doesNotMatch(
+    workflow,
+    /workflow_dispatch|schedule:|continue-on-error|overwrite: true/u,
+  );
 });
 function retryFixture() {
   const goodRequest = createInsightRequest(retryMetadata, insightFixture);
@@ -433,6 +919,14 @@ test("再試行親子はrepo・sourceHash・完了件数を固定し、循環・
       translationsCurrent: false,
     }).id,
     child.id,
+  );
+  assert.equal(
+    selectCompletedBatch([parent, child], new Set([child.id]), {
+      currentSourceHash: sourceHash,
+      translationsCurrent: true,
+    }),
+    null,
+    "after the combined translation is published, cron must not collect the invalid parent again",
   );
   assert.equal(
     selectCompletedBatch(

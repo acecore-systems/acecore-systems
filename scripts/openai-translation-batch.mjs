@@ -137,10 +137,27 @@ export function parseArgs(argv) {
     batchId: null,
     dryRun: false,
     maxRetryRequests: 10,
+    planPath: null,
+    expectedPlanPath: null,
+    receiptPath: null,
   };
   for (const argument of argv.slice(1)) {
     if (argument === "--dry-run") {
       options.dryRun = true;
+    } else if (
+      /^--(?:plan-path|expected-plan-path|receipt-path)=/u.test(argument)
+    ) {
+      const [flag, ...parts] = argument.split("=");
+      const value = parts.join("=");
+      if (command !== "retry" || !value || /[\0\r\n]/u.test(value))
+        throw new Error("retry report paths must be nonempty local paths");
+      options[
+        {
+          "--plan-path": "planPath",
+          "--expected-plan-path": "expectedPlanPath",
+          "--receipt-path": "receiptPath",
+        }[flag]
+      ] = value;
     } else if (argument.startsWith("--max-retry-requests=")) {
       const value = argument.slice("--max-retry-requests=".length);
       if (command !== "retry" || !/^(?:[1-9]|1[0-9]|20)$/u.test(value))
@@ -179,6 +196,12 @@ export function parseArgs(argv) {
   }
   if (command !== "retry" && options.dryRun)
     throw new Error("dry-run is only supported for an explicit retry");
+  if (options.planPath && !options.dryRun)
+    throw new Error("plan-path requires dry-run");
+  if ((options.expectedPlanPath || options.receiptPath) && options.dryRun)
+    throw new Error("expected-plan-path and receipt-path require a live retry");
+  if (options.expectedPlanPath && !options.receiptPath)
+    throw new Error("expected-plan-path requires receipt-path");
   if (options.base === ZERO_SHA) options.base = null;
   if (options.base) options.base = resolveRevision(options.base, "base");
   return options;
@@ -384,8 +407,25 @@ async function openAiJson(pathname, init = {}) {
 }
 
 async function listBatches() {
-  const result = await openAiJson("/batches?limit=100");
-  return Array.isArray(result.data) ? result.data : [];
+  const batches = [];
+  const cursors = new Set();
+  let after = null;
+  do {
+    const result = await openAiJson(
+      `/batches?limit=100${after ? `&after=${encodeURIComponent(after)}` : ""}`,
+    );
+    if (!Array.isArray(result.data)) throw new Error("Invalid Batch listing");
+    batches.push(...result.data);
+    if (!result.has_more) return batches;
+    after = result.last_id ?? result.data.at(-1)?.id;
+    if (
+      !/^batch_[A-Za-z0-9_-]{1,100}$/u.test(after ?? "") ||
+      cursors.has(after)
+    )
+      throw new Error("Invalid Batch listing pagination");
+    cursors.add(after);
+  } while (after);
+  return batches;
 }
 
 function isOurBatch(batch) {
@@ -1065,6 +1105,7 @@ export function planBatchRetry(
 ) {
   const seen = new Set();
   const requests = [];
+  const failures = [];
   for (const output of outputLines) {
     const metadata = decodeMetadata(output.custom_id);
     assertRetryIdentity(metadata, sourceHash);
@@ -1074,7 +1115,8 @@ export function planBatchRetry(
     seen.add(identity);
     try {
       prepareBatchTranslations([output], sourceHash, readers);
-    } catch {
+    } catch (error) {
+      failures.push({ identity, error: error.message.slice(0, 1000) });
       const source =
         metadata.kind === "insight"
           ? readers.readFile(metadata.sourcePath, "utf8")
@@ -1098,7 +1140,38 @@ export function planBatchRetry(
     identitiesHash: hashText(JSON.stringify(identities)),
     originalCount: outputLines.length,
     retainedCount: outputLines.length - requests.length,
+    failures,
   };
+}
+
+function writeRetryJson(filePath, value, { exclusive = false } = {}) {
+  if (!filePath) return;
+  mkdirSync(path.dirname(filePath), { recursive: true });
+  writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, {
+    flag: exclusive ? "wx" : "w",
+  });
+}
+
+export function assertRetryPlan(expected, actual) {
+  for (const key of [
+    "version",
+    "state",
+    "repository",
+    "batchId",
+    "outputFileId",
+    "sourceHash",
+    "sourceCommit",
+    "originalCount",
+    "invalidCount",
+    "retainedCount",
+    "identitiesHash",
+    "identities",
+  ]) {
+    if (JSON.stringify(expected?.[key]) !== JSON.stringify(actual[key]))
+      throw new Error(`Retry plan changed: ${key}; no new Batch submitted`);
+  }
+  if (actual.state !== "planned")
+    throw new Error("Expected retry plan is not actionable");
 }
 
 export function mergeBatchRetry(
@@ -1225,8 +1298,30 @@ export async function retryBatch(options) {
   )
     throw new Error("max-retry-requests must be an integer from 1 to 20");
   const sourceHash = calculateTranslationSourceHash(process.cwd());
+  const sourceCommit = runGit(["rev-parse", "HEAD"]);
   const repository =
     process.env.GITHUB_REPOSITORY ?? "acecore-systems/acecore-systems";
+  const expectedPlan = options.expectedPlanPath
+    ? JSON.parse(readFileSync(options.expectedPlanPath, "utf8"))
+    : null;
+  if (expectedPlan && (!options.receiptPath || options.dryRun))
+    throw new Error("A guarded retry requires a live receipt-path");
+  if (options.receiptPath && existsSync(options.receiptPath))
+    throw new Error(
+      "Retry receipt already exists; do not resend automatically",
+    );
+  if (
+    expectedPlan &&
+    (expectedPlan.version !== 1 ||
+      expectedPlan.state !== "planned" ||
+      expectedPlan.repository !== repository ||
+      expectedPlan.batchId !== options.batchId ||
+      expectedPlan.sourceHash !== sourceHash ||
+      expectedPlan.sourceCommit !== sourceCommit)
+  )
+    throw new Error(
+      "Retry plan source or parent changed; no new Batch submitted",
+    );
   const parent = await openAiJson(
     `/batches/${encodeURIComponent(options.batchId)}`,
   );
@@ -1241,49 +1336,134 @@ export async function retryBatch(options) {
   );
   if (existing) {
     assertRetryLink(existing);
+    if (
+      expectedPlan &&
+      (existing.metadata.retry_identities_hash !==
+        expectedPlan.identitiesHash ||
+        existing.metadata.retry_request_count !==
+          String(expectedPlan.invalidCount))
+    )
+      throw new Error("Existing retry does not match the expected plan");
+    const report = {
+      version: 1,
+      state: "existing_retry",
+      repository,
+      batchId: parent.id,
+      sourceHash,
+      sourceCommit,
+      retryBatchId: existing.id,
+      retryStatus: existing.status,
+    };
+    writeRetryJson(options.planPath, report);
+    writeRetryJson(options.receiptPath, report, { exclusive: true });
     console.log(
       `Retry for ${parent.id} already exists: ${existing.id} (${existing.status}); no new requests submitted.`,
     );
-    return;
+    return report;
   }
   const outputs = await getBatchOutput(parent);
   if (outputs.length !== parent.request_counts.total)
     throw new Error("Retry parent output count is incomplete");
   const plan = planBatchRetry(outputs, sourceHash);
+  const report = {
+    version: 1,
+    state: plan.requests.length ? "planned" : "no_retry_needed",
+    repository,
+    batchId: parent.id,
+    outputFileId: parent.output_file_id,
+    sourceHash,
+    sourceCommit,
+    originalCount: plan.originalCount,
+    invalidCount: plan.requests.length,
+    retainedCount: plan.retainedCount,
+    identities: plan.identities,
+    identitiesHash: plan.identitiesHash,
+    failures: plan.failures,
+  };
+  writeRetryJson(options.planPath, report);
+  if (expectedPlan) assertRetryPlan(expectedPlan, report);
   if (plan.requests.length === 0) {
     console.log(
       "The original batch now passes validation; no retry is needed.",
     );
-    return;
+    return report;
   }
   console.log(
     `Retry plan for ${parent.id}: ${plan.requests.length} invalid requests; ${plan.retainedCount} original results retained.`,
   );
   if (options.dryRun) {
     console.log("Dry run only; no input file uploaded or new Batch created.");
-    return;
+    return report;
   }
   if (plan.requests.length > maxRetryRequests)
     throw new Error(
       `Explicit retry is limited to ${maxRetryRequests} invalid requests; no new batch submitted`,
     );
-  const inputFile = await uploadBatchInput(
-    `${plan.requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
-  );
-  const retry = await createBatch(
-    inputFile.id,
+  if (expectedPlan) {
+    const main = await githubRequest("/git/ref/heads/main");
+    if (main?.object?.sha !== sourceCommit)
+      throw new Error(
+        "Current main moved or could not be verified; no new Batch submitted",
+      );
+  }
+  const receipt = {
+    version: 1,
+    state: "attempting",
+    phase: "before_upload",
+    repository,
+    batchId: parent.id,
     sourceHash,
-    runGit(["rev-parse", "HEAD"]),
-    {
+    sourceCommit,
+    identitiesHash: plan.identitiesHash,
+    requestCount: plan.requests.length,
+    retainedCount: plan.retainedCount,
+  };
+  writeRetryJson(options.receiptPath, receipt, { exclusive: true });
+  let retry;
+  try {
+    const inputFile = await uploadBatchInput(
+      `${plan.requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
+    );
+    if (!/^file[-_][A-Za-z0-9_-]{1,100}$/u.test(inputFile.id ?? ""))
+      throw new Error("Upload receipt has no file ID");
+    receipt.inputFileId = inputFile.id;
+    receipt.phase = "before_batch_create";
+    writeRetryJson(options.receiptPath, receipt);
+    retry = await createBatch(inputFile.id, sourceHash, sourceCommit, {
       retry_of: parent.id,
       retry_identities_hash: plan.identitiesHash,
       retry_request_count: String(plan.requests.length),
-    },
-  );
+    });
+    receipt.retryBatchId = /^batch_[A-Za-z0-9_-]{1,100}$/u.test(retry.id ?? "")
+      ? retry.id
+      : null;
+    assertRetryLink(retry);
+    if (
+      retry.input_file_id !== inputFile.id ||
+      retry.metadata.repository !== repository ||
+      retry.metadata.source_hash !== sourceHash ||
+      retry.metadata.retry_of !== parent.id ||
+      retry.metadata.retry_identities_hash !== plan.identitiesHash ||
+      retry.metadata.retry_request_count !== String(plan.requests.length)
+    )
+      throw new Error("Batch creation receipt does not match the retry plan");
+    receipt.state = "submitted";
+    receipt.phase = "batch_received";
+    receipt.retryStatus = retry.status;
+    writeRetryJson(options.receiptPath, receipt);
+  } catch {
+    receipt.state = "unknown";
+    receipt.error = "submission_response_unconfirmed";
+    writeRetryJson(options.receiptPath, receipt);
+    throw new Error(
+      "Retry submission outcome needs review; do not resend automatically",
+    );
+  }
   console.log(
     `Submitted retry ${retry.id}: ${plan.requests.length} invalid requests; ${plan.retainedCount} original results retained from ${parent.id}.`,
   );
   writeOutput("batch_id", retry.id);
+  return receipt;
 }
 
 async function getBatchOutput(batch) {
