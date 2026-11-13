@@ -18,6 +18,7 @@ concurrency:
 jobs:
   recover:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     concurrency:
       group: openai-translation-batch-submit
       cancel-in-progress: false

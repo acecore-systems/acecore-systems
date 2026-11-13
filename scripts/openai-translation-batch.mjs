@@ -1442,6 +1442,7 @@ export async function retryBatch(options) {
       retry.input_file_id !== inputFile.id ||
       retry.metadata.repository !== repository ||
       retry.metadata.source_hash !== sourceHash ||
+      retry.metadata.source_commit !== sourceCommit ||
       retry.metadata.retry_of !== parent.id ||
       retry.metadata.retry_identities_hash !== plan.identitiesHash ||
       retry.metadata.retry_request_count !== String(plan.requests.length)
