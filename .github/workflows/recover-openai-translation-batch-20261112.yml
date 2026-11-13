@@ -1,0 +1,113 @@
+name: Recover OpenAI Translation Batch 2026-11-12
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/recover-openai-translation-batch-20261112.yml
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: recovery-batch_6af507b520cc81908cd77c5a125eae27
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: openai-translation-batch-submit
+      cancel-in-progress: false
+    env:
+      RECOVERY_BATCH_ID: batch_6af507b520cc81908cd77c5a125eae27
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Define local recovery report paths
+        run: |
+          echo "RETRY_PLAN_PATH=$RUNNER_TEMP/translation-retry-plan.json" >> "$GITHUB_ENV"
+          echo "RETRY_INTENT_PATH=$RUNNER_TEMP/translation-retry-intent.json" >> "$GITHUB_ENV"
+          echo "RETRY_RECEIPT_PATH=$RUNNER_TEMP/translation-retry-receipt.json" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Revalidate all original results without submitting
+        id: plan
+        env:
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
+        run: |
+          node --experimental-strip-types scripts/openai-translation-batch.mjs retry \
+            --batch-id="$RECOVERY_BATCH_ID" --dry-run --max-retry-requests=20 \
+            --plan-path="$RETRY_PLAN_PATH"
+
+      - name: Preserve read-only retry plan
+        if: always() && steps.plan.outcome == 'success'
+        uses: actions/upload-artifact@v7
+        with:
+          name: openai-translation-recovery-plan-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.RETRY_PLAN_PATH }}
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Verify one-off bounds and absence of prior attempts
+        id: guard
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node --experimental-strip-types scripts/guard-openai-translation-recovery.mjs \
+            prepare "$RETRY_PLAN_PATH" "$RETRY_INTENT_PATH"
+
+      - name: Persist intent before any provider POST
+        id: intent
+        if: steps.guard.outputs.submit == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.guard.outputs.artifact_name }}
+          path: ${{ env.RETRY_INTENT_PATH }}
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Retry only the verified invalid identities
+        id: retry
+        if: steps.guard.outputs.submit == 'true' && steps.intent.outcome == 'success'
+        env:
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          record_preflight_failure() {
+            result=$?
+            if [ ! -f "$RETRY_RECEIPT_PATH" ]; then
+              printf '%s\n' '{"version":1,"state":"not_submitted","phase":"preflight_stopped"}' > "$RETRY_RECEIPT_PATH"
+            fi
+            exit "$result"
+          }
+          trap record_preflight_failure EXIT
+          node --experimental-strip-types scripts/guard-openai-translation-recovery.mjs verify "$RETRY_PLAN_PATH"
+          node --experimental-strip-types scripts/openai-translation-batch.mjs retry \
+            --batch-id="$RECOVERY_BATCH_ID" --max-retry-requests=20 \
+            --expected-plan-path="$RETRY_PLAN_PATH" --receipt-path="$RETRY_RECEIPT_PATH"
+
+      - name: Preserve submission receipt or uncertainty
+        if: always() && steps.guard.outputs.submit == 'true' && steps.retry.outcome != 'skipped'
+        uses: actions/upload-artifact@v7
+        with:
+          name: openai-translation-recovery-receipt-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.RETRY_RECEIPT_PATH }}
+          if-no-files-found: error
+          retention-days: 90
