@@ -827,7 +827,71 @@ function getScalar(markdown, key) {
 }
 
 function markdownLinkTargets(markdown) {
-  return matches(markdown, /\]\(([^)\s]+)(?:\s+[^)]*)?\)/gu).sort();
+  // These ranges are already checked byte-for-byte. In particular, an
+  // intentionally incomplete link inside code must not consume later prose.
+  const maskCode = (code) => code.replace(/[^\n]/gu, " ");
+  for (const block of fencedCodeBlocks(markdown)) {
+    markdown = markdown.replace(block, maskCode);
+  }
+  markdown = markdown.replace(/`[^`\r\n]+`/gu, maskCode);
+
+  const targets = [];
+  const whitespace = /[ \t\n]/u;
+  for (const match of markdown.matchAll(/\]\(/gu)) {
+    let index = match.index + 2;
+    while (whitespace.test(markdown[index] ?? "")) index += 1;
+    let target;
+    if (markdown[index] === "<") {
+      const start = ++index;
+      while (index < markdown.length && !/[<>\n]/u.test(markdown[index])) {
+        index += markdown[index] === "\\" ? 2 : 1;
+      }
+      if (markdown[index] !== ">") continue;
+      target = markdown.slice(start, index++);
+    } else {
+      const start = index;
+      let depth = 0;
+      while (index < markdown.length) {
+        const character = markdown[index];
+        if (/[\s<>\u0000-\u001f]/u.test(character)) break;
+        if (character === "\\") {
+          index += 2;
+          continue;
+        }
+        if (character === "(") depth += 1;
+        if (character === ")") {
+          if (depth === 0) break;
+          depth -= 1;
+        }
+        index += 1;
+      }
+      if (depth !== 0) continue;
+      target = markdown.slice(start, index);
+    }
+
+    const destinationEnd = index;
+    while (whitespace.test(markdown[index] ?? "")) index += 1;
+    if (markdown[index] !== ")") {
+      // A title is translatable, but it must be a real quoted/parenthesized
+      // title. Arbitrary prose after a broken destination is not a link.
+      const opening = markdown[index];
+      if (index === destinationEnd || !['"', "'", "("].includes(opening)) {
+        continue;
+      }
+      const closing = opening === "(" ? ")" : opening;
+      index += 1;
+      while (index < markdown.length && markdown[index] !== closing) {
+        if (opening === "(" && markdown[index] === "(") break;
+        index += markdown[index] === "\\" ? 2 : 1;
+      }
+      if (markdown[index] !== closing) continue;
+      index += 1;
+      while (whitespace.test(markdown[index] ?? "")) index += 1;
+      if (markdown[index] !== ")") continue;
+    }
+    targets.push(target);
+  }
+  return targets.sort();
 }
 
 export function validateInsightTranslation(
@@ -864,11 +928,13 @@ export function validateInsightTranslation(
     throw new Error(`${label}: fenced code changed`);
   }
   assertProtectedTokens(source, output, label);
-  if (
-    JSON.stringify(markdownLinkTargets(source)) !==
-    JSON.stringify(markdownLinkTargets(output))
-  ) {
-    throw new Error("Translated Insight changed Markdown link destinations");
+  const sourceTargets = JSON.stringify(markdownLinkTargets(source));
+  const outputTargets = JSON.stringify(markdownLinkTargets(output));
+  if (sourceTargets !== outputTargets) {
+    throw new Error(
+      "Translated Insight changed Markdown link destinations: " +
+        `expected ${sourceTargets.slice(0, 500)}; actual ${outputTargets.slice(0, 500)}`,
+    );
   }
   return output.endsWith("\n") ? output : `${output}\n`;
 }

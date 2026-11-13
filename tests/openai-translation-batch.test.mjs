@@ -689,6 +689,84 @@ test("Insightのコード内のバックスラッシュとコメントの変更�
   );
 });
 
+test("実記事の壊れたMarkdownコード例をまたぐ本文翻訳はリンク変更と誤判定しない", async () => {
+  const source = await readFile(
+    "src/content/insights/ai-chat-markdown-link-safety.md",
+    "utf8",
+  );
+  const request = createInsightRequest(metadata, source);
+  const translated = JSON.parse(request.body.input).markdown.replace(
+    "テキストとして表示する",
+    "Display as text",
+  );
+  const writes = new Map();
+  applyBatchTranslations(
+    [batchResult(request, { markdown: translated })],
+    sourceHash,
+    {
+      readFile: () => source,
+      writeFile: (filePath, content) => {
+        writes.set(filePath, content);
+        return true;
+      },
+    },
+  );
+  assert.deepEqual(
+    [...writes.values()],
+    [source.replace("テキストとして表示する", "Display as text")],
+  );
+  assert.throws(
+    () =>
+      validateInsightTranslation(
+        source,
+        source.replace("[壊れたリンク](/services/`", "[壊れたリンク](/other/`"),
+      ),
+    /inline code changed/u,
+  );
+});
+
+test("実際のMarkdownリンクは表示文とtitleを翻訳してもURLを維持する", () => {
+  for (const link of [
+    '[案内](/services/ "案内")',
+    "[案内]( /services/ '案内' )",
+    '[案内](</services/> "案内")',
+    '[案内](/services/(guide)/ "案内")',
+    '[案内](/services/\\(guide\\)/ "案内")',
+    "[案内](/services/\n(案内)\n)",
+    '[案内](\n/services/ "案内\n説明"\n)',
+    "![案内](/services/)",
+  ]) {
+    const source = `${insightFixture}${link}\n`;
+    const translated = source
+      .replaceAll("案内", "Guide")
+      .replace("説明", "Description");
+    assert.equal(validateInsightTranslation(source, translated), translated);
+    assert.throws(
+      () =>
+        validateInsightTranslation(
+          source,
+          translated.replace("/services/", "/other/"),
+        ),
+      /Markdown link destinations: expected .*services.*; actual .*other/u,
+    );
+  }
+});
+
+test("Markdownリンク先の追加・削除・重複数の変更も拒否する", () => {
+  const source = `${insightFixture}[案内](/services/)\n[連絡](/contact/)\n`;
+  for (const translated of [
+    `${source}[追加](/services/)\n`,
+    source.replace("[連絡](/contact/)", "Contact"),
+    source.replace("/contact/", "/services/"),
+    source.replace("[案内](/services/)", "[Guide](/services/"),
+  ]) {
+    assert.throws(
+      () => validateInsightTranslation(source, translated),
+      /Markdown link destinations/u,
+    );
+  }
+});
+
 test("sourceHashは改行コード差を同じ版として扱う", () => {
   assert.equal(hashText("更新\r\n本文\r\n"), hashText("更新\n本文\n"));
 });
@@ -809,6 +887,10 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
   assert.doesNotMatch(collect, /TRANSLATION_BOT_APP_ID/u);
   assert.doesNotMatch(collect, /^\s+app-id:/mu);
   assert.match(collect, /openai-translation-processed-/u);
+  assert.match(collect, /push:\s+branches:\s+- main\s+paths:/u);
+  assert.match(collect, /- scripts\/openai-translation-batch\.mjs/u);
+  assert.match(collect, /group: openai-translation-collector/u);
+  assert.match(collect, /cancel-in-progress: false/u);
   assert.match(collect, /Format collected translation files/u);
   assert.match(collect, /git diff --name-only --diff-filter=ACMRT -z/u);
   assert.match(collect, /npx prettier --write --/u);

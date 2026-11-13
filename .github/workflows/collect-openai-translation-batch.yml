@@ -1,9 +1,20 @@
 name: Collect OpenAI Translation Batch
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/openai-translation-batch.mjs
+      - scripts/translation-protected-text.mjs
+      - .github/workflows/collect-openai-translation-batch.yml
   schedule:
     - cron: "2,17,32,47 * * * *"
   workflow_dispatch:
+
+concurrency:
+  group: openai-translation-collector
+  cancel-in-progress: false
 
 permissions:
   actions: read
