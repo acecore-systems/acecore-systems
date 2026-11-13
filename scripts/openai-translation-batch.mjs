@@ -22,7 +22,8 @@ import { getPendingContentSourcePaths } from "./pending-content.mjs";
 
 const API_BASE_URL = "https://api.openai.com/v1";
 const BATCH_ENDPOINT = "/v1/responses";
-const BATCH_MODEL = "gpt-6-luna";
+const BATCH_MODEL = "gpt-6.1-terra";
+const BATCH_EFFORT = "medium";
 const BATCH_METADATA_KEY = "translation_system";
 const BATCH_METADATA_VALUE = "acecore-systems-v1";
 const CUSTOM_ID_PREFIX = "acecore-systems:";
@@ -324,7 +325,7 @@ export function createStructuredRequest(metadata, source) {
     url: BATCH_ENDPOINT,
     body: {
       model: BATCH_MODEL,
-      reasoning: { effort: "max" },
+      reasoning: { effort: BATCH_EFFORT },
       instructions: [
         "Translate Japanese Acecore Systems website copy into the requested target locale.",
         "Return one translation for every supplied id.",
@@ -354,7 +355,7 @@ export function createInsightRequest(metadata, markdown) {
     url: BATCH_ENDPOINT,
     body: {
       model: BATCH_MODEL,
-      reasoning: { effort: "max" },
+      reasoning: { effort: BATCH_EFFORT },
       instructions: [
         "Translate this Japanese Acecore Systems Insight article into the requested target locale.",
         "Return the entire Markdown document including YAML frontmatter.",
@@ -463,7 +464,7 @@ async function uploadBatchInput(input) {
   return (await openAiFetch("/files", { method: "POST", body: form })).json();
 }
 
-async function createBatch(
+export async function createBatch(
   inputFileId,
   sourceHash,
   sourceCommit,
@@ -482,6 +483,8 @@ async function createBatch(
           process.env.GITHUB_REPOSITORY ?? "acecore-systems/acecore-systems",
         source_hash: sourceHash,
         source_commit: sourceCommit,
+        requested_model: BATCH_MODEL,
+        requested_effort: BATCH_EFFORT,
         ...metadata,
       },
     }),
@@ -1138,6 +1141,9 @@ export function planBatchRetry(
     requests,
     identities,
     identitiesHash: hashText(JSON.stringify(identities)),
+    requestPayloadHash: hashText(
+      `${requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
+    ),
     originalCount: outputLines.length,
     retainedCount: outputLines.length - requests.length,
     failures,
@@ -1165,6 +1171,7 @@ export function assertRetryPlan(expected, actual) {
     "invalidCount",
     "retainedCount",
     "identitiesHash",
+    "requestPayloadHash",
     "identities",
   ]) {
     if (JSON.stringify(expected?.[key]) !== JSON.stringify(actual[key]))
@@ -1378,6 +1385,7 @@ export async function retryBatch(options) {
     retainedCount: plan.retainedCount,
     identities: plan.identities,
     identitiesHash: plan.identitiesHash,
+    requestPayloadHash: plan.requestPayloadHash,
     failures: plan.failures,
   };
   writeRetryJson(options.planPath, report);
@@ -1415,6 +1423,7 @@ export async function retryBatch(options) {
     sourceHash,
     sourceCommit,
     identitiesHash: plan.identitiesHash,
+    requestPayloadHash: plan.requestPayloadHash,
     requestCount: plan.requests.length,
     retainedCount: plan.retainedCount,
   };
@@ -1432,6 +1441,7 @@ export async function retryBatch(options) {
     retry = await createBatch(inputFile.id, sourceHash, sourceCommit, {
       retry_of: parent.id,
       retry_identities_hash: plan.identitiesHash,
+      request_payload_sha256: plan.requestPayloadHash,
       retry_request_count: String(plan.requests.length),
     });
     receipt.retryBatchId = /^batch_[A-Za-z0-9_-]{1,100}$/u.test(retry.id ?? "")
@@ -1445,6 +1455,9 @@ export async function retryBatch(options) {
       retry.metadata.source_commit !== sourceCommit ||
       retry.metadata.retry_of !== parent.id ||
       retry.metadata.retry_identities_hash !== plan.identitiesHash ||
+      retry.metadata.request_payload_sha256 !== plan.requestPayloadHash ||
+      retry.metadata.requested_model !== BATCH_MODEL ||
+      retry.metadata.requested_effort !== BATCH_EFFORT ||
       retry.metadata.retry_request_count !== String(plan.requests.length)
     )
       throw new Error("Batch creation receipt does not match the retry plan");
@@ -1532,7 +1545,7 @@ function makePullRequestBody(batchId, sourceHash) {
     getSourceMarker(sourceHash),
     "",
     "## 概要",
-    "- OpenAI Batch（gpt-6-luna / reasoning max）で最新の日本語 source を翻訳しました。",
+    "- OpenAI Batchで最新の日本語 source を翻訳しました。",
     "- sourceHash が現在の source と一致する結果だけを含めています。",
     "",
     "## 確認",

@@ -8,6 +8,7 @@ import test from "node:test";
 import {
   applyBatchTranslations,
   assertRetryBatch,
+  createBatch,
   createInsightRequest,
   createStructuredRequest,
   decodeMetadata,
@@ -71,6 +72,43 @@ function batchResult(request, response) {
     },
   };
 }
+
+test("新規の両形式は Terra medium の Responses Batch を使う", async () => {
+  const structured = createStructuredRequest(
+    { ...metadata, kind: "content" },
+    { title: "新しい説明" },
+  );
+  const markdown = createInsightRequest(metadata, insightFixture);
+  for (const request of [structured, markdown]) {
+    assert.equal(request.method, "POST");
+    assert.equal(request.url, "/v1/responses");
+    assert.equal(request.body.model, "gpt-6.1-terra");
+    assert.deepEqual(request.body.reasoning, { effort: "medium" });
+  }
+  const originalFetch = globalThis.fetch;
+  const originalKey = process.env.OPENAI_TRANSLATION_API_KEY;
+  process.env.OPENAI_TRANSLATION_API_KEY = "fixture-key";
+  try {
+    globalThis.fetch = async (url, init) => {
+      assert.equal(url, "https://api.openai.com/v1/batches");
+      const body = JSON.parse(init.body);
+      assert.equal(body.endpoint, "/v1/responses");
+      assert.equal(body.completion_window, "24h");
+      assert.equal(body.metadata.requested_model, "gpt-6.1-terra");
+      assert.equal(body.metadata.requested_effort, "medium");
+      return Response.json({ id: "batch_fixture" });
+    };
+    assert.deepEqual(
+      await createBatch("file-fixture", sourceHash, "a".repeat(40)),
+      { id: "batch_fixture" },
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalKey === undefined)
+      delete process.env.OPENAI_TRANSLATION_API_KEY;
+    else process.env.OPENAI_TRANSLATION_API_KEY = originalKey;
+  }
+});
 
 test("翻訳へ渡す数値・URL・placeholder・コードを保護し、JSON往復後に原文から復元する", () => {
   const source = `${insightFixture}価格は1,500円、15秒。\n{count}と\`init=/bin/bash\`を確認する。\nhttps://example.com/v26?q=0\n`;
@@ -449,6 +487,9 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
         .map(JSON.parse);
       assert.equal(lines.length, 1);
       assert.equal(decodeMetadata(lines[0].custom_id).locale, "fr");
+      assert.equal(lines[0].url, "/v1/responses");
+      assert.equal(lines[0].body.model, "gpt-6.1-terra");
+      assert.deepEqual(lines[0].body.reasoning, { effort: "medium" });
       if (mode === "upload_lost") throw new Error("Upload response lost");
       return Response.json({ id: "file-retry" });
     }
@@ -456,6 +497,10 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
       if (mode === "create_lost")
         throw new Error("Batch accepted but response lost");
       const payload = JSON.parse(init.body);
+      assert.equal(payload.endpoint, "/v1/responses");
+      assert.equal(payload.completion_window, "24h");
+      assert.equal(payload.metadata.requested_model, "gpt-6.1-terra");
+      assert.equal(payload.metadata.requested_effort, "medium");
       return Response.json({
         id: "batch_retry",
         status: "validating",
@@ -464,6 +509,10 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
           ...payload.metadata,
           retry_of:
             mode === "bad_receipt" ? "batch_wrong" : payload.metadata.retry_of,
+          request_payload_sha256:
+            mode === "bad_payload_receipt"
+              ? "b".repeat(64)
+              : payload.metadata.request_payload_sha256,
         },
       });
     }
@@ -486,6 +535,8 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
       { outputFileId: "file-other" },
       { invalidCount: 2 },
       { identities: [plan.identities[0].replace('"fr"', '"en"')] },
+      { requestPayloadHash: "c".repeat(64) },
+      { requestPayloadHash: undefined },
     ]) {
       await writeFile(planPath, JSON.stringify({ ...plan, ...changed }));
       await assert.rejects(
@@ -522,7 +573,12 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
     assert.equal(receipt.retainedCount, 1);
     assert.equal(receipt.retryBatchId, "batch_retry");
     assert.equal(posts.length, 2);
-    for (const failure of ["upload_lost", "create_lost", "bad_receipt"]) {
+    for (const failure of [
+      "upload_lost",
+      "create_lost",
+      "bad_receipt",
+      "bad_payload_receipt",
+    ]) {
       await rm(receiptPath);
       mode = failure;
       posts.length = 0;
@@ -817,6 +873,8 @@ function retryFixture() {
 
 test("再試行は正常結果を保持して不正identityだけを作り、全件一致と厳格検証後に結合する", () => {
   const { good, bad, badRequest, masked, readers } = retryFixture();
+  good.response.body.model = "gpt-6-luna";
+  bad.response.body.model = "gpt-6-luna";
   const plan = planBatchRetry([good, bad], sourceHash, readers);
   assert.equal(plan.requests.length, 1);
   assert.equal(plan.retainedCount, 1);
@@ -1356,7 +1414,7 @@ test("feature branchの結果をstaleとして処理した後も、mainが同じ
   assert.equal(selectCompletedBatch([batch], processed), null);
 });
 
-test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", async () => {
+test("WorkflowはTerra/mediumをBatchへ投入し、回収後にBot PRを作る", async () => {
   const [submit, collect, script] = await Promise.all([
     readFile(".github/workflows/submit-openai-translation-batch.yml", "utf8"),
     readFile(".github/workflows/collect-openai-translation-batch.yml", "utf8"),
@@ -1393,8 +1451,8 @@ test("WorkflowはLuna/maxをBatchへ投入し、回収後にBot PRを作る", as
     collect,
     /failure\(\) && steps\.collector\.outputs\.validation_report_path/u,
   );
-  assert.match(script, /gpt-6-luna/u);
-  assert.match(script, /reasoning: \{ effort: "max" \}/u);
+  assert.match(script, /gpt-6\.1-terra/u);
+  assert.match(script, /const BATCH_EFFORT = "medium"/u);
 });
 
 test("セキュリティサービスのBatch翻訳を専用の入れ子へ反映し、既存サービスを保つ", () => {
