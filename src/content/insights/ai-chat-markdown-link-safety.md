@@ -2,7 +2,7 @@
 title: "AIチャット回答のMarkdownリンクを安全に描画する実装設計"
 description: "AIチャットの回答に含まれるMarkdownリンクを、HTMLへ安全に変換するための実装メモです。URL前後の空白を許容しつつ、trim、許可リスト、DOM生成、fallback、テストケースを分けて考えることで、他サイトにも転用しやすいレンダラーになります。"
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["技術", "Webサイト", "AI", "セキュリティ", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -159,7 +159,7 @@ Acecoreの問い合わせAIでは、おおむね次のような範囲に絞っ�
 | 同一origin | `https://acecore.net/...` | 許可する                   |
 | 公式LINE   | `https://lin.ee/...`      | 目的が明確なので許可する   |
 | mailto     | `mailto:info@acecore.net` | 必要な固定宛先だけ許可する |
-| tel        | `tel:05088902788`         | 必要な固定番号だけ許可する |
+| tel        | `tel:0120987370`          | 必要な固定番号だけ許可する |
 | その他外部 | 任意のURL                 | 原則リンク化しない         |
 
 実装例はこうです。
@@ -168,7 +168,7 @@ Acecoreの問い合わせAIでは、おおむね次のような範囲に絞っ�
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 

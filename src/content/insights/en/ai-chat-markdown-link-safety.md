@@ -2,7 +2,7 @@
 title: "Safely Rendering Markdown Links in AI Chat Answers"
 description: "An implementation note on converting Markdown links in AI chat answers into safe HTML. By separating whitespace-tolerant parsing, href trimming, allowlist validation, DOM rendering, fallbacks, and test cases, the same pattern can be reused on other sites."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Technology", "Website", "AI", "Security", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -159,7 +159,7 @@ For Acecore's contact AI, the allowed set is roughly:
 | Same origin    | `https://acecore.net/...` | Allow                              |
 | Official LINE  | `https://lin.ee/...`      | Allow because the purpose is clear |
 | mailto         | `mailto:info@acecore.net` | Allow only the fixed address       |
-| tel            | `tel:05088902788`         | Allow only the fixed number        |
+| tel            | `tel:0120987370`          | Allow only the fixed number        |
 | Other external | Any URL                   | Usually do not link                |
 
 The implementation can look like this:
@@ -168,7 +168,7 @@ The implementation can look like this:
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 

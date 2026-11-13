@@ -2,7 +2,7 @@
 title: "Astro 사이트에 문의 AI 채팅을 넣기 위한 기술 설계"
 description: "2026년 6월 당시의 참조 설계입니다. Astro + Cloudflare Pages 정적 사이트에 OpenAI Responses API 기반 문의 AI 채팅을 넣는 기술 설계입니다. API 경계, 사이트 컨텍스트, 프롬프트 제어, locale별 URL, Origin 검사, rate limit, 안전한 Markdown 링크 렌더링을 정리합니다."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["기술", "Cloudflare", "웹사이트", "AI", "서비스"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -263,7 +263,7 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
   if (href.startsWith("https://acecore.net/")) return href;
   if (href.startsWith("https://lin.ee/")) return href;
   if (href === "mailto:info@acecore.net") return href;
-  if (href === "tel:05088902788") return href;
+  if (href === "tel:0120987370") return href;
 
   return null;
 }

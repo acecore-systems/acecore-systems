@@ -2,7 +2,7 @@
 title: "Technical Design for Adding an AI Contact Chat to an Astro Site"
 description: "A June 2026 reference design. A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
 date: 2026-06-07T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Technology", "Cloudflare", "Website", "AI", "Services"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
@@ -294,7 +294,7 @@ Then restrict link targets:
 - `https://acecore.net`
 - Official LINE URLs
 - `mailto:info@acecore.net` when needed
-- `tel:05088902788` when needed
+- `tel:0120987370` when needed
 
 Always `trim()` the URL before validation. AI output can contain spaces such as `[Services]( /services/ )`.
 
@@ -307,7 +307,7 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
   if (href.startsWith("https://acecore.net/")) return href;
   if (href.startsWith("https://lin.ee/")) return href;
   if (href === "mailto:info@acecore.net") return href;
-  if (href === "tel:05088902788") return href;
+  if (href === "tel:0120987370") return href;
 
   return null;
 }

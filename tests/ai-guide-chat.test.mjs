@@ -80,7 +80,7 @@ test("MarkdownリンクをAcecore公式URLと固定連絡先に限定する", ()
     "https://world-foundation.acecore.net/",
     "https://lin.ee/DjIrdqj",
     "mailto:info@acecore.net",
-    "tel:05088902788",
+    "tel:0120987370",
   ]) {
     assert.equal(isSafeAiGuideHref(href), true, href);
   }
@@ -95,6 +95,7 @@ test("MarkdownリンクをAcecore公式URLと固定連絡先に限定する", ()
     "https://lin.ee/DjIrdqj?redirect=evil",
     "mailto:other@example.com",
     "tel:0123456789",
+    "tel:05088902788",
     "/safe\\evil",
   ]) {
     assert.equal(isSafeAiGuideHref(href), false, href);

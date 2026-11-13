@@ -2,7 +2,7 @@
 title: "Безопасный рендеринг Markdown-ссылок в ответах AI-чата"
 description: "Техническая заметка о том, как безопасно превращать Markdown-ссылки из ответов AI-чата в HTML. Парсинг с допуском пробелов, trim для href, allowlist, DOM-рендеринг, fallback и тесты рассматриваются отдельно."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Технологии", "Веб-сайт", "AI", "Безопасность", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -155,14 +155,14 @@ if (label && isSafeMarkdownHref(href)) {
 | Тот же origin    | `https://acecore.net/...` | Разрешить                       |
 | Официальный LINE | `https://lin.ee/...`      | Разрешить как официальный канал |
 | mailto           | `mailto:info@acecore.net` | Только фиксированный адрес      |
-| tel              | `tel:05088902788`         | Только фиксированный номер      |
+| tel              | `tel:0120987370`          | Только фиксированный номер      |
 | Другие внешние   | Любой URL                 | По умолчанию не ссылать         |
 
 ```js
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 

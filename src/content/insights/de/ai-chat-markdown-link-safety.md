@@ -2,7 +2,7 @@
 title: "Markdown-Links in KI-Chat-Antworten sicher rendern"
 description: "Eine technische Notiz dazu, Markdown-Links aus KI-Chat-Antworten sicher in HTML zu überführen. Parsing mit Leerzeichen-Toleranz, href-trim, Allowlist, DOM-Rendering, Fallback und Tests werden getrennt betrachtet."
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["Technologie", "Website", "AI", "Sicherheit", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -155,14 +155,14 @@ Jede Site muss entscheiden, welche URLs ihre KI anzeigen darf.
 | Gleiche Origin   | `https://acecore.net/...` | Erlauben                       |
 | Offizielles LINE | `https://lin.ee/...`      | Als offizieller Kanal erlauben |
 | mailto           | `mailto:info@acecore.net` | Nur feste Adresse              |
-| tel              | `tel:05088902788`         | Nur feste Nummer               |
+| tel              | `tel:0120987370`          | Nur feste Nummer               |
 | Andere externe   | Beliebige URL             | Standardmäßig nicht verlinken  |
 
 ```js
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 

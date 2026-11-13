@@ -2,7 +2,7 @@
 title: "安全渲染 AI 聊天回答中的 Markdown 链接"
 description: "这是一篇关于如何把 AI 聊天回答中的 Markdown 链接安全转换为 HTML 的实现笔记。通过拆分可容忍空白的解析、href trim、允许列表校验、DOM 渲染、fallback 和测试用例，可以把同样的模式复用到其他网站。"
 date: 2026-06-07T14:30
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
 tags: ["技术", "网站", "AI", "安全", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
@@ -159,7 +159,7 @@ Acecore 的咨询 AI 大致允许以下范围：
 | 同一origin | `https://acecore.net/...` | 允许               |
 | 官方LINE   | `https://lin.ee/...`      | 目的明确，因此允许 |
 | mailto     | `mailto:info@acecore.net` | 只允许固定地址     |
-| tel        | `tel:05088902788`         | 只允许固定号码     |
+| tel        | `tel:0120987370`          | 只允许固定号码     |
 | 其他外部   | 任意 URL                  | 原则上不链接化     |
 
 实现可以这样写：
@@ -168,7 +168,7 @@ Acecore 的咨询 AI 大致允许以下范围：
 function isSafeMarkdownHref(rawHref) {
   const href = String(rawHref ?? "").trim();
   if (!href || /[\u0000-\u001f\u007f\\]/u.test(href)) return false;
-  if (href === "mailto:info@acecore.net" || href === "tel:05088902788") {
+  if (href === "mailto:info@acecore.net" || href === "tel:0120987370") {
     return true;
   }
 
