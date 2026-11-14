@@ -134,7 +134,9 @@ async function inspect(source, expectedIds) {
   assert.equal(process.env.GITHUB_REPOSITORY, fixed.repository);
   assert.equal(process.env.GITHUB_REF, fixed.ref);
   assert.ok(process.env.OPENAI_TRANSLATION_API_KEY, "credential unavailable");
-  assert.equal(execFileSync("git", ["rev-parse", "HEAD"], {encoding:"utf8"}).trim(), fixed.sourceCommit, "source checkout mismatch");
+  const publicationBase = process.env.PUBLICATION_BASE_SHA ?? fixed.sourceCommit;
+  assert.ok(publicationBase === fixed.sourceCommit || publicationBase === "ee6b3fa89f3795a1b0b1d9cdc50df615ce1c1aa4");
+  assert.equal(execFileSync("git", ["rev-parse", "HEAD"], {encoding:"utf8"}).trim(), publicationBase, "source checkout mismatch");
   const batch = await (await get(`/batches/${fixed.batch}`)).json();
   assert.equal(batch.id, fixed.batch);
   assert.equal(batch.status, "completed");

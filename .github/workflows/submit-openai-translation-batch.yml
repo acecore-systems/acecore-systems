@@ -13,7 +13,7 @@ permissions:
 
 env:
   BATCH_ID: batch_6af819d0bc7881909439e79931536a0e
-  SOURCE_COMMIT: 022dafb3b8f1bdfec68a2cb501d6eee2697c8649
+  SOURCE_COMMIT: ee6b3fa89f3795a1b0b1d9cdc50df615ce1c1aa4
 
 jobs:
   publish:
@@ -52,6 +52,7 @@ jobs:
       - name: Retrieve results and validate all eight translations
         working-directory: source-main
         env:
+          PUBLICATION_BASE_SHA: ${{ env.SOURCE_COMMIT }}
           OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
         run: node --experimental-strip-types ../repair/scripts/recover-seo-article-batch-20261114.mjs assemble
       - name: Check the scope, formatting, and translation state
