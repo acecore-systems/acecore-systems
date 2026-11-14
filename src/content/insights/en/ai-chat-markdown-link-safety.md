@@ -1,6 +1,6 @@
 ---
-title: "Safely Rendering Markdown Links in AI Chat Answers"
-description: "An implementation note on converting Markdown links in AI chat answers into safe HTML. By separating whitespace-tolerant parsing, href trimming, allowlist validation, DOM rendering, fallbacks, and test cases, the same pattern can be reused on other sites."
+title: "Implementation Design for Safely Rendering Markdown Links in AI Chat Responses"
+description: "Implementation notes on safely converting Markdown links in AI chat responses to HTML. By allowing whitespace around URLs and treating trimming, allowlisting, DOM creation, fallbacks, and test cases as separate concerns, you can build a renderer that is easy to reuse on other sites."
 date: 2026-06-07T14:30
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
@@ -8,125 +8,125 @@ tags: ["Technology", "Website", "AI", "Security", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
-  title: Key Point
-  text: AI answers are not trusted HTML. Even when Markdown links are useful, trim the URL first, validate it through an allowlist, and leave disallowed links as text instead of turning them into anchors.
+  title: Key Takeaways
+  text: AI responses are not trusted HTML. Even when Markdown links are useful, trim each URL before checking it against an allowlist, and leave URLs that cannot be allowed as text rather than turning them into links.
 processFigure:
-  title: Link Rendering Flow for AI Answers
+  title: AI Response Link Rendering Flow
   steps:
     - title: Text
-      description: Treat the model answer as plain text first.
+      description: Treat model responses as plain text first.
       icon: i-lucide-message-square-text
       accent: brand
     - title: Parse
-      description: Detect only the Markdown features the chat actually supports.
+      description: Use a small parser to pick out only the Markdown syntax you need.
       icon: i-lucide-brackets
       accent: amber
     - title: Validate
-      description: Trim href values and allow only internal URLs or approved domains.
+      description: Trim href and allow only internal URLs and approved domains.
       icon: i-lucide-shield-check
       accent: emerald
     - title: Render
-      description: Create safe elements with the DOM API instead of using innerHTML.
+      description: Create only safe elements with the DOM API instead of innerHTML.
       icon: i-lucide-code-2
       accent: slate
 compareTable:
-  title: Rendering Decisions to Separate
+  title: Decisions to Make When Rendering Markdown Links
   before:
-    label: Loose Rendering
+    label: Naive rendering
     items:
-      - Putting AI answers directly into innerHTML
-      - Trying to implement the whole Markdown specification at once
-      - Failing to link URLs with spaces around them
-      - "Treating external URLs and javascript: URLs the same way"
+      - Directly inserting AI responses into innerHTML
+      - Trying to implement the entire Markdown specification at once
+      - Failing to turn links into links because of whitespace around URLs
+      - "Treating external URLs and javascript: the same way"
   after:
-    label: Small and Safe Rendering
+    label: Small-scale, safe rendering
     items:
-      - Receive answers as text and turn only needed features into DOM nodes
-      - Support only the Markdown subset used in chat
-      - Validate URLs after trimming
-      - Leave disallowed URLs as plain text
+      - Treat responses as text and create DOM elements only for the syntax you need
+      - Support only the Markdown features used in chat
+      - Validate URLs for safety after trimming them
+      - Display URLs that cannot be allowed as text rather than turning them into links
 checklist:
   title: Implementation Checklist
   items:
-    - text: Do not trust AI answers as HTML
-    - text: Accept whitespace around Markdown link URLs
-    - text: Always trim href values before validation
-    - text: Allow only internal paths, the current origin, and required external domains
-    - text: Set target and rel explicitly for external links
-    - text: Preserve disallowed links as text
-    - text: Test dangerous URLs and broken Markdown, not only happy paths
+    - text: Do not trust AI responses as HTML
+    - text: Allow whitespace around URLs in Markdown links
+    - text: Always trim href before validating it
+    - text: Allow only internal paths, same-origin URLs, and required external domains
+    - text: Explicitly set target and rel on external links
+    - text: Leave links that cannot be allowed as text
+    - text: Test unsafe URLs and malformed Markdown, not just the happy path
 linkCards:
   - href: /blog/astro-ai-contact-chat/
-    title: AI Contact Chat Technical Design
-    description: The parent article covering AI answers, API boundaries, and prompt controls.
+    title: Technical Design for an AI Chat for Contact Requests
+    description: The parent article covers AI responses, API boundaries, and prompt controls.
     icon: i-lucide-sparkles
   - href: /insights/cloudflare-pages-security/
-    title: Cloudflare Pages Security
-    description: A related article on CSP and security headers.
+    title: Cloudflare Pages Security Settings
+    description: A related article covering CSP and security headers.
     icon: i-lucide-shield
   - href: /contact/
-    title: Contact
-    description: The actual page where the AI chat and form are placed.
+    title: Contact Us
+    description: The live contact flow featuring the AI chat and form.
     icon: i-lucide-message-square
 faq:
-  title: FAQ
+  title: Frequently Asked Questions
   items:
     - question: Is using markdown-it or marked enough?
-      answer: Even with a library, you still need to decide how HTML output is handled, which link targets are allowed, whether target and rel are added, and how dangerous URLs are rejected. For chat, a small custom renderer can be enough.
-    - question: Does allowing whitespace around URLs make it unsafe?
-      answer: The whitespace itself is not the risk. The important part is validating the trimmed href. That makes the renderer tolerant of model formatting while keeping the allowlist strict.
-    - question: Should disallowed URLs be removed?
-      answer: Usually keeping them as text is easier to debug and preserves context for the user. If your policy requires hiding suspicious strings, dropping the whole link is also valid.
+      answer: Even when you use a library, you still need to separately decide how to handle its HTML output, which link destinations to allow, how to set target and rel, and how to reject unsafe URLs. For chat use, a small custom renderer may be sufficient.
+    - question: Does allowing whitespace around URLs create a security risk?
+      answer: The key is not whether whitespace itself is allowed, but what you allow after trimming. If you validate the trimmed href against an allowlist, you can handle variations in the model's formatting while preserving security.
+    - question: Should URLs that cannot be allowed be removed?
+      answer: In many cases, displaying them as text rather than removing them makes debugging easier and preserves the response context for users. However, if your policy is to hide suspicious strings completely, you may instead choose to drop the entire link.
 ---
 
-If an AI link remains plain text, run the same input through parsing, URL validation and DOM rendering to locate the failure. Use text APIs such as [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) for labels, keeping link eligibility separate from HTML interpretation when adapting an existing chat.
+If a link in an AI response remains a plain string, first pass the same input through parsing, URL validation, and DOM rendering in sequence to identify which stage is failing. Use a text-oriented API such as [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) for displayed text, and keep the decision to turn a URL into a link separate from HTML interpretation. This is the starting point for applying the approach to an existing chat.
 
-When an AI chat returns `See [Services]( /services/ ) for details`, the link can fail to render and the raw Markdown can remain on screen.
+If an AI chat responds with “For more details, see the [service list](/services/),” the link may not render, leaving the Markdown string as-is.
 
-Acecore hit this in the contact AI chat and adjusted the renderer in [the PR that fixed Markdown link rendering](https://github.com/acecore-systems/acecore-net/pull/99).
+Acecore's website also encountered Markdown links with whitespace around URLs in responses from its contact AI chat, so we adjusted the renderer in [the PR that fixed Markdown link rendering in the AI chat](https://github.com/acecore-systems/acecore-net/pull/99).
 
-This article uses that small fix as a starting point for safely converting AI answers into DOM nodes.
+Using that small fix as a starting point, this article summarizes how to safely convert AI responses into DOM.
 
-## AI Answers Are Not Trusted HTML
+## AI responses are not trusted HTML
 
-Start by treating AI output as text, not HTML.
+First, treat AI responses as text, not HTML.
 
-Links, bold text, and lists are useful in a chat UI, but placing the answer directly into `innerHTML` lets the browser interpret whatever string the model produced.
+With a chat UI, it's tempting to support links, bold text, and bullet lists. But if you put a response directly into `innerHTML`, you are letting the browser interpret a string generated by the model.
 
-You do not need a complete Markdown implementation. You need a small renderer that detects the few features the chat supports and creates only safe DOM nodes.
+What's needed is not a complete implementation of Markdown. It's a small parser that picks out only the syntax needed in chat and creates only safe DOM.
 
-## The Problem Is Not Only Whitespace
+## The problem is not just whitespace
 
-The immediate bug was a link like this:
+The immediate issue was a link like this.
 
 ```md
-[Services](/services/)
+[サービス一覧](/services/)
 ```
 
-A human can read it, but a regular expression that treats the URL as a string without whitespace will not match it.
+These make sense to a human as Markdown, but if a regular expression captures the URL portion as a “string with no whitespace,” it won't match.
 
-The stricter pattern looked like this:
+Before the fix, the logic looked like this.
 
 ```js
 /\[([^\]]+)\]\(([^)\s]+)\)/;
 ```
 
-`[^)\s]+` rejects spaces, so `( /services/ )` is not parsed as a link. The fix is to tolerate whitespace inside the parentheses and normalize the URL afterward.
+`[^)\s]+` does not allow whitespace, so it cannot pick up `( /services/ )` as a link. We therefore allow whitespace at the start and end inside the parentheses, then trim the URL that will actually be used.
 
 ```js
 /\[([^\]]+)\]\(\s*([^)]+?)\s*\)/;
 ```
 
-Do not stop at loosening the pattern. The next steps must normalize and validate the href.
+The important thing is not to stop at loosening the regular expression. After loosening it, always normalize the URL and perform a safety check.
 
-## Trim href Before Validation
+## Trim href before validating it
 
-The order should be fixed:
+Keep the link-generation order fixed.
 
 1. Extract the label and raw href from Markdown
-2. `trim()` the raw href
-3. Validate the trimmed href through an allowlist
-4. Create an anchor only when the href is allowed
+2. Trim the raw href with `trim()`
+3. Validate the trimmed href against the allowlist
+4. Create `<a>` only if the URL is allowed
 
 ```js
 const href = String(rawHref || "").trim();
@@ -145,24 +145,24 @@ if (label && isSafeMarkdownHref(href)) {
 }
 ```
 
-Validate the same value you render. If validation checks one value and the DOM receives another, the safety check becomes weaker.
+Validate the value that will actually go into the DOM, not the value from before `trim()`. If the value you validate differs from the value you render, the safety check loses its meaning.
 
-## Make the Allowlist Product-Specific
+## Define allowlists per product
 
-Each site should decide which URLs its AI may show.
+The URLs an AI chat should be allowed to point to vary from site to site.
 
-For Acecore's contact AI, the allowed set is roughly:
+For Acecore's contact AI, we generally limit them to the following.
 
-| Type           | Example                   | Decision                           |
-| -------------- | ------------------------- | ---------------------------------- |
-| Internal path  | `/services/`              | Allow                              |
-| Same origin    | `https://acecore.net/...` | Allow                              |
-| Official LINE  | `https://lin.ee/...`      | Allow because the purpose is clear |
-| mailto         | `mailto:info@acecore.net` | Allow only the fixed address       |
-| tel            | `tel:0120987370`          | Allow only the fixed number        |
-| Other external | Any URL                   | Usually do not link                |
+| Type                | Example                   | Decision                                       |
+| ------------------- | ------------------------- | ---------------------------------------------- |
+| Internal path       | `/services/`              | Allow                                          |
+| Same origin         | `https://acecore.net/...` | Allow                                          |
+| Official LINE       | `https://lin.ee/...`      | Allow because the purpose is clear             |
+| mailto              | `mailto:info@acecore.net` | Allow only specific fixed recipients as needed |
+| tel                 | `tel:0120987370`          | Allow only specific fixed numbers as needed    |
+| Other external URLs | Any URL                   | Generally, do not turn them into links         |
 
-The implementation can look like this:
+An implementation example.
 
 ```js
 function isSafeMarkdownHref(rawHref) {
@@ -199,60 +199,60 @@ function isSafeMarkdownHref(rawHref) {
 }
 ```
 
-This function should change by product. A recruiting site may allow job boards, an ecommerce site may allow payment or tracking domains, and a SaaS product may allow documentation and status pages.
+This function should be tailored to each site. A recruitment site might allow job platforms, an e-commerce site might allow payment or delivery-tracking services, and a SaaS site might allow documentation or status pages.
 
-## Fall Back to Text for Disallowed Links
+## Leave links that cannot be allowed as text
 
-Decide what happens when a link fails validation.
+How to handle links that fail the safety check is also part of the design.
 
-For a contact AI, preserving the original Markdown as text is usually better than deleting it. The user keeps the context, and developers can see what the model tried to output.
+For the contact AI, leaving Markdown that cannot be turned into a link as its original text is easier to work with than removing it entirely. Users retain the context, and developers can see what the AI produced.
 
-The renderer is responsible not only for creating safe links, but also for failing safely when a link cannot be created.
+In other words, the parser's responsibility is not only to “create safe links,” but also to “output them as ordinary text when they cannot be created safely.”
 
-## Prepare Test Cases Early
+## Prepare test cases from the start
 
-This kind of renderer is easy to under-test if you only check happy paths.
+With this kind of renderer, checking only the happy path can cause you to miss issues.
 
-At minimum, test these cases:
+At a minimum, test the following cases.
 
-| Input                                | Expected Result                         |
-| ------------------------------------ | --------------------------------------- |
-| `[Services](/services/)`             | Internal link                           |
-| `[Services]( /services/ )`           | Trimmed internal link                   |
-| `[LINE]( https://lin.ee/example )`   | External approved link                  |
-| `[Bad](javascript:alert(1))`         | Not linked                              |
-| `[External](https://example.com/)`   | Not linked if the domain is not allowed |
-| `[Broken](/services/`                | Rendered as text                        |
-| `` `code` and [link]( /contact/ ) `` | Code and link both render correctly     |
+| Input                               | Expected result                          |
+| ----------------------------------- | ---------------------------------------- |
+| `[サービス一覧](/services/)`        | Becomes an internal link                 |
+| `[サービス一覧]( /services/ )`      | Trimmed and rendered as an internal link |
+| `[LINE]( https://lin.ee/example )`  | Opens as an external link                |
+| `[危険](javascript:alert(1))`       | Not rendered as a link                   |
+| `[外部](https://example.com/)`      | Not rendered as a link unless allowed    |
+| `[壊れたリンク](/services/`         | Displayed as text                        |
+| `` `code` と [link]( /contact/ ) `` | code and link are rendered separately    |
 
-In PR #99, we confirmed that `[Services]( /services/ )`, `[Services](/services/)`, and `[LINE]( https://lin.ee/DjIrdqj )` resolve to the same intended URLs.
+In PR #99, we confirmed that `[サービス一覧]( /services/ )`, `[サービス一覧](/services/)`, and `[LINE]( https://lin.ee/DjIrdqj )` are treated as the same URL.
 
-## Do Not Implement All of Markdown by Default
+## The decision not to implement all of Markdown
 
-The Markdown subset for an AI chat can stay small:
+The Markdown needed in an AI chat can be limited.
 
 - Paragraphs
-- Lists
-- Bold text
+- Bullet lists
+- Bold
 - Inline code
 - Links
 
-Tables, images, raw HTML, footnotes, and deep heading structures expand the renderer's responsibility quickly. A chat UI only needs readable guidance.
+Supporting tables, images, HTML, footnotes, and deeply nested headings makes the renderer's responsibilities grow rapidly. In a chat UI, providing readable guidance is enough.
 
-If you use a mature Markdown library later, still decide separately whether HTML is allowed, how URLs are restricted, and which attributes are added to external links.
+If the need arises, using an established Markdown library is another option. Even then, decide separately whether to allow HTML, how to restrict URLs, and what to add to external links.
 
 ## Summary
 
-Markdown link rendering in AI chat looks like a small UI fix, but it is really a boundary decision about how much AI output is trusted.
+Rendering Markdown links in an AI chat may look like a small visual fix. In reality, though, it's a boundary-design question about how much to trust AI output.
 
-The important points are:
+Key implementation points:
 
-- Treat AI answers as text, not HTML
-- Convert only the required Markdown subset into DOM nodes
-- Accept whitespace around Markdown link URLs
-- Trim href values before safety checks
-- Allow only internal URLs and required external domains
-- Preserve disallowed links as text
-- Test broken Markdown and dangerous URLs
+- Treat AI responses as text, not HTML
+- Create DOM only for the Markdown features you need
+- Allow whitespace around URLs in Markdown links
+- Trim href before performing a safety check
+- Use an allowlist to permit only internal URLs and necessary external URLs
+- Leave links that cannot be allowed as text
+- Test malformed Markdown and unsafe URLs
 
-The more AI is used in site navigation, the more link rendering matters. Convenient Markdown support and strict link control should be designed together.
+The more AI is integrated into a site's user flows, the more important it becomes to decide how response text is rendered. Convenient Markdown support and safe link controls should be handled together in the same implementation.

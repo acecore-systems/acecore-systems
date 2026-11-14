@@ -1,6 +1,6 @@
 ---
-title: "在 Astro 网站中加入咨询 AI 聊天的技术设计"
-description: "这是 2026 年 6 月的参考设计。面向 Astro + Cloudflare Pages 静态网站，使用 OpenAI Responses API 加入咨询 AI 聊天的技术设计。整理 API 边界、站内信息上下文、提示词控制、按 locale 生成 URL、Origin 检查、限流以及安全的 Markdown 链接渲染。"
+title: "在 Astro 网站中集成咨询 AI 聊天机器人的技术设计"
+description: "这是截至2026年6月的参考设计。本文介绍如何在 Astro + Cloudflare Pages 架构的静态网站中集成使用 OpenAI Responses API 的咨询 AI 聊天机器人。我们将 API 边界、站内上下文、提示词控制、按 locale 区分的 URL、Origin 检查、速率限制以及安全的 Markdown 链接渲染等内容，整理成便于移植到其他网站的形式。"
 date: 2026-06-07T12:00
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
@@ -9,104 +9,108 @@ image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
 callout:
   type: info
   title: 本文要点
-  text: 咨询 AI 聊天不是让 AI 自由回答的功能，而是使用公开的网站信息，把访客引导到合适下一步的小型应用。API key、提示词、联系方式和 Markdown 渲染都应通过服务端与允许列表控制。
+  text: 咨询 AI 聊天机器人并非让 AI 自由回答的功能，而应设计成一个利用已公开的网站信息、将访客引导至恰当入口的小型应用。API 密钥、提示词、联系方式和 Markdown 渲染均通过服务器端和允许列表进行控制。
 processFigure:
-  title: 咨询 AI 聊天的参考架构
+  title: 咨询 AI 聊天机器人的参考架构
   steps:
-    - title: Widget
-      description: Astro 侧聊天 UI 只发送问题、当前 locale 和必要的最小历史记录。
+    - title: 聊天组件
+      description: Astro 端的聊天 UI 只发送问题、显示 locale 和必要的最少历史记录。
       icon: i-lucide-message-circle
       accent: brand
-    - title: Function
-      description: Cloudflare Pages Function 负责输入验证、Origin 检查、限流和提示词生成。
+    - title: 函数
+      description: Cloudflare Pages Function 负责输入验证、Origin 检查、速率限制和提示词生成。
       icon: i-lucide-shield-check
       accent: amber
-    - title: Model
-      description: OpenAI Responses API 接收公开站点信息和会话上下文，然后返回回答。
+    - title: 模型
+      description: 将公开的网站信息和会话上下文发送至 OpenAI Responses API，并接收回答文本。
       icon: i-lucide-sparkles
       accent: emerald
-    - title: Renderer
-      description: 客户端只渲染允许的 Markdown，并引导到内部链接或允许的联系方式。
+    - title: 渲染器
+      description: 在客户端将允许的 Markdown 转换为 DOM，并引导至站内链接或联系方式。
       icon: i-lucide-code-2
       accent: slate
 compareTable:
-  title: 导入时需要拆分的职责
+  title: 实施时应拆分的职责
   before:
-    label: 全部混在一起时
+    label: 集中实现时
     items:
-      - 从浏览器直接调用 AI API
-      - 站点信息、API key、UI 显示和链接渲染混在一起
-      - AI 容易断言价格、合同或交期
-      - Markdown 和 URL 容易被直接作为 HTML 输出
+      - 直接从浏览器调用 AI API
+      - 网站信息、API 密钥、UI 显示和链接渲染混在一起
+      - AI 容易对价格、合同和交付期限作出确定承诺
+      - 容易将 Markdown 或 URL 原样写入 HTML
   after:
     label: 拆分职责后
     items:
-      - API key 和模型调用留在服务端
-      - 将公开站点信息作为明确的上下文管理
-      - 通过提示词控制回答范围和联系导线
-      - Markdown 和 URL 通过允许列表渲染
+      - API 密钥和模型调用仅保留在服务器端
+      - 将公开的网站信息作为明确的上下文进行管理
+      - 通过提示词控制回答范围和联系入口
+      - 使用允许列表渲染 Markdown 和 URL
 checklist:
-  title: 其他网站导入时的设计检查
+  title: 移植到其他网站时的设计检查清单
   items:
-    - text: 将 AI 聊天定义为导线整理，而不是完整替代表单
-    - text: 建立服务端 API 边界，不把 API key 暴露给浏览器
-    - text: 回答范围限定在公开站点信息
-    - text: 明确 AI 不应断言的领域，例如价格、合同、交期和保证
-    - text: 定义表单、LINE、邮件、电话的使用规则
-    - text: 生成符合 locale 的 URL，避免破坏多语言导线
-    - text: 加入 Origin 检查、输入长度限制、历史记录限制和限流
-    - text: Markdown 链接的 URL 先 trim 再用允许列表验证
+    - text: 将 AI 聊天机器人的目标定义为「梳理引导路径」，而非「完成咨询」
+    - text: 不在浏览器中暴露 API 密钥，并建立服务器端 API 边界
+    - text: 将回答所用的网站信息限定为已公开的信息
+    - text: 明确 AI 不得对价格、合同、交付期限、保证等内容作出断言
+    - text: 确定表单、LINE、电子邮件和电话的展示规则
+    - text: 生成按 locale 区分的 URL，确保多语言导航正常
+    - text: 加入 Origin 检查、输入长度限制、历史记录限制和速率限制
+    - text: 对 Markdown 链接先执行 trim，再通过允许列表判定
 linkCards:
   - href: /contact/
     title: 联系我们
-    description: 整理 AI 聊天、LINE、表单和直接联系方式入口的页面。
+    description: 整理了 AI 聊天、LINE、表单和直接联系方式的入口。
     icon: i-lucide-message-square
   - href: /insights/cloudflare-pages-security/
     title: Cloudflare Pages 安全设置
-    description: 关于静态站点分发中的 CSP 和安全 header 的相关文章。
+    description: 介绍 CSP、标头设置等静态网站托管基础的文章。
     icon: i-lucide-shield
   - href: /blog/cms-selection-and-turnstile/
-    title: Sveltia CMS 导入指南
-    description: 关于为静态网站添加 CMS 编辑界面的相关文章。
+    title: Sveltia CMS 集成指南
+    description: 介绍如何为静态网站添加 CMS 编辑界面的相关文章。
     icon: i-lucide-badge-check
 faq:
   title: 常见问题
   items:
-    - question: 没有 RAG 或向量数据库也能做咨询 AI 聊天吗？
-      answer: 小型企业网站通常只要把公开页面的要点结构化后放入提示词即可实用。页面数量或更新频率增加后，再考虑搜索索引或向量数据库。
-    - question: OpenAI API key 会暴露在浏览器里吗？
-      answer: 不会。浏览器只向 /api/ai-contact 发送问题，OpenAI Responses API 的调用和 API key 管理都在 Cloudflare Pages Function 中完成。
-    - question: AI 回答中可以自由输出链接吗？
-      answer: 不可以。链接限制为内部路径、当前 origin、acecore.net、官方 LINE，以及必要时的 mailto 和 tel。Markdown URL 会在安全检查前先 trim。
+    - question: 没有 RAG 或向量数据库，就不能构建咨询 AI 聊天机器人吗？
+      answer: 对于规模较小的企业网站，只要先将已公开页面的要点整理为结构化上下文并传入提示词，就能满足实际使用需求。页面数量和更新频率增加后，再考虑搜索索引或向量数据库即可。
+    - question: OpenAI API 密钥会暴露在浏览器中吗？
+      answer: 不会。浏览器只会将问题发送到 /api/ai-contact，OpenAI Responses API 的调用和 API 密钥管理都在 Cloudflare Pages Function 端进行。
+    - question: AI 回答中的链接可以随意显示吗？
+      answer: 不会随意显示。只允许内部路径、同一 origin、acecore.net、官方 LINE，以及必要时使用的 mailto 和 tel；即使 Markdown 链接的 URL 前后有空格，也会先执行 trim 再进行安全判定。
 ---
 
-初次试用静态网站AI聊天时，先限定为公开FAQ引导，正式报价与受理交给表单。服务器连接可查阅[Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/)。下文URL判断是当时的简化示例；实现时应使用相关文章的URL解析与允许列表，不能仅靠字符串前缀匹配。
+如果要在静态网站上尝试 AI 聊天，首先只让它为访客指引已公开的 FAQ，并将正式报价和业务受理交给表单。服务器端连接配置请参阅 [Cloudflare Pages：绑定](https://developers.cloudflare.com/pages/functions/bindings/)。正文中的 URL 判定属于当时的简化示例，因此在实际实现时，请使用相关文章中介绍的 URL 解析和允许列表，不要仅凭字符串前缀匹配就放行。
 
-> **2026 年 9 月 26 日更新：** 下文记录的是 2026 年 6 月的参考设计。现在 Acecore Systems 的 AI 聊天 API 通过 Cloudflare Pages Function 和 Service Binding 将请求转发至共用的 acecore-chat-worker。界面接收 JSON 并显示完整答案。下文所述直接调用 OpenAI 的方式已不是当前实现。
+> **2026年9月26日补充：** 以下是截至2026年6月的参考设计。Acecore Systems 当前的 `/api/ai-chat` 会从 Cloudflare Pages Function 经由 Service Binding 转发至通用的 `acecore-chat-worker`。界面端接收 JSON 响应并显示已生成的回答。正文中直接调用 OpenAI Responses API 的架构，请按照当前 Systems 实现的方式重新理解。
 
-把 AI 聊天放到网站上并不难。真正需要设计的是运行方式：AI 可以回答到什么程度、应该把访客引导到哪里、哪些 URL 可以显示，以及如何控制 API 成本。
+只要是在网站上放置 AI，搭建咨询 AI 聊天机器人并不难。但实际运营中容易出问题的，与其说是模型性能，不如说是允许它回答到什么程度、将访客引导至哪里、允许显示哪些 URL，以及如何控制 API 成本。
 
-Acecore 在 Astro + Cloudflare Pages 的静态网站中加入了咨询 AI 聊天。核心实现来自[加入咨询 AI 与 CMS 限定翻译流程的 PR](https://github.com/acecore-systems/acecore-net/pull/98)。之后又在[另一个 PR](https://github.com/acecore-systems/acecore-net/pull/99) 中调整了 AI 回答内 Markdown 链接的安全渲染。链接渲染的细节已整理到[安全渲染 AI 聊天回答中的 Markdown 链接](/blog/ai-chat-markdown-link-safety/)。
+在 Acecore 的网站上，我们在 Astro + Cloudflare Pages 静态网站中加入了咨询 AI 聊天机器人。实现的核心是 [实现咨询 AI 和 CMS 专属翻译流程的 PR](https://github.com/acecore-systems/acecore-net/pull/98)。随后，我们通过[另一项 PR](https://github.com/acecore-systems/acecore-net/pull/99)调整了 AI 回答中 Markdown 链接的安全渲染。链接渲染的详细设计另行整理在[安全渲染 AI 聊天回答中 Markdown 链接的实现设计](/blog/ai-chat-markdown-link-safety/)。
 
-本文不是单纯的作业记录，而是把这个实现整理成其他静态网站也能参考的技术设计。即使不是 Astro，也可以采用同样的思路：拆分客户端、API 边界、提示词和渲染器的职责。
+本文不记录特定网站的具体作业，而是将其整理为便于移植到其他静态网站的技术设计。即使使用 Astro 以外的前端框架，思路也基本相同；关键是区分客户端、API 边界、提示词和渲染器各自的职责。
 
-## 整体结构
+## 整体架构
 
-架构可以分为三层。
+本次架构分为简单的3层。
 
-| 层                   | 职责                                                     |
+| 层级                 | 作用                                                     |
 | -------------------- | -------------------------------------------------------- |
-| 聊天 Widget          | UI、输入、当前 locale、必要的最小历史记录、Markdown 渲染 |
-| `/api/ai-contact`    | 输入验证、Origin 检查、限流、提示词生成、OpenAI 调用     |
+| 聊天组件             | UI、输入、显示 locale、必要的最少历史记录、Markdown 渲染 |
+| `/api/ai-contact`    | 输入验证、Origin 检查、速率限制、提示词生成、调用 OpenAI |
 | OpenAI Responses API | 基于站内信息和会话上下文生成回答                         |
 
-浏览器不直接调用 OpenAI API。这样可以避免 API key 暴露，也能在服务端更新模型、提示词和站点上下文，并把输入限制与错误处理集中在一个位置。
+不会采用从浏览器直接调用 OpenAI API 的架构。原因有3个。
 
-在 Astro + Cloudflare Pages 中，这个 API 边界可以实现为 `/api/ai-contact` 的 Pages Function。Next.js 可以使用 Route Handler，Hono 或 Express 也可以用普通 API route。
+- 不在浏览器中暴露 API 密钥
+- 可在服务器端更新模型、提示词和站内上下文
+- 可将输入长度、Origin、速率限制和错误处理集中到1处
 
-## 缩小 API 契约
+在 Astro + Cloudflare Pages 中，API 边界可以实现为 Cloudflare Pages Functions 的 `/api/ai-contact`。在 Next.js 中可替换为 Route Handler，在 Hono 或 Express 中可替换为 API route，采用同样的思路即可。
 
-发送给 AI 聊天 API 的信息应尽量少。
+## 精简端点契约
+
+发送到咨询 AI 聊天机器人 API 的信息应尽可能精简。
 
 ```ts
 type ContactAiRequest = {
@@ -123,13 +127,13 @@ type ContactAiResponse = {
 };
 ```
 
-姓名、邮箱、电话号码、公司名等表单字段不需要送入 AI 聊天。这个聊天入口的职责是帮助访客判断应该看哪个服务、从哪里咨询，而不是收集个人信息。
+我们决定不将表单中填写的姓名、电子邮件、电话号码、公司名称等信息发送给 AI 聊天机器人。咨询 AI 聊天不是收集个人信息的地方，而是帮助访客梳理「应该查看哪项服务」或「应该从哪里开始咨询」的入口。
 
-历史记录也不应无限发送。只保留最近几轮，并限制每条消息的长度，可以避免提示词膨胀并控制 API 成本。
+对话历史也不会无限制发送。只发送最近的几条，并限制每1条消息的字符数。这样可以控制提示词膨胀和 API 成本。
 
-## 在服务端控制输入和模型调用
+## 在服务器端控制输入和调用
 
-Cloudflare Pages Function 负责安全边界和执行边界。
+Cloudflare Pages Function 端会集中执行以下处理。
 
 ```ts
 export async function onRequestPost({ request, env }: PagesFunction<Env>) {
@@ -158,93 +162,98 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 }
 ```
 
-关键是在调用 AI API 前先缩小并验证输入。长文、无限历史、来自外部网站的连续访问如果直接通过，运营会先于功能本身变得不稳定。
+关键点是在调用 OpenAI 之前，务必先将输入控制在较小范围内。调用 AI API 会根据接收的输入产生费用。如果直接放行长文本、不必要的历史记录和来自外部网站的连续访问，运营稳定性会先于功能体验受到影响。
 
-`OPENAI_MODEL` 通过环境变量管理，方便在 preview 或 production 中切换模型。`OPENAI_API_KEY` 只保存在服务端。
+将 `OPENAI_MODEL` 设置为环境变量后，更便于更换模型或在 preview 环境中进行验证。`OPENAI_API_KEY` 则理应只通过服务器端环境变量进行管理。
 
-Cloudflare Pages 的分发和 CSP 可参考[使用 Cloudflare Pages 实现安全的静态站点分发](/insights/cloudflare-pages-security/)。
+Cloudflare Pages 的托管和 CSP 相关思路，也整理在[使用 Cloudflare Pages 构建安全的静态网站托管](/insights/cloudflare-pages-security/)一文中。
 
-## 将站内信息显式作为上下文
+## 将站内信息明确作为上下文传递
 
-这种规模的网站不必一开始就引入向量数据库。先把公开站点信息的要点结构化后放入提示词，通常更容易实现和维护。
+对于这种规模的网站，不必一开始就引入向量数据库或 RAG。首先将已公开的网站信息要点整理成结构化内容并传入提示词，会让实现和运营都更轻量。
 
-可以包含的上下文如下：
+例如，可以在服务器端整理以下信息。
 
-- 公司和服务概要
-- 每个服务的对象、咨询示例和相关 URL
-- FAQ 中已经回答的内容
-- 表单、LINE、邮件、电话的使用规则
-- AI 不应断言的价格、合同、交期等领域
-- 各 locale 的内部 URL
+- 公司或服务的概要
+- 各项服务的目标对象、咨询示例和相关 URL
+- FAQ 中已有答案的内容
+- 咨询表单、LINE、电子邮件和电话的使用场景
+- AI 不得对价格、合同、交付期限等内容作出断言的范围
+- 各 locale 对应的内部 URL
 
-重点不是让模型凭一般知识回答，而是告诉模型「这个网站允许怎么回答」。
+关键在于，不要让模型回答它「似乎知道的事情」，而是向它提供「本网站可以作答的信息」。
 
 ```ts
 function buildPublicSiteContext(locale: Locale) {
   return {
     services: [
       {
-        name: "Web production",
-        summary: "Corporate sites, recruiting sites, and landing pages",
+        name: "Web制作",
+        summary: "コーポレートサイト、採用サイト、LPの制作相談に対応",
         url: localizePath("/services/web-production/", locale),
       },
       {
-        name: "Server operations",
-        summary: "Reservation, inventory, and customer management systems",
-        url: localizePath("/services/business-system/", locale),
+        name: "サーバー運用",
+        summary: "クラウド、VPS、監視、バックアップ設計の相談に対応",
+        url: localizePath("/services/server-operations/", locale),
       },
     ],
     contact: {
       form: localizePath("/contact/", locale),
       line: "https://lin.ee/...",
-      emailPolicy:
-        "Show email only when the form cannot be used or follow-up is needed",
-      phonePolicy: "Show phone only for urgent confirmation",
+      emailPolicy: "フォームが使えない場合や補足が必要な場合だけ案内する",
+      phonePolicy: "急ぎの確認が必要な場合だけ案内する",
     },
   };
 }
 ```
 
-当页面数量、更新频率和搜索需求增加后，再考虑 Pagefind、CMS JSON、D1、Vectorize 等检索层。
+页面数量不多时，这种方式就足够了。随着页面数量、更新频率和搜索需求增加，可以考虑使用 Pagefind、CMS 的 JSON、D1、Vectorize 等工具添加搜索层。
 
-## 提示词先写规则，而不是只写语气
+## 提示词应写清规则，而非只关注回答措辞
 
-咨询 AI 聊天的提示词中，比自然语气更重要的是回答范围和禁止事项。
+在咨询 AI 聊天机器人的提示词中，与其要求模型写出自然流畅的文字，不如明确规定回答范围和禁止事项。
 
 ```txt
-You are the contact guidance AI for this website.
-Answer only from public site information.
+あなたはこのサイトの問い合わせ案内AIです。
+公開済みサイト情報だけを根拠に回答してください。
 
-Rules:
-- Do not make firm statements about pricing, contracts, schedules, or guarantees
-- Send formal consultations and estimates to the contact form
-- Also suggest LINE for quick checks and Schools-related inquiries
-- Show email and phone only when the user asks for direct contact
-- Use URLs that match the current locale
-- If unsure, do not guess; guide the user to the form
+ルール:
+- 料金、契約、納期、保証を断定しない
+- 詳細見積りや正式な相談は問い合わせフォームへ案内する
+- 短い確認やSchoolsに関する相談はLINEも案内する
+- メールと電話は、ユーザーが直接連絡を求めた場合だけ案内する
+- 内部リンクは現在のlocaleに合うURLを使う
+- わからない場合は、推測せずフォームへ案内する
 ```
 
-常见失败是 AI 为了显得有帮助而说得过于确定。费用、交期、保证等问题应停留在一般说明，并引导到表单，因为这些回答需要人工确认。
+AI 聊天机器人常见的问题是，模型为了让服务显得更好而作出断言。例如，对于「多少钱可以做」「最晚什么时候能交付」「一定能处理吗」这类问题，应限于一般性说明，并引导用户通过表单获取正式答复。
 
-## 拆分咨询导线
+这不仅是法律层面的问题。因为在沟通需求之前，报价和交期无法确定。提示词应明确写出运营中能够负责的回答范围，而不是写一些对销售有利的回答。
 
-AI 聊天不应替代表单。联系页面中各导线有清晰职责时更容易运营。
+## 区分咨询入口的职责
 
-| 导线     | 职责                                       |
-| -------- | ------------------------------------------ |
-| FAQ      | 在页面内先解决常见问题                     |
-| AI 聊天  | 帮助选择服务、咨询方式和相关页面           |
-| LINE     | 简短咨询、联系 Acecore Schools 和简单确认  |
-| 表单     | 报价、制作咨询、合作、招聘等需要记录的咨询 |
-| 直接联系 | 表单后的补充或紧急确认时使用               |
+AI 聊天机器人不能替代表单。将咨询页面中的入口按以下方式区分，会更便于运营。
 
-AI 可以把[服务介绍文章](/services/) 这样的概要内容与[联系页面](/contact/) 的具体入口连接起来。这个模式也适用于 BtoB 网站、制作公司、学校和 SaaS 支持页面。
+| 入口         | 作用                                               |
+| ------------ | -------------------------------------------------- |
+| FAQ          | 先在页面中解答常见疑问                             |
+| AI 聊天      | 通过对话梳理服务选择、咨询对象和相关页面           |
+| LINE         | 用于简短咨询、Schools 相关联系和简单确认           |
+| 表单         | 用于报价、制作咨询、合作、招聘等需要留存记录的咨询 |
+| 直接联系方式 | 仅在表单沟通后的补充联系或需要紧急确认时开放       |
 
-## 不破坏 locale URL
+让 AI 将[服务页面](/services/)等介绍性内容与[咨询页面](/contact/)中的具体受理入口连接起来，访客就不必自己重新寻找页面。
 
-多语言网站中，不仅回答语言要正确，链接 URL 也要符合当前 locale。
+这种设计也适用于 BtoB 网站、制作公司网站、学校网站和 SaaS 的支持入口。与其让 AI 完成整个咨询，不如让它帮访客缩小下一步要查看的页面或要使用的联系方式范围，这样更容易落地。
 
-例如从英文页面提问时，回答应为英文，服务链接应指向 `/en/services/`。日文页面则使用 `/services/`。
+## 不要破坏各 locale 对应的 URL
+
+在多语言网站中，不仅回答语言要匹配，链接目标 URL 也需要与 locale 对应。
+
+例如，如果用户在英文页面提问，回答也应使用英文，指向服务页面的链接也应使用 `/en/services/` 这类带 locale 的 URL。如果用户在日语页面提问，则应使用 `/services/`。
+
+与其把这项处理交给提示词，不如通过服务器端的 URL 生成函数来确定。
 
 ```ts
 function localizePath(path: string, locale: Locale) {
@@ -253,11 +262,13 @@ function localizePath(path: string, locale: Locale) {
 }
 ```
 
-这类处理由服务端 URL 生成函数负责，比只写在提示词里更稳定。翻译运用的基础可参考[用 Sveltia CMS 运营多语言博客的方法](/zh-cn/blog/copilot-translation-pipeline/)。
+如果只有 AI 回答跳回日语 URL，多语言导航就会被破坏。多语言博客和翻译运营的基础整理在 [使用 Sveltia CMS 运营多语言博客的方法](/blog/copilot-translation-pipeline/)一文中。
 
-## 加入 Origin 检查和限流
+## 加入 Origin 检查和速率限制
 
-`/api/ai-contact` 是公开 API，因此至少要有 Origin 检查、输入长度限制、历史记录限制和限流。
+由于 `/api/ai-contact` 是公开 API，至少应加入 Origin 检查、输入长度限制、历史记录限制和速率限制。
+
+Origin 检查会在存在 `Origin` 标头时，确认请求来源与 API 主机是否一致，以减少其他网站擅自调用的可能性。
 
 ```ts
 function assertSameOrigin(request: Request) {
@@ -273,30 +284,34 @@ function assertSameOrigin(request: Request) {
 }
 ```
 
-IP 基础限流可以作为第一层刹车。在 Cloudflare 环境中，可以使用 `CF-Connecting-IP`、`X-Forwarded-For`、`CF-Ray` 等 header。
+首先采用基于 IP 的简单速率限制也很有效。在 Cloudflare 环境中，可以使用 `CF-Connecting-IP`、`X-Forwarded-For`、`CF-Ray` 等来识别请求。
 
-内存限流不会跨 isolate 或重启持久化，因此只适合作为初始层。访问量增加后，应考虑 Cloudflare WAF、Turnstile、KV、D1 或 Durable Objects。内容更新侧的 CMS 运维可参考[Sveltia CMS 导入指南](/blog/cms-selection-and-turnstile/)；表单与评论的机器人防护应作为另一层处理。
+不过，内存中的速率限制无法跨多个 isolate 或重启实现持久限制。它可以作为小型网站的初期防护措施，但访问量增加时，使用 Cloudflare WAF、Turnstile、KV、D1、Durable Objects 等方案会更稳定。
 
-## 用允许列表渲染 Markdown 链接
+内容更新侧的 CMS 设计另行整理在 [Sveltia CMS 集成指南](/blog/cms-selection-and-turnstile/)中。表单和评论的 bot 防护应作为 Turnstile 等独立层来处理。仅使用 Cloudflare 为 Astro 博客构建评论功能的设计，整理在[仅用 Cloudflare 为 Astro 博客添加评论功能的方法](/blog/cloudflare-only-blog-comments/)一文中。
 
-链接让聊天更有用，但 Markdown 不应直接作为 HTML 输出。客户端渲染器只支持必要的子集即可：
+## 使用允许列表渲染 Markdown 链接
+
+允许 AI 回答中包含链接，可以方便地引导访客了解服务。但应避免将 Markdown 原样注入 HTML。
+
+聊天 UI 只将允许的语法转换为 DOM。
 
 - 段落
-- 列表
+- 项目列表
 - 粗体
 - 行内代码
 - Markdown 链接
 
-链接目标再进一步限制：
+还要进一步限制链接目标。
 
-- `/services/` 等内部路径
+- `/services/` 这类同一网站内的路径
 - 当前 origin
 - `https://acecore.net`
 - 官方 LINE
-- 必要时的 `mailto:info@acecore.net`
-- 必要时的 `tel:0120987370`
+- 必要时使用的 `mailto:info@acecore.net`
+- 必要时使用的 `tel:0120987370`
 
-验证前一定要对 URL 执行 `trim()`。AI 可能输出 `[Services]( /services/ )` 这种前后有空格的链接。
+判定前务必先对 URL 执行 `trim()`。AI 有时会像 `[サービス一覧]( /services/ )` 这样，在 URL 前后带上空格。
 
 ```ts
 function sanitizeHref(rawHref: string, currentOrigin: string) {
@@ -313,60 +328,64 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
 }
 ```
 
-相比完整实现 Markdown，小而严格的渲染器更容易维护。如果允许更多外部链接，至少也应使用域名允许列表和 `rel="noopener noreferrer"`。
+与其追求完整实现 Markdown 规范，不如仅支持聊天中实际使用的语法，并严格处理，这样更便于维护。即使要允许自由输出外部 URL，也至少应设置域名允许列表和 `rel="noopener noreferrer"`。
 
-## 分别确认本地、preview 和生产环境
+## 在本地、preview 和生产环境中检查的事项
 
-Astro dev 或 preview 与 Cloudflare Pages Functions 环境并不完全相同。没有 `OPENAI_API_KEY` 时，本地应主要确认 UI 的 fallback 和错误显示。
+仅在本地运行 Astro dev 或 preview，无法与 Cloudflare Pages Functions 的执行环境完全一致。没有 `OPENAI_API_KEY` 的环境无法生成 AI 回答，因此需要确认 UI 侧的备用处理和错误提示。
 
-Pages preview 或生产环境中，需要确认：
+在 Pages preview 或生产环境中，请确认以下事项。
 
 - `/api/ai-contact` 可以通过 POST 调用
-- `OPENAI_API_KEY` 和 `OPENAI_MODEL` 已设置
-- 不同 Origin 的请求会被拒绝
-- 输入长度和历史件数有限制
-- 回答符合当前 locale
-- 内部链接使用 locale URL
-- AI 不断言报价或合同
-- 邮件和电话不会默认显示
-- Markdown 链接只在 URL 被允许时转换
+- `OPENAI_API_KEY` 和 `OPENAI_MODEL` 已配置
+- 可以拒绝 Origin 不同的请求
+- 输入长度和历史记录条数受到限制
+- 回答符合显示语言 locale
+- 内部链接使用带 locale 的 URL
+- AI 不会对报价或合同作出断言
+- 电子邮件和电话不会始终显示
+- Markdown 链接只会转换为安全的 URL
 
-不要只问一个问题就结束验证。长文、意外问题、英文页面、要求直接联系方式、询问价格等情况应分开确认。
+AI 集成并不是只要提问1次并收到回复就算完成。还要分别检查意料之外的问题、长文本、来自英语页面的问题、要求直接联系方式的问题和询问价格的问题。
 
-## 运营中要看的指标
+## 日志和运营中应关注的指标
 
-公开后也要看日志和指标。
+咨询 AI 聊天机器人发布后的日志检查也很重要。
+
+至少应关注以下指标。
 
 - API 错误率
-- 触发限流的次数
-- 每次咨询的平均消息数
-- 跳转到表单或 LINE 的次数
-- AI 无法回答并引导到表单的次数
+- 触发速率限制的次数
+- 每1次咨询的平均消息数
+- 跳转至表单或 LINE 的次数
+- AI 无法回答并引导至表单的次数
 - 各 locale 的使用量
 
-如果保存会话内容，需要先定义个人信息处理规则。更安全的第一步是不保存正文，只记录事件数和错误。
+如果要保存对话内容，就需要预先决定如何处理个人信息。更安全的做法是先不保存正文，仅从事件数量和错误情况开始观察。
 
-## 本次拆分出的范围
+## 本文单独讨论的范围
 
-本文只聚焦咨询 AI 聊天的技术设计。把服务页面的上下文传递给咨询表单的导线也已实现，已整理到 [从服务 CTA 向问询表单传递上下文的技术设计](/blog/service-cta-contact-prefill/) 中。
+本文只讨论咨询 AI 聊天机器人的技术设计。我们还实现了从服务页面向表单传递咨询对象的入口，并将其单独整理在[从服务 CTA 向咨询表单传递上下文的技术设计](/blog/service-cta-contact-prefill/)一文中。
 
-- AI 聊天：通过对话整理迷茫，并安全地引导
-- 服务 CTA：把访客正在阅读的服务上下文传给表单
+这是因为两者讨论的问题不同。
 
-分开处理后，文章更容易阅读，之后也更容易互相链接。
+- AI 聊天机器人：通过对话梳理访客的疑虑，并安全地引导他们
+- 按服务区分的 CTA：将访客正在阅读的服务上下文传递到表单
+
+前者涉及 AI、API 边界、提示词和安全渲染；后者涉及表单 UX 和入口设计。分开整理更易阅读，也便于之后添加内部链接。
 
 ## 总结
 
-在静态网站中加入咨询 AI 聊天时，应先设计 API 边界和回答控制，再打磨聊天 UI。
+将咨询 AI 聊天机器人集成到静态网站时，比起聊天 UI，更应优先设计 API 边界和回答控制。
 
-关键决策如下：
+本次实现中特别有效的做法包括：
 
-- 从 Cloudflare Pages Function 调用 OpenAI，而不是从浏览器调用
-- 缩小 endpoint 输入，并限制历史和消息长度
-- 在服务端组装站点上下文和 locale URL
-- 在提示词中明确 AI 不应断言的范围
-- 拆分表单、LINE 和直接联系方式的职责
-- 加入 Origin 检查和限流
-- Markdown 链接先 trim，再通过允许列表渲染
+- 从 Cloudflare Pages Function 而非浏览器调用 OpenAI API
+- 精简端点输入，并限制历史记录和字符数
+- 在服务器端构建站内信息和按 locale 区分的 URL
+- 在提示词中明确 AI 可以和不可以作出断言的内容
+- 区分表单、LINE 和直接联系方式的作用
+- 加入 Origin 检查和速率限制
+- Markdown 链接先执行 trim，再通过允许列表方式渲染
 
-静态网站也可以实现有用的咨询 AI 聊天。重点不是让 AI 更显眼，而是让访客安全地选择下一步行动。
+静态网站也完全可以集成咨询 AI 聊天机器人。集成的重点不是让 AI 更醒目，而是帮助访客安全地选择下一步行动。

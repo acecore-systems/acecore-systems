@@ -1,112 +1,116 @@
 ---
-title: "Diseño técnico para añadir un chat de IA de consultas a un sitio Astro"
-description: "Diseño de referencia de junio de 2026. Diseño práctico para incorporar un chat de IA de consultas en un sitio estático Astro + Cloudflare Pages con OpenAI Responses API. Cubre límites de API, contexto del sitio, control de prompt, URLs por locale, verificación de Origin, rate limit y renderizado seguro de enlaces Markdown."
+title: "Diseño técnico para integrar un chat de IA para consultas en un sitio Astro"
+description: "Diseño de referencia a fecha de 2026-6. Diseño técnico para integrar un chat de IA para consultas que utiliza OpenAI Responses API en un sitio estático con Astro + Cloudflare Pages. Se presenta de forma reutilizable en otros sitios y abarca los límites de API, el contexto del sitio, el control de prompts, las URL por locale, la comprobación de Origin, la limitación de frecuencia y la representación segura de enlaces Markdown."
 date: 2026-06-07T12:00
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
-tags: ["Tecnología", "Cloudflare", "Sitio web", "AI", "Servicios"]
+tags: ["Tecnología", "Cloudflare", "Sitio web", "IA", "Servicios"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
 callout:
   type: info
-  title: Punto clave
-  text: El chat de IA de consultas no es una caja de respuestas libres. Es una pequeña aplicación que usa información pública del sitio para guiar al visitante hacia el siguiente paso correcto. API keys, prompts, datos de contacto y Markdown se controlan desde el servidor y mediante listas permitidas.
+  title: Puntos clave de este artículo
+  text: El chat de IA para consultas no debe diseñarse como una función que permite a la IA responder libremente, sino como una pequeña aplicación que utiliza la información publicada en el sitio para orientar a los visitantes hacia el canal adecuado. Las claves de API, los prompts, la información de contacto y la representación de Markdown se controlan en el servidor y mediante listas de permitidos.
 processFigure:
-  title: Arquitectura de referencia
+  title: Arquitectura de referencia de un chat de IA para consultas
   steps:
-    - title: Widget
-      description: La UI de chat en Astro envía solo la pregunta, el locale actual y el historial mínimo necesario.
+    - title: Widget de chat
+      description: La interfaz de chat de Astro envía la pregunta, el locale de visualización y solo el historial mínimo necesario.
       icon: i-lucide-message-circle
       accent: brand
-    - title: Function
-      description: Cloudflare Pages Function valida entradas, comprueba Origin, aplica rate limit y construye el prompt.
+    - title: Función
+      description: Cloudflare Pages Function se encarga de validar la entrada, comprobar Origin, limitar la frecuencia y generar el prompt.
       icon: i-lucide-shield-check
       accent: amber
-    - title: Model
-      description: OpenAI Responses API recibe el contexto público del sitio y el estado de la conversación.
+    - title: Modelo
+      description: Envía a OpenAI Responses API la información pública del sitio y el contexto de la conversación, y recibe el texto de respuesta.
       icon: i-lucide-sparkles
       accent: emerald
-    - title: Renderer
-      description: El cliente renderiza solo Markdown permitido y guía a enlaces internos o canales de contacto aprobados.
+    - title: Renderizador
+      description: En el cliente, convierte en elementos DOM solo el Markdown permitido y orienta hacia enlaces internos o datos de contacto.
       icon: i-lucide-code-2
       accent: slate
 compareTable:
-  title: Responsabilidades que conviene separar
+  title: Responsabilidades que conviene separar al implementar
   before:
-    label: Cuando todo está mezclado
+    label: Si se implementa todo junto
     items:
-      - La API de IA se llama directamente desde el navegador
-      - Contexto del sitio, API key, UI y renderizado de enlaces quedan acoplados
-      - La IA puede afirmar precios, contratos o plazos con demasiada seguridad
-      - Markdown y URLs pueden terminar renderizados como HTML sin control
+      - Se llama directamente a la API de IA desde el navegador
+      - Se mezclan la información del sitio, la clave de API, la interfaz y el renderizado de enlaces
+      - La IA tiende a afirmar precios, contratos y plazos de entrega como definitivos
+      - Es fácil insertar Markdown y URL directamente en HTML
   after:
-    label: Cuando las responsabilidades se separan
+    label: Si se separan las responsabilidades
     items:
-      - API keys y llamadas al modelo permanecen en el servidor
+      - La clave de API y las llamadas al modelo quedan en el servidor
       - La información pública del sitio se gestiona como contexto explícito
-      - El prompt controla el alcance de respuesta y las rutas de contacto
-      - Markdown y URLs se renderizan con listas permitidas
+      - El prompt controla el alcance de las respuestas y los canales de contacto
+      - Markdown y URL se representan mediante una lista de permitidos
 checklist:
-  title: Checklist de diseño para otros sitios
+  title: Lista de comprobación del diseño para implementarlo en otros sitios
   items:
-    - text: Definir el chat como guía de rutas, no como reemplazo total del formulario
-    - text: Crear un límite de API en servidor y no exponer la API key al navegador
-    - text: Limitar respuestas a información pública del sitio
-    - text: Decidir qué no debe afirmar la IA, como precios, contratos, plazos y garantías
-    - text: Definir cuándo usar formulario, LINE, correo y teléfono
-    - text: Generar URLs por locale para no romper la navegación multilingüe
-    - text: Añadir Origin check, límites de longitud, límites de historial y rate limiting
-    - text: Hacer trim de URLs Markdown antes de validarlas con la lista permitida
+    - text: Definir el objetivo del chat de IA como «organizar los canales adecuados», no «resolver la consulta por completo»
+    - text: No exponer la clave de API en el navegador y crear un límite de API del lado del servidor
+    - text: Limitar la información que se usa para responder a contenido ya publicado
+    - text: Definir los ámbitos sobre los que la IA no debe pronunciarse de forma concluyente, como precios, contratos, plazos de entrega y garantías
+    - text: Definir las reglas para dirigir a los usuarios al formulario, LINE, correo electrónico o teléfono
+    - text: Generar URL por locale sin romper los recorridos multilingües
+    - text: Añadir comprobaciones de Origin, límites de longitud de entrada e historial y limitación de frecuencia
+    - text: Validar los enlaces Markdown con una lista de permitidos después de aplicar trim
 linkCards:
   - href: /contact/
     title: Contacto
-    description: Página que organiza chat de IA, LINE, formulario y contacto directo.
+    description: Página que organiza los puntos de entrada del chat de IA, LINE, el formulario y los datos de contacto directo.
     icon: i-lucide-message-square
   - href: /insights/cloudflare-pages-security/
-    title: Seguridad en Cloudflare Pages
-    description: Artículo relacionado sobre CSP y cabeceras de seguridad para sitios estáticos.
+    title: Configuración de seguridad de Cloudflare Pages
+    description: Artículo sobre los cimientos de la entrega de sitios estáticos, como CSP y la configuración de encabezados.
     icon: i-lucide-shield
   - href: /blog/cms-selection-and-turnstile/
-    title: Guía de instalación de Sveltia CMS
-    description: Artículo relacionado sobre añadir una pantalla de edición CMS a un sitio estático.
+    title: Guía de implementación de Sveltia CMS
+    description: Artículo relacionado sobre cómo añadir una interfaz de edición CMS a un sitio estático.
     icon: i-lucide-badge-check
 faq:
   title: Preguntas frecuentes
   items:
-    - question: ¿Hace falta RAG o una base vectorial para crear este chat?
-      answer: Para un sitio corporativo pequeño, suele bastar con pasar al prompt un contexto estructurado a partir de páginas públicas. La búsqueda o la base vectorial pueden añadirse cuando crezcan las páginas o la frecuencia de actualización.
-    - question: ¿La API key de OpenAI queda expuesta en el navegador?
-      answer: No. El navegador solo envía la pregunta a /api/ai-contact. Cloudflare Pages Function llama a OpenAI Responses API y gestiona la API key.
-    - question: ¿La IA puede devolver cualquier enlace?
-      answer: No. Los enlaces se limitan a rutas internas, el origin actual, acecore.net, LINE oficial y, cuando haga falta, mailto o tel específicos. Las URLs Markdown se recortan antes de la comprobación de seguridad.
+    - question: ¿Se puede crear un chat de IA para consultas sin RAG ni una base de datos vectorial?
+      answer: Para un sitio corporativo pequeño, basta con pasar al prompt como contexto estructurado los puntos clave de las páginas públicas. Cuando aumenten el número de páginas o la frecuencia de actualización, se puede plantear incorporar un índice de búsqueda o una base de datos vectorial.
+    - question: ¿Se expone la clave de API de OpenAI en el navegador?
+      answer: No. El navegador solo envía la pregunta a /api/ai-contact; la llamada a OpenAI Responses API y la gestión de la clave de API se realizan desde Cloudflare Pages Function.
+    - question: ¿Se pueden mostrar libremente los enlaces de las respuestas de IA?
+      answer: No se muestran libremente. Solo se permiten las rutas internas, el mismo origen, acecore.net, LINE oficial y mailto y tel cuando sea necesario. Aunque haya espacios alrededor de la URL de un enlace Markdown, se eliminan con trim antes de validar su seguridad.
 ---
 
-Para probar un chat de IA en un sitio estático, limita las respuestas a FAQ públicas y deriva presupuestos o solicitudes formales al formulario. Consulta [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/) para las conexiones del servidor. La validación de URL inferior es un ejemplo histórico simplificado; usa el análisis de URL y la lista permitida del artículo enlazado, no solo prefijos.
+Si quieres probar un chat de IA en un sitio estático, empieza limitándolo a orientar sobre las preguntas frecuentes públicas, y deriva los presupuestos formales y las solicitudes al formulario. Consulta [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/) para configurar la conexión del lado del servidor. La comprobación de URL del texto es un ejemplo simplificado de aquella época; al implementarlo, utiliza el análisis sintáctico de URL y una lista de permitidos del artículo relacionado, y evita permitir direcciones basándote únicamente en que una cadena empiece por cierto texto.
 
-> **Actualización del 26 de septiembre de 2026:** El texto siguiente documenta un diseño de junio de 2026. Actualmente, la API de chat de Acecore Systems reenvía las solicitudes mediante una Cloudflare Pages Function y un Service Binding al acecore-chat-worker compartido. La interfaz recibe JSON y muestra la respuesta completa. La llamada directa a OpenAI descrita abajo ya no es la implementación actual.
+> **Nota añadida el 2026-9-26:** Lo siguiente es un diseño de referencia a fecha de 2026-6. La implementación actual de `/api/ai-chat` de Acecore Systems reenvía las solicitudes a un `acecore-chat-worker` común mediante Service Binding desde Cloudflare Pages Function. El lado de la interfaz recibe una respuesta JSON y muestra la respuesta completa. La configuración descrita en el cuerpo, que llama directamente a OpenAI Responses API, debe entenderse como diseño de referencia y no como descripción de la implementación actual de Systems.
 
-Añadir un chat de IA a un sitio web es sencillo. Lo que requiere diseño es hacerlo operable: qué puede responder la IA, a dónde debe dirigir al visitante, qué URLs se pueden mostrar y cómo se controla el coste de API.
+Un chat de IA para consultas es fácil de añadir a un sitio. Sin embargo, en la práctica, los problemas no suelen depender tanto del rendimiento del modelo como de cuánto se le permite responder, a qué canal se dirige a los usuarios, qué URL se pueden mostrar y cómo se controlan los costes de API.
 
-Acecore añadió un chat de IA de consultas a un sitio estático con Astro + Cloudflare Pages. La implementación principal está en [el PR que incorporó la IA de contacto y el flujo de traducción limitado al CMS](https://github.com/acecore-systems/acecore-net/pull/98). Más tarde ajustamos el renderizado seguro de enlaces Markdown en [otro PR](https://github.com/acecore-systems/acecore-net/pull/99). El detalle de ese renderizado está separado en [Renderizar con seguridad enlaces Markdown en respuestas de chat con IA](/blog/ai-chat-markdown-link-safety/).
+En el sitio de Acecore añadimos un chat de IA para consultas a un sitio estático con Astro + Cloudflare Pages. La implementación principal está en el [PR que implementa el chat de IA para consultas y el flujo de traducción limitado al CMS](https://github.com/acecore-systems/acecore-net/pull/98). Después, ajustamos la representación segura de los enlaces Markdown incluidos en las respuestas de IA en [otro PR](https://github.com/acecore-systems/acecore-net/pull/99). Los detalles de la representación de enlaces se explican por separado en [Diseño de implementación para representar de forma segura enlaces Markdown en las respuestas del chat de IA](/blog/ai-chat-markdown-link-safety/).
 
-Este artículo no es solo una bitácora del proyecto. Resume el diseño técnico como patrón reutilizable para otros sitios estáticos. Fuera de Astro, la idea sigue siendo la misma: separar widget cliente, límite de API, prompt y renderer.
+Este artículo presenta un diseño técnico fácil de reutilizar en otros sitios estáticos, en lugar de ser un registro del trabajo realizado para un sitio concreto. Aunque el frontend no sea Astro, el enfoque es prácticamente el mismo: la base es separar las responsabilidades del cliente, el límite de API, el prompt y el renderizador.
 
-## Estructura general
+## Arquitectura general
 
-La arquitectura tiene tres capas simples.
+La arquitectura utilizada es sencilla y consta de 3 capas.
 
-| Capa                 | Responsabilidad                                                     |
-| -------------------- | ------------------------------------------------------------------- |
-| Chat widget          | UI, entrada, locale actual, historial mínimo y renderizado Markdown |
-| `/api/ai-contact`    | Validación, Origin check, rate limit, prompt y llamada a OpenAI     |
-| OpenAI Responses API | Generar respuesta desde contexto público y estado de conversación   |
+| Capa                 | Función                                                                                                           |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Widget de chat       | Interfaz, entrada, locale de visualización, historial mínimo necesario y representación de Markdown               |
+| `/api/ai-contact`    | Validación de entrada, comprobación de Origin, limitación de frecuencia, generación del prompt y llamada a OpenAI |
+| OpenAI Responses API | Generación de respuestas basada en la información del sitio y el contexto de la conversación                      |
 
-El navegador no debe llamar directamente a OpenAI. Mantener la llamada detrás de un endpoint evita exponer claves, permite actualizar prompt y contexto desde servidor, y centraliza límites de entrada y errores.
+No hacemos llamadas directas a OpenAI API desde el navegador. Hay 3 motivos.
 
-En Astro + Cloudflare Pages, este límite puede ser una Pages Function en `/api/ai-contact`. En Next.js sería un Route Handler; en Hono o Express, una ruta API normal.
+- No exponer la clave de API en el navegador
+- Poder actualizar el modelo, el prompt y el contexto del sitio desde el servidor
+- Centralizar en 1 lugar los límites de entrada, Origin, la limitación de frecuencia y el tratamiento de errores
 
-## Mantener pequeño el contrato del endpoint
+En Astro + Cloudflare Pages, el límite de API puede implementarse como `/api/ai-contact` de Cloudflare Pages Functions. En Next.js se puede sustituir por un Route Handler; con Hono o Express, por una ruta de API. El enfoque es el mismo.
 
-El payload debe ser estrecho.
+## Mantén pequeño el contrato del endpoint
+
+Limita todo lo posible la información que se envía a la API del chat de IA para consultas.
 
 ```ts
 type ContactAiRequest = {
@@ -123,13 +127,13 @@ type ContactAiResponse = {
 };
 ```
 
-Nombre, correo, teléfono, empresa y otros campos del formulario no necesitan pasar por el chat. Su rol es ayudar a decidir qué servicio ver y qué vía de contacto usar, no recoger datos personales.
+Decidimos no enviar al chat de IA los nombres, las direcciones de correo electrónico, los números de teléfono, los nombres de empresa ni otros datos introducidos en el formulario. El chat de IA para consultas no es un lugar para recopilar datos personales, sino un punto de entrada que ayuda a los visitantes a decidir qué servicio consultar y dónde pedir asesoramiento.
 
-El historial también debe limitarse a los últimos turnos y con tamaño máximo por mensaje. Así se evita que el prompt crezca y se controla el coste.
+El historial tampoco se envía sin límite. Solo incluimos unos pocos mensajes recientes y limitamos también la longitud permitida por mensaje, es decir, por cada 1 mensaje. Así se evita que el prompt crezca demasiado y se reducen los costes de API.
 
-## Controlar validación y modelo en el servidor
+## Controla la entrada y las llamadas desde el servidor
 
-La Pages Function concentra el límite de seguridad y ejecución.
+En el lado de Cloudflare Pages Function se agrupan los siguientes procesos.
 
 ```ts
 export async function onRequestPost({ request, env }: PagesFunction<Env>) {
@@ -158,89 +162,98 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 }
 ```
 
-El punto importante es validar y reducir la entrada antes de llamar a la IA. Mensajes largos, historial ilimitado o tráfico externo repetido vuelven inestable la operación antes de que la función aporte valor.
+El punto clave de la implementación es normalizar la entrada antes de llamar a OpenAI. Las llamadas a la API de IA generan costes en función de la entrada recibida. Si se permite el paso sin control de textos largos, historial innecesario y accesos repetidos desde sitios externos, la operación se vuelve inestable antes que la funcionalidad.
 
-`OPENAI_MODEL` debe poder configurarse por variable de entorno. `OPENAI_API_KEY` permanece solo en servidor. Para el entorno de distribución y CSP, vea [distribución segura con Cloudflare Pages](/insights/cloudflare-pages-security/).
+Conviene definir `OPENAI_MODEL` como variable de entorno para facilitar el cambio de modelo y las pruebas en entornos preview. `OPENAI_API_KEY` debe administrarse, por supuesto, únicamente como variable de entorno del servidor.
 
-## Hacer explícito el contexto del sitio
+La entrega desde Cloudflare Pages y el enfoque de CSP se explican también en [Entrega segura de sitios estáticos con Cloudflare Pages](/insights/cloudflare-pages-security/).
 
-Para sitios de este tamaño no hace falta empezar con una base vectorial. Un contexto estructurado con información pública suele ser suficiente.
+## Proporciona explícitamente la información del sitio como contexto
 
-Incluya:
+En un sitio de este tamaño, no hace falta incorporar de entrada una base de datos vectorial ni RAG. Al principio, es más sencillo implementar y operar si se estructura un resumen de la información publicada en el sitio y se pasa al prompt.
 
-- Resumen de la empresa y servicios
-- Público objetivo, ejemplos de consulta y URLs de cada servicio
-- Preguntas frecuentes ya respondidas
-- Reglas para formulario, LINE, correo y teléfono
-- Áreas que la IA no debe afirmar, como precios, contratos o plazos
-- URLs internas por locale
+Por ejemplo, el servidor puede recopilar información como la siguiente.
 
-La idea no es que el modelo conteste desde su conocimiento general, sino decirle qué está autorizado a decir este sitio.
+- Resumen de la empresa y sus servicios
+- Público de cada servicio, ejemplos de consultas y URL relacionadas
+- Contenido respondido en las FAQ
+- Cómo elegir entre el formulario de contacto, LINE, el correo electrónico y el teléfono
+- Temas sobre los que la IA no debe pronunciarse de forma concluyente, como precios, contratos y plazos de entrega
+- URL internas de cada locale
+
+Lo importante no es hacer que el modelo responda basándose en lo que «parece saber», sino proporcionarle la información que este sitio puede ofrecer como respuesta.
 
 ```ts
 function buildPublicSiteContext(locale: Locale) {
   return {
     services: [
       {
-        name: "Web production",
-        summary: "Corporate sites, recruiting sites, and landing pages",
+        name: "Web制作",
+        summary: "コーポレートサイト、採用サイト、LPの制作相談に対応",
         url: localizePath("/services/web-production/", locale),
       },
       {
-        name: "Server operations",
-        summary: "Reservation, inventory, and customer management systems",
-        url: localizePath("/services/business-system/", locale),
+        name: "サーバー運用",
+        summary: "クラウド、VPS、監視、バックアップ設計の相談に対応",
+        url: localizePath("/services/server-operations/", locale),
       },
     ],
     contact: {
       form: localizePath("/contact/", locale),
       line: "https://lin.ee/...",
-      emailPolicy:
-        "Show email only when the form cannot be used or follow-up is needed",
-      phonePolicy: "Show phone only for urgent confirmation",
+      emailPolicy: "フォームが使えない場合や補足が必要な場合だけ案内する",
+      phonePolicy: "急ぎの確認が必要な場合だけ案内する",
     },
   };
 }
 ```
 
-Cuando aumenten páginas y frecuencia de actualización, esta capa puede evolucionar hacia Pagefind, CMS JSON, D1, Vectorize u otro mecanismo de recuperación.
+Con pocas páginas, este método es suficiente. Cuando aumenten el número de páginas, la frecuencia de actualización o los requisitos de búsqueda, se puede añadir una capa de búsqueda con Pagefind, el JSON del CMS, D1 o Vectorize.
 
-## Escribir reglas en el prompt
+## Escribe reglas en el prompt, no solo instrucciones para redactar respuestas
 
-En un chat de consultas, el prompt debe definir límites y prohibiciones más que solo tono.
+En el prompt del chat de IA para consultas, aclara el alcance de las respuestas y las prohibiciones, en lugar de limitarte a pedir que genere una prosa natural.
 
 ```txt
-You are the contact guidance AI for this website.
-Answer only from public site information.
+あなたはこのサイトの問い合わせ案内AIです。
+公開済みサイト情報だけを根拠に回答してください。
 
-Rules:
-- Do not make firm statements about pricing, contracts, schedules, or guarantees
-- Send formal consultations and estimates to the contact form
-- Also suggest LINE for quick checks and Schools-related inquiries
-- Show email and phone only when the user asks for direct contact
-- Use URLs that match the current locale
-- If unsure, do not guess; guide the user to the form
+ルール:
+- 料金、契約、納期、保証を断定しない
+- 詳細見積りや正式な相談は問い合わせフォームへ案内する
+- 短い確認やSchoolsに関する相談はLINEも案内する
+- メールと電話は、ユーザーが直接連絡を求めた場合だけ案内する
+- 内部リンクは現在のlocaleに合うURLを使う
+- わからない場合は、推測せずフォームへ案内する
 ```
 
-El fallo típico es que la IA intenta ser demasiado útil y promete demasiado. Costes, fechas de entrega y garantías deben resolverse con una guía general y derivación al formulario.
+Un error frecuente en los chats de IA es que el modelo haga afirmaciones contundentes para presentar los servicios de forma favorable. Por ejemplo, ante preguntas como «¿Cuánto cuesta?», «¿Para cuándo se puede entregar?» o «¿Pueden garantizar que se encargarán?», la respuesta debe limitarse a información general y derivar la respuesta formal al formulario.
 
-## Separar las rutas de contacto
+Esto no es solo una cuestión legal. Los presupuestos y los plazos de entrega no se pueden confirmar antes de conocer los detalles de la solicitud. El prompt debe definir qué respuestas se pueden respaldar en la práctica, en lugar de priorizar las respuestas que resulten convenientes desde el punto de vista comercial.
 
-El chat no reemplaza al formulario. Cada ruta tiene un papel.
+## Separa las funciones de los canales de contacto
 
-| Ruta             | Papel                                                                     |
-| ---------------- | ------------------------------------------------------------------------- |
-| FAQ              | Resolver dudas comunes dentro de la página                                |
-| Chat de IA       | Ordenar servicios, rutas de contacto y páginas relacionadas               |
-| LINE             | Consultas breves, contacto con Acecore Schools y verificaciones sencillas |
-| Formulario       | Presupuestos, producción, alianzas y reclutamiento                        |
-| Contacto directo | Complementos tras el formulario o confirmación urgente                    |
+El chat de IA no sustituye al formulario. Para facilitar la gestión, conviene separar los canales de la página de contacto de la siguiente manera.
 
-La IA conecta contenidos generales como [la introducción de servicios](/services/) con rutas concretas de la [página de contacto](/contact/). Es un patrón útil para B2B, agencias, escuelas y soporte SaaS.
+| Canal            | Función                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------- |
+| FAQ              | Resolver de antemano en la página las dudas frecuentes                                                        |
+| Chat de IA       | Organizar mediante una conversación la elección del servicio, el canal de consulta y las páginas relacionadas |
+| LINE             | Consultas breves, contactos relacionados con Schools y verificaciones sencillas                               |
+| Formulario       | Consultas sobre presupuestos, proyectos, colaboraciones, empleo y otros temas que requieran dejar constancia  |
+| Contacto directo | Mostrarlo solo si hace falta añadir información después de enviar el formulario o hacer una consulta urgente  |
 
-## No romper URLs por locale
+La IA puede conectar contenido general, como la [página de servicios](/services/), con los canales concretos de recepción de la [página de contacto](/contact/). Así, los visitantes no tienen que volver a buscar las páginas por su cuenta.
 
-En un sitio multilingüe no basta con responder en el idioma correcto. Las URLs también deben coincidir con el locale.
+Este diseño también se puede aplicar a sitios de empresa a empresa, sitios de agencias de producción, sitios de escuelas y canales de soporte de SaaS. Es más fácil implementarlo si la IA ayuda a elegir la página que se debe consultar o el canal de contacto, en lugar de resolver por completo las consultas.
+
+## Mantén las URL correctas para cada locale
+
+En un sitio multilingüe, no solo el idioma de la respuesta de IA, sino también la URL de destino debe corresponder al locale.
+
+Por ejemplo, si alguien pregunta desde una página en inglés, la respuesta también debe estar en inglés y los enlaces a páginas de servicios deben usar URL con locale, como `/en/services/`. Desde una página en japonés, se debe usar `/services/`.
+
+Es más fiable resolverlo con una función de generación de URL del lado del servidor que delegarlo al prompt.
 
 ```ts
 function localizePath(path: string, locale: Locale) {
@@ -249,11 +262,13 @@ function localizePath(path: string, locale: Locale) {
 }
 ```
 
-Es más estable generarlo en servidor que dejarlo solo como instrucción del prompt. La base de traducción está resumida en [Cómo gestionar un blog multilingüe con Sveltia CMS](/es/blog/copilot-translation-pipeline/).
+Si la respuesta de IA vuelve a enlazar únicamente a URL japonesas, se rompe el recorrido multilingüe. La base para gestionar blogs multilingües y su traducción se explica en [Cómo gestionar un blog multilingüe con Sveltia CMS](/blog/copilot-translation-pipeline/).
 
-## Añadir Origin check y rate limit
+## Añade comprobaciones de Origin y limitación de frecuencia
 
-`/api/ai-contact` es una API pública, por lo que necesita Origin check, límites de longitud, límite de historial y rate limit.
+Como `/api/ai-contact` es una API pública, incluye al menos comprobaciones de Origin, límites de longitud de entrada e historial y limitación de frecuencia.
+
+Cuando existe un encabezado `Origin`, se comprueba que el host desde el que se origina la solicitud coincida con el host de la API. Así se reduce la posibilidad de que se invoque sin autorización desde otros sitios.
 
 ```ts
 function assertSameOrigin(request: Request) {
@@ -269,19 +284,34 @@ function assertSameOrigin(request: Request) {
 }
 ```
 
-El rate limit por IP sirve como primer freno. En Cloudflare puede apoyarse en `CF-Connecting-IP`, `X-Forwarded-For` o `CF-Ray`. Para más tráfico, conviene mover el control a Cloudflare WAF, Turnstile, KV, D1 o Durable Objects. La operación CMS para actualizaciones de contenido se explica en la [Guía de instalación de Sveltia CMS](/blog/cms-selection-and-turnstile/); la protección anti-bot de formularios y comentarios debe tratarse como otra capa.
+La limitación de frecuencia puede empezar con un control sencillo basado en la IP. En un entorno de Cloudflare se pueden usar `CF-Connecting-IP`, `X-Forwarded-For` y `CF-Ray`, entre otros, para identificar las solicitudes.
 
-## Renderizar enlaces Markdown con lista permitida
+Sin embargo, la limitación de frecuencia en memoria no ofrece un límite persistente entre varios isolates ni después de un reinicio. Puede servir como primera barrera para un sitio pequeño, pero si aumenta el tráfico, resulta más fiable recurrir a Cloudflare WAF, Turnstile, KV, D1 o Durable Objects.
 
-Los enlaces son útiles, pero el Markdown no debe pasar directo a HTML. Permita solo el subconjunto necesario:
+El diseño del CMS para actualizar el contenido se explica por separado en la [Guía de implementación de Sveltia CMS](/blog/cms-selection-and-turnstile/). La protección contra bots de los formularios y los comentarios se gestiona en una capa distinta, con Turnstile, por ejemplo. El diseño para crear comentarios con Cloudflare únicamente se presenta en [Cómo añadir comentarios a un blog Astro usando solo Cloudflare](/blog/cloudflare-only-blog-comments/).
+
+## Representa los enlaces Markdown mediante una lista de permitidos
+
+Incluir enlaces en las respuestas de IA resulta práctico para orientar sobre los servicios. Sin embargo, evita insertar Markdown directamente en HTML.
+
+La interfaz del chat convierte en elementos DOM solo las expresiones permitidas.
 
 - Párrafos
-- Listas
+- Listas con viñetas
 - Negrita
 - Código en línea
 - Enlaces Markdown
 
-Luego limite los destinos a rutas internas, origin actual, `https://acecore.net`, LINE oficial y los `mailto:` o `tel:` necesarios.
+Restringe aún más los destinos de los enlaces.
+
+- Rutas dentro del mismo sitio, como `/services/`
+- El origen actual
+- `https://acecore.net`
+- LINE oficial
+- `mailto:info@acecore.net` cuando sea necesario
+- `tel:0120987370` cuando sea necesario
+
+Antes de validar una URL, asegúrate de aplicar `trim()`. La IA puede devolver una URL con espacios delante o detrás, como `[サービス一覧]( /services/ )`.
 
 ```ts
 function sanitizeHref(rawHref: string, currentOrigin: string) {
@@ -298,60 +328,64 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
 }
 ```
 
-Hacer `trim()` es importante porque la IA puede devolver `[Services]( /services/ )`. Un renderer pequeño y estricto es más mantenible que implementar Markdown completo.
+Es más fácil de mantener un procesamiento estricto limitado a las expresiones que se usan en el chat que intentar implementar por completo la especificación Markdown. Aunque se quiera permitir que aparezcan URL externas libremente, conviene incluir al menos una lista de dominios permitidos y `rel="noopener noreferrer"`.
 
-## Probar local, preview y producción
+## Qué comprobar en local, preview y producción
 
-Astro dev o preview no es idéntico al entorno de Cloudflare Pages Functions. Sin `OPENAI_API_KEY`, localmente conviene revisar fallback y errores de UI.
+El entorno local de Astro dev o preview no coincide por completo con el entorno de ejecución de Cloudflare Pages Functions. En los entornos donde no está configurado `OPENAI_API_KEY`, no se pueden usar respuestas de IA; por eso, comprueba el fallback de la interfaz y la visualización de errores.
 
-En Pages preview o producción, revise:
+En Pages preview o producción, comprueba lo siguiente.
 
-- `/api/ai-contact` acepta POST
-- `OPENAI_API_KEY` y `OPENAI_MODEL` están configurados
-- Se rechazan solicitudes de otro Origin
-- Hay límites de longitud e historial
-- La respuesta coincide con el locale
-- Los enlaces internos usan URLs por locale
-- La IA no afirma presupuestos ni contratos
-- Correo y teléfono no se muestran por defecto
-- Markdown solo se convierte cuando la URL está permitida
+- Que se pueda llamar a `/api/ai-contact` mediante POST
+- Que estén configurados `OPENAI_API_KEY` y `OPENAI_MODEL`
+- Que se rechacen las solicitudes con un Origin distinto
+- Que se limiten la longitud de entrada y el número de mensajes del historial
+- Que las respuestas estén en el locale mostrado
+- Que los enlaces internos usen URL con locale
+- Que la IA no haga afirmaciones definitivas sobre presupuestos o contratos
+- Que el correo electrónico y el teléfono no aparezcan siempre
+- Que los enlaces Markdown se conviertan solo en URL seguras
 
-No valide solo con una pregunta. Pruebe entradas largas, preguntas inesperadas, páginas en inglés, solicitudes de contacto directo y preguntas sobre precios.
+La integración con IA no está completa por el mero hecho de obtener una respuesta tras enviar 1 pregunta. Comprueba por separado las preguntas inesperadas, los textos largos, las preguntas desde páginas en inglés, las solicitudes de datos de contacto directo y las preguntas sobre precios.
 
-## Señales operativas
+## Indicadores que conviene observar en los registros y durante la operación
 
-Después de publicar, mire:
+También es importante revisar los registros del chat de IA para consultas después de publicarlo.
 
-- Tasa de errores de API
-- Veces que se aplicó rate limit
-- Mensajes promedio por consulta
-- Transiciones a formulario y LINE
-- Casos en que la IA derivó al formulario
-- Uso por locale
+Como mínimo, observa estos indicadores.
 
-Si guarda conversaciones, defina primero las reglas de privacidad. Un inicio más seguro es guardar solo eventos y errores, sin texto de mensajes.
+- Tasa de errores de la API
+- Número de veces que se activa la limitación de frecuencia
+- Promedio de mensajes por consulta (1 consulta)
+- Número de visitas al formulario o a LINE
+- Número de veces que la IA no puede responder y dirige al formulario
+- Número de usos por locale
 
-## Alcance separado
+Si se guarda el contenido de las conversaciones, primero hay que decidir cómo se tratarán los datos personales. Para empezar con seguridad, se puede no guardar el contenido de los mensajes y observar únicamente el número de eventos y los errores.
 
-Este artículo trata solo el diseño técnico del chat de IA. La guía que pasa el contexto de la página de servicio al formulario también está implementada, y está organizada en [Diseño técnico para pasar contexto del CTA de servicio al formulario de contacto](/blog/service-cta-contact-prefill/).
+## Qué se ha separado en este artículo
 
-- Chat de IA: ordenar dudas en conversación y guiar con seguridad
-- CTA de servicio: pasar al formulario el contexto que el visitante estaba leyendo
+Este artículo se limita al diseño técnico del chat de IA para consultas. También implementamos un recorrido que transfiere al formulario el contexto de la consulta desde una página de servicios; se explica por separado en [Diseño técnico para transferir el contexto de la CTA de servicios al formulario de contacto](/blog/service-cta-contact-prefill/).
 
-Separarlos mejora la lectura y facilita enlaces internos posteriores.
+La razón es que son temas distintos.
+
+- Chat de IA: aclarar dudas mediante una conversación y orientar de forma segura
+- CTA de servicios: transferir al formulario el contexto del servicio que se está consultando
+
+El primero trata de IA, límites de API, prompts y representación segura. El segundo trata de la experiencia del formulario y del diseño del recorrido. Separarlos facilita la lectura y la incorporación posterior de enlaces internos.
 
 ## Resumen
 
-Para añadir un chat de IA a un sitio estático, diseñe primero el límite de API y el control de respuestas, antes de pulir la UI.
+Al integrar un chat de IA para consultas en un sitio estático, es más importante diseñar primero el límite de API y el control de las respuestas que la interfaz del chat.
 
-Las decisiones clave fueron:
+Estos son los aspectos que más ayudaron en la implementación.
 
-- Llamar a OpenAI desde Cloudflare Pages Function, no desde el navegador
-- Mantener pequeño el input y limitar historial y longitud
-- Construir contexto y URLs por locale en servidor
-- Escribir en el prompt lo que la IA no debe afirmar
-- Separar formulario, LINE y contacto directo
-- Añadir Origin check y rate limit
-- Renderizar enlaces Markdown tras `trim()` y con lista permitida
+- Llamar a OpenAI API desde Cloudflare Pages Function y no desde el navegador
+- Reducir la entrada del endpoint y limitar el historial y la longitud de los mensajes
+- Generar en el servidor la información del sitio y las URL por locale
+- Indicar en el prompt qué puede afirmar la IA y qué no
+- Separar las funciones del formulario, LINE y los datos de contacto directo
+- Incluir comprobaciones de Origin y limitación de frecuencia
+- Representar los enlaces Markdown mediante una lista de permitidos después de aplicar trim
 
-Un sitio estático puede tener un chat de consultas útil. Lo importante no es destacar la IA, sino ayudar al visitante a elegir el siguiente paso con seguridad.
+El chat de IA para consultas se puede implementar sin problemas incluso en un sitio estático. La clave no es hacer que la IA destaque, sino ayudar a los visitantes a elegir de forma segura qué hacer a continuación.

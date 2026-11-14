@@ -1,130 +1,132 @@
 ---
-title: "Renderizar con seguridad enlaces Markdown en respuestas de chat con IA"
-description: "Nota técnica sobre cómo convertir enlaces Markdown de respuestas de IA en HTML seguro. Separar parseo tolerante a espacios, trim de href, allowlist, DOM rendering, fallback y pruebas hace que el patrón sea reutilizable en otros sitios."
+title: "Diseño de implementación para renderizar de forma segura los enlaces Markdown de las respuestas de chat con IA"
+description: "Nota de implementación para convertir de forma segura a HTML los enlaces Markdown incluidos en las respuestas de un chat con IA. Al permitir espacios en blanco alrededor de la URL y tratar por separado el recorte mediante trim, la lista de permitidos, la creación del DOM, la alternativa de respaldo y los casos de prueba, se obtiene un renderizador fácil de reutilizar en otros sitios."
 date: 2026-06-07T14:30
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
-tags: ["Tecnología", "Sitio web", "AI", "Seguridad", "Astro"]
+tags: ["Tecnología", "Sitios web", "IA", "Seguridad", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
-  title: Punto clave
-  text: Las respuestas de IA no son HTML confiable. Aunque uses enlaces Markdown, recorta primero la URL, valídala con una allowlist y deja como texto los enlaces no permitidos.
+  title: Puntos clave de este artículo
+  text: Las respuestas de IA no son HTML de confianza. Aunque los enlaces Markdown resulten prácticos, el diseño debe recortar la URL antes de validarla con una lista de permitidos, y mostrar como texto aquello que no se pueda permitir, sin convertirlo en enlace.
 processFigure:
-  title: Flujo de renderizado de enlaces
+  title: Flujo de representación de enlaces en respuestas de IA
   steps:
-    - title: Text
-      description: Tratar la respuesta del modelo como texto plano.
+    - title: Texto
+      description: Trata primero la respuesta del modelo como texto sin formato.
       icon: i-lucide-message-square-text
       accent: brand
-    - title: Parse
-      description: Detectar solo el Markdown que el chat realmente soporta.
+    - title: Análisis
+      description: Extrae con un parser pequeño solo las expresiones Markdown necesarias.
       icon: i-lucide-brackets
       accent: amber
-    - title: Validate
-      description: Recortar href y permitir solo URLs internas o dominios aprobados.
+    - title: Validación
+      description: Aplica trim al href y permite solo las URL internas o de dominios autorizados.
       icon: i-lucide-shield-check
       accent: emerald
-    - title: Render
-      description: Crear elementos seguros con DOM API, no con innerHTML.
+    - title: Renderizado
+      description: Crea solo elementos seguros con la API del DOM, no con innerHTML.
       icon: i-lucide-code-2
       accent: slate
 compareTable:
-  title: Decisiones que conviene separar
+  title: Decisiones que conviene separar al renderizar enlaces Markdown
   before:
-    label: Renderizado laxo
+    label: Renderizado descuidado
     items:
-      - Poner respuestas de IA directamente en innerHTML
-      - Intentar implementar todo Markdown de una vez
-      - Fallar cuando la URL tiene espacios alrededor
-      - "Tratar URLs externas y javascript: como si fueran iguales"
+      - Insertar directamente la respuesta de IA en innerHTML
+      - Intentar implementar de una vez toda la especificación Markdown
+      - No poder convertir en enlace por los espacios que rodean la URL
+      - "Tratar las URL externas y javascript: de la misma manera"
   after:
     label: Renderizado pequeño y seguro
     items:
-      - Recibir respuestas como texto y convertir solo lo necesario en DOM
-      - Soportar solo el subconjunto usado por el chat
-      - Validar URLs después de trim
-      - Mantener URLs no permitidas como texto
+      - Recibir la respuesta como texto y convertir en elementos DOM solo las expresiones necesarias
+      - Admitir solo el Markdown usado en el chat
+      - Comprobar la seguridad de las URL después de recortarlas
+      - Mostrar como texto las URL no permitidas, sin convertirlas en enlaces
 checklist:
-  title: Checklist de implementación
+  title: Lista de comprobación para la implementación
   items:
-    - text: No confiar en respuestas de IA como HTML
-    - text: Aceptar espacios alrededor de URLs Markdown
-    - text: Hacer trim de href antes de validar
-    - text: Permitir solo rutas internas, origin actual y dominios necesarios
-    - text: Definir target y rel en enlaces externos
-    - text: Conservar enlaces no permitidos como texto
-    - text: Probar URLs peligrosas y Markdown roto
+    - text: No confiar en las respuestas de IA como HTML
+    - text: Permitir espacios antes y después de las URL de los enlaces Markdown
+    - text: Validar siempre href después de aplicar trim
+    - text: Permitir solo rutas internas, el mismo origen y los dominios externos necesarios
+    - text: Especificar target y rel en los enlaces externos
+    - text: Dejar como texto los enlaces no permitidos
+    - text: Probar no solo el caso correcto, sino también URL peligrosas y Markdown mal formado
 linkCards:
   - href: /blog/astro-ai-contact-chat/
-    title: Diseño técnico del chat de contacto con IA
-    description: Artículo base sobre respuestas de IA, API boundary y control de prompts.
+    title: Diseño técnico del chat de IA para consultas
+    description: Artículo principal sobre las respuestas de IA, los límites de la API y el control de prompts.
     icon: i-lucide-sparkles
   - href: /insights/cloudflare-pages-security/
-    title: Seguridad en Cloudflare Pages
-    description: Artículo relacionado sobre CSP y cabeceras de seguridad.
+    title: Configuración de seguridad de Cloudflare Pages
+    description: Artículo relacionado que organiza la CSP y las cabeceras de seguridad.
     icon: i-lucide-shield
   - href: /contact/
     title: Contacto
-    description: Página real donde se ubican el chat de IA y el formulario.
+    description: El recorrido real donde están el chat de IA y el formulario.
     icon: i-lucide-message-square
 faq:
   title: Preguntas frecuentes
   items:
     - question: ¿Basta con usar markdown-it o marked?
-      answer: Incluso usando una librería, hay que decidir cómo tratar HTML, qué destinos de enlace permitir, cómo añadir target y rel, y cómo rechazar URLs peligrosas. Para chat, un renderizador pequeño puede ser suficiente.
-    - question: ¿Permitir espacios alrededor de la URL es peligroso?
-      answer: El riesgo no está en los espacios. Lo importante es validar el href después de trim. Así toleras variaciones del modelo sin relajar la allowlist.
-    - question: ¿Hay que eliminar las URLs no permitidas?
-      answer: Normalmente dejarlas como texto facilita depurar y conserva contexto. Si la política exige ocultarlas, también puedes eliminar el enlace completo.
+      answer: Aunque se use una biblioteca, hay que diseñar por separado el tratamiento de la salida HTML, los destinos de enlace permitidos, la adición de target y rel y el rechazo de URL peligrosas. Para un chat, a veces basta con un renderizador pequeño hecho a medida.
+    - question: ¿Permitir espacios alrededor de las URL no resulta peligroso?
+      answer: Lo importante no es permitir espacios en sí, sino qué se permite después de aplicar trim. Si se valida el href ya recortado con una lista de permitidos, se puede mantener la seguridad y, a la vez, tolerar mejor las variaciones de formato del modelo.
+    - question: ¿Hay que eliminar las URL que no se pueden permitir?
+      answer: En muchos casos es más fácil depurar si se muestran como texto en vez de eliminarlas, y también se conserva el contexto de la respuesta para el usuario. Sin embargo, si el funcionamiento requiere ocultar por completo las cadenas sospechosas, también se puede optar por descartar todo el enlace.
 ---
 
-Si un enlace de IA queda como texto, pasa la misma entrada por análisis, validación de URL y renderizado DOM para localizar el fallo. Usa API de texto como [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) para las etiquetas y separa la autorización del enlace de la interpretación de HTML.
+Si los enlaces de una respuesta de IA siguen apareciendo como texto sin formato, primero pasa la misma entrada, en orden, por el análisis, la validación de URL y el renderizado en el DOM para identificar en qué etapa falla. Usa una API para texto como [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) para la cadena visible y no mezcles la decisión de convertirla en enlace con la interpretación de HTML; ese es el punto de partida para aplicarlo a un chat existente.
 
-Si un chat con IA responde `Consulta [Servicios]( /services/ )`, el enlace puede no renderizarse y el Markdown bruto puede quedar visible.
+Cuando un chat con IA responde «Para más información, consulta la [lista de servicios](/services/)», puede que no se muestre como enlace y la cadena Markdown quede tal cual.
 
-Acecore encontró este caso en el chat de contacto y ajustó el renderizador en [el PR que corrigió el renderizado de enlaces Markdown](https://github.com/acecore-systems/acecore-net/pull/99).
+En el sitio de Acecore también aparecieron enlaces Markdown con espacios alrededor de las URL en las respuestas del chat de IA para consultas, así que ajustamos el renderizador en la [PR que corrigió la representación de enlaces Markdown del chat con IA](https://github.com/acecore-systems/acecore-net/pull/99).
 
-Este artículo toma esa corrección pequeña como punto de partida para convertir respuestas de IA en DOM de forma segura.
+En este artículo tomamos esa pequeña corrección como punto de partida y resumimos cómo convertir de forma segura las respuestas de IA en DOM.
 
-## Las respuestas de IA no son HTML confiable
+## Las respuestas de IA no son HTML de confianza
 
-La salida del modelo debe tratarse como texto.
+Como premisa, trata las respuestas de IA como texto, no como HTML.
 
-En un chat son útiles los enlaces, negritas y listas, pero poner la respuesta en `innerHTML` permite que el navegador interprete cualquier cadena generada por el modelo.
+En una interfaz de chat, dan ganas de permitir enlaces, negrita y listas con viñetas. Pero, si insertas la respuesta tal cual en `innerHTML`, haces que el navegador interprete la cadena generada por el modelo.
 
-No necesitas implementar Markdown completo. Necesitas detectar solo las expresiones que el chat soporta y crear nodos DOM seguros.
+Lo necesario no es implementar Markdown completo. Basta con extraer de forma acotada solo las expresiones necesarias en el chat y crear únicamente un DOM seguro.
 
-## El problema no es solo el espacio
+## El problema no son solo los espacios
 
-El bug concreto era un enlace como:
+El fallo concreto que motivó esta corrección se producía con un enlace como el siguiente.
 
 ```md
-[Servicios](/services/)
+[サービス一覧](/services/)
 ```
 
-Una expresión regular estricta suele asumir que la URL no contiene espacios:
+Como Markdown, tiene sentido para una persona, pero si la parte de la URL se extrae con una expresión regular que la recoge como «una cadena sin espacios», no hay coincidencia.
+
+Antes de corregirlo, el enfoque era el siguiente.
 
 ```js
 /\[([^\]]+)\]\(([^)\s]+)\)/;
 ```
 
-`[^)\s]+` rechaza espacios, por lo que `( /services/ )` no se reconoce. La solución es tolerar espacios dentro del paréntesis y normalizar después.
+`[^)\s]+` no permite espacios, así que no puede reconocer `( /services/ )` como enlace. Por ello, permitimos espacios en blanco al principio y al final dentro de los paréntesis y luego aplicamos trim a la URL que realmente se utilizará.
 
 ```js
 /\[([^\]]+)\]\(\s*([^)]+?)\s*\)/;
 ```
 
-Pero relajar el parser no basta. Después hay que validar el valor normalizado.
+Lo importante aquí es no limitarse a flexibilizar la expresión regular. Después de hacerlo, siempre hay que normalizar y realizar la validación de seguridad.
 
-## Recorta href antes de validar
+## Validar href después de aplicar trim
 
-El orden debe ser estable:
+El orden de creación de los enlaces debe mantenerse fijo.
 
-1. Extraer label y raw href
-2. Ejecutar `trim()` sobre raw href
-3. Validar el href recortado con una allowlist
-4. Crear `<a>` solo si está permitido
+1. Extraer de Markdown la etiqueta y el href sin procesar
+2. Aplicar `trim()` al href sin procesar
+3. Validar el href ya recortado con la lista de permitidos
+4. Crear `<a>` solo si se permite
 
 ```js
 const href = String(rawHref || "").trim();
@@ -143,20 +145,24 @@ if (label && isSafeMarkdownHref(href)) {
 }
 ```
 
-Valida exactamente el mismo valor que insertas en el DOM. Si no, el control pierde fuerza.
+Se valida el valor que realmente se insertará en el DOM, no el valor anterior a `trim()`. Si el valor validado y el que se representa no coinciden, la comprobación de seguridad pierde eficacia.
 
-## La allowlist depende del producto
+## Definir la lista de permitidos según cada producto
 
-Cada sitio decide qué URLs puede mostrar su IA.
+Las URL que puede indicar el chat con IA varían según el sitio.
 
-| Tipo           | Ejemplo                   | Decisión                        |
-| -------------- | ------------------------- | ------------------------------- |
-| Ruta interna   | `/services/`              | Permitir                        |
-| Mismo origin   | `https://acecore.net/...` | Permitir                        |
-| LINE oficial   | `https://lin.ee/...`      | Permitir si es el canal oficial |
-| mailto         | `mailto:info@acecore.net` | Solo dirección fija             |
-| tel            | `tel:0120987370`          | Solo número fijo                |
-| Otros externos | Cualquier URL             | No enlazar por defecto          |
+En el chat de IA para consultas de Acecore, lo limitamos aproximadamente a estos casos.
+
+| Tipo           | Ejemplo                   | Decisión                                    |
+| -------------- | ------------------------- | ------------------------------------------- |
+| Ruta interna   | `/services/`              | Permitir                                    |
+| Mismo origen   | `https://acecore.net/...` | Permitir                                    |
+| LINE oficial   | `https://lin.ee/...`      | Permitir porque su propósito está claro     |
+| mailto         | `mailto:info@acecore.net` | Permitir solo los destinos fijos necesarios |
+| tel            | `tel:0120987370`          | Permitir solo los números fijos necesarios  |
+| Otras externas | URL cualquiera            | En principio, no convertir en enlace        |
+
+Un ejemplo de implementación sería este.
 
 ```js
 function isSafeMarkdownHref(rawHref) {
@@ -193,45 +199,60 @@ function isSafeMarkdownHref(rawHref) {
 }
 ```
 
-Un sitio de empleo puede permitir portales de reclutamiento; un SaaS puede permitir documentación y página de estado. La función debe ser propia de cada producto.
+Esta función debe adaptarse a cada sitio. Un sitio de contratación puede permitir plataformas de empleo; una tienda en línea, pagos o seguimiento de envíos; y un SaaS, documentación o una página de estado.
 
-## Fallback a texto para enlaces no permitidos
+## Dejar como texto los enlaces que no se puedan permitir
 
-Cuando un enlace no pasa la validación, no siempre conviene borrarlo.
+También hay que diseñar cómo tratar los enlaces que no pasan la comprobación de seguridad.
 
-En un chat de contacto, dejar el Markdown como texto conserva contexto para el usuario y ayuda a depurar qué intentó emitir el modelo.
+En el chat de consultas, resulta más fácil manejar el Markdown que no puede convertirse en enlace si se conserva como cadena original, en lugar de eliminarlo por completo. El usuario mantiene el contexto y el desarrollador puede comprobar «qué generó la IA».
 
-El renderizador debe saber crear enlaces seguros y también fallar de forma segura.
+En otras palabras, el analizador no solo debe «crear enlaces seguros», sino también «mostrar como texto normal aquello que no pueda crear de forma segura».
 
-## Pruebas mínimas
+## Preparar los casos de prueba desde el principio
 
-Prueba más que el caso feliz.
+Si solo se revisa el caso normal, es fácil pasar por alto problemas en este tipo de renderizadores.
 
-| Entrada                            | Resultado esperado                           |
-| ---------------------------------- | -------------------------------------------- |
-| `[Servicios](/services/)`          | Enlace interno                               |
-| `[Servicios]( /services/ )`        | Enlace interno después de trim               |
-| `[LINE]( https://lin.ee/example )` | Enlace externo permitido                     |
-| `[Malo](javascript:alert(1))`      | No se enlaza                                 |
-| `[Externo](https://example.com/)`  | No se enlaza si el dominio no está permitido |
-| `[Roto](/services/`                | Se muestra como texto                        |
+Comprueba como mínimo los siguientes casos.
 
-En PR #99 se confirmó que las variantes con y sin espacios producen la misma URL esperada.
+| Entrada                             | Resultado esperado                               |
+| ----------------------------------- | ------------------------------------------------ |
+| `[サービス一覧](/services/)`        | Se convierte en enlace interno                   |
+| `[サービス一覧]( /services/ )`      | Se recorta y se convierte en enlace interno      |
+| `[LINE]( https://lin.ee/example )`  | Se abre como enlace externo                      |
+| `[危険](javascript:alert(1))`       | No se convierte en enlace                        |
+| `[外部](https://example.com/)`      | No se convierte en enlace si no está permitido   |
+| `[壊れたリンク](/services/`         | Se muestra como texto                            |
+| `` `code` と [link]( /contact/ ) `` | Se renderizan por separado el código y el enlace |
 
-## No implementes todo Markdown por defecto
+En la PR #99 comprobamos que `[サービス一覧]( /services/ )`, `[サービス一覧](/services/)` y `[LINE]( https://lin.ee/DjIrdqj )` se tratan como la misma URL.
 
-Para un chat suele bastar con:
+## Decidir no implementar todo Markdown
+
+El Markdown que se usa en un chat con IA se puede limitar.
 
 - Párrafos
-- Listas
+- Listas con viñetas
 - Negrita
-- Código inline
+- Código en línea
 - Enlaces
 
-Tablas, imágenes, HTML crudo y notas al pie amplían demasiado la responsabilidad. Si usas una librería más adelante, la política de HTML y URLs sigue siendo una decisión separada.
+Si además se admiten tablas, imágenes, HTML, notas al pie y jerarquías profundas de encabezados, la responsabilidad del renderizador crece de golpe. En una interfaz de chat basta con ofrecer indicaciones legibles.
+
+Si llega a ser necesario, también se puede optar por una biblioteca Markdown consolidada. Aun así, hay que decidir por separado si se permite HTML, cómo restringir las URL y qué atributos añadir a los enlaces externos.
 
 ## Resumen
 
-Renderizar enlaces Markdown en respuestas de IA parece un detalle de UI, pero define cuánto confías en la salida del modelo.
+El renderizado de enlaces Markdown en un chat con IA parece un pequeño ajuste visual. Sin embargo, en realidad es una decisión de diseño de límites que determina hasta qué punto se confía en la salida de la IA.
 
-La pauta es simple: texto primero, subconjunto pequeño, trim antes de validar, allowlist estricta y fallback seguro.
+Los puntos importantes de la implementación son los siguientes.
+
+- Tratar las respuestas de IA como texto, no como HTML
+- Convertir en DOM solo el Markdown necesario
+- Permitir espacios en blanco alrededor de la URL de los enlaces Markdown
+- Comprobar la seguridad de href después de aplicar trim
+- Permitir mediante una lista de permitidos solo las URL internas y las URL externas necesarias
+- Dejar como texto los enlaces que no se puedan permitir
+- Probar el Markdown mal formado y las URL peligrosas
+
+Cuanto más se integra la IA en los recorridos de un sitio, más importante es cómo se representa el texto de respuesta. La compatibilidad práctica con Markdown y el control seguro de enlaces deben gestionarse juntos dentro de la misma implementación.

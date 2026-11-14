@@ -1,130 +1,132 @@
 ---
-title: "Markdown-Links in KI-Chat-Antworten sicher rendern"
-description: "Eine technische Notiz dazu, Markdown-Links aus KI-Chat-Antworten sicher in HTML zu überführen. Parsing mit Leerzeichen-Toleranz, href-trim, Allowlist, DOM-Rendering, Fallback und Tests werden getrennt betrachtet."
+title: "Implementierungsdesign für die sichere Darstellung von Markdown-Links in KI-Chat-Antworten"
+description: "Ein Implementierungsvermerk dazu, wie Markdown-Links in KI-Chat-Antworten sicher in HTML umgewandelt werden. Indem man Leerzeichen vor und nach URLs zulässt, aber trim, Allowlist, DOM-Erstellung, Fallback und Testfälle getrennt betrachtet, entsteht ein Renderer, der sich leicht auf andere Websites übertragen lässt."
 date: 2026-06-07T14:30
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
-tags: ["Technologie", "Website", "AI", "Sicherheit", "Astro"]
+tags: ["Technik", "Websites", "KI", "Sicherheit", "Astro"]
 image: "/images/insights/covers/ai-chat-markdown-link-safety-cover-v2.webp"
 callout:
   type: tip
-  title: Kernpunkt
-  text: KI-Antworten sind kein vertrauenswürdiges HTML. Auch bei Markdown-Links sollte die URL zuerst getrimmt, per Allowlist validiert und bei Ablehnung als Text belassen werden.
+  title: Die wichtigsten Punkte dieses Artikels
+  text: KI-Antworten sind kein vertrauenswürdiges HTML. Auch wenn Markdown-Links praktisch sind, sollten URLs zunächst getrimmt und dann anhand einer Allowlist geprüft werden; nicht zulässige URLs werden nicht verlinkt, sondern als Text beibehalten.
 processFigure:
-  title: Rendering-Ablauf für Links
+  title: Ablauf der Linkdarstellung für KI-Antworten
   steps:
     - title: Text
-      description: Die Modellantwort zuerst als reinen Text behandeln.
+      description: Eine Antwort des Modells zunächst als Klartext behandeln.
       icon: i-lucide-message-square-text
       accent: brand
-    - title: Parse
-      description: Nur die Markdown-Ausdrücke erkennen, die der Chat wirklich nutzt.
+    - title: Parsen
+      description: Nur die benötigten Markdown-Formen mit einem kleinen Parser erfassen.
       icon: i-lucide-brackets
       accent: amber
-    - title: Validate
-      description: href trimmen und nur interne URLs oder freigegebene Domains erlauben.
+    - title: Prüfen
+      description: href trimmen und nur interne URLs oder zulässige Domains durchlassen.
       icon: i-lucide-shield-check
       accent: emerald
-    - title: Render
-      description: Sichere Elemente mit der DOM API erzeugen, nicht mit innerHTML.
+    - title: Rendern
+      description: Mit der DOM-API statt mit innerHTML nur sichere Elemente erstellen.
       icon: i-lucide-code-2
       accent: slate
 compareTable:
-  title: Entscheidungen, die getrennt bleiben sollten
+  title: Entscheidungen bei der Darstellung von Markdown-Links, die getrennt getroffen werden sollten
   before:
-    label: Lockeres Rendering
+    label: Bei einer nachlässigen Darstellung
     items:
       - KI-Antworten direkt in innerHTML einsetzen
-      - Die gesamte Markdown-Spezifikation auf einmal implementieren
-      - Links mit Leerzeichen um die URL nicht erkennen
+      - Versuchen, die gesamte Markdown-Spezifikation auf einmal umzusetzen
+      - Wegen Leerzeichen vor oder nach der URL scheitert die Verlinkung
       - "Externe URLs und javascript: gleich behandeln"
   after:
-    label: Kleines und sicheres Rendering
+    label: Bei einer schlanken und sicheren Darstellung
     items:
-      - Antworten als Text empfangen und nur Nötiges in DOM umwandeln
-      - Nur die im Chat genutzte Markdown-Teilmenge unterstützen
-      - URLs nach trim validieren
-      - Nicht erlaubte URLs als Text belassen
+      - Antworten als Text entgegennehmen und nur die benötigten Ausdrucksformen in DOM-Elemente umwandeln
+      - Nur die Markdown-Formen unterstützen, die im Chat verwendet werden
+      - URL nach trim sicherheitsprüfen
+      - Nicht zulässige URLs nicht verlinken, sondern als Zeichenfolge anzeigen
 checklist:
-  title: Implementierungscheck
+  title: Einführungscheckliste
   items:
     - text: KI-Antworten nicht als HTML vertrauen
-    - text: Leerzeichen um Markdown-Link-URLs akzeptieren
-    - text: href immer vor der Validierung trimmen
-    - text: Nur interne Pfade, aktuelle Origin und nötige externe Domains erlauben
-    - text: target und rel für externe Links explizit setzen
-    - text: Abgelehnte Links als Text erhalten
-    - text: Gefährliche URLs und kaputtes Markdown testen
+    - text: Leerzeichen vor und nach URLs in Markdown-Links zulassen
+    - text: href immer erst nach dem trim prüfen
+    - text: Nur interne Pfade, denselben Origin und erforderliche externe Domains zulassen
+    - text: Bei externen Links target und rel explizit angeben
+    - text: Nicht zulässige Links als Text beibehalten
+    - text: Nicht nur Normalfälle, sondern auch gefährliche URLs und fehlerhaftes Markdown testen
 linkCards:
   - href: /blog/astro-ai-contact-chat/
-    title: Technisches Design des KI-Kontaktchats
-    description: Grundlagenartikel zu KI-Antworten, API-Grenze und Prompt-Steuerung.
+    title: Technisches Design für den KI-Chat zur Kontaktaufnahme
+    description: Ein übergeordneter Artikel zu KI-Antworten, API-Grenzen und Prompt-Steuerung.
     icon: i-lucide-sparkles
   - href: /insights/cloudflare-pages-security/
-    title: Cloudflare Pages Sicherheit
-    description: Verwandter Artikel zu CSP und Sicherheitsheadern.
+    title: Sicherheitseinstellungen für Cloudflare Pages
+    description: Ein verwandter Artikel zu CSP und Security-Headern.
     icon: i-lucide-shield
   - href: /contact/
     title: Kontakt
-    description: Die tatsächliche Seite mit KI-Chat und Formular.
+    description: Der tatsächliche Einstiegspunkt, auf dem KI-Chat und Formular eingebunden sind.
     icon: i-lucide-message-square
 faq:
-  title: Häufige Fragen
+  title: Häufig gestellte Fragen
   items:
-    - question: Reicht markdown-it oder marked?
-      answer: Auch mit Bibliothek müssen HTML-Ausgabe, erlaubte Linkziele, target und rel sowie die Ablehnung gefährlicher URLs gestaltet werden. Für einen Chat kann ein kleiner eigener Renderer genügen.
-    - question: Sind Leerzeichen um URLs gefährlich?
-      answer: Nicht die Leerzeichen sind das Risiko, sondern was nach dem Trim erlaubt wird. Validierung des getrimmten href hält die Allowlist streng.
-    - question: Sollte man abgelehnte URLs löschen?
-      answer: Meist ist Text besser für Debugging und Kontext. Eine strengere Policy kann den gesamten Link entfernen.
+    - question: Reicht es, markdown-it oder marked zu verwenden?
+      answer: Auch bei Verwendung einer Bibliothek müssen der Umgang mit der HTML-Ausgabe, die erlaubten Linkziele, das Hinzufügen von target und rel sowie das Zurückweisen gefährlicher URLs separat entworfen werden. Für Chat-Anwendungen kann ein kleiner eigener Renderer ausreichen.
+    - question: Ist es nicht gefährlich, Leerzeichen vor und nach URLs zuzulassen?
+      answer: Entscheidend ist nicht das Zulassen von Leerzeichen an sich, sondern was nach dem trim erlaubt wird. Wird das getrimmte href anhand einer Allowlist geprüft, bleibt die Sicherheit gewahrt und zugleich werden unterschiedliche Schreibweisen des Modells besser abgefangen.
+    - question: Sollten nicht zulässige URLs gelöscht werden?
+      answer: In vielen Fällen ist eine Textdarstellung einfacher zu debuggen als das Löschen und bewahrt auch für Nutzer den Antwortkontext. Wenn im Betrieb verdächtige Zeichenfolgen vollständig verborgen werden sollen, kann man jedoch entscheiden, den gesamten Link zu entfernen.
 ---
 
-Bleibt ein KI-Link als Text stehen, prüfen Sie dieselbe Eingabe nacheinander beim Parsen, bei der URL-Prüfung und beim DOM-Rendering. Verwenden Sie für Beschriftungen Text-APIs wie [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent), damit Linkfreigabe und HTML-Interpretation getrennt bleiben.
+Wenn ein Link in einer KI-Antwort als Zeichenfolge stehen bleibt, schicken Sie dieselbe Eingabe zunächst nacheinander durch Parsing, URL-Prüfung und DOM-Darstellung und ermitteln Sie, in welchem Schritt es scheitert. Verwenden Sie für den Anzeigetext eine Text-API wie [MDN: textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) und vermischen Sie nicht die Entscheidung, ob etwas verlinkt werden darf, mit der Interpretation von HTML – das ist der Ausgangspunkt für die Übertragung auf einen bestehenden Chat.
 
-Wenn ein KI-Chat `Siehe [Services]( /services/ )` ausgibt, kann der Link nicht gerendert werden und das rohe Markdown bleibt sichtbar.
+Wenn man den KI-Chat bittet, mit „Weitere Informationen finden Sie in der [Serviceübersicht](/services/).“ zu antworten, kann es vorkommen, dass der Inhalt nicht als Link erscheint und der Markdown-String unverändert stehen bleibt.
 
-Acecore traf diesen Fall im Kontakt-KI-Chat und passte den Renderer in [dem PR zur Korrektur des Markdown-Link-Renderings](https://github.com/acecore-systems/acecore-net/pull/99) an.
+Da sich in Antworten des KI-Chats zur Kontaktaufnahme auf der Acecore-Website auch Markdown-Links mit Leerzeichen vor oder nach der URL fanden, haben wir den Renderer in [PR zur Korrektur der Markdown-Linkdarstellung im KI-Chat](https://github.com/acecore-systems/acecore-net/pull/99) angepasst.
 
-Dieser Artikel nutzt diese kleine Korrektur als Einstieg, um KI-Antworten sicher in DOM umzuwandeln.
+Dieser Artikel nimmt diese kleine Korrektur zum Anlass und fasst die Überlegungen dazu zusammen, wie KI-Antworten sicher in DOM umgewandelt werden.
 
 ## KI-Antworten sind kein vertrauenswürdiges HTML
 
-Modellausgaben sollten als Text behandelt werden.
+Zunächst gilt: KI-Antworten behandeln wir als Text, nicht als HTML.
 
-Links, Fettschrift und Listen sind in einem Chat nützlich. Aber `innerHTML` lässt den Browser beliebige Modellstrings interpretieren.
+Im Chat-UI möchte man zumindest Links, Fettdruck und Aufzählungen unterstützen. Wenn man die Antwort aber direkt in `innerHTML` einsetzt, überlässt man dem Browser die Interpretation einer vom Modell erzeugten Zeichenfolge.
 
-Es braucht keine komplette Markdown-Implementierung. Ein kleiner Renderer, der nur unterstützte Ausdrücke erkennt und sichere DOM-Knoten erzeugt, ist oft besser.
+Wir müssen nicht das gesamte Markdown implementieren. Es genügt, nur die im Chat benötigten Ausdrucksformen in kleinem Umfang zu erkennen und ausschließlich sichere DOM-Elemente zu erstellen.
 
-## Das Problem ist nicht nur Leerraum
+## Das Problem sind nicht nur Leerzeichen
 
-Der konkrete Fehler war ein Link wie:
+Der unmittelbare Fehler sah so aus.
 
 ```md
-[Services](/services/)
+[サービス一覧](/services/)
 ```
 
-Eine strenge Regex geht oft von einer URL ohne Leerzeichen aus:
+Als Markdown ist das für Menschen verständlich, aber wenn man den URL-Teil mit einem regulären Ausdruck als „Zeichenfolge ohne Leerzeichen“ erfasst, wird kein Treffer gefunden.
+
+Vor der Korrektur sah der Ansatz so aus.
 
 ```js
 /\[([^\]]+)\]\(([^)\s]+)\)/;
 ```
 
-`[^)\s]+` lehnt Leerzeichen ab. Deshalb wird `( /services/ )` nicht erkannt. Die Korrektur toleriert Leerraum in den Klammern und normalisiert danach.
+Da `[^)\s]+` keine Leerzeichen zulässt, kann `( /services/ )` nicht als Link erfasst werden. Deshalb erlauben wir innerhalb der Klammern Leerraum am Anfang und Ende und trimmen anschließend die tatsächlich verwendete URL.
 
 ```js
 /\[([^\]]+)\]\(\s*([^)]+?)\s*\)/;
 ```
 
-Damit ist es aber nicht getan. Der normalisierte Wert muss validiert werden.
+Entscheidend ist, die Regex nicht einfach nur zu lockern. Danach müssen unbedingt Normalisierung und Sicherheitsprüfung folgen.
 
-## href vor der Validierung trimmen
+## href erst nach trim prüfen
 
-Der Ablauf sollte fest sein:
+Die Reihenfolge beim Erstellen eines Links steht fest.
 
-1. Label und raw href aus Markdown extrahieren
-2. `trim()` auf raw href anwenden
-3. Getrimmtes href per Allowlist validieren
-4. `<a>` nur bei erlaubtem href erzeugen
+1. Label und raw href aus dem Markdown auslesen
+2. raw href mit `trim()` trimmen
+3. Den getrimmten href anhand einer Allowlist prüfen
+4. Nur wenn er zulässig ist, `<a>` erstellen
 
 ```js
 const href = String(rawHref || "").trim();
@@ -143,20 +145,24 @@ if (label && isSafeMarkdownHref(href)) {
 }
 ```
 
-Der validierte Wert muss derselbe sein, der ins DOM geschrieben wird.
+Wir prüfen nicht den Wert vor `trim()`, sondern den Wert, den wir tatsächlich ins DOM einfügen. Wenn sich der geprüfte Wert von dem dargestellten Wert unterscheidet, verliert die Sicherheitsprüfung an Aussagekraft.
 
-## Die Allowlist ist produktspezifisch
+## Die Allowlist je nach Produkt festlegen
 
-Jede Site muss entscheiden, welche URLs ihre KI anzeigen darf.
+Welche URLs der KI-Chat verlinken darf, unterscheidet sich von Website zu Website.
 
-| Typ              | Beispiel                  | Entscheidung                   |
-| ---------------- | ------------------------- | ------------------------------ |
-| Interner Pfad    | `/services/`              | Erlauben                       |
-| Gleiche Origin   | `https://acecore.net/...` | Erlauben                       |
-| Offizielles LINE | `https://lin.ee/...`      | Als offizieller Kanal erlauben |
-| mailto           | `mailto:info@acecore.net` | Nur feste Adresse              |
-| tel              | `tel:0120987370`          | Nur feste Nummer               |
-| Andere externe   | Beliebige URL             | Standardmäßig nicht verlinken  |
+Der KI-Chat für Kontaktanfragen von Acecore beschränkt sich ungefähr auf folgende Bereiche.
+
+| Typ                    | Beispiel                  | Entscheidung                            |
+| ---------------------- | ------------------------- | --------------------------------------- |
+| Interner Pfad          | `/services/`              | Zulassen                                |
+| Gleicher Origin        | `https://acecore.net/...` | Zulassen                                |
+| Offizieller LINE-Kanal | `https://lin.ee/...`      | Zulassen, da der Zweck eindeutig ist    |
+| mailto                 | `mailto:info@acecore.net` | Nur notwendige feste Empfänger zulassen |
+| tel                    | `tel:0120987370`          | Nur notwendige feste Nummern zulassen   |
+| Sonstige externe URLs  | Beliebige URL             | Grundsätzlich nicht verlinken           |
+
+Ein Implementierungsbeispiel:
 
 ```js
 function isSafeMarkdownHref(rawHref) {
@@ -193,43 +199,60 @@ function isSafeMarkdownHref(rawHref) {
 }
 ```
 
-Eine Recruiting-Seite kann Jobportale erlauben, ein SaaS Dokumentation und Statusseite. Die Funktion muss zur Policy des Produkts passen.
+Diese Funktion sollte je nach Website angepasst werden. Eine Karrierewebsite könnte Jobportale erlauben, ein E-Commerce-Shop Zahlungsdienste oder Sendungsverfolgung, und ein SaaS-Angebot vielleicht Dokumentation oder Statusseiten.
 
-## Fallback auf Text
+## Nicht zulässige Links als Text beibehalten
 
-Wenn ein Link die Validierung nicht besteht, ist Löschen nicht immer die beste Wahl.
+Auch der Umgang mit Links, die die Sicherheitsprüfung nicht bestehen, muss festgelegt werden.
 
-Im Kontaktchat erhält Text den Kontext für Nutzer und zeigt Entwicklern, was das Modell ausgeben wollte. Der Renderer muss sichere Links erzeugen und sicher fehlschlagen können.
+Beim KI-Chat für Kontaktanfragen ist es einfacher, Markdown, das sich nicht verlinken lässt, als ursprüngliche Zeichenfolge beizubehalten, statt es vollständig zu entfernen. So bleibt der Kontext für Nutzer erhalten, und Entwickler können nachvollziehen, was die KI ausgegeben hat.
 
-## Fehlerfälle testen
+Der Parser ist also nicht nur dafür verantwortlich, sichere Links zu erstellen, sondern auch dafür, sie als normalen Text auszugeben, wenn sie sich nicht sicher erstellen lassen.
 
-Mindestens diese Fälle sollten abgedeckt sein:
+## Testfälle von Anfang an vorbereiten
 
-| Eingabe                            | Erwartung                            |
-| ---------------------------------- | ------------------------------------ |
-| `[Services](/services/)`           | Interner Link                        |
-| `[Services]( /services/ )`         | Interner Link nach trim              |
-| `[LINE]( https://lin.ee/example )` | Erlaubter externer Link              |
-| `[Böse](javascript:alert(1))`      | Kein Link                            |
-| `[Extern](https://example.com/)`   | Kein Link, wenn Domain nicht erlaubt |
-| `[Kaputt](/services/`              | Anzeige als Text                     |
+Bei dieser Art Renderer übersieht man leicht Fehler, wenn man nur den Erfolgsfall betrachtet.
 
-Im PR #99 wurde bestätigt, dass Varianten mit und ohne Leerzeichen auf dieselbe erwartete URL führen.
+Mindestens die folgenden Fälle sollten geprüft werden.
 
-## Nicht ganz Markdown standardmäßig implementieren
+| Eingabe                             | Erwartetes Ergebnis                      |
+| ----------------------------------- | ---------------------------------------- |
+| `[サービス一覧](/services/)`        | Ergibt einen internen Link               |
+| `[サービス一覧]( /services/ )`      | Wird getrimmt und zu einem internen Link |
+| `[LINE]( https://lin.ee/example )`  | Wird als externer Link geöffnet          |
+| `[危険](javascript:alert(1))`       | Wird nicht verlinkt                      |
+| `[外部](https://example.com/)`      | Wird nicht verlinkt, wenn nicht zulässig |
+| `[壊れたリンク](/services/`         | Wird als Text angezeigt                  |
+| `` `code` と [link]( /contact/ ) `` | Code und Link werden jeweils gerendert   |
 
-Für Chat reicht meist:
+In PR #99 haben wir bestätigt, dass `[サービス一覧]( /services/ )`, `[サービス一覧](/services/)` und `[LINE]( https://lin.ee/DjIrdqj )` als dieselbe URL behandelt werden.
+
+## Warum wir nicht das gesamte Markdown implementieren
+
+Das in einem KI-Chat verwendete Markdown lässt sich einschränken.
 
 - Absätze
-- Listen
-- Fett
+- Aufzählungen
+- Fettdruck
 - Inline-Code
 - Links
 
-Tabellen, Bilder, rohes HTML und Fußnoten vergrößern den Scope schnell. Selbst mit einer Bibliothek bleiben HTML- und URL-Policy eigene Entscheidungen.
+Wenn auch Tabellen, Bilder, HTML, Fußnoten und tiefe Überschriftenhierarchien unterstützt werden, wächst der Verantwortungsbereich des Renderers rapide. Für ein Chat-UI reicht es, Informationen gut lesbar vermitteln zu können.
 
-## Zusammenfassung
+Bei Bedarf kann man sich auch für eine bewährte Markdown-Bibliothek entscheiden. Doch auch dann muss separat festgelegt werden, ob HTML erlaubt ist, wie URLs beschränkt werden und welche Attribute externe Links erhalten.
 
-Markdown-Link-Rendering in KI-Antworten wirkt wie ein kleines UI-Detail, legt aber die Vertrauensgrenze für Modellausgaben fest.
+## Fazit
 
-Praktisch heißt das: erst Text, kleine Teilmenge, trim vor Validierung, strenge Allowlist und sicherer Fallback.
+Die Darstellung von Markdown-Links im KI-Chat wirkt wie eine kleine visuelle Korrektur. Tatsächlich ist sie jedoch eine Frage der Grenzziehung: Wie weit vertrauen wir der KI-Ausgabe?
+
+Bei der Umsetzung sind folgende Punkte wichtig.
+
+- KI-Antworten als Text und nicht als HTML behandeln
+- Nur das benötigte Markdown in kleinem Umfang in DOM-Elemente umwandeln
+- Leerzeichen vor und nach URLs in Markdown-Links zulassen
+- href trimmen und erst danach die Sicherheitsprüfung durchführen
+- Mit einer Allowlist nur interne und erforderliche externe URLs zulassen
+- Nicht zulässige Links als Text beibehalten
+- Fehlerhaftes Markdown und gefährliche URLs testen
+
+Je stärker KI in die Nutzerführung einer Website eingebunden wird, desto wichtiger ist es, wie Antworttexte dargestellt werden. Komfortable Markdown-Unterstützung und sichere Linkkontrolle sollten gemeinsam in derselben Implementierung behandelt werden.
