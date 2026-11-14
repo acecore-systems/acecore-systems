@@ -1,87 +1,57 @@
-name: Submit OpenAI Translation Batch
+name: One-off SEO article translation submission
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - src/data/**/*.json
-      - src/content/insights/*.md
-      - src/i18n/contact-form.ts
-      - src/i18n/ui.ts
   workflow_dispatch:
-    inputs:
-      retry_batch_id:
-        description: "既存の完了Batchで検証に失敗した分だけを再翻訳する（通常投入は空欄）"
-        required: false
-        default: ""
-        type: string
-      retry_dry_run:
-        description: "再試行対象の件数確認だけ行い、新しいBatchは作らない"
-        required: false
-        default: true
-        type: boolean
-      retry_max_requests:
-        description: "dry-runで件数を確認した後の再試行上限（既定10、最大20）"
-        required: false
-        default: "10"
-        type: string
 
 permissions:
   contents: read
-  pull-requests: write
+  actions: read
 
 jobs:
   submit:
+    if: github.repository == 'acecore-systems/acecore-systems' && github.ref == 'refs/heads/codex/seo-article-batch-20261114' && github.run_attempt == 1
     runs-on: ubuntu-latest
     concurrency:
       group: openai-translation-batch-submit
       cancel-in-progress: false
-
     steps:
-      - name: Check out repository
+      - name: Check out one-off branch
         uses: actions/checkout@v7
         with:
-          fetch-depth: 0
-
+          persist-credentials: false
+      - name: Check out fixed source
+        uses: actions/checkout@v7
+        with:
+          ref: 022dafb3b8f1bdfec68a2cb501d6eee2697c8649
+          path: source-main
+          persist-credentials: false
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Wait for consecutive source edits
-        if: github.event_name != 'workflow_dispatch' || inputs.retry_batch_id == ''
-        run: sleep 900
-
-      - name: Use current main as the source version
+      - name: Offline scope validation
         run: |
-          git fetch origin main
-          git checkout --detach origin/main
-
-      - name: Submit OpenAI Batch
+          node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs dry-run source-main
+          node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs self-test source-main
+      - name: Verify prior intent and existing batches
         env:
-          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
-          RETRY_BATCH_ID: ${{ inputs.retry_batch_id }}
-          RETRY_DRY_RUN: ${{ inputs.retry_dry_run }}
-          RETRY_MAX_REQUESTS: ${{ inputs.retry_max_requests }}
-        run: |
-          if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
-            echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was submitted."
-            exit 0
-          fi
-          if [ -n "$RETRY_BATCH_ID" ]; then
-            retry_args=(--batch-id="$RETRY_BATCH_ID" --max-retry-requests="${RETRY_MAX_REQUESTS:-10}")
-            if [ "$RETRY_DRY_RUN" = "true" ]; then
-              retry_args+=(--dry-run)
-            fi
-            node --experimental-strip-types scripts/openai-translation-batch.mjs retry "${retry_args[@]}"
-          else
-            node --experimental-strip-types scripts/openai-translation-batch.mjs submit --head=HEAD
-          fi
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
+          INTENT_PATH: ${{ runner.temp }}/seo-article-intent.json
+        run: node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs prepare source-main
+      - name: Save submission intent
+        id: intent
+        uses: actions/upload-artifact@v7
+        with:
+          name: seo-article-eight-locale-batch-intent-20261114-v1
+          path: ${{ runner.temp }}/seo-article-intent.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Recheck and submit once
+        if: steps.intent.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
+          INTENT_PATH: ${{ runner.temp }}/seo-article-intent.json
+          INTENT_UPLOADED: ${{ steps.intent.outcome }}
+        run: node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs submit source-main
