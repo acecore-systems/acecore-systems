@@ -19,12 +19,32 @@ const baseline = Object.fromEntries(
   ]),
 );
 
+const newStrings = new Map([
+  [
+    "[\"fr\",[\"serviceDetails\",\"website\",\"offerings\",\"0\",\"includes\",\"3\"]]",
+    "Compatibilité avec les smartphones, actualités modifiables, SEO de base et formulaire de contact"
+  ],
+  [
+    "[\"fr\",[\"serviceDetails\",\"website\",\"faqs\",\"3\",\"answer\"]]",
+    "Nous mettons en place le SEO de base et facilitons la navigation. Nous ne garantissons ni le classement dans les résultats de recherche, ni le trafic, ni les ventes, ni le nombre de demandes. Nous étudions les améliorations dont les effets peuvent être mesurés."
+  ],
+  [
+    "[\"fr\",[\"serviceDetails\",\"website\",\"faqs\",\"4\",\"question\"]]",
+    "Le CMS, le SEO et le formulaire sont-ils facturés séparément ?"
+  ],
+  [
+    "[\"fr\",[\"serviceDetails\",\"website\",\"faqs\",\"4\",\"answer\"]]",
+    "Le CMS pour les actualités, le SEO de base et le formulaire de contact font partie du prix de création du site. Aucun supplément par fonctionnalité ne s’ajoute. Les tarifs affichés séparément concernent les demandes qui dépassent le périmètre standard. Nous en définissons le périmètre avant d’établir un devis."
+  ]
+]);
+
 const diagnostics = `
-export function repairOverlayStrings(expected, baseline) {
+export function repairOverlayStrings(expected, baseline, newStrings) {
   const tree = readSourceTree(sourceFiles);
   const allowed = new Set(expected.map((item) => JSON.stringify(item)));
   const pending = new Map();
   const repaired = [];
+  let newlyTranslated = 0;
   for (const locale of translatedLocales) {
     const file = "src/i18n/content/" + locale + ".json";
     const overlay = readJson(file);
@@ -40,8 +60,11 @@ export function repairOverlayStrings(expected, baseline) {
             throw new Error("Unexpected i18n issue at " + locale + ":" + parts.join("/"));
           }
         }
-        const original = parts.reduce((node, part) => node?.[part], baseline[locale]);
-        validateOverlayNode(source, original, "current main translation", key, locale);
+        const previous = parts.reduce((node, part) => node?.[part], baseline[locale]);
+        const replacement = newStrings.get(JSON.stringify([locale, parts]));
+        const original = replacement ?? previous;
+        validateOverlayNode(source, original, "replacement at " + locale + ":" + parts.join("/"), key, locale);
+        if (replacement) newlyTranslated += 1;
         const parent = parts.slice(0, -1).reduce((node, part) => node[part], overlay);
         parent[key] = original;
         repaired.push([locale, parts]);
@@ -57,18 +80,18 @@ export function repairOverlayStrings(expected, baseline) {
   if (allowed.size || repaired.length !== expected.length) {
     throw new Error("The set of identified i18n issues changed");
   }
-  return { pending, repaired };
+  return { pending, repaired, newlyTranslated };
 }
 `;
 
 try {
   writeFileSync(temporaryPath, validator.slice(0, entry) + diagnostics, { flag: "wx" });
   const { repairOverlayStrings } = await import(pathToFileURL(temporaryPath).href);
-  const { pending, repaired } = repairOverlayStrings(expected, baseline);
+  const { pending, repaired, newlyTranslated } = repairOverlayStrings(expected, baseline, newStrings);
   for (const [file, overlay] of pending) {
     writeFileSync(file, JSON.stringify(overlay, null, 2) + "\n");
   }
-  console.log(JSON.stringify({ retainedValidatedBaselineFields: repaired.length }));
+  console.log(JSON.stringify({ retainedValidatedBaselineFields: repaired.length - newlyTranslated, newlyTranslatedFields: newlyTranslated }));
 } finally {
   unlinkSync(temporaryPath);
 }
