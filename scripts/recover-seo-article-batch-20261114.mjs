@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { createInsightRequest, decodeMetadata, prepareBatchTranslations } from "./openai-translation-batch.mjs";
-import { restoreTranslationText } from "./translation-protected-text.mjs";
+import { protectTranslationText, restoreTranslationText } from "./translation-protected-text.mjs";
 import { calculateTranslationSourceHash } from "./i18n-source-hash.mjs";
 import { hashText } from "./stage-seo-translation.mjs";
 
@@ -82,6 +82,46 @@ function inspectRows(rows, source) {
   }
   return {succeeded, failed:failures.length, failures};
 }
+
+function patchGerman(rows, source) {
+  const before = inspectRows(rows, source);
+  assert.equal(before.succeeded, 7);
+  assert.equal(before.failed, 1);
+  assert.equal(before.failures[0].locale, "de");
+  assert.equal(before.failures[0].reason, "numeric value changed");
+  const numbers = before.failures[0].numbers;
+  assert.deepEqual(numbers.extra, [{value:"26.9.2026",count:1},{value:"29.7.2026",count:3},{value:"6.10.2026",count:1}]);
+  assert.deepEqual(numbers.missing, [{value:"10",count:1},{value:"2026",count:5},{value:"26",count:1},{value:"29",count:3},{value:"6",count:1},{value:"7",count:3},{value:"9",count:1}]);
+  const result = rows.map((row) => row);
+  const index = rows.findIndex((row) => decodeMetadata(row.custom_id).locale === "de");
+  assert.ok(index >= 0);
+  const row = structuredClone(rows[index]);
+  const body = row.response.body;
+  const texts = typeof body.output_text === "string" ? [{object:body,key:"output_text"}] : (body.output ?? []).flatMap((item) => item.content ?? []).filter((item) => typeof item.text === "string").map((item) => ({object:item,key:"text"}));
+  assert.equal(texts.length, 1);
+  const parsed = JSON.parse(texts[0].object[texts[0].key]);
+  assert.equal(typeof parsed.markdown, "string");
+  const tokens = protectTranslationText(source).tokens;
+  const expected = new Map([["26.9.2026",1],["29.7.2026",3],["6.10.2026",1]]);
+  const counts = new Map();
+  const marker = "\\{ACECORE_KEEP_[^{}\\r\\n]+\\}";
+  const pattern = new RegExp(`(${marker})\\.(${marker})\\.(${marker})`, "gu");
+  parsed.markdown = parsed.markdown.replace(pattern, (match, first, second, third) => {
+    const date = [first, second, third].map((token) => tokens.get(token)).join(".");
+    if (!expected.has(date)) return match;
+    counts.set(date, (counts.get(date) ?? 0) + 1);
+    return `${first}. ${second}. ${third}`;
+  });
+  const actualCounts = [...expected.keys()].map((date) => ({date,count:counts.get(date) ?? 0}));
+  if (actualCounts.some(({date,count}) => count !== expected.get(date))) {
+    console.log(JSON.stringify({error:"date_marker_shape_mismatch", shape:"NUMBER.NUMBER.NUMBER", counts:actualCounts}));
+    throw new Error("unexpected date marker count");
+  }
+  texts[0].object[texts[0].key] = JSON.stringify(parsed);
+  result[index] = row;
+  return result;
+}
+
 async function get(path) {
   let response;
   try { response = await fetch(`https://api.openai.com/v1${path}`, {headers:{Authorization:`Bearer ${process.env.OPENAI_TRANSLATION_API_KEY}`}, redirect:"error", signal:AbortSignal.timeout(30000)}); }
@@ -113,7 +153,8 @@ async function inspect(source, expectedIds) {
   identitySet(input, expectedIds);
   const output = parseRows(await (await get(`/files/${encodeURIComponent(batch.output_file_id)}/content`)).text());
   identitySet(output, expectedIds);
-  return inspectRows(output, source);
+  assert.ok(Number.isSafeInteger(batch.completed_at) && batch.completed_at > 0);
+  return {batch, output};
 }
 async function main() {
   const mode = process.argv[2];
@@ -130,12 +171,39 @@ async function main() {
     const data=JSON.parse(bad[6].response.body.output_text); data.markdown += "\n Extra 987654321.\n"; bad[6].response.body.output_text=JSON.stringify(data);
     const report=inspectRows(bad,source);
     assert.equal(report.succeeded,7); assert.equal(report.failed,1); assert.equal(report.failures[0].locale,"de"); assert.deepEqual(report.failures[0].numbers.extra,[{value:"987654321",count:1}]);
+    const damaged = structuredClone(rows);
+    const translated = JSON.parse(damaged[6].response.body.output_text);
+    const tokenMap = protectTranslationText(source).tokens;
+    const japaneseDate = /(\{ACECORE_KEEP_[^{}\r\n]+\})年(\{ACECORE_KEEP_[^{}\r\n]+\})月(\{ACECORE_KEEP_[^{}\r\n]+\})日/gu;
+    translated.markdown = translated.markdown.replace(japaneseDate, (match, year, month, day) => {
+      const date = [day,month,year].map((token) => tokenMap.get(token)).join(".");
+      return ["26.9.2026","29.7.2026","6.10.2026"].includes(date) ? `${day}.${month}.${year}` : match;
+    });
+    damaged[6].response.body.output_text = JSON.stringify(translated);
+    const repaired = patchGerman(damaged, source);
+    assert.equal(prepareBatchTranslations(repaired, fixed.sourceHash).size, 8);
+    for (let i=0;i<8;i++) if(i!==6) assert.equal(repaired[i],damaged[i]);
+    const fewer = structuredClone(damaged);
+    const fewerData = JSON.parse(fewer[6].response.body.output_text);
+    let fixedOne = false;
+    fewerData.markdown = fewerData.markdown.replace(/(\{ACECORE_KEEP_[^{}\r\n]+\})\.(\{ACECORE_KEEP_[^{}\r\n]+\})\.(\{ACECORE_KEEP_[^{}\r\n]+\})/gu,(match,a,b,c)=>{ if (!fixedOne && [a,b,c].map((token)=>tokenMap.get(token)).join(".")==="29.7.2026") {fixedOne=true;return `${a}. ${b}. ${c}`;} return match;});
+    assert.ok(fixedOne);
+    fewer[6].response.body.output_text = JSON.stringify(fewerData);
+    assert.throws(()=>patchGerman(fewer,source));
     assert.throws(()=>identitySet([...rows.slice(0,7),rows[0]],ids));
     assert.throws(()=>identitySet(rows.slice(0,7),ids));
     console.log("offline validation passed"); return;
   }
-  assert.equal(mode,"inspect", "unsupported mode");
-  console.log(JSON.stringify(await inspect(source,ids)));
+  assert.ok(mode === "inspect" || mode === "assemble", "unsupported mode");
+  const {batch,output} = await inspect(source,ids);
+  if (mode === "inspect") { console.log(JSON.stringify(inspectRows(output,source))); return; }
+  const patched = patchGerman(output,source);
+  const prepared = prepareBatchTranslations(patched,fixed.sourceHash);
+  const expectedPaths = new Set(locales.map((locale) => `src/content/insights/${locale}/astro-i18n-blog-translation.md`.replaceAll("/", process.platform === "win32" ? "\\" : "/")));
+  assert.equal(prepared.size, 8);
+  for (const path of prepared.keys()) assert.ok(expectedPaths.has(path));
+  for (const [path,content] of prepared) writeFileSync(path,content,"utf8");
+  console.log(JSON.stringify({batchId:batch.id,acceptedDate:batch.created_at,completedAt:batch.completed_at,status:batch.status,count:batch.request_counts.total,retained:7,patched:1,occurrences:5,locale:"de"}));
 }
 main().catch((error) => {
   const message=String(error?.message ?? "");
