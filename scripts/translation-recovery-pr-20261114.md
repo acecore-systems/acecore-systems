@@ -8,3 +8,5 @@
 公開前の i18n 検証で不一致が見つかった238箇所のうち234箇所には、現行の日本語原文に対して既存の検証を通る main の訳文を再利用しました。残る4箇所はサイト制作ページのフランス語訳を補いました。価格の数値は展開後の金額を照合しています。 [i18n 診断](https://github.com/acecore-systems/acecore-systems/actions/runs/43568804470)
 
 原文の二重バッククォートの例はそのまま保持し、別途取り込んだ Markdown 検証修正で正しいコード範囲を判定します。 [検証修正 PR #185](https://github.com/acecore-systems/acecore-systems/pull/185)
+
+別記事の翻訳待ち SEO 改訂は既存の旧正本と訳文を保持し、今回の更新対象に含めていません。 [翻訳状態の修正 PR #186](https://github.com/acecore-systems/acecore-systems/pull/186)

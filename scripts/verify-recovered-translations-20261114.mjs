@@ -5,6 +5,7 @@ import { pathToFileURL } from "node:url";
 
 const fromMain = (file) => import(pathToFileURL(resolve("scripts", file)).href);
 const { calculateTranslationSourceHash, translatedLocales } = await fromMain("i18n-source-hash.mjs");
+const { loadPending, pendingSourceOverrides } = await fromMain("stage-seo-translation.mjs");
 const { validateInsightTranslation } = await fromMain("openai-translation-batch.mjs");
 const { hasOnlyAllowedTranslationFiles } = await fromMain("merge-openai-translation-pr.mjs");
 const read = (file) => readFileSync(file, "utf8");
@@ -28,7 +29,15 @@ if (!hasOnlyAllowedTranslationFiles(files) || !files.includes("src/i18n/translat
   throw new Error("Unexpected publication files");
 }
 const state = JSON.parse(read("src/i18n/translation-state.json"));
-if (calculateTranslationSourceHash(process.cwd()) !== hash || state.sourceHash !== hash ||
+const pendingRevisions = Object.keys(loadPending(process.cwd()));
+const sourceOverrides = pendingSourceOverrides(process.cwd());
+const expectedPendingArticle = "src/content/insights/astro-i18n-blog-translation.md";
+if (pendingRevisions.length !== 1 || pendingRevisions[0] !== expectedPendingArticle ||
+    sourceOverrides.size !== 1 || !sourceOverrides.has(expectedPendingArticle)) {
+  throw new Error("The existing pending SEO revision changed");
+}
+if (calculateTranslationSourceHash(process.cwd()) !== hash ||
+    state.sourceHash !== calculateTranslationSourceHash(process.cwd(), {sourceOverrides}) ||
     Object.keys(state.pendingContent ?? {}).length !== 0 ||
     Object.keys(state.pendingInsights ?? {}).length !== 0 ||
     state.locales.length !== translatedLocales.length ||
@@ -44,4 +53,4 @@ for (const slug of articles) {
   }
 }
 
-console.log("Verified the formatted files, exact sourceHash, translation state and Markdown invariants for both articles in all 8 locales.");
+console.log("Verified the formatted files, the live sourceHash, the retained pending SEO revision, and Markdown invariants for both articles in all 8 locales.");
