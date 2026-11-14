@@ -19,6 +19,7 @@ import { contactFormCopy } from "../src/i18n/contact-form.ts";
 import { ui } from "../src/i18n/ui.ts";
 import { calculateTranslationSourceHash } from "./i18n-source-hash.mjs";
 import { validatePendingInsights } from "./pending-insights.mjs";
+import { withoutInlineCode } from "./inline-code-prose.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const siteOrigin = "https://systems.acecore.net";
@@ -408,10 +409,11 @@ function getScalar(frontmatter, key) {
 }
 
 function proseWithoutCode(markdown) {
-  return markdown
-    .replace(/^---\s*$[\s\S]*?^---\s*$/mu, "")
-    .replace(/```[\s\S]*?```/gu, "")
-    .replace(/`[^`\r\n]*`/gu, "")
+  return withoutInlineCode(
+    markdown
+      .replace(/^---\s*$[\s\S]*?^---\s*$/mu, "")
+      .replace(/```[\s\S]*?```/gu, ""),
+  )
     .replace(/!\[([^\]]*)\]\([^)]+\)/gu, "$1")
     .replace(/\[([^\]]+)\]\([^)]+\)/gu, "$1")
     .replace(/<[^>]+>/gu, "")
