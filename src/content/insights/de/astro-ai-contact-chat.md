@@ -1,108 +1,116 @@
 ---
-title: "Technisches Design für einen KI-Kontaktchat in einer Astro-Website"
-description: "Referenzdesign vom Juni 2026. Ein praktischer Leitfaden für einen KI-Kontaktchat in einer statischen Astro + Cloudflare Pages Website mit der OpenAI Responses API. Behandelt werden API-Grenzen, Website-Kontext, Prompt-Steuerung, locale-bezogene URLs, Origin-Prüfung, Rate Limiting und sicheres Rendern von Markdown-Links."
+title: "KI-Kontaktchat in eine Astro-Website integrieren: Architektur und Umsetzung"
+description: "Referenzarchitektur mit Stand 6/2026. Dieser Artikel zeigt, wie sich ein KI-Kontaktchat mit der OpenAI Responses API in eine statische Website mit Astro und Cloudflare Pages integrieren lässt. Er behandelt die API-Grenze, den Website-Kontext, die Regeln im Prompt, sprachabhängige URLs, die Origin-Prüfung, Anfragelimits und die sichere Darstellung von Markdown-Links. Das Muster lässt sich auf andere Websites übertragen."
 date: 2026-06-07T12:00
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
-tags: ["Technologie", "Cloudflare", "Website", "AI", "Services"]
+tags: ["Technik", "Cloudflare", "Website", "KI", "Dienstleistungen"]
 image: "/images/insights/covers/astro-ai-contact-chat-cover-v2.webp"
 callout:
   type: info
-  title: Kernpunkt
-  text: Der KI-Kontaktchat ist kein freies Antwortfeld. Er ist eine kleine Anwendung, die öffentliche Website-Informationen nutzt, um Besucher zum passenden nächsten Schritt zu führen. API-Schlüssel, Prompts, Kontaktdaten und Markdown-Rendering werden serverseitig und über Allow-Lists gesteuert.
+  title: Das Wichtigste
+  text: Der KI-Kontaktchat ist eine kleine Anwendung, die Besucher anhand veröffentlichter Website-Informationen zum passenden nächsten Schritt führt. Der Server und explizite Freigabelisten regeln den Umgang mit API-Schlüsseln, Prompts, Kontaktdaten und Markdown.
 processFigure:
-  title: Referenzarchitektur
+  title: Referenzarchitektur des KI-Kontaktchats
   steps:
     - title: Widget
-      description: Das Astro-Chat-UI sendet nur Frage, aktuellen locale und minimalen Verlauf.
+      description: Die Chatoberfläche in Astro sendet die Frage, die Anzeigesprache und einen möglichst kurzen Gesprächsverlauf.
       icon: i-lucide-message-circle
       accent: brand
-    - title: Function
-      description: Die Cloudflare Pages Function validiert Eingaben, prüft Origin, begrenzt Anfragen und baut den Prompt.
+    - title: Funktion
+      description: Die Cloudflare Pages Function prüft die Eingabe und den Origin, begrenzt Anfragen und erstellt den Prompt.
       icon: i-lucide-shield-check
       accent: amber
-    - title: Model
-      description: Die OpenAI Responses API erhält öffentlichen Website-Kontext und Gesprächszustand.
+    - title: Modell
+      description: Die OpenAI Responses API erhält öffentliche Website-Informationen und den Gesprächskontext und gibt den Antworttext zurück.
       icon: i-lucide-sparkles
       accent: emerald
-    - title: Renderer
-      description: Der Client rendert nur erlaubtes Markdown und führt zu internen Links oder freigegebenen Kontaktwegen.
+    - title: Darstellung
+      description: Der Client wandelt freigegebene Markdown-Elemente in DOM-Knoten um und verweist auf interne Seiten oder passende Kontaktmöglichkeiten.
       icon: i-lucide-code-2
       accent: slate
 compareTable:
-  title: Verantwortlichkeiten trennen
+  title: Zuständigkeiten bei der Einführung
   before:
-    label: Alles vermischt
+    label: Gemeinsame Implementierung
     items:
-      - Die KI-API wird direkt aus dem Browser aufgerufen
-      - Website-Kontext, API-Schlüssel, UI und Link-Rendering sind gekoppelt
-      - Die KI kann Preise, Verträge oder Termine zu bestimmt formulieren
-      - Markdown und URLs können direkt als HTML gerendert werden
+      - Der Browser kann die KI-API direkt aufrufen
+      - Website-Informationen, API-Schlüssel, Oberfläche und Linkdarstellung vermischen sich
+      - Die KI macht leichter verbindliche Aussagen über Preise, Verträge und Liefertermine
+      - Markdown und URLs gelangen leicht ungeprüft ins HTML
   after:
-    label: Getrennte Verantwortlichkeiten
+    label: Getrennte Zuständigkeiten
     items:
-      - API-Schlüssel und Modellaufrufe bleiben serverseitig
+      - API-Schlüssel und Modellaufrufe bleiben auf dem Server
       - Öffentliche Website-Informationen werden als expliziter Kontext gepflegt
-      - Der Prompt steuert Antwortumfang und Kontaktwege
-      - Markdown und URLs werden über Allow-Lists gerendert
+      - Der Prompt legt den Antwortumfang und die Kontaktwege fest
+      - Die Darstellung von Markdown und URLs folgt Freigabelisten
 checklist:
-  title: Design-Checkliste für andere Websites
+  title: Checkliste für die Umsetzung auf einer anderen Website
   items:
-    - text: Den Chat als Orientierungshilfe definieren, nicht als vollständigen Formularersatz
-    - text: Eine serverseitige API-Grenze schaffen und den API-Schlüssel nicht im Browser ausgeben
-    - text: Antworten auf öffentliche Website-Informationen beschränken
-    - text: Festlegen, was die KI nicht behaupten darf, etwa Preise, Verträge, Fristen und Garantien
-    - text: Rollen von Formular, LINE, E-Mail und Telefon definieren
-    - text: URLs nach locale erzeugen, damit mehrsprachige Navigation intakt bleibt
-    - text: Origin-Prüfung, Längenlimits, Verlaufslimits und Rate Limiting einbauen
-    - text: Markdown-Link-URLs vor der Allow-List-Prüfung trimmen
+    - text: Den KI-Chat als Orientierung zu den Kontaktwegen einplanen und formelle Anfragen über das Formular abwickeln
+    - text: Eine serverseitige API-Grenze einrichten, damit der API-Schlüssel auf dem Server bleibt
+    - text: Für Antworten nur veröffentlichte Website-Informationen verwenden
+    - text: Festlegen, in welchen Bereichen die KI keine verbindlichen Aussagen treffen darf, etwa bei Preisen, Verträgen, Lieferterminen und Garantien
+    - text: Regeln für den Einsatz von Formular, LINE, E-Mail und Telefon festlegen
+    - text: URLs für die jeweilige Sprachversion erzeugen, damit die Navigation in allen Sprachen funktioniert
+    - text: Origin-Prüfung sowie Limits für Eingabelänge, Verlauf und Anfragerate einbauen
+    - text: Leerraum an den Rändern von Markdown-Linkzielen entfernen und danach die Freigabeliste prüfen
 linkCards:
   - href: /contact/
     title: Kontakt
-    description: Seite mit KI-Chat, LINE, Formular und direkten Kontaktoptionen.
+    description: Die Kontaktseite bündelt den KI-Chat, LINE, das Formular und direkte Kontaktmöglichkeiten.
     icon: i-lucide-message-square
   - href: /insights/cloudflare-pages-security/
-    title: Cloudflare Pages Sicherheit
-    description: Verwandter Artikel zu CSP und Sicherheits-Headern für statische Sites.
+    title: Sicherheitseinstellungen für Cloudflare Pages
+    description: Der Artikel erklärt die Grundlagen für statische Websites, darunter CSP und HTTP-Header.
     icon: i-lucide-shield
   - href: /blog/cms-selection-and-turnstile/
-    title: Sveltia CMS Einrichtungsleitfaden
-    description: Verwandter Artikel zum Hinzufügen einer CMS-Editieroberfläche zu statischen Websites.
+    title: Sveltia CMS einrichten
+    description: Der Artikel zeigt, wie eine statische Website eine CMS-Oberfläche zur Bearbeitung erhält.
     icon: i-lucide-badge-check
 faq:
-  title: Häufige Fragen
+  title: Häufig gestellte Fragen
   items:
-    - question: Braucht man RAG oder eine Vektordatenbank für einen KI-Kontaktchat?
-      answer: Für eine kleine Unternehmenswebsite reicht oft strukturierter Kontext aus öffentlichen Seiten im Prompt. Suche oder Vektordatenbank kann man später ergänzen, wenn Umfang oder Aktualisierungsfrequenz wachsen.
-    - question: Wird der OpenAI API-Schlüssel im Browser sichtbar?
+    - question: Braucht ein KI-Kontaktchat RAG oder eine Vektordatenbank?
+      answer: Für eine kleine Unternehmenswebsite genügt als Einstieg oft ein Prompt mit den wichtigsten Informationen aus veröffentlichten Seiten als strukturierter Kontext. Ein Suchindex oder eine Vektordatenbank lässt sich ergänzen, wenn die Zahl der Seiten oder die Häufigkeit der Aktualisierungen steigt.
+    - question: Ist der OpenAI-API-Schlüssel im Browser sichtbar?
       answer: Nein. Der Browser sendet nur die Frage an /api/ai-contact. Die Cloudflare Pages Function ruft die OpenAI Responses API auf und verwaltet den Schlüssel.
-    - question: Darf die KI beliebige Links ausgeben?
-      answer: Nein. Links sind auf interne Pfade, den aktuellen Origin, acecore.net, die offizielle LINE-URL sowie notwendige mailto- und tel-Links beschränkt. Markdown-URLs werden vor der Prüfung getrimmt.
+    - question: Darf eine KI-Antwort beliebige Links enthalten?
+      answer: Zulässig sind interne Pfade, URLs desselben Origins, acecore.net, der offizielle LINE-Kanal sowie bei Bedarf mailto und tel. Vor der Sicherheitsprüfung werden Leerzeichen an den Rändern des Markdown-Linkziels entfernt.
 ---
 
-Beschränken Sie einen ersten KI-Chat auf öffentliche FAQ und leiten Sie verbindliche Angebote oder Anfragen an das Formular weiter. Prüfen Sie Serververbindungen mit [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/). Die folgende URL-Prüfung ist ein historisches vereinfachtes Beispiel; verwenden Sie URL-Parsing und die Freigabeliste des verlinkten Artikels statt bloßer Präfixvergleiche.
+Für einen ersten KI-Chat auf einer statischen Website genügt es, auf öffentliche FAQ zu verweisen und formelle Angebotsanfragen oder andere verbindliche Anliegen an das Formular weiterzuleiten. Die serverseitige Verbindung beschreibt die Dokumentation [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/). Die URL-Prüfung im Artikel ist ein vereinfachtes Beispiel aus der damaligen Implementierung. Verwenden Sie für die Umsetzung die URL-Syntaxprüfung und die Freigabeliste aus dem verlinkten Artikel. Ein übereinstimmender Zeichenkettenanfang allein reicht für eine Freigabe nicht aus.
 
-> **Ergänzung vom 26. September 2026:** Der folgende Text beschreibt ein Referenzdesign vom Juni 2026. Das aktuelle API für AI Chat von Acecore Systems leitet Anfragen über eine Cloudflare Pages Function und ein Service Binding an den gemeinsamen acecore-chat-worker weiter. Die Oberfläche empfängt JSON und zeigt die vollständige Antwort an. Der direkte OpenAI-Aufruf unten ist nicht mehr die aktuelle Systems-Implementierung.
+> **Nachtrag vom 26. Tag im 9. Monat 2026:** Die folgende Referenzarchitektur hat den Stand 6/2026. Der heutige Endpunkt `/api/ai-chat` von Acecore Systems leitet von einer Cloudflare Pages Function über ein Service Binding an den gemeinsamen Worker `acecore-chat-worker` weiter. Die Oberfläche nimmt eine JSON-Antwort entgegen und zeigt die fertige Antwort an. Der direkte Aufruf der OpenAI Responses API im Artikel beschreibt die damalige Architektur.
 
-Einen KI-Chat auf eine Website zu setzen, ist einfach. Entscheidend ist der Betrieb: Was darf die KI beantworten, wohin soll sie Besucher führen, welche URLs dürfen erscheinen und wie bleiben API-Kosten kontrollierbar?
+Einen KI-Chat auf einer Website einzubinden ist einfach. Für den Betrieb zählen vor allem klare Regeln: Worauf darf der Chat antworten? Welche Kontaktwege soll er anbieten? Welche URLs darf er anzeigen? Wie lassen sich die API-Kosten begrenzen?
 
-Acecore hat einen KI-Kontaktchat in eine statische Astro + Cloudflare Pages Website integriert. Die Hauptimplementierung steht im [PR für Kontakt-KI und CMS-begrenzten Übersetzungsfluss](https://github.com/acecore-systems/acecore-net/pull/98). Das sichere Rendering von Markdown-Links wurde anschließend in [einem weiteren PR](https://github.com/acecore-systems/acecore-net/pull/99) verbessert. Die Details dazu sind in [Markdown-Links in KI-Chat-Antworten sicher rendern](/blog/ai-chat-markdown-link-safety/) separat beschrieben.
+Acecore hat einen KI-Kontaktchat in seine statische Website mit Astro und Cloudflare Pages eingebaut. Die zentrale Umsetzung steht im [PR zum KI-Kontaktchat und zur auf das CMS beschränkten Übersetzung](https://github.com/acecore-systems/acecore-net/pull/98). Ein [weiterer PR](https://github.com/acecore-systems/acecore-net/pull/99) passte die sichere Darstellung von Markdown-Links in KI-Antworten an. Der Artikel [Markdown-Links in KI-Chatantworten sicher darstellen](/blog/ai-chat-markdown-link-safety/) erklärt die Linkdarstellung im Detail.
 
-Dieser Artikel beschreibt das Design als wiederverwendbares Muster für andere statische Websites. Auch außerhalb von Astro gilt: Client-Widget, API-Grenze, Prompt und Renderer sollten getrennte Verantwortlichkeiten haben.
+Die Architektur lässt sich auch für andere statische Websites verwenden. Das Prinzip gilt ebenso für andere Frontends: Client, API-Grenze, Prompt und Darstellung haben jeweils klar abgegrenzte Aufgaben.
 
-## Gesamtstruktur
+## Gesamtaufbau
 
-| Schicht              | Verantwortung                                                        |
-| -------------------- | -------------------------------------------------------------------- |
-| Chat widget          | UI, Eingabe, aktueller locale, minimaler Verlauf, Markdown-Rendering |
-| `/api/ai-contact`    | Validierung, Origin-Prüfung, Rate Limit, Prompt, OpenAI-Aufruf       |
-| OpenAI Responses API | Antwort aus öffentlichem Kontext und Gesprächszustand erzeugen       |
+Die Architektur besteht aus 3 Schichten.
 
-Der Browser sollte OpenAI nicht direkt aufrufen. Ein serverseitiger Endpoint verhindert Schlüssel-Leaks, erlaubt Anpassungen von Prompt und Kontext und bündelt Limits sowie Fehlerbehandlung.
+| Schicht              | Aufgabe                                                                                      |
+| -------------------- | -------------------------------------------------------------------------------------------- |
+| Chat-Widget          | Oberfläche, Eingabe, Anzeigesprache, kurzer Gesprächsverlauf und Markdown-Darstellung        |
+| `/api/ai-contact`    | Eingaben validieren, Origin prüfen, Anfragen begrenzen, Prompt erstellen und OpenAI aufrufen |
+| OpenAI Responses API | Antworten aus Website-Informationen und Gesprächskontext erzeugen                            |
 
-Bei Astro + Cloudflare Pages kann die Grenze eine Pages Function unter `/api/ai-contact` sein. In Next.js wäre es ein Route Handler, in Hono oder Express eine normale API-Route.
+Der Aufruf der OpenAI API läuft über den Server. Dafür gibt es 3 Gründe.
 
-## Den Endpoint-Vertrag klein halten
+- Der API-Schlüssel bleibt auf dem Server.
+- Modell, Prompt und Website-Kontext lassen sich serverseitig aktualisieren.
+- Eingabelänge, Origin-Prüfung, Anfragelimits und Fehlerbehandlung lassen sich an 1 Stelle bündeln.
+
+Bei Astro und Cloudflare Pages lässt sich die API-Grenze als Cloudflare Pages Function unter `/api/ai-contact` umsetzen. In Next.js übernimmt diese Aufgabe ein Route Handler, in Hono oder Express eine API-Route.
+
+## Den Vertrag des Endpunkts klein halten
+
+Die API des KI-Kontaktchats erhält nur die Informationen, die sie für die Antwort benötigt.
 
 ```ts
 type ContactAiRequest = {
@@ -119,11 +127,13 @@ type ContactAiResponse = {
 };
 ```
 
-Name, E-Mail, Telefonnummer, Firma und detaillierte Formularfelder müssen nicht durch den Chat laufen. Der Chat hilft bei der Wahl von Service und Kontaktweg, er sammelt keine personenbezogenen Daten.
+Namen, E-Mail-Adressen, Telefonnummern und Firmennamen aus dem Formular gehen nicht an den Chat. Der Chat hilft Besuchern, den passenden Dienst und die richtige Anlaufstelle zu finden. Persönliche Daten bleiben beim Kontaktformular.
 
-Auch der Verlauf wird auf wenige aktuelle Nachrichten und eine maximale Länge begrenzt. Das reduziert Prompt-Größe und Kosten.
+Der Chat übermittelt nur die letzten Nachrichten aus dem Verlauf. Auch die Zeichenzahl pro 1 Nachricht ist begrenzt. Das hält den Prompt klein und begrenzt die Kosten der API.
 
-## Validierung und Modellaufruf auf dem Server steuern
+## Eingaben und Aufrufe auf dem Server steuern
+
+Die Cloudflare Pages Function bündelt die folgenden Schritte.
 
 ```ts
 export async function onRequestPost({ request, env }: PagesFunction<Env>) {
@@ -152,76 +162,98 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 }
 ```
 
-Wichtig ist, Eingaben vor dem KI-Aufruf zu verkleinern und zu validieren. Lange Texte, unbegrenzter Verlauf und fremde wiederholte Aufrufe destabilisieren den Betrieb.
+Vor dem OpenAI-Aufruf wird die Eingabe geprüft und auf das Nötige gekürzt. Die KI-API berechnet Kosten für die übermittelten Eingaben. Unbegrenzte Texte, überflüssiger Gesprächsverlauf und wiederholte Aufrufe von fremden Websites machen den Betrieb schnell instabil.
 
-`OPENAI_MODEL` sollte eine Umgebungsvariable sein, `OPENAI_API_KEY` bleibt ausschließlich serverseitig. Für Auslieferung und CSP siehe [Cloudflare Pages Sicherheit](/insights/cloudflare-pages-security/).
+Die Umgebungsvariable `OPENAI_MODEL` erleichtert Modellwechsel und Tests in der Vorschau. `OPENAI_API_KEY` wird ausschließlich in der Serverumgebung verwaltet.
 
-## Website-Informationen als expliziten Kontext pflegen
+Weitere Hinweise zur Auslieferung und zu CSP stehen in [Statische Websites mit Cloudflare Pages sicher ausliefern](/insights/cloudflare-pages-security/).
 
-Für eine Website dieser Größe ist eine Vektordatenbank nicht der erste Schritt. Strukturierter Kontext aus öffentlichen Seiten ist oft ausreichend.
+## Website-Informationen als Kontext übergeben
 
-Dazu gehören Unternehmens- und Service-Übersichten, Zielgruppen, Beispielanfragen, URLs, FAQ, Regeln für Formular/LINE/E-Mail/Telefon, nicht zu behauptende Bereiche wie Preise oder Verträge, und interne URLs pro locale.
+Bei einer Website dieser Größe können Sie mit einem strukturierten Auszug aus veröffentlichten Inhalten beginnen. So bleiben Umsetzung und Betrieb überschaubar. Eine Vektordatenbank oder RAG lässt sich später ergänzen.
+
+Bereiten Sie etwa folgende Informationen auf dem Server auf.
+
+- Kurzbeschreibung des Unternehmens und seiner Leistungen
+- Zielgruppen, typische Beratungsanfragen und passende URLs für jede Leistung
+- Antworten aus den FAQ
+- Einsatzbereiche von Kontaktformular, LINE, E-Mail und Telefon
+- Themen wie Preise, Verträge und Liefertermine, zu denen die KI keine verbindlichen Aussagen treffen darf
+- Interne URLs für jede Sprachversion
+
+Geben Sie dem Modell die Informationen vor, auf deren Grundlage diese Website Auskunft erteilen darf.
 
 ```ts
 function buildPublicSiteContext(locale: Locale) {
   return {
     services: [
       {
-        name: "Web production",
-        summary: "Corporate sites, recruiting sites, and landing pages",
+        name: "Web制作",
+        summary: "コーポレートサイト、採用サイト、LPの制作相談に対応",
         url: localizePath("/services/web-production/", locale),
       },
       {
-        name: "Server operations",
-        summary: "Reservation, inventory, and customer management systems",
-        url: localizePath("/services/business-system/", locale),
+        name: "サーバー運用",
+        summary: "クラウド、VPS、監視、バックアップ設計の相談に対応",
+        url: localizePath("/services/server-operations/", locale),
       },
     ],
     contact: {
       form: localizePath("/contact/", locale),
       line: "https://lin.ee/...",
-      emailPolicy:
-        "Show email only when the form cannot be used or follow-up is needed",
-      phonePolicy: "Show phone only for urgent confirmation",
+      emailPolicy: "フォームが使えない場合や補足が必要な場合だけ案内する",
+      phonePolicy: "急ぎの確認が必要な場合だけ案内する",
     },
   };
 }
 ```
 
-Das Modell soll nicht aus allgemeinem Wissen antworten, sondern aus dem, was diese Website sagen darf. Bei Wachstum kann diese Schicht zu Pagefind, CMS JSON, D1, Vectorize oder anderer Suche erweitert werden.
+Für wenige Seiten genügt dieses Vorgehen. Wachsen Seitenzahl, Aktualisierungsfrequenz oder Suchanforderungen, können Sie eine Suche mit Pagefind, JSON aus dem CMS, D1 oder Vectorize ergänzen.
 
-## Im Prompt Regeln schreiben
+## Im Prompt Regeln für Antworten festlegen
+
+Im Prompt für den KI-Kontaktchat stehen vor allem klare Grenzen und Verbote. Stilvorgaben für flüssige Antworten sind zweitrangig.
 
 ```txt
-You are the contact guidance AI for this website.
-Answer only from public site information.
+あなたはこのサイトの問い合わせ案内AIです。
+公開済みサイト情報だけを根拠に回答してください。
 
-Rules:
-- Do not make firm statements about pricing, contracts, schedules, or guarantees
-- Send formal consultations and estimates to the contact form
-- Also suggest LINE for quick checks and Schools-related inquiries
-- Show email and phone only when the user asks for direct contact
-- Use URLs that match the current locale
-- If unsure, do not guess; guide the user to the form
+ルール:
+- 料金、契約、納期、保証を断定しない
+- 詳細見積りや正式な相談は問い合わせフォームへ案内する
+- 短い確認やSchoolsに関する相談はLINEも案内する
+- メールと電話は、ユーザーが直接連絡を求めた場合だけ案内する
+- 内部リンクは現在のlocaleに合うURLを使う
+- わからない場合は、推測せずフォームへ案内する
 ```
 
-Ein typischer Fehler ist eine zu hilfsbereite KI, die zu viel zusichert. Preise, Termine und Garantien sollten allgemein erklärt und dann ans Formular verwiesen werden.
+Ein häufiger Fehler ist, dass das Modell Leistungen möglichst vorteilhaft darstellen will und dabei verbindlich klingt. Auf Fragen wie „Was kostet das?“, „Bis wann können Sie liefern?“ oder „Können Sie das auf jeden Fall umsetzen?“ soll es allgemein Auskunft geben und für eine verbindliche Antwort auf das Formular verweisen.
 
-## Kontaktwege trennen
+Dafür gibt es auch einen praktischen Grund. Angebote und Liefertermine lassen sich erst nach dem Gespräch mit dem Kunden festlegen. Beschreiben Sie im Prompt, für welche Auskünfte das Team im Betrieb die Verantwortung übernehmen kann.
 
-| Weg           | Rolle                                                               |
-| ------------- | ------------------------------------------------------------------- |
-| FAQ           | Häufige Fragen direkt auf der Seite klären                          |
-| KI-Chat       | Services, Kontaktwege und verwandte Seiten sortieren                |
-| LINE          | Kurze Anliegen, Kontakt mit Acecore Schools und einfache Rückfragen |
-| Formular      | Angebote, Produktion, Partnerschaften und Recruiting                |
-| Direktkontakt | Ergänzungen nach Formular oder dringende Bestätigung                |
+## Kontaktwege nach ihrem Zweck aufteilen
 
-Die KI verbindet Inhalte wie [die Service-Übersicht](/services/) mit konkreten Wegen auf der [Kontaktseite](/contact/). Das Muster passt zu B2B-Websites, Agenturen, Schulen und SaaS-Support.
+Auf der Kontaktseite ergänzen sich Chat und Formular. Die folgende Aufteilung erleichtert den Betrieb.
 
-## Locale-URLs bewahren
+| Kontaktweg           | Aufgabe                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| FAQ                  | Häufige Fragen direkt auf der Seite beantworten                                                 |
+| KI-Chat              | Im Gespräch passende Leistungen, Anlaufstellen und Seiten finden                                |
+| LINE                 | Kurze Beratungen, Anliegen zu Schools und einfache Rückfragen klären                            |
+| Formular             | Angebote, Projektanfragen, Kooperationen und Bewerbungen mit nachvollziehbarem Verlauf erfassen |
+| Direkte Kontaktdaten | Bei Ergänzungen nach der Formularanfrage oder dringenden Rückfragen anzeigen                    |
 
-Bei mehrsprachigen Websites reicht die richtige Antwortsprache nicht. Auch URLs müssen zum locale passen.
+Der Chat kann von Übersichtsseiten wie der [Leistungsübersicht](/services/) zu konkreten Kontaktmöglichkeiten auf der [Kontaktseite](/contact/) führen. Besucher müssen dann nicht erneut selbst nach der passenden Seite suchen.
+
+Das Muster funktioniert auch für Websites, die sich an Unternehmen richten, für Agenturen, Bildungseinrichtungen und den Support von SaaS-Produkten. Wenn der Chat die passenden Seiten und Kontaktwege eingrenzt, lässt er sich leichter einführen.
+
+## Die richtige Sprachversion verlinken
+
+Auf mehrsprachigen Websites müssen sowohl die Sprache der Antwort als auch die Linkziele zur aktuellen Sprachversion passen.
+
+Kommt die Frage von einer englischen Seite, antwortet der Chat auf Englisch und verweist zum Beispiel über `/en/services/` auf die englischen Leistungen. Auf einer japanischen Seite verwendet er `/services/`.
+
+Eine serverseitige Funktion für die URL-Erzeugung ist zuverlässiger als eine Vorgabe im Prompt.
 
 ```ts
 function localizePath(path: string, locale: Locale) {
@@ -230,9 +262,13 @@ function localizePath(path: string, locale: Locale) {
 }
 ```
 
-Serverseitige URL-Erzeugung ist stabiler als nur eine Prompt-Anweisung. Der Übersetzungsbetrieb wird in [Mehrsprachige Blogs mit Sveltia CMS betreiben](/de/blog/copilot-translation-pipeline/) beschrieben.
+Wenn Chatantworten auf japanische URLs zurückführen, unterbricht das die Navigation in der gewählten Sprache. Die Grundlagen für Übersetzungen und mehrsprachige Beiträge erklärt [Einen mehrsprachigen Blog mit Sveltia CMS betreiben](/blog/copilot-translation-pipeline/).
 
-## Origin-Prüfung und Rate Limit
+## Origin prüfen und Anfragen begrenzen
+
+`/api/ai-contact` ist eine öffentliche API. Sie braucht mindestens eine Origin-Prüfung und Limits für Eingabelänge, Gesprächsverlauf und Anfragerate.
+
+Enthält die Anfrage den Header `Origin`, prüfen Sie, ob der Host der anfragenden Website mit dem Host der API übereinstimmt. So lassen sich unerwünschte Aufrufe von anderen Websites begrenzen.
 
 ```ts
 function assertSameOrigin(request: Request) {
@@ -248,11 +284,34 @@ function assertSameOrigin(request: Request) {
 }
 ```
 
-IP-basiertes Rate Limiting ist eine erste Bremse. In Cloudflare können `CF-Connecting-IP`, `X-Forwarded-For` oder `CF-Ray` genutzt werden. Bei höherem Traffic sind Cloudflare WAF, Turnstile, KV, D1 oder Durable Objects stabiler. Den CMS-Betrieb für Content-Updates beschreibt der [Sveltia CMS Einrichtungsleitfaden](/blog/cms-selection-and-turnstile/); Bot-Schutz für Formulare und Kommentare ist eine eigene Ebene.
+Als Einstieg ist ein einfaches IP-basiertes Anfragelimit sinnvoll. In Cloudflare lassen sich Anfragen beispielsweise anhand von `CF-Connecting-IP`, `X-Forwarded-For` oder `CF-Ray` zuordnen.
 
-## Markdown-Links per Allow-List rendern
+Ein Limit im Arbeitsspeicher gilt nicht dauerhaft über mehrere Isolates oder Neustarts hinweg. Für eine kleine Website ist es ein erster Schutz. Bei wachsendem Verkehr sind Cloudflare WAF, Turnstile, KV, D1 oder Durable Objects zuverlässiger.
 
-Erlauben Sie nur Absätze, Listen, Fettdruck, Inline-Code und Markdown-Links. Linkziele werden auf interne Pfade, aktuellen Origin, `https://acecore.net`, offizielle LINE-URLs und notwendige `mailto:` oder `tel:` beschränkt.
+Wie sich Inhalte aktualisieren lassen, beschreibt der [Leitfaden zur Einführung von Sveltia CMS](/blog/cms-selection-and-turnstile/). Der Bot-Schutz für Formulare und Kommentare gehört in eine eigene Schicht, etwa mit Turnstile. Ein Beispiel dafür steht in [Eine Kommentarfunktion für einen Astro-Blog mit Cloudflare umsetzen](/blog/cloudflare-only-blog-comments/).
+
+## Markdown-Links über eine Freigabeliste anzeigen
+
+Links in KI-Antworten erleichtern es, Besucher zu den passenden Leistungen zu führen. Die Anwendung verarbeitet die Markdown-Antwort, bevor sie daraus HTML erzeugt.
+
+Die Chatoberfläche wandelt ausschließlich freigegebene Elemente in DOM-Knoten um.
+
+- Absätze
+- Aufzählungen
+- Fettdruck
+- Inline-Code
+- Markdown-Links
+
+Für Linkziele gelten zusätzliche Einschränkungen.
+
+- Interne Pfade derselben Website wie `/services/`
+- Der aktuelle Origin
+- `https://acecore.net`
+- Der offizielle LINE-Kanal
+- Bei Bedarf `mailto:info@acecore.net`
+- Bei Bedarf `tel:0120987370`
+
+Bereinigen Sie die URL immer mit `trim()`, bevor Sie sie prüfen. Das Modell kann wie in `[サービス一覧]( /services/ )` vor und nach dem Linkziel Leerzeichen ausgeben.
 
 ```ts
 function sanitizeHref(rawHref: string, currentOrigin: string) {
@@ -269,35 +328,64 @@ function sanitizeHref(rawHref: string, currentOrigin: string) {
 }
 ```
 
-`trim()` ist wichtig, weil KI-Ausgaben wie `[Services]( /services/ )` vorkommen können. Ein kleiner, strenger Renderer ist leichter zu pflegen als vollständiges Markdown.
+Beschränken Sie die Implementierung auf die Markdown-Elemente, die im Chat gebraucht werden. So bleiben Sicherheitsregeln und Wartung überschaubar. Wenn externe URLs erlaubt sein sollen, verwenden Sie mindestens eine Domain-Freigabeliste und `rel="noopener noreferrer"`.
 
-## Local, Preview und Produktion testen
+## Lokal, in der Vorschau und in Produktion prüfen
 
-Astro dev oder preview entspricht nicht vollständig Cloudflare Pages Functions. Ohne `OPENAI_API_KEY` sollten lokal Fallback und Fehleranzeige geprüft werden.
+Die lokale Astro-Entwicklungsumgebung und die Astro-Vorschau entsprechen nicht vollständig der Laufzeit der Cloudflare Pages Functions. Ohne `OPENAI_API_KEY` sind keine KI-Antworten verfügbar. Prüfen Sie in diesem Fall den Ersatzhinweis und die Fehleranzeige der Oberfläche.
 
-In Preview oder Produktion prüfen Sie POST auf `/api/ai-contact`, `OPENAI_API_KEY` und `OPENAI_MODEL`, Ablehnung fremder Origins, Eingabelimits, Antworten im richtigen locale, lokalisierte URLs, keine Zusagen zu Angebot oder Vertrag, keine Standardanzeige von E-Mail und Telefon, sowie Markdown-Links nur bei erlaubter URL.
+Prüfen Sie in der Pages-Vorschau oder in Produktion folgende Punkte.
 
-Testen Sie außerdem lange Eingaben, unerwartete Fragen, englische Seiten, Direktkontakt-Wünsche und Preisfragen.
+- `/api/ai-contact` lässt sich per POST aufrufen.
+- `OPENAI_API_KEY` und `OPENAI_MODEL` sind konfiguriert.
+- Anfragen mit abweichendem Origin werden abgelehnt.
+- Eingabelänge und Anzahl der Nachrichten im Verlauf sind begrenzt.
+- Die Antwort ist in der Sprache der aktuellen Seite.
+- Interne Links führen zur entsprechenden Sprachversion.
+- Die KI macht keine verbindlichen Aussagen zu Angeboten oder Verträgen.
+- E-Mail-Adresse und Telefonnummer erscheinen nur bei Bedarf.
+- Markdown-Links führen ausschließlich zu sicheren URLs.
 
-## Betriebsmetriken
+Eine Antwort auf 1 Frage reicht als Test nicht aus. Prüfen Sie unerwartete und lange Fragen, Anfragen über die englische Website sowie Fragen nach direkten Kontaktdaten oder Preisen jeweils separat.
 
-Beobachten Sie API-Fehlerquote, Rate-Limit-Treffer, durchschnittliche Nachrichten pro Anfrage, Übergänge zu Formular und LINE, Weiterleitungen zum Formular bei fehlender Antwort und Nutzung pro locale.
+## Kennzahlen für Protokollierung und Betrieb
 
-Wenn Gesprächsinhalte gespeichert werden, müssen Datenschutzregeln zuerst feststehen. Ein sicherer Start ist, nur Ereignisse und Fehler ohne Nachrichtentext zu speichern.
+Prüfen Sie nach der Veröffentlichung auch die Protokolle des KI-Kontaktchats.
 
-## Abgegrenzter Umfang
+Erfassen Sie mindestens folgende Kennzahlen.
 
-Dieser Artikel behandelt nur das technische Design des KI-Chats. Die Strecke, die den Beratungsgegenstand von der Service-Seite ins Formular übergibt, ist ebenfalls implementiert und in [Technisches Design zur Kontextübergabe vom Service-CTA zum Kontaktformular](/blog/service-cta-contact-prefill/) beschrieben.
+- Fehlerquote der API
+- Anzahl der Anfragen, die das Ratenlimit erreicht haben
+- Durchschnittliche Nachrichtenanzahl pro 1 Anfrage
+- Aufrufe des Formulars oder von LINE aus dem Chat
+- Weiterleitungen zum Formular bei Fragen, die die KI offenlassen musste
+- Nutzung nach Sprachversion
 
-- KI-Chat: Unsicherheit im Gespräch ordnen und sicher führen
-- Service-CTA: Den gelesenen Service-Kontext ins Formular übergeben
+Legen Sie vor dem Speichern von Gesprächsinhalten fest, wie Sie personenbezogene Daten behandeln. Als Einstieg genügt es, Ereignisse und Fehler zu zählen, ohne Gesprächsinhalte zu speichern.
 
-Getrennt bleiben beide Artikel lesbarer und lassen sich später besser verlinken.
+## Abgrenzung zur Weitergabe des Formular-Kontexts
+
+Dieser Artikel beschreibt die Architektur des KI-Kontaktchats. Die benachbarte Funktion, die die ausgewählte Dienstleistung von der Leistungsseite an das Formular übergibt, erklärt [Den Kontext eines Service-CTA an das Kontaktformular übergeben](/blog/service-cta-contact-prefill/).
+
+Die beiden Funktionen lösen unterschiedliche Aufgaben.
+
+- KI-Chat: Fragen im Gespräch klären und Besucher sicher zu den passenden Informationen führen.
+- Dienstleistungsbezogener CTA: Die aktuell gelesene Dienstleistung als Kontext an das Formular übergeben.
+
+Beim Chat geht es um KI, API-Grenze, Prompt und sichere Darstellung. Bei der Weitergabe an das Formular stehen dessen Bedienung und die Gestaltung der Kontaktwege im Vordergrund. Getrennte Artikel machen beide Themen leichter verständlich und später leichter intern verlinkbar.
 
 ## Zusammenfassung
 
-Bei einem KI-Kontaktchat für eine statische Website sollten API-Grenze und Antwortkontrolle vor der UI gestaltet werden.
+Planen Sie die API-Grenze und die Regeln für Antworten, bevor Sie die Chatoberfläche in eine statische Website einbauen.
 
-Die wichtigsten Entscheidungen: OpenAI über Cloudflare Pages Function aufrufen, Eingabe und Verlauf klein halten, Kontext und locale-URLs serverseitig bauen, Grenzen im Prompt formulieren, Formular/LINE/Direktkontakt trennen, Origin-Prüfung und Rate Limit einbauen, Markdown-Links nach `trim()` per Allow-List rendern.
+Folgende Entscheidungen waren für diese Umsetzung besonders hilfreich.
 
-Statische Websites können sinnvolle KI-Kontaktchats haben. Entscheidend ist nicht, die KI sichtbar zu machen, sondern Besucher sicher zur nächsten Aktion zu führen.
+- Die OpenAI API aus einer Cloudflare Pages Function aufrufen.
+- Nur die benötigten Daten an den Endpunkt senden und Verlauf sowie Zeichenzahl begrenzen.
+- Website-Kontext und sprachabhängige URLs serverseitig zusammenstellen.
+- Im Prompt vorgeben, welche Aussagen die KI treffen darf.
+- Formular, LINE und direkte Kontaktdaten für die jeweils passenden Anliegen verwenden.
+- Origin prüfen und Anfragen begrenzen.
+- Markdown-Linkziele vor der Prüfung bereinigen und anhand einer Freigabeliste zulassen.
+
+Ein KI-Kontaktchat lässt sich auch auf einer statischen Website umsetzen. Er hilft Besuchern, sicher den passenden nächsten Schritt zu wählen.

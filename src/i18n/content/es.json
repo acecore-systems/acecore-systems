@@ -2,21 +2,25 @@
   "contact": {
     "title": "Contacto",
     "description": "Atendemos consultas sobre asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, y automatización de operaciones existentes, incluso antes de definir los requisitos. También ofrecemos evaluación de seguridad Web y API y apoyo a la remediación.",
-    "heroTitle": "Puede consultarnos aunque los requisitos aún no estén definidos.",
-    "heroLead": "Cuéntenos sobre sus operaciones actuales, dificultades, herramientas y plazos deseados.",
-    "formLead": "La consulta inicial y el presupuesto son gratuitos. También podemos ayudarle a organizar el proyecto antes del presupuesto formal. Normalmente respondemos en 1–2 días laborables.",
+    "heroTitle": "Puede consultarnos aunque todavía no tenga claros los requisitos.",
+    "heroLead": "Cuéntenos sobre sus procesos actuales, los problemas que encuentra, las herramientas que utiliza y los plazos que tiene en mente.",
+    "formLead": "La consulta inicial y el presupuesto son gratuitos. También podemos ayudarle a definir el alcance antes de elaborar un presupuesto formal. Normalmente respondemos en un plazo de 1 a 2 días laborables.",
     "faqs": [
       {
-        "question": "¿Puedo consultarles aunque aún no haya decidido qué construir?",
-        "answer": "Sí. Podemos organizarlo juntos a partir de sus operaciones actuales, problemas y tareas manuales que consumen tiempo."
+        "question": "¿Puedo consultarles aunque todavía no tenga decidido qué necesito desarrollar?",
+        "answer": "Sí. Le ayudamos a analizar la situación actual de sus procesos, los problemas que encuentra y las tareas manuales que le consumen tiempo."
       },
       {
-        "question": "¿Puedo solicitar solo una pequeña mejora?",
-        "answer": "Sí. Podemos comenzar con un alcance reducido, como mejorar un formulario existente, exportar CSV, añadir notificaciones o automatizar cálculos."
+        "question": "¿Puedo encargarles solo una pequeña mejora?",
+        "answer": "Sí. Podemos encargarnos de mejoras acotadas, como optimizar formularios existentes, exportar datos a CSV, configurar notificaciones o automatizar la consolidación de datos."
       },
       {
-        "question": "¿También pueden asesorarme sobre un sistema existente?",
-        "answer": "Sí. Podemos revisar interfaces difíciles de mantener, sistemas antiguos, operaciones con Excel e integraciones con servicios externos."
+        "question": "¿Puedo consultarles también sobre un sistema existente?",
+        "answer": "Sí. También podemos revisar interfaces difíciles de mantener, sistemas obsoletos, procesos basados en Excel e integraciones con servicios externos."
+      },
+      {
+        "question": "¿Puedo consultarles sobre la creación o actualización de un sitio web?",
+        "answer": "Sí. Ayudamos a pequeñas empresas, comercios, centros de formación y otros negocios con la creación de sitios web y su mantenimiento y actualización después de la publicación. En el formulario de abajo, seleccione «Soporte para la creación y actualización de sitios web» y cuéntenos sobre su sitio actual y lo que necesita."
       }
     ]
   },
@@ -175,83 +179,87 @@
     "ctaLabel": "Elegir una forma de avanzar"
   },
   "home": {
-    "title": "Desarrollo de sistemas y aplicaciones empresariales",
+    "title": "Soporte informático para pequeños comercios, academias y empresas",
     "description": "Acecore Systems ofrece un servicio de desarrollo integral que abarca desde la asesoría de TI, la implementación de AI y la mejora de procesos hasta el despliegue, el desarrollo de aplicaciones web, el aprovechamiento de datos y la mejora operativa.",
     "heroEyebrow": "Tu aliado para afrontar nuevos retos",
-    "heroTitle": "En las operaciones que no se detienen,\nhay un diseño discreto.",
-    "heroLead": "Desde el sitio web y los canales de reserva y contacto hasta la organización del trabajo diario y la gestión posterior a la puesta en marcha.\nAunque todavía no esté claro por dónde empezar, ordenamos la situación actual y las prioridades, y proponemos una forma de avanzar realista.",
-    "primaryCta": "Consultar sobre desarrollo",
+    "heroTitle": "Empecemos por lo que te preocupa\nahora.",
+    "heroLead": "Tanto tu sitio web como el trabajo del día a día.\nTe ayudamos a poner en orden lo que necesitas, empezando por donde haga falta.",
+    "primaryCta": "Ver servicios",
     "secondaryCta": "Consultar sobre asesoría de TI",
-    "layersTitle": "Damos forma a las soluciones necesarias, empezando por el objetivo.",
-    "layersLead": "Los puntos de contacto con los clientes, las operaciones diarias y la infraestructura de TI que las sostiene. Empezamos por donde hace falta y ponemos en orden lo necesario de manera realista.",
+    "layersTitle": "Diseñamos las soluciones que necesitas a partir de tus objetivos.",
+    "layersLead": "Los puntos de contacto con tus clientes, el trabajo del día a día y la infraestructura de TI que lo sostiene. Ponemos a punto lo que necesites, de forma gradual y manejable.",
     "layers": [
       {
         "label": "Clientes",
-        "title": "Conectar con los clientes",
-        "body": "Sitio web, reservas, formularios de contacto y más:\nestructuramos los primeros puntos de contacto para que el usuario avance sin perderse."
+        "title": "Conectar con tus clientes",
+        "body": "Sitio web, reservas, formularios de contacto y más:\ncreamos un primer contacto claro para que tus clientes sepan cómo avanzar."
       },
       {
         "label": "Operaciones",
         "title": "Agilizar las operaciones",
-        "body": "Con aplicaciones internas, herramientas, integraciones y automatización,\nreducimos la carga que suponen el trabajo manual y las comprobaciones."
+        "body": "Con aplicaciones internas, herramientas, integraciones y automatizaciones,\nreducimos las tareas manuales y el esfuerzo que requieren las revisiones."
       },
       {
         "label": "Infraestructura",
-        "title": "Poner en orden la infraestructura de TI",
-        "body": "Sin necesidad de contar con un responsable dedicado, puede consultar a un asesor de TI sobre la puesta en producción, la operación y las decisiones técnicas.\nLlevamos la TI de su empresa un paso más allá."
+        "title": "Poner a punto la infraestructura de TI",
+        "body": "Puedes recibir asesoría sobre la puesta en producción, las operaciones y las decisiones técnicas, sin necesidad de contar con un responsable dedicado.\nLlevamos la TI de tu empresa un paso más allá."
       }
     ],
     "philosophyEyebrow": "FILOSOFÍA DE DISEÑO",
-    "philosophyTitle": "Lo visible y lo invisible, con la misma precisión.",
-    "philosophyLead": "La filosofía de Acecore es «Llevar el mundo a la siguiente etapa»: reducir las cargas no esenciales y ayudar a las personas a perseguir sus aspiraciones. Systems apoya ese primer paso con tecnología, integrando el trabajo, los sistemas y su operación.",
+    "philosophyTitle": "La misma precisión en lo visible y en lo que no se ve.",
+    "philosophyLead": "Acecore tiene como lema «Llevar el mundo a la siguiente etapa» y aspira a construir una sociedad que reduzca las cargas innecesarias y anime a las personas a atreverse a hacer lo que desean. Systems integra las necesidades del día a día, los sistemas y su funcionamiento, y respalda cada paso con tecnología.",
     "designPrinciples": [
       {
-        "title": "Aclarar lo que quieres lograr",
-        "body": "Organizamos contigo incluso una idea vaga de querer mejorar las cosas. No necesitas una propuesta concreta: podemos empezar hablando de lo que es posible hacer."
+        "title": "Aclarar qué quieres hacer realidad",
+        "body": "Junto con nuestro equipo, te ayudamos a concretar ese deseo aún impreciso de «mejorar las cosas». Aunque no tengas una idea concreta, podemos empezar hablando de lo que es posible."
       },
       {
-        "title": "Cuidar también lo que no se ve",
-        "body": "No nos limitamos a mejorar la apariencia ni a resolver solo las necesidades actuales. Integramos la capacidad de ampliación futura y la facilidad de mantenimiento en el conjunto del sistema."
+        "title": "No hacemos concesiones en los detalles que no se ven",
+        "body": "No nos conformamos con mejorar la apariencia ni con que todo funcione bien solo a corto plazo. Integramos en cada solución la posibilidad de ampliarla en el futuro y la facilidad de mantenimiento."
       },
       {
-        "title": "Ofrecer un proceso que inspire confianza",
-        "body": "Compartimos los avances durante la producción para detectar pronto las mejoras que solo se hacen evidentes cuando el resultado empieza a tomar forma."
+        "title": "Un proceso claro y satisfactorio",
+        "body": "Compartimos periódicamente los avances del desarrollo para detectar pronto mejoras que, de otro modo, solo notarías cuando el trabajo estuviera terminado."
       }
     ],
-    "consultationEyebrow": "CUÁNDO CONSULTAR",
-    "consultationTitle": "Puede consultarnos desde las primeras etapas.",
-    "consultationLead": "No es necesario que haya decidido aún qué construir. Partimos de sus operaciones actuales y de los problemas que afronta para definir juntos las soluciones que hacen falta.",
+    "consultationEyebrow": "CUÁNDO CONSULTARNOS",
+    "consultationTitle": "Puedes consultarnos desde estas primeras etapas.",
+    "consultationLead": "No hace falta que tengas decidido qué quieres desarrollar. Partimos de tus procesos actuales y de los problemas que quieres resolver para definir juntos qué solución necesitas.",
     "consultationSituations": [
       {
         "title": "No puede publicar una aplicación creada con AI",
-        "body": "El código está listo, pero el proyecto sigue bloqueado por decisiones sobre el dominio, la nube, la seguridad y la operación."
+        "body": "El código ya está listo, pero las decisiones sobre el dominio, la nube, la seguridad y la operación te impiden avanzar."
       },
       {
-        "title": "Aumentan las tareas de introducción de datos y el trabajo manual",
-        "body": "Quiere ordenar las tareas repartidas entre hojas de cálculo, papel y correo electrónico, y decidir por dónde empezar a sistematizarlas."
+        "title": "Se acumulan las tareas manuales y la entrada repetida de datos",
+        "body": "Quieres organizar los procesos repartidos entre hojas de cálculo, papel y correo electrónico, y decidir por dónde empezar a sistematizarlos."
       },
       {
         "title": "El sistema actual no se adapta al trabajo diario",
-        "body": "Quiere revisar las dificultades de uso y la dependencia de personas concretas, y adaptar gradualmente el sistema al flujo de trabajo."
+        "body": "Quieres revisar los problemas de usabilidad y reducir la dependencia de personas concretas para adaptar poco a poco el sistema al flujo de trabajo."
       },
       {
-        "title": "Los datos y las herramientas están fragmentados",
-        "body": "Quiere conectar varios servicios y fuentes de datos para reducir la introducción duplicada de información y las comprobaciones que se pasan por alto."
+        "title": "Los datos y las herramientas están desconectados",
+        "body": "Quieres conectar distintos servicios y fuentes de datos para reducir la introducción duplicada de información y evitar omisiones en las comprobaciones."
       },
       {
-        "title": "Quiere ordenar los problemas antes de convertirlos en requisitos",
-        "body": "Quiere ordenar los objetivos, los usuarios, las restricciones y las prioridades, y decidir una forma realista de avanzar."
+        "title": "Quieres aclarar el problema antes de definir los requisitos",
+        "body": "Quieres aclarar el objetivo, los usuarios, las limitaciones y las prioridades para decidir cómo avanzar de forma realista."
       },
       {
-        "title": "Comprobar y mejorar la seguridad de su aplicación",
-        "body": "Solicite revisión previa al lanzamiento, evaluación Web y API o correcciones tras recibir un informe."
+        "title": "Quieres comprobar y mejorar la seguridad de tu aplicación",
+        "body": "Quieres recibir asesoría para hacer una revisión antes de publicar, evaluar la seguridad de la web y la API, y aplicar las correcciones que indique el informe."
+      },
+      {
+        "title": "Quieres delegar la creación o actualización de tu sitio web",
+        "body": "Si tienes un pequeño negocio, un comercio o un centro de formación, puedes consultarnos sobre todo el proceso: desde organizar los textos y publicar el sitio hasta actualizarlo día a día con nuevos textos, fotos y avisos."
       }
     ],
     "ctaEyebrow": "EMPECEMOS CON UNA CONVERSACIÓN",
-    "ctaTitle": "Cuéntanos qué quieres crear o, simplemente, qué dificultades tienes.",
-    "ctaBody": "Puede consultarnos incluso si los requisitos aún no están completamente definidos. Juntos ponemos en orden el flujo actual, las restricciones y las prioridades.",
-    "ctaLabel": "Elegir una forma de consulta",
-    "philosophyLinkLabel": "Filosofía y visión de Acecore"
+    "ctaTitle": "Cuéntanos qué quieres crear o, simplemente, qué problema necesitas resolver.",
+    "ctaBody": "Puedes consultarnos aunque todavía no tengas todos los requisitos definidos. Analizaremos juntos los procesos actuales, las limitaciones y las prioridades.",
+    "ctaLabel": "Elige cómo quieres consultarnos",
+    "philosophyLinkLabel": "La filosofía corporativa y la visión de Acecore"
   },
   "itAdvisor": {
     "title": "Ingeniero asesor de IT",
@@ -509,25 +517,25 @@
     "ctaLabel": "Consultar a un ingeniero asesor de IT"
   },
   "pricing": {
-    "title": "Guía de precios",
+    "title": "Precios orientativos",
     "description": "Orientación de precios y condiciones de los servicios de Acecore Systems, incluidos asesoría de IT, adopción de AI, despliegue, sistemas empresariales, aplicaciones Web, diseño y producción creativa, chat de AI, CMS, SEO y mejoras de seguridad.",
-    "heroTitle": "Comience de forma sostenible con el alcance que necesita.",
-    "heroLead": "Los importes son orientativos e incluyen impuestos. Prepararemos un presupuesto individual una vez definidos los requisitos. Cuéntanos también con franqueza cuál es tu presupuesto.",
+    "heroTitle": "Empiece por lo que necesita, a un ritmo sostenible.",
+    "heroLead": "Los importes son orientativos e incluyen impuestos. Le prepararemos un presupuesto personalizado una vez definidos los requisitos. No dude en indicarnos también el presupuesto que tiene en mente.",
     "items": [
       {
-        "label": "Ingeniero asesor de IT — Light",
-        "price": "Desde ¥49.500/mes",
+        "label": "Asesoría de TI por un ingeniero — plan ligero",
+        "price": "Desde 49,500 yenes al mes",
         "note": "Incluye 1–2 consultas al mes, selección de herramientas de AI e IT, configuración inicial y soporte para un lanzamiento pequeño con hasta 1 proyecto simultáneo. Los límites de horas y los costes adicionales se indican antes del contrato. Hasta 4 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
       },
       {
-        "label": "Ingeniero asesor de IT — Standard",
-        "price": "Desde ¥102.300/mes",
-        "note": "Dentro de los límites de consultas y horas acordados: despliegue, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión durante 24 horas ni respuesta inmediata a incidentes. Hasta 12 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
+        "label": "Asesoría de TI por un ingeniero — plan estándar",
+        "price": "Desde 102,300 yenes al mes",
+        "note": "Incluye despliegues dentro de los límites de consultas y horas de trabajo acordados al contratar, depuración y pruebas, informes de estado y revisión del uso y de posibles mejoras. No incluye supervisión las 24 horas del día ni respuesta inmediata ante incidencias. El total mensual de consultas, investigación, trabajo, revisiones y comunicaciones está limitado a 12 horas. Las horas no utilizadas no se acumulan; cualquier exceso se presupuestará por separado antes de empezar."
       },
       {
-        "label": "Soporte puntual de despliegue",
+        "label": "Asistencia puntual para despliegues",
         "price": "Desde ¥50.000",
-        "note": "Para 1 aplicación Web existente en 1 entorno: selección del entorno recomendado, configuración inicial de dominio, SSL, VPS o nube, lanzamiento, comprobaciones y entrega. Los cambios de código, migración, CI/CD, supervisión, copias de seguridad y operación continua se presupuestan por separado. El alcance básico es una configuración estándar con hasta 4 horas en total para reuniones, configuración, comprobaciones, entrega y comunicación. Las configuraciones complejas y el tiempo adicional se presupuestan antes de comenzar."
+        "note": "Tomamos como base 1 aplicación web existente y 1 entorno. Nos encargamos de elegir el entorno recomendado, configurar inicialmente el dominio, SSL, VPS o servicios en la nube, publicar, comprobar el funcionamiento y realizar el traspaso. Las modificaciones de código, migraciones, CI/CD, diseño de supervisión y copias de seguridad, y la operación continua se presupuestan por separado. La configuración estándar contempla hasta 4 horas en total para reuniones, configuración, comprobaciones, traspaso y comunicaciones. Las configuraciones complejas o el tiempo adicional se presupuestan por separado antes de empezar."
       },
       {
         "label": "Paquete inicial de mejora operativa con AI",
@@ -537,22 +545,22 @@
       {
         "label": "Implementación de producción de AI y sistemas empresariales",
         "price": "Desde ¥500.000",
-        "note": "Construcción de producción tras un PoC, integración con sistemas existentes, permisos, aprobaciones, registros de auditoría, pruebas, lanzamiento y entrega operativa. Se presupuesta según los requisitos. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
+        "note": "Implementación en producción tras la PoC, integración con los sistemas existentes, gestión de permisos y aprobaciones, registros de auditoría, pruebas, publicación y traspaso a operaciones. El presupuesto se adapta a los requisitos. El importe indicado es orientativo para la configuración mínima. Prepararemos un presupuesto personalizado tras acordar los procesos incluidos, el número de pantallas, los permisos, las integraciones externas y el alcance de la migración."
       },
       {
-        "label": "Automatización a pequeña escala y asistencia operativa",
+        "label": "Automatización sencilla y asistencia operativa",
         "price": "Desde ¥300.000",
-        "note": "Automatización a pequeña escala de tareas existentes de entrada, cálculo, notificación y comprobación. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
+        "note": "Automatizamos a pequeña escala tareas existentes de introducción de datos, agregación, notificación y verificación. El importe indicado es orientativo para la configuración mínima. Prepararemos un presupuesto personalizado tras acordar los procesos incluidos, el número de pantallas, los permisos, las integraciones externas y el alcance de la migración."
       },
       {
-        "label": "Herramienta empresarial interna",
+        "label": "Herramienta empresarial de uso interno",
         "price": "Desde ¥500.000",
-        "note": "Herramienta pequeña o mediana con interfaz de administración, formularios, listas, exportación CSV y permisos. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
+        "note": "Herramienta de pequeña o mediana escala con panel de administración, formularios, listados, exportación CSV y gestión de permisos. El importe indicado es orientativo para la configuración mínima. Prepararemos un presupuesto personalizado tras acordar los procesos incluidos, el número de pantallas, los permisos, las integraciones externas y el alcance de la migración."
       },
       {
-        "label": "Aplicación Web mediana",
+        "label": "Aplicación web de tamaño medio",
         "price": "Desde ¥1.500.000",
-        "note": "Aplicación Web con varios usuarios, funciones de membresía, flujos de aprobación e integraciones externas. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
+        "note": "Aplicación web con varios usuarios, funciones para miembros, flujos de aprobación e integraciones externas. El importe indicado es orientativo para la configuración mínima. Prepararemos un presupuesto personalizado tras acordar los procesos incluidos, el número de pantallas, los permisos, las integraciones externas y el alcance de la migración."
       },
       {
         "label": "Diseño y producción creativa",
@@ -565,89 +573,119 @@
         "note": "Añadimos un chat de consultas con AI a un sitio estático o de servicio, con alcance de respuestas, límites de uso, comprobaciones de Origin y representación segura de enlaces. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
       },
       {
-        "label": "Comentarios de blog",
+        "label": "Función de comentarios para blogs",
         "price": "Desde ¥80.000",
-        "note": "Con Cloudflare Pages Functions, D1 y Turnstile, ofrecemos publicación, almacenamiento, prevención de spam y eliminación sin depender de un servicio externo de comentarios. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Con Cloudflare Pages Functions, D1 y Turnstile, configuramos el envío y almacenamiento de comentarios, las medidas antispam y el proceso de eliminación, sin depender de servicios externos de comentarios. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación completa de un sitio desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
-        "label": "Interfaz de edición CMS",
+        "label": "Incorporación de un panel de edición CMS",
         "price": "Desde ¥50.000",
-        "note": "Añadimos una interfaz de Sveltia CMS para actualizar blogs, páginas fijas, anuncios y ajustes desde el navegador. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Añadimos un panel de administración con Sveltia CMS para actualizar desde el navegador el blog, las páginas estáticas, los avisos y la configuración. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
         "label": "Base para blogs y artículos",
         "price": "Desde ¥50.000",
-        "note": "Creamos la base para publicar de forma continua: listas, páginas de detalle, etiquetas, artículos relacionados, RSS y recorridos de búsqueda. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Configuramos la base necesaria para publicar contenido de forma continua: listados de artículos, páginas de detalle, etiquetas, artículos relacionados, RSS y vías de acceso a la búsqueda. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
-        "label": "Operación de blog multilingüe",
+        "label": "Gestión de blogs multilingües",
         "price": "Desde ¥80.000",
-        "note": "Establecemos operaciones multilingües que abarcan la fuente japonesa, PR de traducción, hreflang, sitemap y RSS. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Configuramos la gestión de un blog multilingüe, incluido el contenido original en japonés, las PR de traducción, hreflang, sitemap y RSS. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
         "label": "SEO y datos estructurados",
         "price": "Desde ¥50.000",
-        "note": "Organizamos la información para buscadores, incluidos OGP, JSON-LD, sitemap, RSS y canonical. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Organizamos la información que se comunica a los motores de búsqueda, como OGP, JSON-LD, sitemap, RSS y canonical. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
         "label": "Búsqueda interna con Pagefind",
         "price": "Desde ¥30.000",
-        "note": "Añadimos Pagefind a un sitio estático, incluida la interfaz de búsqueda, los parámetros URL y la caché. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Añadimos la búsqueda de Pagefind a sitios estáticos y configuramos la interfaz de búsqueda, los parámetros de URL y la caché. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
-        "label": "Mejora de velocidad",
+        "label": "Mejora de la velocidad de carga",
         "price": "Desde ¥50.000",
-        "note": "Revisamos imágenes, CSS, fuentes, carga diferida y mediciones para mejorar Core Web Vitals. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Revisamos imágenes, CSS, fuentes, carga diferida y resultados de medición para mejorar Core Web Vitals. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
-        "label": "Mejora de accesibilidad",
+        "label": "Mejora de la accesibilidad",
         "price": "Desde ¥50.000",
-        "note": "Revisamos contraste, atributos aria, foco y validación de formularios y corregimos hacia WCAG AA. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Revisamos el contraste, los atributos aria, el foco y la validación de formularios, y aplicamos correcciones con el objetivo de cumplir WCAG AA. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
-        "label": "Cabeceras de seguridad/CSP",
+        "label": "Cabeceras de seguridad y CSP",
         "price": "Desde ¥30.000",
-        "note": "Organizamos _headers de Cloudflare Pages, CSP y ajustes de entrega de la interfaz de administración para mejorar la seguridad. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Organizamos _headers y CSP de Cloudflare Pages, junto con la configuración de entrega del panel de administración, para acercar el sitio a un estado de publicación seguro. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
         "label": "Integración de CTA y formulario",
         "price": "Desde ¥30.000",
-        "note": "Transferimos categoría, asunto y contexto desde una CTA de servicio al formulario para mejorar el recorrido de consulta. La estimación cubre 1 implementación, revisión o mejora estándar en 1 sitio existente. Las funciones personalizadas, la construcción de un sitio completo, la migración y la operación continua se presupuestan aparte."
+        "note": "Transferimos el tipo de consulta, el asunto y el contexto desde las CTA de servicios al formulario de contacto para facilitar el proceso de consulta. La referencia corresponde al trabajo estándar en 1 sitio con la configuración existente y 1 intervención. Las funciones personalizadas, la creación de un sitio completo desde cero, las migraciones y la operación continua se presupuestan por separado."
       },
       {
-        "label": "Sistemas integrados e integración con sistemas centrales",
+        "label": "Plataforma integrada y conexión con sistemas centrales",
         "price": "Desde ¥2.500.000",
-        "note": "Base operativa que conecta varios departamentos y sistemas existentes, diseñada para un despliegue por fases. El importe es orientativo para una configuración mínima. Acordamos los procesos, pantallas, permisos, integraciones y alcance de migración antes de preparar el presupuesto individual."
+        "note": "Plataforma empresarial conectada con varios departamentos y sistemas existentes, diseñada para implantarse por fases. El importe indicado es orientativo para la configuración mínima. Prepararemos un presupuesto personalizado tras acordar los procesos incluidos, el número de pantallas, los permisos, las integraciones externas y el alcance de la migración."
       },
       {
         "label": "Mantenimiento y mejora",
         "price": "Desde ¥30.000/mes",
-        "note": "Cambios menores, consultas, supervisión, propuestas de mejora y atención prioritaria al desarrollo adicional. Hasta 2 horas mensuales en total, incluidas consultas, investigación, trabajo, comprobaciones y comunicación. El tiempo no utilizado no se acumula; cualquier trabajo adicional se presupuesta antes de comenzar."
+        "note": "Incluye pequeñas correcciones, consultas, supervisión, propuestas de mejora y prioridad para los trabajos de desarrollo adicional. El total mensual de consultas, investigación, trabajo, revisiones y comunicaciones está limitado a 2 horas. Las horas no utilizadas no se acumulan; cualquier exceso se presupuestará por separado antes de empezar."
       },
       {
-        "label": "Requisitos y consulta técnica",
+        "label": "Definición de requisitos y asesoría técnica",
         "price": "Presupuesto personalizado",
-        "note": "También disponible para revisar operaciones antes del desarrollo, investigar sistemas existentes y revisar la arquitectura."
+        "note": "También ofrecemos análisis de procesos empresariales antes del desarrollo, revisión de los sistemas existentes y evaluación de la arquitectura."
       },
       {
-        "label": "Revisión previa al lanzamiento",
-        "price": "Presupuesto individual",
-        "note": "Arquitectura, exposición pública, secretos, dependencias y diseño de autenticación. Presupuesto tras revisar documentación y entorno."
+        "label": "Revisión de seguridad antes de la publicación",
+        "price": "Presupuesto personalizado",
+        "note": "Revisamos la arquitectura, el alcance de publicación, la gestión de secretos, las dependencias y el diseño de autenticación. Elaboraremos un presupuesto tras conocer la documentación de revisión y el entorno objetivo."
       },
       {
-        "label": "Evaluación de vulnerabilidades Web y API",
-        "price": "Presupuesto individual",
-        "note": "Comprobaciones automáticas y manuales acordadas. Viabilidad y coste según funciones, solicitudes, permisos y entornos."
+        "label": "Auditoría de vulnerabilidades web y API",
+        "price": "Presupuesto personalizado",
+        "note": "Incluye análisis automatizados y revisión manual dentro del alcance acordado. Confirmaremos la viabilidad y el coste según las funciones, las solicitudes, los permisos y los entornos."
       },
       {
-        "label": "Correcciones y verificación",
-        "price": "Presupuesto individual",
-        "note": "Correcciones, pruebas, publicación y verificación, incluidos informes de terceros. Alcance, plazos y número de reevaluaciones se acuerdan al presupuestar."
+        "label": "Implementación de mejoras de seguridad y revisión posterior",
+        "price": "Presupuesto personalizado",
+        "note": "Incluye correcciones basadas en informes propios o de terceros, pruebas, publicación y revisión posterior. El alcance, los plazos y el número de rondas de revisión se acordarán al preparar el presupuesto."
       },
       {
-        "label": "Apoyo continuo en seguridad",
-        "price": "Presupuesto individual",
-        "note": "Actualizaciones, permisos, revisión de cambios y consultas. Objetivos, frecuencia, horas y trabajo adicional se acuerdan individualmente."
+        "label": "Asistencia continua en seguridad",
+        "price": "Presupuesto personalizado",
+        "note": "Revisiones y consultas sobre actualizaciones, permisos y cambios. El alcance, la frecuencia, las horas de trabajo y las condiciones de asistencia adicional se definirán para cada caso."
+      },
+      {
+        "label": "Plan de lanzamiento",
+        "price": "156,750 yenes",
+        "note": "Hasta 5 páginas estáticas. Incluye diseño estándar, edición y organización del contenido a partir de los materiales proporcionados, adaptación a móviles, sección de noticias, SEO básico, formulario, publicación y guía de actualización. Importe orientativo con impuestos incluidos. Los costes externos se facturan aparte al coste real; cualquier solicitud adicional que exceda el alcance de producción acordado se presupuesta antes de empezar."
+      },
+      {
+        "label": "Plan de renovación y mejora",
+        "price": "Desde 330,000 yenes",
+        "note": "Se toma como base un máximo de 10 páginas estáticas e incluye las entrevistas acordadas y una propuesta de contenido y estructura. La migración de contenido existente se presupuesta por separado. Importe orientativo con impuestos incluidos. Los costes externos se facturan aparte al coste real; cualquier solicitud adicional que exceda el alcance de producción acordado se presupuesta antes de empezar."
+      },
+      {
+        "label": "Desarrollo a medida y nuevas funciones",
+        "price": "Presupuesto personalizado",
+        "note": "Incluye diseños personalizados, reservas, pagos, funciones para miembros, contenido multilingüe y migraciones de gran volumen, entre otros. Importe orientativo con impuestos incluidos. Los costes externos se facturan aparte al coste real; cualquier solicitud adicional que exceda el alcance de producción acordado se presupuesta antes de empezar."
+      },
+      {
+        "label": "Mantenimiento del sitio web",
+        "price": "5,500 yenes al mes",
+        "note": "Incluye comprobaciones automáticas de disponibilidad y copias de seguridad, revisiones periódicas, análisis inicial de incidencias, restauración prevista y comunicaciones, hasta 30 minutos al mes. No incluye actualizaciones de contenido. Importe orientativo con impuestos incluidos. Los costes externos se facturan aparte al coste real; el tiempo que exceda el límite se presupuesta antes de empezar."
+      },
+      {
+        "label": "Servicio de actualizaciones",
+        "price": "15,400 yenes al mes",
+        "note": "A los 30 minutos mensuales de mantenimiento se añaden 60 minutos al mes para actualizar textos, imágenes y avisos, incluidas la revisión, la coordinación y la publicación (hasta un total de 90 minutos al mes). Importe orientativo con impuestos incluidos. Los costes externos se facturan aparte al coste real; el tiempo que exceda el límite se presupuesta antes de empezar."
+      },
+      {
+        "label": "Optimización y mejora",
+        "price": "Desde 33,000 yenes al mes",
+        "note": "El total mensual de mantenimiento, actualizaciones, análisis de tráfico, mejoras, consultas y comunicaciones está limitado a 3 horas. Importe orientativo con impuestos incluidos. Los costes externos se facturan aparte al coste real; el tiempo que exceda el límite se presupuesta antes de empezar."
       }
     ]
   },
@@ -1392,62 +1430,285 @@
       ],
       "ctaTitle": "Consulte sus dudas y qué necesita revisar",
       "ctaBody": "Describa su aplicación y sus dudas. No necesita enviar contraseñas, claves API ni datos de producción en el formulario inicial."
+    },
+    "website": {
+      "title": "Diseño web y soporte para actualizaciones",
+      "description": "Creación de sitios web y soporte para las actualizaciones posteriores a la publicación, dirigido a pequeñas empresas, comercios y centros de formación. Diseño desde 156,750 yenes, mantenimiento por 5,500 yenes al mes y plan mensual con actualizaciones desde 15,400 yenes. Le indicamos los precios orientativos con impuestos incluidos y qué incluyen.",
+      "heroEyebrow": "SITIOS WEB / DISEÑO Y SOPORTE",
+      "heroTitle": "Una web para que pueda centrarse\nen su actividad principal.",
+      "heroLead": "Le ayudamos a crear una página web que transmita el atractivo de su comercio o negocio, desde la organización de los textos hasta las actualizaciones posteriores a la publicación. Atendemos consultas de pequeñas empresas, comercios, centros de formación y otros sectores.",
+      "heroBenefits": [
+        "Asesoramiento desde la organización de los textos",
+        "También puede delegar las actualizaciones tras la publicación"
+      ],
+      "visual": {
+        "alt": "Concepto de diseño en el que una persona responsable revisa la pantalla de edición y el sitio web",
+        "caption": "Organizamos lo que desea comunicar y preparamos páginas fáciles de consultar y un método de actualización sencillo de mantener."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Representación de una pantalla de edición y un formulario de contacto en una computadora y un teléfono móvil",
+          "caption": "Presentación del negocio, servicios y tarifas, ubicación y contacto: reunimos la información necesaria y las vías de navegación en un solo sitio."
+        },
+        "process": {
+          "alt": "Concepto del proceso de creación: una persona responsable y un ingeniero revisan la visualización en una computadora y un teléfono móvil",
+          "caption": "Revisamos juntos el contenido y cómo se muestra, y le explicamos también cómo actualizarlo después de la publicación."
+        }
+      },
+      "indexSummary": "Creamos un sitio web que reúne desde la presentación del negocio hasta el contacto. Tras la publicación, puede elegir solo mantenimiento o también delegar las actualizaciones de textos, imágenes y novedades.",
+      "indexTopics": [
+        "Organización de los textos",
+        "Adaptación a dispositivos móviles",
+        "Novedades y contacto",
+        "Mantenimiento y actualizaciones"
+      ],
+      "introTitle": "Organizamos lo que quiere comunicar y seguimos a su disposición tras la publicación.",
+      "introBody": "Tanto si necesita su primera página web como si quiere renovar un sitio antiguo, organizamos la información que desean conocer sus clientes: presentación del negocio, servicios y tarifas, ubicación y formas de contacto. Después de la publicación, puede elegir entre actualizar el sitio por su cuenta o delegar las actualizaciones.",
+      "challenges": [
+        {
+          "title": "No sabe qué información incluir",
+          "body": "No sabe en qué orden presentar su empresa o comercio ni hasta qué punto explicar cada aspecto."
+        },
+        {
+          "title": "Cuesta consultar el sitio desde el móvil",
+          "body": "Quiere adaptar la visualización de una página antigua y el acceso al formulario de contacto a las necesidades actuales de sus clientes."
+        },
+        {
+          "title": "No tiene tiempo para las actualizaciones del día a día",
+          "body": "Quiere actualizar los horarios, las tarifas, las fotos o las novedades, pero el trabajo se queda pendiente por falta de tiempo."
+        }
+      ],
+      "offeringsTitle": "Planes de desarrollo y opciones de soporte tras la publicación",
+      "offeringsLead": "El precio de desarrollo es orientativo para el proyecto completo; el soporte mensual se contrata por separado, según las necesidades. Todas las cantidades incluyen impuestos. Los costes de servicios externos, como el dominio, el servidor y los servicios de pago, se abonan aparte al coste real. Antes de contratar, le facilitaremos un presupuesto con el alcance y el precio exactos.",
+      "offerings": [
+        {
+          "title": "Plan de puesta en marcha",
+          "body": "Para quienes desean reunir la información necesaria en un sitio fácil de consultar y disponer de una web que puedan presentar con confianza.",
+          "includes": [
+            "Hasta 5 páginas estáticas con un diseño estándar (incluida la página de contacto)",
+            "Estructuración de la información para presentar la empresa o el comercio, sus servicios y tarifas, la ubicación, etc.",
+            "Organización de los textos a partir de la información, los textos y las fotografías que nos facilite",
+            "Diseño adaptable a móviles, sección de novedades editable, SEO básico y formulario de contacto",
+            "Publicación del sitio, instrucciones para actualizarlo y hasta 2 rondas de cambios agrupados en el contenido y el diseño"
+          ],
+          "priceNote": "La lista de novedades, las páginas de detalle de los artículos y el aviso de privacidad estándar se incluyen fuera del límite de páginas. Las entrevistas y sesiones fotográficas nuevas, así como un diseño a medida, se presupuestan aparte."
+        },
+        {
+          "title": "Plan avanzado y de renovación",
+          "body": "Para quienes quieren dar a conocer el valor de sus servicios y mostrar casos prácticos, o revisar los contenidos y la estructura del sitio.",
+          "includes": [
+            "Hasta 10 páginas estáticas basadas en una estructura estándar (incluida la página de contacto)",
+            "Sesión para recopilar información y preparación de propuestas de textos y estructura, dentro del alcance acordado",
+            "Estructura de páginas adaptada a cada objetivo, como detalles de servicios, casos prácticos e información de empleo",
+            "Las mismas funciones básicas del plan de puesta en marcha, con instrucciones para la publicación y las actualizaciones",
+            "Hasta 2 rondas de cambios agrupados en el contenido y el diseño"
+          ],
+          "priceNote": "La migración de páginas, artículos, imágenes y URL existentes se define aparte tras revisar su cantidad y estado. No incluye entrevistas ni sesiones fotográficas."
+        },
+        {
+          "title": "Desarrollo a medida y funciones adicionales",
+          "body": "Si necesita un diseño adaptado a su actividad o funciones como reservas y pagos, definiremos el alcance a partir de sus objetivos y de cómo se gestionará el sitio.",
+          "includes": [
+            "Diseño a medida, reservas, pagos y funciones para miembros",
+            "Sitios web multilingües o migración de numerosos artículos y páginas",
+            "Análisis de la estructura del sitio existente y propuestas de las funciones adicionales necesarias"
+          ],
+          "priceNote": "Elaboraremos un presupuesto personalizado tras confirmar las funciones, los servicios externos, el tratamiento de los datos y el método de gestión."
+        },
+        {
+          "title": "Plan de mantenimiento",
+          "body": "Para quienes actualizan los contenidos por su cuenta y prefieren delegar las revisiones técnicas periódicas.",
+          "includes": [
+            "Comprobaciones automáticas de disponibilidad, copias de seguridad y revisiones periódicas",
+            "Evaluación inicial de incidencias y restauración desde las copias de seguridad acordadas previamente",
+            "Hasta un total de 30 minutos al mes para revisiones, diagnóstico, restauraciones y comunicaciones relacionadas"
+          ],
+          "priceNote": "No incluye la actualización de textos, imágenes ni novedades. Este plan no garantiza la recuperación de fallos en servicios de terceros, la atención durante 24 horas ni una respuesta inmediata."
+        },
+        {
+          "title": "Plan de gestión de actualizaciones",
+          "body": "Para quienes quieren solicitar en un único punto de contacto los cambios de horarios, tarifas, fotos y novedades.",
+          "includes": [
+            "Contenido del plan de mantenimiento (hasta 30 minutos al mes)",
+            "Sustitución de textos e imágenes en páginas existentes y publicación de novedades",
+            "Las tareas de actualización, incluidas la revisión del contenido, la comunicación, la solicitud de confirmación y la publicación, están limitadas a 60 minutos al mes (hasta 90 minutos al mes en total, junto con el mantenimiento)"
+          ],
+          "priceNote": "La creación de páginas, los cambios de diseño, las nuevas funciones y la redacción de textos extensos se presupuestan aparte. El cliente deberá proporcionar las fotografías y la información que se vaya a publicar."
+        },
+        {
+          "title": "Plan de optimización y mejora",
+          "body": "Para quienes, además de las actualizaciones, quieren mejorar poco a poco la presentación y la navegación del sitio según las visitas que recibe.",
+          "includes": [
+            "Mantenimiento y actualización de textos, imágenes y novedades",
+            "Revisión de las estadísticas de acceso y selección de posibles mejoras",
+            "Mejoras en las páginas y consultas dentro del alcance acordado",
+            "Tareas de mantenimiento, actualización y análisis, consultas e intercambios relacionados, con un límite total de 3 horas al mes"
+          ],
+          "priceNote": "El análisis se realizará una vez preparado el entorno de medición necesario. La gestión de anuncios, la creación continua de artículos y las modificaciones importantes se presupuestan aparte."
+        }
+      ],
+      "costExample": {
+        "title": "Ejemplo de costes para un período inicial de 1 año",
+        "body": "Plan de puesta en marcha: 156,750 yenes + Plan de gestión de actualizaciones: 15,400 yenes × 12 meses = 341,550 yenes (impuestos incluidos). Los gastos externos, como el dominio, el servidor y los servicios de pago, se abonan aparte. También puede consultar solo sobre el desarrollo, sin contratar soporte mensual."
+      },
+      "termsTitle": "Alcance del servicio: información clara antes de contratar",
+      "terms": [
+        {
+          "title": "Contenido del desarrollo y número de rondas de cambios",
+          "body": "Antes de empezar, acordaremos la estructura de las páginas, los contenidos, el plazo de entrega y el precio. En la revisión inicial de contenido y diseño se incluyen hasta 2 rondas de cambios agrupados. Las páginas que se añadan o los cambios de estructura solicitados tras aprobar la estructura se presupuestarán aparte antes de empezar el trabajo."
+        },
+        {
+          "title": "Tiempo de trabajo mensual",
+          "body": "Las revisiones y comunicaciones también cuentan dentro del tiempo de cada plan, y el tiempo no utilizado no se acumula para el mes siguiente. Antes de empezar cualquier trabajo que supere el límite, confirmaremos su alcance, coste y plazo."
+        },
+        {
+          "title": "Plazos de respuesta y trabajo",
+          "body": "La primera respuesta suele llegar en un plazo de 2 días laborables. La fecha de finalización de los cambios se acuerda según el contenido y el tiempo de trabajo disponible. No se incluyen la atención en el mismo día, la supervisión por personal durante 24 horas ni la respuesta urgente."
+        },
+        {
+          "title": "Continuidad del servicio y cancelación",
+          "body": "El soporte mensual no tiene un período mínimo de contratación. Como norma general, si comunica la baja antes del día 20 de cada mes, el servicio finalizará a fin de ese mes; si lo hace a partir del día 21, finalizará a fin del mes siguiente. No se reembolsará la parte proporcional del mes. Confirmaremos las condiciones aplicables antes de formalizar el contrato."
+        },
+        {
+          "title": "Datos del cliente y traspaso",
+          "body": "Siempre que sea posible, los dominios y las cuentas de terceros se registrarán a nombre del cliente. Al finalizar el soporte, le entregaremos sus textos e imágenes, así como el código fuente y los datos exportados del sitio web que se hayan acordado en el contrato. Confirmaremos de antemano si es posible migrar los servicios externos y las licencias de terceros; la migración a otro destino de publicación se presupuestará aparte."
+        }
+      ],
+      "processTitle": "Desde el contenido que quiere publicar hasta las actualizaciones posteriores.",
+      "processLead": "Para empezar, cuéntenos cómo es su sitio actual, qué contenido quiere incluir, cuándo le gustaría publicarlo y cuál es su presupuesto.",
+      "process": [
+        {
+          "title": "Consulta y organización del contenido",
+          "body": "Definimos a quién quiere dirigirse y qué desea comunicar, las páginas necesarias, los textos y las fotos disponibles y quién se encargará de las actualizaciones."
+        },
+        {
+          "title": "Propuesta y presupuesto",
+          "body": "Acordamos el alcance del desarrollo, los costes externos, el número de rondas de cambios, las condiciones de publicación, si habrá soporte mensual y cómo se hará el traspaso."
+        },
+        {
+          "title": "Desarrollo y revisión",
+          "body": "Creamos el sitio según la estructura acordada y revisamos el contenido, cómo se muestra y los formularios en computadoras y teléfonos móviles."
+        },
+        {
+          "title": "Publicación e instrucciones de actualización",
+          "body": "Una vez aprobado el contenido, publicamos el sitio, le explicamos cómo editar las novedades y le facilitamos la información de gestión."
+        },
+        {
+          "title": "Soporte continuo según sus necesidades",
+          "body": "Dentro del alcance del plan y del tiempo que elija, realizamos revisiones periódicas, actualizaciones y mejoras."
+        }
+      ],
+      "faqsTitle": "Preguntas frecuentes sobre el diseño y las actualizaciones de sitios web",
+      "faqs": [
+        {
+          "question": "¿Puedo contratar el servicio para otro tipo de negocio?",
+          "answer": "Sí. Atendemos a pequeñas empresas, comercios, centros de formación y otros sectores, sin limitarnos a una industria concreta. Le proponemos una solución según la información que necesite y cómo vaya a actualizarla."
+        },
+        {
+          "question": "¿Puedo solicitar asesoramiento aunque aún no tenga listos los textos ni las fotografías?",
+          "answer": "Sí. En el plan de puesta en marcha organizamos los textos a partir de la información y los materiales que nos facilite. Si necesita borradores elaborados a partir de una sesión de consulta, definiremos el alcance dentro del plan avanzado y de renovación. Las entrevistas y las sesiones fotográficas se presupuestan aparte."
+        },
+        {
+          "question": "¿Puedo contratar solo el desarrollo o solo las actualizaciones?",
+          "answer": "También es posible contratar solo el desarrollo. Para el mantenimiento o la actualización de un sitio existente, revisaremos su estructura y los permisos de administración y presupuestaremos cualquier preparación inicial necesaria."
+        },
+        {
+          "question": "¿Mejorarán la posición en los buscadores o aumentarán las consultas?",
+          "answer": "Configuramos el SEO básico y una navegación sencilla, pero no garantizamos la posición en los buscadores, el número de visitas, las ventas ni las consultas recibidas. Estudiaremos posibles mejoras en la medida en que puedan medirse."
+        },
+        {
+          "question": "¿El CMS, el SEO y el formulario tienen un coste adicional?",
+          "answer": "El CMS estándar para publicar novedades, el SEO básico y el formulario de contacto están incluidos en el coste de desarrollo; no añadimos un cargo independiente por cada función. Las funciones adicionales indicadas aparte se presupuestan según su alcance cuando se solicitan requisitos que superan lo incluido de serie."
+        }
+      ],
+      "resourcesTitle": "Cómo planteamos el desarrollo y la gestión",
+      "resourcesLead": "En nuestros artículos técnicos también explicamos cómo elegir un CMS, organizar la información para los buscadores y diseñar el recorrido hasta el formulario de contacto.",
+      "resources": [
+        {
+          "title": "Cómo elegir un CMS fácil de actualizar",
+          "description": "Criterios para elegir y estructurar un CMS según quién editará el contenido, qué información se gestionará y cómo se publicará."
+        },
+        {
+          "title": "Principios básicos para comunicar información a los motores de búsqueda",
+          "description": "Cómo organizar la información de las páginas, los datos estructurados, el mapa del sitio y otros elementos."
+        },
+        {
+          "title": "Cómo conectar la consulta con el formulario de contacto",
+          "description": "Diseño de un recorrido que traslada al formulario el motivo de consulta indicado en la página del servicio."
+        }
+      ],
+      "ctaTitle": "Hablemos de su sitio web, partiendo de su situación actual.",
+      "ctaBody": "Si quiere crear un sitio nuevo, renovar uno antiguo o delegar las actualizaciones, cuéntenos la URL actual y qué necesita, si ya lo sabe.",
+      "heroPrimaryCta": "Consultar sobre mi sitio web",
+      "heroSecondaryCta": "Ver los precios de desarrollo y soporte",
+      "indexNavigation": {
+        "chooseScopeLead": "Creación y actualización de sitios web, desarrollo desde la fase de planificación y publicación y gestión de aplicaciones existentes. Puede consultarnos a través de la opción que mejor se ajuste a lo que necesita.",
+        "serviceDetailsLead": "Le presentamos tres vías principales: diseño y actualización web, desarrollo por encargo y consultoría informática, además de otros servicios de apoyo que puede contratar con un alcance específico.",
+        "primaryServicesTitle": "Tres servicios principales como punto de partida",
+        "primaryServicesLead": "Sitios web para comercios y negocios, desarrollo de sistemas empresariales y publicación y gestión de aplicaciones existentes. Elija el servicio que mejor se adapte a sus objetivos."
+      }
     }
   },
   "services": {
     "title": "Servicios",
     "description": "Servicios de Acecore Systems: asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web e interfaces de administración, diseño y producción creativa, CMS, búsqueda, datos y modernización. También ofrecemos evaluación de seguridad Web y API y apoyo a la remediación.",
     "heroTitle": "Servicios que se adaptan a ti.",
-    "heroLead": "Además de trabajos puntuales, damos prioridad al diseño y la mejora que ayudan a integrar la solución en las operaciones.",
+    "heroLead": "Cuéntanos qué quieres hacer o qué problemas necesitas resolver y te propondremos el apoyo tecnológico más adecuado.",
     "entryPoints": [
       {
-        "eyebrow": "Desarrollo por encargo / DEVELOPMENT",
-        "title": "Desea delegar el proyecto desde el concepto hasta el lanzamiento",
-        "body": "Para quienes tienen una idea o problema y quieren un único contacto para requisitos, diseño, desarrollo y lanzamiento.",
-        "label": "Ver desarrollo por encargo"
+        "eyebrow": "Desarrollo a medida / DEVELOPMENT",
+        "title": "Quiero delegar todo el proceso, desde la idea hasta el desarrollo y la puesta en producción",
+        "body": "Para quienes tienen una idea de proyecto o un problema que quieren resolver y desean confiar a un solo equipo la definición de requisitos, el diseño, el desarrollo y la puesta en producción.",
+        "label": "Ver los detalles del desarrollo a medida"
       },
       {
-        "eyebrow": "Ingeniero asesor de IT / ADVISORY",
+        "eyebrow": "Acompañamiento de un ingeniero de TI / ADVISORY",
         "title": "Desarrolla internamente o con AI, pero necesita apoyo hasta la operación",
-        "body": "Para quienes ya tienen un sistema o aplicación, pero están bloqueados por despliegue, decisiones técnicas, seguridad u operación.",
-        "label": "Ver ingeniero asesor de IT"
+        "body": "Para quienes ya tienen un sistema o una aplicación, pero se han quedado atascados con el despliegue, las decisiones técnicas, la seguridad o la operación posterior a la puesta en producción.",
+        "label": "Ver los detalles de la asesoría de TI"
+      },
+      {
+        "eyebrow": "Creación de sitios web / WEBSITE",
+        "title": "Quiero delegar la creación y actualización del sitio web de mi negocio o tienda",
+        "body": "Para presentar con claridad tu negocio, tus servicios y precios, la ubicación y los datos de contacto. Puedes elegir el alcance que necesitas, incluida la actualización del sitio después de su publicación.",
+        "label": "Ver los detalles de la creación y actualización de sitios web"
       }
     ],
     "services": [
       {
-        "title": "Asesoría de IT, lanzamiento y operación",
+        "title": "Asesoría de TI y acompañamiento en despliegue y operación",
         "body": "Un ingeniero acompaña a empresas sin especialista IT en el lanzamiento de aplicaciones internas o creadas con AI, la selección de herramientas y las decisiones de nube e infraestructura IT.",
         "examples": [
           "Revisión, despliegue y entrega de aplicaciones creadas con AI",
           "Organización del trabajo, selección de AI y servicios, y evaluación de PoC",
-          "Selección tecnológica, seguridad y segunda opinión sobre proveedores"
+          "Selección de tecnologías, asesoría en seguridad y segundas opiniones sobre proveedores externos"
         ]
       },
       {
         "title": "Desarrollo de sistemas empresariales",
-        "body": "Diseñamos sistemas adaptados a cada flujo: pedidos, inventario, clientes, solicitudes, reservas, informes e inspecciones.",
+        "body": "Diseñamos y desarrollamos sistemas adaptados a los flujos de trabajo de cada organización para gestionar pedidos y compras, inventario, clientes, solicitudes, reservas, informes diarios e inspecciones.",
         "examples": [
-          "Diseño y desarrollo de sistemas de gestión, CRM y ERP",
-          "Migración por fases desde Excel y papel",
-          "Diseño operativo con permisos, aprobaciones, historial y notificaciones"
+          "Diseño y desarrollo de sistemas de gestión empresarial, CRM y ERP",
+          "Transición gradual de hojas de Excel y procesos en papel",
+          "Diseño de procesos operativos con permisos, aprobaciones, historial y notificaciones"
         ]
       },
       {
-        "title": "Aplicaciones Web e interfaces de administración",
-        "body": "Creamos aplicaciones Web internas y externas, funciones de membresía, formularios, CMS y paneles.",
+        "title": "Aplicaciones web y paneles de administración",
+        "body": "Creamos aplicaciones web para uso interno o externo, funcionalidades para miembros, formularios de reserva e inscripción, CMS y paneles de control.",
         "examples": [
-          "Administración, páginas de miembros y formularios",
-          "Búsqueda, listas, detalles, exportación CSV y notificaciones",
-          "Interfaces fáciles de usar en teléfonos"
+          "Paneles de administración, páginas para miembros y formularios",
+          "Funciones de búsqueda, listados, páginas de detalle, exportación CSV y notificaciones",
+          "Diseño de interfaces fáciles de usar también en dispositivos móviles"
         ]
       },
       {
         "title": "Diseño y producción creativa",
-        "body": "Realizamos logotipos, impresos, banners, personajes y otros trabajos creativos para expresar con precisión lo que el cliente desea comunicar. Combinado con producción Web, cubrimos desde el diseño hasta el lanzamiento.",
+        "body": "Diseñamos logotipos, materiales impresos, banners, personajes y muchos otros recursos creativos. Nos esforzamos por plasmar con precisión lo que quieres comunicar. Si combinas estos servicios con la creación de un sitio web, podemos encargarnos de todo, desde el diseño hasta la publicación.",
         "examples": [
-          "Logotipo e identidad de marca",
-          "Tarjetas, folletos, carteles y otros impresos",
-          "Banners Web y contenido para redes sociales",
+          "Diseño de logotipos e identidad de marca",
+          "Materiales impresos como tarjetas de presentación, folletos y carteles",
+          "Creatividades para banners web y redes sociales",
           "Diseño de personajes e ilustración"
         ]
       },
@@ -1455,59 +1716,68 @@
         "title": "Mejoras de CMS, AI, búsqueda y formularios",
         "body": "Añadimos a sitios existentes o estáticos chat de consultas con AI, edición CMS, comentarios, búsqueda, formularios y operación multilingüe.",
         "examples": [
-          "Edición de páginas, blogs y ajustes con Sveltia CMS",
+          "Panel de edición con Sveltia CMS para páginas fijas, el blog y las opciones de configuración",
           "Chat de AI, comentarios y contexto de CTA en formularios",
-          "Pagefind, artículos, etiquetas, relacionados, RSS y páginas multilingües"
+          "Búsqueda con Pagefind y gestión de artículos, etiquetas, contenidos relacionados, RSS y páginas multilingües"
         ]
       },
       {
         "title": "Uso de datos e integraciones externas",
-        "body": "Conectamos servicios, API, hojas de cálculo, correo y chat para reducir entradas duplicadas y comprobaciones omitidas.",
+        "body": "Conectamos servicios y API existentes con hojas de cálculo, correo electrónico y notificaciones por chat para reducir la duplicación de datos y las omisiones en las comprobaciones.",
         "examples": [
-          "Diseño de API e integración de servicios y Webhook",
-          "Diseño de bases de datos, cálculo e informes",
-          "Notificaciones, copias de seguridad y supervisión"
+          "Diseño de API, conexión con servicios externos e integración mediante Webhook",
+          "Diseño de bases de datos, agregación de datos y elaboración de informes",
+          "Configuración de notificaciones, copias de seguridad y supervisión"
         ]
       },
       {
         "title": "Mejora y modernización",
-        "body": "Organizamos sistemas antiguos, herramientas dependientes de personas e interfaces difíciles de mantener para facilitar futuras mejoras.",
+        "body": "Ponemos en orden sistemas obsoletos, herramientas cuyo uso depende de una sola persona e interfaces difíciles de mantener, y los preparamos para que puedan seguir mejorándose.",
         "examples": [
-          "Evaluación de sistemas heredados y migración por fases",
-          "Mejoras de velocidad y UI e investigación de fallos",
-          "Flujos de desarrollo y operación basados en GitHub"
+          "Organización de sistemas heredados y migración por etapas",
+          "Mejora del rendimiento y de la interfaz, e investigación de fallos",
+          "Optimización de flujos de desarrollo y operación basados en GitHub"
         ]
       },
       {
-        "title": "Evaluación de seguridad Web y API y apoyo a la remediación",
-        "body": "Para aplicaciones Web de pymes y pequeños equipos SaaS, ofrecemos revisión previa al lanzamiento, evaluación Web y API, correcciones y verificación dentro de un alcance acordado.",
+        "title": "Diagnóstico de seguridad web y de API y asistencia para mejoras",
+        "body": "Prestamos apoyo, dentro del alcance acordado, para revisar antes de su publicación aplicaciones web de pymes y de pequeños proveedores de SaaS, realizar diagnósticos web y de API, corregir problemas y comprobar las correcciones.",
         "examples": [
           "Revisión previa de aplicaciones creadas con AI o por terceros",
-          "Evaluación de vulnerabilidades de autenticación, permisos y API",
-          "Correcciones y verificación a partir de informes de otros proveedores"
+          "Análisis de vulnerabilidades en autenticación, permisos y API",
+          "Implementación de mejoras y nueva revisión a partir de informes de diagnóstico de terceros"
+        ]
+      },
+      {
+        "title": "Creación de sitios web y asistencia para su actualización",
+        "body": "Creamos un sitio web completo, desde la presentación del negocio hasta los canales de contacto. Después de publicarlo, puedes elegir entre contratar solo el mantenimiento o incluir también la actualización de textos, imágenes y noticias.",
+        "examples": [
+          "Sitios web completos para pequeños negocios, tiendas y academias",
+          "Organización de textos, adaptación a dispositivos móviles, noticias y formularios de contacto",
+          "Revisión periódica después de la publicación y actualización de textos, imágenes y noticias"
         ]
       }
     ],
     "process": [
       {
-        "title": "Entrevista",
-        "body": "Organizamos objetivos, operaciones problemáticas, usuarios, plazos y presupuesto."
+        "title": "Reunión inicial",
+        "body": "Definimos el objetivo, los procesos que plantean dificultades, las personas usuarias, los plazos y el presupuesto aproximado."
       },
       {
-        "title": "Requisitos y propuesta",
-        "body": "Proponemos de forma conjunta las funciones, pantallas y datos, y revisamos las inquietudes y prioridades."
+        "title": "Definición de requisitos y propuesta",
+        "body": "Proponemos una solución integral con las funciones, pantallas y datos necesarios, y confirmamos las inquietudes y prioridades."
       },
       {
         "title": "Diseño y desarrollo",
-        "body": "Puedes revisar las versiones durante el desarrollo e incorporar los nuevos problemas que se descubran."
+        "body": "Puedes revisar las versiones durante el desarrollo e incorporar nuevas necesidades que vayan surgiendo."
       },
       {
-        "title": "Lanzamiento y mejora",
-        "body": "Seguimos apoyando la resolución de fallos, nuevas solicitudes y mejora operativa."
+        "title": "Publicación y mejora",
+        "body": "Seguimos prestando apoyo después de la publicación, desde la resolución de errores y las nuevas solicitudes hasta la mejora de las operaciones."
       }
     ],
-    "designContextNote": "La preparación del departamento Acecore Design es independiente de las consultas sobre los servicios creativos actualmente disponibles. Systems recibe las consultas sobre el diseño y la producción creativa descritos en esta página.",
-    "designContextLinkLabel": "Sobre el departamento Acecore Design"
+    "designContextNote": "La planificación y preparación de la división Acecore Design es independiente de la atención actual de consultas sobre producción. Las consultas sobre diseño y producción creativa descritas en esta página las atiende Systems.",
+    "designContextLinkLabel": "Acerca de la división Acecore Design"
   },
   "workDetail": {
     "title": "Funciones y base operativa del sitio corporativo de Acecore",
@@ -1715,51 +1985,51 @@
   "site": {
     "description": "Acecore Systems es un servicio de Acecore que ofrece asesoría de IT, adopción de AI y mejora operativa, despliegue, sistemas empresariales, aplicaciones Web y producción creativa desde los requisitos hasta la mejora continua.",
     "footerImageDisclosure": "Las imágenes ilustrativas que incluyen personas utilizan material generado con AI.",
-    "footerImageCreditLabel": "Acerca de las imágenes",
+    "footerImageCreditLabel": "Información sobre los recursos de imagen",
     "nav": [
       {
-        "label": "Enfoque"
+        "label": "Enfoque de apoyo"
       },
       {
         "label": "Servicios"
       },
       {
-        "label": "Proyectos"
+        "label": "Casos de éxito"
       },
       {
-        "label": "Precios"
+        "label": "Precios orientativos"
       },
       {
-        "label": "Guía de implantación"
+        "label": "Guía de implementación"
       },
       {
-        "label": "Artículos"
+        "label": "Guías técnicas"
       }
     ],
     "footerLinks": [
       {
-        "label": "Enfoque"
+        "label": "Enfoque de apoyo"
       },
       {
         "label": "Servicios"
       },
       {
-        "label": "Precios"
+        "label": "Precios orientativos"
       },
       {
-        "label": "Proyectos"
+        "label": "Casos de éxito"
       },
       {
-        "label": "Guía de implantación"
+        "label": "Guía de implementación"
       },
       {
-        "label": "Artículos"
+        "label": "Guías técnicas"
       },
       {
         "label": "Contacto"
       },
       {
-        "label": "Privacidad"
+        "label": "Política de privacidad"
       }
     ]
   }

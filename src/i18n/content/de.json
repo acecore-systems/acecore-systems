@@ -2,21 +2,25 @@
   "contact": {
     "title": "Kontakt",
     "description": "Wir beraten zu IT-Beratung, AI-Einführung, Deployment, Geschäftssystemen, Webanwendungen, Design und Kreativleistungen sowie zur Automatisierung bestehender Abläufe – auch bevor die Anforderungen vollständig feststehen. Wir bieten auch Web- und API-Sicherheitsprüfungen und Unterstützung bei der Behebung an.",
-    "heroTitle": "Sie können uns ansprechen, auch wenn die Anforderungen noch nicht feststehen.",
-    "heroLead": "Beschreiben Sie Ihren aktuellen Ablauf, die Schwierigkeiten, die eingesetzten Werkzeuge und den gewünschten Zeitraum.",
-    "formLead": "Erstgespräch und erste Kosteneinschätzung sind kostenlos. Wir unterstützen auch bei der Klärung vor einem verbindlichen Angebot. In der Regel antworten wir innerhalb von 1–2 Werktagen.",
+    "heroTitle": "Sie können sich auch beraten lassen, wenn Ihre Anforderungen noch nicht feststehen.",
+    "heroLead": "Teilen Sie uns mit, wie Ihre aktuellen Abläufe aussehen, was Ihnen Schwierigkeiten bereitet, welche Tools Sie verwenden und wann Sie Unterstützung wünschen.",
+    "formLead": "Das Erstgespräch und ein Kostenvoranschlag sind kostenlos. Auch bei der Klärung Ihres Vorhabens vor einem verbindlichen Angebot unterstützen wir Sie gern. In der Regel antworten wir innerhalb von 1 bis 2 Werktagen.",
     "faqs": [
       {
-        "question": "Kann ich Sie konsultieren, auch wenn ich noch nicht entschieden habe, was ich machen soll?",
-        "answer": "Ja. Gemeinsam organisieren wir Ihr aktuelles Geschäft, womit Sie Probleme haben und was manuell zeitaufwändig erledigt werden muss."
+        "question": "Kann ich mich auch beraten lassen, wenn noch nicht feststeht, was entwickelt werden soll?",
+        "answer": "Ja. Gemeinsam verschaffen wir uns einen Überblick über Ihre aktuellen Abläufe, Ihre Herausforderungen und zeitaufwendige manuelle Arbeiten."
       },
       {
-        "question": "Kann ich auch nur eine kleine Verbesserung verlangen?",
-        "answer": "Ja. Wir können im Kleinen reagieren, beispielsweise durch die Verbesserung vorhandener Formulare, CSV-Ausgabe, Benachrichtigungen und automatische Aggregation."
+        "question": "Kann ich auch nur kleinere Verbesserungen in Auftrag geben?",
+        "answer": "Ja. Wir unterstützen Sie auch bei kleinen Aufgaben wie der Optimierung bestehender Formulare, CSV-Exporten, Benachrichtigungen oder automatisierten Datenauswertungen."
       },
       {
-        "question": "Können Sie sich auch über das bestehende System informieren?",
-        "answer": "Ja. Wir befassen uns auch mit schwer zu wartenden Bildschirmen, veralteten Mechanismen, Excel-Vorgängen und Überprüfungen der externen Servicezusammenarbeit."
+        "question": "Kann ich mich auch zu bestehenden Systemen beraten lassen?",
+        "answer": "Ja. Wir unterstützen Sie auch bei schwer wartbaren Benutzeroberflächen, veralteten Systemen, Excel-basierten Abläufen und der Überprüfung von Integrationen mit externen Diensten."
+      },
+      {
+        "question": "Kann ich mich auch zur Erstellung oder Aktualisierung einer Website beraten lassen?",
+        "answer": "Ja. Wir unterstützen kleine Unternehmen, Ladengeschäfte, Kursanbieter und ähnliche Einrichtungen bei der Erstellung sowie bei Wartung und Aktualisierung nach der Veröffentlichung. Wählen Sie im untenstehenden Formular „Website-Erstellung und -Aktualisierung“ aus und teilen Sie uns Ihre aktuelle Website sowie Ihre Wünsche mit."
       }
     ]
   },
@@ -175,83 +179,87 @@
     "ctaLabel": "Vorgehensweise wählen"
   },
   "home": {
-    "title": "Entwicklung von Unternehmenssoftware und Apps",
+    "title": "IT-Unterstützung für kleine Geschäfte, Kursanbieter und Unternehmen",
     "description": "Acecore Systems unterstützt Sie als Entwicklungsdienstleister ganzheitlich – von der IT-Beratung, der Einführung von AI-Lösungen und der Optimierung von Geschäftsprozessen über Deployment und Web-App-Entwicklung bis hin zur Nutzung von Daten und zur Optimierung des laufenden Betriebs.",
     "heroEyebrow": "Ihr Partner für neue Herausforderungen",
-    "heroTitle": "Hinter Abläufen, die einfach weiterlaufen,\nsteckt ruhiges Design.",
-    "heroLead": "Von der Website über die Nutzerführung bei Buchungen und Anfragen bis hin zur Strukturierung des Arbeitsalltags und zum Betrieb nach dem Launch.\nAuch wenn noch nicht feststeht, womit Sie beginnen sollten, schaffen wir Klarheit über Ihre Ausgangslage und Prioritäten und schlagen ein Vorgehen vor, das sich realistisch umsetzen lässt.",
-    "primaryCta": "Entwicklung anfragen",
+    "heroTitle": "Fangen wir mit dem an,\nwas Sie gerade beschäftigt.",
+    "heroLead": "Ob Website oder Arbeitsalltag:\nWir setzen dort an, wo Sie Unterstützung brauchen.",
+    "primaryCta": "Leistungen ansehen",
     "secondaryCta": "IT-Beratung anfragen",
-    "layersTitle": "Ausgehend von Ihren Zielen schaffen wir die nötigen Strukturen.",
-    "layersLead": "Kundenkontakt, tägliche Abläufe und die zugrunde liegende IT-Infrastruktur. Wir setzen dort an, wo es nötig ist, und schaffen Strukturen, die sich ohne unnötigen Aufwand umsetzen lassen.",
+    "layersTitle": "Wir schaffen die passenden Lösungen – ausgehend von Ihrem Ziel.",
+    "layersLead": "Kundenkontakt, tägliche Abläufe und die IT-Infrastruktur: Wir setzen dort an, wo es nötig ist – mit Lösungen, die sich gut in Ihren Alltag einfügen.",
     "layers": [
       {
         "label": "Kunden",
-        "title": "Kunden erreichen",
-        "body": "Website, Buchungen und Kontaktformulare –\nwir gestalten den ersten Kontakt so, dass Besucher ohne Umwege weiterkommen."
+        "title": "Mit Kunden in Kontakt treten",
+        "body": "Websites, Buchungen, Kontaktformulare und mehr –\nwir gestalten den ersten Kontakt klar und unkompliziert."
       },
       {
-        "label": "Abläufe",
+        "label": "Prozesse",
         "title": "Abläufe reibungsloser gestalten",
-        "body": "Mit internen Apps, Tools, Integrationen und Automatisierung\nreduzieren wir manuelle Arbeit und den Aufwand für Kontrollen."
+        "body": "Mit internen Apps, Tools, Integrationen und Automatisierungen\nreduzieren wir manuelle Arbeit und den Aufwand für Kontrollen."
       },
       {
         "label": "Infrastruktur",
-        "title": "IT-Infrastruktur stärken",
-        "body": "Ein IT-Berater für Fragen rund um Deployment, Betrieb und technische Entscheidungen – ohne dass Sie dafür eine eigene Fachkraft beschäftigen müssen.\nWir bringen die IT Ihres Unternehmens auf die nächste Stufe."
+        "title": "IT-Infrastruktur solide aufstellen",
+        "body": "Auch ohne eigene IT-Fachkraft haben Sie eine Ansprechperson für Fragen zu Veröffentlichung, Betrieb und technischen Entscheidungen.\nSo bringen Sie die IT Ihres Unternehmens einen Schritt weiter."
       }
     ],
     "philosophyEyebrow": "DESIGNPHILOSOPHIE",
-    "philosophyTitle": "Sichtbares und Unsichtbares – mit derselben Präzision.",
-    "philosophyLead": "Acecores Philosophie lautet „Die Welt auf die nächste Stufe bringen“: unwesentliche Belastungen verringern und Menschen bei ihren Vorhaben unterstützen. Systems unterstützt diesen ersten Schritt mit Technologie und verbindet dabei Arbeitsalltag, Systeme und Betrieb.",
+    "philosophyTitle": "Das Sichtbare und das Unsichtbare – mit derselben Präzision.",
+    "philosophyLead": "Mit dem Leitgedanken „Die Welt auf die nächste Stufe bringen“ setzt sich Acecore für eine Gesellschaft ein, in der unnötige Belastungen abnehmen und Menschen darin bestärkt werden, das anzugehen, was sie wirklich tun möchten. Systems bringt Arbeitsalltag, Systeme und Betrieb in Einklang und unterstützt diesen Schritt mit Technologie.",
     "designPrinciples": [
       {
         "title": "Klären, was Sie erreichen möchten",
-        "body": "Wir ordnen gemeinsam mit Ihnen auch den noch vagen Wunsch, etwas zu verbessern. Eine konkrete Idee ist nicht nötig: Beginnen wir mit einem Gespräch darüber, was möglich ist."
+        "body": "Gemeinsam mit Ihnen bringen wir den zunächst vagen Wunsch, etwas zu verbessern, in eine klare Form. Auch ohne konkrete Ideen finden wir im Gespräch heraus, was möglich ist."
       },
       {
-        "title": "Auch im Hintergrund keine Kompromisse eingehen",
-        "body": "Wir verbessern nicht nur das Erscheinungsbild und denken über die heutigen Anforderungen hinaus. Künftige Erweiterbarkeit und einfache Wartung fließen in das gesamte System ein."
+        "title": "Auch hinter den Kulissen keine Kompromisse",
+        "body": "Wir geben uns nicht mit einem guten Erscheinungsbild oder einer kurzfristigen Verbesserung zufrieden. Auch die spätere Erweiterbarkeit und einfache Wartung planen wir von Anfang an mit ein."
       },
       {
-        "title": "Einen nachvollziehbaren Prozess bieten",
-        "body": "Wir teilen regelmäßig Zwischenstände, damit Verbesserungen, die erst beim Entstehen des Ergebnisses sichtbar werden, früh erkannt werden können."
+        "title": "Ein Prozess, der Sie überzeugt",
+        "body": "Während der Umsetzung teilen wir regelmäßig Zwischenstände mit Ihnen. So erkennen wir mögliche Verbesserungen frühzeitig – noch bevor das Ergebnis fertig ist."
       }
     ],
-    "consultationEyebrow": "WANN EIN GESPRÄCH SINNVOLL IST",
-    "consultationTitle": "Sie können uns bereits in diesen Phasen ansprechen.",
-    "consultationLead": "Es muss noch nicht feststehen, was entwickelt werden soll. Ausgehend von Ihren aktuellen Abläufen und den Herausforderungen klären wir gemeinsam, welche Strukturen Sie brauchen.",
+    "consultationEyebrow": "WANN SIE UNS ANSPRECHEN KÖNNEN",
+    "consultationTitle": "Sie können sich schon in solchen frühen Phasen an uns wenden.",
+    "consultationLead": "Sie müssen noch nicht wissen, was entwickelt werden soll. Gemeinsam betrachten wir Ihre aktuellen Abläufe und Herausforderungen und klären, welche Lösungen Sie wirklich brauchen.",
     "consultationSituations": [
       {
         "title": "Eine mit AI erstellte App lässt sich nicht live schalten",
-        "body": "Der Code ist fertig, doch das Projekt stockt bei Entscheidungen rund um Domain, Cloud, Sicherheit und Betrieb."
+        "body": "Der Code ist fertig, doch bei Fragen zu Domain, Cloud, Sicherheit oder Betrieb kommen Sie nicht weiter."
       },
       {
         "title": "Der Aufwand für Übertragungen und manuelle Arbeit wächst",
-        "body": "Wir möchten die in Tabellenkalkulationen, auf Papier und in E-Mails verteilten Abläufe ordnen und überlegen, wo sich zuerst eine passende Lösung schaffen lässt."
+        "body": "Wir bringen Ordnung in Abläufe, die auf Tabellen, Papier und E-Mails verteilt sind, und überlegen gemeinsam, welche davon sich zuerst in einem System abbilden lassen."
       },
       {
         "title": "Das aktuelle System passt nicht zum Arbeitsalltag",
-        "body": "Wir möchten die umständliche Bedienung und die Abhängigkeit von einzelnen Personen neu bewerten und das System schrittweise an unsere Abläufe anpassen."
+        "body": "Wir prüfen, was die Nutzung erschwert und wo Wissen an einzelne Personen gebunden ist, und passen das System schrittweise an die tatsächlichen Arbeitsabläufe an."
       },
       {
-        "title": "Daten und Tools sind auf mehrere Systeme verteilt",
-        "body": "Wir möchten mehrere Dienste und Datenquellen verknüpfen und so doppelte Eingaben sowie Kontrolllücken reduzieren."
+        "title": "Daten und Tools sind voneinander getrennt",
+        "body": "Wir verbinden verschiedene Dienste und Datenquellen, um doppelte Eingaben und versäumte Kontrollen zu reduzieren."
       },
       {
-        "title": "Herausforderungen klären, bevor daraus Anforderungen werden",
-        "body": "Wir möchten Ziele, Nutzer, Rahmenbedingungen und Prioritäten ordnen und ein realistisches Vorgehen festlegen."
+        "title": "Herausforderungen klären, bevor konkrete Anforderungen entstehen",
+        "body": "Wir ordnen Ziele, Nutzer, Rahmenbedingungen und Prioritäten und legen gemeinsam ein realistisches Vorgehen fest."
       },
       {
-        "title": "Die Sicherheit Ihrer App prüfen und verbessern",
-        "body": "Hilfe bei Prüfungen vor Veröffentlichung, Web-/API-Prüfungen und Korrekturen nach einem Bericht."
+        "title": "App-Sicherheit prüfen und verbessern",
+        "body": "Von der Prüfung vor der Veröffentlichung über Sicherheitsanalysen von Webanwendungen und APIs bis zur Behebung von Befunden aus einem Prüfbericht – wir beraten Sie gern."
+      },
+      {
+        "title": "Website erstellen oder aktualisieren lassen",
+        "body": "Für kleine Unternehmen, Geschäfte und Kursanbieter: Wir unterstützen Sie von der Strukturierung Ihrer Texte über die Veröffentlichung bis zur laufenden Pflege von Texten, Fotos und Neuigkeiten."
       }
     ],
-    "ctaEyebrow": "MIT EINEM GESPRÄCH BEGINNEN",
-    "ctaTitle": "Erzählen Sie uns, was Sie entwickeln möchten, oder einfach, wo Sie Schwierigkeiten haben.",
-    "ctaBody": "Auch wenn die Anforderungen noch nicht vollständig feststehen, können Sie sich an uns wenden. Gemeinsam ordnen wir Ihre aktuellen Abläufe, Rahmenbedingungen und Prioritäten.",
-    "ctaLabel": "Beratungsform wählen",
-    "philosophyLinkLabel": "Acecores Philosophie und Vision"
+    "ctaEyebrow": "STARTEN WIR MIT EINEM GESPRÄCH",
+    "ctaTitle": "Erzählen Sie uns, was Sie umsetzen möchten – oder einfach, wo Sie Unterstützung brauchen.",
+    "ctaBody": "Auch wenn Ihre Anforderungen noch nicht vollständig feststehen, können Sie sich an uns wenden. Gemeinsam strukturieren wir Ihre aktuellen Abläufe, Rahmenbedingungen und Prioritäten.",
+    "ctaLabel": "Kontaktmöglichkeit auswählen",
+    "philosophyLinkLabel": "Unternehmensphilosophie und Vision von Acecore"
   },
   "itAdvisor": {
     "title": "IT-Berater auf Abruf",
@@ -516,12 +524,12 @@
     "items": [
       {
         "label": "IT Advisor Engineer Light",
-        "price": "Ab 49.500 Yen pro Monat",
+        "price": "Ab 49,500 Yen pro Monat",
         "note": "1–2 Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens 1 kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt. Insgesamt bis zu 4 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
         "label": "IT Advisor Engineer Standard",
-        "price": "Ab 102.300 Yen pro Monat",
+        "price": "Ab 102,300 Yen pro Monat",
         "note": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine 24-Stunden-Überwachung und sofortige Fehlerbehebung. Insgesamt bis zu 12 Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
       },
       {
@@ -562,57 +570,57 @@
       {
         "label": "Anfrage-AI-Chat",
         "price": "Ab 80.000 Yen",
-        "note": "Integrieren Sie den AI-Chat für Anfragen in statische Websites und Service-Websites und ordnen Sie den Antwortbereich, das Ratenlimit, die Herkunftsprüfung und das Erstellen sicherer Links. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Integrieren Sie den AI-Chat für Anfragen in statische Websites und Service-Websites und ordnen Sie den Antwortbereich, das Ratenlimit, die Herkunftsprüfung und das Erstellen sicherer Links. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Blog-Kommentarfunktion",
         "price": "Ab 80.000 Yen",
-        "note": "Verwenden Sie Cloudflare Pages Functions, D1, Turnstile, um Posting-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren, die nicht auf externe Kommentardienste angewiesen sind. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Verwenden Sie Cloudflare Pages Functions, D1, Turnstile, um Posting-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren, die nicht auf externe Kommentardienste angewiesen sind. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Einführung des CMS-Bearbeitungsbildschirms",
         "price": "Ab 50.000 Yen",
-        "note": "Sveltia CMS fügt einen Verwaltungsbildschirm hinzu, mit dem Sie Blogs, feste Seiten, Ankündigungen und Einstellungselemente über den Browser aktualisieren können. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Sveltia CMS fügt einen Verwaltungsbildschirm hinzu, mit dem Sie Blogs, feste Seiten, Ankündigungen und Einstellungselemente über den Browser aktualisieren können. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Blog-/Artikelbasis",
         "price": "Ab 50.000 Yen",
-        "note": "Wir bereiten die notwendige Infrastruktur für die kontinuierliche Verbreitung vor, wie z. B. Artikellisten, Detailseiten, Tags, verwandte Artikel, RSS und Suchkanäle. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Wir bereiten die notwendige Infrastruktur für die kontinuierliche Verbreitung vor, wie z. B. Artikellisten, Detailseiten, Tags, verwandte Artikel, RSS und Suchkanäle. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Mehrsprachiger Blog-Betrieb",
         "price": "Ab 80.000 Yen",
-        "note": "Wir bereiten einen mehrsprachigen Blog-Vorgang vor, einschließlich japanischer Quellen, übersetzter PR, Hreflang, Sitemap und RSS. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Wir bereiten einen mehrsprachigen Blog-Vorgang vor, einschließlich japanischer Quellen, übersetzter PR, Hreflang, Sitemap und RSS. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "SEO/strukturierte Daten",
         "price": "Ab 50.000 Yen",
-        "note": "Informationen organisieren, die an Suchmaschinen wie OGP, JSON-LD, Sitemap, RSS, Canonical usw. übermittelt werden sollen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Informationen organisieren, die an Suchmaschinen wie OGP, JSON-LD, Sitemap, RSS, Canonical usw. übermittelt werden sollen. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Pagefind-Site-Suche",
         "price": "Ab 30.000 Yen",
-        "note": "Fügen Sie der statischen Site die Suche Pagefind hinzu und ordnen Sie die Suchoberfläche, URL-Parameter und Cache-Einstellungen an. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Fügen Sie der statischen Site die Suche Pagefind hinzu und ordnen Sie die Suchoberfläche, URL-Parameter und Cache-Einstellungen an. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Verbesserte Anzeigegeschwindigkeit",
         "price": "Ab 50.000 Yen",
-        "note": "Wir werden Core Web Vitals weiter verbessern, indem wir Bilder, CSS, Schriftarten, Lazy Loading und Messergebnisse überprüfen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Wir werden Core Web Vitals weiter verbessern, indem wir Bilder, CSS, Schriftarten, Lazy Loading und Messergebnisse überprüfen. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Verbesserung der Barrierefreiheit",
         "price": "Ab 50.000 Yen",
-        "note": "Überprüfen Sie Kontrast, Arienattribute, Fokus, Formularvalidierung usw. und korrigieren Sie sie, um WCAG AA zu erreichen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Wir prüfen Kontraste, aria-Attribute, Fokus und Formularvalidierung und beheben Probleme mit dem Ziel WCAG AA. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Sicherheitsheader/CSP",
         "price": "Ab 30.000 Yen",
-        "note": "Wir werden die Verteilungseinstellungen rund um die _Header, den CSP und den Verwaltungsbildschirm von Cloudflare Pages organisieren, um es näher an einen sicheren Veröffentlichungsstatus zu bringen. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Wir ordnen _headers, CSP und Auslieferungseinstellungen für den Verwaltungsbereich in Cloudflare Pages, um die Veröffentlichung sicherer zu gestalten. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "CTA/Formularverknüpfung",
         "price": "Ab 30.000 Yen",
-        "note": "Übernehmen Sie Typ, Betreff und Kontext vom Service-CTA auf das Anfrageformular, um den Beratungsablauf zu verbessern. Der Richtpreis gilt für 1 Standardeinrichtung, Prüfung oder Verbesserung auf 1 bestehenden Website. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        "note": "Übernehmen Sie Typ, Betreff und Kontext vom Service-CTA auf das Anfrageformular, um den Beratungsablauf zu verbessern. Der Richtpreis gilt für 1 Standardaufgabe an 1 Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
       },
       {
         "label": "Integrierte System-/Kernzusammenarbeit",
@@ -648,6 +656,36 @@
         "label": "Laufende Sicherheitsunterstützung",
         "price": "Individuelles Angebot",
         "note": "Updates, Rechte, Änderungskontrollen und Beratung. Ziele, Häufigkeit, Stunden und Zusatzleistungen werden individuell vereinbart."
+      },
+      {
+        "label": "Startpaket",
+        "price": "156,750 Yen",
+        "note": "Bis zu 5 feste Seiten. Standarddesign, Aufbereitung der Texte aus bereitgestellten Materialien, mobile Darstellung, Aktuelles, grundlegende SEO, Formular sowie Hinweise zur Veröffentlichung und Aktualisierung. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Zusatzwünsche außerhalb des vereinbarten Umfangs werden vor Beginn angeboten."
+      },
+      {
+        "label": "Ausbau und Relaunch",
+        "price": "Ab 330,000 Yen",
+        "note": "Grundlage sind bis zu 10 feste Seiten, ein abgestimmtes Gespräch sowie Text- und Strukturvorschläge. Der Umfang der Migration bestehender Inhalte wird gesondert angeboten. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Zusatzwünsche außerhalb des vereinbarten Umfangs werden vor Beginn angeboten."
+      },
+      {
+        "label": "Individuelle Erstellung und Zusatzfunktionen",
+        "price": "Individuelles Angebot",
+        "note": "Individuelles Design, Buchungen, Zahlungen, Mitgliedschaften, Mehrsprachigkeit oder umfangreiche Migrationen. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Zusatzwünsche außerhalb des vereinbarten Umfangs werden vor Beginn angeboten."
+      },
+      {
+        "label": "Website-Wartung",
+        "price": "5,500 Yen pro Monat",
+        "note": "Automatische Verfügbarkeitsprüfung und Backups, regelmäßige Kontrollen, erste Fehleranalyse, vereinbarte Wiederherstellung und Kommunikation bis zu 30 Minuten pro Monat. Inhaltsaktualisierungen sind nicht enthalten. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Mehrzeit wird vor Beginn angeboten."
+      },
+      {
+        "label": "Aktualisierungsservice",
+        "price": "15,400 Yen pro Monat",
+        "note": "Zusätzlich zu 30 Minuten monatlicher Wartung: 60 Minuten pro Monat für Text-, Bild- und Nachrichtenaktualisierungen einschließlich Prüfung, Abstimmung und Veröffentlichung (insgesamt bis zu 90 Minuten pro Monat). Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Mehrzeit wird vor Beginn angeboten."
+      },
+      {
+        "label": "Nutzung und Verbesserung",
+        "price": "Ab 33,000 Yen pro Monat",
+        "note": "Wartung, Aktualisierungen, Webanalyse, Verbesserungen, Beratung und Kommunikation zusammen bis zu 3 Stunden pro Monat. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Mehrzeit wird vor Beginn angeboten."
       }
     ]
   },
@@ -1397,122 +1435,354 @@
       ],
       "ctaTitle": "Anliegen und Prüfbedarf besprechen",
       "ctaBody": "Beschreiben Sie die App und Ihre Anliegen. Passwörter, API-Schlüssel und Produktionsdaten sind im ersten Formular nicht erforderlich."
+    },
+    "website": {
+      "title": "Erstellung und Pflege von Websites",
+      "description": "Erstellung von Websites und Unterstützung bei Aktualisierungen nach der Veröffentlichung für kleine Unternehmen, Geschäfte und Kursanbieter. Erstellung ab 156,750 Yen, Wartung ab 5,500 Yen pro Monat und Aktualisierungsservice ab 15,400 Yen pro Monat. Wir informieren Sie über Richtpreise inklusive Steuern und den jeweiligen Leistungsumfang.",
+      "heroEyebrow": "WEBSITE / ERSTELLUNG & SUPPORT",
+      "heroTitle": "Eine Website, mit der Sie sich\nauf Ihr Kerngeschäft konzentrieren können.",
+      "heroLead": "Wir unterstützen Sie dabei, die Stärken Ihres Geschäfts oder Unternehmens mit einer Website zu vermitteln – von der Strukturierung der Texte bis zu Aktualisierungen nach der Veröffentlichung. Anfragen sind branchenunabhängig möglich, etwa von kleinen Unternehmen, Geschäften und Kursanbietern.",
+      "heroBenefits": [
+        "Beratung zur Strukturierung der Texte",
+        "Auch Aktualisierungen nach der Veröffentlichung beauftragen"
+      ],
+      "visual": {
+        "alt": "Visualisierung zur Website-Erstellung: Eine Ansprechperson prüft die Bearbeitungsansicht und die Website",
+        "caption": "Wir strukturieren die Inhalte, die Sie vermitteln möchten, und sorgen für übersichtliche Seiten und einen einfach fortzuführenden Aktualisierungsprozess."
+      },
+      "sectionVisuals": {
+        "scope": {
+          "alt": "Darstellung einer Bearbeitungsansicht und eines Kontaktformulars auf einem Computer und Smartphone",
+          "caption": "Unternehmensvorstellung, Leistungen und Preise, Anfahrt und Kontakt: Wir bündeln alle wichtigen Informationen und Wege auf einer Website."
+        },
+        "process": {
+          "alt": "Visualisierung des Erstellungsprozesses: Eine Ansprechperson und ein Entwickler prüfen die Darstellung auf Computer und Smartphone",
+          "caption": "Wir prüfen Inhalte und Darstellung gemeinsam mit Ihnen und zeigen Ihnen, wie Aktualisierungen nach der Veröffentlichung funktionieren."
+        }
+      },
+      "indexSummary": "Von der Unternehmensvorstellung bis zur Kontaktaufnahme aus einer Hand. Nach der Veröffentlichung können Sie zwischen reiner Wartung und Unterstützung bei Aktualisierungen von Texten, Bildern und Neuigkeiten wählen.",
+      "indexTopics": [
+        "Strukturierung der Texte",
+        "Für Smartphones optimiert",
+        "Neuigkeiten & Kontakt",
+        "Wartung & Aktualisierung"
+      ],
+      "introTitle": "Klare Inhalte – und auch nach der Veröffentlichung ein verlässlicher Ansprechpartner.",
+      "introBody": "Ob Ihre erste Website oder die Überarbeitung einer in die Jahre gekommenen Seite: Wir strukturieren die Informationen, die Ihre Kunden suchen – etwa zu Ihrem Unternehmen, Ihren Leistungen und Preisen, der Anfahrt und den Kontaktmöglichkeiten. Nach der Veröffentlichung können Sie wählen, ob Sie selbst aktualisieren oder die Aktualisierung uns überlassen.",
+      "challenges": [
+        {
+          "title": "Sie wissen nicht, welche Inhalte auf die Website gehören",
+          "body": "Sie sind unsicher, in welcher Reihenfolge und wie ausführlich Sie Ihr Unternehmen oder Geschäft vorstellen sollten."
+        },
+        {
+          "title": "Auf dem Smartphone schwer lesbar",
+          "body": "Sie möchten die Darstellung und den Weg zur Kontaktaufnahme auf älteren Seiten an die Bedürfnisse Ihrer heutigen Kunden anpassen."
+        },
+        {
+          "title": "Für laufende Aktualisierungen fehlt die Zeit",
+          "body": "Änderungen an Öffnungszeiten, Preisen, Fotos oder Neuigkeiten werden trotz Bedarf wegen des vollen Alltags immer wieder aufgeschoben."
+        }
+      ],
+      "offeringsTitle": "Erstellungspakete und flexibel wählbarer Support nach der Veröffentlichung",
+      "offeringsLead": "Die Website-Erstellung wird als Gesamtleistung kalkuliert; monatliche Supportleistungen sind separate, je nach Bedarf wählbare Verträge. Alle Beträge verstehen sich inklusive Steuern. Externe Kosten, etwa für Domain, Server und kostenpflichtige Dienste, kommen nach tatsächlichem Aufwand hinzu. Vor Vertragsschluss erstellen wir ein Angebot mit dem verbindlichen Leistungsumfang und Preis.",
+      "offerings": [
+        {
+          "title": "Startpaket",
+          "body": "Für alle, die wichtige Informationen übersichtlich bündeln und zunächst eine Website möchten, mit der sie sich sicher präsentieren können.",
+          "includes": [
+            "Bis zu 5 statische Seiten auf Basis eines Standarddesigns (einschließlich Kontaktseite)",
+            "Strukturierung der Inhalte wie Unternehmens- oder Geschäftsvorstellung, Leistungen und Preise sowie Anfahrt",
+            "Strukturierung der Texte auf Grundlage der von Ihnen bereitgestellten Fakten, Texte und Fotos",
+            "Für Smartphones optimiert, bearbeitbarer Bereich für Neuigkeiten, SEO-Grundoptimierung und Kontaktformular",
+            "Veröffentlichung, Anleitung zur Aktualisierung und bis zu 2 gebündelte Korrekturrunden für Inhalte und Design"
+          ],
+          "priceNote": "Eine Neuigkeitenübersicht, Detailseiten für Beiträge und ein standardmäßiger Datenschutzhinweis sind zusätzlich zu den statischen Seiten enthalten. Neue Recherchen und Interviews, Fotoaufnahmen sowie individuelle Designs werden separat angeboten."
+        },
+        {
+          "title": "Erweiterungs- und Relaunchpaket",
+          "body": "Für alle, die auch die Vorzüge ihrer Leistungen und konkrete Beispiele vermitteln oder Inhalte und Seitenstruktur grundlegend überarbeiten möchten.",
+          "includes": [
+            "Bis zu 10 statische Seiten auf Basis einer Standardstruktur (einschließlich Kontaktseite)",
+            "Abstimmung im vereinbarten Umfang sowie Erstellung von Text- und Strukturentwürfen",
+            "Seitenstruktur passend zum Zweck, z. B. für Leistungsdetails, Referenzen oder Karriereinformationen",
+            "Dieselben Grundfunktionen wie im Startpaket sowie Anleitung zur Veröffentlichung und Aktualisierung",
+            "Bis zu 2 gebündelte Korrekturrunden für Inhalte und Design"
+          ],
+          "priceNote": "Die Übernahme vorhandener Seiten, Beiträge, Bilder und URLs legen wir nach Prüfung von Umfang und Zustand separat fest. Recherchen, Interviews und Fotoaufnahmen sind nicht enthalten."
+        },
+        {
+          "title": "Individuelle Website-Erstellung und Funktionserweiterungen",
+          "body": "Wenn Sie ein maßgeschneidertes Design oder Funktionen wie Buchung und Zahlung benötigen, klären wir zunächst die Ziele und die spätere Betriebsweise.",
+          "includes": [
+            "Individuelles Design, Buchungs-, Zahlungs- und Mitgliederfunktionen",
+            "Mehrsprachige Websites oder die Migration zahlreicher Seiten und Beiträge",
+            "Analyse der bestehenden Website-Struktur und Vorschläge für benötigte Zusatzfunktionen"
+          ],
+          "priceNote": "Wir erstellen ein individuelles Angebot, nachdem wir die gewünschten Funktionen, externe Dienste, den Umgang mit Daten und die Betriebsweise geklärt haben."
+        },
+        {
+          "title": "Wartungspaket",
+          "body": "Für alle, die Inhalte selbst aktualisieren und die regelmäßige technische Überprüfung in unsere Hände legen möchten.",
+          "includes": [
+            "Automatische Verfügbarkeitsprüfungen und Backups sowie regelmäßige technische Kontrollen",
+            "Erste Fehleranalyse bei Störungen und Wiederherstellung aus zuvor vereinbarten Backups",
+            "Bis zu 30 Minuten pro Monat insgesamt für Prüfung, Fehleranalyse, Wiederherstellung und zugehörige Kommunikation"
+          ],
+          "priceNote": "Aktualisierungen von Texten, Bildern und Neuigkeiten sind nicht enthalten. Das Paket garantiert weder die Behebung von Störungen bei externen Anbietern noch einen 24-Stunden-Service oder eine sofortige Reaktion."
+        },
+        {
+          "title": "Aktualisierungsservice",
+          "body": "Für alle, die Änderungen an Öffnungszeiten, Preisen, Fotos und Neuigkeiten gebündelt über eine zentrale Ansprechstelle beauftragen möchten.",
+          "includes": [
+            "Leistungen des Wartungspakets (bis zu 30 Minuten pro Monat)",
+            "Austausch von Texten und Bildern auf bestehenden Seiten sowie Veröffentlichung von Neuigkeiten",
+            "Bis zu 60 Minuten pro Monat für Aktualisierungsarbeiten einschließlich Prüfung der Inhalte, Abstimmung, Einholen der Freigabe und Veröffentlichung (zusammen mit der Wartung bis zu 90 Minuten pro Monat)"
+          ],
+          "priceNote": "Neue Seiten, Designänderungen, neue Funktionen und das Verfassen längerer Texte werden separat kalkuliert. Fotos und die zur Veröffentlichung vorgesehenen Fakten stellen Sie bereit."
+        },
+        {
+          "title": "Optimierungs- und Weiterentwicklungspaket",
+          "body": "Für alle, die zusätzlich zu Aktualisierungen anhand der Nutzungsdaten die Darstellung und Nutzerführung schrittweise verbessern möchten.",
+          "includes": [
+            "Wartung sowie Aktualisierung von Texten, Bildern und Neuigkeiten",
+            "Auswertung der Zugriffsstatistiken und Ermittlung möglicher Verbesserungen",
+            "Verbesserung von Seiten und Beratung im vereinbarten Umfang",
+            "Bis zu 3 Stunden pro Monat insgesamt für Wartung, Aktualisierungen, Analyse, Beratung und sämtliche zugehörigen Abstimmungen"
+          ],
+          "priceNote": "Die Analyse beginnt, sobald die erforderliche Messtechnik eingerichtet ist. Anzeigenmanagement, die laufende Erstellung von Beiträgen und umfangreiche Überarbeitungen werden separat kalkuliert."
+        }
+      ],
+      "costExample": {
+        "title": "Beispielkosten im ersten 1 Jahr",
+        "body": "Startpaket: 156,750 Yen + Aktualisierungsservice: 15,400 Yen × 12 Monate = 341,550 Yen (inklusive Steuern). Externe Kosten, etwa für Domain, Server und kostenpflichtige Dienste, kommen hinzu. Sie können auch nur die Website-Erstellung beauftragen, ohne monatlichen Support."
+      },
+      "termsTitle": "Leistungsumfang – vor der Beauftragung transparent",
+      "terms": [
+        {
+          "title": "Erstellungsumfang und Korrekturrunden",
+          "body": "Vor Beginn der Erstellung vereinbaren wir Seitenstruktur, Inhalte, Liefertermin und Preis. Für die erste Prüfung von Inhalt und Design sind bis zu 2 gebündelte Korrekturrunden vorgesehen. Zusätzliche Seiten oder Änderungen der Struktur nach deren Freigabe werden vorab separat angeboten."
+        },
+        {
+          "title": "Monatliches Zeitkontingent",
+          "body": "Auch Abstimmungen und Kommunikation werden auf das Zeitkontingent des jeweiligen Pakets angerechnet; nicht genutzte Zeit wird nicht in den Folgemonat übertragen. Arbeiten über das Kontingent hinaus stimmen wir hinsichtlich Umfang, Kosten und Zeitplan vor Beginn mit Ihnen ab."
+        },
+        {
+          "title": "Antwortzeiten und Arbeitsplanung",
+          "body": "Wir melden uns in der Regel innerhalb von 2 Geschäftstagen erstmals zurück. Den Termin für die Fertigstellung von Änderungen stimmen wir entsprechend dem Umfang und dem verfügbaren Zeitkontingent ab. Eine Bearbeitung am selben Tag, eine Überwachung durch Personal über 24 Stunden oder eine Notfallbetreuung sind nicht enthalten."
+        },
+        {
+          "title": "Fortsetzung und Kündigung",
+          "body": "Für monatliche Supportleistungen gibt es keine Mindestvertragslaufzeit. Geht Ihre Kündigung bis zum 20. eines Monats ein, endet der Vertrag grundsätzlich zum Monatsende; geht sie am 21. oder später ein, endet er grundsätzlich zum Ende des Folgemonats. Eine anteilige Erstattung für den laufenden Monat erfolgt nicht. Die geltenden Bedingungen klären wir vor Vertragsschluss."
+        },
+        {
+          "title": "Ihre Daten und die Übergabe",
+          "body": "Domains und externe Konten richten wir nach Möglichkeit auf Ihren Namen ein. Bei Ende des Supports erhalten Sie Ihre Texte und Bilder sowie den im Vertrag festgelegten Quellcode und die Exportdaten der Website. Wir prüfen vorab, ob externe Dienste übertragen werden können und welche Lizenzen Dritter gelten. Die Migration auf einen anderen Veröffentlichungsort wird separat kalkuliert."
+        }
+      ],
+      "processTitle": "Von den Inhalten bis zu Aktualisierungen nach der Veröffentlichung.",
+      "processLead": "Teilen Sie uns zunächst mit, welche Website Sie derzeit nutzen, welche Inhalte veröffentlicht werden sollen, welchen Zeitrahmen und welches Budget Sie sich vorstellen.",
+      "process": [
+        {
+          "title": "Beratung und Klärung der Inhalte",
+          "body": "Wir klären, wen Sie erreichen und was Sie vermitteln möchten, welche Seiten erforderlich sind, welche Texte und Fotos verfügbar sind und wer Aktualisierungen übernimmt."
+        },
+        {
+          "title": "Vorschlag und Angebot",
+          "body": "Wir legen den Erstellungsumfang, externe Kosten, die Zahl der Korrekturrunden, die Bedingungen für die Veröffentlichung, den monatlichen Support und die Übergabe fest."
+        },
+        {
+          "title": "Erstellung und Prüfung",
+          "body": "Wir erstellen die Website gemäß der vereinbarten Struktur und prüfen Inhalte, Darstellung und Formular auf Computer und Smartphone."
+        },
+        {
+          "title": "Veröffentlichung und Anleitung zu Aktualisierungen",
+          "body": "Nach Ihrer Freigabe veröffentlichen wir die Website und zeigen Ihnen, wie Sie Neuigkeiten bearbeiten. Außerdem erhalten Sie die Verwaltungsinformationen."
+        },
+        {
+          "title": "Fortlaufender Support nach Bedarf",
+          "body": "Im Rahmen des von Ihnen gewählten Pakets und Zeitkontingents übernehmen wir regelmäßige Prüfungen, Aktualisierungen und Optimierungen."
+        }
+      ],
+      "faqsTitle": "Häufige Fragen zur Website-Erstellung und -Pflege",
+      "faqs": [
+        {
+          "question": "Ist eine Beauftragung auch außerhalb von Geschäften und Kursangeboten möglich?",
+          "answer": "Ja. Unser Angebot richtet sich branchenunabhängig an kleine Unternehmen, Geschäfte, Kursanbieter und ähnliche Organisationen. Wir machen Vorschläge passend zu den benötigten Informationen und der gewünschten Aktualisierungsmethode."
+        },
+        {
+          "question": "Kann ich mich auch beraten lassen, wenn Texte und Fotos noch nicht vollständig vorliegen?",
+          "answer": "Ja. Im Startpaket strukturieren wir die Texte anhand der von Ihnen bereitgestellten Fakten und Unterlagen. Wenn wir auf Grundlage eines Gesprächs Textentwürfe erstellen sollen, vereinbaren wir den Umfang im Erweiterungs- und Relaunchpaket. Recherchen, Interviews und Fotoaufnahmen werden separat kalkuliert."
+        },
+        {
+          "question": "Kann ich nur die Erstellung oder nur Aktualisierungen beauftragen?",
+          "answer": "Die Erstellung allein ist möglich. Bei Wartung und Aktualisierung einer bestehenden Website prüfen wir deren Aufbau und die Zugriffsrechte und erstellen ein Angebot unter Berücksichtigung eventuell erforderlicher Vorarbeiten."
+        },
+        {
+          "question": "Verbessern sich dadurch Suchmaschinen-Rankings oder die Zahl der Anfragen?",
+          "answer": "Wir richten grundlegende SEO und eine übersichtliche Nutzerführung ein, können jedoch weder Suchmaschinen-Rankings noch Besucherzahlen, Umsatz oder die Zahl der Anfragen garantieren. Verbesserungsmöglichkeiten prüfen wir anhand der verfügbaren Messdaten."
+        },
+        {
+          "question": "Fallen für CMS, SEO oder Kontaktformular zusätzliche Gebühren an?",
+          "answer": "Das standardmäßige CMS für Neuigkeiten, die SEO-Grundoptimierung und das Kontaktformular sind im Erstellungspreis enthalten; für diese Funktionen werden keine zusätzlichen Einzelgebühren berechnet. Separat aufgeführte Kosten für Funktionserweiterungen werden nach Umfang angeboten, wenn Sie Anforderungen über den Standard hinaus wünschen."
+        }
+      ],
+      "resourcesTitle": "Unser Ansatz für Erstellung und Betrieb",
+      "resourcesLead": "Technische Erläuterungen geben auch Einblicke in die Auswahl eines CMS, suchmaschinenrelevante Informationen und die Gestaltung des Wegs zur Kontaktaufnahme.",
+      "resources": [
+        {
+          "title": "Das passende CMS für einfache Aktualisierungen auswählen",
+          "description": "So wählen Sie ein CMS und eine passende Struktur anhand der bearbeitenden Personen, der verwalteten Informationen und der Veröffentlichungsweise aus."
+        },
+        {
+          "title": "Grundlagen einer suchmaschinenfreundlichen Informationsvermittlung",
+          "description": "Ein Überblick darüber, wie Seiteninhalte, strukturierte Daten und Sitemaps sinnvoll aufbereitet werden."
+        },
+        {
+          "title": "Anfragen vom Leistungsangebot zum Kontaktformular führen",
+          "description": "So werden Informationen zum gewünschten Anliegen vom Leistungsangebot bis ins Kontaktformular weitergeführt."
+        }
+      ],
+      "ctaTitle": "Sprechen Sie mit uns über Ihre Website – unabhängig vom aktuellen Stand.",
+      "ctaBody": "Sie möchten eine neue Website, eine ältere überarbeiten lassen oder Aktualisierungen abgeben? Teilen Sie uns gerne die URL Ihrer aktuellen Website und Ihre Wünsche mit.",
+      "heroPrimaryCta": "Website-Beratung anfragen",
+      "heroSecondaryCta": "Preise für Erstellung und Support ansehen",
+      "indexNavigation": {
+        "chooseScopeLead": "Website-Erstellung und -Pflege, Entwicklung nach Konzept sowie Veröffentlichung und Betrieb bestehender Apps: Wählen Sie den Einstieg, der zu Ihrem Vorhaben passt.",
+        "serviceDetailsLead": "Hier finden Sie drei Wege zu uns – Website-Erstellung und -Pflege, Auftragsentwicklung und IT-Beratung – sowie einzelne Unterstützungsleistungen mit klar abgegrenztem Umfang.",
+        "primaryServicesTitle": "Drei zentrale Einstiege für Ihr Vorhaben",
+        "primaryServicesLead": "Websites für Geschäfte und Unternehmen, Entwicklung betrieblicher Systeme sowie Veröffentlichung und Betrieb bestehender Apps: Wählen Sie den Service, der zu Ihrem Ziel passt."
+      }
     }
   },
   "services": {
     "title": "Leistungen",
     "description": "Leistungen von Acecore Systems: IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Entwicklung von Geschäftssystemen und Webanwendungen, Administrationsoberflächen, Design und Kreativleistungen, CMS, Suche, Datennutzung und Modernisierung bestehender Systeme. Wir bieten auch Web- und API-Sicherheitsprüfungen und Unterstützung bei der Behebung an.",
-    "heroTitle": "Leistungen, die zu Ihnen passen.",
-    "heroLead": "Wir liefern nicht nur einmalig, sondern gestalten auch den Weg, auf dem die Lösung im Arbeitsalltag ankommt und weiter verbessert werden kann.",
+    "heroTitle": "Die passende Unterstützung für Sie.",
+    "heroLead": "Ausgehend von Ihren Vorhaben und Herausforderungen empfehlen wir die passende IT-Unterstützung.",
     "entryPoints": [
       {
-        "eyebrow": "Auftragsentwicklung / ENTWICKLUNG",
-        "title": "Ich möchte mich um alles kümmern, vom Konzept bis zur Entwicklung und Veröffentlichung.",
-        "body": "Dies ist für Personen gedacht, die eine Idee für ein Projekt oder ein Problem haben, das sie lösen möchten, sich aber auf einen einzigen Ansprechpartner für die Organisation, das Design, die Entwicklung und die Veröffentlichung der Anforderungen verlassen möchten.",
-        "label": "Siehe Details zur Auftragsentwicklung"
+        "eyebrow": "Individuelle Softwareentwicklung / DEVELOPMENT",
+        "title": "Von der Idee über die Entwicklung bis zur Veröffentlichung – alles aus einer Hand",
+        "body": "Für alle, die eine Projektidee oder ein konkretes Problem haben und Anforderungen, Konzeption, Entwicklung und Veröffentlichung über eine zentrale Anlaufstelle abwickeln möchten.",
+        "label": "Mehr zur individuellen Softwareentwicklung"
       },
       {
-        "eyebrow": "IT-Beratungsingenieur / BERATUNG",
+        "eyebrow": "IT-Beratung durch Entwickler / ADVISORY",
         "title": "Intern oder durch AI entwickelt. Ich möchte jedoch, dass Du mich bis zur Entlassung und Operation begleitest.",
-        "body": "Dies ist für Personen gedacht, die bereits ein System oder eine Anwendung erstellt haben und nach der Veröffentlichung mit der Bereitstellung, technischen Entscheidungen, Sicherheit und Betrieb nicht weiterkommen.",
-        "label": "Sehen Sie sich den Inhalt des IT-Beratungsingenieurs an"
+        "body": "Für alle, die bereits ein System oder eine App entwickelt haben und bei Deployment, technischen Entscheidungen, Sicherheit oder dem Betrieb nach der Veröffentlichung nicht weiterkommen.",
+        "label": "Mehr zur IT-Beratung durch Entwickler"
+      },
+      {
+        "eyebrow": "Website-Erstellung / WEBSITE",
+        "title": "Die Website Ihres Geschäfts oder Unternehmens von der Erstellung bis zur Pflege in erfahrene Hände geben",
+        "body": "Für alle, die Informationen zu ihrem Unternehmen, Leistungen und Preisen, Anfahrt und Kontakt übersichtlich darstellen möchten. Für die Pflege nach der Veröffentlichung können Sie den benötigten Leistungsumfang wählen.",
+        "label": "Mehr zur Erstellung und Pflege von Websites"
       }
     ],
     "services": [
       {
-        "title": "IT-Berater/Publikation/Betriebsbegleitung",
+        "title": "IT-Beratung und Begleitung bei Veröffentlichung und Betrieb",
         "body": "Kleine und mittlere Unternehmen, die nicht über dediziertes IT-Personal verfügen, werden von einem Ingenieur begleitet, der sie bei der Veröffentlichung von von ihrem Unternehmen erstellten Anwendungen oder der Verwendung von AI, der Auswahl von Tools und der Entscheidungsfindung über Cloud- und IT-Infrastruktur beraten kann.",
         "examples": [
           "Konfigurationsbestätigung, Bereitstellung und Übergabe von mit AI erstellten Anwendungen",
           "Unternehmensorganisation, Auswahl der AI/bestehenden Dienste, Bewertung des vorhandenen PoC",
-          "Technologieauswahl, Sicherheit, Zweitmeinung von externen Anbietern"
+          "Beratung zu Technologieauswahl und Sicherheit sowie eine unabhängige Zweitmeinung zu externen Dienstleistern"
         ]
       },
       {
-        "title": "Entwicklung von Geschäftssystemen",
-        "body": "Wir entwerfen und entwickeln Systeme, die auf den Arbeitsablauf jedes Standorts abgestimmt sind, einschließlich Bestellung, Inventar, Kundenverwaltung, Anträge, Reservierungen, tägliche Berichte und Inspektionen.",
+        "title": "Entwicklung betrieblicher Systeme",
+        "body": "Wir konzipieren und entwickeln Systeme, die auf die Arbeitsabläufe vor Ort zugeschnitten sind – etwa für Bestell- und Auftragswesen, Lagerverwaltung, Kundenmanagement, Anträge, Buchungen, Tagesberichte und Prüfungen.",
         "examples": [
-          "Design und Entwicklung von Unternehmensmanagementsystemen, CRM und ERP",
-          "Schrittweiser Übergang von bestehenden Excel- und Papierbetrieben",
-          "Betriebsdesign einschließlich Berechtigungen, Genehmigungen, Verlauf und Benachrichtigungen"
+          "Konzeption und Entwicklung von Betriebsverwaltungssystemen, CRM- und ERP-Systemen",
+          "Schrittweise Migration von bestehenden Excel- und papierbasierten Abläufen",
+          "Betriebskonzepte mit Berechtigungen, Genehmigungen, Verlaufsprotokollen und Benachrichtigungen"
         ]
       },
       {
-        "title": "Webanwendungs-/Verwaltungsbildschirm",
-        "body": "Wir erstellen Webanwendungen, die sowohl innerhalb als auch außerhalb des Unternehmens verwendet werden können, Funktionen für Mitglieder, Reservierungs-/Antragsformulare, CMS, Dashboards usw.",
+        "title": "Web-Apps und Verwaltungsoberflächen",
+        "body": "Wir entwickeln Web-Apps für den internen und externen Einsatz, Funktionen für Mitglieder, Buchungs- und Anmeldeformulare, CMS und Dashboards.",
         "examples": [
-          "Verwaltungsbildschirm, Mitgliederseite, Formularfunktion",
-          "Suche, Liste, Details, CSV-Ausgabe, Benachrichtigung",
-          "Bildschirmdesign, das auf Smartphones einfach zu verwenden ist"
+          "Verwaltungsoberflächen, Mitgliederbereiche und Formulare",
+          "Suche, Listen- und Detailansichten, CSV-Export und Benachrichtigungen",
+          "Benutzerfreundliche Oberflächen, die auch auf Smartphones überzeugen"
         ]
       },
       {
-        "title": "Design/Kreativ",
-        "body": "Wir kümmern uns um eine breite Palette kreativer Produktion, einschließlich Logodesign, Druckmaterialien, Banner und Charakterdesigns. Wir legen großen Wert darauf, dem, was unsere Kunden vermitteln wollen, eine präzise Form zu geben. Wenn Sie es mit der Website-Erstellung kombinieren, können Sie uns vom Design bis zur Veröffentlichung überlassen.",
+        "title": "Design und Kreativleistungen",
+        "body": "Wir realisieren vielfältige kreative Projekte – von Logodesign und Drucksachen über Banner bis hin zu Charakterdesign. Dabei ist es uns wichtig, Ihre Botschaft präzise in eine passende Form zu bringen. In Kombination mit der Website-Erstellung begleiten wir Sie durchgehend vom Design bis zur Veröffentlichung.",
         "examples": [
-          "Logo-/Markenidentitätsdesign",
-          "Druckmaterialien wie Visitenkarten, Broschüren, Poster usw.",
-          "Kreativ für Web-Banner und SNS",
-          "Charakterdesign/Illustrationsproduktion"
+          "Logo- und Markenidentitätsentwicklung",
+          "Drucksachen wie Visitenkarten, Broschüren und Poster",
+          "Webbanner und Kreativmaterialien für soziale Netzwerke",
+          "Charakterdesign und Illustration"
         ]
       },
       {
         "title": "CMS/AI/Suche/Formularfunktionen hinzugefügt",
         "body": "Fügen Sie Funktionen wie Anfrage-AI-Chat, CMS-Bearbeitungsbildschirm, Kommentare, Suche, Formularverknüpfung, Artikel-/Mehrsprachigkeitsbetrieb usw. zu bestehenden oder statischen Websites hinzu.",
         "examples": [
-          "Sveltia CMS Bearbeitungsbildschirm für feste Seiten, Blogs und Einstellungselemente",
+          "Bearbeitungsoberfläche mit Sveltia CMS für statische Seiten, Blogbeiträge und Einstellungen",
           "Anfrage-AI-Chat, Kommentarveröffentlichung, Kontextvererbung vom CTA zum Formular",
-          "Pagefind Suche, Artikel/Tags/verwandte Artikel/RSS, Betrieb mehrsprachiger Seiten"
+          "Pagefind-Suche sowie Verwaltung von Artikeln, Tags, verwandten Beiträgen, RSS und mehrsprachigen Seiten"
         ]
       },
       {
-        "title": "Datennutzung/externe Zusammenarbeit",
-        "body": "Verbinden Sie vorhandene Dienste, APIs, Tabellenkalkulationen, E-Mails, Chat-Benachrichtigungen usw., um doppelte Eingaben und Auslassungen bei der Bestätigung zu reduzieren.",
+        "title": "Datennutzung und externe Schnittstellen",
+        "body": "Wir verbinden bestehende Dienste, APIs, Tabellen, E-Mail- und Chat-Benachrichtigungen, um doppelte Dateneingaben und übersehene Prüfschritte zu reduzieren.",
         "examples": [
-          "API-Design, externe Servicekooperation, Webhook Zusammenarbeit",
-          "Datenbankdesign, Aggregation, Berichterstattung",
-          "Erstellen eines Systems zur Benachrichtigung, Sicherung und Überwachung"
+          "API-Design, Anbindung externer Dienste und Webhook-Integration",
+          "Datenbankdesign, Auswertungen und Berichte",
+          "Einrichtung von Benachrichtigungen, Backups und Überwachung"
         ]
       },
       {
-        "title": "Verbesserung/Modernisierung",
-        "body": "Wir organisieren veraltete Mechanismen, individualisierte Tools und Bildschirme, die schwer zu warten sind, und organisieren sie in einem Format, das in Zukunft leicht zu reparieren ist.",
+        "title": "Optimierung und Modernisierung",
+        "body": "Wir strukturieren veraltete Systeme, von einzelnen Personen abhängige Tools und schwer wartbare Oberflächen neu und schaffen eine Grundlage, die sich auch künftig gut weiterentwickeln lässt.",
         "examples": [
-          "Legacy-Systemorganisation und Phasenmigration",
-          "Geschwindigkeitsverbesserung, Verbesserung der Benutzeroberfläche, Fehleruntersuchung",
-          "GitHub-basierte Entwicklung und Wartung des Betriebsablaufs"
+          "Strukturierung von Altsystemen und schrittweise Migration",
+          "Geschwindigkeitsoptimierung, Verbesserung der Benutzeroberfläche und Fehleranalyse",
+          "Einrichtung von Entwicklungs- und Betriebsabläufen auf GitHub-Basis"
         ]
       },
       {
-        "title": "Web- und API-Sicherheitsprüfung und Unterstützung bei der Behebung",
-        "body": "Für Web-Apps kleiner Unternehmen und kleiner SaaS-Teams unterstützen wir Prüfung vor Veröffentlichung, Web-/API-Prüfung, Korrekturen und Nachprüfung im vereinbarten Umfang.",
+        "title": "Sicherheitsprüfung und -verbesserung für Web und API",
+        "body": "Wir unterstützen kleine und mittlere Unternehmen sowie kleine SaaS-Anbieter im vereinbarten Umfang mit Prüfungen von Webanwendungen vor der Veröffentlichung, Web- und API-Sicherheitsanalysen, der Behebung von Schwachstellen und anschließenden Nachprüfungen.",
         "examples": [
           "Prüfung vor Veröffentlichung von mit AI oder extern erstellten Apps",
-          "Schwachstellenprüfung von Authentifizierung, Rechten und API",
-          "Korrekturen und Nachprüfung auf Basis fremder Prüfberichte"
+          "Schwachstellenanalyse von Authentifizierung, Berechtigungen und API-Zugriffen",
+          "Umsetzung von Verbesserungen und Nachprüfung auf Grundlage des Prüfberichts eines anderen Anbieters"
+        ]
+      },
+      {
+        "title": "Erstellung und Pflege von Websites",
+        "body": "Wir erstellen Ihre Website von der Unternehmensvorstellung bis zur Kontaktaufnahme aus einer Hand. Für die Zeit nach der Veröffentlichung können Sie zwischen reiner Wartung und zusätzlicher Aktualisierung von Texten, Bildern und Neuigkeiten wählen.",
+        "examples": [
+          "Komplette Websites für kleine Unternehmen, Geschäfte und Kursanbieter",
+          "Überarbeitung von Texten, Optimierung für Smartphones, Neuigkeiten und Kontaktmöglichkeiten",
+          "Prüfung nach der Veröffentlichung sowie Aktualisierung von Texten, Bildern und Neuigkeiten in Ihrem Auftrag"
         ]
       }
     ],
     "process": [
       {
-        "title": "Anhörung",
-        "body": "Organisieren Sie den Zweck, das Problem, das Sie haben, Benutzer, Fristen und Budget."
+        "title": "Erstgespräch",
+        "body": "Wir klären Ihre Ziele, die Herausforderungen in den Arbeitsabläufen, die Nutzerinnen und Nutzer, den Zeitplan und den Budgetrahmen."
       },
       {
-        "title": "Anforderungen und Vorschlag",
-        "body": "Wir schlagen Funktionen, Oberflächen und Daten im Zusammenhang vor und klären Bedenken sowie Prioritäten."
+        "title": "Anforderungen klären und Lösung vorschlagen",
+        "body": "Wir erarbeiten einen umfassenden Vorschlag zu den benötigten Funktionen, Ansichten und Daten und stimmen offene Fragen sowie Prioritäten mit Ihnen ab."
       },
       {
-        "title": "Design und Entwicklung",
-        "body": "Sie können auch Versionen während der Entwicklung prüfen und neu entdeckte Probleme einfließen lassen."
+        "title": "Konzeption und Entwicklung",
+        "body": "Während der Entwicklung können Sie Zwischenversionen prüfen; neu erkannte Herausforderungen lassen sich dabei ebenfalls berücksichtigen."
       },
       {
-        "title": "Veröffentlichen/verbessern",
-        "body": "Wir unterstützen Sie auch nach der Veröffentlichung weiterhin, einschließlich Fehlerbehebung, zusätzlichen Anfragen und betrieblichen Verbesserungen."
+        "title": "Veröffentlichung und Optimierung",
+        "body": "Auch nach der Veröffentlichung unterstützen wir Sie kontinuierlich – bei Fehlerbehebungen, Erweiterungswünschen und der Optimierung des Betriebs."
       }
     ],
     "designContextNote": "Die Vorbereitungen für den Bereich Acecore Design sind von den derzeit angebotenen kreativen Leistungen zu unterscheiden. Systems nimmt Anfragen zu den auf dieser Seite beschriebenen Design- und Kreativleistungen entgegen.",
-    "designContextLinkLabel": "Über den Bereich Acecore Design"
+    "designContextLinkLabel": "Informationen zum Designbereich von Acecore"
   },
   "workDetail": {
     "title": "Funktionserweiterungen und Betriebsplattform der offiziellen Acecore-Website",
@@ -1720,48 +1990,48 @@
   "site": {
     "description": "Acecore Systems ist ein Service von Acecore für IT-Beratung, AI-Einführung und Prozessverbesserung, Deployment, Geschäftssysteme und Webanwendungen sowie Design und Kreativleistungen – von der Anforderungsklärung bis zur Betriebsverbesserung.",
     "footerImageDisclosure": "Für illustrative Bilder mit Personen werden AI-generierte Materialien verwendet.",
-    "footerImageCreditLabel": "Über die Bildmaterialien",
+    "footerImageCreditLabel": "Hinweise zum Bildmaterial",
     "nav": [
       {
-        "label": "Support-Richtlinie"
+        "label": "Unser Ansatz"
       },
       {
-        "label": "Dienst"
+        "label": "Leistungen"
       },
       {
-        "label": "Erfolge"
+        "label": "Referenzen"
       },
       {
-        "label": "Geschätzter Preis"
+        "label": "Richtpreise"
       },
       {
         "label": "Einführungsleitfaden"
       },
       {
-        "label": "Technische Erklärung"
+        "label": "Technische Einblicke"
       }
     ],
     "footerLinks": [
       {
-        "label": "Support-Richtlinie"
+        "label": "Unser Ansatz"
       },
       {
-        "label": "Dienst"
+        "label": "Leistungen"
       },
       {
-        "label": "Geschätzter Preis"
+        "label": "Richtpreise"
       },
       {
-        "label": "Erfolge"
+        "label": "Referenzen"
       },
       {
         "label": "Einführungsleitfaden"
       },
       {
-        "label": "Technische Erklärung"
+        "label": "Technische Einblicke"
       },
       {
-        "label": "Kontaktieren Sie uns"
+        "label": "Kontakt"
       },
       {
         "label": "Datenschutz"

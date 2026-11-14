@@ -1,6 +1,6 @@
 ---
 title: "Technical Design for Adding an AI Contact Chat to an Astro Site"
-description: "A June 2026 reference design. A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
+description: "A reference design as of 2026-6. A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering."
 date: 2026-06-07T12:00
 lastUpdated: "2026-11-12T00:00:00+09:00"
 author: gui
@@ -82,7 +82,7 @@ faq:
 
 For a first AI chat on a static site, limit answers to public FAQs and send formal quotes or requests to a form. Check server connections against [Cloudflare Pages: Bindings](https://developers.cloudflare.com/pages/functions/bindings/). The URL check below is a historical simplified example; use the linked article’s URL parsing and allowlist rather than prefix matching alone.
 
-> **Update, September 26, 2026:** The article below documents a June 2026 reference design. Acecore Systems now forwards its AI chat API through a Cloudflare Pages Function and Service Binding to the shared acecore-chat-worker. The interface receives JSON and displays the completed answer. The direct OpenAI call described below is no longer the current Systems implementation.
+> **Update, 2026-9-26:** The article below documents a reference design as of 2026-6. Acecore Systems now forwards its `/api/ai-chat` through a Cloudflare Pages Function and Service Binding to the shared `acecore-chat-worker`. The interface receives JSON and displays the completed answer. The direct OpenAI call described below is no longer the current Systems implementation.
 
 Adding an AI chat to a website is easy. Running it responsibly is where the design matters. The difficult parts are not only model quality, but deciding what the AI may answer, where it should send visitors, which URLs may be displayed, and how API cost is controlled.
 
@@ -92,7 +92,7 @@ This article explains the design as a reusable pattern for other static sites. T
 
 ## Overall Structure
 
-The architecture has three simple layers.
+The architecture has 3 simple layers.
 
 | Layer                | Responsibility                                                          |
 | -------------------- | ----------------------------------------------------------------------- |
@@ -100,7 +100,7 @@ The architecture has three simple layers.
 | `/api/ai-contact`    | Validation, Origin checks, rate limiting, prompt construction, AI calls |
 | OpenAI Responses API | Generate an answer from public site context and conversation state      |
 
-The browser should not call the OpenAI API directly. Keeping the model call behind a server-side endpoint prevents key exposure, lets you update prompts and site context without redeploying the UI, and centralizes input limits and error handling.
+The browser should not call the OpenAI API directly for 3 reasons. Keeping the model call behind a server-side endpoint prevents key exposure, lets you update the model, prompts and site context server-side, and centralizes input length limits, Origin checks, rate limits and error handling in 1 place.
 
 On Astro + Cloudflare Pages, the API boundary can be a Pages Function at `/api/ai-contact`. In Next.js it could be a Route Handler; in Hono or Express it can be a normal API route.
 
@@ -125,11 +125,11 @@ type ContactAiResponse = {
 
 Names, email addresses, phone numbers, company names, and detailed form fields do not need to go through the AI chat. The chat is an entry point for helping users decide which service to read about and which contact route to use.
 
-History should also be limited. Send only recent turns and enforce a character limit per message. This keeps prompts smaller and controls API cost.
+History should also be limited. Send only recent turns and enforce a character limit per 1 message. This keeps prompts smaller and controls API cost.
 
 ## Control Validation and Model Calls on the Server
 
-The Pages Function owns the safety and execution boundary.
+The Cloudflare Pages Function performs the following steps together.
 
 ```ts
 export async function onRequestPost({ request, env }: PagesFunction<Env>) {
@@ -158,7 +158,7 @@ export async function onRequestPost({ request, env }: PagesFunction<Env>) {
 }
 ```
 
-The important point is to reduce and validate input before calling the AI API. Long messages, unlimited history, and uncontrolled cross-site traffic can make operations unstable before the feature itself becomes useful.
+The important point is to reduce and validate input before calling the AI API. The AI API incurs costs for the input it receives. Long messages, unnecessary history, and repeated access from external sites can make operations unstable before the feature itself becomes useful.
 
 `OPENAI_MODEL` should be configurable through environment variables so the model can be changed in preview or production without touching the frontend. `OPENAI_API_KEY` must stay server-side.
 
@@ -166,7 +166,7 @@ See also [Secure Static Site Delivery with Cloudflare Pages](/insights/cloudflar
 
 ## Make Site Information Explicit Context
 
-For a site of this size, you do not need to start with a vector database. A structured prompt context made from public site information is easier to operate.
+For a site of this size, you do not need to start with a vector database or RAG. A structured prompt context made from public site information is easier to operate.
 
 Useful context includes:
 
@@ -184,47 +184,48 @@ function buildPublicSiteContext(locale: Locale) {
   return {
     services: [
       {
-        name: "Web production",
-        summary: "Corporate sites, recruiting sites, and landing pages",
+        name: "Web制作",
+        summary: "コーポレートサイト、採用サイト、LPの制作相談に対応",
         url: localizePath("/services/web-production/", locale),
       },
       {
-        name: "Server operations",
-        summary: "Reservation, inventory, and customer management systems",
-        url: localizePath("/services/business-system/", locale),
+        name: "サーバー運用",
+        summary: "クラウド、VPS、監視、バックアップ設計の相談に対応",
+        url: localizePath("/services/server-operations/", locale),
       },
     ],
     contact: {
       form: localizePath("/contact/", locale),
       line: "https://lin.ee/...",
-      emailPolicy:
-        "Show email only when the form cannot be used or follow-up is needed",
-      phonePolicy: "Show phone only for urgent confirmation",
+      emailPolicy: "フォームが使えない場合や補足が必要な場合だけ案内する",
+      phonePolicy: "急ぎの確認が必要な場合だけ案内する",
     },
   };
 }
 ```
 
-When the site grows, this layer can evolve toward Pagefind, CMS JSON, D1, Vectorize, or another retrieval mechanism.
+This approach is sufficient while the site has few pages. As page count, update frequency, and search requirements grow, consider adding a search layer using Pagefind, CMS JSON, D1, Vectorize, or similar tools.
 
 ## Write Rules, Not Only Tone Instructions
 
 The prompt should define answer boundaries and restrictions more than writing style.
 
 ```txt
-You are the contact guidance AI for this website.
-Answer only from public site information.
+あなたはこのサイトの問い合わせ案内AIです。
+公開済みサイト情報だけを根拠に回答してください。
 
-Rules:
-- Do not make firm statements about pricing, contracts, schedules, or guarantees
-- Send formal consultations and estimates to the contact form
-- Also suggest LINE for quick checks and Schools-related inquiries
-- Show email and phone only when the user asks for direct contact
-- Use URLs that match the current locale
-- If unsure, do not guess; guide the user to the form
+ルール:
+- 料金、契約、納期、保証を断定しない
+- 詳細見積りや正式な相談は問い合わせフォームへ案内する
+- 短い確認やSchoolsに関する相談はLINEも案内する
+- メールと電話は、ユーザーが直接連絡を求めた場合だけ案内する
+- 内部リンクは現在のlocaleに合うURLを使う
+- わからない場合は、推測せずフォームへ案内する
 ```
 
-The common failure mode is that the AI tries to be helpful by over-committing. Questions about cost, delivery dates, and guarantees should lead to general guidance and then the form, because those answers require human confirmation.
+A common failure is for the model to make firm promises while trying to make a service look good. For questions such as “How much will it cost?”, “When can you deliver?” and “Can you guarantee support?”, provide general guidance and send the visitor to the form for a formal answer.
+
+This is not only a legal issue: estimates and delivery dates cannot be fixed before hearing the requirements. Write the range of answers the operation can stand behind into the prompt, rather than merely answers that are convenient for sales.
 
 ## Split the Contact Routes
 
@@ -238,7 +239,7 @@ The AI chat should not replace the contact form. The contact page works better w
 | Form           | Estimates, production inquiries, partnerships, and recruiting      |
 | Direct contact | Follow-up after the form or urgent confirmation only               |
 
-The AI connects broad service content such as the [service overview article](/services/) with concrete routes on the [contact page](/contact/). This pattern works for B2B sites, agencies, schools, and SaaS support pages.
+The AI connects broad service content such as the [service overview article](/services/) with concrete routes on the [contact page](/contact/). This pattern works for BtoB sites, agencies, schools, and SaaS support pages. It is easier to introduce when the goal is to narrow down the next page or contact method, rather than complete the inquiry through AI.
 
 ## Preserve Locale-Aware URLs
 
@@ -253,11 +254,13 @@ function localizePath(path: string, locale: Locale) {
 }
 ```
 
-This is more reliable as server-side URL generation than as a loose instruction in the prompt. For more on the translation setup, see [How to Run a Multilingual Blog with Sveltia CMS](/en/blog/copilot-translation-pipeline/).
+Server-side URL generation is more reliable than leaving this to the prompt. If only the AI answer sends users back to Japanese URLs, multilingual navigation breaks. For more on the translation setup, see [How to Run a Multilingual Blog with Sveltia CMS](/blog/copilot-translation-pipeline/).
 
 ## Add Origin Checks and Rate Limiting
 
 Because `/api/ai-contact` is public, it should have at least Origin checks, input length limits, history limits, and rate limiting.
+
+When an `Origin` header is present, compare the requesting origin with the API host to reduce unauthorized calls from other sites.
 
 ```ts
 function assertSameOrigin(request: Request) {
@@ -275,7 +278,7 @@ function assertSameOrigin(request: Request) {
 
 IP-based rate limiting is a useful first brake. In Cloudflare, you can derive identifiers from headers such as `CF-Connecting-IP`, `X-Forwarded-For`, or `CF-Ray`.
 
-In-memory limits are not persistent across isolates or restarts, so they are only an initial layer. For heavier traffic, move enforcement toward Cloudflare WAF, Turnstile, KV, D1, or Durable Objects. Content-update CMS operations are covered in [Sveltia CMS Setup Guide](/blog/cms-selection-and-turnstile/); form and comment bot protection should be treated as a separate layer.
+In-memory limits are not persistent across isolates or restarts, so they are only an initial layer. For heavier traffic, move enforcement toward Cloudflare WAF, Turnstile, KV, D1, or Durable Objects. Content-update CMS operations are covered in [Sveltia CMS Setup Guide](/blog/cms-selection-and-turnstile/); form and comment bot protection should be treated as a separate layer. For a design using Cloudflare alone, see [How to Add Comments to an Astro Blog Using Only Cloudflare](/blog/cloudflare-only-blog-comments/).
 
 ## Render Markdown Links with an Allowlist
 
@@ -296,7 +299,7 @@ Then restrict link targets:
 - `mailto:info@acecore.net` when needed
 - `tel:0120987370` when needed
 
-Always `trim()` the URL before validation. AI output can contain spaces such as `[Services]( /services/ )`.
+Always `trim()` the URL before validation. AI output can contain spaces such as `[サービス一覧]( /services/ )`.
 
 ```ts
 function sanitizeHref(rawHref: string, currentOrigin: string) {
@@ -331,7 +334,7 @@ In Pages preview or production, check:
 - Email and phone are not shown by default
 - Markdown links are converted only when the URL is allowed
 
-Do not finish validation after one successful question. Test long input, unexpected questions, English pages, direct-contact requests, and pricing questions separately.
+Do not finish validation after 1 successful question. Test long input, unexpected questions, English pages, direct-contact requests, and pricing questions separately.
 
 ## Watch the Right Operational Signals
 
@@ -339,7 +342,7 @@ After release, watch more than page views.
 
 - API error rate
 - Rate-limit hits
-- Average messages per inquiry
+- Average messages per 1 inquiry
 - Clicks to the form and LINE
 - Cases where the AI could not answer and guided users to the form
 - Usage by locale
@@ -353,7 +356,7 @@ This article focuses only on the technical design of the AI contact chat. Passin
 - AI chat: organize uncertainty through conversation and guide users safely
 - Service CTA: pass the service context a visitor is reading into the form
 
-Keeping these topics separate makes both articles easier to read and easier to cross-link later.
+The former concerns AI, API boundaries, prompts, and safe rendering; the latter concerns form UX and navigation design. Keeping them separate makes both articles easier to read and easier to cross-link later.
 
 ## Summary
 
