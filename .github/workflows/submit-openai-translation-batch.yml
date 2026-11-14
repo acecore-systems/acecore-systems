@@ -35,7 +35,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          test "$(git rev-parse HEAD)" = 0cfb4cd94e0bf3d7ad3cd0b67f66e9b69e9e700c
+          test "$(git rev-parse HEAD)" = f73657f0f92da9e69b51222a0af1a54c28b19b37
           existing="$(gh api "repos/$GITHUB_REPOSITORY/pulls?state=all&head=acecore-systems%3Atranslation%2Fopenai%2Fbatch_6af6cbe85e408190a398542c939daaf9" --jq 'length')"
           test "$existing" = 0
 
