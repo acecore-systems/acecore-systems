@@ -1,57 +1,55 @@
-name: One-off SEO article translation submission
+name: Verify one-off SEO article translation Batch
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  actions: read
+permissions: {}
 
 jobs:
-  submit:
-    if: github.repository == 'acecore-systems/acecore-systems' && github.ref == 'refs/heads/codex/seo-article-batch-20261114' && github.run_attempt == 1
+  verify:
+    if: github.repository == 'acecore-systems/acecore-systems' && github.ref == 'refs/heads/codex/seo-article-batch-20261114'
     runs-on: ubuntu-latest
-    concurrency:
-      group: openai-translation-batch-submit
-      cancel-in-progress: false
+    timeout-minutes: 3
     steps:
-      - name: Check out one-off branch
-        uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          persist-credentials: false
-      - name: Check out fixed source
-        uses: actions/checkout@v7
-        with:
-          ref: 022dafb3b8f1bdfec68a2cb501d6eee2697c8649
-          path: source-main
-          persist-credentials: false
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-      - name: Offline scope validation
+          node-version: "24"
+      - name: Verify the accepted Batch (GET)
+        env:
+          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
         run: |
-          node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs dry-run source-main
-          node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs self-test source-main
-      - name: Verify prior intent and existing batches
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
-          INTENT_PATH: ${{ runner.temp }}/seo-article-intent.json
-        run: node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs prepare source-main
-      - name: Save submission intent
-        id: intent
-        uses: actions/upload-artifact@v7
-        with:
-          name: seo-article-eight-locale-batch-intent-20261114-v1
-          path: ${{ runner.temp }}/seo-article-intent.json
-          if-no-files-found: error
-          retention-days: 90
-      - name: Recheck and submit once
-        if: steps.intent.outcome == 'success'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
-          INTENT_PATH: ${{ runner.temp }}/seo-article-intent.json
-          INTENT_UPLOADED: ${{ steps.intent.outcome }}
-        run: node --experimental-strip-types scripts/submit-seo-article-batch-20261114.mjs submit source-main
+          node --input-type=module <<'NODE'
+          const id = "batch_6af819d0bc7881909439e79931536a0e";
+          const key = process.env.OPENAI_TRANSLATION_API_KEY;
+          if (!key) throw new Error("OpenAI credential is unavailable");
+          const response = await fetch("https://api.openai.com/v1/batches/" + id, {
+            headers: { Authorization: "Bearer " + key },
+            redirect: "error",
+            signal: AbortSignal.timeout(20_000),
+          });
+          if (!response.ok) throw new Error("Batch GET failed (HTTP " + response.status + ")");
+          const batch = await response.json().catch(() => null);
+          const metadata = batch?.metadata;
+          if (
+            batch?.id !== id ||
+            batch.input_file_id !== "file-KAQpLi3Hzpigf16VP31xXH" ||
+            metadata?.repository !== "acecore-systems/acecore-systems" ||
+            metadata?.translation_system !== "acecore-systems-v1" ||
+            metadata?.source_commit !== "022dafb3b8f1bdfec68a2cb501d6eee2697c8649" ||
+            metadata?.source_hash !== "1c5558eb6049330f86d8cd800b863a8a7a11fbbe72c94e4db4efd8d07a86a8b5" ||
+            metadata?.article_hash !== "96ac1ae6255d853d737d39f41440ac084a2e8290e4b616cd98c81fd53298adfa"
+          ) throw new Error("Batch identity did not match the submission");
+          const { total, completed, failed } = batch.request_counts;
+          console.log(JSON.stringify({
+            event: "accepted_batch_status",
+            id,
+            status: batch.status,
+            total, completed, failed,
+            createdAt: batch.created_at,
+            completedAt: batch.completed_at,
+            readAt: Math.floor(Date.now() / 1000),
+          }));
+          if (total !== 8 && !(total === 0 && batch.status === "validating")) {
+            throw new Error("Unexpected Batch request count");
+          }
+          NODE
