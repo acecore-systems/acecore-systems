@@ -63,6 +63,7 @@ jobs:
           git diff --check
           node --experimental-strip-types ../repair/scripts/verify-recovered-translations-20261114.mjs
           npm run validate:content
+          node --experimental-strip-types ../repair/scripts/diagnose-i18n-translation-20261114.mjs
           npm run validate:i18n
           npm run test:openai-translation
 
