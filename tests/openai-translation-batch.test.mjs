@@ -1,8 +1,15 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  copyFile,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
 
 import {
@@ -33,6 +40,7 @@ import {
 import {
   calculateTranslationSourceHash,
   translatedLocales,
+  translationSourcePaths,
 } from "../scripts/i18n-source-hash.mjs";
 import {
   assertRecoveryIntroduction,
@@ -1516,7 +1524,8 @@ test("回収前に同じBatch・sourceのmain向けマージ済みPRを確認し
   ];
   const env = Object.fromEntries(names.map((key) => [key, process.env[key]]));
   const dir = await mkdtemp(join(tmpdir(), "systems-merged-batch-"));
-  const hash = calculateTranslationSourceHash(process.cwd());
+  const originalCwd = process.cwd();
+  const hash = calculateTranslationSourceHash(originalCwd);
   const batch = {
     id: "batch_child",
     status: "completed",
@@ -1542,6 +1551,22 @@ test("回収前に同じBatch・sourceのmain向けマージ済みPRを確認し
     base: { ref: "main" },
   };
   try {
+    for (const sourcePath of translationSourcePaths) {
+      const target = join(dir, sourcePath);
+      await mkdir(dirname(target), { recursive: true });
+      await copyFile(join(originalCwd, sourcePath), target);
+    }
+    const statePath = join(dir, "src/i18n/translation-state.json");
+    await mkdir(dirname(statePath), { recursive: true });
+    await writeFile(
+      statePath,
+      JSON.stringify({
+        sourceHash: "0".repeat(64),
+        locales: translatedLocales,
+      }),
+    );
+    process.chdir(dir);
+    assert.equal(calculateTranslationSourceHash(process.cwd()), hash);
     process.env.GITHUB_REPOSITORY = "acecore-systems/acecore-systems";
     process.env.GITHUB_TOKEN = "fixture";
     process.env.OPENAI_TRANSLATION_API_KEY = "fixture";
@@ -1607,7 +1632,38 @@ test("回収前に同じBatch・sourceのmain向けマージ済みPRを確認し
         );
       }
     }
+    // With an up-to-date state the collector skips before requesting PR or output.
+    await writeFile(
+      statePath,
+      JSON.stringify({ sourceHash: hash, locales: translatedLocales }),
+    );
+    await rm(join(dir, "openai-translation-processed-batch_child.txt"), {
+      force: true,
+    });
+    const currentCalls = [];
+    globalThis.fetch = async (url) => {
+      currentCalls.push(url);
+      if (url.includes("/pulls?state=open")) return Response.json([]);
+      if (url.includes("/batches?limit=100"))
+        return Response.json({ data: [batch], has_more: false });
+      throw new Error(`unexpected ${url}`);
+    };
+    await collectBatch({ processedBatches: new Set() });
+    assert.equal(
+      await readFile(
+        join(dir, "openai-translation-processed-batch_child.txt"),
+        "utf8",
+      ),
+      "batch_child\n",
+    );
+    assert.equal(
+      currentCalls.some(
+        (url) => url.includes("/pulls?state=all") || url.includes("/files/"),
+      ),
+      false,
+    );
   } finally {
+    process.chdir(originalCwd);
     globalThis.fetch = originalFetch;
     for (const key of names) {
       if (env[key] === undefined) delete process.env[key];
