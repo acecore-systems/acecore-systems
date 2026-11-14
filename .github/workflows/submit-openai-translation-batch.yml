@@ -1,24 +1,99 @@
-name: Inspect existing Systems translation Batch
+name: Recover verified Systems translations
 
 on:
   workflow_dispatch:
 
 permissions:
   contents: read
+  pull-requests: read
+
+concurrency:
+  group: openai-translation-collector
+  cancel-in-progress: false
 
 jobs:
-  inspect:
+  recover:
     if: github.repository == 'acecore-systems/acecore-systems' && github.ref == 'refs/heads/codex/translation-batch-20261114-inspect' && github.run_attempt == 1
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v7
+      - name: Check out the reviewed repair
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
+          path: repair
+
+      - name: Check out current main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          persist-credentials: false
+          path: publication
+
+      - name: Verify base and check for existing translation PR
+        working-directory: publication
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          test "$(git rev-parse HEAD)" = 0cfb4cd94e0bf3d7ad3cd0b67f66e9b69e9e700c
+          existing="$(gh api "repos/$GITHUB_REPOSITORY/pulls?state=all&head=acecore-systems%3Atranslation%2Fopenai%2Fbatch_6af6cbe85e408190a398542c939daaf9" --jq 'length')"
+          test "$existing" = 0
+
       - uses: actions/setup-node@v7
         with:
-          node-version-file: .node-version
-      - name: Read Batch metadata and validate translation rows in memory
+          node-version-file: publication/.node-version
+          cache: npm
+          cache-dependency-path: publication/package-lock.json
+
+      - name: Install dependencies
+        working-directory: publication
+        run: npm ci
+
+      - name: Retrieve and validate all translation results
+        working-directory: publication
         env:
           OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
-        run: node --experimental-strip-types scripts/inspect-translation-batch-20261114.mjs
+        run: node --experimental-strip-types ../repair/scripts/inspect-translation-batch-20261114.mjs --assemble
+
+      - name: Format and verify the translation diff
+        working-directory: publication
+        run: |
+          npm run update:i18n-state
+          git diff --name-only --diff-filter=ACMRT -z | xargs -0 -r npm exec -- prettier --write --
+          git diff --check
+          node --experimental-strip-types ../repair/scripts/verify-recovered-translations-20261114.mjs
+          npm run validate:content
+          npm run validate:i18n
+          npm run test:openai-translation
+
+      - name: Create translation Bot token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.TRANSLATION_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.TRANSLATION_BOT_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Create the verified translation pull request
+        working-directory: publication
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          head="$(git rev-parse HEAD)"
+          latest="$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq '.commit.sha')"
+          test "$head" = "$latest"
+          branch=translation/openai/batch_6af6cbe85e408190a398542c939daaf9
+          refs="$(gh api "repos/$GITHUB_REPOSITORY/git/matching-refs/heads/$branch" --jq 'length')"
+          test "$refs" = 0
+          git switch -c "$branch"
+          git config user.name "Acecore Translation Bot"
+          git config user.email "translation-bot@users.noreply.github.com"
+          git add -u
+          git diff --cached --quiet && exit 1
+          git commit -m "翻訳を更新 (batch_6af6cbe85e408190a398542c939daaf9)"
+          gh auth setup-git --hostname github.com
+          git push --set-upstream origin "$branch"
+          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$branch" \
+            --title "[translation] OpenAI Batch batch_6af6cbe85e408190a398542c939daaf9" \
+            --body-file ../repair/scripts/translation-recovery-pr-20261114.md

@@ -1,11 +1,17 @@
-import {
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+
+const fromMain = (file) => import(pathToFileURL(resolve("scripts", file)).href);
+const {
+  applyBatchTranslations,
   assertRetryBatch,
   decodeMetadata,
   mergeBatchRetry,
   planBatchRetry,
   prepareBatchTranslations,
-} from "./openai-translation-batch.mjs";
-import { calculateTranslationSourceHash } from "./i18n-source-hash.mjs";
+} = await fromMain("openai-translation-batch.mjs");
+const { calculateTranslationSourceHash } = await fromMain("i18n-source-hash.mjs");
 
 const repository = "acecore-systems/acecore-systems";
 const parentId = "batch_6af507b520cc81908cd77c5a125eae27";
@@ -186,4 +192,50 @@ console.log(JSON.stringify({
 if (valid.size === 16) {
   mergeBatchRetry(parentRows, childRows, sourceHash, plan.identitiesHash);
   console.log("All 64 translations pass the existing validators.");
+}
+
+const assemble = process.argv[2] === "--assemble";
+if (assemble) {
+  const repairs = JSON.parse(readFileSync(new URL("./translation-repairs-20261114.json", import.meta.url), "utf8"));
+  const canonical = new Map(plan.requests.map((request) => [identity(request), request.custom_id]));
+  const expectedRepairIdentities = new Set(rejected.map((row) => JSON.stringify(row.identity)));
+  check(
+    child.status === "completed" &&
+      child.request_counts.completed === 14 &&
+      child.request_counts.failed === 2 &&
+      childRows.length === 14 &&
+      errorRows.length === 2 &&
+      seen.size === 16 &&
+      valid.size === 10 &&
+      expectedRepairIdentities.size === 6 &&
+      repairs.length === 6,
+    "Recovery evidence changed; inspect the original results",
+  );
+
+  const replacementRows = repairs.map(({kind, locale, sourcePath, result}) => {
+    const item = JSON.stringify([kind, locale, sourcePath]);
+    check(expectedRepairIdentities.delete(item), "Unexpected or duplicate repair");
+    const customId = canonical.get(item);
+    check(customId, "Repair lacks an original request identity");
+    return {
+      custom_id: customId,
+      response: { status_code: 200, body: { output_text: JSON.stringify(result) } },
+    };
+  });
+  const acceptedChild = childRows.filter((row) => valid.has(identity(row)));
+  const combined = mergeBatchRetry(
+    parentRows,
+    [...acceptedChild, ...replacementRows],
+    sourceHash,
+    child.metadata.retry_identities_hash,
+  );
+  check(combined.length === 64, "Combined validation did not cover 64 results");
+  check(applyBatchTranslations(combined, sourceHash), "Recovery produced no changes");
+  console.log(JSON.stringify({
+    validated: combined.length,
+    reusedParent: plan.retainedCount,
+    reusedChild: acceptedChild.length,
+    localRepairs: replacementRows.length,
+    sourceHash,
+  }));
 }

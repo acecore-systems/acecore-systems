@@ -1,0 +1,1289 @@
+[
+  {
+    "kind": "content",
+    "locale": "de",
+    "sourcePath": "src/data/pricing.json",
+    "result": {
+      "translations": [
+        {
+          "id": "/title",
+          "text": "Preisrahmen"
+        },
+        {
+          "id": "/description",
+          "text": "Preisrahmen und Annahmen von Acecore Systems für IT-Beratung, AI-Einführung, Deployment-Unterstützung, Geschäftssysteme, Webanwendungen, Design und Kreativleistungen, AI-Chat, CMS, SEO und Sicherheitsverbesserungen."
+        },
+        {
+          "id": "/heroTitle",
+          "text": "Mit dem wirklich benötigten Umfang sinnvoll starten."
+        },
+        {
+          "id": "/heroLead",
+          "text": "Die Beträge sind Richtwerte einschließlich Steuern. Nach der verbindlichen Klärung der Anforderungen erstellen wir ein individuelles Angebot. Sprechen Sie auch offen über Ihr Budget."
+        },
+        {
+          "id": "/items/0/label",
+          "text": "IT Advisor Engineer Light"
+        },
+        {
+          "id": "/items/0/price",
+          "text": "Ab {ACECORE_KEEP_ff0b045df600_NUMBER_49,500_0} Yen pro Monat"
+        },
+        {
+          "id": "/items/0/note",
+          "text": "{ACECORE_KEEP_5b9083cb5cf0_NUMBER_1_0}–{ACECORE_KEEP_5b9083cb5cf0_NUMBER_2_1} Beratungen pro Monat, Auswahl von AI- und IT-Werkzeugen, Ersteinrichtung und Unterstützung für höchstens {ACECORE_KEEP_5b9083cb5cf0_NUMBER_1_2} kleine parallele Veröffentlichung. Arbeitszeitlimit und Zusatzkosten werden vor Vertragsabschluss genannt. Insgesamt bis zu {ACECORE_KEEP_5b9083cb5cf0_NUMBER_4_3} Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
+        },
+        {
+          "id": "/items/1/label",
+          "text": "IT Advisor Engineer Standard"
+        },
+        {
+          "id": "/items/1/price",
+          "text": "Ab {ACECORE_KEEP_d4bddbbc059f_NUMBER_102,300_0} Yen pro Monat"
+        },
+        {
+          "id": "/items/1/note",
+          "text": "Bereitstellung, Debugging und Tests, Statusberichte, Bestätigung des Nutzungsstatus und Verbesserungskandidaten usw. innerhalb der bei Vertragsabschluss festgelegten maximalen Anzahl an Beratungen und Arbeitsstunden. Beinhaltet keine {ACECORE_KEEP_1a01159f3a14_NUMBER_24_0}-Stunden-Überwachung und sofortige Fehlerbehebung. Insgesamt bis zu {ACECORE_KEEP_1a01159f3a14_NUMBER_12_1} Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
+        },
+        {
+          "id": "/items/2/label",
+          "text": "Unterstützung für die Spot-Bereitstellung"
+        },
+        {
+          "id": "/items/2/price",
+          "text": "Ab {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/2/note",
+          "text": "Grundumfang sind {ACECORE_KEEP_8b53a70c1817_NUMBER_1_0} bestehende Webanwendung und {ACECORE_KEEP_8b53a70c1817_NUMBER_1_1} Umgebung: Auswahl der empfohlenen Umgebung, Ersteinrichtung von Domain, SSL, VPS oder Cloud, Veröffentlichung, Funktionsprüfung und Übergabe. Codeänderungen, Migration, CI/CD, Monitoring- und Backup-Design sowie laufender Betrieb werden separat angeboten. Der Grundumfang ist eine Standardkonfiguration mit insgesamt bis zu {ACECORE_KEEP_8b53a70c1817_NUMBER_4_2} Stunden für Besprechungen, Einrichtung, Prüfungen, Übergabe und Kommunikation. Komplexe Konfigurationen und zusätzliche Zeit werden vor Beginn separat angeboten."
+        },
+        {
+          "id": "/items/3/label",
+          "text": "Starterpaket zur AI-Geschäftsverbesserung"
+        },
+        {
+          "id": "/items/3/price",
+          "text": "Richtwert: {ACECORE_KEEP_1f6a5ec7480d_NUMBER_15_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/3/note",
+          "text": "{ACECORE_KEEP_5247cfbed1a6_NUMBER_90_0}-minütiges Gespräch, Prozessaufnahme, {ACECORE_KEEP_5247cfbed1a6_NUMBER_3_1} AI-Kandidaten, einfacher Prototyp für {ACECORE_KEEP_5247cfbed1a6_NUMBER_1_2} Kandidaten, Aufwand-Nutzen-Schätzung und kompakte AI-Nutzungsregeln. Der Richtwert für die Dauer beträgt {ACECORE_KEEP_5247cfbed1a6_NUMBER_2_3}–{ACECORE_KEEP_5247cfbed1a6_NUMBER_3_4} Wochen. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
+        },
+        {
+          "id": "/items/4/label",
+          "text": "Haupteinführung in AI/Geschäftssystem"
+        },
+        {
+          "id": "/items/4/price",
+          "text": "Ab {ACECORE_KEEP_d44d90840277_NUMBER_50_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/4/note",
+          "text": "Post-PoC-Produktionsaufbau, bestehende Systemverknüpfung, Autoritäts-/Genehmigungs-/Auditprotokolle, Tests, Veröffentlichung und Betriebsübernahme. Wir unterbreiten Ihnen ein Angebot entsprechend Ihren Anforderungen. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
+        },
+        {
+          "id": "/items/5/label",
+          "text": "Kleine Automatisierung/Geschäftsunterstützung"
+        },
+        {
+          "id": "/items/5/price",
+          "text": "Ab {ACECORE_KEEP_43d6a1ac09fa_NUMBER_30_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/5/note",
+          "text": "Kleine Automatisierung bestehender Eingabe-, Aggregations-, Benachrichtigungs- und Bestätigungsarbeiten. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
+        },
+        {
+          "id": "/items/6/label",
+          "text": "Interne Geschäftstools"
+        },
+        {
+          "id": "/items/6/price",
+          "text": "Ab {ACECORE_KEEP_d44d90840277_NUMBER_50_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/6/note",
+          "text": "Ein kleines bis mittelgroßes Tool mit Admin-Bildschirm, Formularen, Listen, CSV-Ausgabe, Berechtigungen usw. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
+        },
+        {
+          "id": "/items/7/label",
+          "text": "Mittelgroße Webanwendung"
+        },
+        {
+          "id": "/items/7/price",
+          "text": "Ab {ACECORE_KEEP_453020b8ab78_NUMBER_150_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/7/note",
+          "text": "Eine Web-App, die mehrere Benutzer, Mitgliedschaftsfunktionen, Genehmigungsabläufe und externe Verknüpfungen umfasst. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
+        },
+        {
+          "id": "/items/8/label",
+          "text": "Design/Kreativ"
+        },
+        {
+          "id": "/items/8/price",
+          "text": "Ab {ACECORE_KEEP_e9389100d411_NUMBER_2_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/8/note",
+          "text": "Richtwerte: Logo {ACECORE_KEEP_84a5ffc7164b_NUMBER_5_0}–{ACECORE_KEEP_84a5ffc7164b_NUMBER_15_1} Zehntausend Yen, Flyer und Banner {ACECORE_KEEP_84a5ffc7164b_NUMBER_2_2}–{ACECORE_KEEP_84a5ffc7164b_NUMBER_12_3} Zehntausend Yen, Markenentwicklung oder Webintegration ab {ACECORE_KEEP_84a5ffc7164b_NUMBER_10_4} Zehntausend Yen."
+        },
+        {
+          "id": "/items/9/label",
+          "text": "Anfrage-AI-Chat"
+        },
+        {
+          "id": "/items/9/price",
+          "text": "Ab {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/9/note",
+          "text": "Integrieren Sie den AI-Chat für Anfragen in statische Websites und Service-Websites und ordnen Sie den Antwortbereich, das Ratenlimit, die Herkunftsprüfung und das Erstellen sicherer Links. Der Richtpreis gilt für {ACECORE_KEEP_1aac45340184_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_1aac45340184_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/10/label",
+          "text": "Blog-Kommentarfunktion"
+        },
+        {
+          "id": "/items/10/price",
+          "text": "Ab {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/10/note",
+          "text": "Verwenden Sie Cloudflare Pages Functions, D{ACECORE_KEEP_9b943b3b5687_NUMBER_1_0}, Turnstile, um Posting-, Speicher-, Anti-Spam- und Löschvorgänge zu organisieren, die nicht auf externe Kommentardienste angewiesen sind. Der Richtpreis gilt für {ACECORE_KEEP_9b943b3b5687_NUMBER_1_1} Standardaufgabe an {ACECORE_KEEP_9b943b3b5687_NUMBER_1_2} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/11/label",
+          "text": "Einführung des CMS-Bearbeitungsbildschirms"
+        },
+        {
+          "id": "/items/11/price",
+          "text": "Ab {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/11/note",
+          "text": "Sveltia CMS fügt einen Verwaltungsbildschirm hinzu, mit dem Sie Blogs, feste Seiten, Ankündigungen und Einstellungselemente über den Browser aktualisieren können. Der Richtpreis gilt für {ACECORE_KEEP_a9d616e41a5a_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_a9d616e41a5a_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/12/label",
+          "text": "Blog-/Artikelbasis"
+        },
+        {
+          "id": "/items/12/price",
+          "text": "Ab {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/12/note",
+          "text": "Wir bereiten die notwendige Infrastruktur für die kontinuierliche Verbreitung vor, wie z. B. Artikellisten, Detailseiten, Tags, verwandte Artikel, RSS und Suchkanäle. Der Richtpreis gilt für {ACECORE_KEEP_743c726654d2_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_743c726654d2_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/13/label",
+          "text": "Mehrsprachiger Blog-Betrieb"
+        },
+        {
+          "id": "/items/13/price",
+          "text": "Ab {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/13/note",
+          "text": "Wir bereiten einen mehrsprachigen Blog-Vorgang vor, einschließlich japanischer Quellen, übersetzter PR, Hreflang, Sitemap und RSS. Der Richtpreis gilt für {ACECORE_KEEP_f8a9d0783370_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_f8a9d0783370_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/14/label",
+          "text": "SEO/strukturierte Daten"
+        },
+        {
+          "id": "/items/14/price",
+          "text": "Ab {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/14/note",
+          "text": "Informationen organisieren, die an Suchmaschinen wie OGP, JSON-LD, Sitemap, RSS, Canonical usw. übermittelt werden sollen. Der Richtpreis gilt für {ACECORE_KEEP_07f7a7405be5_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_07f7a7405be5_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/15/label",
+          "text": "Pagefind-Site-Suche"
+        },
+        {
+          "id": "/items/15/price",
+          "text": "Ab {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/15/note",
+          "text": "Fügen Sie der statischen Site die Suche Pagefind hinzu und ordnen Sie die Suchoberfläche, URL-Parameter und Cache-Einstellungen an. Der Richtpreis gilt für {ACECORE_KEEP_44454bebd3b6_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_44454bebd3b6_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/16/label",
+          "text": "Verbesserte Anzeigegeschwindigkeit"
+        },
+        {
+          "id": "/items/16/price",
+          "text": "Ab {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/16/note",
+          "text": "Wir werden Core Web Vitals weiter verbessern, indem wir Bilder, CSS, Schriftarten, Lazy Loading und Messergebnisse überprüfen. Der Richtpreis gilt für {ACECORE_KEEP_50fcedf2458f_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_50fcedf2458f_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/17/label",
+          "text": "Verbesserung der Barrierefreiheit"
+        },
+        {
+          "id": "/items/17/price",
+          "text": "Ab {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/17/note",
+          "text": "Wir prüfen Kontraste, aria-Attribute, Fokus und Formularvalidierung und beheben Probleme mit dem Ziel WCAG AA. Der Richtpreis gilt für {ACECORE_KEEP_89738c7dbaf8_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_89738c7dbaf8_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/18/label",
+          "text": "Sicherheitsheader/CSP"
+        },
+        {
+          "id": "/items/18/price",
+          "text": "Ab {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/18/note",
+          "text": "Wir ordnen _headers, CSP und Auslieferungseinstellungen für den Verwaltungsbereich in Cloudflare Pages, um die Veröffentlichung sicherer zu gestalten. Der Richtpreis gilt für {ACECORE_KEEP_7054fb1c35b3_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_7054fb1c35b3_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/19/label",
+          "text": "CTA/Formularverknüpfung"
+        },
+        {
+          "id": "/items/19/price",
+          "text": "Ab {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/19/note",
+          "text": "Übernehmen Sie Typ, Betreff und Kontext vom Service-CTA auf das Anfrageformular, um den Beratungsablauf zu verbessern. Der Richtpreis gilt für {ACECORE_KEEP_001d0de14b49_NUMBER_1_0} Standardaufgabe an {ACECORE_KEEP_001d0de14b49_NUMBER_1_1} Website mit bestehender Konfiguration. Individuelle Funktionen, ein vollständiger Website-Neubau, Migration und laufender Betrieb werden separat angeboten."
+        },
+        {
+          "id": "/items/20/label",
+          "text": "Integrierte System-/Kernzusammenarbeit"
+        },
+        {
+          "id": "/items/20/price",
+          "text": "Ab {ACECORE_KEEP_8d2fce106c39_NUMBER_250_0} Zehntausend Yen"
+        },
+        {
+          "id": "/items/20/note",
+          "text": "Eine Geschäftsplattform, die mehrere Abteilungen und bestehende Systeme verbindet. Konzipiert für eine schrittweise Einführung. Der Betrag ist ein Richtwert für eine Minimalkonfiguration. Abläufe, Oberflächen, Berechtigungen, Schnittstellen und Migrationsumfang werden vor einem individuellen Angebot abgestimmt."
+        },
+        {
+          "id": "/items/21/label",
+          "text": "Wartung/Verbesserung"
+        },
+        {
+          "id": "/items/21/price",
+          "text": "Ab {ACECORE_KEEP_67a28e05fb39_NUMBER_3_0} Zehntausend Yen pro Monat"
+        },
+        {
+          "id": "/items/21/note",
+          "text": "Kleinere Korrekturen, Beratung, Überwachung, Verbesserungsvorschläge, vorrangige Reaktion für zusätzliche Entwicklung usw. Insgesamt bis zu {ACECORE_KEEP_28b03cfb1653_NUMBER_2_0} Stunden pro Monat für Beratung, Recherche, Arbeiten, Prüfungen und Kommunikation. Ungenutzte Zeit wird nicht übertragen; zusätzliche Arbeiten werden vor Beginn separat angeboten."
+        },
+        {
+          "id": "/items/22/label",
+          "text": "Anforderungen Organisation/technische Beratung"
+        },
+        {
+          "id": "/items/22/price",
+          "text": "Individuelles Angebot"
+        },
+        {
+          "id": "/items/22/note",
+          "text": "Wir unterstützen auch die Arbeitsorganisation vor der Entwicklung, die Untersuchung bestehender Systeme und die Überprüfung der Konfiguration."
+        },
+        {
+          "id": "/items/23/label",
+          "text": "Prüfung vor Veröffentlichung"
+        },
+        {
+          "id": "/items/23/price",
+          "text": "Individuelles Angebot"
+        },
+        {
+          "id": "/items/23/note",
+          "text": "Architektur, öffentliche Erreichbarkeit, Geheimnisse, Abhängigkeiten und Authentifizierung. Angebot nach Prüfung der Unterlagen und Umgebung."
+        },
+        {
+          "id": "/items/24/label",
+          "text": "Web- und API-Schwachstellenprüfung"
+        },
+        {
+          "id": "/items/24/price",
+          "text": "Individuelles Angebot"
+        },
+        {
+          "id": "/items/24/note",
+          "text": "Vereinbarte automatische und manuelle Prüfungen. Machbarkeit und Kosten nach Funktionen, Anfragen, Rechten und Umgebungen."
+        },
+        {
+          "id": "/items/25/label",
+          "text": "Korrekturen und Nachprüfung"
+        },
+        {
+          "id": "/items/25/price",
+          "text": "Individuelles Angebot"
+        },
+        {
+          "id": "/items/25/note",
+          "text": "Korrekturen, Tests, Veröffentlichung und Nachprüfung, auch nach fremden Berichten. Umfang, Fristen und Anzahl der Nachprüfungen werden im Angebot vereinbart."
+        },
+        {
+          "id": "/items/26/label",
+          "text": "Laufende Sicherheitsunterstützung"
+        },
+        {
+          "id": "/items/26/price",
+          "text": "Individuelles Angebot"
+        },
+        {
+          "id": "/items/26/note",
+          "text": "Updates, Rechte, Änderungskontrollen und Beratung. Ziele, Häufigkeit, Stunden und Zusatzleistungen werden individuell vereinbart."
+        },
+        {
+          "id": "/items/27/label",
+          "text": "Startpaket"
+        },
+        {
+          "id": "/items/27/price",
+          "text": "{ACECORE_KEEP_e928e8725959_NUMBER_156,750_0} Yen"
+        },
+        {
+          "id": "/items/27/note",
+          "text": "Bis zu {ACECORE_KEEP_b66da847f6bc_NUMBER_5_0} feste Seiten. Standarddesign, Aufbereitung der Texte aus bereitgestellten Materialien, mobile Darstellung, Aktuelles, grundlegende SEO, Formular sowie Hinweise zur Veröffentlichung und Aktualisierung. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Zusatzwünsche außerhalb des vereinbarten Umfangs werden vor Beginn angeboten."
+        },
+        {
+          "id": "/items/28/label",
+          "text": "Ausbau und Relaunch"
+        },
+        {
+          "id": "/items/28/price",
+          "text": "Ab {ACECORE_KEEP_26391e8d7c73_NUMBER_330,000_0} Yen"
+        },
+        {
+          "id": "/items/28/note",
+          "text": "Grundlage sind bis zu {ACECORE_KEEP_87f30dec13dc_NUMBER_10_0} feste Seiten, ein abgestimmtes Gespräch sowie Text- und Strukturvorschläge. Der Umfang der Migration bestehender Inhalte wird gesondert angeboten. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Zusatzwünsche außerhalb des vereinbarten Umfangs werden vor Beginn angeboten."
+        },
+        {
+          "id": "/items/29/label",
+          "text": "Individuelle Erstellung und Zusatzfunktionen"
+        },
+        {
+          "id": "/items/29/price",
+          "text": "Individuelles Angebot"
+        },
+        {
+          "id": "/items/29/note",
+          "text": "Individuelles Design, Buchungen, Zahlungen, Mitgliedschaften, Mehrsprachigkeit oder umfangreiche Migrationen. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Zusatzwünsche außerhalb des vereinbarten Umfangs werden vor Beginn angeboten."
+        },
+        {
+          "id": "/items/30/label",
+          "text": "Website-Wartung"
+        },
+        {
+          "id": "/items/30/price",
+          "text": "{ACECORE_KEEP_901e8ef2bed2_NUMBER_5,500_0} Yen pro Monat"
+        },
+        {
+          "id": "/items/30/note",
+          "text": "Automatische Verfügbarkeitsprüfung und Backups, regelmäßige Kontrollen, erste Fehleranalyse, vereinbarte Wiederherstellung und Kommunikation bis zu {ACECORE_KEEP_e4fb67735498_NUMBER_30_0} Minuten pro Monat. Inhaltsaktualisierungen sind nicht enthalten. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Mehrzeit wird vor Beginn angeboten."
+        },
+        {
+          "id": "/items/31/label",
+          "text": "Aktualisierungsservice"
+        },
+        {
+          "id": "/items/31/price",
+          "text": "{ACECORE_KEEP_49509c75f29c_NUMBER_15,400_0} Yen pro Monat"
+        },
+        {
+          "id": "/items/31/note",
+          "text": "Zusätzlich zu {ACECORE_KEEP_6f7bcb5c1932_NUMBER_30_0} Minuten monatlicher Wartung: {ACECORE_KEEP_6f7bcb5c1932_NUMBER_60_1} Minuten pro Monat für Text-, Bild- und Nachrichtenaktualisierungen einschließlich Prüfung, Abstimmung und Veröffentlichung (insgesamt bis zu {ACECORE_KEEP_6f7bcb5c1932_NUMBER_90_2} Minuten pro Monat). Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Mehrzeit wird vor Beginn angeboten."
+        },
+        {
+          "id": "/items/32/label",
+          "text": "Nutzung und Verbesserung"
+        },
+        {
+          "id": "/items/32/price",
+          "text": "Ab {ACECORE_KEEP_304e68e2021d_NUMBER_33,000_0} Yen pro Monat"
+        },
+        {
+          "id": "/items/32/note",
+          "text": "Wartung, Aktualisierungen, Webanalyse, Verbesserungen, Beratung und Kommunikation zusammen bis zu {ACECORE_KEEP_a34f1aea67d3_NUMBER_3_0} Stunden pro Monat. Unverbindlicher Richtpreis inklusive Steuern. Externe Kosten werden zusätzlich zum Selbstkostenpreis berechnet; Mehrzeit wird vor Beginn angeboten."
+        }
+      ]
+    }
+  },
+  {
+    "kind": "content",
+    "locale": "pt",
+    "sourcePath": "src/data/pricing.json",
+    "result": {
+      "translations": [
+        {
+          "id": "/title",
+          "text": "Guia de preços"
+        },
+        {
+          "id": "/description",
+          "text": "Reunimos estimativas de preço e premissas para os serviços da Acecore Systems, incluindo assessoria de TI, adoção de AI, suporte à implantação, sistemas empresariais, aplicativos web, design e produção criativa, chat com AI, CMS, SEO e melhorias de segurança."
+        },
+        {
+          "id": "/heroTitle",
+          "text": "Comece de forma sustentável com o escopo necessário."
+        },
+        {
+          "id": "/heroLead",
+          "text": "Os valores são indicativos e incluem impostos. Apresentaremos um orçamento individual após a definição dos requisitos. Conte também, com franqueza, qual é o seu orçamento."
+        },
+        {
+          "id": "/items/0/label",
+          "text": "Engenheiro consultor de TI — Light"
+        },
+        {
+          "id": "/items/0/price",
+          "text": "A partir de {ACECORE_KEEP_ff0b045df600_NUMBER_49,500_0} ienes por mês"
+        },
+        {
+          "id": "/items/0/note",
+          "text": "Inclui {ACECORE_KEEP_5b9083cb5cf0_NUMBER_1_0} a {ACECORE_KEEP_5b9083cb5cf0_NUMBER_2_1} consultas por mês, seleção de ferramentas de AI e TI, configuração inicial e suporte a lançamentos de pequena escala para até {ACECORE_KEEP_5b9083cb5cf0_NUMBER_1_2} projeto simultâneo. O limite de horas e os custos adicionais são informados antes do contrato. Até {ACECORE_KEEP_5b9083cb5cf0_NUMBER_4_3} horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
+        },
+        {
+          "id": "/items/1/label",
+          "text": "Engenheiro consultor de TI — Standard"
+        },
+        {
+          "id": "/items/1/price",
+          "text": "A partir de {ACECORE_KEEP_d4bddbbc059f_NUMBER_102,300_0} ienes por mês"
+        },
+        {
+          "id": "/items/1/note",
+          "text": "Dentro do número de consultas e do limite de horas definidos no contrato: implantação, depuração e testes, relatórios de andamento e análise do uso e de possíveis melhorias. Monitoramento {ACECORE_KEEP_1a01159f3a14_NUMBER_24_0} horas e resposta imediata a incidentes não estão incluídos. Até {ACECORE_KEEP_1a01159f3a14_NUMBER_12_1} horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
+        },
+        {
+          "id": "/items/2/label",
+          "text": "Suporte pontual à implantação"
+        },
+        {
+          "id": "/items/2/price",
+          "text": "A partir de {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/2/note",
+          "text": "Para {ACECORE_KEEP_8b53a70c1817_NUMBER_1_0} aplicativo web existente em {ACECORE_KEEP_8b53a70c1817_NUMBER_1_1} ambiente: seleção do ambiente recomendado, configuração inicial de domínio, SSL, VPS ou nuvem, lançamento, verificação de funcionamento e transferência. Alterações de código, migração, CI/CD, projeto de monitoramento e backup e operação contínua são orçados separadamente. O escopo básico é uma configuração padrão com até {ACECORE_KEEP_8b53a70c1817_NUMBER_4_2} horas no total para reuniões, configuração, verificações, entrega e comunicação. Configurações complexas ou tempo adicional são orçados antes do início."
+        },
+        {
+          "id": "/items/3/label",
+          "text": "Pacote inicial de melhoria operacional com AI"
+        },
+        {
+          "id": "/items/3/price",
+          "text": "Aproximadamente {ACECORE_KEEP_1f6a5ec7480d_NUMBER_15_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/3/note",
+          "text": "Entrevista de {ACECORE_KEEP_5247cfbed1a6_NUMBER_90_0} minutos, análise do fluxo de trabalho, {ACECORE_KEEP_5247cfbed1a6_NUMBER_3_1} oportunidades para AI, protótipo simples de {ACECORE_KEEP_5247cfbed1a6_NUMBER_1_2} oportunidade, estimativa de custo-benefício e regras resumidas de uso de AI. O prazo estimado é de {ACECORE_KEEP_5247cfbed1a6_NUMBER_2_3} a {ACECORE_KEEP_5247cfbed1a6_NUMBER_3_4} semanas. O valor é indicativo para uma configuração mínima. Acordamos os processos, telas, permissões, integrações e escopo de migração antes de elaborar um orçamento individual."
+        },
+        {
+          "id": "/items/4/label",
+          "text": "Implementação de produção de AI e sistemas empresariais"
+        },
+        {
+          "id": "/items/4/price",
+          "text": "A partir de {ACECORE_KEEP_d44d90840277_NUMBER_50_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/4/note",
+          "text": "Construção de produção após a PoC, integração com sistemas existentes, permissões, aprovações, logs de auditoria, testes, lançamento e transferência operacional. O orçamento é preparado conforme os requisitos. O valor é indicativo para uma configuração mínima. Acordamos os processos, telas, permissões, integrações e escopo de migração antes de elaborar um orçamento individual."
+        },
+        {
+          "id": "/items/5/label",
+          "text": "Automação de pequena escala e apoio operacional"
+        },
+        {
+          "id": "/items/5/price",
+          "text": "A partir de {ACECORE_KEEP_43d6a1ac09fa_NUMBER_30_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/5/note",
+          "text": "Automatizamos em pequena escala entradas, consolidações, notificações e verificações existentes. O valor é indicativo para uma configuração mínima. Acordamos os processos, telas, permissões, integrações e escopo de migração antes de elaborar um orçamento individual."
+        },
+        {
+          "id": "/items/6/label",
+          "text": "Ferramenta empresarial interna"
+        },
+        {
+          "id": "/items/6/price",
+          "text": "A partir de {ACECORE_KEEP_d44d90840277_NUMBER_50_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/6/note",
+          "text": "Ferramenta de pequeno a médio porte com painel administrativo, formulários, listas, exportação de CSV, permissões e funções relacionadas. O valor é indicativo para uma configuração mínima. Acordamos os processos, telas, permissões, integrações e escopo de migração antes de elaborar um orçamento individual."
+        },
+        {
+          "id": "/items/7/label",
+          "text": "Aplicativo web de médio porte"
+        },
+        {
+          "id": "/items/7/price",
+          "text": "A partir de {ACECORE_KEEP_453020b8ab78_NUMBER_150_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/7/note",
+          "text": "Aplicativo web com vários usuários, funções para membros, fluxos de aprovação e integrações externas. O valor é indicativo para uma configuração mínima. Acordamos os processos, telas, permissões, integrações e escopo de migração antes de elaborar um orçamento individual."
+        },
+        {
+          "id": "/items/8/label",
+          "text": "Design e produção criativa"
+        },
+        {
+          "id": "/items/8/price",
+          "text": "A partir de {ACECORE_KEEP_e9389100d411_NUMBER_2_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/8/note",
+          "text": "Valores de referência: logotipo de {ACECORE_KEEP_84a5ffc7164b_NUMBER_5_0} a {ACECORE_KEEP_84a5ffc7164b_NUMBER_15_1} dezenas de milhares de ienes, folheto ou banner de {ACECORE_KEEP_84a5ffc7164b_NUMBER_2_2} a {ACECORE_KEEP_84a5ffc7164b_NUMBER_12_3} dezenas de milhares de ienes, marca ou integração web a partir de {ACECORE_KEEP_84a5ffc7164b_NUMBER_10_4} dezenas de milhares de ienes."
+        },
+        {
+          "id": "/items/9/label",
+          "text": "Chat de consultas com AI"
+        },
+        {
+          "id": "/items/9/price",
+          "text": "A partir de {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/9/note",
+          "text": "Adicionamos um chat de consultas com AI a um site estático ou de serviços, definindo o escopo das respostas, limites de requisição, verificação de Origin e renderização segura de links. A estimativa cobre {ACECORE_KEEP_1aac45340184_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_1aac45340184_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/10/label",
+          "text": "Função de comentários no blog"
+        },
+        {
+          "id": "/items/10/price",
+          "text": "A partir de {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/10/note",
+          "text": "Com Cloudflare Pages Functions, D{ACECORE_KEEP_9b943b3b5687_NUMBER_1_0} e Turnstile, estruturamos publicação, armazenamento, prevenção de spam e operação de exclusão sem depender de um serviço externo de comentários. A estimativa cobre {ACECORE_KEEP_9b943b3b5687_NUMBER_1_1} trabalho padrão em {ACECORE_KEEP_9b943b3b5687_NUMBER_1_2} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/11/label",
+          "text": "Implementação de interface de edição CMS"
+        },
+        {
+          "id": "/items/11/price",
+          "text": "A partir de {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/11/note",
+          "text": "Adicionamos uma interface administrativa com Sveltia CMS para atualizar pelo navegador o blog, páginas fixas, anúncios e configurações. A estimativa cobre {ACECORE_KEEP_a9d616e41a5a_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_a9d616e41a5a_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/12/label",
+          "text": "Base para blog e artigos"
+        },
+        {
+          "id": "/items/12/price",
+          "text": "A partir de {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/12/note",
+          "text": "Criamos a base necessária para publicação contínua, incluindo listas de artigos, páginas de detalhe, tags, artigos relacionados, RSS e fluxos de busca. A estimativa cobre {ACECORE_KEEP_743c726654d2_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_743c726654d2_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/13/label",
+          "text": "Operação de blog multilíngue"
+        },
+        {
+          "id": "/items/13/price",
+          "text": "A partir de {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/13/note",
+          "text": "Estruturamos a operação de um blog multilíngue, incluindo source em japonês, PR de tradução, hreflang, sitemap e RSS. A estimativa cobre {ACECORE_KEEP_f8a9d0783370_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_f8a9d0783370_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/14/label",
+          "text": "SEO e dados estruturados"
+        },
+        {
+          "id": "/items/14/price",
+          "text": "A partir de {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/14/note",
+          "text": "Organizamos as informações transmitidas aos mecanismos de busca, como OGP, JSON-LD, sitemap, RSS e canonical. A estimativa cobre {ACECORE_KEEP_07f7a7405be5_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_07f7a7405be5_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/15/label",
+          "text": "Busca interna com Pagefind"
+        },
+        {
+          "id": "/items/15/price",
+          "text": "A partir de {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/15/note",
+          "text": "Adicionamos a busca Pagefind a um site estático e configuramos a UI de busca, parâmetros de URL e cache. A estimativa cobre {ACECORE_KEEP_44454bebd3b6_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_44454bebd3b6_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/16/label",
+          "text": "Melhoria da velocidade de exibição"
+        },
+        {
+          "id": "/items/16/price",
+          "text": "A partir de {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/16/note",
+          "text": "Analisamos imagens, CSS, fontes, carregamento lento e medições para melhorar os Core Web Vitals. A estimativa cobre {ACECORE_KEEP_50fcedf2458f_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_50fcedf2458f_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/17/label",
+          "text": "Melhoria de acessibilidade"
+        },
+        {
+          "id": "/items/17/price",
+          "text": "A partir de {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/17/note",
+          "text": "Revisamos contraste, atributos aria, foco, validação de formulários e outros pontos, corrigindo-os com a meta de alcançar WCAG AA. A estimativa cobre {ACECORE_KEEP_89738c7dbaf8_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_89738c7dbaf8_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/18/label",
+          "text": "Cabeçalhos de segurança/CSP"
+        },
+        {
+          "id": "/items/18/price",
+          "text": "A partir de {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/18/note",
+          "text": "Organizamos os _headers do Cloudflare Pages, o CSP e as configurações de entrega ao redor da interface administrativa para aumentar a segurança da publicação. A estimativa cobre {ACECORE_KEEP_7054fb1c35b3_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_7054fb1c35b3_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/19/label",
+          "text": "Integração de CTA e formulário"
+        },
+        {
+          "id": "/items/19/price",
+          "text": "A partir de {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/19/note",
+          "text": "Transferimos categoria, assunto e contexto da CTA de serviço para o formulário de contato, melhorando o fluxo de consulta. A estimativa cobre {ACECORE_KEEP_001d0de14b49_NUMBER_1_0} trabalho padrão em {ACECORE_KEEP_001d0de14b49_NUMBER_1_1} site com configuração existente. Funcionalidades personalizadas, a criação de um site completo, migração e operação contínua são orçadas separadamente."
+        },
+        {
+          "id": "/items/20/label",
+          "text": "Sistemas integrados e integração com sistemas centrais"
+        },
+        {
+          "id": "/items/20/price",
+          "text": "A partir de {ACECORE_KEEP_8d2fce106c39_NUMBER_250_0} dezenas de milhares de ienes"
+        },
+        {
+          "id": "/items/20/note",
+          "text": "Base operacional conectada a vários departamentos e sistemas existentes, projetada para implementação gradual. O valor é indicativo para uma configuração mínima. Acordamos os processos, telas, permissões, integrações e escopo de migração antes de elaborar um orçamento individual."
+        },
+        {
+          "id": "/items/21/label",
+          "text": "Manutenção e melhoria"
+        },
+        {
+          "id": "/items/21/price",
+          "text": "A partir de {ACECORE_KEEP_67a28e05fb39_NUMBER_3_0} dezenas de milhares de ienes por mês"
+        },
+        {
+          "id": "/items/21/note",
+          "text": "Pequenas alterações, consultas, monitoramento, propostas de melhoria, atendimento prioritário para desenvolvimento adicional e suporte relacionado. Até {ACECORE_KEEP_28b03cfb1653_NUMBER_2_0} horas mensais no total, incluindo consultas, pesquisa, trabalho, verificações e comunicação. O tempo não utilizado não acumula; trabalhos adicionais são orçados antes do início."
+        },
+        {
+          "id": "/items/22/label",
+          "text": "Definição de requisitos e consulta técnica"
+        },
+        {
+          "id": "/items/22/price",
+          "text": "Orçamento personalizado"
+        },
+        {
+          "id": "/items/22/note",
+          "text": "Também atendemos à organização das operações antes do desenvolvimento, investigação de sistemas existentes e revisão de arquitetura."
+        },
+        {
+          "id": "/items/23/label",
+          "text": "Revisão pré-lançamento"
+        },
+        {
+          "id": "/items/23/price",
+          "text": "Orçamento individual"
+        },
+        {
+          "id": "/items/23/note",
+          "text": "Arquitetura, exposição pública, segredos, dependências e autenticação. Orçamento após revisar documentação e ambiente."
+        },
+        {
+          "id": "/items/24/label",
+          "text": "Avaliação de vulnerabilidades Web e API"
+        },
+        {
+          "id": "/items/24/price",
+          "text": "Orçamento individual"
+        },
+        {
+          "id": "/items/24/note",
+          "text": "Verificações automáticas e manuais acordadas. Viabilidade e custo conforme funções, requisições, permissões e ambientes."
+        },
+        {
+          "id": "/items/25/label",
+          "text": "Correções e verificação"
+        },
+        {
+          "id": "/items/25/price",
+          "text": "Orçamento individual"
+        },
+        {
+          "id": "/items/25/note",
+          "text": "Correções, testes, publicação e verificação, inclusive de relatórios de terceiros. Escopo, prazos e quantidade de retestes são acordados no orçamento."
+        },
+        {
+          "id": "/items/26/label",
+          "text": "Apoio contínuo em segurança"
+        },
+        {
+          "id": "/items/26/price",
+          "text": "Orçamento individual"
+        },
+        {
+          "id": "/items/26/note",
+          "text": "Atualizações, permissões, verificação de mudanças e consultas. Alvos, frequência, horas e trabalho extra são definidos individualmente."
+        },
+        {
+          "id": "/items/27/label",
+          "text": "Plano de lançamento"
+        },
+        {
+          "id": "/items/27/price",
+          "text": "{ACECORE_KEEP_e928e8725959_NUMBER_156,750_0} ienes"
+        },
+        {
+          "id": "/items/27/note",
+          "text": "Até {ACECORE_KEEP_b66da847f6bc_NUMBER_5_0} páginas fixas. Design padrão, organização dos textos a partir dos materiais fornecidos, adaptação para smartphones, notícias, SEO básico, formulário e orientações de publicação e atualização. Valor estimado com impostos. Custos externos são cobrados à parte pelo valor real; solicitações além do escopo acordado são orçadas antes do início."
+        },
+        {
+          "id": "/items/28/label",
+          "text": "Plano de ampliação e renovação"
+        },
+        {
+          "id": "/items/28/price",
+          "text": "A partir de {ACECORE_KEEP_26391e8d7c73_NUMBER_330,000_0} ienes"
+        },
+        {
+          "id": "/items/28/note",
+          "text": "Até {ACECORE_KEEP_87f30dec13dc_NUMBER_10_0} páginas fixas como referência, com entrevista acordada e propostas de texto e estrutura. A migração do conteúdo existente é orçada separadamente. Valor estimado com impostos. Custos externos são cobrados à parte pelo valor real; solicitações além do escopo acordado são orçadas antes do início."
+        },
+        {
+          "id": "/items/29/label",
+          "text": "Criação personalizada e funções adicionais"
+        },
+        {
+          "id": "/items/29/price",
+          "text": "Orçamento individual"
+        },
+        {
+          "id": "/items/29/note",
+          "text": "Design personalizado, reservas, pagamentos, membros, vários idiomas ou migrações extensas. Valor estimado com impostos. Custos externos são cobrados à parte pelo valor real; solicitações além do escopo acordado são orçadas antes do início."
+        },
+        {
+          "id": "/items/30/label",
+          "text": "Manutenção do site"
+        },
+        {
+          "id": "/items/30/price",
+          "text": "{ACECORE_KEEP_901e8ef2bed2_NUMBER_5,500_0} ienes por mês"
+        },
+        {
+          "id": "/items/30/note",
+          "text": "Verificação automática de disponibilidade e backups, inspeções periódicas, diagnóstico inicial, restauração prevista e comunicação por até {ACECORE_KEEP_e4fb67735498_NUMBER_30_0} minutos mensais. Atualizações de conteúdo não estão incluídas. Valor estimado com impostos. Custos externos são cobrados à parte pelo valor real; horas excedentes são orçadas antes do início."
+        },
+        {
+          "id": "/items/31/label",
+          "text": "Atualizações assistidas"
+        },
+        {
+          "id": "/items/31/price",
+          "text": "{ACECORE_KEEP_49509c75f29c_NUMBER_15,400_0} ienes por mês"
+        },
+        {
+          "id": "/items/31/note",
+          "text": "Aos {ACECORE_KEEP_6f7bcb5c1932_NUMBER_30_0} minutos mensais de manutenção são adicionados {ACECORE_KEEP_6f7bcb5c1932_NUMBER_60_1} minutos mensais para atualizar textos, imagens e notícias, incluindo revisão, comunicação e publicação (até {ACECORE_KEEP_6f7bcb5c1932_NUMBER_90_2} minutos mensais no total). Valor estimado com impostos. Custos externos são cobrados à parte pelo valor real; horas excedentes são orçadas antes do início."
+        },
+        {
+          "id": "/items/32/label",
+          "text": "Aproveitamento e melhorias"
+        },
+        {
+          "id": "/items/32/price",
+          "text": "A partir de {ACECORE_KEEP_304e68e2021d_NUMBER_33,000_0} ienes por mês"
+        },
+        {
+          "id": "/items/32/note",
+          "text": "Manutenção, atualizações, análise de acesso, melhorias, consultoria e comunicação somam até {ACECORE_KEEP_a34f1aea67d3_NUMBER_3_0} horas mensais. Valor estimado com impostos. Custos externos são cobrados à parte pelo valor real; horas excedentes são orçadas antes do início."
+        }
+      ]
+    }
+  },
+  {
+    "kind": "content",
+    "locale": "ru",
+    "sourcePath": "src/data/pricing.json",
+    "result": {
+      "translations": [
+        {
+          "id": "/title",
+          "text": "Ориентиры по стоимости"
+        },
+        {
+          "id": "/description",
+          "text": "Ориентиры и условия стоимости ИТ-консалтинга, внедрения AI, развертывания, бизнес-систем, веб-приложений, дизайна и креативных материалов, AI-чата, CMS, SEO и улучшений безопасности от Acecore Systems."
+        },
+        {
+          "id": "/heroTitle",
+          "text": "Начните без лишней нагрузки — только с необходимого объема."
+        },
+        {
+          "id": "/heroLead",
+          "text": "Суммы ориентировочные и включают налоги. После окончательного согласования требований мы подготовим индивидуальную смету. Пожалуйста, открыто расскажите и о вашем бюджете."
+        },
+        {
+          "id": "/items/0/label",
+          "text": "ИТ-советник — Light"
+        },
+        {
+          "id": "/items/0/price",
+          "text": "От {ACECORE_KEEP_ff0b045df600_NUMBER_49,500_0} иен в месяц"
+        },
+        {
+          "id": "/items/0/note",
+          "text": "{ACECORE_KEEP_5b9083cb5cf0_NUMBER_1_0}–{ACECORE_KEEP_5b9083cb5cf0_NUMBER_2_1} консультации в месяц, выбор инструментов AI и ИТ, первичная настройка и небольшая поддержка публикации не более {ACECORE_KEEP_5b9083cb5cf0_NUMBER_1_2} параллельной задачи. Лимит рабочего времени и дополнительные расходы указываются до заключения договора. Всего до {ACECORE_KEEP_5b9083cb5cf0_NUMBER_4_3} часов в месяц, включая консультации, исследование, работы, проверки и общение. Неиспользованное время не переносится; дополнительные работы оцениваются до их начала."
+        },
+        {
+          "id": "/items/1/label",
+          "text": "ИТ-советник — Standard"
+        },
+        {
+          "id": "/items/1/price",
+          "text": "От {ACECORE_KEEP_d4bddbbc059f_NUMBER_102,300_0} иен в месяц"
+        },
+        {
+          "id": "/items/1/note",
+          "text": "Развертывание, отладка и тестирование, отчеты о состоянии и проверка использования и кандидатов на улучшение — в пределах числа консультаций и рабочего лимита по договору. {ACECORE_KEEP_1a01159f3a14_NUMBER_24_0}-часовой мониторинг и немедленное реагирование на сбои не включены. Всего до {ACECORE_KEEP_1a01159f3a14_NUMBER_12_1} часов в месяц, включая консультации, исследование, работы, проверки и общение. Неиспользованное время не переносится; дополнительные работы оцениваются до их начала."
+        },
+        {
+          "id": "/items/2/label",
+          "text": "Разовая помощь с развертыванием"
+        },
+        {
+          "id": "/items/2/price",
+          "text": "От {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/2/note",
+          "text": "Базовый объем — {ACECORE_KEEP_8b53a70c1817_NUMBER_1_0} существующее веб-приложение и {ACECORE_KEEP_8b53a70c1817_NUMBER_1_1} окружение: выбор рекомендуемой среды, первичная настройка домена, SSL, VPS или облака, публикация, проверка и передача. Изменения кода, миграция, CI/CD, проектирование мониторинга и резервного копирования и дальнейшая эксплуатация оцениваются отдельно. Базовый объём — стандартная конфигурация и всего до {ACECORE_KEEP_8b53a70c1817_NUMBER_4_2} часов на встречи, настройку, проверки, передачу и общение. Сложные конфигурации и дополнительное время оцениваются до начала работ."
+        },
+        {
+          "id": "/items/3/label",
+          "text": "Стартовый пакет улучшения процессов с AI"
+        },
+        {
+          "id": "/items/3/price",
+          "text": "Около {ACECORE_KEEP_1f6a5ec7480d_NUMBER_15_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/3/note",
+          "text": "{ACECORE_KEEP_5247cfbed1a6_NUMBER_90_0}-минутное интервью, описание процесса, {ACECORE_KEEP_5247cfbed1a6_NUMBER_3_1} кандидата на AI, простой прототип {ACECORE_KEEP_5247cfbed1a6_NUMBER_1_2} кандидата, оценка соотношения затрат и эффекта и краткие правила использования AI. Ориентировочный срок — {ACECORE_KEEP_5247cfbed1a6_NUMBER_2_3}–{ACECORE_KEEP_5247cfbed1a6_NUMBER_3_4} недели. Сумма ориентировочная и относится к минимальной конфигурации. Процессы, экраны, права, интеграции и объём переноса согласовываются перед индивидуальной оценкой."
+        },
+        {
+          "id": "/items/4/label",
+          "text": "Полноценное внедрение AI или бизнес-системы"
+        },
+        {
+          "id": "/items/4/price",
+          "text": "От {ACECORE_KEEP_d44d90840277_NUMBER_50_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/4/note",
+          "text": "Производственная реализация после PoC, интеграция с существующими системами, права, согласования, журнал аудита, тестирование, публикация и передача эксплуатации. Оценка зависит от требований. Сумма ориентировочная и относится к минимальной конфигурации. Процессы, экраны, права, интеграции и объём переноса согласовываются перед индивидуальной оценкой."
+        },
+        {
+          "id": "/items/5/label",
+          "text": "Небольшая автоматизация и помощь процессу"
+        },
+        {
+          "id": "/items/5/price",
+          "text": "От {ACECORE_KEEP_43d6a1ac09fa_NUMBER_30_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/5/note",
+          "text": "Небольшая автоматизация существующего ввода, подсчета, уведомлений и проверок. Сумма ориентировочная и относится к минимальной конфигурации. Процессы, экраны, права, интеграции и объём переноса согласовываются перед индивидуальной оценкой."
+        },
+        {
+          "id": "/items/6/label",
+          "text": "Внутренний рабочий инструмент"
+        },
+        {
+          "id": "/items/6/price",
+          "text": "От {ACECORE_KEEP_d44d90840277_NUMBER_50_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/6/note",
+          "text": "Небольшой или средний инструмент с административным экраном, формами, списками, экспортом CSV и правами доступа. Сумма ориентировочная и относится к минимальной конфигурации. Процессы, экраны, права, интеграции и объём переноса согласовываются перед индивидуальной оценкой."
+        },
+        {
+          "id": "/items/7/label",
+          "text": "Веб-приложение среднего масштаба"
+        },
+        {
+          "id": "/items/7/price",
+          "text": "От {ACECORE_KEEP_453020b8ab78_NUMBER_150_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/7/note",
+          "text": "Веб-приложение с несколькими пользователями, учетными записями, согласованиями и внешними интеграциями. Сумма ориентировочная и относится к минимальной конфигурации. Процессы, экраны, права, интеграции и объём переноса согласовываются перед индивидуальной оценкой."
+        },
+        {
+          "id": "/items/8/label",
+          "text": "Дизайн и креативные материалы"
+        },
+        {
+          "id": "/items/8/price",
+          "text": "От {ACECORE_KEEP_e9389100d411_NUMBER_2_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/8/note",
+          "text": "Ориентиры: логотип — {ACECORE_KEEP_84a5ffc7164b_NUMBER_5_0}–{ACECORE_KEEP_84a5ffc7164b_NUMBER_15_1} десятков тысяч иен, листовка или баннер — {ACECORE_KEEP_84a5ffc7164b_NUMBER_2_2}–{ACECORE_KEEP_84a5ffc7164b_NUMBER_12_3} десятков тысяч иен, разработка бренда или веб-интеграция — от {ACECORE_KEEP_84a5ffc7164b_NUMBER_10_4} десятков тысяч иен."
+        },
+        {
+          "id": "/items/9/label",
+          "text": "AI-чат для обращений"
+        },
+        {
+          "id": "/items/9/price",
+          "text": "От {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/9/note",
+          "text": "Встраиваем AI-чат в статический или сервисный сайт и настраиваем область ответов, ограничение частоты, проверку Origin и безопасный вывод ссылок. Ориентир относится к {ACECORE_KEEP_1aac45340184_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_1aac45340184_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/10/label",
+          "text": "Комментарии к блогу"
+        },
+        {
+          "id": "/items/10/price",
+          "text": "От {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/10/note",
+          "text": "Настраиваем публикацию, хранение, защиту от спама и удаление без внешней службы комментариев с помощью Cloudflare Pages Functions, D{ACECORE_KEEP_9b943b3b5687_NUMBER_1_0} и Turnstile. Ориентир относится к {ACECORE_KEEP_9b943b3b5687_NUMBER_1_1} стандартной задаче на {ACECORE_KEEP_9b943b3b5687_NUMBER_1_2} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/11/label",
+          "text": "Экран редактирования CMS"
+        },
+        {
+          "id": "/items/11/price",
+          "text": "От {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/11/note",
+          "text": "Добавляем административный экран Sveltia CMS для обновления блога, постоянных страниц, объявлений и настроек из браузера. Ориентир относится к {ACECORE_KEEP_a9d616e41a5a_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_a9d616e41a5a_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/12/label",
+          "text": "Основа блога и статей"
+        },
+        {
+          "id": "/items/12/price",
+          "text": "От {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/12/note",
+          "text": "Создаем необходимую основу для постоянной публикации: список и страницы статей, теги, связанные материалы, RSS и пути поиска. Ориентир относится к {ACECORE_KEEP_743c726654d2_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_743c726654d2_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/13/label",
+          "text": "Многоязычный блог"
+        },
+        {
+          "id": "/items/13/price",
+          "text": "От {ACECORE_KEEP_3db8efed6217_NUMBER_8_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/13/note",
+          "text": "Настраиваем многоязычную работу с японским исходником, PR перевода, hreflang, sitemap и RSS. Ориентир относится к {ACECORE_KEEP_f8a9d0783370_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_f8a9d0783370_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/14/label",
+          "text": "SEO и структурированные данные"
+        },
+        {
+          "id": "/items/14/price",
+          "text": "От {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/14/note",
+          "text": "Упорядочиваем OGP, JSON-LD, карту сайта, RSS, canonical и другие данные для поисковых систем. Ориентир относится к {ACECORE_KEEP_07f7a7405be5_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_07f7a7405be5_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/15/label",
+          "text": "Поиск Pagefind по сайту"
+        },
+        {
+          "id": "/items/15/price",
+          "text": "От {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/15/note",
+          "text": "Добавляем Pagefind на статический сайт и настраиваем интерфейс поиска, параметры URL и кеширование. Ориентир относится к {ACECORE_KEEP_44454bebd3b6_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_44454bebd3b6_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/16/label",
+          "text": "Улучшение скорости отображения"
+        },
+        {
+          "id": "/items/16/price",
+          "text": "От {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/16/note",
+          "text": "Проверяем изображения, CSS, шрифты, отложенную загрузку и измерения и улучшаем Core Web Vitals. Ориентир относится к {ACECORE_KEEP_50fcedf2458f_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_50fcedf2458f_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/17/label",
+          "text": "Улучшение доступности"
+        },
+        {
+          "id": "/items/17/price",
+          "text": "От {ACECORE_KEEP_7d924a7c7d3a_NUMBER_5_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/17/note",
+          "text": "Проверяем контрастность, aria-атрибуты, фокус и валидацию форм и вносим исправления с целью соответствия WCAG AA. Ориентир относится к {ACECORE_KEEP_89738c7dbaf8_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_89738c7dbaf8_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/18/label",
+          "text": "Заголовки безопасности и CSP"
+        },
+        {
+          "id": "/items/18/price",
+          "text": "От {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/18/note",
+          "text": "Приводим в порядок _headers, CSP и параметры доставки вокруг административного экрана Cloudflare Pages, чтобы приблизить сайт к безопасной публикации. Ориентир относится к {ACECORE_KEEP_7054fb1c35b3_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_7054fb1c35b3_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/19/label",
+          "text": "Связь CTA с формой"
+        },
+        {
+          "id": "/items/19/price",
+          "text": "От {ACECORE_KEEP_3069f17c4d35_NUMBER_3_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/19/note",
+          "text": "Передаем из CTA услуги в форму тип, тему и контекст обращения и улучшаем путь к консультации. Ориентир относится к {ACECORE_KEEP_001d0de14b49_NUMBER_1_0} стандартной задаче на {ACECORE_KEEP_001d0de14b49_NUMBER_1_1} сайте с существующей конфигурацией. Индивидуальные функции, создание целого нового сайта, перенос и постоянная эксплуатация оцениваются отдельно."
+        },
+        {
+          "id": "/items/20/label",
+          "text": "Интегрированная или основная система"
+        },
+        {
+          "id": "/items/20/price",
+          "text": "От {ACECORE_KEEP_8d2fce106c39_NUMBER_250_0} десятков тысяч иен"
+        },
+        {
+          "id": "/items/20/note",
+          "text": "Рабочая платформа, связанная с несколькими отделами и существующими системами. Проектируется для поэтапного внедрения. Сумма ориентировочная и относится к минимальной конфигурации. Процессы, экраны, права, интеграции и объём переноса согласовываются перед индивидуальной оценкой."
+        },
+        {
+          "id": "/items/21/label",
+          "text": "Сопровождение и улучшения"
+        },
+        {
+          "id": "/items/21/price",
+          "text": "От {ACECORE_KEEP_67a28e05fb39_NUMBER_3_0} десятков тысяч иен в месяц"
+        },
+        {
+          "id": "/items/21/note",
+          "text": "Небольшие исправления, консультации, мониторинг, предложения улучшений и приоритетная обработка дополнительной разработки. Всего до {ACECORE_KEEP_28b03cfb1653_NUMBER_2_0} часов в месяц, включая консультации, исследование, работы, проверки и общение. Неиспользованное время не переносится; дополнительные работы оцениваются до их начала."
+        },
+        {
+          "id": "/items/22/label",
+          "text": "Уточнение требований и техническая консультация"
+        },
+        {
+          "id": "/items/22/price",
+          "text": "Индивидуальная оценка"
+        },
+        {
+          "id": "/items/22/note",
+          "text": "Также выполняем анализ процессов до разработки, обследование существующей системы и проверку архитектуры."
+        },
+        {
+          "id": "/items/23/label",
+          "text": "Проверка перед запуском"
+        },
+        {
+          "id": "/items/23/price",
+          "text": "Индивидуальный расчёт"
+        },
+        {
+          "id": "/items/23/note",
+          "text": "Архитектура, публичная доступность, секреты, зависимости и аутентификация. Расчёт после изучения документов и среды."
+        },
+        {
+          "id": "/items/24/label",
+          "text": "Оценка уязвимостей Web и API"
+        },
+        {
+          "id": "/items/24/price",
+          "text": "Индивидуальный расчёт"
+        },
+        {
+          "id": "/items/24/note",
+          "text": "Согласованные автоматические и ручные проверки. Возможность и стоимость зависят от функций, запросов, прав и сред."
+        },
+        {
+          "id": "/items/25/label",
+          "text": "Исправления и повторная проверка"
+        },
+        {
+          "id": "/items/25/price",
+          "text": "Индивидуальный расчёт"
+        },
+        {
+          "id": "/items/25/note",
+          "text": "Исправления, тесты, публикация и проверка, в том числе по сторонним отчётам. Объём, сроки и число повторных проверок согласуются при расчёте."
+        },
+        {
+          "id": "/items/26/label",
+          "text": "Постоянная поддержка безопасности"
+        },
+        {
+          "id": "/items/26/price",
+          "text": "Индивидуальный расчёт"
+        },
+        {
+          "id": "/items/26/note",
+          "text": "Обновления, права, проверки изменений и консультации. Цели, частота, часы и дополнительные работы согласуются индивидуально."
+        },
+        {
+          "id": "/items/27/label",
+          "text": "План запуска"
+        },
+        {
+          "id": "/items/27/price",
+          "text": "{ACECORE_KEEP_e928e8725959_NUMBER_156,750_0} иен"
+        },
+        {
+          "id": "/items/27/note",
+          "text": "До {ACECORE_KEEP_b66da847f6bc_NUMBER_5_0} статических страниц. Стандартный дизайн, подготовка текстов по предоставленным материалам, адаптация для смартфонов, новости, базовое SEO, форма и инструкции по публикации и обновлению. Ориентировочная цена с налогом. Внешние расходы оплачиваются отдельно по фактической стоимости; дополнительные запросы сверх согласованного объёма оцениваются до начала работ."
+        },
+        {
+          "id": "/items/28/label",
+          "text": "Расширение и обновление сайта"
+        },
+        {
+          "id": "/items/28/price",
+          "text": "От {ACECORE_KEEP_26391e8d7c73_NUMBER_330,000_0} иен"
+        },
+        {
+          "id": "/items/28/note",
+          "text": "За основу берутся до {ACECORE_KEEP_87f30dec13dc_NUMBER_10_0} статических страниц, согласованное интервью и предложения по текстам и структуре. Объём переноса существующих материалов оценивается отдельно. Ориентировочная цена с налогом. Внешние расходы оплачиваются отдельно по фактической стоимости; дополнительные запросы сверх согласованного объёма оцениваются до начала работ."
+        },
+        {
+          "id": "/items/29/label",
+          "text": "Индивидуальная разработка и дополнительные функции"
+        },
+        {
+          "id": "/items/29/price",
+          "text": "Индивидуальный расчёт"
+        },
+        {
+          "id": "/items/29/note",
+          "text": "Индивидуальный дизайн, бронирование, платежи, личные кабинеты, многоязычность и масштабный перенос материалов. Ориентировочная цена с налогом. Внешние расходы оплачиваются отдельно по фактической стоимости; дополнительные запросы сверх согласованного объёма оцениваются до начала работ."
+        },
+        {
+          "id": "/items/30/label",
+          "text": "Поддержка сайта"
+        },
+        {
+          "id": "/items/30/price",
+          "text": "{ACECORE_KEEP_901e8ef2bed2_NUMBER_5,500_0} иен в месяц"
+        },
+        {
+          "id": "/items/30/note",
+          "text": "Автоматическая проверка доступности и резервное копирование, регулярные проверки, первичная диагностика, предусмотренное восстановление и связь — до {ACECORE_KEEP_e4fb67735498_NUMBER_30_0} минут в месяц. Обновление содержимого не входит. Ориентировочная цена с налогом. Внешние расходы оплачиваются отдельно по фактической стоимости; превышение времени оценивается до начала работ."
+        },
+        {
+          "id": "/items/31/label",
+          "text": "Обновление контента"
+        },
+        {
+          "id": "/items/31/price",
+          "text": "{ACECORE_KEEP_49509c75f29c_NUMBER_15,400_0} иен в месяц"
+        },
+        {
+          "id": "/items/31/note",
+          "text": "К {ACECORE_KEEP_6f7bcb5c1932_NUMBER_30_0} минутам поддержки в месяц добавляется {ACECORE_KEEP_6f7bcb5c1932_NUMBER_60_1} минут в месяц на обновление текстов, изображений и новостей, включая проверку, согласование и публикацию (всего до {ACECORE_KEEP_6f7bcb5c1932_NUMBER_90_2} минут в месяц). Ориентировочная цена с налогом. Внешние расходы оплачиваются отдельно по фактической стоимости; превышение времени оценивается до начала работ."
+        },
+        {
+          "id": "/items/32/label",
+          "text": "Развитие и улучшение"
+        },
+        {
+          "id": "/items/32/price",
+          "text": "От {ACECORE_KEEP_304e68e2021d_NUMBER_33,000_0} иен в месяц"
+        },
+        {
+          "id": "/items/32/note",
+          "text": "Поддержка, обновления, аналитика посещаемости, улучшения, консультации и связь — всего до {ACECORE_KEEP_a34f1aea67d3_NUMBER_3_0} часов в месяц. Ориентировочная цена с налогом. Внешние расходы оплачиваются отдельно по фактической стоимости; превышение времени оценивается до начала работ."
+        }
+      ]
+    }
+  },
+  {
+    "kind": "insight",
+    "locale": "en",
+    "sourcePath": "src/content/insights/astro-ai-contact-chat.md",
+    "result": {
+      "markdown": "---\ntitle: \"Technical Design for Adding an AI Contact Chat to an Astro Site\"\ndescription: \"A reference design as of {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_0}-{ACECORE_KEEP_270acb4d7b12_NUMBER_6_1}. A practical design guide for adding an AI contact chat to a static Astro + Cloudflare Pages site with the OpenAI Responses API. It covers API boundaries, site context, prompt controls, locale-aware URLs, Origin checks, rate limiting, and safe Markdown link rendering.\"\ndate: {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_2}-{ACECORE_KEEP_270acb4d7b12_NUMBER_06_3}-{ACECORE_KEEP_270acb4d7b12_NUMBER_07_4}T{ACECORE_KEEP_270acb4d7b12_NUMBER_12_5}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_6}\nlastUpdated: \"{ACECORE_KEEP_270acb4d7b12_NUMBER_2026_7}-{ACECORE_KEEP_270acb4d7b12_NUMBER_11_8}-{ACECORE_KEEP_270acb4d7b12_NUMBER_12_9}T{ACECORE_KEEP_270acb4d7b12_NUMBER_00_10}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_11}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_12}+{ACECORE_KEEP_270acb4d7b12_NUMBER_09_13}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_14}\"\nauthor: gui\ntags: [\"Technology\", \"Cloudflare\", \"Website\", \"AI\", \"Services\"]\nimage: \"/images/insights/covers/astro-ai-contact-chat-cover-v{ACECORE_KEEP_270acb4d7b12_NUMBER_2_15}.webp\"\ncallout:\n  type: info\n  title: Key Point\n  text: The AI contact chat is not a free-form answer box. It is a small application that uses public site information to guide visitors to the right next step. API keys, prompts, contact details, and Markdown rendering are controlled through the server side and allowlists.\nprocessFigure:\n  title: Reference Architecture\n  steps:\n    - title: Widget\n      description: The Astro chat UI sends only the question, current locale, and minimal history.\n      icon: i-lucide-message-circle\n      accent: brand\n    - title: Function\n      description: The Cloudflare Pages Function handles validation, Origin checks, rate limiting, and prompt construction.\n      icon: i-lucide-shield-check\n      accent: amber\n    - title: Model\n      description: The OpenAI Responses API receives public site context and conversation state, then returns the answer.\n      icon: i-lucide-sparkles\n      accent: emerald\n    - title: Renderer\n      description: The client renders only allowed Markdown and sends users to internal links or approved contact channels.\n      icon: i-lucide-code-{ACECORE_KEEP_270acb4d7b12_NUMBER_2_16}\n      accent: slate\ncompareTable:\n  title: Responsibilities to Separate\n  before:\n    label: When Everything Is Mixed\n    items:\n      - Calling the AI API directly from the browser\n      - Mixing site context, API keys, UI display, and link rendering\n      - Letting the AI make firm statements about pricing, contracts, or schedules\n      - Rendering Markdown and URLs directly as HTML\n  after:\n    label: When Responsibilities Are Split\n    items:\n      - Keep API keys and model calls on the server side\n      - Manage public site information as explicit context\n      - Control answer scope and contact routing through prompts\n      - Render Markdown and URLs through allowlists\nchecklist:\n  title: Design Checklist for Other Sites\n  items:\n    - text: Define the chat as route guidance, not as a complete inquiry replacement\n    - text: Create a server-side API boundary and never expose the API key to the browser\n    - text: Restrict answers to public site information\n    - text: Decide what the AI must not assert, such as pricing, contracts, schedules, and guarantees\n    - text: Define when to use forms, LINE, email, and phone\n    - text: Generate locale-aware URLs so multilingual navigation stays intact\n    - text: Add Origin checks, input length limits, history limits, and rate limiting\n    - text: Trim Markdown link URLs before allowlist validation\nlinkCards:\n  - href: /contact/\n    title: Contact\n    description: The page that organizes the AI chat, LINE, contact form, and direct contact options.\n    icon: i-lucide-message-square\n  - href: /insights/cloudflare-pages-security/\n    title: Cloudflare Pages Security\n    description: A related article on CSP and security headers for static site delivery.\n    icon: i-lucide-shield\n  - href: /blog/cms-selection-and-turnstile/\n    title: Sveltia CMS Setup Guide\n    description: A related article on adding a CMS editing screen to a static site.\n    icon: i-lucide-badge-check\nfaq:\n  title: Frequently Asked Questions\n  items:\n    - question: Do I need RAG or a vector database to build an AI contact chat?\n      answer: For a small corporate site, structured public site context in the prompt is often enough. Search indexes or vector databases can be added later when page count or update frequency grows.\n    - question: Is the OpenAI API key exposed to the browser?\n      answer: No. The browser only sends the question to /api/ai-contact. The Cloudflare Pages Function calls the OpenAI Responses API and manages the API key.\n    - question: Can the AI output any link it wants?\n      answer: No. Links are restricted to internal paths, the current origin, acecore.net, the official LINE URL, and specific mailto or tel links when needed. Markdown URLs are trimmed before safety checks.\n---\n\nFor a first AI chat on a static site, limit answers to public FAQs and send formal quotes or requests to a form. Check server connections against [Cloudflare Pages: Bindings]({ACECORE_KEEP_270acb4d7b12_URL_17}). The URL check below is a historical simplified example; use the linked article’s URL parsing and allowlist rather than prefix matching alone.\n\n> **Update, {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_18}-{ACECORE_KEEP_270acb4d7b12_NUMBER_9_19}-{ACECORE_KEEP_270acb4d7b12_NUMBER_26_20}:** The article below documents a reference design as of {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_21}-{ACECORE_KEEP_270acb4d7b12_NUMBER_6_22}. Acecore Systems now forwards its {ACECORE_KEEP_270acb4d7b12_CODE_23} through a Cloudflare Pages Function and Service Binding to the shared {ACECORE_KEEP_270acb4d7b12_CODE_24}. The interface receives JSON and displays the completed answer. The direct OpenAI call described below is no longer the current Systems implementation.\n\nAdding an AI chat to a website is easy. Running it responsibly is where the design matters. The difficult parts are not only model quality, but deciding what the AI may answer, where it should send visitors, which URLs may be displayed, and how API cost is controlled.\n\nAcecore added an AI contact chat to a static Astro + Cloudflare Pages site. The main implementation is in [the PR that added the contact AI and CMS-scoped translation flow]({ACECORE_KEEP_270acb4d7b12_URL_25}). We later tightened safe Markdown link rendering in [a separate PR]({ACECORE_KEEP_270acb4d7b12_URL_26}). The link-rendering details are covered separately in [Safely Rendering Markdown Links in AI Chat Answers](/blog/ai-chat-markdown-link-safety/).\n\nThis article explains the design as a reusable pattern for other static sites. The same structure works beyond Astro: split the responsibilities between the client widget, server-side API boundary, prompt construction, and renderer.\n\n## Overall Structure\n\nThe architecture has {ACECORE_KEEP_270acb4d7b12_NUMBER_3_27} simple layers.\n\n| Layer                | Responsibility                                                          |\n| -------------------- | ----------------------------------------------------------------------- |\n| Chat widget          | UI, input, current locale, minimal history, and Markdown rendering      |\n| {ACECORE_KEEP_270acb4d7b12_CODE_28}    | Validation, Origin checks, rate limiting, prompt construction, AI calls |\n| OpenAI Responses API | Generate an answer from public site context and conversation state      |\n\nThe browser should not call the OpenAI API directly for {ACECORE_KEEP_270acb4d7b12_NUMBER_3_29} reasons. Keeping the model call behind a server-side endpoint prevents key exposure, lets you update the model, prompts and site context server-side, and centralizes input length limits, Origin checks, rate limits and error handling in {ACECORE_KEEP_270acb4d7b12_NUMBER_1_38} place.\n\nOn Astro + Cloudflare Pages, the API boundary can be a Pages Function at {ACECORE_KEEP_270acb4d7b12_CODE_31}. In Next.js it could be a Route Handler; in Hono or Express it can be a normal API route.\n\n## Keep the Endpoint Contract Small\n\nThe request payload should stay narrow.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_32}\n\nNames, email addresses, phone numbers, company names, and detailed form fields do not need to go through the AI chat. The chat is an entry point for helping users decide which service to read about and which contact route to use.\n\nHistory should also be limited. Send only recent turns and enforce a character limit per {ACECORE_KEEP_270acb4d7b12_NUMBER_1_49} message. This keeps prompts smaller and controls API cost.\n\n## Control Validation and Model Calls on the Server\n\nThe Cloudflare Pages Function performs the following steps together.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_34}\n\nThe important point is to reduce and validate input before calling the AI API. The AI API incurs costs for the input it receives. Long messages, unnecessary history, and repeated access from external sites can make operations unstable before the feature itself becomes useful.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_35} should be configurable through environment variables so the model can be changed in preview or production without touching the frontend. {ACECORE_KEEP_270acb4d7b12_CODE_36} must stay server-side.\n\nSee also [Secure Static Site Delivery with Cloudflare Pages](/insights/cloudflare-pages-security/) for the surrounding delivery and CSP setup.\n\n## Make Site Information Explicit Context\n\nFor a site of this size, you do not need to start with a vector database or RAG. A structured prompt context made from public site information is easier to operate.\n\nUseful context includes:\n\n- Company and service summaries\n- Target users, example consultations, and related URLs for each service\n- FAQ content that already answers common questions\n- Rules for forms, LINE, email, and phone\n- Areas the AI must not assert, such as pricing, contracts, or schedules\n- Internal URLs for each locale\n\nThe goal is not to let the model answer from what it generally knows. The goal is to tell it what this site is allowed to say.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_37}\n\nThis approach is sufficient while the site has few pages. As page count, update frequency, and search requirements grow, consider adding a search layer using Pagefind, CMS JSON, D{ACECORE_KEEP_270acb4d7b12_NUMBER_1_30}, Vectorize, or similar tools.\n\n## Write Rules, Not Only Tone Instructions\n\nThe prompt should define answer boundaries and restrictions more than writing style.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_39}\n\nA common failure is for the model to make firm promises while trying to make a service look good. For questions such as “How much will it cost?”, “When can you deliver?” and “Can you guarantee support?”, provide general guidance and send the visitor to the form for a formal answer.\n\nThis is not only a legal issue: estimates and delivery dates cannot be fixed before hearing the requirements. Write the range of answers the operation can stand behind into the prompt, rather than merely answers that are convenient for sales.\n\n## Split the Contact Routes\n\nThe AI chat should not replace the contact form. The contact page works better when each route has a clear role.\n\n| Route          | Role                                                               |\n| -------------- | ------------------------------------------------------------------ |\n| FAQ            | Resolve common questions on the page                               |\n| AI chat        | Help visitors choose services, contact routes, and related pages   |\n| LINE           | Quick questions, Acecore Schools inquiries, and lightweight checks |\n| Form           | Estimates, production inquiries, partnerships, and recruiting      |\n| Direct contact | Follow-up after the form or urgent confirmation only               |\n\nThe AI connects broad service content such as the [service overview article](/services/) with concrete routes on the [contact page](/contact/). This pattern works for BtoB sites, agencies, schools, and SaaS support pages. It is easier to introduce when the goal is to narrow down the next page or contact method, rather than complete the inquiry through AI.\n\n## Preserve Locale-Aware URLs\n\nOn a multilingual site, the answer language is not enough. URLs also need to match the current locale.\n\nIf a user asks from an English page, the answer should be in English and service links should point to paths such as {ACECORE_KEEP_270acb4d7b12_CODE_40}. Japanese can use {ACECORE_KEEP_270acb4d7b12_CODE_41}.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_42}\n\nServer-side URL generation is more reliable than leaving this to the prompt. If only the AI answer sends users back to Japanese URLs, multilingual navigation breaks. For more on the translation setup, see [How to Run a Multilingual Blog with Sveltia CMS](/blog/copilot-translation-pipeline/).\n\n## Add Origin Checks and Rate Limiting\n\nBecause {ACECORE_KEEP_270acb4d7b12_CODE_43} is public, it should have at least Origin checks, input length limits, history limits, and rate limiting.\n\nWhen an {ACECORE_KEEP_270acb4d7b12_CODE_44} header is present, compare the requesting origin with the API host to reduce unauthorized calls from other sites.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_45}\n\nIP-based rate limiting is a useful first brake. In Cloudflare, you can derive identifiers from headers such as {ACECORE_KEEP_270acb4d7b12_CODE_46}, {ACECORE_KEEP_270acb4d7b12_CODE_47}, or {ACECORE_KEEP_270acb4d7b12_CODE_48}.\n\nIn-memory limits are not persistent across isolates or restarts, so they are only an initial layer. For heavier traffic, move enforcement toward Cloudflare WAF, Turnstile, KV, D{ACECORE_KEEP_270acb4d7b12_NUMBER_1_33}, or Durable Objects. Content-update CMS operations are covered in [Sveltia CMS Setup Guide](/blog/cms-selection-and-turnstile/); form and comment bot protection should be treated as a separate layer. For a design using Cloudflare alone, see [How to Add Comments to an Astro Blog Using Only Cloudflare](/blog/cloudflare-only-blog-comments/).\n\n## Render Markdown Links with an Allowlist\n\nLinks make the chat useful, but Markdown should not be passed directly to HTML. The client renderer should only support the small subset you need:\n\n- Paragraphs\n- Lists\n- Bold text\n- Inline code\n- Markdown links\n\nThen restrict link targets:\n\n- Internal paths such as {ACECORE_KEEP_270acb4d7b12_CODE_50}\n- The current origin\n- {ACECORE_KEEP_270acb4d7b12_CODE_51}\n- Official LINE URLs\n- {ACECORE_KEEP_270acb4d7b12_CODE_52} when needed\n- {ACECORE_KEEP_270acb4d7b12_CODE_53} when needed\n\nAlways {ACECORE_KEEP_270acb4d7b12_CODE_54} the URL before validation. AI output can contain spaces such as {ACECORE_KEEP_270acb4d7b12_CODE_55}.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_56}\n\nA small, strict renderer is easier to reason about than a full Markdown implementation. If you allow more external links, at least use a domain allowlist and {ACECORE_KEEP_270acb4d7b12_CODE_57}.\n\n## Test Local, Preview, and Production Separately\n\nAstro dev or preview is not identical to the Cloudflare Pages Functions environment. Without {ACECORE_KEEP_270acb4d7b12_CODE_58}, local testing should focus on UI fallback and error states.\n\nIn Pages preview or production, check:\n\n- {ACECORE_KEEP_270acb4d7b12_CODE_59} accepts POST requests\n- {ACECORE_KEEP_270acb4d7b12_CODE_60} and {ACECORE_KEEP_270acb4d7b12_CODE_61} are configured\n- Cross-origin requests are rejected\n- Input length and history count are limited\n- Answers match the current locale\n- Internal links use locale-aware URLs\n- The AI does not assert estimates or contracts\n- Email and phone are not shown by default\n- Markdown links are converted only when the URL is allowed\n\nDo not finish validation after {ACECORE_KEEP_270acb4d7b12_NUMBER_1_62} successful question. Test long input, unexpected questions, English pages, direct-contact requests, and pricing questions separately.\n\n## Watch the Right Operational Signals\n\nAfter release, watch more than page views.\n\n- API error rate\n- Rate-limit hits\n- Average messages per {ACECORE_KEEP_270acb4d7b12_NUMBER_1_63} inquiry\n- Clicks to the form and LINE\n- Cases where the AI could not answer and guided users to the form\n- Usage by locale\n\nIf you store conversation text, define the privacy rules first. A safer first step is to store event counts and errors without message bodies.\n\n## What Is Left for Another Article\n\nThis article focuses only on the technical design of the AI contact chat. Passing service-page context into the contact form is also implemented, and that is covered in [Technical design for passing context from a service CTA to the contact form](/blog/service-cta-contact-prefill/).\n\n- AI chat: organize uncertainty through conversation and guide users safely\n- Service CTA: pass the service context a visitor is reading into the form\n\nThe former concerns AI, API boundaries, prompts, and safe rendering; the latter concerns form UX and navigation design. Keeping them separate makes both articles easier to read and easier to cross-link later.\n\n## Summary\n\nWhen adding an AI contact chat to a static site, design the API boundary and answer controls before polishing the UI.\n\nThe key decisions were:\n\n- Call OpenAI from a Cloudflare Pages Function, not the browser\n- Keep endpoint input small and limit history and message length\n- Build site context and locale-aware URLs on the server side\n- Put clear boundaries in the prompt for what the AI may not assert\n- Split the roles of forms, LINE, and direct contact\n- Add Origin checks and rate limiting\n- Render Markdown links through a trimmed allowlist\n\nStatic sites can support useful AI contact chats. The point is not to make the AI visible, but to help visitors choose their next action safely.\n"
+    }
+  },
+  {
+    "kind": "insight",
+    "locale": "de",
+    "sourcePath": "src/content/insights/astro-ai-contact-chat.md",
+    "result": {
+      "markdown": "---\ntitle: \"KI-Kontaktchat in eine Astro-Website integrieren: Architektur und Umsetzung\"\ndescription: \"Referenzarchitektur mit Stand {ACECORE_KEEP_270acb4d7b12_NUMBER_6_1}/{ACECORE_KEEP_270acb4d7b12_NUMBER_2026_0}. Dieser Artikel zeigt, wie sich ein KI-Kontaktchat mit der OpenAI Responses API in eine statische Website mit Astro und Cloudflare Pages integrieren lässt. Er behandelt die API-Grenze, den Website-Kontext, die Regeln im Prompt, sprachabhängige URLs, die Origin-Prüfung, Anfragelimits und die sichere Darstellung von Markdown-Links. Das Muster lässt sich auf andere Websites übertragen.\"\ndate: {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_2}-{ACECORE_KEEP_270acb4d7b12_NUMBER_06_3}-{ACECORE_KEEP_270acb4d7b12_NUMBER_07_4}T{ACECORE_KEEP_270acb4d7b12_NUMBER_12_5}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_6}\nlastUpdated: \"{ACECORE_KEEP_270acb4d7b12_NUMBER_2026_7}-{ACECORE_KEEP_270acb4d7b12_NUMBER_11_8}-{ACECORE_KEEP_270acb4d7b12_NUMBER_12_9}T{ACECORE_KEEP_270acb4d7b12_NUMBER_00_10}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_11}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_12}+{ACECORE_KEEP_270acb4d7b12_NUMBER_09_13}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_14}\"\nauthor: gui\ntags: [\"Technik\", \"Cloudflare\", \"Website\", \"KI\", \"Dienstleistungen\"]\nimage: \"/images/insights/covers/astro-ai-contact-chat-cover-v{ACECORE_KEEP_270acb4d7b12_NUMBER_2_15}.webp\"\ncallout:\n  type: info\n  title: Das Wichtigste\n  text: Der KI-Kontaktchat ist eine kleine Anwendung, die Besucher anhand veröffentlichter Website-Informationen zum passenden nächsten Schritt führt. Der Server und explizite Freigabelisten regeln den Umgang mit API-Schlüsseln, Prompts, Kontaktdaten und Markdown.\nprocessFigure:\n  title: Referenzarchitektur des KI-Kontaktchats\n  steps:\n    - title: Widget\n      description: Die Chatoberfläche in Astro sendet die Frage, die Anzeigesprache und einen möglichst kurzen Gesprächsverlauf.\n      icon: i-lucide-message-circle\n      accent: brand\n    - title: Funktion\n      description: Die Cloudflare Pages Function prüft die Eingabe und den Origin, begrenzt Anfragen und erstellt den Prompt.\n      icon: i-lucide-shield-check\n      accent: amber\n    - title: Modell\n      description: Die OpenAI Responses API erhält öffentliche Website-Informationen und den Gesprächskontext und gibt den Antworttext zurück.\n      icon: i-lucide-sparkles\n      accent: emerald\n    - title: Darstellung\n      description: Der Client wandelt freigegebene Markdown-Elemente in DOM-Knoten um und verweist auf interne Seiten oder passende Kontaktmöglichkeiten.\n      icon: i-lucide-code-{ACECORE_KEEP_270acb4d7b12_NUMBER_2_16}\n      accent: slate\ncompareTable:\n  title: Zuständigkeiten bei der Einführung\n  before:\n    label: Gemeinsame Implementierung\n    items:\n      - Der Browser kann die KI-API direkt aufrufen\n      - Website-Informationen, API-Schlüssel, Oberfläche und Linkdarstellung vermischen sich\n      - Die KI macht leichter verbindliche Aussagen über Preise, Verträge und Liefertermine\n      - Markdown und URLs gelangen leicht ungeprüft ins HTML\n  after:\n    label: Getrennte Zuständigkeiten\n    items:\n      - API-Schlüssel und Modellaufrufe bleiben auf dem Server\n      - Öffentliche Website-Informationen werden als expliziter Kontext gepflegt\n      - Der Prompt legt den Antwortumfang und die Kontaktwege fest\n      - Die Darstellung von Markdown und URLs folgt Freigabelisten\nchecklist:\n  title: Checkliste für die Umsetzung auf einer anderen Website\n  items:\n    - text: Den KI-Chat als Orientierung zu den Kontaktwegen einplanen und formelle Anfragen über das Formular abwickeln\n    - text: Eine serverseitige API-Grenze einrichten, damit der API-Schlüssel auf dem Server bleibt\n    - text: Für Antworten nur veröffentlichte Website-Informationen verwenden\n    - text: Festlegen, in welchen Bereichen die KI keine verbindlichen Aussagen treffen darf, etwa bei Preisen, Verträgen, Lieferterminen und Garantien\n    - text: Regeln für den Einsatz von Formular, LINE, E-Mail und Telefon festlegen\n    - text: URLs für die jeweilige Sprachversion erzeugen, damit die Navigation in allen Sprachen funktioniert\n    - text: Origin-Prüfung sowie Limits für Eingabelänge, Verlauf und Anfragerate einbauen\n    - text: Leerraum an den Rändern von Markdown-Linkzielen entfernen und danach die Freigabeliste prüfen\nlinkCards:\n  - href: /contact/\n    title: Kontakt\n    description: Die Kontaktseite bündelt den KI-Chat, LINE, das Formular und direkte Kontaktmöglichkeiten.\n    icon: i-lucide-message-square\n  - href: /insights/cloudflare-pages-security/\n    title: Sicherheitseinstellungen für Cloudflare Pages\n    description: Der Artikel erklärt die Grundlagen für statische Websites, darunter CSP und HTTP-Header.\n    icon: i-lucide-shield\n  - href: /blog/cms-selection-and-turnstile/\n    title: Sveltia CMS einrichten\n    description: Der Artikel zeigt, wie eine statische Website eine CMS-Oberfläche zur Bearbeitung erhält.\n    icon: i-lucide-badge-check\nfaq:\n  title: Häufig gestellte Fragen\n  items:\n    - question: Braucht ein KI-Kontaktchat RAG oder eine Vektordatenbank?\n      answer: Für eine kleine Unternehmenswebsite genügt als Einstieg oft ein Prompt mit den wichtigsten Informationen aus veröffentlichten Seiten als strukturierter Kontext. Ein Suchindex oder eine Vektordatenbank lässt sich ergänzen, wenn die Zahl der Seiten oder die Häufigkeit der Aktualisierungen steigt.\n    - question: Ist der OpenAI-API-Schlüssel im Browser sichtbar?\n      answer: Nein. Der Browser sendet nur die Frage an /api/ai-contact. Die Cloudflare Pages Function ruft die OpenAI Responses API auf und verwaltet den Schlüssel.\n    - question: Darf eine KI-Antwort beliebige Links enthalten?\n      answer: Zulässig sind interne Pfade, URLs desselben Origins, acecore.net, der offizielle LINE-Kanal sowie bei Bedarf mailto und tel. Vor der Sicherheitsprüfung werden Leerzeichen an den Rändern des Markdown-Linkziels entfernt.\n---\n\nFür einen ersten KI-Chat auf einer statischen Website genügt es, auf öffentliche FAQ zu verweisen und formelle Angebotsanfragen oder andere verbindliche Anliegen an das Formular weiterzuleiten. Die serverseitige Verbindung beschreibt die Dokumentation [Cloudflare Pages: Bindings]({ACECORE_KEEP_270acb4d7b12_URL_17}). Die URL-Prüfung im Artikel ist ein vereinfachtes Beispiel aus der damaligen Implementierung. Verwenden Sie für die Umsetzung die URL-Syntaxprüfung und die Freigabeliste aus dem verlinkten Artikel. Ein übereinstimmender Zeichenkettenanfang allein reicht für eine Freigabe nicht aus.\n\n> **Nachtrag vom {ACECORE_KEEP_270acb4d7b12_NUMBER_26_20}. Tag im {ACECORE_KEEP_270acb4d7b12_NUMBER_9_19}. Monat {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_18}:** Die folgende Referenzarchitektur hat den Stand {ACECORE_KEEP_270acb4d7b12_NUMBER_6_22}/{ACECORE_KEEP_270acb4d7b12_NUMBER_2026_21}. Der heutige Endpunkt {ACECORE_KEEP_270acb4d7b12_CODE_23} von Acecore Systems leitet von einer Cloudflare Pages Function über ein Service Binding an den gemeinsamen Worker {ACECORE_KEEP_270acb4d7b12_CODE_24} weiter. Die Oberfläche nimmt eine JSON-Antwort entgegen und zeigt die fertige Antwort an. Der direkte Aufruf der OpenAI Responses API im Artikel beschreibt die damalige Architektur.\n\nEinen KI-Chat auf einer Website einzubinden ist einfach. Für den Betrieb zählen vor allem klare Regeln: Worauf darf der Chat antworten? Welche Kontaktwege soll er anbieten? Welche URLs darf er anzeigen? Wie lassen sich die API-Kosten begrenzen?\n\nAcecore hat einen KI-Kontaktchat in seine statische Website mit Astro und Cloudflare Pages eingebaut. Die zentrale Umsetzung steht im [PR zum KI-Kontaktchat und zur auf das CMS beschränkten Übersetzung]({ACECORE_KEEP_270acb4d7b12_URL_25}). Ein [weiterer PR]({ACECORE_KEEP_270acb4d7b12_URL_26}) passte die sichere Darstellung von Markdown-Links in KI-Antworten an. Der Artikel [Markdown-Links in KI-Chatantworten sicher darstellen](/blog/ai-chat-markdown-link-safety/) erklärt die Linkdarstellung im Detail.\n\nDie Architektur lässt sich auch für andere statische Websites verwenden. Das Prinzip gilt ebenso für andere Frontends: Client, API-Grenze, Prompt und Darstellung haben jeweils klar abgegrenzte Aufgaben.\n\n## Gesamtaufbau\n\nDie Architektur besteht aus {ACECORE_KEEP_270acb4d7b12_NUMBER_3_27} Schichten.\n\n| Schicht | Aufgabe |\n| --- | --- |\n| Chat-Widget | Oberfläche, Eingabe, Anzeigesprache, kurzer Gesprächsverlauf und Markdown-Darstellung |\n| {ACECORE_KEEP_270acb4d7b12_CODE_28} | Eingaben validieren, Origin prüfen, Anfragen begrenzen, Prompt erstellen und OpenAI aufrufen |\n| OpenAI Responses API | Antworten aus Website-Informationen und Gesprächskontext erzeugen |\n\nDer Aufruf der OpenAI API läuft über den Server. Dafür gibt es {ACECORE_KEEP_270acb4d7b12_NUMBER_3_29} Gründe.\n\n- Der API-Schlüssel bleibt auf dem Server.\n- Modell, Prompt und Website-Kontext lassen sich serverseitig aktualisieren.\n- Eingabelänge, Origin-Prüfung, Anfragelimits und Fehlerbehandlung lassen sich an {ACECORE_KEEP_270acb4d7b12_NUMBER_1_30} Stelle bündeln.\n\nBei Astro und Cloudflare Pages lässt sich die API-Grenze als Cloudflare Pages Function unter {ACECORE_KEEP_270acb4d7b12_CODE_31} umsetzen. In Next.js übernimmt diese Aufgabe ein Route Handler, in Hono oder Express eine API-Route.\n\n## Den Vertrag des Endpunkts klein halten\n\nDie API des KI-Kontaktchats erhält nur die Informationen, die sie für die Antwort benötigt.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_32}\n\nNamen, E-Mail-Adressen, Telefonnummern und Firmennamen aus dem Formular gehen nicht an den Chat. Der Chat hilft Besuchern, den passenden Dienst und die richtige Anlaufstelle zu finden. Persönliche Daten bleiben beim Kontaktformular.\n\nDer Chat übermittelt nur die letzten Nachrichten aus dem Verlauf. Auch die Zeichenzahl pro {ACECORE_KEEP_270acb4d7b12_NUMBER_1_33} Nachricht ist begrenzt. Das hält den Prompt klein und begrenzt die Kosten der API.\n\n## Eingaben und Aufrufe auf dem Server steuern\n\nDie Cloudflare Pages Function bündelt die folgenden Schritte.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_34}\n\nVor dem OpenAI-Aufruf wird die Eingabe geprüft und auf das Nötige gekürzt. Die KI-API berechnet Kosten für die übermittelten Eingaben. Unbegrenzte Texte, überflüssiger Gesprächsverlauf und wiederholte Aufrufe von fremden Websites machen den Betrieb schnell instabil.\n\nDie Umgebungsvariable {ACECORE_KEEP_270acb4d7b12_CODE_35} erleichtert Modellwechsel und Tests in der Vorschau. {ACECORE_KEEP_270acb4d7b12_CODE_36} wird ausschließlich in der Serverumgebung verwaltet.\n\nWeitere Hinweise zur Auslieferung und zu CSP stehen in [Statische Websites mit Cloudflare Pages sicher ausliefern](/insights/cloudflare-pages-security/).\n\n## Website-Informationen als Kontext übergeben\n\nBei einer Website dieser Größe können Sie mit einem strukturierten Auszug aus veröffentlichten Inhalten beginnen. So bleiben Umsetzung und Betrieb überschaubar. Eine Vektordatenbank oder RAG lässt sich später ergänzen.\n\nBereiten Sie etwa folgende Informationen auf dem Server auf.\n\n- Kurzbeschreibung des Unternehmens und seiner Leistungen\n- Zielgruppen, typische Beratungsanfragen und passende URLs für jede Leistung\n- Antworten aus den FAQ\n- Einsatzbereiche von Kontaktformular, LINE, E-Mail und Telefon\n- Themen wie Preise, Verträge und Liefertermine, zu denen die KI keine verbindlichen Aussagen treffen darf\n- Interne URLs für jede Sprachversion\n\nGeben Sie dem Modell die Informationen vor, auf deren Grundlage diese Website Auskunft erteilen darf.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_37}\n\nFür wenige Seiten genügt dieses Vorgehen. Wachsen Seitenzahl, Aktualisierungsfrequenz oder Suchanforderungen, können Sie eine Suche mit Pagefind, JSON aus dem CMS, D{ACECORE_KEEP_270acb4d7b12_NUMBER_1_38} oder Vectorize ergänzen.\n\n## Im Prompt Regeln für Antworten festlegen\n\nIm Prompt für den KI-Kontaktchat stehen vor allem klare Grenzen und Verbote. Stilvorgaben für flüssige Antworten sind zweitrangig.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_39}\n\nEin häufiger Fehler ist, dass das Modell Leistungen möglichst vorteilhaft darstellen will und dabei verbindlich klingt. Auf Fragen wie „Was kostet das?“, „Bis wann können Sie liefern?“ oder „Können Sie das auf jeden Fall umsetzen?“ soll es allgemein Auskunft geben und für eine verbindliche Antwort auf das Formular verweisen.\n\nDafür gibt es auch einen praktischen Grund. Angebote und Liefertermine lassen sich erst nach dem Gespräch mit dem Kunden festlegen. Beschreiben Sie im Prompt, für welche Auskünfte das Team im Betrieb die Verantwortung übernehmen kann.\n\n## Kontaktwege nach ihrem Zweck aufteilen\n\nAuf der Kontaktseite ergänzen sich Chat und Formular. Die folgende Aufteilung erleichtert den Betrieb.\n\n| Kontaktweg | Aufgabe |\n| --- | --- |\n| FAQ | Häufige Fragen direkt auf der Seite beantworten |\n| KI-Chat | Im Gespräch passende Leistungen, Anlaufstellen und Seiten finden |\n| LINE | Kurze Beratungen, Anliegen zu Schools und einfache Rückfragen klären |\n| Formular | Angebote, Projektanfragen, Kooperationen und Bewerbungen mit nachvollziehbarem Verlauf erfassen |\n| Direkte Kontaktdaten | Bei Ergänzungen nach der Formularanfrage oder dringenden Rückfragen anzeigen |\n\nDer Chat kann von Übersichtsseiten wie der [Leistungsübersicht](/services/) zu konkreten Kontaktmöglichkeiten auf der [Kontaktseite](/contact/) führen. Besucher müssen dann nicht erneut selbst nach der passenden Seite suchen.\n\nDas Muster funktioniert auch für Websites, die sich an Unternehmen richten, für Agenturen, Bildungseinrichtungen und den Support von SaaS-Produkten. Wenn der Chat die passenden Seiten und Kontaktwege eingrenzt, lässt er sich leichter einführen.\n\n## Die richtige Sprachversion verlinken\n\nAuf mehrsprachigen Websites müssen sowohl die Sprache der Antwort als auch die Linkziele zur aktuellen Sprachversion passen.\n\nKommt die Frage von einer englischen Seite, antwortet der Chat auf Englisch und verweist zum Beispiel über {ACECORE_KEEP_270acb4d7b12_CODE_40} auf die englischen Leistungen. Auf einer japanischen Seite verwendet er {ACECORE_KEEP_270acb4d7b12_CODE_41}.\n\nEine serverseitige Funktion für die URL-Erzeugung ist zuverlässiger als eine Vorgabe im Prompt.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_42}\n\nWenn Chatantworten auf japanische URLs zurückführen, unterbricht das die Navigation in der gewählten Sprache. Die Grundlagen für Übersetzungen und mehrsprachige Beiträge erklärt [Einen mehrsprachigen Blog mit Sveltia CMS betreiben](/blog/copilot-translation-pipeline/).\n\n## Origin prüfen und Anfragen begrenzen\n\n{ACECORE_KEEP_270acb4d7b12_CODE_43} ist eine öffentliche API. Sie braucht mindestens eine Origin-Prüfung und Limits für Eingabelänge, Gesprächsverlauf und Anfragerate.\n\nEnthält die Anfrage den Header {ACECORE_KEEP_270acb4d7b12_CODE_44}, prüfen Sie, ob der Host der anfragenden Website mit dem Host der API übereinstimmt. So lassen sich unerwünschte Aufrufe von anderen Websites begrenzen.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_45}\n\nAls Einstieg ist ein einfaches IP-basiertes Anfragelimit sinnvoll. In Cloudflare lassen sich Anfragen beispielsweise anhand von {ACECORE_KEEP_270acb4d7b12_CODE_46}, {ACECORE_KEEP_270acb4d7b12_CODE_47} oder {ACECORE_KEEP_270acb4d7b12_CODE_48} zuordnen.\n\nEin Limit im Arbeitsspeicher gilt nicht dauerhaft über mehrere Isolates oder Neustarts hinweg. Für eine kleine Website ist es ein erster Schutz. Bei wachsendem Verkehr sind Cloudflare WAF, Turnstile, KV, D{ACECORE_KEEP_270acb4d7b12_NUMBER_1_49} oder Durable Objects zuverlässiger.\n\nWie sich Inhalte aktualisieren lassen, beschreibt der [Leitfaden zur Einführung von Sveltia CMS](/blog/cms-selection-and-turnstile/). Der Bot-Schutz für Formulare und Kommentare gehört in eine eigene Schicht, etwa mit Turnstile. Ein Beispiel dafür steht in [Eine Kommentarfunktion für einen Astro-Blog mit Cloudflare umsetzen](/blog/cloudflare-only-blog-comments/).\n\n## Markdown-Links über eine Freigabeliste anzeigen\n\nLinks in KI-Antworten erleichtern es, Besucher zu den passenden Leistungen zu führen. Die Anwendung verarbeitet die Markdown-Antwort, bevor sie daraus HTML erzeugt.\n\nDie Chatoberfläche wandelt ausschließlich freigegebene Elemente in DOM-Knoten um.\n\n- Absätze\n- Aufzählungen\n- Fettdruck\n- Inline-Code\n- Markdown-Links\n\nFür Linkziele gelten zusätzliche Einschränkungen.\n\n- Interne Pfade derselben Website wie {ACECORE_KEEP_270acb4d7b12_CODE_50}\n- Der aktuelle Origin\n- {ACECORE_KEEP_270acb4d7b12_CODE_51}\n- Der offizielle LINE-Kanal\n- Bei Bedarf {ACECORE_KEEP_270acb4d7b12_CODE_52}\n- Bei Bedarf {ACECORE_KEEP_270acb4d7b12_CODE_53}\n\nBereinigen Sie die URL immer mit {ACECORE_KEEP_270acb4d7b12_CODE_54}, bevor Sie sie prüfen. Das Modell kann wie in {ACECORE_KEEP_270acb4d7b12_CODE_55} vor und nach dem Linkziel Leerzeichen ausgeben.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_56}\n\nBeschränken Sie die Implementierung auf die Markdown-Elemente, die im Chat gebraucht werden. So bleiben Sicherheitsregeln und Wartung überschaubar. Wenn externe URLs erlaubt sein sollen, verwenden Sie mindestens eine Domain-Freigabeliste und {ACECORE_KEEP_270acb4d7b12_CODE_57}.\n\n## Lokal, in der Vorschau und in Produktion prüfen\n\nDie lokale Astro-Entwicklungsumgebung und die Astro-Vorschau entsprechen nicht vollständig der Laufzeit der Cloudflare Pages Functions. Ohne {ACECORE_KEEP_270acb4d7b12_CODE_58} sind keine KI-Antworten verfügbar. Prüfen Sie in diesem Fall den Ersatzhinweis und die Fehleranzeige der Oberfläche.\n\nPrüfen Sie in der Pages-Vorschau oder in Produktion folgende Punkte.\n\n- {ACECORE_KEEP_270acb4d7b12_CODE_59} lässt sich per POST aufrufen.\n- {ACECORE_KEEP_270acb4d7b12_CODE_60} und {ACECORE_KEEP_270acb4d7b12_CODE_61} sind konfiguriert.\n- Anfragen mit abweichendem Origin werden abgelehnt.\n- Eingabelänge und Anzahl der Nachrichten im Verlauf sind begrenzt.\n- Die Antwort ist in der Sprache der aktuellen Seite.\n- Interne Links führen zur entsprechenden Sprachversion.\n- Die KI macht keine verbindlichen Aussagen zu Angeboten oder Verträgen.\n- E-Mail-Adresse und Telefonnummer erscheinen nur bei Bedarf.\n- Markdown-Links führen ausschließlich zu sicheren URLs.\n\nEine Antwort auf {ACECORE_KEEP_270acb4d7b12_NUMBER_1_62} Frage reicht als Test nicht aus. Prüfen Sie unerwartete und lange Fragen, Anfragen über die englische Website sowie Fragen nach direkten Kontaktdaten oder Preisen jeweils separat.\n\n## Kennzahlen für Protokollierung und Betrieb\n\nPrüfen Sie nach der Veröffentlichung auch die Protokolle des KI-Kontaktchats.\n\nErfassen Sie mindestens folgende Kennzahlen.\n\n- Fehlerquote der API\n- Anzahl der Anfragen, die das Ratenlimit erreicht haben\n- Durchschnittliche Nachrichtenanzahl pro {ACECORE_KEEP_270acb4d7b12_NUMBER_1_63} Anfrage\n- Aufrufe des Formulars oder von LINE aus dem Chat\n- Weiterleitungen zum Formular bei Fragen, die die KI offenlassen musste\n- Nutzung nach Sprachversion\n\nLegen Sie vor dem Speichern von Gesprächsinhalten fest, wie Sie personenbezogene Daten behandeln. Als Einstieg genügt es, Ereignisse und Fehler zu zählen, ohne Gesprächsinhalte zu speichern.\n\n## Abgrenzung zur Weitergabe des Formular-Kontexts\n\nDieser Artikel beschreibt die Architektur des KI-Kontaktchats. Die benachbarte Funktion, die die ausgewählte Dienstleistung von der Leistungsseite an das Formular übergibt, erklärt [Den Kontext eines Service-CTA an das Kontaktformular übergeben](/blog/service-cta-contact-prefill/).\n\nDie beiden Funktionen lösen unterschiedliche Aufgaben.\n\n- KI-Chat: Fragen im Gespräch klären und Besucher sicher zu den passenden Informationen führen.\n- Dienstleistungsbezogener CTA: Die aktuell gelesene Dienstleistung als Kontext an das Formular übergeben.\n\nBeim Chat geht es um KI, API-Grenze, Prompt und sichere Darstellung. Bei der Weitergabe an das Formular stehen dessen Bedienung und die Gestaltung der Kontaktwege im Vordergrund. Getrennte Artikel machen beide Themen leichter verständlich und später leichter intern verlinkbar.\n\n## Zusammenfassung\n\nPlanen Sie die API-Grenze und die Regeln für Antworten, bevor Sie die Chatoberfläche in eine statische Website einbauen.\n\nFolgende Entscheidungen waren für diese Umsetzung besonders hilfreich.\n\n- Die OpenAI API aus einer Cloudflare Pages Function aufrufen.\n- Nur die benötigten Daten an den Endpunkt senden und Verlauf sowie Zeichenzahl begrenzen.\n- Website-Kontext und sprachabhängige URLs serverseitig zusammenstellen.\n- Im Prompt vorgeben, welche Aussagen die KI treffen darf.\n- Formular, LINE und direkte Kontaktdaten für die jeweils passenden Anliegen verwenden.\n- Origin prüfen und Anfragen begrenzen.\n- Markdown-Linkziele vor der Prüfung bereinigen und anhand einer Freigabeliste zulassen.\n\nEin KI-Kontaktchat lässt sich auch auf einer statischen Website umsetzen. Er hilft Besuchern, sicher den passenden nächsten Schritt zu wählen.\n"
+    }
+  },
+  {
+    "kind": "insight",
+    "locale": "ru",
+    "sourcePath": "src/content/insights/astro-ai-contact-chat.md",
+    "result": {
+      "markdown": "---\ntitle: \"Техническая архитектура AI-чата для обращений на сайте Astro\"\ndescription: \"Эталонная архитектура по состоянию на {ACECORE_KEEP_270acb4d7b12_NUMBER_6_1} месяц {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_0} года. Техническое решение для добавления AI-чата для обращений к статическому сайту на Astro + Cloudflare Pages с помощью OpenAI Responses API. Граница API, контекст сайта, управление промптами, URL для разных языков, проверка Origin, ограничение частоты запросов и безопасный вывод Markdown-ссылок рассмотрены так, чтобы решение можно было применить и на других сайтах.\"\ndate: {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_2}-{ACECORE_KEEP_270acb4d7b12_NUMBER_06_3}-{ACECORE_KEEP_270acb4d7b12_NUMBER_07_4}T{ACECORE_KEEP_270acb4d7b12_NUMBER_12_5}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_6}\nlastUpdated: \"{ACECORE_KEEP_270acb4d7b12_NUMBER_2026_7}-{ACECORE_KEEP_270acb4d7b12_NUMBER_11_8}-{ACECORE_KEEP_270acb4d7b12_NUMBER_12_9}T{ACECORE_KEEP_270acb4d7b12_NUMBER_00_10}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_11}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_12}+{ACECORE_KEEP_270acb4d7b12_NUMBER_09_13}:{ACECORE_KEEP_270acb4d7b12_NUMBER_00_14}\"\nauthor: gui\ntags: [\"Технологии\", \"Cloudflare\", \"Веб-сайт\", \"AI\", \"Услуги\"]\nimage: \"/images/insights/covers/astro-ai-contact-chat-cover-v{ACECORE_KEEP_270acb4d7b12_NUMBER_2_15}.webp\"\ncallout:\n  type: info\n  title: Главное в статье\n  text: AI-чат для обращений следует проектировать как небольшое приложение, которое использует опубликованную информацию сайта и направляет посетителя к подходящему следующему шагу, а не как функцию для свободных ответов. Ключ API, промпты, контакты и вывод Markdown контролируются на сервере и с помощью списков разрешённых значений.\nprocessFigure:\n  title: Эталонная архитектура AI-чата для обращений\n  steps:\n    - title: Widget\n      description: Интерфейс чата Astro отправляет только вопрос, выбранный язык и необходимый минимум истории.\n      icon: i-lucide-message-circle\n      accent: brand\n    - title: Function\n      description: Cloudflare Pages Function проверяет ввод и Origin, ограничивает частоту запросов и формирует промпт.\n      icon: i-lucide-shield-check\n      accent: amber\n    - title: Model\n      description: OpenAI Responses API получает опубликованную информацию сайта и контекст диалога, затем возвращает текст ответа.\n      icon: i-lucide-sparkles\n      accent: emerald\n    - title: Renderer\n      description: На клиенте в DOM преобразуется только разрешённый Markdown; ссылки ведут на внутренние страницы или к контактам.\n      icon: i-lucide-code-{ACECORE_KEEP_270acb4d7b12_NUMBER_2_16}\n      accent: slate\ncompareTable:\n  title: Разделение ответственности при внедрении\n  before:\n    label: При реализации всего вместе\n    items:\n      - AI API вызывается напрямую из браузера\n      - Информация сайта, ключ API, интерфейс и вывод ссылок смешаны\n      - AI может давать категоричные ответы о ценах, договорах и сроках\n      - Markdown и URL легко передать в HTML без обработки\n  after:\n    label: При разделении ответственности\n    items:\n      - Ключ API и вызовы модели остаются на сервере\n      - Опубликованная информация сайта управляется как явный контекст\n      - Промпт ограничивает ответы и направляет к контактам\n      - Markdown и URL выводятся по спискам разрешённых значений\nchecklist:\n  title: Проверки при внедрении на другом сайте\n  items:\n    - text: Определить цель чата как помощь с выбором следующего шага, а не полное завершение обращения\n    - text: Создать серверную границу API и не раскрывать ключ в браузере\n    - text: Ограничить информацию для ответов опубликованными материалами сайта\n    - text: Определить темы, по которым AI не должен давать категоричных ответов, включая цены, договоры, сроки и гарантии\n    - text: Установить правила выбора формы, LINE, электронной почты и телефона\n    - text: Формировать URL для каждого языка, сохраняя многоязычную навигацию\n    - text: Добавить проверку Origin, ограничения длины ввода, истории и частоты запросов\n    - text: Проверять Markdown-ссылки по списку разрешённых адресов после удаления пробелов\nlinkCards:\n  - href: /contact/\n    title: Связаться с нами\n    description: Страница с AI-чатом, LINE, формой и прямыми контактами.\n    icon: i-lucide-message-square\n  - href: /insights/cloudflare-pages-security/\n    title: Настройки безопасности Cloudflare Pages\n    description: Статья об основах безопасной раздачи статического сайта, включая CSP и заголовки.\n    icon: i-lucide-shield\n  - href: /blog/cms-selection-and-turnstile/\n    title: Руководство по внедрению Sveltia CMS\n    description: Статья о добавлении интерфейса редактирования CMS к статическому сайту.\n    icon: i-lucide-badge-check\nfaq:\n  title: Частые вопросы\n  items:\n    - question: Можно ли создать AI-чат для обращений без RAG и векторной базы данных?\n      answer: Для небольшого корпоративного сайта уже может быть достаточно передать в промпт структурированное резюме опубликованных страниц. Поисковый индекс или векторную базу можно рассмотреть, когда вырастет число страниц или частота обновлений.\n    - question: Попадает ли ключ OpenAI API в браузер?\n      answer: Нет. Браузер только отправляет вопрос на /api/ai-contact; вызов OpenAI Responses API и управление ключом происходят в Cloudflare Pages Function.\n    - question: Может ли AI свободно добавлять ссылки в ответы?\n      answer: Нет. Разрешены только внутренние пути, текущий origin, acecore.net, официальный LINE и при необходимости ссылки mailto и tel. Перед проверкой безопасности пробелы по краям URL в Markdown-ссылках удаляются.\n---\n\nПри первом запуске AI-чата на статическом сайте ограничьте его ответами на опубликованные FAQ, а официальные запросы и расчёт стоимости направляйте в форму. Серверные подключения проверьте по документации [Cloudflare Pages: Bindings]({ACECORE_KEEP_270acb4d7b12_URL_17}). Приведённая ниже проверка URL — упрощённый исторический пример: при реализации используйте разбор URL и список разрешённых адресов из связанной статьи, а не только проверку начала строки.\n\n> **Дополнение от {ACECORE_KEEP_270acb4d7b12_NUMBER_26_20} числа {ACECORE_KEEP_270acb4d7b12_NUMBER_9_19} месяца {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_18} года:** Ниже приведена эталонная архитектура по состоянию на {ACECORE_KEEP_270acb4d7b12_NUMBER_6_22} месяц {ACECORE_KEEP_270acb4d7b12_NUMBER_2026_21} года. Сейчас {ACECORE_KEEP_270acb4d7b12_CODE_23} в Acecore Systems передаёт запросы из Cloudflare Pages Function через Service Binding общему {ACECORE_KEEP_270acb4d7b12_CODE_24}. Интерфейс получает ответ JSON и показывает готовый текст. Описанный ниже прямой вызов OpenAI Responses API следует рассматривать с учётом того, что текущая реализация Systems изменилась.\n\nДобавить AI-чат для обращений на сайт несложно. При эксплуатации важнее не только возможности модели, но и то, на какие вопросы ей разрешено отвечать, куда направлять посетителей, какие URL показывать и как ограничить расходы на API.\n\nAcecore добавила AI-чат для обращений на статический сайт Astro + Cloudflare Pages. Основа реализации — [PR с AI для обращений и потоком переводов, ограниченным CMS]({ACECORE_KEEP_270acb4d7b12_URL_25}). Позднее безопасный вывод Markdown-ссылок в ответах AI был доработан в [отдельном PR]({ACECORE_KEEP_270acb4d7b12_URL_26}). Подробности вынесены в статью [Техническое решение для безопасного вывода Markdown-ссылок в ответах AI-чата](/blog/ai-chat-markdown-link-safety/).\n\nЗдесь архитектура представлена как решение, которое можно перенести на другие статические сайты. Принцип подходит и для других фронтендов: разделить обязанности клиента, границы API, промпта и компонента вывода.\n\n## Общая архитектура\n\nРешение состоит из {ACECORE_KEEP_270acb4d7b12_NUMBER_3_27} простых слоёв.\n\n| Слой | Роль |\n| --- | --- |\n| Виджет чата | Интерфейс, ввод, выбранный язык, минимальная история и вывод Markdown |\n| {ACECORE_KEEP_270acb4d7b12_CODE_28} | Проверка ввода и Origin, ограничение частоты, создание промпта и вызов OpenAI |\n| OpenAI Responses API | Формирование ответа на основе информации сайта и контекста диалога |\n\nБраузер не вызывает OpenAI API напрямую по {ACECORE_KEEP_270acb4d7b12_NUMBER_3_29} причинам:\n\n- Ключ API не попадает в браузер.\n- Модель, промпт и контекст сайта можно обновлять на сервере.\n- Ограничения длины ввода и частоты, проверка Origin и обработка ошибок сосредоточены в {ACECORE_KEEP_270acb4d7b12_NUMBER_1_30} месте.\n\nВ Astro + Cloudflare Pages границу API можно реализовать как {ACECORE_KEEP_270acb4d7b12_CODE_31} в Cloudflare Pages Functions. В Next.js её заменит Route Handler, а в Hono или Express — API route.\n\n## Минимальный контракт endpoint\n\nВ API чата следует передавать как можно меньше данных.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_32}\n\nМы решили не отправлять в AI-чат имя, адрес электронной почты, телефон, название компании и другие данные из формы. Чат предназначен не для сбора персональной информации, а для помощи посетителю в выборе услуги и способа обращения.\n\nИстория тоже не передаётся целиком: достаточно нескольких последних сообщений, а длина каждого сообщения ограничивается до установленного числа символов на {ACECORE_KEEP_270acb4d7b12_NUMBER_1_33} сообщение. Это помогает сдерживать размер промпта и расходы на API.\n\n## Управление вводом и вызовом на сервере\n\nCloudflare Pages Function выполняет следующие действия вместе.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_34}\n\nГлавное — до вызова OpenAI проверить и сократить входные данные. AI API тарифицирует полученный ввод; если пропускать длинные тексты, ненужную историю и непрерывные обращения со сторонних сайтов, эксплуатация станет нестабильной прежде, чем возникнут функциональные проблемы.\n\nПеременная окружения {ACECORE_KEEP_270acb4d7b12_CODE_35} упрощает смену модели и проверку в preview-среде. {ACECORE_KEEP_270acb4d7b12_CODE_36} хранится исключительно в серверных переменных окружения.\n\nДоставка через Cloudflare Pages и подход к CSP рассмотрены в статье [Безопасная раздача статического сайта с Cloudflare Pages](/insights/cloudflare-pages-security/).\n\n## Явный контекст из информации сайта\n\nДля сайта такого масштаба не обязательно сразу внедрять векторную базу или RAG. Сначала проще и в разработке, и в эксплуатации структурировать основные сведения опубликованного сайта и передать их в промпт.\n\nНапример, сервер может собрать:\n\n- описание компании и услуг;\n- аудиторию каждой услуги, примеры запросов и связанные URL;\n- ответы из FAQ;\n- правила выбора между формой, LINE, электронной почтой и телефоном;\n- темы, по которым AI не должен делать категоричных утверждений, например цены, договоры и сроки;\n- внутренние URL для каждого языка.\n\nВажно передать модели информацию, которую сайт вправе использовать в ответах, а не просить её отвечать на основе предположительно известных ей фактов.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_37}\n\nПока страниц немного, этого достаточно. С ростом числа страниц, частоты обновлений и поисковых требований можно добавить слой поиска с Pagefind, JSON из CMS, D{ACECORE_KEEP_270acb4d7b12_NUMBER_1_38} или Vectorize.\n\n## В промпте важнее правила, чем формулировка ответа\n\nВ промпте для AI-чата нужно прежде всего определить допустимые темы и запреты, а не только попросить модель писать естественным языком.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_39}\n\nТипичная ошибка — модель стремится представить услугу в выгодном свете и отвечает слишком категорично. На вопросы «Сколько это стоит?», «К какому сроку вы выполните работу?» или «Вы точно сможете помочь?» следует дать общую информацию и направить за официальным ответом в форму.\n\nДело не только в юридических вопросах: стоимость и сроки нельзя определить до выяснения требований. В промпте следует указать границы ответов, за которые можно отвечать при эксплуатации, а не просто удобные для продаж формулировки.\n\n## Разделение каналов обращения\n\nAI-чат не заменяет форму. На странице контактов удобно распределить задачи так:\n\n| Канал | Роль |\n| --- | --- |\n| FAQ | Заранее ответить на частые вопросы на странице |\n| AI-чат | В диалоге помочь выбрать услугу, контакт и связанные страницы |\n| LINE | Короткие консультации, обращения о Schools и простые уточнения |\n| Форма | Запросы стоимости, разработка, партнёрство, найм и другие обращения, которые нужно сохранить |\n| Прямые контакты | Дополнения после формы или срочные уточнения |\n\nЕсли AI связывает обзорные материалы вроде [страницы услуг](/services/) с конкретными каналами на [странице контактов](/contact/), посетителю не придётся заново искать нужную страницу.\n\nПодход применим и к BtoB-сайтам, сайтам студий и школ, а также поддержке SaaS. Его проще внедрить, если чат помогает выбрать следующую страницу или канал связи, а не пытается полностью завершить обращение.\r\n\n## Сохранение URL для каждого языка\n\nНа многоязычном сайте нужно учитывать не только язык ответа AI, но и язык URL, на который ведёт ссылка.\n\nНапример, на вопрос с английской страницы следует ответить по-английски и использовать локализованный URL услуги, например {ACECORE_KEEP_270acb4d7b12_CODE_40}. Для японской страницы используется {ACECORE_KEEP_270acb4d7b12_CODE_41}.\n\nНадёжнее определять адрес серверной функцией, чем поручать это промпту.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_42}\n\nЕсли ответ AI вернёт пользователя на японский URL, многоязычная навигация нарушится. Основа работы с многоязычным блогом и переводами описана в статье [Как вести многоязычный блог с Sveltia CMS](/blog/copilot-translation-pipeline/).\n\n## Проверка Origin и ограничение частоты\n\n{ACECORE_KEEP_270acb4d7b12_CODE_43} — публичный API, поэтому следует как минимум проверять Origin и ограничивать длину ввода, историю и частоту запросов.\n\nЕсли заголовок {ACECORE_KEEP_270acb4d7b12_CODE_44} присутствует, проверка Origin сопоставляет хост источника запроса с хостом API. Это снижает риск нежелательных вызовов с других сайтов.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_45}\n\nДля начала полезно даже простое ограничение по IP. В Cloudflare для идентификации можно использовать {ACECORE_KEEP_270acb4d7b12_CODE_46}, {ACECORE_KEEP_270acb4d7b12_CODE_47} или {ACECORE_KEEP_270acb4d7b12_CODE_48}.\n\nОднако ограничение в памяти не сохраняется между несколькими изолятами и перезапусками. Оно подходит как начальная мера для небольшого сайта, но при росте нагрузки надёжнее перейти к Cloudflare WAF, Turnstile, KV, D{ACECORE_KEEP_270acb4d7b12_NUMBER_1_49} или Durable Objects.\n\nОрганизация CMS для обновления контента описана отдельно в [руководстве по внедрению Sveltia CMS](/blog/cms-selection-and-turnstile/). Защиту форм и комментариев от ботов, например с Turnstile, следует рассматривать как отдельный слой. Архитектура комментариев только на Cloudflare приведена в статье [Как добавить комментарии в блог Astro, используя только Cloudflare](/blog/cloudflare-only-blog-comments/).\n\n## Вывод Markdown-ссылок по списку разрешённых адресов\n\nСсылки в ответах AI полезны для навигации по услугам, но передавать Markdown в HTML без обработки не следует.\n\nИнтерфейс чата преобразует в DOM только разрешённые элементы:\n\n- абзацы;\n- маркированные списки;\n- жирный текст;\n- встроенный код;\n- Markdown-ссылки.\n\nДополнительно ограничиваются назначения ссылок:\n\n- пути внутри того же сайта, например {ACECORE_KEEP_270acb4d7b12_CODE_50};\n- текущий origin;\n- {ACECORE_KEEP_270acb4d7b12_CODE_51}\n- официальный LINE;\n- при необходимости {ACECORE_KEEP_270acb4d7b12_CODE_52};\n- при необходимости {ACECORE_KEEP_270acb4d7b12_CODE_53}.\n\nПеред проверкой URL обязательно применяется {ACECORE_KEEP_270acb4d7b12_CODE_54}. Модель может вернуть пробелы вокруг адреса, как в примере {ACECORE_KEEP_270acb4d7b12_CODE_55}.\n\n{ACECORE_KEEP_270acb4d7b12_CODE_56}\n\nПроще надёжно обрабатывать только нужные в чате элементы, чем реализовывать всю спецификацию Markdown. Даже если нужны произвольные внешние URL, следует как минимум использовать список разрешённых доменов и {ACECORE_KEEP_270acb4d7b12_CODE_57}.\n\n## Проверка локально, в preview и в production\n\nЛокальные Astro dev и preview не полностью совпадают со средой Cloudflare Pages Functions. Без {ACECORE_KEEP_270acb4d7b12_CODE_58} ответы AI недоступны, поэтому проверьте резервное состояние интерфейса и отображение ошибок.\n\nВ Pages preview или production проверьте следующее:\n\n- {ACECORE_KEEP_270acb4d7b12_CODE_59} вызывается методом POST;\n- {ACECORE_KEEP_270acb4d7b12_CODE_60} и {ACECORE_KEEP_270acb4d7b12_CODE_61} настроены;\n- запрос с другим Origin отклоняется;\n- длина ввода и число сообщений истории ограничены;\n- язык ответа соответствует выбранному языку интерфейса;\n- внутренние ссылки ведут на URL с нужной локалью;\n- AI не делает категоричных утверждений о стоимости и договорах;\n- электронная почта и телефон не показываются постоянно;\n- Markdown-ссылки преобразуются только в безопасные URL.\n\nПроверки AI-интеграции не завершаются после {ACECORE_KEEP_270acb4d7b12_NUMBER_1_62} успешного вопроса. Отдельно проверьте неожиданные вопросы, длинный ввод, вопросы с английской страницы, запросы прямых контактов и вопросы о цене.\n\n## Журналы и эксплуатационные показатели\n\nПосле публикации AI-чата важно проверять журналы. Как минимум стоит отслеживать:\n\n- долю ошибок API;\n- число срабатываний ограничения частоты;\n- среднее число сообщений на {ACECORE_KEEP_270acb4d7b12_NUMBER_1_63} обращение;\n- число переходов к форме или в LINE;\n- число случаев, когда AI не ответил и направил пользователя к форме;\n- использование по языкам.\n\nЕсли сохраняется содержание разговоров, сначала необходимо определить порядок работы с персональными данными. Безопаснее начать с подсчёта событий и ошибок без сохранения текста сообщений.\n\n## Границы статьи\n\nЗдесь мы рассмотрели только техническую архитектуру AI-чата для обращений. Связанный механизм передачи контекста услуги из её страницы в форму описан отдельно: [Техническое решение для передачи контекста из CTA услуги в форму обращения](/blog/service-cta-contact-prefill/).\n\nТемы различаются:\n\n- AI-чат помогает разобраться в вопросе в диалоге и безопасно направляет пользователя;\n- CTA конкретной услуги передаёт в форму контекст просматриваемой услуги.\n\nПервое касается AI, границы API, промпта и безопасного вывода. Второе — удобства формы и навигации. Раздельное описание проще читать и связывать внутренними ссылками.\n\n## Итоги\n\nПри добавлении AI-чата для обращений к статическому сайту важнее сначала спроектировать границу API и управление ответами, чем интерфейс чата.\n\nВ этой реализации особенно полезны следующие решения:\n\n- вызывать OpenAI API из Cloudflare Pages Function, а не из браузера;\n- минимизировать вход endpoint и ограничить историю и длину сообщений;\n- формировать информацию сайта и URL для каждого языка на сервере;\n- указывать в промпте, какие утверждения AI может и не может делать;\n- разделить роли формы, LINE и прямых контактов;\n- проверять Origin и ограничивать частоту запросов;\n- удалять пробелы вокруг URL и выводить Markdown-ссылки по списку разрешённых адресов.\n\nAI-чат для обращений вполне можно реализовать на статическом сайте. Главное при внедрении — помочь посетителю безопасно выбрать следующее действие.\r\n\r\n\r\n"
+    }
+  }
+]
