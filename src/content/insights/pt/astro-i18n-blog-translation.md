@@ -1,111 +1,111 @@
 ---
-title: "Como fazer um site Astro 7 suportar 9 idiomas ― Tradução do blog e arquitetura multilíngue"
-description: "Para um blog Astro multilíngue, alinhe primeiro texto, metadados e troca de idioma de um artigo representativo, sem links para traduções inexistentes."
+title: "Como oferecer um blog Astro em 9 idiomas — registro da implementação de tradução, URLs e hreflang"
+description: "Registro da implementação de um blog Astro em 9 idiomas. Explica o desenho de URLs com prefixDefaultLocale, a organização dos arquivos de tradução, as condições para não gerar URLs de artigos, sitemap e hreflang em localidades sem tradução, a alternância de exibição com componentes View e os cuidados com imagens OG, CMS e RSS. Distingue a configuração de julho de 2026 (mês 7) das diferenças atuais e apresenta elementos para avaliar uma configuração semelhante."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-25T06:10:55Z"
 author: gui
-tags: ["Tecnologia", "Astro", "i18n", "Site"]
+tags: ["Tecnologia", "Astro", "i18n", "Sites"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
-  title: Fluxo de trabalho multilíngue
+  title: Fluxo de internacionalização
   steps:
-    - title: Base i18n
-      description: Configurar o roteamento i18n nativo do Astro e utilitários de tradução.
+    - title: Criação da infraestrutura de i18n
+      description: Configuração do roteamento i18n integrado do Astro e dos utilitários de tradução.
       icon: i-lucide-globe
-    - title: Tradução de textos da UI
-      description: Traduzir textos do cabeçalho, rodapé e todos os componentes.
+    - title: Tradução dos textos da interface
+      description: Tradução dos textos exibidos no cabeçalho, no rodapé e em todos os componentes.
       icon: i-lucide-languages
-    - title: Tradução de artigos
-      description: Gerar 168 arquivos na implantação inicial (21 artigos × 8 idiomas).
+    - title: Tradução dos artigos do blog
+      description: Na implementação inicial, foram gerados 21 artigos × 8 idiomas = 168 arquivos de tradução.
       icon: i-lucide-file-text
-    - title: CMS e verificação de build
-      description: Configuração multilíngue do Pages CMS e verificação da geração de todas as páginas.
+    - title: Verificação do CMS e do build
+      description: Adaptação do Pages CMS a vários idiomas e verificação do build de todas as páginas.
       icon: i-lucide-check-circle
 compareTable:
-  title: Comparação antes e depois
+  title: Comparação antes e depois da internacionalização
   before:
     label: Apenas japonês
     items:
-      - Apenas 1 idioma (japonês)
-      - 23 artigos de blog
-      - 523 páginas geradas (após suporte multilíngue da UI)
-      - Pages CMS com 1 coleção de blog
-      - Tags e dados de autor apenas em japonês
-      - Apenas 1 feed RSS
+      - Apenas 1 idioma, japonês
+      - 23 artigos no blog
+      - 523 páginas geradas (após a tradução da interface)
+      - 1 coleção de blog no Pages CMS
+      - Tags e dados de autores apenas em japonês
+      - 1 feed RSS
   after:
-    label: 9 idiomas (implantação inicial)
+    label: Suporte a 9 idiomas (na implementação inicial)
     items:
       - Japonês + 8 idiomas (en, zh-cn, es, pt, fr, ko, de, ru)
-      - 23 artigos + 168 traduções = 191 no total
-      - 621 páginas geradas na implantação inicial
-      - Pages CMS com 9 coleções por idioma
-      - 25 tags e dados de autor traduzidos por idioma
-      - Feeds RSS multilíngues (9 idiomas)
+      - 23 artigos do blog + 168 traduções = 191 artigos
+      - 621 páginas geradas (na implementação inicial)
+      - 9 coleções por idioma no Pages CMS
+      - 25 tipos de tags e dados de autores traduzidos para cada idioma
+      - Feeds RSS multilíngues (para 9 idiomas)
 callout:
   type: info
-  title: Idiomas suportados
-  text: "Suporta 9 idiomas: japonês (padrão), inglês, chinês simplificado, espanhol, português, francês, coreano, alemão e russo."
+  title: Idiomas disponíveis
+  text: "Há suporte a 9 idiomas: japonês (padrão), inglês, chinês simplificado, espanhol, português, francês, coreano, alemão e russo."
 statBar:
   items:
     - value: "9"
-      label: Idiomas suportados
+      label: Número de idiomas disponíveis
     - value: "208"
-      label: Artigos traduzidos (em 29 de julho de 2026)
+      label: Artigos traduzidos (em 29/7/2026)
     - value: "652"
-      label: Páginas geradas (em 29 de julho de 2026)
+      label: Páginas geradas (em 29/7/2026)
 faq:
   title: Perguntas frequentes
   items:
-    - question: Por que foram escolhidos 9 idiomas?
-      answer: "Para maximizar o alcance global, cobrimos os principais mercados linguísticos. Inglês, chinês, espanhol e português cobrem a maioria dos usuários da internet, enquanto francês, alemão, russo e coreano complementam os mercados principais restantes."
-    - question: Como a qualidade da tradução é garantida?
-      answer: "Usamos tradução por IA com GitHub Copilot. Primeiro é criada a versão em inglês como idioma intermediário, depois traduzida do inglês para cada idioma alvo para reduzir a variação de qualidade. Os valores de tags no frontmatter são mantidos em japonês, e URLs, blocos de código e caminhos de imagens permanecem inalterados. Esse era o fluxo de julho de 2026. A geração de traduções agora usa OpenAI Batch."
+    - question: Por que escolheram 9 idiomas?
+      answer: "Para maximizar o alcance global, cobrimos as principais comunidades linguísticas do mundo. Inglês, chinês, espanhol e português abrangem grande parte da população da internet, enquanto francês, alemão, russo e coreano complementam os demais mercados principais."
+    - question: Como garantem a qualidade das traduções?
+      answer: "Adotamos a tradução por IA com o GitHub Copilot. Criamos uma versão em inglês como idioma intermediário e, a partir dela, traduzimos para cada idioma, reduzindo as variações de qualidade. Mantemos os valores das tags no frontmatter em japonês e não alteramos URLs, blocos de código nem caminhos de imagens. Esse era o método em 7/2026. A geração atual de traduções usa o OpenAI Batch."
     - question: O que acontece quando um artigo traduzido não existe?
-      answer: "Se o arquivo de tradução de um locale não existe, nenhuma URL localizada do artigo é gerada. O artigo em japonês permanece disponível na URL original, e o seletor de idioma aponta para o índice do blog do locale de destino."
-    - question: É necessário traduzir ao adicionar um novo artigo?
-      answer: "A tradução não é necessária para publicar o artigo em japonês. Adicionar um arquivo Markdown com o mesmo nome ao diretório do idioma habilita a URL, a entrada no sitemap e a relação hreflang desse locale."
+      answer: "Não geramos a URL do artigo para localidades sem arquivo de tradução. A versão japonesa permanece publicada na URL original e, ao trocar de idioma, o usuário é direcionado à lista de artigos do blog da localidade selecionada."
+    - question: É necessário traduzir um artigo novo?
+      answer: "A tradução não é obrigatória para publicar a versão japonesa. Para adicionar uma tradução, coloque um arquivo Markdown com o mesmo nome no diretório do idioma correspondente; a URL do artigo, o sitemap e o hreflang desse idioma passarão a ser gerados."
 ---
 
-Para um blog Astro multilíngue, alinhe primeiro texto, metadados e troca de idioma de um artigo representativo, sem links para traduções inexistentes. Use [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) para definir URLs e amplie UI e artigos separadamente. As contagens e o CMS antigo descrevem a implantação inicial.
+Este é um registro de implementação para quem deseja tornar um blog japonês em Astro multilíngue e operar URLs de artigos traduzidos, troca de idioma, sitemap e hreflang sem comprometer seu funcionamento. Primeiro, alinhe o conteúdo, os metadados e a troca de idioma em um artigo representativo e verifique se os usuários não são direcionados a páginas sem tradução. Use [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) como referência para o desenho das URLs e amplie gradualmente as traduções da interface e dos artigos de forma separada. Os números e a configuração antiga do CMS abaixo são exemplos da época da implementação.
 
-> **Atualização de 26 de setembro de 2026:** Astro 7.1.3, UnoCSS, os números de artigos e a tradução com Copilot abaixo descrevem julho de 2026. As [dependências atuais](https://github.com/acecore-systems/acecore-net/blob/main/package.json) usam Astro ^7.3.3 e Tailwind CSS 4.3.3; a [atualização do fluxo de tradução](/insights/copilot-translation-pipeline/) explica OpenAI Batch. Confira o código e as páginas publicadas antes de considerar atuais os exemplos e números.
+> **Atualização de 26/9/2026:** O Astro 7.1.3, a quantidade de artigos e a tradução com Copilot descritos no texto refletem o estado em 7/2026. A [declaração atual de dependências](https://github.com/acecore-systems/acecore-net/blob/main/package.json) usa Astro ^7.3.3 e Tailwind CSS 4.3.3; o processo de tradução está descrito no [artigo sobre a atualização para OpenAI Batch](/insights/copilot-translation-pipeline/). Consulte o código-fonte atual e as páginas publicadas antes de usar os exemplos de implementação ou os números abaixo como configuração atual.
 
-## Registro de implementação de julho de 2026
+## Registro da implementação em 7/2026
 
-Atualizamos o site oficial da Acecore de apenas japonês para suporte a 9 idiomas. Na implantação inicial, 21 artigos foram traduzidos para 8 idiomas, gerando 168 arquivos. Em 29 de julho de 2026, o repositório contém 29 artigos em japonês e 208 traduções, 237 arquivos de artigo no total, e o build gera 652 páginas. URLs localizadas só são publicadas quando o arquivo de tradução existe.
+Ampliamos o site oficial da Acecore, antes disponível apenas em japonês, para 9 idiomas. Na implementação inicial, traduzimos 21 artigos do blog para 8 idiomas, totalizando 168 traduções. Em 29/7/2026, havia 29 artigos em japonês e 208 traduções, num total de 237 artigos, e o build gerava 652 páginas. Não geramos URLs de artigos para localidades às quais ainda não foi adicionada uma tradução; publicamos apenas as versões em idiomas que existem.
 
-## Estratégia multilíngue
+## Estratégia de internacionalização e desenho das URLs
 
-### Definição do escopo
+A internacionalização foi realizada gradualmente nas 3 áreas abaixo.
 
-Abordamos o suporte multilíngue em três fases:
+1. **Criação da infraestrutura de i18n**: configuração do roteamento i18n integrado do Astro, utilitários de tradução e arquivos JSON de tradução para 9 idiomas
+2. **Tradução dos textos da interface**: textos dos componentes do cabeçalho, rodapé, barra lateral e de todas as páginas
+3. **Tradução dos artigos do blog**: na implementação inicial, 21 artigos foram traduzidos para 8 idiomas (168 arquivos gerados)
 
-1. **Base i18n**: Configuração de roteamento i18n nativo do Astro, utilitários de tradução e arquivos JSON de tradução para 9 idiomas
-2. **Tradução de textos da UI**: Textos de componentes no cabeçalho, rodapé, barra lateral e todas as páginas
-3. **Tradução de artigos**: 21 artigos traduzidos para 8 idiomas na implantação inicial (168 arquivos gerados)
+### Desenho das URLs
 
-### Design de URLs
-
-Adotamos o `prefixDefaultLocale: false` do Astro, servindo japonês na raiz (`/blog/...`) e outros idiomas com prefixos (`/en/blog/...`, `/zh-cn/blog/...`, etc.).
+Adotamos `prefixDefaultLocale: false` do Astro: o japonês é servido diretamente na raiz (`/blog/...`) e os demais idiomas usam prefixos (`/en/blog/...`, `/zh-cn/blog/...` etc.).
 
 ```
-# Japonês (padrão)
+# 日本語（デフォルト）
 /blog/astro-performance-tuning/
 
-# Inglês
+# 英語
 /en/blog/astro-performance-tuning/
 
-# Chinês simplificado
+# 簡体字中国語
 /zh-cn/blog/astro-performance-tuning/
 ```
 
-Usar o mesmo slug em todos os idiomas mantém simples o mapeamento de URLs ao trocar de idioma.
+Como todos os idiomas usam o mesmo slug, o mapeamento de URLs na troca de idioma é simples.
 
-## Implementação da base i18n
+A automação com Copilot para manter o processo de tradução está descrita em [Como operar um blog multilíngue com Sveltia CMS](/insights/copilot-translation-pipeline/).
 
-### Configuração i18n do Astro
+## Configurar a infraestrutura de i18n do Astro
 
-Configura-se o roteamento i18n no `astro.config.mjs`.
+### Configuração de i18n do Astro
+
+Configure o roteamento i18n em `astro.config.mjs`.
 
 ```javascript
 // astro.config.mjs
@@ -122,7 +122,7 @@ export default defineConfig({
 
 ### Utilitários de tradução
 
-Arquivos de configuração, funções utilitárias e arquivos JSON de tradução são consolidados em `src/i18n/`.
+Reunimos os arquivos de configuração, as funções utilitárias e os arquivos JSON de tradução em `src/i18n/`.
 
 ```typescript
 // src/i18n/utils.ts
@@ -131,15 +131,15 @@ export function t(locale: Locale, key: string): string {
 }
 ```
 
-Os arquivos de tradução estão em formato JSON sob `src/i18n/locales/`, gerenciando aproximadamente 100 chaves para navegação, rodapé, UI do blog e metadados.
+Os arquivos de tradução de cada idioma são armazenados em formato JSON em `src/i18n/locales/`. Gerenciamos cerca de 100 chaves para navegação, rodapé, interface do blog, metadados e outros elementos.
 
-### Padrão View Component
+### Padrão de componentes View
 
-A implementação de páginas usa o **Padrão View Component**. Layout e lógica são centralizados em `src/views/`, enquanto os arquivos de rota (`src/pages/`) são wrappers leves que simplesmente passam o locale.
+A implementação das páginas usa o **padrão de componentes View**. Centralizamos o layout e a lógica em `src/views/`, enquanto os arquivos de rota (`src/pages/`) são wrappers simples que apenas passam a localidade.
 
 ```astro
 ---
-// src/pages/[locale]/about.astro (arquivo de rota)
+// src/pages/[locale]/about.astro（ルートファイル）
 import AboutPage from "../../views/AboutPage.astro";
 const { locale } = Astro.params;
 ---
@@ -147,23 +147,23 @@ const { locale } = Astro.params;
 <AboutPage locale={locale} />
 ```
 
-Este design elimina a duplicação de lógica entre a rota japonesa (`/about`) e as rotas multilíngues (`/en/about`).
+Esse desenho elimina a duplicação de lógica entre a rota japonesa (`/about`) e a rota multilíngue (`/en/about`).
 
-## Suporte multilíngue do conteúdo do blog
+## Traduzir artigos do blog em diretórios por idioma
 
 ### Estrutura de diretórios
 
-Os artigos traduzidos são colocados em subdiretórios com código de idioma. O loader glob do Astro os detecta automaticamente de forma recursiva com o padrão `**/*.md`.
+Os artigos traduzidos são armazenados em subdiretórios identificados pelo código do idioma. O carregador glob do Astro os detecta automaticamente de forma recursiva com o padrão `**/*.md`. A [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/) do Astro explica que é possível especificar um globstar como `**/*.md` em `pattern` do carregador `glob()` para carregar Markdown e outros arquivos de diretórios.
 
 ```
 src/content/blog/
-  astro-performance-tuning.md          # Japonês (base)
+  astro-performance-tuning.md          # 日本語（ベース）
   website-renewal.md
   en/
-    astro-performance-tuning.md        # Versão em inglês
+    astro-performance-tuning.md        # 英語版
     website-renewal.md
   zh-cn/
-    astro-performance-tuning.md        # Versão em chinês simplificado
+    astro-performance-tuning.md        # 簡体字中国語版
     website-renewal.md
   es/
     ...
@@ -171,21 +171,21 @@ src/content/blog/
 
 ### Utilitários de resolução de conteúdo
 
-Três funções foram implementadas em `src/utils/blog-i18n.ts`.
+Implementamos 3 funções em `src/utils/blog-i18n.ts`.
 
 ```typescript
-// Determinar se é um artigo base (sem barra no ID = base)
+// ベース記事かどうかを判定（IDにスラッシュが無い = ベース）
 export function isBasePost(post: CollectionEntry<"blog">): boolean {
   return !post.id.includes("/");
 }
 
-// Remover prefixo de locale do ID para obter o slug base
+// IDからロケールプレフィックスを除去してベーススラッグを取得
 export function getBaseSlug(postId: string): string {
   const idx = postId.indexOf("/");
   return idx !== -1 ? postId.slice(idx + 1) : postId;
 }
 
-// Obter a versão localizada de um artigo base (fallback para o original)
+// ベース記事のローカライズ版を取得（無ければ原文にフォールバック）
 export function localizePost(
   post: CollectionEntry<"blog">,
   allPosts: CollectionEntry<"blog">[],
@@ -196,34 +196,34 @@ export function localizePost(
 }
 ```
 
-`localizePost()` ainda retorna o artigo original como fallback de segurança, mas as rotas públicas e listagens usam `isPostAvailableInLocale()` e filtros para selecionar apenas traduções reais. Nenhuma URL localizada é gerada quando a tradução não existe.
+`localizePost()` retorna o original como medida de segurança, mas as rotas públicas e as listas usam `isPostAvailableInLocale()` e filtros para incluir apenas traduções existentes. Assim, URLs de artigos não são geradas para localidades sem tradução.
 
-O ponto chave é **não modificar o schema existente da coleção de conteúdo**. O loader glob do Astro reconhece automaticamente os arquivos em subdiretórios com IDs como `en/astro-performance-tuning`, sem necessidade de alterações de configuração.
+O ponto principal é **não alterar o esquema existente da coleção de conteúdo**. Como o carregador glob do Astro reconhece automaticamente os arquivos nos subdiretórios com IDs como `en/astro-performance-tuning`, não foi necessário alterar a configuração.
 
 ### Regras dos arquivos de tradução
 
-Os arquivos de tradução foram gerados seguindo estas regras:
+Os arquivos de tradução foram gerados de acordo com as seguintes regras:
 
-- As **chaves do frontmatter** permanecem em inglês (`title`, `description`, `date`, etc.)
-- Os **valores de tags** são mantidos em japonês (`['技術', 'Astro']`, etc.)
-- **URLs, caminhos de imagens, blocos de código e HTML** não são modificados
-- **Data e autor** permanecem inalterados
-- **Texto do corpo e valores de texto do frontmatter** (title, description, callout, FAQ, etc.) são traduzidos
+- As **chaves do frontmatter** permanecem em inglês (`title`, `description`, `date` etc.)
+- Os **valores das tags** permanecem em japonês (`['技術', 'Astro']` etc.)
+- **URLs, caminhos de imagens, blocos de código e HTML** não são alterados
+- **Datas e autores** não são alterados
+- O **corpo do texto e os valores textuais do frontmatter** (title, description, callout, FAQ etc.) são traduzidos
 
-### Fluxo de trabalho de tradução
+### Fluxo de tradução
 
-O processo de tradução segue estes passos:
+O processo de tradução funciona da seguinte forma:
 
-1. **Criar inglês como idioma intermediário**: Traduzir do japonês original para o inglês
-2. **Traduzir do inglês para cada idioma**: Expandir do inglês para 7 idiomas
-3. **Processamento em lote**: Processar 5-6 artigos por vez com GitHub Copilot
+1. **Criar uma versão em inglês como idioma intermediário**: traduzir o original japonês para o inglês
+2. **Traduzir do inglês para cada idioma**: usar o inglês como ponto de partida para 7 idiomas
+3. **Processamento em lote**: processar de 5 a 6 artigos por lote com o GitHub Copilot
 
-A tradução em duas etapas (japonês → inglês → idiomas alvo) reduz a variação de qualidade. Passar pelo inglês como idioma intermediário produz qualidade mais estável do que traduzir diretamente do japonês para cada idioma.
+A tradução em 2 etapas, do japonês para o inglês e depois para cada idioma, reduz a variação na qualidade. Usar o inglês como idioma intermediário proporcionou uma qualidade mais consistente do que traduzir diretamente do japonês para cada idioma.
 
 <figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
   <figcaption>
-    <strong id="diagram-astro-i18n-blog-translation">Conferir as traduções com a fonte japonesa atual</strong>
-    <span>As URLs públicas e as referências de busca correspondem somente a arquivos de tradução existentes.</span>
+    <strong id="diagram-astro-i18n-blog-translation">Confira as traduções com a versão mais recente do original japonês antes de publicar</strong>
+    <span>As URLs públicas e as referências para mecanismos de busca correspondem aos arquivos de tradução existentes.</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
@@ -231,47 +231,47 @@ A tradução em duas etapas (japonês → inglês → idiomas alvo) reduz a vari
         <span aria-hidden="true">1</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
       </span>
-      <strong>Atualizar a fonte japonesa</strong>
-      <span>Revise as alterações e identifique quais versões de idioma precisam ser verificadas.</span>
+      <strong>Atualizar o original japonês</strong>
+      <span>Confira as alterações no original japonês e identifique primeiro as versões em outros idiomas afetadas e os artigos que precisam ser revisados.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
         <span aria-hidden="true">2</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
       </span>
-      <strong>Conferir cada tradução</strong>
-      <span>Compare title, description e corpo; gere uma URL de locale somente para um arquivo de tradução existente.</span>
+      <strong>Conferir as traduções de cada localidade</strong>
+      <span>Verifique title, description e o corpo do texto e gere apenas as URLs de localidades que correspondam a arquivos de tradução existentes.</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
         <span aria-hidden="true">3</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
       </span>
-      <strong>Quando não houver arquivo traduzido</strong>
-      <span>Não crie URL, entrada de sitemap ou hreflang para esse locale. Não publique automaticamente uma página sem tradução.</span>
+      <strong>Quando não há arquivo de tradução</strong>
+      <span>Não crie URL, sitemap nem hreflang para essa localidade. Não publique automaticamente páginas sem tradução.</span>
     </li>
   </ol>
 </figure>
 
-## View Components multilíngues
+## Suporte multilíngue dos componentes View
 
-### Implementação do BlogPostPage
+### Implementação de BlogPostPage
 
-A página de artigos do blog obtém a versão locale do conteúdo usando `localizePost()` e a atribui a uma variável de template.
+Na página do artigo, usamos `localizePost()` para obter o conteúdo da localidade e atribuí-lo às variáveis do template.
 
 ```astro
 ---
 // src/views/BlogPostPage.astro
 const localizedPost = localizePost(basePost, allPosts, locale);
-const post = localizedPost; // referências existentes do template funcionam como estão
+const post = localizedPost; // テンプレートの既存参照がそのまま動く
 ---
 ```
 
-Esta abordagem permite o suporte multilíngue sem alterar nenhuma referência a `post.data.title` ou `post.body` no template.
+Essa abordagem permitiu oferecer suporte a vários idiomas sem alterar nenhuma referência a `post.data.title` ou `post.body` no template.
 
-### Implementação de páginas de lista
+### Adaptação das páginas de listagem
 
-Listas do blog, listas de tags, listas de autores e páginas de arquivo filtram apenas artigos base com `isBasePost()`, e depois substituem com versões traduzidas usando `localizePost()` no momento da exibição.
+Nas páginas de listagem do blog, de tags, de autores e de arquivo, usamos `isBasePost()` para filtrar apenas os artigos originais e, na exibição, substituímos cada um pela versão traduzida com `localizePost()`.
 
 ```astro
 ---
@@ -281,25 +281,25 @@ const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale));
 ---
 ```
 
-## Considerações de build
+## Problemas de YAML e imagens OG durante o build
 
 ### Escape no frontmatter YAML
 
-As traduções para francês causaram problemas onde os apóstrofos (`l'atelier`, `qu'on`, etc.) conflitavam com as aspas simples do YAML.
+Nas traduções para o francês, os apóstrofos (`l'atelier`, `qu'on` etc.) entraram em conflito com as aspas simples do YAML.
 
 ```yaml
-# NG: Erro de análise YAML
+# NG：YAML パースエラー
 title: 'Le métavers est plus proche qu'on ne le pense'
 
-# OK: Mudar para aspas duplas
+# OK：ダブルクォートに変更
 title: "Le métavers est plus proche qu'on ne le pense"
 ```
 
-Um script Node.js foi usado para corrigir todos os arquivos em lote. Texto em inglês como `Acecore's` tem o mesmo problema, então o tipo de aspas deve ser considerado ao gerar arquivos de tradução.
+Corrigimos todos os arquivos de uma só vez com um script Node.js. Expressões em inglês como `Acecore's` apresentam o mesmo problema, portanto é preciso prestar atenção ao tipo de aspas ao gerar os arquivos de tradução.
 
-### Filtragem de rotas de imagens OG
+### Filtragem das rotas de imagens OG
 
-`/blog/og/[slug].png.ts` também capturava slugs de artigos traduzidos (`en/aceserver-hijacked`, etc.), causando erros de parâmetros. Foi resolvido filtrando com `isBasePost()`.
+`/blog/og/[slug].png.ts` também capturava os slugs dos artigos traduzidos (`en/aceserver-hijacked` etc.), causando erros de parâmetros. Resolvemos o problema filtrando com `isBasePost()`.
 
 ```typescript
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -312,9 +312,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 ```
 
-## Suporte multilíngue do Pages CMS
+## Suporte multilíngue no Pages CMS
 
-O Pages CMS (`.pages.yml`) só aponta para arquivos diretamente sob o diretório `path` especificado, então os subdiretórios de tradução foram registrados como coleções individuais.
+Como o Pages CMS (`.pages.yml`) considera apenas os arquivos diretamente no diretório especificado por `path`, registramos os subdiretórios de tradução como coleções separadas.
 
 ```yaml
 content:
@@ -327,20 +327,20 @@ content:
   - name: blog-zh-cn
     label: 博客（简体中文）
     path: src/content/blog/zh-cn
-  # ... configurado para cada idioma
+  # ... 各言語ごとに設定
 ```
 
-As labels são escritas em cada idioma para que seja imediatamente claro qual coleção corresponde a qual idioma no CMS.
+Ao escrever os rótulos em cada idioma, é possível identificar de imediato no CMS a qual idioma cada coleção pertence.
 
-## UI de troca de idioma
+## Interface de troca de idioma
 
-Um componente `LanguageSwitcher` foi adicionado ao cabeçalho, fornecendo uma UI de troca de idioma para desktop e mobile. Ao trocar de idioma, os usuários navegam para o locale correspondente da mesma página. Na primeira visita, o `navigator.language` do navegador é detectado para redirecionamento automático.
+Adicionamos o componente `LanguageSwitcher` ao cabeçalho e implementamos uma interface de troca de idioma para desktop e dispositivos móveis. Ao trocar de idioma, o usuário é direcionado à localidade correspondente da mesma página. Na primeira visita, o sistema detecta `navigator.language` do navegador e redireciona automaticamente.
 
 ## Exibição multilíngue de tags
 
-As tags dos artigos mantêm seus slugs em japonês nas URLs enquanto **apenas o nome visível é traduzido**. Isso evita a complexidade de roteamento enquanto mostra as tags no idioma nativo do usuário.
+Adotamos uma abordagem que mantém os slugs japoneses das tags nas URLs e **traduz apenas os nomes exibidos**. Assim, evitamos complicar o roteamento e mostramos as tags aos usuários em seu idioma nativo.
 
-As definições de tags são centralizadas em `src/content/tags/{tagId}.json`, com cada tag contendo um campo `i18n.name`. Isso move a fonte de verdade das traduções de tags dos JSONs de tradução para a coleção de tags.
+As definições das tags estão centralizadas em `src/content/tags/{tagId}.json`, e cada tag possui `i18n.name`. Isso permite que a coleção de tags, em vez dos arquivos JSON de tradução, seja a fonte de referência das traduções de tags.
 
 ```json
 {
@@ -353,18 +353,18 @@ As definições de tags são centralizadas em `src/content/tags/{tagId}.json`, c
 }
 ```
 
-Os cards de artigos, a barra lateral, a listagem de tags e os detalhes de artigos consultam a coleção de tags para alterar o nome exibido, garantindo que a exibição de tags esteja unificada no idioma correspondente.
+Os cartões de artigos, a barra lateral, a lista de tags e os detalhes dos artigos consultam a coleção de tags para alternar os nomes exibidos. Assim, todas as tags são exibidas de forma consistente no idioma da localidade.
 
-## Dados de autor multilíngues
+## Suporte multilíngue aos dados dos autores
 
-Os nomes, biografias e listas de habilidades dos autores também mudam conforme o idioma. Um campo `i18n` foi adicionado ao `src/content/authors/{authorId}.json` para armazenar as traduções de cada idioma.
+Também implementamos a troca por idioma dos nomes, das biografias (bio) e das listas de habilidades dos autores. Adicionamos o campo `i18n` a `src/content/authors/{authorId}.json` para armazenar as traduções de cada idioma.
 
 ```json
 {
   "id": "hatt",
   "name": "ハット",
   "bio": "代表取締役。Web制作・サーバー運用…",
-  "skills": ["TypeScript", "Astro", "..."]
+  "skills": ["TypeScript", "Astro", "..."],
   "i18n": {
     "en": {
       "name": "Hatt",
@@ -375,7 +375,7 @@ Os nomes, biografias e listas de habilidades dos autores também mudam conforme 
 }
 ```
 
-O utilitário `getLocalizedAuthor()` obtém as informações do autor apropriadas para o locale.
+O utilitário `getLocalizedAuthor()` obtém as informações do autor de acordo com a localidade.
 
 ```typescript
 // src/utils/blog-i18n.ts
@@ -385,13 +385,13 @@ export function getLocalizedAuthor(author: Author, locale: Locale) {
 }
 ```
 
-## SEO para site multilíngue
+## Implementação de SEO multilíngue
 
-Para maximizar os benefícios de SEO do suporte multilíngue, implementamos mecanismos para que os motores de busca identifiquem e indexem corretamente cada versão de idioma.
+Para maximizar os benefícios de SEO da internacionalização, criamos mecanismos que permitem aos motores de busca reconhecer e indexar corretamente cada versão linguística.
 
-### Suporte hreflang no sitemap
+### Suporte a hreflang no sitemap
 
-A opção `i18n` do `@astrojs/sitemap` é combinada com um filtro que verifica a existência dos arquivos de tradução. O sitemap inclui apenas versões reais e gera automaticamente suas tags `xhtml:link rel="alternate"`.
+Configuramos a opção `i18n` de `@astrojs/sitemap` e um filtro que verifica a existência dos arquivos de tradução. O sitemap inclui apenas as versões linguísticas existentes e gera automaticamente as tags `xhtml:link rel="alternate"` correspondentes.
 
 ```javascript
 // astro.config.mjs
@@ -416,17 +416,17 @@ sitemap({
 });
 ```
 
-Artigos disponíveis nos 9 idiomas recebem um cluster hreflang de 9 idiomas. Um artigo disponível apenas em japonês permanece como uma entrada japonesa independente, sem links para URLs localizadas inexistentes.
+Para artigos disponíveis em todos os 9 idiomas, são gerados valores hreflang para os 9 idiomas. Para artigos sem tradução, apenas a URL japonesa é incluída; versões inexistentes não aparecem no sitemap nem no hreflang.
 
-### Suporte de idioma em dados estruturados JSON-LD
+### Suporte a idiomas nos dados estruturados JSON-LD
 
-O campo `inLanguage` foi adicionado aos dados estruturados `BlogPosting` dos artigos, informando aos motores de busca em qual idioma cada artigo está escrito.
+Adicionamos o campo `inLanguage` aos dados estruturados `BlogPosting` dos artigos para informar aos motores de busca em que idioma cada artigo está escrito.
 
 ```javascript
-// BlogPostPage.astro (trecho JSON-LD)
+// BlogPostPage.astro（JSON-LD 抜粋）
 {
   "@type": "BlogPosting",
-  "inLanguage": htmlLangMap[locale],  // "ja", "en", "zh-CN", etc.
+  "inLanguage": htmlLangMap[locale],  // "ja", "en", "zh-CN" など
   "headline": post.data.title,
   // ...
 }
@@ -434,7 +434,7 @@ O campo `inLanguage` foi adicionado aos dados estruturados `BlogPosting` dos art
 
 ### Feeds RSS multilíngues
 
-Além do `/rss.xml` em japonês, feeds RSS são gerados para cada versão de idioma (`/en/rss.xml`, `/zh-cn/rss.xml`, etc.). Os títulos e descrições dos feeds são traduzidos por idioma, e a tag `<language>` gera códigos de idioma compatíveis com BCP47.
+Além de `/rss.xml` da versão japonesa, geramos feeds RSS para cada idioma (`/en/rss.xml`, `/zh-cn/rss.xml` etc.). Os títulos e as descrições dos feeds também são traduzidos, e a tag `<language>` fornece um código de idioma compatível com BCP47.
 
 ```typescript
 // src/pages/[locale]/rss.xml.ts
@@ -444,27 +444,27 @@ export const getStaticPaths = () =>
     .map((l) => ({ params: { locale: l } }));
 ```
 
-O `<link rel="alternate" type="application/rss+xml">` no `BaseLayout.astro` também configura automaticamente a URL RSS apropriada para o locale.
+`<link rel="alternate" type="application/rss+xml">` de `BaseLayout.astro` também configura automaticamente a URL do RSS de acordo com a localidade.
 
 ## Resumo
 
-O site usa atualmente os recursos i18n nativos do Astro 7.1.3 para gerar sua versão estática multilíngue.
+Na implementação de 7/2026, usamos os recursos integrados de i18n do Astro 7.1.3 para oferecer suporte a vários idiomas mesmo em um site estático.
 
-- **Base i18n**: Sem prefixo para japonês com `prefixDefaultLocale: false` do Astro
-- **Tradução da UI**: Zero duplicação de lógica com o Padrão View Component
-- **Tradução de conteúdo**: Abordagem de subdiretórios sem alterações de schema
-- **Tradução de tags**: Slugs em japonês nas URLs, nomes visíveis traduzidos por idioma
-- **Tradução de dados de autor**: Bio e habilidades mudam conforme o idioma
-- **SEO**: Hreflang no sitemap, `inLanguage` no JSON-LD, feeds RSS multilíngues
-- **Traduções ausentes**: Nenhuma URL localizada é gerada; o artigo japonês permanece na URL original
-- **Suporte CMS**: Os artigos de cada idioma são editáveis individualmente no Pages CMS
+- **Infraestrutura de i18n**: com `prefixDefaultLocale: false` do Astro, o japonês não usa prefixo
+- **Tradução da interface**: o padrão de componentes View elimina a duplicação de lógica
+- **Tradução de conteúdo**: a organização em subdiretórios não exige alterações no esquema existente
+- **Tradução de tags**: as URLs mantêm os slugs japoneses; apenas os nomes exibidos são traduzidos
+- **Tradução dos dados dos autores**: bio e skills são alternados conforme o idioma
+- **SEO**: hreflang no sitemap, `inLanguage` em JSON-LD e feeds RSS multilíngues
+- **Localidades sem tradução**: URLs de artigos não são geradas e a versão japonesa continua publicada na URL original
+- **Suporte ao CMS**: os artigos de cada idioma podem ser editados separadamente no Pages CMS
 
-Os arquivos de tradução continuarão sendo adicionados gradualmente. Até existir uma tradução, apenas o artigo japonês é publicado; adicionar o arquivo do locale ativa sua URL, entrada no sitemap e relação hreflang.
+Ao adicionar novos artigos, os arquivos de tradução também serão adicionados gradualmente. Até que a tradução esteja concluída, apenas a versão japonesa será publicada; as URLs dos artigos, o sitemap e o hreflang serão ativados para cada localidade à medida que seu arquivo de tradução for adicionado.
 
-## Atualização de 6 de outubro de 2026: idioma e erros nas telas de autenticação
+## Atualização de 6/10/2026: idioma e erros nas telas de autenticação
 
-Além da tradução de artigos públicos, as telas de autenticação precisam oferecer uma seleção de idioma consistente. Em uma alteração anonimizada, o idioma foi escolhido, nesta ordem, entre os valores aceitos de ui_locales, Accept-Language e o idioma padrão; valores não aceitos recebem uma alternativa segura. Erros OIDC conhecidos foram convertidos em mensagens comuns para a interface, enquanto erros desconhecidos não exibem mensagens internas sem tratamento.
+Além da tradução dos artigos publicados, as telas de autenticação também precisam de uma seleção de idioma consistente. Em uma alteração anonimizada, selecionamos, nessa ordem, `ui_locales`, `Accept-Language` ou o idioma padrão, conforme a disponibilidade, com uma alternativa segura para valores não suportados. Os erros conhecidos de OIDC são convertidos em mensagens de exibição comuns, e mesmo erros desconhecidos não exibem mensagens internas brutas.
 
-São conferidos em conjunto os rótulos da página, os erros retornados pela API e as instruções exibidas após o cadastro. A disponibilidade do blog em nove idiomas não significa que todas as telas de autenticação ou o fluxo real de cadastro tenham sido aceitos.
+Verificamos em conjunto os rótulos das páginas, os erros recebidos pela API e as orientações após a conclusão do cadastro. O suporte do blog a 9 idiomas, por si só, não significa que a aceitação de todas as telas de autenticação e dos fluxos reais de cadastro esteja concluída.
 
-O idioma também é mantido durante login, gerenciamento da conta, consentimento e uso de códigos de uso único; locale e state do OIDC são preservados durante as transições. As URLs, o Content-Language e a exibição em telas estreitas foram verificados dentro do escopo confirmado, separadamente da aceitação por usuários de todos os idiomas.
+O idioma também é mantido no login, no gerenciamento de conta, no consentimento e nos códigos de uso único, preservando locale e state do OIDC durante as transições. Distinguimos o escopo verificado em URLs, Content-Language e exibição em telas estreitas da aceitação pelos usuários em todos os idiomas.

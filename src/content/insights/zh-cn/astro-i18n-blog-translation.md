@@ -1,109 +1,109 @@
 ---
-title: "将 Astro 7 网站扩展至9种语言 ― 博客翻译与多语言架构"
-description: "为Astro博客增加多语言时，先在代表文章上对齐正文、元信息与语言切换，确认不会链接到未翻译页面。"
+title: "如何让 Astro 博客支持 9 种语言——翻译、URL 和 hreflang 实现记录"
+description: "本文记录了 Astro 博客支持 9 种语言的实现过程，分别说明截至 2026 年 7 月的配置与当前差异，涵盖使用 prefixDefaultLocale 设计 URL、翻译文件的放置、未翻译 locale 不生成文章 URL、sitemap 和 hreflang 的条件、通过 View 组件切换显示，以及 OG 图片、CMS 和 RSS 的注意事项，为考虑采用相同配置时提供决策依据。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-10-25T06:10:55Z"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
 processFigure:
   title: 多语言化流程
   steps:
-    - title: i18n 基础搭建
-      description: 搭建 Astro 内置 i18n 路由和翻译工具。
+    - title: 构建 i18n 基础
+      description: 配置 Astro 内置的 i18n 路由和翻译工具。
       icon: i-lucide-globe
-    - title: UI 文本翻译
-      description: 将页头、页脚及所有组件的显示文本多语言化。
+    - title: 翻译 UI 文本
+      description: 将页眉、页脚及所有组件的显示文本多语言化。
       icon: i-lucide-languages
-    - title: 博客文章翻译
-      description: 首次上线时生成168个翻译文件（21篇文章 × 8种语言）。
+    - title: 翻译博客文章
+      description: 首次实施时生成 21 篇文章 × 8 种语言＝168 个翻译文件。
       icon: i-lucide-file-text
     - title: CMS 与构建验证
-      description: Pages CMS 多语言配置及全部页面的构建验证。
+      description: 实现 Pages CMS 多语言支持并验证所有页面的构建。
       icon: i-lucide-check-circle
 compareTable:
   title: 多语言化前后对比
   before:
     label: 仅日语
     items:
-      - 仅日语1种语言
-      - 23篇博客文章
-      - 生成523个页面（UI多语言化后）
-      - Pages CMS 仅1个博客集合
-      - 标签和作者数据仅日语
-      - 仅1个 RSS 订阅源
+      - 仅日语 1 种语言
+      - 博客文章 23 篇
+      - 生成 523 个页面（UI 多语言化后）
+      - Pages CMS 中有 1 个博客集合
+      - 标签和作者数据仅有日语
+      - RSS 订阅源 1 个
   after:
-    label: 支持9种语言（首次上线时）
+    label: 支持 9 种语言（首次引入时）
     items:
-      - 日语 + 8种语言（en、zh-cn、es、pt、fr、ko、de、ru）
-      - 23篇博客文章 + 168篇翻译 = 共191篇
-      - 首次上线时生成621个页面
-      - Pages CMS 包含9个语言集合
-      - 25种标签和作者数据翻译至各语言
-      - 多语言 RSS 订阅源（9种语言）
+      - 日语 + 8 种语言（en, zh-cn, es, pt, fr, ko, de, ru）
+      - 博客文章 23 篇 + 翻译 168 篇 = 191 篇
+      - 生成 621 个页面（首次引入时）
+      - Pages CMS 中按语言划分的 9 个集合
+      - 将 25 种标签和作者数据翻译为各语言
+      - 多语言 RSS 订阅源（9 种语言）
 callout:
   type: info
   title: 支持的语言
-  text: "支持9种语言：日语（默认）、英语、简体中文、西班牙语、葡萄牙语、法语、韩语、德语和俄语。"
+  text: "支持日语（默认）、英语、简体中文、西班牙语、葡萄牙语、法语、韩语、德语和俄语，共 9 种语言。"
 statBar:
   items:
     - value: "9"
-      label: 支持语言数
+      label: 支持的语言数量
     - value: "208"
-      label: 翻译文章数（截至2026年7月29日）
+      label: 翻译文章数量（截至 2026 年 7 月 29 日）
     - value: "652"
-      label: 生成页面数（截至2026年7月29日）
+      label: 生成页面数量（截至 2026 年 7 月 29 日）
 faq:
   title: 常见问题
   items:
-    - question: 为什么选择了9种语言？
-      answer: "为了最大化全球覆盖范围，我们选择了全球主要语言市场。英语、中文、西班牙语和葡萄牙语覆盖了大部分互联网用户，法语、德语、俄语和韩语则补充了其余主要市场。"
+    - question: 为什么选择 9 种语言？
+      answer: "为了最大限度地扩大全球覆盖范围，我们涵盖了世界主要语言区。英语、中文、西班牙语和葡萄牙语覆盖了大部分互联网用户，法语、德语、俄语和韩语则补充了其他主要市场。"
     - question: 如何保证翻译质量？
-      answer: "我们使用 GitHub Copilot 进行 AI 翻译。先创建英语版作为中间语言，再从英语翻译至各目标语言，以减少质量波动。frontmatter 中的标签值保持日语不变，URL、代码块和图片路径也保持不变。 这是 2026 年 7 月的方式。当前翻译生成使用 OpenAI Batch。"
-    - question: 如果翻译文章不存在会怎样？
-      answer: "某个 locale 缺少翻译文件时，不会生成该语言的文章 URL。日语文章继续在原 URL 发布，语言切换器会链接到目标 locale 的博客首页。"
-    - question: 添加新文章时需要翻译吗？
-      answer: "发布日语文章不要求同时翻译。在对应语言目录中添加同名 Markdown 文件后，该 locale 的文章 URL、sitemap 条目和 hreflang 关系才会进入生成范围。"
+      answer: "我们使用 GitHub Copilot 进行 AI 翻译。先以英语作为中间语言，再从英语翻译为各语言，以减少翻译质量的差异。frontmatter 的标签值保留日语，URL、代码块和图片路径保持不变。这是截至 2026 年 7 月的方式。目前的翻译生成使用 OpenAI Batch。"
+    - question: 如果翻译文章不存在，会发生什么？
+      answer: "没有翻译文件的 locale 不会生成文章 URL。日语版继续通过原 URL 发布，切换语言时则跳转到目标 locale 的博客列表。"
+    - question: 添加新文章时也必须翻译吗？
+      answer: "发布日语版不要求必须提供翻译。如需添加翻译，只需在对应语言目录中放置同名 Markdown 文件，该语言的文章 URL、sitemap 和 hreflang 就会被纳入生成范围。"
 ---
 
-为Astro博客增加多语言时，先在代表文章上对齐正文、元信息与语言切换，确认不会链接到未翻译页面。以[Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)为URL设计依据，分别扩展UI与文章翻译。下文数量和旧CMS配置属于初次上线案例。
+这是一份实现记录，面向希望使用 Astro 将日语博客多语言化，并可靠地维护翻译文章 URL、语言切换、sitemap 和 hreflang 的读者。首先选取代表性文章，配齐正文、元信息和语言切换，并确认不会将用户引导至未翻译的页面。请以 [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) 为 URL 设计依据，将 UI 翻译与文章翻译分开，逐步扩展。下文的数量和旧 CMS 配置是引入时的实例。
 
-> **2026 年 9 月 26 日更新：** 下文的 Astro 7.1.3、UnoCSS、文章数量和 Copilot 翻译属于 2026 年 7 月的记录。[当前依赖声明](https://github.com/acecore-systems/acecore-net/blob/main/package.json)使用 Astro ^7.3.3 和 Tailwind CSS 4.3.3；[翻译流程更新](/insights/copilot-translation-pipeline/)介绍 OpenAI Batch。将下文代码和数字视为当前配置之前，请核对最新源码和已发布页面。
+> **2026 年 9 月 26 日补充：**正文中的 Astro 7.1.3、文章数量和 Copilot 翻译是截至 2026 年 7 月的记录。[当前依赖声明](https://github.com/acecore-systems/acecore-net/blob/main/package.json)使用 Astro ^7.3.3 和 Tailwind CSS 4.3.3，翻译工作流程已整理在[更新至 OpenAI Batch 的文章](/insights/copilot-translation-pipeline/)中。在将以下实现示例或数值作为当前配置使用之前，请先确认当前源代码和公开页面。
 
-## 2026 年 7 月的实施记录
+## 截至 2026 年 7 月的实现记录
 
-我们将 Acecore 官方网站从仅支持日语升级为支持9种语言。首次上线时将21篇博客文章翻译为8种语言，共生成168个文件。截至2026年7月29日，仓库包含29篇日语文章和208篇翻译，共237个文章文件，构建会生成652个页面。只有存在翻译文件时才发布对应语言的文章 URL。
+我们将 Acecore 官方网站从仅支持日语升级为支持 9 种语言。首次实施时翻译了 21 篇博客文章 × 8 种语言＝168 篇；截至 2026 年 7 月 29 日，共有日语文章 29 篇、翻译文章 208 篇，合计 237 篇，构建输出为 652 个页面。未添加翻译的 locale 不生成文章 URL，只发布实际存在的语言版本。
 
-## 多语言化方针
+## 多语言化方针与 URL 设计
 
-### 范围确定
+多语言化分阶段覆盖了以下 3 个范围。
 
-我们分三个阶段推进多语言化：
-
-1. **i18n 基础搭建**：Astro 内置 i18n 路由配置、翻译工具、9种语言的翻译 JSON 文件
-2. **UI 文本翻译**：页头、页脚、侧边栏及所有页面的组件文本
-3. **博客文章翻译**：首次上线时将21篇文章翻译为8种语言（生成168个文件）
+1. **构建 i18n 基础**：Astro 内置 i18n 路由配置、翻译工具及 9 种语言的翻译 JSON 文件
+2. **翻译 UI 文本**：页眉、页脚、侧边栏及所有页面的组件文本
+3. **翻译博客文章**：首次实施时将 21 篇文章翻译为 8 种语言（生成 168 个文件）
 
 ### URL 设计
 
-采用 Astro 的 `prefixDefaultLocale: false`，日语在根路径（`/blog/...`），其他语言带前缀（`/en/blog/...`、`/zh-cn/blog/...` 等）。
+采用 Astro 的 `prefixDefaultLocale: false`，日语直接位于根路径下（`/blog/...`），其他语言则通过带前缀的路径提供（如 `/en/blog/...`、`/zh-cn/blog/...`）。
 
 ```
-# 日语（默认）
+# 日本語（デフォルト）
 /blog/astro-performance-tuning/
 
-# 英语
+# 英語
 /en/blog/astro-performance-tuning/
 
-# 简体中文
+# 簡体字中国語
 /zh-cn/blog/astro-performance-tuning/
 ```
 
-所有语言使用相同的 slug，使得语言切换时的 URL 映射非常简单。
+所有语言使用相同的 slug，因此切换语言时的 URL 对应关系很简单。
 
-## i18n 基础实现
+为了持续开展翻译工作而使用的 Copilot 自动化，已整理在[如何使用 Sveltia CMS 运营多语言博客](/insights/copilot-translation-pipeline/)中。
 
-### Astro i18n 配置
+## 配置 Astro 的 i18n 基础
+
+### Astro 的 i18n 配置
 
 在 `astro.config.mjs` 中配置 i18n 路由。
 
@@ -122,7 +122,7 @@ export default defineConfig({
 
 ### 翻译工具
 
-配置文件、工具函数和翻译 JSON 文件集中在 `src/i18n/` 目录下。
+我们将配置文件、工具函数和翻译 JSON 集中放在 `src/i18n/` 中。
 
 ```typescript
 // src/i18n/utils.ts
@@ -131,15 +131,15 @@ export function t(locale: Locale, key: string): string {
 }
 ```
 
-翻译文件以 JSON 格式存放在 `src/i18n/locales/` 下，管理着导航、页脚、博客 UI 和元数据等约100个键。
+各语言的翻译文件以 JSON 格式放在 `src/i18n/locales/` 中，管理导航、页脚、博客 UI、元信息等约 100 个键。
 
 ### View 组件模式
 
-页面实现采用 **View 组件模式**。布局和逻辑集中在 `src/views/` 中，路由文件（`src/pages/`）仅作为传递 locale 的轻量包装器。
+页面实现采用 **View 组件模式**。将布局和逻辑集中在 `src/views/` 中，路由文件（`src/pages/`）则作为只负责传递 locale 的轻量包装层。
 
 ```astro
 ---
-// src/pages/[locale]/about.astro（路由文件）
+// src/pages/[locale]/about.astro（ルートファイル）
 import AboutPage from "../../views/AboutPage.astro";
 const { locale } = Astro.params;
 ---
@@ -147,23 +147,23 @@ const { locale } = Astro.params;
 <AboutPage locale={locale} />
 ```
 
-这种设计消除了日语路由（`/about`）和多语言路由（`/en/about`）之间的逻辑重复。
+通过这种设计，日语路由（`/about`）和多语言路由（`/en/about`）之间的逻辑重复为零。
 
-## 博客内容多语言化
+## 按语言目录翻译博客文章
 
 ### 目录结构
 
-翻译文章放置在语言代码子目录中。Astro 的 glob 加载器通过 `**/*.md` 模式自动递归检测。
+翻译文章放在以语言代码命名的子目录中。Astro 的 glob 加载器使用 `**/*.md` 模式自动递归查找。Astro 的 [Content Loader API](https://docs.astro.build/en/reference/content-loader-reference/) 说明，可以在 `glob()` 加载器的 `pattern` 中指定类似 `**/*.md` 的 globstar，从目录加载 Markdown 等文件。
 
 ```
 src/content/blog/
-  astro-performance-tuning.md          # 日语（基础）
+  astro-performance-tuning.md          # 日本語（ベース）
   website-renewal.md
   en/
-    astro-performance-tuning.md        # 英语版
+    astro-performance-tuning.md        # 英語版
     website-renewal.md
   zh-cn/
-    astro-performance-tuning.md        # 简体中文版
+    astro-performance-tuning.md        # 簡体字中国語版
     website-renewal.md
   es/
     ...
@@ -171,21 +171,21 @@ src/content/blog/
 
 ### 内容解析工具
 
-在 `src/utils/blog-i18n.ts` 中实现了3个函数。
+我们在 `src/utils/blog-i18n.ts` 中实现了 3 个函数。
 
 ```typescript
-// 判断是否为基础文章（ID中无斜杠 = 基础）
+// ベース記事かどうかを判定（IDにスラッシュが無い = ベース）
 export function isBasePost(post: CollectionEntry<"blog">): boolean {
   return !post.id.includes("/");
 }
 
-// 从ID中移除 locale 前缀获取基础 slug
+// IDからロケールプレフィックスを除去してベーススラッグを取得
 export function getBaseSlug(postId: string): string {
   const idx = postId.indexOf("/");
   return idx !== -1 ? postId.slice(idx + 1) : postId;
 }
 
-// 获取基础文章的本地化版本（没有则回退到原文）
+// ベース記事のローカライズ版を取得（無ければ原文にフォールバック）
 export function localizePost(
   post: CollectionEntry<"blog">,
   allPosts: CollectionEntry<"blog">[],
@@ -196,34 +196,34 @@ export function localizePost(
 }
 ```
 
-`localizePost()` 本身仍会把日语原文作为安全回退，但公开路由和列表通过 `isPostAvailableInLocale()` 及过滤器只选择实际存在的翻译。缺少翻译时不会生成本地化文章 URL。
+`localizePost()` 本身会作为安全措施返回原文，但公开路由和列表通过 `isPostAvailableInLocale()` 与过滤器只处理实际存在的翻译，因此不会生成未翻译 locale 的文章 URL。
 
-关键在于**不修改现有的内容集合 schema**。Astro 的 glob 加载器会自动识别子目录中的文件，生成类似 `en/astro-performance-tuning` 的 ID，无需更改配置。
+重点是**不修改现有内容集合的 schema**。Astro 的 glob 加载器会自动以类似 `en/astro-performance-tuning` 的 ID 识别子目录中的文件，因此无需更改配置。
 
 ### 翻译文件规则
 
-翻译文件遵循以下规则生成：
+翻译文件按以下规则生成。
 
-- **frontmatter 键名**保持英文（`title`、`description`、`date` 等）
-- **标签值**保持日语不变（`['技術', 'Astro']` 等）
-- **URL、图片路径、代码块和 HTML** 不修改
+- **frontmatter 的键**保留英文（如 `title`、`description`、`date`）
+- **标签值**保留日语（如 `['技術', 'Astro']`）
+- **URL、图片路径、代码块和 HTML**保持不变
 - **日期和作者**保持不变
-- **正文和 frontmatter 文本值**（title、description、callout、FAQ 等）进行翻译
+- 翻译**正文和 frontmatter 的文本值**（title、description、callout、FAQ 等）
 
-### 翻译工作流
+### 翻译工作流程
 
-翻译流程如下：
+翻译流程如下。
 
-1. **创建英语作为中间语言**：从日语原文翻译为英语
-2. **从英语翻译至各语言**：以英语为起点扩展至7种语言
-3. **批量处理**：使用 GitHub Copilot 每次处理5-6篇文章
+1. **创建英文版作为中间语言**：将日语原文翻译为英语
+2. **从英文版翻译为各语言**：以英语为起点扩展至 7 种语言
+3. **批量处理**：使用 GitHub Copilot，每批处理 5～6 篇文章
 
-日语→英语→目标语言的两阶段翻译减少了质量波动。通过英语作为中间语言，比直接从日语翻译至各语言能获得更稳定的质量。
+通过日语→英语→各语言的 2 阶段翻译，减少翻译质量的差异。与直接从日语翻译为各语言相比，以英语作为中间语言获得了更稳定的质量。
 
 <figure class="article-diagram" data-layout="branches" data-tone="teal" data-count="3" aria-labelledby="diagram-astro-i18n-blog-translation">
   <figcaption>
-    <strong id="diagram-astro-i18n-blog-translation">发布前将译文与最新日文 source 对照</strong>
-    <span>公开 URL 和搜索引擎引用仅对应实际存在的译文文件。</span>
+    <strong id="diagram-astro-i18n-blog-translation">将翻译与最新日语源文件核对后发布</strong>
+    <span>公开 URL 和供搜索使用的引用与实际存在的翻译文件保持一致。</span>
   </figcaption>
   <ol class="article-diagram__nodes">
     <li>
@@ -231,47 +231,47 @@ export function localizePost(
         <span aria-hidden="true">1</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M9 12h6 M9 16h6"/></svg>
       </span>
-      <strong>更新日文 source</strong>
-      <span>检查改动，找出需要复核的语言版本。</span>
+      <strong>更新日语源文件</strong>
+      <span>确认日语源文件的变更，先确定受影响的语言版本及需要重新检查的文章范围。</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
         <span aria-hidden="true">2</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"/></svg>
       </span>
-      <strong>核对各语言译文</strong>
-      <span>对照 title、description 与正文；仅为实际存在的译文文件生成 locale URL。</span>
+      <strong>核对各 locale 的翻译</strong>
+      <span>检查 title、description 和正文，只生成与现有翻译文件对应的 locale URL。</span>
     </li>
     <li>
       <span class="article-diagram__symbol">
         <span aria-hidden="true">3</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v5h5 M8 16l8-8"/></svg>
       </span>
-      <strong>没有译文文件</strong>
-      <span>不创建该语言的 URL、sitemap 条目或 hreflang；不自动发布未翻译页面。</span>
+      <strong>没有翻译文件时</strong>
+      <span>不生成该 locale 的 URL、sitemap 和 hreflang，也不自动发布未翻译页面。</span>
     </li>
   </ol>
 </figure>
 
 ## View 组件的多语言支持
 
-### BlogPostPage 实现
+### BlogPostPage 的实现
 
-博客文章页面使用 `localizePost()` 获取对应 locale 版本的内容，并赋值给模板变量。
+在博客文章页面中，通过 `localizePost()` 获取对应 locale 的内容，并赋值给模板变量。
 
 ```astro
 ---
 // src/views/BlogPostPage.astro
 const localizedPost = localizePost(basePost, allPosts, locale);
-const post = localizedPost; // 现有模板引用直接可用
+const post = localizedPost; // テンプレートの既存参照がそのまま動く
 ---
 ```
 
-这种方法无需更改模板中对 `post.data.title` 或 `post.body` 的任何引用即可实现多语言支持。
+通过这种方法，无需更改模板中对 `post.data.title` 和 `post.body` 的引用，即可实现多语言支持。
 
-### 列表页面实现
+### 列表页面的支持
 
-博客列表、标签列表、作者列表和归档页面使用 `isBasePost()` 仅过滤基础文章，然后在显示时通过 `localizePost()` 替换为翻译版本。
+在博客列表、标签列表、作者列表和归档页面中，使用 `isBasePost()` 筛选出基础文章，显示时再通过 `localizePost()` 替换为翻译版本。
 
 ```astro
 ---
@@ -281,25 +281,25 @@ const displayPosts = basePosts.map((p) => localizePost(p, allPosts, locale));
 ---
 ```
 
-## 构建注意事项
+## 构建时遇到的 YAML 和 OG 图片问题
 
-### YAML frontmatter 转义
+### YAML frontmatter 的转义
 
-法语翻译中撇号（`l'atelier`、`qu'on` 等）与 YAML 单引号冲突导致问题。
+法语翻译中的撇号（如 `l'atelier`、`qu'on`）与 YAML 单引号发生冲突。
 
 ```yaml
-# NG：YAML 解析错误
+# NG：YAML パースエラー
 title: 'Le métavers est plus proche qu'on ne le pense'
 
-# OK：改用双引号
+# OK：ダブルクォートに変更
 title: "Le métavers est plus proche qu'on ne le pense"
 ```
 
-使用 Node.js 脚本批量修复了所有文件。英语文本如 `Acecore's` 也存在同样的问题，因此生成翻译文件时需注意引号类型。
+我们使用 Node.js 脚本批量修复了所有文件。英语中的 `Acecore's` 等也有类似问题，因此生成翻译文件时需要注意引号类型。
 
-### OG 图像路由过滤
+### OG 图片路由的过滤
 
-`/blog/og/[slug].png.ts` 也会捕获翻译文章的 slug（`en/aceserver-hijacked` 等），导致参数错误。通过 `isBasePost()` 过滤解决。
+`/blog/og/[slug].png.ts` 也匹配到了翻译文章的 slug（如 `en/aceserver-hijacked`），导致参数错误。通过 `isBasePost()` 过滤后解决了问题。
 
 ```typescript
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -312,9 +312,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 ```
 
-## Pages CMS 多语言支持
+## Pages CMS 的多语言支持
 
-Pages CMS（`.pages.yml`）仅针对指定 `path` 目录下的直接文件，因此翻译子目录需作为独立集合注册。
+由于 Pages CMS（`.pages.yml`）仅处理 `path` 指定目录下的直接文件，我们将翻译子目录分别注册为独立集合。
 
 ```yaml
 content:
@@ -327,20 +327,20 @@ content:
   - name: blog-zh-cn
     label: 博客（简体中文）
     path: src/content/blog/zh-cn
-  # ... 每种语言单独配置
+  # ... 各言語ごとに設定
 ```
 
-标签使用各语言显示，以便在 CMS 中一目了然地识别每个集合对应的语言。
+通过使用各语言编写标签，可以在 CMS 中一眼看出每个集合对应的语言。
 
 ## 语言切换 UI
 
-在页头添加了 `LanguageSwitcher` 组件，提供桌面端和移动端均可使用的语言切换 UI。切换语言时跳转到同一页面的对应语言版本，首次访问时检测浏览器的 `navigator.language` 进行自动重定向。
+我们在页眉中添加了 `LanguageSwitcher` 组件，实现同时适用于桌面端和移动端的语言切换 UI。切换语言时跳转至同一页面对应的 locale；首次访问时则检测浏览器的 `navigator.language` 并自动重定向。
 
-## 标签多语言显示
+## 标签的多语言显示
 
-文章标签在 URL 中保持日语 slug，**仅翻译显示名称**。这避免了路由复杂化，同时让用户看到母语显示的标签。
+文章标签在 URL 中继续使用日语 slug，**仅翻译显示名称**。这样既能避免路由变得复杂，也能让用户以母语看到标签。
 
-标签定义集中在 `src/content/tags/{tagId}.json` 中，每个标签持有 `i18n.name` 字段。这将标签翻译的唯一真实来源从翻译 JSON 迁移至标签 collection。
+标签定义集中在 `src/content/tags/{tagId}.json` 中，每个标签都具有 `i18n.name`。这样可以将标签翻译的唯一可信来源从翻译 JSON 转移到标签集合。
 
 ```json
 {
@@ -353,18 +353,18 @@ content:
 }
 ```
 
-文章卡片、侧边栏、标签列表和文章详情页通过引用标签 collection 切换显示名称，确保所有标签显示统一为对应语言。
+文章卡片、侧边栏、标签列表和文章详情均引用 tags collection 切换显示名称，所有标签显示都统一使用对应 locale 的语言。
 
-## 作者数据多语言支持
+## 作者数据的多语言支持
 
-作者姓名、简介（bio）和技能列表也实现了按语言切换。在 `src/content/authors/{authorId}.json` 中添加了 `i18n` 字段，保存各语言的翻译。
+我们还引入了按语言切换作者姓名、个人简介（bio）和技能列表的机制。在 `src/content/authors/{authorId}.json` 中添加 `i18n` 字段，保存各语言的翻译。
 
 ```json
 {
   "id": "hatt",
   "name": "ハット",
   "bio": "代表取締役。Web制作・サーバー運用…",
-  "skills": ["TypeScript", "Astro", "..."]
+  "skills": ["TypeScript", "Astro", "..."],
   "i18n": {
     "en": {
       "name": "Hatt",
@@ -375,7 +375,7 @@ content:
 }
 ```
 
-`getLocalizedAuthor()` 工具函数根据 locale 获取对应的作者信息。
+使用 `getLocalizedAuthor()` 工具获取对应 locale 的作者信息。
 
 ```typescript
 // src/utils/blog-i18n.ts
@@ -385,13 +385,13 @@ export function getLocalizedAuthor(author: Author, locale: Locale) {
 }
 ```
 
-## 多语言网站 SEO 优化
+## 多语言 SEO 的实现
 
-为了最大化多语言化的 SEO 优势，我们建立了让搜索引擎正确识别和索引各语言版本的机制。
+为了最大化多语言化的 SEO 效益，我们配置了让搜索引擎正确识别和索引各语言版本的机制。
 
-### 站点地图 hreflang 支持
+### 站点地图的 hreflang 支持
 
-将 `@astrojs/sitemap` 的 `i18n` 选项与检查翻译文件是否存在的过滤器配合使用。sitemap 只收录实际存在的语言版本，并自动输出对应的 `xhtml:link rel="alternate"` 标签。
+我们配置了 `@astrojs/sitemap` 的 `i18n` 选项，以及检查翻译文件是否存在的过滤器。站点地图只收录实际存在的语言版本，并自动输出对应的 `xhtml:link rel="alternate"` 标签。
 
 ```javascript
 // astro.config.mjs
@@ -416,17 +416,17 @@ sitemap({
 });
 ```
 
-同时存在9种语言的文章会生成包含9种语言的 hreflang 集群。只有日语版本的文章会保留为独立的日语 sitemap 条目，不会链接到不存在的本地化 URL。
+对于 9 种语言版本全部存在的文章，会输出 9 种语言的 hreflang。没有翻译的文章只收录日语 URL，不会在 sitemap 或 hreflang 中包含不存在的语言版本。
 
-### JSON-LD 结构化数据语言支持
+### JSON-LD 结构化数据的语言支持
 
-在博客文章的 `BlogPosting` 结构化数据中添加了 `inLanguage` 字段，告知搜索引擎每篇文章的语言。
+我们在博客文章的 `BlogPosting` 结构化数据中添加 `inLanguage` 字段，告知搜索引擎各篇文章使用的语言。
 
 ```javascript
-// BlogPostPage.astro（JSON-LD 摘录）
+// BlogPostPage.astro（JSON-LD 抜粋）
 {
   "@type": "BlogPosting",
-  "inLanguage": htmlLangMap[locale],  // "ja"、"en"、"zh-CN" 等
+  "inLanguage": htmlLangMap[locale],  // "ja", "en", "zh-CN" など
   "headline": post.data.title,
   // ...
 }
@@ -434,7 +434,7 @@ sitemap({
 
 ### 多语言 RSS 订阅源
 
-除了日语版的 `/rss.xml`，还为每种语言生成了 RSS 订阅源（`/en/rss.xml`、`/zh-cn/rss.xml` 等）。订阅源的标题和描述也翻译为各语言，`<language>` 标签输出符合 BCP47 标准的语言代码。
+除了日语版的 `/rss.xml`，我们还生成各语言的 RSS 订阅源（如 `/en/rss.xml`、`/zh-cn/rss.xml`）。订阅源的标题和描述也翻译为各语言，并通过 `<language>` 标签输出符合 BCP47 的语言代码。
 
 ```typescript
 // src/pages/[locale]/rss.xml.ts
@@ -444,27 +444,27 @@ export const getStaticPaths = () =>
     .map((l) => ({ params: { locale: l } }));
 ```
 
-`BaseLayout.astro` 中的 `<link rel="alternate" type="application/rss+xml">` 也会根据 locale 自动设置相应的 RSS URL。
+`BaseLayout.astro` 的 `<link rel="alternate" type="application/rss+xml">` 也会根据 locale 自动设置 RSS URL。
 
 ## 总结
 
-网站目前使用 Astro 7.1.3 的内置 i18n 功能生成多语言静态页面。
+在截至 2026 年 7 月的实现中，通过利用 Astro 7.1.3 内置的 i18n 功能，静态网站也实现了多语言支持。
 
-- **i18n 基础**：使用 Astro 的 `prefixDefaultLocale: false`，日语无前缀
+- **i18n 基础**：使用 Astro 的 `prefixDefaultLocale: false`，日语不带前缀
 - **UI 翻译**：通过 View 组件模式实现零逻辑重复
-- **内容翻译**：子目录方式，无需修改现有 schema
-- **标签翻译**：URL 保持日语 slug，仅翻译显示名称
-- **作者数据翻译**：bio 和 skills 按语言切换
-- **SEO 优化**：站点地图 hreflang、JSON-LD `inLanguage`、多语言 RSS 订阅源
-- **缺少翻译时**：不生成本地化文章 URL，日语文章继续在原 URL 发布
-- **CMS 支持**：各语言的文章可在 Pages CMS 中独立编辑
+- **内容翻译**：采用子目录方式，无需修改现有 schema
+- **标签翻译**：URL 保留日语 slug，仅将显示名称翻译为各语言
+- **作者数据翻译**：按语言切换 bio 和 skills
+- **SEO 措施**：站点地图 hreflang、JSON-LD `inLanguage` 和多语言 RSS 订阅源
+- **未翻译的 locale**：不生成文章 URL，日语版继续通过原 URL 发布
+- **CMS 支持**：可在 Pages CMS 中分别编辑各语言的文章
 
-翻译文件今后仍会逐步添加。在翻译存在之前只发布日语文章；添加 locale 文件后再启用该语言的文章 URL、sitemap 条目和 hreflang 关系。
+今后添加新文章时，也会陆续添加翻译文件。在翻译完成前只发布日语版，并在添加翻译文件的 locale 中启用文章 URL、sitemap 和 hreflang。
 
-## 2026年10月6日补充：认证界面的语言与错误
+## 2026 年 10 月 6 日补充：认证界面的语言与错误
 
-除了公开文章翻译，认证界面也需要一致的语言选择。匿名化的改进按受支持的 `ui_locales`、`Accept-Language`、默认语言的顺序选择，对不支持的值采用安全fallback。把已知OIDC错误转换为统一的用户提示；未知错误也不显示原始内部消息。
+除了翻译公开文章，认证界面也需要一致的语言选择。在经过匿名化处理的改造中，我们依次选择受支持的 `ui_locales`、`Accept-Language` 和默认语言，并为不受支持的值提供安全的回退机制。已知的 OIDC 错误会转换为统一的显示文本，即使遇到未知错误，也不会显示未经处理的内部消息。
 
-页面标签、API错误、注册完成后的提示要一起检查。博客支持九种语言并不代表所有认证界面或实际注册路径都已完成受验。
+我们会一并检查页面标签、通过 API 返回的错误以及注册完成后的提示。博客支持 9 种语言，并不意味着所有认证界面和实际注册路径都已完成验收。
 
-登录、账户管理、同意与一次性代码都延续所选语言，在OIDC跳转中保留locale和state。已检查的URL、Content-Language及窄屏显示，与所有语言用户的实际受验分别记录。
+登录、账户管理、授权同意和一次性验证码流程也会继承语言设置，并在跳转过程中保留 OIDC 的 locale 和 state。我们会区分已结合 URL、Content-Language 和窄屏显示进行检查的范围，与所有语言的用户验收。
