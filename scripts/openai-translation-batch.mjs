@@ -1580,7 +1580,7 @@ function writeCollectedOutputs({ batchId, hasChanges, bodyPath, processed }) {
   if (processed && batchId) writeOutput("marker_path", writeMarker(batchId));
 }
 
-async function collectBatch(options) {
+export async function collectBatch(options) {
   const currentSourceHash = calculateTranslationSourceHash(process.cwd());
   const translationsCurrent = areTranslationsCurrent(currentSourceHash);
   const pulls = await closeStalePullRequests(currentSourceHash);
@@ -1633,26 +1633,34 @@ async function collectBatch(options) {
     return;
   }
 
-  if (options.processedBatches.has(batch.id)) {
+  {
     const owner = (process.env.GITHUB_REPOSITORY ?? "").split("/")[0];
     const head = encodeURIComponent(`${owner}:translation/openai/${batch.id}`);
     const previousPulls = await githubRequest(
       `/pulls?state=all&head=${head}&per_page=100`,
     );
-    if (!Array.isArray(previousPulls)) {
+    if (
+      !Array.isArray(previousPulls) &&
+      (previousPulls !== null || options.processedBatches.has(batch.id))
+    ) {
       throw new Error(
         "Cannot verify whether the processed Batch already has a translation PR",
       );
     }
     if (
-      previousPulls.some(
+      (previousPulls ?? []).some(
         (pull) =>
           pull?.head?.ref === `translation/openai/${batch.id}` &&
-          isTranslationPullRequestCurrent(pull.body, currentSourceHash),
+          isTranslationPullRequestCurrent(pull.body, currentSourceHash) &&
+          (options.processedBatches.has(batch.id) ||
+            (pull.state === "closed" &&
+              Boolean(pull.merged_at) &&
+              pull?.head?.repo?.full_name === process.env.GITHUB_REPOSITORY &&
+              pull?.base?.ref === "main")),
       )
     ) {
       console.log(
-        `Skipped processed Batch ${batch.id}; its translation PR already exists.`,
+        `Skipped Batch ${batch.id}; a matching translation PR already exists or was merged.`,
       );
       writeCollectedOutputs({
         batchId: batch.id,

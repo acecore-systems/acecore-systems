@@ -21,6 +21,7 @@ import {
   translatedLocales,
 } from "../scripts/i18n-source-hash.mjs";
 import { createTranslationState } from "../scripts/pending-insights.mjs";
+import { hashText } from "../scripts/stage-seo-translation.mjs";
 import {
   calculateContentNodeHash,
   createPendingContentState,
@@ -355,4 +356,55 @@ test("既存の料金・サービスは配列位置を保ち、英語のラベ�
     isContentUnavailable("/pricing/items/0", "en", state.pendingContent),
     false,
   );
+});
+
+test("未更新の既存SEO翻訳は翻訳状態ハッシュでも旧原文を使う", () => {
+  const target = fixture();
+  try {
+    const slug = "astro-i18n-blog-translation";
+    const source = `src/content/insights/${slug}.md`;
+    const previous = readFileSync(join(target, source), "utf8");
+    const current = previous + "\nUpdated SEO source.\n";
+    writeFileSync(join(target, source), current);
+    const translations = Object.fromEntries(
+      translatedLocales.map((locale) => [
+        locale,
+        hashText(
+          readFileSync(
+            join(target, `src/content/insights/${locale}/${slug}.md`),
+            "utf8",
+          ),
+        ),
+      ]),
+    );
+    writeJson(target, "src/i18n/pending-seo-revisions.json", {
+      version: 1,
+      revisions: {
+        [source]: {
+          previousSource: previous,
+          previousSourceHash: hashText(previous),
+          sourceHash: hashText(current),
+          translations,
+        },
+      },
+    });
+    const previousState = { pendingInsights: {} };
+    const overrides = new Map([[source, previous]]);
+    assert.equal(
+      createTranslationState(target, previousState).sourceHash,
+      calculateTranslationSourceHash(target, { sourceOverrides: overrides }),
+    );
+    assert.notEqual(
+      createTranslationState(target, previousState).sourceHash,
+      calculateTranslationSourceHash(target),
+    );
+    const en = join(target, `src/content/insights/en/${slug}.md`);
+    writeFileSync(en, readFileSync(en, "utf8") + "\nTranslated revision.\n");
+    assert.equal(
+      createTranslationState(target, previousState).sourceHash,
+      calculateTranslationSourceHash(target),
+    );
+  } finally {
+    removeFixture(target);
+  }
 });

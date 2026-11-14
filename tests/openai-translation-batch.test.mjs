@@ -9,6 +9,7 @@ import {
   applyBatchTranslations,
   assertRetryBatch,
   createBatch,
+  collectBatch,
   createInsightRequest,
   createStructuredRequest,
   decodeMetadata,
@@ -1502,4 +1503,116 @@ test("セキュリティサービスのBatch翻訳を専用の入れ子へ反映
       },
     },
   });
+});
+
+test("回収前に同じBatch・sourceのmain向けマージ済みPRを確認した場合だけ既存結果とする", async () => {
+  const originalFetch = globalThis.fetch;
+  const names = [
+    "GITHUB_REPOSITORY",
+    "GITHUB_TOKEN",
+    "OPENAI_TRANSLATION_API_KEY",
+    "RUNNER_TEMP",
+    "GITHUB_OUTPUT",
+  ];
+  const env = Object.fromEntries(names.map((key) => [key, process.env[key]]));
+  const dir = await mkdtemp(join(tmpdir(), "systems-merged-batch-"));
+  const hash = calculateTranslationSourceHash(process.cwd());
+  const batch = {
+    id: "batch_child",
+    status: "completed",
+    output_file_id: "file_child",
+    request_counts: { total: 16, completed: 14, failed: 2 },
+    metadata: {
+      translation_system: "acecore-systems-v1",
+      repository: "acecore-systems/acecore-systems",
+      source_hash: hash,
+      retry_of: "batch_parent",
+      retry_identities_hash: "b".repeat(64),
+      retry_request_count: "16",
+    },
+  };
+  const pull = {
+    state: "closed",
+    merged_at: "2026-11-14T00:00:00Z",
+    body: getSourceMarker(hash),
+    head: {
+      ref: "translation/openai/batch_child",
+      repo: { full_name: "acecore-systems/acecore-systems" },
+    },
+    base: { ref: "main" },
+  };
+  try {
+    process.env.GITHUB_REPOSITORY = "acecore-systems/acecore-systems";
+    process.env.GITHUB_TOKEN = "fixture";
+    process.env.OPENAI_TRANSLATION_API_KEY = "fixture";
+    process.env.RUNNER_TEMP = dir;
+    process.env.GITHUB_OUTPUT = join(dir, "output");
+    for (const [candidate, accepted] of [
+      [pull, true],
+      [{ ...pull, merged_at: null }, false],
+      [{ ...pull, body: getSourceMarker("c".repeat(64)) }, false],
+      [{ ...pull, state: "open" }, false],
+      [
+        {
+          ...pull,
+          head: { ...pull.head, ref: "translation/openai/batch_other" },
+        },
+        false,
+      ],
+      [
+        { ...pull, head: { ...pull.head, repo: { full_name: "other/repo" } } },
+        false,
+      ],
+      [{ ...pull, base: { ref: "other" } }, false],
+    ]) {
+      const calls = [];
+      globalThis.fetch = async (url) => {
+        calls.push(url);
+        if (url.includes("/pulls?state=open")) return Response.json([]);
+        if (url.includes("/batches?limit=100"))
+          return Response.json({ data: [batch], has_more: false });
+        if (url.includes("/pulls?state=all")) return Response.json([candidate]);
+        if (url.includes("/files/file_child/content"))
+          return new Response("", { status: 200 });
+        throw new Error(`unexpected ${url}`);
+      };
+      await rm(join(dir, "openai-translation-processed-batch_child.txt"), {
+        force: true,
+      });
+      if (accepted) {
+        await collectBatch({ processedBatches: new Set() });
+        assert.equal(
+          await readFile(
+            join(dir, "openai-translation-processed-batch_child.txt"),
+            "utf8",
+          ),
+          "batch_child\n",
+        );
+        assert.equal(
+          calls.some((url) => url.includes("/files/")),
+          false,
+        );
+      } else {
+        await assert.rejects(
+          collectBatch({ processedBatches: new Set() }),
+          /Retry output is incomplete/,
+        );
+        await assert.rejects(
+          readFile(join(dir, "openai-translation-processed-batch_child.txt")),
+          { code: "ENOENT" },
+        );
+        assert.equal(
+          calls.some((url) => url.includes("/files/")),
+          true,
+        );
+      }
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
+    for (const key of names) {
+      if (env[key] === undefined) delete process.env[key];
+      else process.env[key] = env[key];
+    }
+    await rm(dir, { recursive: true, force: true });
+  }
 });
