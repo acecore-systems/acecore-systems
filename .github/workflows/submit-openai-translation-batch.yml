@@ -1,119 +1,87 @@
-name: Publish verified SEO article Batch translations
+name: Submit OpenAI Translation Batch
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - src/data/**/*.json
+      - src/content/insights/*.md
+      - src/i18n/contact-form.ts
+      - src/i18n/ui.ts
   workflow_dispatch:
-
-concurrency:
-  group: openai-translation-collector
-  cancel-in-progress: false
+    inputs:
+      retry_batch_id:
+        description: "既存の完了Batchで検証に失敗した分だけを再翻訳する（通常投入は空欄）"
+        required: false
+        default: ""
+        type: string
+      retry_dry_run:
+        description: "再試行対象の件数確認だけ行い、新しいBatchは作らない"
+        required: false
+        default: true
+        type: boolean
+      retry_max_requests:
+        description: "dry-runで件数を確認した後の再試行上限（既定10、最大20）"
+        required: false
+        default: "10"
+        type: string
 
 permissions:
   contents: read
-  pull-requests: read
-
-env:
-  BATCH_ID: batch_6af819d0bc7881909439e79931536a0e
-  SOURCE_COMMIT: ee6b3fa89f3795a1b0b1d9cdc50df615ce1c1aa4
+  pull-requests: write
 
 jobs:
-  publish:
-    if: github.repository == 'acecore-systems/acecore-systems' && github.ref == 'refs/heads/codex/seo-article-batch-20261114' && github.run_attempt == 1
+  submit:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    concurrency:
+      group: openai-translation-batch-submit
+      cancel-in-progress: false
+
     steps:
-      - uses: actions/checkout@v7
+      - name: Check out repository
+        uses: actions/checkout@v7
         with:
-          path: repair
-          persist-credentials: false
-      - uses: actions/checkout@v7
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
         with:
-          ref: ${{ env.SOURCE_COMMIT }}
-          path: source-main
-          persist-credentials: false
-      - name: Verify main and check for an existing translation branch or PR
-        working-directory: source-main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          test "$(git rev-parse HEAD)" = "$SOURCE_COMMIT"
-          test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')" = "$SOURCE_COMMIT"
-          pulls="$(gh api "repos/$GITHUB_REPOSITORY/pulls?state=all&head=acecore-systems%3Atranslation%2Fopenai%2F$BATCH_ID" --jq 'length')"
-          branches="$(gh api "repos/$GITHUB_REPOSITORY/git/matching-refs/heads/translation/openai/$BATCH_ID" --jq 'length')"
-          test "$pulls" = 0
-          test "$branches" = 0
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: source-main/.node-version
+          node-version-file: .node-version
           cache: npm
-          cache-dependency-path: source-main/package-lock.json
+
       - name: Install dependencies
-        working-directory: source-main
         run: npm ci
-      - name: Retrieve results and validate all eight translations
-        working-directory: source-main
+
+      - name: Wait for consecutive source edits
+        if: github.event_name != 'workflow_dispatch' || inputs.retry_batch_id == ''
+        run: sleep 900
+
+      - name: Use current main as the source version
+        run: |
+          git fetch origin main
+          git checkout --detach origin/main
+
+      - name: Submit OpenAI Batch
         env:
-          PUBLICATION_BASE_SHA: ${{ env.SOURCE_COMMIT }}
           OPENAI_TRANSLATION_API_KEY: ${{ secrets.OPENAI_TRANSLATION_API_KEY }}
-        run: node --experimental-strip-types ../repair/scripts/recover-seo-article-batch-20261114.mjs assemble
-      - name: Check the scope, formatting, and translation state
-        working-directory: source-main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          RETRY_BATCH_ID: ${{ inputs.retry_batch_id }}
+          RETRY_DRY_RUN: ${{ inputs.retry_dry_run }}
+          RETRY_MAX_REQUESTS: ${{ inputs.retry_max_requests }}
         run: |
-          npm run update:i18n-state
-          locales=(de en es fr ko pt ru zh-cn)
-          files=()
-          for locale in "${locales[@]}"; do
-            files+=("src/content/insights/$locale/astro-i18n-blog-translation.md")
-          done
-          files+=(src/i18n/translation-state.json)
-          npx --no-install prettier --write -- "${files[@]}"
-          diff <(printf '%s\n' "${files[@]}" | LC_ALL=C sort) <(git diff --name-only | LC_ALL=C sort)
-          test -z "$(git ls-files --others --exclude-standard)"
-          git diff --check
-          npm run validate:content
-          npm run validate:i18n
-          npm run test:openai-translation
-      - name: Create translation Bot token
-        id: app-token
-        uses: actions/create-github-app-token@v3
-        with:
-          client-id: ${{ secrets.TRANSLATION_BOT_CLIENT_ID }}
-          private-key: ${{ secrets.TRANSLATION_BOT_APP_PRIVATE_KEY }}
-          permission-contents: write
-          permission-pull-requests: write
-      - name: Open a translation PR
-        working-directory: source-main
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')" = "$SOURCE_COMMIT"
-          branch="translation/openai/$BATCH_ID"
-          pulls="$(gh api "repos/$GITHUB_REPOSITORY/pulls?state=all&head=acecore-systems%3Atranslation%2Fopenai%2F$BATCH_ID" --jq 'length')"
-          branches="$(gh api "repos/$GITHUB_REPOSITORY/git/matching-refs/heads/$branch" --jq 'length')"
-          test "$pulls" = 0
-          test "$branches" = 0
-          git switch -c "$branch"
-          git config user.name "Acecore Translation Bot"
-          git config user.email "translation-bot@users.noreply.github.com"
-          git add --update -- src/content/insights src/i18n/translation-state.json
-          git commit -m "翻訳を更新 ($BATCH_ID)"
-          gh auth setup-git --hostname github.com
-          git push --set-upstream origin "$branch"
-          cat > "$RUNNER_TEMP/seo-translation-pr.md" <<'EOF'
-          <!-- openai-translation-batch: batch_6af819d0bc7881909439e79931536a0e -->
-          <!-- openai-translation-source: 1c5558eb6049330f86d8cd800b863a8a7a11fbbe72c94e4db4efd8d07a86a8b5 -->
-
-          Astroのブログ翻訳に関する記事の8言語版を更新します。7言語分はBatch出力を使用し、ドイツ語版は原文と同じ年月日になるよう5箇所の日付表記を修正しました。
-
-          全8件に既存のBatch検証を実行し、本文と翻訳状態を検証しました。
-          EOF
-          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$branch" --draft \
-            --title "[translation] OpenAI Batch $BATCH_ID" \
-            --body-file "$RUNNER_TEMP/seo-translation-pr.md"
-          printf '%s\n' "$BATCH_ID" > "$RUNNER_TEMP/openai-translation-processed-$BATCH_ID.txt"
-      - name: Mark the Batch as processed
-        uses: actions/upload-artifact@v7
-        with:
-          name: openai-translation-processed-${{ env.BATCH_ID }}
-          path: ${{ runner.temp }}/openai-translation-processed-${{ env.BATCH_ID }}.txt
-          if-no-files-found: error
-          retention-days: 30
+          if [ -z "$OPENAI_TRANSLATION_API_KEY" ]; then
+            echo "::warning::OPENAI_TRANSLATION_API_KEY is not configured; no Batch was submitted."
+            exit 0
+          fi
+          if [ -n "$RETRY_BATCH_ID" ]; then
+            retry_args=(--batch-id="$RETRY_BATCH_ID" --max-retry-requests="${RETRY_MAX_REQUESTS:-10}")
+            if [ "$RETRY_DRY_RUN" = "true" ]; then
+              retry_args+=(--dry-run)
+            fi
+            node --experimental-strip-types scripts/openai-translation-batch.mjs retry "${retry_args[@]}"
+          else
+            node --experimental-strip-types scripts/openai-translation-batch.mjs submit --head=HEAD
+          fi
