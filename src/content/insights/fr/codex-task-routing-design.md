@@ -9,8 +9,10 @@ callout:
   type: note
   title: "Ce qui a été vérifié"
   text: "Code public, tests et installation isolée ont été contrôlés. Un enfant Sol direct a envoyé une requête réelle à Temporary Chat Pro, récupéré et accepté la réponse via Browser plugin sous Windows. Cela ne démontre pas tous les hôtes, le backend, l’authentification réelle ni des gains mesurés."
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Mise à jour du 17 novembre 2026 : les conditions et l’expérience 0.14.0 ci-dessous sont historiques. Vérifiez la [politique publique](https://github.com/acecore-systems/codex-task-routing) 0.34.0 et les permissions de l’hôte. Le [PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78) demande de vérifier disponibilité, autorisation et résultat des opérations GitHub par dépôt dans le chat temporaire Pro. Une écriture GitHub depuis un vrai chat Pro après ce changement reste non vérifiée.
 
 Testez la délégation Codex sur des recherches ou revues vérifiables indépendamment, en précisant l’intégration par le parent. Transmettez fichiers, références, preuves et inconnues ; appliquez aux outils les privilèges minimaux de [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/). Déléguer ne démontre pas à lui seul une amélioration de qualité ou de coût.
 

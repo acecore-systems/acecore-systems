@@ -9,8 +9,10 @@ callout:
   type: note
   title: "What was verified"
   text: "Public code, automated checks and isolated installation were examined. One actual request from a direct Sol child to Temporary Chat Pro, response collection and semantic acceptance were verified through a Windows Browser plugin. This does not establish all hosts, backend identity, real authentication or measured quality and usage gains."
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Updated 17 November 2026: The 0.14.0 conditions and experiment below are historical. Check the current 0.34.0 [public policy](https://github.com/acecore-systems/codex-task-routing) and host permissions. [PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78) requires checking GitHub operation availability, authorization and results in the Pro temporary chat for each repository. A GitHub write from a real Pro chat after that change remains unverified.
 
 Trial Codex delegation with research or reviews that can be accepted independently, clarifying what the parent must integrate. Include files, references, returned evidence and unknowns in the handoff; use the least-privilege approach in [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) for tools. Delegation alone does not demonstrate quality or cost improvement.
 

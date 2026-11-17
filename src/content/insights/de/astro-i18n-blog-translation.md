@@ -2,7 +2,7 @@
 title: "So wird ein Astro-Blog in 9 Sprachen verfügbar – Implementierung von Übersetzung, URLs und hreflang"
 description: "Ein Implementierungsbericht zur Übersetzung eines Astro-Blogs in 9 Sprachen. Er erläutert URL-Design mit prefixDefaultLocale, die Ablage von Übersetzungsdateien, Bedingungen, unter denen für nicht übersetzte Locales keine Artikel-URLs, Sitemaps oder hreflang-Einträge erzeugt werden, die Anzeige über View-Komponenten sowie Hinweise zu OG-Bildern, CMS und RSS. Dabei werden der Stand von 7/2026 und aktuelle Änderungen getrennt dargestellt, um Entscheidungen für eine vergleichbare Konfiguration zu erleichtern."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-25T06:10:55Z"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Technik", "Astro", "i18n", "Website"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: Müssen neue Artikel ebenfalls übersetzt werden?
       answer: "Für die Veröffentlichung der japanischen Version ist keine Übersetzung erforderlich. Wird eine Übersetzung hinzugefügt, erzeugt eine gleichnamige Markdown-Datei im entsprechenden Sprachverzeichnis die Grundlage für Artikel-URL, Sitemap und hreflang dieser Sprache."
 ---
+
+> Aktualisierung vom 17. November 2026: Die Aktualisierung in acht Sprachen wurde im [Übersetzungs-PR #189](https://github.com/acecore-systems/acecore-systems/pull/189) abgeholt: sieben nutzten Batch, fünf deutsche Datumsangaben wurden korrigiert. Neue Übersetzungen verwenden Responses Batch mit `gpt-6.1-terra` und `medium`-Reasoning. Siehe die [Übersetzungspipeline](/insights/copilot-translation-pipeline/).
 
 Dieser Implementierungsbericht richtet sich an alle, die einen japanischen Astro-Blog mehrsprachig betreiben möchten, ohne URLs übersetzter Artikel, Sprachwechsel, Sitemap oder hreflang zu beeinträchtigen. Gleichen Sie zunächst Text, Metadaten und Sprachwechsel anhand eines repräsentativen Artikels ab und stellen Sie sicher, dass nicht auf unübersetzte Seiten verwiesen wird. Nutzen Sie [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) als Grundlage für das URL-Design und erweitern Sie UI- und Artikelübersetzungen getrennt und schrittweise. Die folgenden Zahlen und die frühere CMS-Konfiguration stammen aus der Einführungsphase.
 

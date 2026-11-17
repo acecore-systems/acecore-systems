@@ -2,7 +2,7 @@
 title: "Sveltia CMS로 다국어 블로그를 운영하는 방법"
 description: "일본어 정본으로 8개 언어 정적 페이지를 운영하는 방법. OpenAI Batch의 숫자·URL·코드 보호, 전체 검증 후 쓰기, 번역 PR·CI·GitHub 연계 공개를 설명합니다."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["기술", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: 번역 페이지는 중복 콘텐츠인가요?
       answer: "Google 문서에 따르면 본문이 번역되어 있다면 현지화 페이지가 단순 중복으로 취급되는 것은 아닙니다. hreflang으로 관계를 명확히 합니다."
 ---
+
+> 2026년 11월 17일 업데이트: 신규 번역은 `gpt-6.1-terra`, 추론 `medium`의 OpenAI Responses Batch를 사용합니다. [실제 회수 PR #189](https://github.com/acecore-systems/acecore-systems/pull/189)에서는 7개 언어에 Batch 결과를 사용하고 독일어 날짜 5곳을 원문에 맞게 수정했습니다. 회수, 검증, PR 병합과 공개는 별도로 확인합니다.
 
 다국어 블로그 운영은 대표 글의 번역 파일로 언어별 HTML을 생성해 본문, title, description, 내부 링크를 확인하는 것부터 시작하세요. [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)에 따라 실제 있는 언어판만 연결하고 번역 서비스 성공과 공개 페이지 완성을 따로 검수하세요.
 

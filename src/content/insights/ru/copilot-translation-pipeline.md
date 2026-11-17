@@ -2,7 +2,7 @@
 title: "Как вести многоязычный блог с Sveltia CMS"
 description: "Восемь статических переводов из японского источника: защита чисел, URL и кода в OpenAI Batch, проверка всех результатов до записи, PR, CI и публикация через GitHub."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Технологии", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: Являются ли переводы дублями?
       answer: "Google указывает, что локализованные страницы считаются дубликатами только если основной контент не переведен. Варианты следует связывать через hreflang."
 ---
+
+> Обновление 17 ноября 2026 года: новые переводы используют OpenAI Responses Batch с `gpt-6.1-terra` и рассуждением `medium`. В [фактическом PR сбора #189](https://github.com/acecore-systems/acecore-systems/pull/189) семь языков использовали результат Batch, а пять дат в немецком были исправлены по оригиналу. Сбор, проверку, слияние и публикацию подтверждают отдельно.
 
 Начните многоязычный блог с генерации HTML из переводов показательной статьи и проверки текста, title, description и внутренних ссылок. По [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions) связывайте только существующие языковые версии, отдельно принимая результат службы перевода и готовые публичные страницы.
 

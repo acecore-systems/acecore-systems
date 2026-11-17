@@ -9,8 +9,10 @@ callout:
   type: note
   title: "Geprüfter Umfang"
   text: "Öffentlicher Code, Tests und isolierte Installation wurden geprüft. Ein direkter Sol-Kindagent sendete eine echte Anfrage an Temporary Chat Pro, sammelte und akzeptierte die Antwort per Browser-Plugin unter Windows. Nicht belegt sind alle Hosts, Backend, echte Anmeldung oder gemessene Qualitäts- und Nutzungsvorteile."
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Aktualisierung vom 17. November 2026: Die folgenden Bedingungen und das Experiment zu 0.14.0 sind historisch. Prüfen Sie die aktuelle [öffentliche Richtlinie](https://github.com/acecore-systems/codex-task-routing) 0.34.0 und die Host-Berechtigungen. [PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78) verlangt, Verfügbarkeit, Berechtigung und Ergebnis von GitHub-Operationen je Repository im temporären Pro-Chat zu prüfen. Ein GitHub-Schreibvorgang aus einem echten Pro-Chat nach der Änderung wurde nicht verifiziert.
 
 Testen Sie Codex-Delegation mit unabhängig abnehmbarer Recherche oder Prüfung und klären Sie die Integration durch den Elternagenten. Übergeben Sie Dateien, Quellen, Belege und offene Punkte; begrenzen Sie Werkzeugrechte nach [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/). Delegation allein belegt keine Qualitäts- oder Kostenverbesserung.
 

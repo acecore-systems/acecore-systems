@@ -9,8 +9,10 @@ callout:
   type: note
   title: "확인한 범위"
   text: "공개 코드·기계 테스트·격리 설치와 Windows Browser 플러그인에서 직계 Sol 자식의 Temporary Chat Pro 실제 요청 1회·회수·의미 수용을 확인했습니다. 모든 호스트·backend 식별·실제 인증·품질 및 사용량 개선율의 실증은 아닙니다."
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> 2026년 11월 17일 업데이트: 아래 0.14.0 조건과 실험은 당시 기록입니다. 현재 0.34.0의 [공개 정책](https://github.com/acecore-systems/codex-task-routing)과 호스트 권한을 확인하세요. [PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78)은 Pro 임시 채팅에서 저장소별 GitHub 작업의 제공 여부·권한·결과 확인을 요구합니다. 변경 후 실제 Pro 채팅의 GitHub 쓰기는 미검증입니다.
 
 Codex 분담은 독립적으로 검수할 수 있는 조사나 리뷰부터 시험해 부모가 통합할 책임을 명확히 하세요. 인계에는 파일, 참고 자료, 증거, 미확인 사항을 포함하고 도구 권한에는 [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)의 최소화 원칙을 참고하세요. 분담 사실만으로 품질이나 비용 개선을 판단하지 않습니다.
 

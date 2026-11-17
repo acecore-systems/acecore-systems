@@ -2,7 +2,7 @@
 title: "如何让 Astro 博客支持 9 种语言——翻译、URL 和 hreflang 实现记录"
 description: "本文记录了 Astro 博客支持 9 种语言的实现过程，分别说明截至 2026 年 7 月的配置与当前差异，涵盖使用 prefixDefaultLocale 设计 URL、翻译文件的放置、未翻译 locale 不生成文章 URL、sitemap 和 hreflang 的条件、通过 View 组件切换显示，以及 OG 图片、CMS 和 RSS 的注意事项，为考虑采用相同配置时提供决策依据。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-25T06:10:55Z"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["技术", "Astro", "i18n", "网站"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: 添加新文章时也必须翻译吗？
       answer: "发布日语版不要求必须提供翻译。如需添加翻译，只需在对应语言目录中放置同名 Markdown 文件，该语言的文章 URL、sitemap 和 hreflang 就会被纳入生成范围。"
 ---
+
+> 2026年11月17日更新：本文8种语言的更新通过[翻译PR #189](https://github.com/acecore-systems/acecore-systems/pull/189)回收：7种语言使用Batch输出，德语修正了5处日期。新的翻译使用 `gpt-6.1-terra`、`medium` 推理的Responses Batch。参见[翻译流程](/insights/copilot-translation-pipeline/)。
 
 这是一份实现记录，面向希望使用 Astro 将日语博客多语言化，并可靠地维护翻译文章 URL、语言切换、sitemap 和 hreflang 的读者。首先选取代表性文章，配齐正文、元信息和语言切换，并确认不会将用户引导至未翻译的页面。请以 [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) 为 URL 设计依据，将 UI 翻译与文章翻译分开，逐步扩展。下文的数量和旧 CMS 配置是引入时的实例。
 
