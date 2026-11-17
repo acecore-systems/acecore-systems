@@ -1488,7 +1488,7 @@ async function getBatchOutput(batch) {
   return parseOutputLines(await response.text());
 }
 
-export { decodeMetadata, getBatchOutput, openAiJson, translationIdentity };
+export { getBatchOutput, openAiJson, translationIdentity };
 
 export function selectCompletedBatch(
   batches,
