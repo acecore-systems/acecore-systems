@@ -9,8 +9,10 @@ callout:
   type: note
   title: "Alcance de la verificación"
   text: "Se revisaron código público, pruebas e instalación aislada. Un hijo Sol directo envió una petición real a Temporary Chat Pro, recuperó y aceptó su respuesta mediante un Browser plugin en Windows. No demuestra todos los hosts, backend, autenticación real ni mejoras medidas de calidad o consumo."
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Actualización del 17 de noviembre de 2026: las condiciones y el experimento de 0.14.0 descritos abajo son históricos. Comprueba la [política pública](https://github.com/acecore-systems/codex-task-routing) 0.34.0 y los permisos del entorno. El [PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78) exige comprobar por repositorio la disponibilidad, autorización y resultado de operaciones GitHub dentro del chat temporal Pro. La escritura GitHub en un chat Pro real tras el cambio sigue sin verificarse.
 
 Prueba la delegación en Codex con investigaciones o revisiones verificables de forma independiente, aclarando la integración del agente principal. Incluye archivos, referencias, evidencias e incógnitas; aplica el mínimo privilegio de [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) a las herramientas. Delegar no demuestra por sí solo mejoras de calidad o coste.
 

@@ -1,10 +1,4 @@
 {
-  "sourceHash": "fa0b60963544ba8d29cfc13143866500d9ed9e77781415cfc27c2131d20c8dff",
-  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
-  "pendingInsights": {
-    "search-console-editorial-evaluation": {
-      "sourceHash": "c4aef402b0245c1aa338cdf99312554c114b84a7b482104e1a481d9a5db99bbf",
-      "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
-    }
-  }
+  "sourceHash": "a7e9b9e585f61426c2b73ae0a65f3f4e6f8685d35539a957ca2456262a8978b2",
+  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
 }

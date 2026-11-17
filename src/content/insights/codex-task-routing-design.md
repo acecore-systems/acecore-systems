@@ -9,8 +9,10 @@ callout:
   type: note
   title: "確認できた範囲"
   text: "公開コード・機械テスト・隔離導入の検査に加え、WindowsのBrowser pluginで直下Sol子からTemporary Chat Proへの一回の実送受信と内容検収を確認しました。全ホスト・backend・実認証や、品質・利用量の改善率まで実証した結果ではありません。"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> 2026年11月17日追記：以下の0.14.0の条件と実験は当時の記録です。現在は0.34.0の[公開方針](https://github.com/acecore-systems/codex-task-routing)とホストの権限を確認してください。[PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78)はPro一時チャット内でGitHub操作の提供状況・権限・結果を対象リポジトリごとに確認する方針を追加しました。修正後の実ProチャットによるGitHub書込みは未検証です。
 
 Codexの分担設計は、独立して検収できる調査やレビューから試すと、親が統合すべき責任を明確にできます。引継ぎには対象ファイル、確認資料、返す証拠、未確認事項を含め、ツール権限は[OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)の最小化の考え方も参考にします。分担した事実だけで品質や費用の改善を判断しません。
 

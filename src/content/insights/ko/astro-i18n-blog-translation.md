@@ -2,7 +2,7 @@
 title: "Astro 블로그를 9개 언어로 지원하는 방법 ― 번역·URL·hreflang 구현 기록"
 description: "Astro 블로그를 9개 언어로 제공한 구현 기록입니다. prefixDefaultLocale을 이용한 URL 설계, 번역 파일 배치, 번역되지 않은 로케일의 글 URL·sitemap·hreflang을 생성하지 않는 조건, View 컴포넌트를 이용한 표시 전환, OG 이미지·CMS·RSS의 주의점을 2026년 7월 기준 구성과 현재의 차이로 나누어 설명하고, 같은 구성을 검토할 때 참고할 판단 기준을 제시합니다."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-25T06:10:55Z"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["기술", "Astro", "i18n", "웹사이트"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: 새 글을 추가하면 번역도 필요한가요?
       answer: "일본어 버전을 공개할 때 번역은 필수가 아닙니다. 번역을 추가하려면 해당 언어 디렉터리에 같은 이름의 Markdown 파일을 배치하면 됩니다. 그러면 해당 언어의 글 URL·sitemap·hreflang이 생성 대상이 됩니다."
 ---
+
+> 2026년 11월 17일 업데이트: 이 글의 8개 언어 갱신은 [번역 PR #189](https://github.com/acecore-systems/acecore-systems/pull/189)에서 회수했습니다. 7개 언어는 Batch 결과이며 독일어 날짜 5곳을 수정했습니다. 신규 번역은 `gpt-6.1-terra`, 추론 `medium`의 Responses Batch를 사용합니다. [번역 파이프라인](/insights/copilot-translation-pipeline/)을 참고하세요.
 
 Astro에서 일본어 블로그를 다국어로 제공하면서 번역 글의 URL, 언어 전환, sitemap과 hreflang을 문제없이 운영하려는 분들을 위한 구현 기록입니다. 먼저 대표 글의 본문·메타 정보·언어 전환을 갖추고, 번역되지 않은 페이지로 안내하지 않는지 확인합니다. [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)을 URL 설계 기준으로 삼고, UI 번역과 글 번역을 분리해 단계적으로 늘려가세요. 아래의 건수와 이전 CMS 구성은 도입 당시의 사례입니다.
 

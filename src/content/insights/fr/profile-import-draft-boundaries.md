@@ -1,28 +1,28 @@
 ---
 title: "Importer un profil comme brouillon : comparer, choisir et publier avec discernement"
-description: "Importer URL publiques, texte, CSV, HTML et JSON dans un brouillon de profil : médias limités, ordre des liens, conservation après échec de relecture, enregistrement et publication par le titulaire."
+description: "Importer des candidats depuis une URL de profil publique : médias limités, conservation après échec et enregistrement et publication par le titulaire."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
   title: "Mise en œuvre vérifiée ; réception sur un compte réel en attente"
-  text: "Les imports de fichiers et de certaines URL, images et pistes audio publiques sont intégrés et déployés. Les contrôles couvrent des interactions synthétiques et certains médias publics. Droits, enregistrement et publication par le titulaire réel, intégrations officielles et réponses 429 restent des travaux distincts inachevés."
+  text: "Les imports limités d’URL publiques, d’images et d’audio sont implémentés et déployés. Des interactions synthétiques et certains médias publics ont été vérifiés. La validation réelle des droits, de l’enregistrement et de la publication reste à faire. La connexion officielle est hors périmètre et les restrictions ne sont pas contournées."
 ---
 
 Lorsqu’on transfère un profil existant vers un autre éditeur, il faut comparer les valeurs actuelles aux données candidates avant tout remplacement. Cet exemple anonymisé décrit les limites entre l’importation et la publication d’un profil.
 
 ## Tester la conservation des retouches avec une biographie
 
-Modifiez manuellement la biographie, puis importez un autre texte candidat. Vérifiez conservation des champs non sélectionnés, possibilité de revoir les remplacements et restauration après annulation. Comparez ensuite brouillon et page publique : l’import seul ne doit pas modifier la publication.
+Modifiez une biographie puis obtenez un autre candidat depuis une URL publique prise en charge. Vérifiez les champs non sélectionnés, le remplacement et l’annulation ; comparez brouillon et page publique : importer ne publie pas.
 
 [OWASP：Valider format, valeurs et longueur des entrées](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Définir d’abord les formats d’entrée pris en charge
 
-Texte, CSV, HTML statique, JSON commun et modèles sont complétés par la récupération depuis les URL de profils publics prises en charge. Le HTML est analysé comme donnée : scripts et balisage original ne sont pas exécutés sur la page publique. Longueur, nombre, format et liens HTTPS sont contrôlés.
+Le point d’entrée actuel accepte une URL de profil publique prise en charge. Le HTML obtenu est analysé comme donnée sans exécuter scripts ni balisage ; longueur, nombre, format et liens HTTPS sont contrôlés. Fichier, texte collé et connexion officielle ne sont pas des entrées d’import.
 
 Les liens gardent leur ordre et les parenthèses équilibrées dans les URL. Une URL dans un lien Markdown ne devient pas deux candidats, mais une répétition ailleurs reste distincte. Le titulaire décide du traitement de l’ordre et des doublons.
 
@@ -30,19 +30,19 @@ Les liens gardent leur ordre et les parenthèses équilibrées dans les URL. Une
 
 Ne publiez pas immédiatement le résultat de l’analyse ; comparez-le d’abord aux valeurs actuelles. La personne propriétaire choisit les champs un par un et peut modifier les propositions avant de les appliquer à l’éditeur. Un champ choisi remplace sa valeur actuelle : il faut donc vérifier les différences à chaque importation. La modification peut aussi être annulée. Ces commandes ne garantissent pas la résolution automatique des conflits avec des modifications faites sur un autre écran ou par une autre personne.
 
-Si la relecture de la même URL ou du même fichier échoue, conserver candidats, modifications, sélections, correspondances CSV et médias téléchargés. Afficher l’erreur et préciser qu’il s’agit des candidats précédents. Les remplacer après changement de source, méthode, texte ou fichier, ou après une relecture réussie. Leur conservation ne les applique, enregistre ni publie.
+Si la relecture de la même URL échoue, conserver candidats, modifications, sélections et médias obtenus. Afficher l’erreur et indiquer qu’il s’agit des résultats précédents. Les remplacer si la source change ou si la relecture réussit. Conserver ne signifie pas appliquer, enregistrer ou publier.
 
 ## Distinguer récupération par URL et intégration officielle
 
 La récupération se limite aux structures publiques connues de Profcard, lit.link, POTOFU, HTML Meishi et foriio. Vérifier identité, exclusions d’indexation et cohérence des candidats, sans étendre aux pages authentifiées ni aux destinations interdites. Cela ne prouve ni connexion ou API officielle, ni migration complète.
 
-Le modèle JSON commun et les capacités par service restent disponibles. Les URL non prises en charge et contenus dynamiques utilisent le collage ou les fichiers. Les réponses 401, 403 ou 429 arrêtent la récupération, sans contourner les restrictions par un autre navigateur ou une API.
+Les URL non prises en charge et contenus dynamiques inaccessibles ne sont pas considérés comme importés. Arrêter sur 401, 403 ou 429 sans contourner les restrictions par un autre navigateur ou une API.
 
 [OWASP : Limiter destinations et redirections contre SSRF](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
 
 ## Examiner l’image ou écouter l’audio récupéré avant sélection
 
-Outre les images de profil GIF, des cartes de liens et publications connues fournissent images et titres d’œuvres. Les liens autorisés du titulaire vers des images, WAV et MP3 GitHub et les fichiers publics individuels Dropbox ont un support limité. Les cartes du HTML initial POTOFU sont couvertes ; descriptions, pages supplémentaires, lecteurs intégrés et galerie foriio restent hors du périmètre terminé.
+Les candidats peuvent inclure images GIF, images et titres de cartes et publications publiques ; les liens GitHub autorisés vers images, WAV et MP3 et les fichiers publics individuels Dropbox sont pris en charge de façon limitée. Les descriptions POTOFU peuvent aussi provenir des données initiales lorsque profil, image et titre original correspondent de façon unique. Les textes suivants exigent notamment la concordance des premières publications visibles. Pages supplémentaires, lecteurs intégrés, publications ambiguës et galerie foriio restent exclus ; les restrictions ne sont pas contournées.
 
 Recontrôler source et candidat, host, path, redirections, MIME, contenu réel, taille et délai. Le titulaire examine les mêmes données et confirme droits, titre et description. Seules les pièces choisies rejoignent les œuvres non enregistrées, sont préparées via l’upload existant puis enregistrées normalement. Titulaire, profil, type et état ready sont revérifiés, avec conservation des saisies manuelles et du snapshot public.
 

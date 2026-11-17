@@ -2,7 +2,7 @@
 title: "How to Run a Multilingual Blog with Sveltia CMS"
 description: "Publish eight static translations from Japanese source. Covers OpenAI Batch protection for numbers, URLs and code, validating all results before writing, translation PRs, CI and GitHub-connected publication."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Technology", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -84,6 +84,8 @@ faq:
     - question: Are translated pages duplicate content?
       answer: "Google says localized pages are only duplicates when the main content remains untranslated. Keep each language page translated and connect variants with hreflang."
 ---
+
+> Updated 17 November 2026: New translations now use OpenAI Responses Batch with `gpt-6.1-terra` and `medium` reasoning. In [actual collection PR #189](https://github.com/acecore-systems/acecore-systems/pull/189), seven locales used Batch output and five German dates were corrected against the source. Collection, validation, PR merge and publication are separate checks.
 
 To start a multilingual blog workflow, generate localized HTML from a representative article’s translations and check body, title, description and internal links. Associate only existing language versions using [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions), accepting translation-service success separately from completed public pages.
 
