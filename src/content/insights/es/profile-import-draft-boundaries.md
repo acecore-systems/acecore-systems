@@ -1,28 +1,28 @@
 ---
 title: "Importar datos del perfil como borrador: comparar, elegir y publicar con criterio"
-description: "Importa URL públicas, texto, CSV, HTML y JSON a borradores de perfil. Explica medios limitados, orden de enlaces, conservación tras fallos de relectura y guardado y publicación por el titular."
+description: "Obtención de candidatos desde URL de perfiles públicos, medios limitados, conservación tras fallos y guardado y publicación por el titular."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
   title: "Implementación verificada; falta la aceptación en una cuenta real"
-  text: "La importación de archivos y de URL, imágenes y audio públicos limitados está implementada, integrada y desplegada. Se comprobaron interacciones sintéticas y algunos medios públicos. La revisión de derechos, el guardado y la publicación por titulares reales, las integraciones oficiales y los errores 429 de origen siguen pendientes por separado."
+  text: "La importación limitada de URL públicas, imágenes y audio está implementada y desplegada. Se comprobaron datos sintéticos y algunos medios públicos. La aceptación real de derechos, guardado y publicación sigue pendiente. El acceso oficial está fuera del alcance y no se eluden restricciones."
 ---
 
 Al trasladar un perfil existente a otro editor, compara los valores actuales con los candidatos importados antes de sustituir nada. Este caso anonimizado explica los límites entre importar datos y publicar un perfil.
 
 ## Probar la conservación de ediciones con una biografía
 
-Edite manualmente la biografía e importe un texto distinto como candidato. Compruebe que los campos no elegidos permanecen, que puede revisar reemplazos y que cancelar restaura el original. Compare después borrador y página pública: importar por sí solo no debe cambiar la publicación.
+Edita una biografía y obtiene un candidato distinto desde una URL pública admitida. Comprueba los valores no seleccionados, la sustitución y la cancelación; compara borrador y página pública: importar no publica.
 
 [OWASP：Validar formato, valores y longitud de entrada](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Define primero los formatos de entrada admitidos
 
-Además de texto, CSV, HTML estático, JSON común y plantillas, se obtienen candidatos de URL de perfiles públicos admitidos. El HTML se analiza como datos; sus scripts y marcado original no se ejecutan en la página pública. Se validan longitud, cantidad, formato y enlaces HTTPS.
+La entrada actual acepta una URL de perfil público admitida. El HTML se analiza como datos sin ejecutar scripts ni marcado original; se validan longitud, cantidad, formato y enlaces HTTPS. Los archivos, texto pegado e inicio de sesión oficial no son entradas de importación.
 
 Los enlaces conservan el orden de aparición y los paréntesis emparejados dentro de la URL. Una URL dentro de Markdown no se recoge dos veces, pero una repetición en otra posición sigue siendo un candidato independiente. El titular decide sobre el orden y los duplicados.
 
@@ -30,19 +30,19 @@ Los enlaces conservan el orden de aparición y los paréntesis emparejados dentr
 
 No publiques de inmediato los resultados del análisis: compáralos primero con los valores actuales. La persona propietaria del perfil selecciona los campos uno por uno y puede editar los valores candidatos antes de aplicarlos al editor. Aplicar un campo seleccionado sustituye el valor actual, así que hay que revisar las diferencias en cada importación. También es posible deshacer el cambio. Estos controles no garantizan que se resuelvan automáticamente los conflictos con ediciones hechas en otra pantalla o por otra persona.
 
-Si falla la relectura de la misma URL o archivo, se conservan candidatos, ediciones, selección, correspondencia de columnas CSV y medios descargados. Se muestra el error y que son candidatos anteriores. Solo se sustituyen al cambiar origen, método, texto o archivo, o tras una relectura correcta. Conservarlos no los aplica, guarda ni publica.
+Si falla la relectura de la misma URL, se conservan candidatos, ediciones, selección y medios obtenidos. Se muestra el error y que son candidatos anteriores. Se sustituyen al cambiar la fuente o completar la relectura. Conservar no aplica, guarda ni publica.
 
 ## Distinguir la obtención por URL de las integraciones oficiales
 
 La obtención se limita a estructuras públicas conocidas de Profcard, lit.link, POTOFU, HTML Meishi y foriio. Se comprueban identidad, exclusiones de indexación y coincidencia de candidatos, sin acceder a páginas autenticadas ni destinos no permitidos. No implica integración oficial de acceso o API ni migración completa.
 
-Siguen disponibles la plantilla JSON común y la información por servicio. Las URL no admitidas y el contenido dinámico usan texto pegado o archivos. Ante 401, 403 o 429 se detiene el proceso, sin eludir restricciones con otro navegador o API.
+Las URL no admitidas y el contenido dinámico inaccesible no se consideran importaciones correctas. Ante 401, 403 o 429 se detiene el proceso sin eludir restricciones con otro navegador o API.
 
 [OWASP: Restringir destinos y redirecciones para prevenir SSRF](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
 
 ## Revisar la imagen o el audio obtenido antes de seleccionarlo
 
-Además de imágenes de perfil GIF, las tarjetas de enlaces y publicaciones públicas conocidas aportan imágenes y títulos de obras. Se admiten de forma limitada enlaces autorizados de GitHub a imágenes, WAV y MP3 en los enlaces del titular, y archivos públicos individuales de Dropbox. Se admiten tarjetas del HTML inicial de POTOFU; quedan fuera descripciones, páginas adicionales, reproductores incrustados y la galería de foriio.
+Los candidatos pueden incluir imágenes GIF, imágenes y títulos de tarjetas y publicaciones públicas; los enlaces permitidos de GitHub a imágenes, WAV y MP3 y archivos públicos individuales de Dropbox tienen soporte limitado. También se completan descripciones de publicaciones POTOFU desde datos iniciales cuando coinciden de forma única perfil, imagen y título original. El texto posterior exige condiciones como la coincidencia de las primeras publicaciones visibles. No se admiten páginas extra, reproductores incrustados, publicaciones ambiguas ni la galería de foriio; no se eluden restricciones.
 
 Se revisan origen y candidato, host, path, redirecciones, MIME, contenido, tamaño y plazos. El titular ve o escucha los mismos datos obtenidos y confirma derechos, título y descripción. Solo los adjuntos seleccionados se incorporan a obras sin guardar; se preparan con la carga existente y se guardan normalmente. Se revalidan titular, perfil, tipo y estado ready, conservando la entrada manual y el snapshot público.
 
