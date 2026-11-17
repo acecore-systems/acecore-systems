@@ -1,4 +1,10 @@
 {
   "sourceHash": "1c5558eb6049330f86d8cd800b863a8a7a11fbbe72c94e4db4efd8d07a86a8b5",
-  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
+  "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
+  "pendingInsights": {
+    "search-console-editorial-evaluation": {
+      "sourceHash": "c4aef402b0245c1aa338cdf99312554c114b84a7b482104e1a481d9a5db99bbf",
+      "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
+    }
+  }
 }
