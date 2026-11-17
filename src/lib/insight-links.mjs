@@ -23,6 +23,7 @@ export const insightSlugs = Object.freeze([
   "cms-selection-and-turnstile",
   "codex-task-routing-design",
   "copilot-translation-pipeline",
+  "desktop-automation-shared-lock",
   "dynmap-512-migration",
   "gradle-cache-ci-measurement",
   "hatt-homepage-launch",
@@ -44,6 +45,10 @@ export const insightSlugs = Object.freeze([
   "vitepress-to-starlight-migration",
   "website-improvement-batches",
   "website-improvement-final-batch",
+  "git-dvc-creative-restore",
+  "public-register-snapshot-review",
+  "commerce-state-readback",
+  "discord-audio-processing-boundaries",
   "zoho-to-kagoya-mail-migration",
 ]);
 
