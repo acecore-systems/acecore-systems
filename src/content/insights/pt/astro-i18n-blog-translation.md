@@ -2,7 +2,7 @@
 title: "Como oferecer um blog Astro em 9 idiomas — registro da implementação de tradução, URLs e hreflang"
 description: "Registro da implementação de um blog Astro em 9 idiomas. Explica o desenho de URLs com prefixDefaultLocale, a organização dos arquivos de tradução, as condições para não gerar URLs de artigos, sitemap e hreflang em localidades sem tradução, a alternância de exibição com componentes View e os cuidados com imagens OG, CMS e RSS. Distingue a configuração de julho de 2026 (mês 7) das diferenças atuais e apresenta elementos para avaliar uma configuração semelhante."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-25T06:10:55Z"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Tecnologia", "Astro", "i18n", "Sites"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: É necessário traduzir um artigo novo?
       answer: "A tradução não é obrigatória para publicar a versão japonesa. Para adicionar uma tradução, coloque um arquivo Markdown com o mesmo nome no diretório do idioma correspondente; a URL do artigo, o sitemap e o hreflang desse idioma passarão a ser gerados."
 ---
+
+> Atualização de 17 de novembro de 2026: a atualização em oito idiomas foi coletada no [PR de tradução #189](https://github.com/acecore-systems/acecore-systems/pull/189): sete usaram Batch e cinco datas alemãs foram corrigidas. Novas traduções usam Responses Batch com `gpt-6.1-terra` e raciocínio `medium`. Veja o [fluxo de tradução](/insights/copilot-translation-pipeline/).
 
 Este é um registro de implementação para quem deseja tornar um blog japonês em Astro multilíngue e operar URLs de artigos traduzidos, troca de idioma, sitemap e hreflang sem comprometer seu funcionamento. Primeiro, alinhe o conteúdo, os metadados e a troca de idioma em um artigo representativo e verifique se os usuários não são direcionados a páginas sem tradução. Use [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) como referência para o desenho das URLs e amplie gradualmente as traduções da interface e dos artigos de forma separada. Os números e a configuração antiga do CMS abaixo são exemplos da época da implementação.
 

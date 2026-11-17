@@ -2,7 +2,7 @@
 title: "用 Sveltia CMS 运营多语言博客的方法"
 description: "以日语正本生成8种语言静态页面，说明OpenAI Batch对数字、URL、代码的保护、全部结果验证后写入、翻译PR、CI及GitHub关联发布。"
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["技术", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: 翻译页面会被视为重复内容吗？
       answer: "Google 的说明是，主要内容已经翻译的本地化页面不会仅因为内容对应就成为重复页面。应保持 slug 对应，并通过 hreflang 表示关系。"
 ---
+
+> 2026年11月17日更新：新的翻译使用 `gpt-6.1-terra`、`medium` 推理的OpenAI Responses Batch。[实际回收PR #189](https://github.com/acecore-systems/acecore-systems/pull/189)中，7种语言使用Batch输出，德语的5处日期按原文修正。回收、验证、合并PR与发布分别确认。
 
 开始多语言博客流程时，先用代表文章的翻译文件生成各语言HTML，检查正文、title、description和内部链接。按照[Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)仅关联存在的语言版本，并将翻译服务成功与公开页面完成分别验收。
 

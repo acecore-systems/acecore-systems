@@ -2,7 +2,7 @@
 title: "How to Make an Astro Blog Available in 9 Languages: Translation, URLs, and hreflang"
 description: "An implementation record of making an Astro blog available in 9 languages. It covers URL design with prefixDefaultLocale, translation file placement, conditions that prevent article URLs, sitemaps, and hreflang from being generated for untranslated locales, display switching with View components, and considerations for OG images, CMS, and RSS. It separates the configuration as of 2026-7 from subsequent changes to help readers evaluate a similar setup."
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-25T06:10:55Z"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Technology", "Astro", "i18n", "Websites"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -65,6 +65,8 @@ faq:
     - question: Do new articles also need translations?
       answer: "Translations are not required to publish the Japanese version. To add a translation, place a Markdown file with the same name in the corresponding language directory. The article URL, sitemap, and hreflang for that language will then be eligible for generation."
 ---
+
+> Updated 17 November 2026: The eight-language update for this article was collected in [translation PR #189](https://github.com/acecore-systems/acecore-systems/pull/189): seven locales used Batch output and five German dates were corrected. New translations use Responses Batch with `gpt-6.1-terra` and `medium` reasoning. See the [translation pipeline](/insights/copilot-translation-pipeline/).
 
 This implementation record is for people who want to make a Japanese Astro blog multilingual while keeping translated article URLs, language switching, sitemaps, and hreflang working correctly. Start with a representative article, aligning its body, metadata, and language switcher, and verify that users are not directed to untranslated pages. Use [Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/) as the basis for URL design, and expand UI and article translations separately in stages. The counts and old CMS configuration below are examples from the initial rollout.
 

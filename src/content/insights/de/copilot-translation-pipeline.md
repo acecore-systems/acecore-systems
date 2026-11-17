@@ -2,7 +2,7 @@
 title: "Mehrsprachige Blogs mit Sveltia CMS betreiben"
 description: "Acht statische Übersetzungen aus japanischer Quelle: Schutz von Zahlen, URLs und Code in OpenAI Batch, vollständige Prüfung vor dem Schreiben, PR, CI und GitHub-Veröffentlichung."
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Technologie", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -80,6 +80,8 @@ faq:
     - question: Sind übersetzte Seiten Duplicate Content?
       answer: "Google betrachtet lokalisierte Seiten nur dann als Duplikate, wenn der Hauptinhalt nicht übersetzt ist. Varianten sollten mit hreflang verbunden werden."
 ---
+
+> Aktualisierung vom 17. November 2026: Neue Übersetzungen verwenden OpenAI Responses Batch mit `gpt-6.1-terra` und `medium`-Reasoning. Im [tatsächlichen Abhol-PR #189](https://github.com/acecore-systems/acecore-systems/pull/189) nutzten sieben Sprachen Batch-Ausgaben; fünf deutsche Datumsangaben wurden anhand der Vorlage korrigiert. Abholung, Prüfung, Merge und Veröffentlichung werden getrennt bestätigt.
 
 Erzeugen Sie zu Beginn eines mehrsprachigen Blog-Ablaufs lokales HTML eines repräsentativen Artikels und prüfen Sie Text, title, description und interne Links. Verknüpfen Sie nach [Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions) nur vorhandene Sprachversionen. Nehmen Sie Übersetzungsdienst und fertige öffentliche Seiten getrennt ab.
 

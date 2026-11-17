@@ -2,7 +2,7 @@
 title: "Sveltia CMSで多言語ブログを運用する方法"
 description: "日本語を正本に8言語を静的公開する運用を解説。OpenAI Batchの数値・URL・コード保護、全件検証後の書込み、翻訳PR・CI・GitHub連携公開を整理します。"
 date: 2026-06-07T17:00
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["技術", "GitHub Copilot", "i18n", "CMS", "SEO"]
 image: "/images/insights/covers/copilot-translation-pipeline-cover-v2.webp"
@@ -84,6 +84,8 @@ faq:
     - question: 翻訳ページは重複コンテンツになりませんか？
       answer: "Googleは、主本文が翻訳されているローカライズページを単なる重複とは扱いません。各言語版を同じslugで対応させ、hreflangやsitemapで関係を示すのが基本です。"
 ---
+
+> 2026年11月17日追記：現在の新規翻訳は `gpt-6.1-terra`、推論 `medium` のOpenAI Responses Batchを使います。[実際の回収PR #189](https://github.com/acecore-systems/acecore-systems/pull/189)では、Astro多言語記事の7言語にBatch出力を使い、ドイツ語は日付5箇所を原文に合わせて修正しました。回収、検証、PR統合と公開は別々に確認します。
 
 多言語ブログ運用を始めるなら、まず代表記事の翻訳ファイルから言語別HTMLを生成し、本文・title・description・内部リンクを確認します。[Google: Localized Versions](https://developers.google.com/search/docs/specialty/international/localized-versions)に沿って実在する言語版だけを対応付け、翻訳サービスの成功と公開ページの完成を別に検収してください。
 
