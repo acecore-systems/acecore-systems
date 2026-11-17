@@ -2,7 +2,7 @@
 title: "Connecting monitoring to OpenClaw investigations: detection, evidence and decisions"
 description: "How scheduled checks and bounded OpenClaw investigations fit together, with a clear distinction between verified operation and untested incident recovery."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "Verification scope"
   text: "This is a generalized internal operations case. Scheduled runs, controlled investigations and partial evidence retention on timeout were checked. Real-incident diagnostic accuracy and automatic recovery were not demonstrated."
 ---
+
+> November 2026 update: During the monitoring host move, the execution host was identified and a no-notification dry run and scheduled monitoring were confirmed at the destination. A separate response-path test used synthetic responses; successful acceptance of an actual Discord message was not confirmed.
 
 Monitoring needs explicit responsibilities for detecting a problem and investigating its cause. This case connects scheduled checks to OpenClaw investigations without publishing internal topology or notification destinations.
 

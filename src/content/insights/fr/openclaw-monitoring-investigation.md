@@ -2,7 +2,7 @@
 title: "Relier la supervision aux investigations OpenClaw : détection, preuves et décisions"
 description: "Associer contrôles périodiques et investigations limitées, en distinguant exploitation vérifiée et reprise non démontrée."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "Périmètre vérifié"
   text: "Cas interne généralisé. Exécutions périodiques, investigations contrôlées et conservation des preuves après expiration du délai ont été vérifiées. Précision en incident réel et reprise automatique ne sont pas démontrées."
 ---
+
+> Mise à jour de novembre 2026 : lors du déplacement de la surveillance, l’hôte d’exécution a été identifié et un essai sans notification ainsi que la surveillance programmée ont été confirmés à destination. Une autre voie a utilisé des réponses synthétiques ; la réception d’un vrai message Discord n’a pas été confirmée.
 
 La supervision doit attribuer des responsabilités précises à la détection et à la recherche des causes. Ce cas relie contrôles périodiques et OpenClaw sans publier la topologie interne ni les destinataires des alertes.
 

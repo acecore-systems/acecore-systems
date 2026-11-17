@@ -87,8 +87,10 @@ faq:
       answer: Sie können uns zu Geschäftssystemen, Webanwendungen, Administrationsoberflächen, Datenintegrationen und Integrationen mit externen Diensten sowie zur Verbesserung bestehender Systeme ansprechen. Die Website informiert außerdem über IT-Beratung, KI-Einführung, Begleitung bei Deployments und die Ergänzung von Websites um CMS-, Such- und Formularfunktionen.
     - question: Kann ich Sie auch kontaktieren, wenn noch nicht feststeht, was entwickelt werden soll?
       answer: Ja. Wir können mit Ihren aktuellen Arbeitsabläufen, Herausforderungen, Nutzern, Rahmenbedingungen und Prioritäten beginnen. Eine Beratung ist auch möglich, bevor Anforderungen oder Beschaffungsumfang feststehen.
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Aktualisierung November 2026: Stellen Sie aktuelle Konfiguration, Ziel und Grenzen zusammen und teilen Sie sie über den [Leitfaden](/guide/) oder [Kontakt](/contact/). Dies eröffnet ein Gespräch und garantiert nicht automatisch Termin oder Ergebnis.
 
 Klären Sie vor dem visuellen Entwurf einer Firmenwebsite, wer welche Informationen für welche Entscheidung braucht. Prüfen Sie den Weg einer typischen Anfrage durch Leistungen, Referenzen, Preise und Kontakt. Das Beispiel Acecore Systems zeigt diesen Ansatz; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) behandelt außerdem Struktur und Auffindbarkeit.
 

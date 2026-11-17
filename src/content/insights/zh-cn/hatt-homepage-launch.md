@@ -61,8 +61,10 @@ faq:
       answer: 网站作为静态站点构建，使用 Astro、TypeScript、UnoCSS、Sveltia CMS 和 Pagefind。
     - question: Acecore 也可以咨询个人网站或作品集网站吗？
       answer: 可以。我们可以从活动内容整理、设计、CMS、搜索、SEO 到公开后的更新路径进行整体咨询。
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> 2026年11月更新：现有[Hatt主页](https://hatt.acecore.net/)分别介绍绘画、小说和建模，并引导读者前往各作品的公开页面和视频，方便查找作品。
 
 我们公开了汇总 Hatt 创作活动的个人网站「[Hatt 的主页](https://hatt.acecore.net/)」。
 

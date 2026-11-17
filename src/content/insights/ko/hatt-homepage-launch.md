@@ -61,8 +61,10 @@ faq:
       answer: Astro, TypeScript, UnoCSS, Sveltia CMS, Pagefind를 사용한 정적 사이트로 구축했습니다.
     - question: Acecore에서는 개인 사이트나 포트폴리오 사이트도 상담할 수 있나요?
       answer: 네. 활동 내용 정리, 디자인, CMS, 검색, SEO, 공개 후 업데이트 동선까지 함께 상담할 수 있습니다.
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> 2026년 11월 업데이트: 현재 [Hatt 홈페이지](https://hatt.acecore.net/)는 그림·소설·모델링을 나누어 소개하고 각 작품의 공개처와 영상으로 안내합니다.
 
 Hatt의 창작 활동을 모은 개인 사이트 “[Hatt 홈페이지](https://hatt.acecore.net/)”를 공개했습니다.
 

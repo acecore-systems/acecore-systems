@@ -2,7 +2,7 @@
 title: "R2与restic备份监控：从保存成功到恢复验证"
 description: "使用R2和restic分别验证snapshot新鲜度、完整性和恢复，介绍OS升级后的PostgreSQL版本选择、Samba隔离runtime及DB/LDAP检查和完整灾备的剩余条件。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "完整恢复需单独验证"
   text: "已进行定期备份、监控、保留处理及选定数据的提取与完整性检查。尚未证明所有应用启动，以及包含独立保管凭据的完整灾难恢复。"
 ---
+
+> 2026年11月更新：另一次恢复测试从加密快照向隔离环境恢复Web数据和数据库并检查完整性。外部存储的独立保护需要另行核对。获取和数据库加载成功不能证明所有应用启动或完整灾难恢复。
 
 备份任务结束不代表所需数据可以恢复。本案例将内部运维经验一般化，分别评价保存、完整性、恢复和服务恢复，并非从另一备份服务完成迁移的案例。
 

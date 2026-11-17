@@ -61,8 +61,10 @@ faq:
       answer: Astro、TypeScript、UnoCSS、Sveltia CMS、Pagefindを使った静的サイトとして構築しています。
     - question: Acecoreでは個人サイトやポートフォリオサイトも相談できますか？
       answer: はい。活動内容の整理、デザイン、CMS、検索、SEO、公開後の更新導線までまとめて相談できます。
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> 2026年11月追記：現在の[Hattのホームページ](https://hatt.acecore.net/)では、絵・小説・モデリングを分けて紹介し、作品ごとに公開先や動画へ案内しています。作品の発見と外部ページへの移動を確認できる構成です。
 
 Hattの創作活動をまとめる個人サイト「[Hattのホームページ](https://hatt.acecore.net/)」を公開しました。
 

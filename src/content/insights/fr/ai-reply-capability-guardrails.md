@@ -2,7 +2,7 @@
 title: "Empêcher l’IA de promettre ce qu’elle ne peut pas tenir"
 description: "Éviter les promesses d’actions impossibles : contexte, fréquentation mesurée, fraîcheur et échecs, annonces cohérentes avec la personnalité, textes similaires et contrôles avant envoi."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Cas généralisé ; aucune conversation précise n’est publiée"
   text: "Ce cas couvre des changements de politique et de classification, des contrôles avant envoi, des tests, une mise en production et une observation opérationnelle limitée. Il ne contient ni publications ni comptes d’autres personnes et ne démontre pas qu’on peut empêcher toute formulation de promesse erronée."
 ---
+
+> Mise à jour de novembre 2026 : la demande explicite de l’auteur et l’approbation du texte proposé sont distinctes. Vérifiez état et doublons avant l’envoi ; en cas de résultat incertain, rapprochez les faits sans renvoi automatique. L’approbation ne prouve pas la publication.
 
 Pour l’orientation ou le support, distinguez l’explication d’informations publiques, le transfert à une personne et la réservation effective. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) aide à définir actions autorisées et approbation. La suite traite des limites des réponses, sans procédure d’envoi automatisé propre à une plateforme.
 

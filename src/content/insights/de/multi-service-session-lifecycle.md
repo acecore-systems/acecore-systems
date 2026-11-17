@@ -2,7 +2,7 @@
 title: "Anmeldefristen über Dienste hinweg abstimmen: Erneuerung und erneute Authentifizierung"
 description: "Allgemeiner Entwurf konsistenter Anmeldefristen mit getrennten Regeln für Anmeldung, Server, Cookies und Identitätsanbieter."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Verallgemeinerter interner Fall"
   text: "Grundlage sind Richtlinienänderungen und Produktivbereitstellungen. Konkrete Fristen und interne Einstellungen bleiben unveröffentlicht; langfristiges Verhalten aller Nutzer und umfassende Sicherheit sind nicht belegt."
 ---
+
+> Aktualisierung November 2026: Eine normale Anmeldung kann gültige Identitätssitzung und Zustimmung wiederverwenden. Ein neu ausgestelltes Token ist keine neue Authentifizierung: Nach Prüfung von Signatur und weiteren Claims sind ursprüngliches `auth_time` und Ablauf zu prüfen. Aufrufe oder Tokenneuausstellung verlängern die ursprüngliche Frist nicht; zusätzliche Authentifizierung für sensible Aktionen wird getrennt gestaltet.
 
 Ein gemeinsames Konto macht die Sitzungen der Anwendungen und des Identitätsanbieters nicht identisch. Der Fall gleicht Regeln ab, ohne Zielsysteme oder Fristen zu veröffentlichen.
 

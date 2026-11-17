@@ -2,7 +2,7 @@
 title: "Enquêter sur les ralentissements de Minecraft : mesures discrètes et stockage partagé"
 description: "De la collecte discrète de TPS/MSPT à la mise en regard de JFR et des observations d’E/S du système d’exploitation. L’article distingue l’enquête sur les causes, achevée, des améliorations de performance qui restent à tester."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "Distinguer l’enquête sur les causes des résultats d’amélioration"
   text: "La surveillance continue et l’enquête sur les attentes pendant les sauvegardes sont terminées. Le passage à un autre stockage et la comparaison des performances n’ont pas été réalisés ; l’enquête ne prouve ni une panne de composant ni la disparition des ralentissements pour tous les joueurs."
 ---
+
+> Pour comparer, alignez charge et conditions d’observation et mesurez plusieurs fois sur un même cycle. Maintenir 20 TPS sous faible charge ne démontre pas une amélioration en charge ou à long terme.
 
 Les ralentissements de Minecraft peuvent avoir des causes différentes : traitement des ticks du serveur, brèves attentes pendant une sauvegarde, réseau ou rendu côté client. Nous présentons de façon anonyme une enquête menée sur plusieurs serveurs Paper, sans révéler les noms d’hôtes ni la configuration internes.
 

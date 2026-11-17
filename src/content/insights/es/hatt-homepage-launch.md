@@ -61,8 +61,10 @@ faq:
       answer: Es un sitio estático construido con Astro, TypeScript, UnoCSS, Sveltia CMS y Pagefind.
     - question: ¿Acecore también puede asesorar sobre sitios personales o portafolios?
       answer: Sí. Podemos ayudar con organización de actividades, diseño, CMS, búsqueda, SEO y flujos de actualización después de la publicación.
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Actualización de noviembre de 2026: la [web actual de Hatt](https://hatt.acecore.net/) presenta arte, novelas y modelado por separado y dirige a las páginas y vídeos públicos de cada obra.
 
 Publicamos el sitio personal [Página web de Hatt](https://hatt.acecore.net/), que reúne la actividad creativa de Hatt en un solo lugar.
 

@@ -61,8 +61,10 @@ faq:
       answer: It is a static site built with Astro, TypeScript, UnoCSS, Sveltia CMS, and Pagefind.
     - question: Can Acecore also help with personal sites and portfolio sites?
       answer: Yes. We can help organize your activity, design the site, add CMS editing, search, SEO, and post-launch update flows.
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> November 2026 update: The current [Hatt homepage](https://hatt.acecore.net/) presents art, novels and modeling separately and guides readers to each work’s public destination and videos. It is organized around finding works and following those links.
 
 We launched the personal site [Hatt’s Homepage](https://hatt.acecore.net/), which brings Hatt’s creative activity together in one place.
 

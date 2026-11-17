@@ -2,7 +2,7 @@
 title: "Aligning login expiry across services: session renewal and reauthentication"
 description: "A generalized design for consistent login expiry across web services, separating explicit sign-in, server enforcement, cookies and identity-provider settings."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Generalized internal case"
   text: "This draws on records of policy changes and production rollout across services. Exact durations and internal settings are omitted; long-term behavior for every user and comprehensive security are not demonstrated."
 ---
+
+> November 2026 update: A normal login may reuse a valid identity-provider session and consent. Do not treat a newly issued token as a new authentication: verify its signature and other claims, then check the original `auth_time` and expiry. Browsing or token reissue must not extend the original expiry; design additional authentication for sensitive actions separately.
 
 Sharing an account does not make every application session identical to the identity provider’s session. This internal case aligns expiry rules without publishing deployment targets or timeout values.
 

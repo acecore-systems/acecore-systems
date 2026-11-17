@@ -2,7 +2,7 @@
 title: "KI-Antworten dürfen keine unerfüllbaren Versprechen machen"
 description: "Unbegründete KI-Versprechen verhindern: Gespräch, gemessene Teilnahme, Aktualität und Abruffehler, persona-konforme Meldungen, ähnliche Texte und Prüfungen vor dem Senden."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Verallgemeinerter Fall; kein konkretes Gespräch wird veröffentlicht"
   text: "Der Fall behandelt Änderungen an Richtlinien und Klassifizierung, Prüfungen vor dem Versand, Tests, Bereitstellung und eine begrenzte betriebliche Beobachtung. Beiträge oder Konten anderer Personen werden nicht einbezogen; außerdem wird nicht belegt, dass sich jede Formulierung eines falschen Versprechens verhindern lässt."
 ---
+
+> Aktualisierung November 2026: Die ausdrückliche Anfrage des Urhebers und die Freigabe des vorgeschlagenen Textes sind getrennte Schritte. Vor dem Senden Status und Duplikate prüfen; bei unklarem Ergebnis abgleichen statt automatisch erneut senden. Freigabe belegt keine Veröffentlichung.
 
 Definieren Sie öffentliche Auskünfte, Übergaben an Mitarbeitende und tatsächliche Buchungen als getrennte Fähigkeiten. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) unterstützt die Gestaltung erlaubter Aktionen und Freigaben. Der folgende Text behandelt Antwortgrenzen, ohne plattformspezifische Verfahren zum automatisierten Versand.
 

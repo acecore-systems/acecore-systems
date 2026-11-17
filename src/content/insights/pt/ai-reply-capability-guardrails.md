@@ -2,7 +2,7 @@
 title: "Impeça que respostas de IA façam promessas que não podem cumprir"
 description: "Evitar promessas de ações que a IA não executa: contexto, presença medida, frescor e falhas, anúncios com personalidade, supressão de textos similares e barreiras de envio."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Caso generalizado; nenhuma conversa específica é publicada"
   text: "O caso cobre alterações de política e classificação, verificações antes do envio, testes, entrega e observação operacional limitada. Não inclui publicações nem contas de outras pessoas e não demonstra que toda formulação de promessa incorreta pode ser evitada."
 ---
+
+> Atualização de novembro de 2026: o pedido explícito do autor e a aprovação do texto proposto são etapas distintas. Confira estado e duplicações antes do envio; se o resultado for incerto, concilie sem reenviar automaticamente. Aprovação não prova publicação.
 
 Para orientação ou suporte, defina como capacidades distintas explicar informações públicas, encaminhar à equipe e realizar uma reserva. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) ajuda a projetar ações permitidas e aprovações. O texto aborda limites das respostas, sem procedimentos de envio automático específicos de plataformas.
 

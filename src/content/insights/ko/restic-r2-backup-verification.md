@@ -2,7 +2,7 @@
 title: "R2와 restic 백업 모니터링: 저장 성공부터 복원 검증까지"
 description: "R2·restic으로 snapshot 신선도·무결성·복원을 나누는 설계. OS 갱신 후 PostgreSQL 버전 선택, Samba 격리 runtime과 DB·LDAP 검사, 전체 복구의 잔여 조건을 설명합니다."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "완전한 복구는 별도 검증"
   text: "정기 백업·모니터링·보존 처리와 선택한 데이터의 추출·무결성 확인을 수행했습니다. 모든 앱의 기동과 별도 자격 증명 관리를 포함한 재해 복구는 입증하지 않았습니다."
 ---
+
+> 2026년 11월 업데이트: 다른 복원 시험에서 암호화 snapshot의 웹 데이터와 DB를 격리 환경에 복원하고 무결성을 확인했습니다. 외부 저장소의 독립 보호는 별도 대조가 필요합니다. 가져오기와 DB 적재만으로 모든 앱의 기동이나 완전한 재해 복구를 증명할 수 없습니다.
 
 백업 작업이 끝나도 필요한 데이터를 복구할 수 있다는 뜻은 아닙니다. 내부 사례를 일반화해 저장·무결성·복원·서비스 복구를 따로 평가합니다. 다른 백업 서비스에서 이전을 완료했다는 사례는 아닙니다.
 

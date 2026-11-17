@@ -2,7 +2,7 @@
 title: "restic-Backups auf R2 überwachen: von Speicherung zu geprüfter Wiederherstellung"
 description: "Snapshot-Aktualität, Integrität und Wiederherstellung mit R2/restic trennen: PostgreSQL-Version nach OS-Updates, isolierte Samba-Runtime, DB/LDAP-Prüfung und offene Gesamtrettung."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "Vollständige Wiederherstellung separat prüfen"
   text: "Regelmäßige Backups, Überwachung, Aufbewahrung und Extraktion/Integritätsprüfung ausgewählter Daten wurden durchgeführt. Start aller Anwendungen und Katastrophenwiederherstellung mit getrennten Zugangsdaten sind nicht belegt."
 ---
+
+> Aktualisierung November 2026: Ein weiterer Test stellte Webdaten und Datenbank aus einem verschlüsselten Snapshot isoliert wieder her und prüfte die Integrität. Der unabhängige Schutz externer Speicher muss getrennt abgeglichen werden. Abruf und Datenbankladen belegen weder den Start aller Anwendungen noch eine vollständige Notfallwiederherstellung.
 
 Ein beendeter Backup-Job beweist keine Wiederherstellbarkeit. Dieser verallgemeinerte interne Fall bewertet Speicherung, Integrität, Wiederherstellung und Dienstbetrieb getrennt. Er dokumentiert keine abgeschlossene Migration von einem anderen Dienst.
 

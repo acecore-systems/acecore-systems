@@ -2,7 +2,7 @@
 title: "Investigating Minecraft Lag: Quiet Metrics and Shared-Storage Diagnosis"
 description: "From quiet TPS/MSPT collection to correlating JFR and OS I/O observations. This article separates a completed cause investigation from performance improvements that have not been tested."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "Separate cause investigation from improvement results"
   text: "Always-on monitoring and the investigation of save waits are complete. Moving to different storage and comparing performance have not been done; the investigation does not prove a component failure or eliminate lag for every player."
 ---
+
+> For additional comparisons, match workload and observation conditions and measure repeatedly across the same cycle. Maintaining 20 TPS under light load alone does not demonstrate improvement under load or over a long period.
 
 Minecraft lag can come from different sources: server tick processing, brief save stalls, networking, or client rendering. This anonymized investigation covers several Paper servers without revealing internal hostnames or configuration.
 

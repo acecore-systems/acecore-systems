@@ -2,7 +2,7 @@
 title: "Minecraft-Lag untersuchen: unauffällige Messung und gemeinsame Speicherpfade"
 description: "Von der leisen Erfassung von TPS/MSPT bis zum Abgleich von JFR und I/O-Beobachtungen des Betriebssystems. Der Beitrag trennt die abgeschlossene Ursachensuche von noch nicht geprüften Leistungsverbesserungen."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "Ursachensuche und Verbesserungsergebnisse getrennt betrachten"
   text: "Die kontinuierliche Messung und die Untersuchung der Wartezeiten beim Speichern sind abgeschlossen. Ein Wechsel des Speichers und ein Leistungsvergleich wurden nicht durchgeführt. Die Untersuchung belegt weder einen Komponentenausfall noch, dass alle Spieler keine Verzögerungen mehr erleben."
 ---
+
+> Gleichen Sie für weitere Vergleiche Last und Beobachtungsbedingungen an und messen Sie mehrfach über denselben Zyklus. 20 TPS bei leichter Last belegen weder eine Verbesserung unter Last noch langfristig.
 
 Minecraft-Lag kann verschiedene Ursachen haben: Tick-Verarbeitung des Servers, kurze Speicherwartezeiten, Netzwerk oder Rendering auf dem Client. Wir beschreiben anonym eine Untersuchung auf mehreren Paper-Servern, ohne interne Hostnamen oder Konfiguration offenzulegen.
 

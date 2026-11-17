@@ -2,7 +2,7 @@
 title: "Supervisión e investigación con OpenClaw: detección, pruebas y decisiones"
 description: "Cómo combinar comprobaciones periódicas e investigaciones limitadas, distinguiendo la operación verificada de la recuperación aún no probada."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "Alcance de la verificación"
   text: "Caso interno generalizado. Se comprobaron ejecuciones periódicas, investigaciones controladas y conservación de pruebas al agotar el tiempo. No se demostró la precisión en incidentes reales ni la recuperación automática."
 ---
+
+> Actualización de noviembre de 2026: al trasladar la supervisión se identificó el host y se verificaron una prueba sin avisos y la ejecución programada en destino. Otra vía solo se probó con respuestas sintéticas; no se confirmó la aceptación de un mensaje real de Discord.
 
 La supervisión necesita responsabilidades claras para detectar problemas e investigar causas. Este caso conecta comprobaciones periódicas con OpenClaw sin publicar la topología interna ni los destinos de avisos.
 

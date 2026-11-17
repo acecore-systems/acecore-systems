@@ -2,7 +2,7 @@
 title: "CSS de usuários e temas públicos com segurança: fonte compartilhada, escopo de renderização e versões fixas"
 description: "CSS comum à edição visual e manual, renderização segura e aplicação imediata de temas fixos da loja. Abrange página e diretório independentes, prévia do titular, rascunho e publicação."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Verificar a implementação não equivale à aceitação completa pelos usuários"
   text: "CSS/GUI, loja de versões fixas, aplicação imediata, destinos independentes e prévias do titular foram integrados e implantados, com exibição pública verificada. Operações autenticadas usaram perfis sintéticos. Consentimento, aplicação, salvamento e publicação reais e vendas pagas não foram demonstrados."
 ---
+
+> Atualização de novembro de 2026: para impedir que temas gerados alterem as dimensões de cabeçalho e rodapé comuns, regras confiáveis de renderização preservam medidas e mantêm decorações como cores. O layout do perfil é separado e CSS salvo e snapshots públicos não são reescritos. Foram verificadas as vistas pública, edição, candidato e loja em larguras diferentes.
 
 Um editor de perfil que permite ajustar cores e espaçamentos por uma interface gráfica e editar todo o layout com CSS precisa cuidar tanto da usabilidade quanto da segurança do código exibido em páginas públicas. Este caso anonimizado descreve os limites entre edição e distribuição.
 

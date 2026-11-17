@@ -2,7 +2,7 @@
 title: "Guide d'implémentation Cloudflare Vectorize : synchroniser le HTML public en sécurité"
 description: "Un guide détaillé pour créer un corpus depuis le HTML public, conserver Pagefind et exploiter une synchronisation Vectorize sûre."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags:
   ["Technologie", "Cloudflare", "Vectorize", "Workers AI", "Recherche interne"]
@@ -117,6 +117,8 @@ faq:
     - question: À quel moment l'intégration est-elle considérée comme terminée ?
       answer: "Un merge ou des tests locaux ne suffisent pas. En Preview, nous vérifions Pagefind et le fallback de l'interface ; en Production, la correspondance entre commit publié et corpus, la synchronisation de l'index, la convergence des mutations, la recherche associée, le rate limit et la procédure d'arrêt avant de consigner l'exploitation."
 ---
+
+> Après un échec de récupération du texte Pages pour le chat public, le texte du corpus public a été stocké dans les métadonnées Vectorize existantes, avec les limites de source, langue et nombre. Seul le contenu public est concerné. Vérifier les réponses JSON et SSE et évaluer leur qualité sont des étapes distinctes. [Portal PR #237](https://github.com/acecore-systems/aceserver-portal/pull/237) · [WIKI PR #143](https://github.com/acecore-systems/aceserver-wiki/pull/143)
 
 Pour tester la synchronisation différentielle, régénérez le corpus depuis un HTML public identique et vérifiez l’absence d’ajouts ou suppressions. Testez ensuite une petite modification d’article, puis mutations et recherche avec [Cloudflare Vectorize: API](https://developers.cloudflare.com/vectorize/reference/client-api/). Définissez les seuils d’arrêt des suppressions séparément des limites produit.
 

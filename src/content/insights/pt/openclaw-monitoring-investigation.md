@@ -2,7 +2,7 @@
 title: "Monitoramento e investigação com OpenClaw: detecção, evidências e decisões"
 description: "Como combinar verificações periódicas e investigações limitadas, separando a operação verificada da recuperação ainda não comprovada."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "Escopo da verificação"
   text: "Caso interno generalizado. Foram verificadas execuções periódicas, investigações controladas e preservação de evidências após o limite de tempo. Precisão em incidentes reais e recuperação automática não foram demonstradas."
 ---
+
+> Atualização de novembro de 2026: na mudança do host de monitoramento, identificou-se o executor e foram confirmados um ensaio sem notificações e a execução periódica no destino. Outra rota foi testada com respostas sintéticas; a aceitação de mensagem real no Discord não foi confirmada.
 
 Monitoramento exige responsabilidades claras para detectar problemas e investigar causas. Este caso conecta verificações periódicas ao OpenClaw sem publicar topologia interna ou destinos de avisos.
 
