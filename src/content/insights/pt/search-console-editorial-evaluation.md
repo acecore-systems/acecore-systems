@@ -50,7 +50,7 @@ Como exemplo, compare os 28 dias anteriores com os 28 dias posteriores, excluind
 
 ## Exemplo: a comparação entre antes e depois não determina, por si só, o efeito da alteração
 
-No [artigo de apresentação do WIKI e do Alpha-kun](https://asv.acecore.net/stories/wiki-alpha-guide/) do Aceserver Portal, foram acrescentados exemplos de perguntas e orientações para consultar o texto original, e a versão revisada foi publicada em 2026/10/10. As janelas de avaliação, de acordo com os limites de data do Search Console e excluindo o dia da publicação, são de 9/12 a 10/9 e de 10/11 a 11/7, com mês e dia nessa ordem.
+No [artigo de apresentação do WIKI e do Alpha-kun](https://asv.acecore.net/pt/stories/wiki-alpha-guide/) do Aceserver Portal, foram acrescentados exemplos de perguntas e orientações para consultar o texto original, e a versão revisada foi publicada em 2026/10/10. As janelas de avaliação, de acordo com os limites de data do Search Console e excluindo o dia da publicação, são de 9/12 a 10/9 e de 10/11 a 11/7, com mês e dia nessa ordem.
 
 O período anterior também inclui a data da publicação inicial e outra alteração imediatamente anterior. Como várias mudanças foram feitas ao mesmo tempo e também pode haver variações na demanda de pesquisa e nos números reduzidos, a diferença entre os períodos não pode ser interpretada como efeito isolado desta alteração ou dos links de referência. No momento da investigação, uma melhoria no tráfego não havia sido comprovada. Ao registrar os valores observados, diferencie o que foi possível obter do que não foi obtido.
 

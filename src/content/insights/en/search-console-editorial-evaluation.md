@@ -50,7 +50,7 @@ As an example, compare the 28 days before publication with the 28 days after it,
 
 ## Example: A before-and-after comparison alone cannot establish the effect of a revision
 
-For the Aceserver Portal [guide to WIKI and Alpha-kun](https://asv.acecore.net/stories/wiki-alpha-guide/), we added example questions and guidance on checking the original text, and published the revised version on 2026-10-10. Using Search Console date boundaries and excluding the publication day, the evaluation windows were 9/12–10/9 and 10/11–11/7, in month/day format.
+For the Aceserver Portal [guide to WIKI and Alpha-kun](https://asv.acecore.net/en/stories/wiki-alpha-guide/), we added example questions and guidance on checking the original text, and published the revised version on 2026-10-10. Using Search Console date boundaries and excluding the publication day, the evaluation windows were 9/12–10/9 and 10/11–11/7, in month/day format.
 
 The earlier period also includes the initial publication date and another revision made immediately before the one discussed here. Because multiple changes were made at the same time and fluctuations can also result from search demand and small counts, the before-and-after difference cannot be interpreted as the effect of this revision or the reference links alone. An improvement in traffic had not been demonstrated at the time of the investigation. When recording observations, distinguish the data that was available from what could not be obtained.
 

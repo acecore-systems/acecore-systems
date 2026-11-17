@@ -50,7 +50,7 @@ Vergleichen Sie beispielsweise die 28 Tage vor und die 28 Tage nach der Veröffe
 
 ## Praxisbeispiel: Ein Vorher-nachher-Vergleich allein belegt nicht die Wirkung der Überarbeitung
 
-Im Aceserver Portal wurden im [Informationsartikel zu WIKI und Alpha-kun](https://asv.acecore.net/stories/wiki-alpha-guide/) Beispielfragen und Hinweise zur Prüfung des Originaltexts ergänzt. Die überarbeitete Fassung wurde am 10. 10. 2026 veröffentlicht. Die Bewertungsfenster reichen gemäß den Datumsgrenzen von Search Console unter Ausschluss des Veröffentlichungstags vom 12. 9. bis zum 9. 10. und vom 11. 10. bis zum 7. 11.
+Im Aceserver Portal wurden im [Informationsartikel zu WIKI und Alpha-kun](https://asv.acecore.net/de/stories/wiki-alpha-guide/) Beispielfragen und Hinweise zur Prüfung des Originaltexts ergänzt. Die überarbeitete Fassung wurde am 10. 10. 2026 veröffentlicht. Die Bewertungsfenster reichen gemäß den Datumsgrenzen von Search Console unter Ausschluss des Veröffentlichungstags vom 12. 9. bis zum 9. 10. und vom 11. 10. bis zum 7. 11.
 
 Der Vorher-Zeitraum umfasst auch den Tag der Erstveröffentlichung und eine weitere, kurz zuvor vorgenommene Überarbeitung. Da mehrere Änderungen gleichzeitig vorgenommen wurden und zudem Schwankungen durch die Suchnachfrage und geringe Fallzahlen möglich sind, lässt sich die Vorher-nachher-Differenz weder allein auf diese Überarbeitung noch allein auf die weiterführenden Links zurückführen. Zum Zeitpunkt der Untersuchung war eine Verbesserung des Suchzugriffs nicht belegt. Unterscheiden Sie bei der Dokumentation der Beobachtungswerte zwischen verfügbaren und nicht verfügbaren Daten.
 

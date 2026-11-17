@@ -50,7 +50,7 @@ Regroupez les modifications proposées dans une Draft PR et vérifiez les passag
 
 ## Exemple : une comparaison avant-après ne suffit pas à établir l’effet d’une révision
 
-Dans l’[article de présentation du WIKI et d’Alpha-kun](https://asv.acecore.net/stories/wiki-alpha-guide/) d’Aceserver Portal, des exemples de questions et des indications pour vérifier le texte original ont été ajoutés, puis une version révisée a été publiée le 10/10/2026. Les fenêtres d’évaluation, définies selon les limites des journées de Search Console et excluant le jour de publication, vont du 12/9 au 9/10, puis du 11/10 au 7/11.
+Dans l’[article de présentation du WIKI et d’Alpha-kun](https://asv.acecore.net/fr/stories/wiki-alpha-guide/) d’Aceserver Portal, des exemples de questions et des indications pour vérifier le texte original ont été ajoutés, puis une version révisée a été publiée le 10/10/2026. Les fenêtres d’évaluation, définies selon les limites des journées de Search Console et excluant le jour de publication, vont du 12/9 au 9/10, puis du 11/10 au 7/11.
 
 La période précédente comprend également la date de publication initiale et une autre révision immédiatement antérieure. Plusieurs modifications ayant été apportées simultanément, et des fluctuations pouvant aussi résulter de la demande de recherche ou du faible nombre de données, la différence avant-après ne peut pas être attribuée à cette révision ou aux seuls liens de référence. Au moment de l’analyse, aucune amélioration du trafic n’a été démontrée. Lorsque vous consignez les valeurs observées, distinguez les données obtenues de celles qui n’ont pas pu l’être.
 

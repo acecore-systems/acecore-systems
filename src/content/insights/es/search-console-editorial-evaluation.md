@@ -50,7 +50,7 @@ Como ejemplo, compara los 28 días anteriores y los 28 días posteriores, excluy
 
 ## Caso real: la comparación anterior y posterior no basta para determinar el efecto de la revisión
 
-En el [artículo de presentación de WIKI y Alpha-kun de Aceserver Portal](https://asv.acecore.net/stories/wiki-alpha-guide/), añadimos ejemplos de preguntas e indicaciones para consultar el texto original y publicamos la versión revisada en el año 2026, mes 10, día 10. Las ventanas de evaluación, según los límites de fecha de Search Console y excluyendo el día de publicación, van del mes 9, día 12, al mes 10, día 9, y del mes 10, día 11, al mes 11, día 7.
+En el [artículo de presentación de WIKI y Alpha-kun de Aceserver Portal](https://asv.acecore.net/es/stories/wiki-alpha-guide/), añadimos ejemplos de preguntas e indicaciones para consultar el texto original y publicamos la versión revisada en el año 2026, mes 10, día 10. Las ventanas de evaluación, según los límites de fecha de Search Console y excluyendo el día de publicación, van del mes 9, día 12, al mes 10, día 9, y del mes 10, día 11, al mes 11, día 7.
 
 El período anterior también incluye la fecha de publicación inicial y otra revisión inmediatamente anterior. Como se realizaron varios cambios a la vez y también hay fluctuaciones debidas a la demanda de búsqueda y al reducido número de casos, la diferencia entre ambos períodos no puede interpretarse como el efecto aislado de esta revisión o de los enlaces de referencia. En el momento de la investigación no se había demostrado una mejora del tráfico. Al registrar las observaciones, distingue entre los datos que se pudieron obtener y los que no.
 
