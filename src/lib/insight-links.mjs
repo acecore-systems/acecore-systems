@@ -6,6 +6,7 @@ export const insightSlugs = Object.freeze([
   "ai-chat-markdown-link-safety",
   "ai-monkey-testing-methodology",
   "ai-reply-capability-guardrails",
+  "alpha-lore-evidence-review",
   "astro-accessibility-guide",
   "astro-ai-contact-chat",
   "astro-cloudflare-site-architecture",
@@ -22,7 +23,9 @@ export const insightSlugs = Object.freeze([
   "cms-selection-and-turnstile",
   "codex-task-routing-design",
   "copilot-translation-pipeline",
+  "desktop-automation-shared-lock",
   "dynmap-512-migration",
+  "gradle-cache-ci-measurement",
   "hatt-homepage-launch",
   "homepage-production-cost-guide",
   "minecraft-latency-investigation",
@@ -42,6 +45,10 @@ export const insightSlugs = Object.freeze([
   "vitepress-to-starlight-migration",
   "website-improvement-batches",
   "website-improvement-final-batch",
+  "git-dvc-creative-restore",
+  "public-register-snapshot-review",
+  "commerce-state-readback",
+  "discord-audio-processing-boundaries",
   "zoho-to-kagoya-mail-migration",
 ]);
 
