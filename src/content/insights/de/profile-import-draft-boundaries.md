@@ -1,28 +1,28 @@
 ---
 title: "Profildaten als Entwurf importieren: vergleichen, auswählen, gezielt veröffentlichen"
-description: "Öffentliche URLs, Text, CSV, HTML und JSON in Profilentwürfe importieren: begrenzte Medienabrufe, Linkreihenfolge, Erhalt nach Lesefehlern sowie Speichern und Veröffentlichen durch Eigentümer."
+description: "Kandidaten aus einer öffentlichen Profil-URL in einen Entwurf übernehmen: begrenzte Medien, Erhalt bei Lesefehlern sowie Speichern und Veröffentlichen durch Eigentümer."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
   title: "Umsetzung bestätigt; Abnahme mit echtem Konto steht aus"
-  text: "Dateiimporte und begrenzte öffentliche URL-, Bild- und Audioimporte sind implementiert, integriert und produktiv ausgeliefert. Geprüft wurden synthetische Abläufe und ausgewählte öffentliche Medien. Rechteprüfung, Speichern und Veröffentlichung durch echte Eigentümer, offizielle Integrationen und Quellantworten 429 bleiben getrennte offene Aufgaben."
+  text: "Begrenzte öffentliche URL-, Bild- und Audioimporte sind implementiert und produktiv ausgeliefert. Synthetische Abläufe und ausgewählte öffentliche Medien wurden geprüft. Die Abnahme von Rechteprüfung, Speichern und Veröffentlichung durch echte Eigentümer steht aus. Offizieller Login liegt außerhalb des Umfangs; Quellenbeschränkungen werden nicht umgangen."
 ---
 
 Wer ein vorhandenes Profil in einen anderen Editor überträgt, sollte die aktuellen Werte zuerst mit den Importvorschlägen vergleichen. Dieses anonymisierte Beispiel beschreibt die Grenzen zwischen Datenimport und Veröffentlichung eines Profils.
 
 ## Manuelle Änderungen mit einem Biografiefeld prüfen
 
-Bearbeiten Sie die Biografie manuell und importieren Sie einen anderen Textvorschlag. Prüfen Sie unveränderte, nicht ausgewählte Felder, überprüfbare Ersetzungen und Rückkehr zum Original nach Abbruch. Vergleichen Sie anschließend Entwurf und öffentliche Seite: Import allein darf die Veröffentlichung nicht ändern.
+Bearbeiten Sie eine Biografie und rufen Sie einen anderen Kandidaten über eine unterstützte öffentliche URL ab. Prüfen Sie nicht ausgewählte Werte, Ersetzung und Abbruch; vergleichen Sie Entwurf und öffentliche Seite: Import allein veröffentlicht nicht.
 
 [OWASP：Format, Werte und Länge von Eingaben prüfen](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Unterstützte Eingabeformate zuerst festlegen
 
-Text, CSV, statisches HTML, gemeinsames JSON und Vorlagen werden um Kandidaten aus unterstützten öffentlichen Profil-URLs ergänzt. HTML wird als Eingabe analysiert; Skripte und ursprüngliches Markup laufen nicht auf der öffentlichen Seite. Länge, Anzahl, Format und HTTPS-Links werden geprüft.
+Der aktuelle Einstieg akzeptiert eine unterstützte öffentliche Profil-URL. Abgerufenes HTML wird als Daten analysiert, ohne Skripte oder Markup auszuführen; Länge, Anzahl, Format und HTTPS-Links werden geprüft. Datei, eingefügter Text und offizieller Login sind keine Importeingänge.
 
 Links behalten ihre Reihenfolge und zusammengehörige Klammern innerhalb von URLs. Eine URL in Markdown wird nicht doppelt erfasst; dieselbe URL an anderer Stelle bleibt ein eigener Kandidat. Reihenfolge und Duplikate werden nur nach Entscheidung des Eigentümers bereinigt.
 
@@ -30,19 +30,19 @@ Links behalten ihre Reihenfolge und zusammengehörige Klammern innerhalb von URL
 
 Veröffentlichen Sie Analyseergebnisse nicht sofort, sondern vergleichen Sie sie zuerst mit den aktuellen Werten. Die profilverantwortliche Person wählt Felder einzeln aus und kann Vorschläge bearbeiten, bevor sie im Editor angewendet werden. Ein ausgewähltes Feld ersetzt den aktuellen Wert; prüfen Sie daher bei jedem Import die Unterschiede. Die Änderung lässt sich auch rückgängig machen. Damit ist nicht garantiert, dass Konflikte mit Änderungen auf anderen Seiten oder durch andere Personen automatisch gelöst werden.
 
-Schlägt das erneute Lesen derselben URL oder Datei fehl, bleiben Kandidaten, Bearbeitungen, Auswahl, CSV-Zuordnungen und heruntergeladene Medien erhalten. Fehler und Herkunft als frühere Kandidaten werden angezeigt. Ein Austausch erfolgt nach Änderung von Quelle, Methode, Text oder Datei oder nach erfolgreichem erneuten Lesen. Erhalten bedeutet weder anwenden noch speichern oder veröffentlichen.
+Scheitert das erneute Lesen derselben URL, bleiben frühere Kandidaten, Bearbeitungen, Auswahl und abgerufene Medien erhalten. Fehler und frühere Herkunft werden angezeigt. Bei Quellenwechsel oder erfolgreichem erneutem Lesen werden sie ersetzt. Erhalt wendet nichts an und speichert oder veröffentlicht nichts.
 
 ## URL-Abruf von offizieller Integration unterscheiden
 
 Der Abruf ist auf bekannte öffentliche Strukturen von Profcard, lit.link, POTOFU, HTML Meishi und foriio begrenzt. Identität, Indexierungsausschlüsse und Kandidatenkonsistenz werden geprüft; authentifizierte Seiten und unzulässige Ziele bleiben ausgeschlossen. Das belegt keine offizielle Anmeldung oder API-Integration und keine vollständige Migration.
 
-Gemeinsame JSON-Vorlage und Angaben je Dienst bleiben verfügbar. Nicht unterstützte URLs und dynamische Inhalte nutzen Einfügen oder Dateiimport. Antworten wie 401, 403 oder 429 stoppen den Abruf, ohne Umgehung durch andere Browser oder APIs.
+Nicht unterstützte URLs und nicht abrufbare dynamische Inhalte gelten nicht als erfolgreicher Import. Bei 401, 403 oder 429 stoppen, ohne Beschränkungen über andere Browser oder APIs zu umgehen.
 
 [OWASP: URL-Ziele und Weiterleitungen gegen SSRF begrenzen](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
 
 ## Abgerufene Bilder und Audio vor der Auswahl prüfen
 
-Neben GIF-Profilbildern liefern bekannte Linkkarten und öffentliche Beiträge Werkbilder und Titel. Zulässige GitHub-Links zu Bildern, WAV und MP3 im Linkfeld des Eigentümers und einzelne öffentliche Dropbox-Dateien werden begrenzt unterstützt. POTOFU-Karten im initialen HTML sind enthalten; Beschreibungen, Zusatzseiten, eingebettete Player und die foriio-Galerie gehören nicht zum abgeschlossenen Umfang.
+Kandidaten können GIF-Profilbilder sowie Bilder und Titel bekannter Linkkarten und öffentlicher Beiträge enthalten; erlaubte GitHub-Links zu Bildern, WAV und MP3 und einzelne öffentliche Dropbox-Dateien werden begrenzt unterstützt. POTOFU-Beschreibungen können aus Anfangsdaten ergänzt werden, wenn Profil, Bild und ursprünglicher Titel einen öffentlichen Beitrag eindeutig zuordnen. Weitere Texte erfordern unter anderem die Übereinstimmung der sichtbaren ersten Beiträge. Zusätzliche Seiten, eingebettete Player, mehrdeutige Beiträge und die foriio-Galerie bleiben ausgeschlossen; Quellenbeschränkungen werden nicht umgangen.
 
 Quelle und Kandidat sowie host, path, Weiterleitungen, MIME, Inhalt, Größe und Fristen werden erneut geprüft. Eigentümer sehen oder hören dieselben Daten und prüfen Rechte, Titel und Beschreibung. Nur ausgewählte Anhänge gelangen zu ungespeicherten Werken, werden über den bestehenden Upload vorbereitet und normal gespeichert. Eigentümer, Profil, Medientyp und ready-Status werden erneut geprüft; manuelle Eingaben und öffentlicher snapshot bleiben erhalten.
 
