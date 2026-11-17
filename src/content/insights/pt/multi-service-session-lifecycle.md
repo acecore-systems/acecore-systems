@@ -2,7 +2,7 @@
 title: "Alinhar a validade do login entre serviços: renovação e reautenticação"
 description: "Desenho geral de validade de login, separando acesso explícito, servidor, cookies e provedor de identidade."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Caso interno generalizado"
   text: "Baseado em mudanças de política e publicação em produção. Prazos e configurações internas são omitidos; não comprova comportamento prolongado de todos os usuários nem segurança integral."
 ---
+
+> Atualização de novembro de 2026: o login normal pode reutilizar sessão e consentimento válidos. Um token novo não significa nova autenticação: após verificar assinatura e outras alegações, confira o `auth_time` original e o prazo. Navegação ou reemissão não estende o prazo; autenticação adicional para ações sensíveis é definida separadamente.
 
 Usar uma conta comum não torna idênticas as sessões das aplicações e do provedor de identidade. O caso alinha regras sem publicar destinos ou prazos.
 

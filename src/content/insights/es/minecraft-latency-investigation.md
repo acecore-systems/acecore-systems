@@ -2,7 +2,7 @@
 title: "Cómo investigar el lag de Minecraft: métricas silenciosas y almacenamiento compartido"
 description: "Desde la recopilación silenciosa de TPS/MSPT hasta la correlación de JFR con observaciones de E/S del sistema operativo. Separa la investigación de causas ya completada de las mejoras de rendimiento aún no probadas."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "Separar la investigación de causas de los resultados de mejora"
   text: "La monitorización continua y la investigación de las esperas al guardar están completas. No se ha migrado a otro almacenamiento ni comparado el rendimiento; la investigación no demuestra un fallo de componentes ni que haya desaparecido el lag para todos los jugadores."
 ---
+
+> Para comparar, iguala la carga y las condiciones de observación y mide varias veces a lo largo del mismo ciclo. Mantener 20 TPS con poca carga no demuestra mejora con carga ni a largo plazo.
 
 El lag de Minecraft puede deberse a causas distintas: procesamiento de ticks del servidor, pausas breves al guardar, red o renderizado del cliente. Presentamos de forma anónima una investigación en varios servidores Paper, sin revelar nombres de host ni configuración internos.
 

@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize 实现指南：安全同步已发布 HTML"
 description: "详细说明如何从已发布 HTML 创建 corpus、保留 Pagefind，并安全运行 Vectorize 同步。"
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["技术", "Cloudflare", "Vectorize", "Workers AI", "站内搜索"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -116,6 +116,8 @@ faq:
     - question: 在什么阶段可以判断导入完成？
       answer: "merge 或本地 test 本身不代表完成。在 Preview 中确认 Pagefind 和 UI fallback；在 Production 中确认已发布 commit 与 corpus 一致、index 同步、mutation 收敛、相关搜索、rate limit 和停止步骤后，才记录为正在运行。"
 ---
+
+> 公开聊天从Pages获取搜索正文失败时，将公开语料正文保存到现有Vectorize元数据，并保留来源、语言和数量限制。范围仅限公开内容。JSON和SSE响应检查及回答质量评估是独立的验证项目。 [Portal PR #237](https://github.com/acecore-systems/aceserver-portal/pull/237) · [WIKI PR #143](https://github.com/acecore-systems/aceserver-wiki/pull/143)
 
 试验差分同步时，从相同公开HTML重建corpus，先确认无变化内容不会产生新增或删除。再通过文章的小改动，按[Cloudflare Vectorize: API](https://developers.cloudflare.com/vectorize/reference/client-api/)检查mutation完成与搜索结果。批量删除停止阈值应与产品限制分开制定。
 

@@ -2,7 +2,7 @@
 title: "Unificar la caducidad del acceso entre servicios: renovación y reautenticación"
 description: "Diseño general para alinear la caducidad del acceso, distinguiendo inicio explícito, servidor, cookies y proveedor de identidad."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Caso interno generalizado"
   text: "Basado en cambios de política y despliegues de producción. Se omiten duraciones y ajustes internos; no demuestra el comportamiento prolongado de todos los usuarios ni una seguridad completa."
 ---
+
+> Actualización de noviembre de 2026: el acceso normal puede reutilizar una sesión y consentimiento válidos. Un token nuevo no implica autenticación nueva: tras verificar firma y otras declaraciones, comprueba el `auth_time` original y su vencimiento. Navegar o renovar el token no amplía ese plazo; la autenticación adicional para acciones sensibles se diseña aparte.
 
 Compartir una cuenta no hace idénticas las sesiones de cada aplicación y del proveedor de identidad. Este caso alinea las reglas sin publicar destinos ni duraciones.
 

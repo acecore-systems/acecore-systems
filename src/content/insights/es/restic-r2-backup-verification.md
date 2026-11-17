@@ -2,7 +2,7 @@
 title: "Copias con restic en R2: de guardar datos a verificar su restauración"
 description: "Separar frescura, integridad y restauración con R2 y restic: selección PostgreSQL tras actualizar el OS, runtime aislado Samba, comprobaciones DB/LDAP y recuperación completa pendiente."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "La recuperación completa exige otra verificación"
   text: "Se realizaron copias periódicas, supervisión, retención y extracción/comprobación de datos seleccionados. No se demostró el arranque de todas las aplicaciones ni la recuperación ante desastres con credenciales guardadas por separado."
 ---
+
+> Actualización de noviembre de 2026: otra prueba restauró datos web y una base de datos desde una instantánea cifrada en un entorno aislado y comprobó su integridad. La protección independiente del almacenamiento externo requiere una comprobación aparte. Obtener y cargar la base no demuestra el inicio de todas las aplicaciones ni una recuperación completa.
 
 Un trabajo terminado no demuestra que los datos necesarios puedan recuperarse. Este caso interno generalizado evalúa almacenamiento, integridad, restauración y recuperación del servicio por separado. No documenta una migración completada desde otro servicio.
 

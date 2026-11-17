@@ -2,7 +2,7 @@
 title: "Superviser restic sur R2 : du stockage réussi à la restauration vérifiée"
 description: "Séparer fraîcheur, intégrité et restauration avec R2/restic : version PostgreSQL après mise à jour OS, runtime Samba isolé, contrôles DB/LDAP et conditions de reprise complète."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "La reprise complète exige une vérification distincte"
   text: "Sauvegardes périodiques, supervision, rétention et extraction/intégrité de données sélectionnées ont été effectuées. Le démarrage de toutes les applications et la reprise avec identifiants séparés ne sont pas démontrés."
 ---
+
+> Mise à jour de novembre 2026 : un autre essai a restauré données web et base depuis un snapshot chiffré dans un environnement isolé, puis vérifié leur intégrité. La protection indépendante du stockage externe exige un contrôle distinct. Récupération et chargement de la base ne prouvent ni le démarrage de toutes les applications ni une reprise complète.
 
 Une tâche terminée ne prouve pas que les données nécessaires sont récupérables. Ce cas interne généralisé évalue séparément stockage, intégrité, restauration et reprise du service. Il ne décrit pas une migration achevée depuis un autre service.
 

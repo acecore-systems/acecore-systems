@@ -2,7 +2,7 @@
 title: "Safe User CSS and Public Themes: Shared Source, Scoped Rendering, and Versioned Releases"
 description: "A shared CSS source for GUI and handwritten editing, safe rendering, and immediate application of fixed store themes. Covers independent page and directory targets, owner previews, drafts and publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Implementation checks do not equal end-to-end user acceptance"
   text: "CSS/GUI editing, the fixed-version store, immediate application, independent page/card targets and owner previews are integrated and deployed, with public display checked. Authenticated interactions used synthetic profiles. Real-owner consent, application, saving and publication, and paid sales, remain unproven."
 ---
+
+> November 2026 update: To prevent generated themes changing shared header and footer dimensions, trusted rendering rules preserved their dimensions while retaining decoration such as colors. Profile content layout remained separate; saved CSS and public snapshots were not rewritten. Public, editing, generated-candidate and store-preview views were checked at different widths.
 
 A profile editor that lets people adjust colors and spacing in a GUI and edit the overall layout with CSS needs to address both usability and the safety of code shown on public pages. This anonymized implementation illustrates the boundaries between editing and distribution.
 

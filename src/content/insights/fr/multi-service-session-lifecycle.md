@@ -2,7 +2,7 @@
 title: "Aligner l’expiration des connexions entre services : renouvellement et réauthentification"
 description: "Une conception générale distinguant connexion explicite, expiration côté serveur, cookies et fournisseur d’identité."
 date: "2026-09-30T13:37:47+00:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/multi-service-session-lifecycle-cover-v1.webp
 tags: ["Authentication", "Session", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Cas interne généralisé"
   text: "Fondé sur des changements de règles et leur déploiement en production. Durées et réglages internes sont omis ; le comportement à long terme de tous les utilisateurs et une sécurité exhaustive ne sont pas démontrés."
 ---
+
+> Mise à jour de novembre 2026 : une connexion normale peut réutiliser une session et un consentement valides. Un nouveau jeton ne vaut pas nouvelle authentification : après vérification de sa signature et des autres déclarations, contrôler l’`auth_time` et l’expiration d’origine. Navigation et renouvellement ne prolongent pas ce délai ; l’authentification supplémentaire des actions sensibles est distincte.
 
 Un compte commun ne rend pas identiques les sessions des applications et du fournisseur d’identité. Ce cas aligne les règles sans publier les destinations ni les durées.
 

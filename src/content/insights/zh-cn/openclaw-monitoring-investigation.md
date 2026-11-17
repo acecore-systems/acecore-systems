@@ -2,7 +2,7 @@
 title: "用OpenClaw连接监控与故障调查：检测、证据和判断的边界"
 description: "介绍定期检查与受限的OpenClaw调查如何配合，并区分已验证的运行与尚未验证的故障恢复。"
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "验证范围"
   text: "本文将内部运维案例一般化。已检查定期运行、受控调查和超时后的部分证据保留；尚未证明真实故障中的诊断准确率或自动恢复效果。"
 ---
+
+> 2026年11月更新：监控迁移时区分执行主机，并在新环境确认不发送通知的演练和定期监控成功。另一条响应路径仅测试合成响应，未确认真实Discord消息的验收成功。
 
 监控需要分别明确异常检测和原因调查的职责。本文介绍定期检查与OpenClaw调查的连接方式，不公开内部拓扑或通知目的地。
 

@@ -2,7 +2,7 @@
 title: "避免 AI 回复做出无法兑现的承诺"
 description: "防止AI擅自承诺担当者行为的回复设计，说明上下文、实测人数、新鲜度与获取失败、人格一致的公告、相似文抑制及发送前检查。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "一般化案例，不公开具体会话"
   text: "本文讨论策略与分类调整、发送前检查、测试、发布及有限的运营观察。不会包含他人的帖子或账号，也不保证能够防止所有形式的错误承诺。"
 ---
+
+> 2026年11月更新：原发帖人的明确请求与对拟发文案的批准是两个步骤。发送前检查状态和重复；结果不明时先核对，不自动重发。批准与实际发布成功也不同。
 
 用于咨询引导或客服回复时，应将解释公开信息、转交工作人员和实际预约定义为不同能力。允许的操作与审批设计可参考[OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)。下文仅讨论回复边界，不涉及特定平台的自动发送步骤。
 

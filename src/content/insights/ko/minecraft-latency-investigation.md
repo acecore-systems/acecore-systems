@@ -2,7 +2,7 @@
 title: "Minecraft 지연 조사: 조용한 지표 수집과 공유 스토리지 원인 분석"
 description: "TPS/MSPT를 조용히 수집하는 단계부터 JFR과 운영체제 I/O 관측을 대조하는 과정까지 소개합니다. 완료된 원인 조사와 아직 시험하지 않은 성능 개선을 구분합니다."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "원인 조사와 개선 효과를 구분합니다"
   text: "상시 모니터링과 저장 대기 원인 조사는 완료했습니다. 다른 스토리지로 이전하거나 성능을 비교하지 않았으므로, 특정 부품의 고장이나 모든 플레이어의 지연 해소를 입증한 것은 아닙니다."
 ---
+
+> 추가 비교에서는 부하와 관측 조건을 맞추고 같은 주기를 가로지르는 측정을 여러 번 하세요. 가벼운 부하에서 20 TPS를 유지한 것만으로 부하 중이나 장기간의 개선을 증명할 수 없습니다.
 
 Minecraft 지연은 서버 tick 처리, 짧은 저장 대기, 네트워크, 클라이언트 렌더링 등 여러 원인에서 생길 수 있습니다. 내부 호스트명과 구성을 공개하지 않고 여러 Paper 서버에서 진행한 조사를 익명으로 소개합니다.
 

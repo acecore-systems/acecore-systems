@@ -2,7 +2,7 @@
 title: "Monitoring mit OpenClaw verbinden: Erkennung, Belege und Entscheidungen"
 description: "Regelmäßige Prüfungen und begrenzte Untersuchungen verbinden und geprüften Betrieb von unbewiesener Wiederherstellung trennen."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "Prüfumfang"
   text: "Verallgemeinerter interner Betriebsfall. Regelmäßige Läufe, kontrollierte Untersuchungen und Belegerhalt bei Zeitüberschreitung wurden geprüft. Diagnosegenauigkeit bei echten Störungen und automatische Wiederherstellung sind nicht belegt."
 ---
+
+> Aktualisierung November 2026: Beim Umzug der Überwachung wurde der ausführende Host unterschieden und am Ziel ein Test ohne Benachrichtigung sowie die periodische Überwachung bestätigt. Ein anderer Antwortweg wurde mit synthetischen Antworten geprüft; die Annahme einer echten Discord-Nachricht ist nicht bestätigt.
 
 Monitoring braucht klare Zuständigkeiten für Erkennung und Ursachenanalyse. Dieser Fall verbindet regelmäßige Prüfungen mit OpenClaw, ohne interne Topologie oder Benachrichtigungsziele zu veröffentlichen.
 

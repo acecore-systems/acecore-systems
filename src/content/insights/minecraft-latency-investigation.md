@@ -2,7 +2,7 @@
 title: "Minecraftの遅延をどう調べるか：静かな測定と共有ストレージの切り分け"
 description: "TPS・MSPTの静かな収集からJFRとOSのI/O観測を照合するまで。完了した原因調査と、未実施の性能改善を分けて紹介します。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "原因調査と改善効果を分ける"
   text: "常時計測の導入と保存待ちの原因調査は完了しています。別ストレージへの移行や改善効果の比較は未実施で、部品故障や全利用者のラグ解消を証明するものではありません。"
 ---
+
+> 追加の比較では、負荷や観測条件を揃え、同じ周期を跨ぐ複数回の計測を行ってください。軽い負荷で20 TPSを維持しただけでは、負荷時や長期間の改善を実証できません。
 
 Minecraftの『重い』には、サーバーのtick処理、短い保存待ち、通信、クライアントの描画など、異なる原因が含まれます。複数のPaperサーバーで行った調査を、内部ホスト名や構成を伏せて紹介します。
 

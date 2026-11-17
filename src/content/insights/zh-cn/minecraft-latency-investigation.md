@@ -2,7 +2,7 @@
 title: "排查 Minecraft 卡顿：静默采集指标与共享存储定位"
 description: "从安静地采集 TPS/MSPT，到对照 JFR 与操作系统 I/O 观测。本文区分已经完成的原因调查与尚未验证的性能改进。"
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/minecraft-latency-investigation-cover-v1.webp
 tags: ["Minecraft", "Monitoring", "Performance"]
@@ -11,6 +11,8 @@ callout:
   title: "区分原因调查与改进效果"
   text: "持续监测和保存等待原因调查已经完成。迁移到其他存储以及性能对比尚未进行；调查没有证明部件故障，也没有证明所有玩家的卡顿都已消失。"
 ---
+
+> 追加比较应统一负载和观察条件，并跨相同周期多次测量。仅在轻负载下保持20 TPS，不能证明负载期间或长期有所改善。
 
 Minecraft 卡顿可能来自服务器 tick 处理、短暂保存停顿、网络或客户端渲染等不同环节。本文匿名介绍对多台 Paper 服务器的调查，不公开内部主机名和配置。
 

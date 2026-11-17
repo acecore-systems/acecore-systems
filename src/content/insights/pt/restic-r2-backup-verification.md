@@ -2,7 +2,7 @@
 title: "Backups restic no R2: do armazenamento à restauração verificada"
 description: "Separar frescor, integridade e restauração no R2/restic: versão PostgreSQL após atualização do OS, runtime isolado Samba, testes DB/LDAP e condições da recuperação completa."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "Recuperação completa exige outra verificação"
   text: "Foram realizados backups periódicos, monitoramento, retenção e extração/integridade de dados selecionados. Não foram demonstrados o início de todas as aplicações nem a recuperação de desastres com credenciais separadas."
 ---
+
+> Atualização de novembro de 2026: outro teste restaurou dados web e banco de dados de um snapshot criptografado em ambiente isolado e verificou a integridade. A proteção independente do armazenamento externo exige conferência separada. Recuperar e carregar o banco não prova que todos os aplicativos iniciam nem uma recuperação completa.
 
 Um job concluído não prova que os dados necessários possam ser recuperados. Este caso interno generalizado avalia armazenamento, integridade, restauração e recuperação do serviço separadamente. Não documenta migração concluída de outro serviço.
 
