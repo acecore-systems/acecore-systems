@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize Implementation Guide: Safely Sync Public HTML"
 description: "A detailed guide to building a corpus from public HTML, keeping Pagefind available, and operating Vectorize synchronization safely."
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["Technology", "Cloudflare", "Vectorize", "Workers AI", "Site Search"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -116,6 +116,8 @@ faq:
     - question: At what point is the rollout considered complete?
       answer: "A merge or local test alone is not completion. In Preview, verify Pagefind and the UI fallback; in Production, verify agreement between the published commit and corpus, index synchronization, mutation convergence, related search, the rate limit, and the shutdown procedure before recording it as running."
 ---
+
+> When fetching search text from Pages failed in public chat, public corpus text was stored in existing Vectorize metadata while preserving source, locale and result limits. The scope is public content only. JSON and SSE response checks and answer-quality evaluation are separate verification steps. [Portal PR #237](https://github.com/acecore-systems/aceserver-portal/pull/237) · [WIKI PR #143](https://github.com/acecore-systems/aceserver-wiki/pull/143)
 
 To trial incremental sync, regenerate the corpus from identical public HTML and first verify unchanged content causes no additions or deletions. Then use a small article change to check mutation completion and search results against [Cloudflare Vectorize: API](https://developers.cloudflare.com/vectorize/reference/client-api/). Define mass-deletion stop thresholds separately from product limits.
 

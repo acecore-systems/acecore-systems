@@ -9,8 +9,10 @@ callout:
   type: note
   title: "已验证的范围"
   text: "已检查公开代码、自动测试和隔离安装，并在Windows Browser插件中确认直属Sol子代理向Temporary Chat Pro发送一次请求、回收回答和语义验收。这不代表全部主机、backend身份、真实认证或质量与用量改善率已验证。"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> 2026年11月17日更新：下文0.14.0的条件与实验是历史记录。请确认现行0.34.0的[公开方针](https://github.com/acecore-systems/codex-task-routing)与主机权限。[PR #78](https://github.com/acecore-systems/codex-task-routing/pull/78)要求在Pro临时聊天中按仓库确认GitHub操作的可用性、权限和结果。修改后真实Pro聊天中的GitHub写入尚未验证。
 
 Codex任务分工可从能够独立验收的研究或审查开始，明确父任务的整合责任。交接应包含文件、资料、证据与未确认事项，工具权限参考[OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)的最小化原则。分工本身不能证明质量或成本改善。
 

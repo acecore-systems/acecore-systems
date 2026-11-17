@@ -5,7 +5,7 @@ description:
   ケールで記事URL・sitemap・hreflangを生成しない条件、Viewコンポーネントによる表示切替、OG画像・CMS・RSSの注意点を、2026年\
   7月時点の構成と現行差分を分けて説明し、同じ構成を検討する際の判断材料を示します。"
 date: 2026-03-25T10:00
-lastUpdated: "2026-10-25T06:10:55Z"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["技術", "Astro", "i18n", "Webサイト"]
 image: "/images/insights/covers/astro-i18n-blog-translation-cover-v2.webp"
@@ -75,6 +75,8 @@ faq:
         "日本語版の公開に翻訳は必須ではありません。翻訳を追加する場合は、対応する言語ディレクトリに同名のMarkdownファイルを配置すると、その言\
         語の記事URL・sitemap・hreflangが生成対象になります。"
 ---
+
+> 2026年11月17日追記：この記事の8言語更新は[翻訳PR #189](https://github.com/acecore-systems/acecore-systems/pull/189)で回収されました。7言語はBatch出力、ドイツ語は日付5箇所を修正しています。現在の新規翻訳は `gpt-6.1-terra`、推論 `medium` のResponses Batchを使います。運用の詳細は[翻訳パイプライン](/insights/copilot-translation-pipeline/)を参照してください。
 
 Astroで日本語ブログを多言語化し、翻訳記事のURL、言語切替、sitemapやhreflangを破綻させずに運用したい人に向けた実装記録です。まず代表記事で本文・メタ情報・言語切替をそろえ、未翻訳ページへ誘導しないことを確認します。[Astro: Internationalization Routing](https://docs.astro.build/en/guides/internationalization/)をURL設計の基準にし、UI翻訳と記事翻訳を分けて段階的に増やしてください。下の件数と旧CMS構成は導入時の事例です。
 

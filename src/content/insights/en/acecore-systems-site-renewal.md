@@ -87,8 +87,10 @@ faq:
       answer: You can consult us about business systems, web applications, admin interfaces, data and third-party service integrations, and improvements to existing systems. The site also includes information about IT advisory services, AI adoption, deployment support, and adding CMS, search, and form capabilities to websites.
     - question: Can I contact you even if I have not decided what to build?
       answer: Yes. We can begin by organizing your current workflow, challenges, users, constraints, and priorities. You are welcome to consult us before your requirements or procurement scope are finalized.
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> November 2026 update: Start a consultation by outlining the current setup, desired outcome and constraints, then share them through the [guide](/guide/) or [contact page](/contact/). This starts a discussion; it does not automatically promise a deadline or result.
 
 For a company website redesign, define who needs which information and what decision it supports before choosing a visual design. Start with a typical inquiry and check the path through services, work, pricing and contact. The Acecore Systems example below shows this approach; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) also covers site structure and discoverability.
 

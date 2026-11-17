@@ -1,28 +1,28 @@
 ---
 title: "Import Profile Details as a Draft: Compare, Select, and Publish Deliberately"
-description: "Import public URLs, text, CSV, HTML and JSON into profile drafts. Covers limited image and audio retrieval, link order, retaining candidates after reread failures, and owner-controlled saving and publication."
+description: "Import candidates from a public profile URL into a draft, with limited media retrieval, recovery from reread failure, and owner-controlled saving and publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/profile-import-draft-boundaries-cover-v1.webp
 tags: ["Web", "Import", "Security"]
 callout:
   type: note
   title: "Verified implementation; real-account acceptance remains"
-  text: "File inputs and limited public URL, image and audio imports have been implemented, integrated and deployed. Checks cover synthetic interactions and retrieval of selected public media. Real-owner rights review, saving and publication, official login integrations and resolving source-side 429 responses remain separate unfinished work."
+  text: "Limited public URL, image and audio imports are implemented and deployed. Synthetic interactions and selected public media were checked. Real-owner rights review, saving and publication remain unaccepted. Official login is outside the scope, and source restrictions are not bypassed."
 ---
 
 When moving an existing profile into another editor, compare the current values with the import candidates before replacing anything. This anonymized example explains the boundaries between importing data and publishing a profile.
 
 ## Test preservation of edits with one biography field
 
-Manually edit an existing biography, then import a different candidate. Check that unselected fields remain, selected replacements can be reviewed, and cancellation restores the original. After applying, compare the draft with the public page to verify that importing alone does not change publication.
+Manually edit an existing biography, then retrieve a different candidate from a supported public profile URL. Check that unselected fields remain, selected replacements can be reviewed, and cancellation restores the original. Compare the draft with the public page: importing alone does not publish.
 
 [OWASP：Validating input format, values, and length](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
 ## Choose supported input formats first
 
-Text, CSV, static HTML and shared JSON imports and templates now sit alongside candidate retrieval from supported public profile URLs. HTML is parsed as input data; scripts and original HTML are not executed on the public page. Length, count, format and HTTPS links are validated.
+The current entry point accepts a supported public profile URL. Retrieved HTML is parsed as data; scripts and original markup are not executed on the public page. Length, count, format and HTTPS links are validated. File upload, pasted text and official login are not import entry points.
 
 Links retain their order of appearance and balanced parentheses within URLs. A URL inside a Markdown link is not collected twice, while the same URL repeated elsewhere remains a separate candidate. Order and duplicates are not silently tidied without the owner deciding.
 
@@ -30,19 +30,19 @@ Links retain their order of appearance and balanced parentheses within URLs. A U
 
 Do not publish parsed results immediately. Compare them with current values first. The owner selects fields one by one and can edit candidate values before applying them to the editor. Applying a selected field replaces its current value, so review the differences on every import. The change can also be undone. These controls do not guarantee that conflicts with edits made elsewhere or by another person will be resolved automatically.
 
-When rereading the same URL or file fails, retain the previous candidates, owner edits, selections, CSV column mappings and downloaded media. Show both the retrieval error and that these are previous candidates. Replace candidates after an input source, method, text or file changes, or after a successful reread. Retention itself never applies, saves or publishes them.
+If rereading the same URL fails, previous candidates, edits, selections and retrieved media remain. Show the error and identify the candidates as previous results. Replace them when the source changes or rereading succeeds. Retention does not apply, save or publish them.
 
 ## Distinguish URL retrieval from official integrations
 
 URL retrieval is limited to known public structures on Profcard, lit.link, POTOFU, HTML Meishi and foriio. Check source identity, indexing exclusions and candidate consistency, and do not expand retrieval to authenticated pages or disallowed destinations. This does not establish official login or API integration with those services, or complete profile migration.
 
-Shared JSON templates and per-service capability information remain available. Unsupported URLs and dynamic content use pasted text or file import. Stop on source responses such as 401, 403 or 429; do not bypass restrictions through another browser or API.
+Unsupported URLs and unavailable dynamic content are not treated as successful imports. Stop on 401, 403 or 429; do not bypass restrictions through another browser or API.
 
 [OWASP: Limit URL destinations and redirects to prevent SSRF](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
 
 ## Review the retrieved image or audio before selecting it
 
-Alongside GIF profile images, known link cards and public posts can provide portfolio images and titles. Allowed GitHub image, WAV and MP3 links in owner link fields, and public Dropbox single files, have limited support. Initial POTOFU post cards are supported; descriptions, extra pages, embedded players and retrieval of the foriio portfolio gallery are outside the completed scope.
+Candidates can include GIF profile images, portfolio images and titles from known link cards and public posts, with limited support for allowed GitHub image, WAV and MP3 links and individual public Dropbox files. POTOFU descriptions can also be taken from initial data when a public post uniquely matches the same profile, image and original title. Further text is eligible only under defined checks including matching the visible leading posts. Extra pages, embedded players, ambiguous posts and the foriio gallery remain unsupported; source restrictions are not bypassed.
 
 Recheck the source and candidate, then validate host, path, redirects, MIME, file content, size and deadlines. Owners view or listen to the same retrieved bytes and review rights, titles and descriptions. Add only selected attachments to unsaved portfolio entries, prepare them through the existing upload path and use normal saving. Saving rechecks owner, profile, media kind and ready state while preserving manual input and the public snapshot.
 

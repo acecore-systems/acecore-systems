@@ -2,7 +2,7 @@
 title: "OpenClaw로 모니터링과 장애 조사를 연결하기: 탐지·증거·판단의 경계"
 description: "정기 점검과 권한을 제한한 OpenClaw 조사를 연결하고, 검증한 운영 범위와 미검증 복구 범위를 설명합니다."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/openclaw-monitoring-investigation-cover-v1.webp
 tags: ["OpenClaw", "AI", "Monitoring"]
@@ -11,6 +11,8 @@ callout:
   title: "검증 범위"
   text: "내부 운영 사례를 일반화했습니다. 정기 실행, 통제된 조사, 시간 초과 시 일부 증거 보존을 확인했습니다. 실제 장애 진단 정확도와 자동 복구는 입증하지 않았습니다."
 ---
+
+> 2026년 11월 업데이트: 감시 호스트를 옮길 때 실행 호스트를 구분하고 이전 대상에서 알림 없는 dry-run과 정기 감시 성공을 확인했습니다. 다른 응답 경로는 합성 응답으로 시험했으며 실제 Discord 메시지 수용 성공은 확인되지 않았습니다.
 
 모니터링에는 이상 탐지와 원인 조사 각각의 책임이 필요합니다. 이 사례는 내부 구성과 알림 대상을 공개하지 않고 정기 점검과 OpenClaw 조사를 연결하는 설계를 소개합니다.
 

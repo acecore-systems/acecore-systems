@@ -2,7 +2,7 @@
 title: "CSS utilisateur et thèmes publics sûrs : source partagée, rendu cloisonné et versions figées"
 description: "CSS commun à l’édition visuelle et manuelle, rendu sûr et application immédiate de versions fixes du magasin. Pages et cartes indépendantes, aperçu du titulaire, brouillon et publication."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "La vérification de l’implémentation ne vaut pas une recette de bout en bout par les utilisateurs"
   text: "CSS/GUI, magasin versionné, application immédiate, cibles indépendantes et aperçus du titulaire sont intégrés et déployés, avec affichage public contrôlé. Les tests authentifiés utilisent des profils synthétiques. Consentement, application, enregistrement et publication réels, et ventes payantes, ne sont pas démontrés."
 ---
+
+> Mise à jour de novembre 2026 : pour empêcher les thèmes générés de modifier les dimensions des en-têtes et pieds communs, des règles de rendu fiables conservent leurs dimensions et les décorations comme les couleurs. La disposition du profil reste distincte ; CSS enregistré et snapshot public ne sont pas réécrits. Les vues publique, édition, candidat et boutique ont été contrôlées à plusieurs largeurs.
 
 Un éditeur de profil qui permet d’ajuster les couleurs et les espacements dans une interface graphique et de modifier toute la mise en page avec du CSS doit tenir compte à la fois de l’ergonomie et de la sécurité du code affiché sur les pages publiques. Ce cas anonymisé présente les limites entre modification et distribution.
 

@@ -1,11 +1,7 @@
 {
-  "sourceHash": "1c5558eb6049330f86d8cd800b863a8a7a11fbbe72c94e4db4efd8d07a86a8b5",
+  "sourceHash": "a7e9b9e585f61426c2b73ae0a65f3f4e6f8685d35539a957ca2456262a8978b2",
   "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"],
   "pendingInsights": {
-    "search-console-editorial-evaluation": {
-      "sourceHash": "c4aef402b0245c1aa338cdf99312554c114b84a7b482104e1a481d9a5db99bbf",
-      "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]
-    },
     "alpha-lore-evidence-review": {
       "sourceHash": "fbeaaea0ef9b049e430de7412c563bbc03a9fc006bce132f06e1e36d4aa2fa93",
       "locales": ["en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"]

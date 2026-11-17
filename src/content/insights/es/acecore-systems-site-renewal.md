@@ -87,8 +87,10 @@ faq:
       answer: Puede consultarnos sobre sistemas empresariales, aplicaciones web, paneles de administración, integraciones de datos y servicios externos, y mejoras de sistemas existentes. Actualmente también publicamos información sobre asesoría de TI, adopción de IA, acompañamiento en despliegues y la incorporación de CMS, buscadores y formularios a sitios web.
     - question: ¿Puedo consultar aunque todavía no sepa qué quiero crear?
       answer: Sí. Podemos empezar por ordenar la situación actual, los problemas, los usuarios, las restricciones y las prioridades. También puede consultarnos antes de que los requisitos o el alcance del encargo estén definidos.
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 ---
+
+> Actualización de noviembre de 2026: prepara la configuración actual, el objetivo y las restricciones para compartirlos mediante la [guía](/guide/) o [contacto](/contact/). Es el inicio de una conversación, no una promesa automática de plazo o resultado.
 
 Antes de elegir el diseño visual de un sitio corporativo, define quién necesita cada información y qué decisión debe tomar. Revisa el recorrido de una consulta habitual entre servicios, proyectos, precios y contacto. El caso de Acecore Systems ilustra este enfoque; [Google: SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) también aborda la estructura y la visibilidad en búsquedas.
 

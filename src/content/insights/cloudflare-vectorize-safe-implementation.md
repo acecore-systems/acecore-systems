@@ -2,7 +2,7 @@
 title: "Cloudflare Vectorize実装ガイド：公開HTMLを安全に同期する"
 description: "公開HTMLからcorpusを作り、Pagefindと併用しながらVectorizeを安全に同期・運用するための実装ガイドです。"
 date: 2026-07-31T12:00
-lastUpdated: "2026-10-09T15:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 tags: ["技術", "Cloudflare", "Vectorize", "Workers AI", "サイト内検索"]
 image: /images/insights/vectorize-safe-sync-hero.webp
@@ -116,6 +116,8 @@ faq:
     - question: どの時点で導入完了と判断しますか？
       answer: "mergeやローカルtestだけでは完了にしません。PreviewではPagefindとUIのfallbackを確認し、Productionでは公開commitとcorpusの一致、本番index同期、mutation収束、関連検索、rate limit、停止手順まで確認して本番稼働と記録します。"
 ---
+
+> 公開チャットでPagesから検索本文を取得する通信が失敗した事例では、公開コーパスの本文を既存Vectorizeのmetadataへ保存し、出典・言語・件数の境界を維持しました。対象は公開コンテンツに限ります。JSONとSSEの応答確認、回答品質の評価はそれぞれ別の確認項目です。 [Portal PR #237](https://github.com/acecore-systems/aceserver-portal/pull/237) · [WIKI PR #143](https://github.com/acecore-systems/aceserver-wiki/pull/143)
 
 差分同期の設計を試すときは、同じ公開HTMLからcorpusを再生成し、無変更時の追加・削除が発生しないことを先に確認します。次に公開記事を変更した小さな差分で、[Cloudflare Vectorize: API](https://developers.cloudflare.com/vectorize/reference/client-api/)に沿ってmutation完了と検索結果を確認してください。大量削除の停止閾値は製品仕様とは分けて決めます。
 

@@ -2,7 +2,7 @@
 title: "Benutzer-CSS und öffentliche Themes sicher verwalten: gemeinsame Quelle, begrenztes Rendering und feste Versionen"
 description: "Gemeinsamer CSS-Quelltext für GUI und Handbearbeitung, sichere Darstellung und sofortige Anwendung fester Store-Themes. Separate Seiten/Karten, Eigentümervorschau, Entwürfe und Veröffentlichung."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/user-css-versioned-theme-safety-cover-v1.webp
 tags: ["CSS", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "Implementierungsprüfungen sind keine vollständige Abnahme durch Nutzer"
   text: "CSS/GUI, versionierter Store, sofortige Anwendung, unabhängige Ziele und Eigentümervorschau sind integriert und produktiv ausgeliefert; öffentliche Darstellung wurde geprüft. Authentifizierte Abläufe nutzten synthetische Profile. Echte Zustimmung, Anwendung, Speichern und Veröffentlichung sowie Verkäufe sind nicht belegt."
 ---
+
+> Aktualisierung November 2026: Vertrauenswürdige Darstellungsregeln bewahren die Maße gemeinsamer Kopf- und Fußbereiche gegen Änderungen durch generierte Themes, während etwa Farben erhalten bleiben. Das Profil-Layout bleibt getrennt; gespeichertes CSS und öffentliche Snapshots werden nicht umgeschrieben. Öffentliche Ansicht, Bearbeitung, Kandidat und Store-Vorschau wurden bei verschiedenen Breiten geprüft.
 
 Ein Profil-Editor, in dem sich Farben und Abstände über eine grafische Oberfläche anpassen und das gesamte Layout mit CSS bearbeiten lassen, muss sowohl die Bedienbarkeit als auch die Sicherheit des auf öffentlichen Seiten angezeigten Codes berücksichtigen. Dieser anonymisierte Implementierungsfall zeigt die Grenzen zwischen Bearbeitung und Verteilung.
 

@@ -2,7 +2,7 @@
 title: "Preventing AI Replies from Making Promises They Cannot Keep"
 description: "Prevent AI from promising actions it cannot perform. Covers conversation context, measured attendance, freshness and retrieval failure, persona-based announcements, similar-copy suppression and pre-send gates."
 date: "2026-10-06T01:10:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/ai-reply-capability-guardrails-cover-v1.webp
 tags: ["AI", "Security", "Web"]
@@ -11,6 +11,8 @@ callout:
   title: "A generalized case; no specific conversation is published"
   text: "This case covers policy and classification changes, pre-send checks, tests, delivery, and limited operational review. It includes no other person's posts or account, and does not prove that every phrasing of an incorrect promise can be prevented."
 ---
+
+> November 2026 update: An explicit request by the original poster and approval of the proposed text are separate steps. Check request state and duplicates before sending; if the result is uncertain, reconcile it rather than automatically resend. Approval and successful publication are also separate.
 
 For inquiry guidance or support replies, define explaining public information, handing off to staff and making a booking as separate capabilities. [OWASP: Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) helps frame permitted actions and approval. The following focuses on reply boundaries rather than platform-specific automated sending procedures.
 

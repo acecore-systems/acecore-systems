@@ -2,7 +2,7 @@
 title: "Monitoring restic backups on R2: from successful storage to verified restoration"
 description: "Separate snapshot freshness, integrity and restoration with R2 and restic. Covers PostgreSQL version selection after OS upgrades, Samba isolated runtime and DB/LDAP checks, and remaining disaster-recovery conditions."
 date: "2026-09-30T20:53:00+09:00"
-lastUpdated: "2026-10-15T00:00:00+09:00"
+lastUpdated: "2026-11-17T00:00:00+09:00"
 author: gui
 image: /images/insights/covers/restic-r2-backup-verification-cover-v1.webp
 tags: ["Cloudflare R2", "restic", "Backup"]
@@ -11,6 +11,8 @@ callout:
   title: "Full recovery requires separate verification"
   text: "Scheduled backups, monitoring, retention and extraction/integrity checks of selected data were performed. Startup of every application and disaster recovery including separately managed credentials were not demonstrated."
 ---
+
+> November 2026 update: Another restore test recovered web data and a database from an encrypted snapshot into an isolated environment and checked integrity. Independent protection of external storage requires separate reconciliation. Retrieval and database loading alone do not prove all applications start or complete disaster recovery.
 
 A completed backup job does not establish that the required data can be recovered. This generalized internal case evaluates storage, integrity, restoration and service recovery separately. It does not describe a completed migration from another backup service.
 
