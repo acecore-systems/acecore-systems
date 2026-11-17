@@ -34,6 +34,7 @@ export const insightSlugs = Object.freeze([
   "profile-import-draft-boundaries",
   "public-image-cache-and-api-rate-limits",
   "restic-r2-backup-verification",
+  "search-console-editorial-evaluation",
   "service-cta-contact-prefill",
   "tax-return-with-copilot",
   "ubuntu26-lts-upgrade-recovery",
