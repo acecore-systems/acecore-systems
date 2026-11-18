@@ -712,3 +712,96 @@ test("rejects malformed Workers AI embeddings", () => {
     /returned 0 embeddings; expected 1/u,
   );
 });
+
+test("Voyage候補は明示confirmと専用キーを要求し文書とmetadataを保持する", async () => {
+  const corpus = makeCorpus(2);
+  const corpusFile = await writeCorpus(corpus);
+  const indexName = "acecore-systems-search-voyage-4-lite-1024-production-v1";
+  const opts = {
+    ...commonOptions(corpusFile, () => {
+      assert.fail("unexpected network");
+    }),
+    indexName,
+    productionConfirmation: indexName,
+  };
+  await assert.rejects(
+    syncVectorize({ ...opts, voyageApiKey: "" }),
+    /VOYAGE_API_KEY/u,
+  );
+  await assert.rejects(
+    syncVectorize({
+      ...opts,
+      voyageApiKey: "test",
+      productionConfirmation: PRODUCTION_INDEX_NAME,
+    }),
+    /confirm-production/u,
+  );
+  let embeds = 0;
+  const fetchImpl = async (input, init = {}) => {
+    const url = new URL(input);
+    if (url.pathname.endsWith(`/indexes/${indexName}`)) return indexResponse();
+    if (url.pathname.endsWith("/list"))
+      return listResponse([corpus.vectors[0].id]);
+    if (url.origin === "https://ai.mongodb.com") {
+      embeds += 1;
+      assert.deepEqual(JSON.parse(init.body), {
+        model: "voyage-4-lite",
+        input: [corpus.vectors[1].text],
+        input_type: "document",
+        output_dimension: 1024,
+        output_dtype: "float",
+        truncation: false,
+      });
+      return jsonResponse({
+        model: "voyage-4-lite",
+        data: [{ index: 0, embedding: Array(1024).fill(0.1) }],
+      });
+    }
+    if (url.pathname.endsWith("/upsert")) {
+      const vector = JSON.parse((await init.body.get("vectors").text()).trim());
+      assert.equal(vector.namespace, "ja");
+      assert.deepEqual(vector.metadata, corpus.vectors[1].metadata);
+      return jsonResponse({ success: true, result: { mutationId: "test" } });
+    }
+    assert.fail("unexpected endpoint");
+  };
+  const result = await syncVectorize({
+    ...opts,
+    voyageApiKey: "test",
+    fetchImpl,
+    waitForMutations: false,
+  });
+  assert.equal(result.upserted, 1);
+  assert.equal(embeds, 1);
+});
+
+test("Voyage同期は明示flagが必要でBGEは独立して停止可能", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/sync-vectorize.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    workflow,
+    /vars\.SYSTEMS_VECTORIZE_PRODUCTION_ENABLED == 'true'/u,
+  );
+  assert.match(
+    workflow,
+    /name: Sync production Vectorize index\s+if: vars\.SYSTEMS_BGE_SYNC_ENABLED != 'false'/u,
+  );
+  assert.match(
+    workflow,
+    /name: Sync Voyage candidate Vectorize index\s+if: vars\.SYSTEMS_VOYAGE_SYNC_ENABLED == 'true'/u,
+  );
+  assert.match(
+    workflow,
+    /VOYAGE_API_KEY: \$\{\{ secrets\.VOYAGE_API_KEY \}\}/u,
+  );
+  assert.ok(
+    workflow.indexOf("Confirm Voyage corpus is still public") <
+      workflow.indexOf("Sync Voyage candidate Vectorize index"),
+  );
+  assert.ok(
+    workflow.indexOf("Sync Voyage candidate Vectorize index") <
+      workflow.indexOf("Confirm synced Voyage corpus is still public"),
+  );
+});
