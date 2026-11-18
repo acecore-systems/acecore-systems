@@ -298,7 +298,7 @@ test("keeps Pages Preview free of Vectorize and D1 bindings", async () => {
   assert.equal(config.match(/"d1_databases"\s*:/gu)?.length, 1);
   assert.equal(
     config.match(
-      /"index_name": "acecore-systems-search-bge-m3-1024-production-v1"/gu,
+      /"index_name": "acecore-systems-search-voyage-4-lite-1024-production-v1"/gu,
     )?.length,
     1,
   );
@@ -804,4 +804,44 @@ test("Voyage同期は明示flagが必要でBGEは独立して停止可能", asyn
     workflow.indexOf("Sync Voyage candidate Vectorize index") <
       workflow.indexOf("Confirm synced Voyage corpus is still public"),
   );
+});
+
+test("不正なVoyage応答では索引を書き換えない", async () => {
+  const corpus = makeCorpus(1);
+  const corpusFile = await writeCorpus(corpus);
+  const indexName = "acecore-systems-search-voyage-4-lite-1024-production-v1";
+  for (const payload of [
+    { model: "wrong", data: [{ index: 0, embedding: Array(1024).fill(0.1) }] },
+    { model: "voyage-4-lite", data: [] },
+    {
+      model: "voyage-4-lite",
+      data: [{ index: 1, embedding: Array(1024).fill(0.1) }],
+    },
+    { model: "voyage-4-lite", data: [{ index: 0, embedding: [1] }] },
+    {
+      model: "voyage-4-lite",
+      data: [{ index: 0, embedding: [...Array(1023).fill(0.1), null] }],
+    },
+  ]) {
+    let mutated = false;
+    const fetchImpl = async (input) => {
+      const url = new URL(input);
+      if (url.pathname.endsWith(`/indexes/${indexName}`))
+        return indexResponse();
+      if (url.pathname.endsWith("/list")) return listResponse([]);
+      if (url.origin === "https://ai.mongodb.com") return jsonResponse(payload);
+      mutated = true;
+      throw new Error("unexpected mutation");
+    };
+    await assert.rejects(
+      syncVectorize({
+        ...commonOptions(corpusFile, fetchImpl),
+        indexName,
+        productionConfirmation: indexName,
+        voyageApiKey: "test",
+        waitForMutations: false,
+      }),
+    );
+    assert.equal(mutated, false);
+  }
 });

@@ -1,12 +1,12 @@
 # Vectorize検索運用
 
-Acecore Systems の検索は、利用者が明示的に実行した場合に Cloudflare Workers AI の BGE-M3 と Cloudflare Vectorize で当サイトの公開情報を検索します。結果が取得できない場合だけ、ブラウザ内の Pagefind をキーワード検索のフォールバックとして使います。ローカル結果を表示した後は、Acecore共通検索APIの検証済み結果だけを「Acecore関連サイト」として下部へ追加表示します。
+Acecore Systems の検索は、利用者が明示的に実行した場合に Voyage 4 Lite と Cloudflare Vectorize で当サイトの公開情報を検索します。結果が取得できない場合だけ、ブラウザ内の Pagefind をキーワード検索のフォールバックとして使います。ローカル結果を表示した後は、Acecore共通検索APIの検証済み結果だけを「Acecore関連サイト」として下部へ追加表示します。
 
 ## 現在の状態
 
 - 通常の Pages Preview は Vectorize と D1 の binding を持たず、`SEARCH_ENABLED=false` のまま、サイト内検索はPagefindのフォールバックだけを使います。
 - Production のサイト内検索は `SEARCH_ENABLED=true` で有効です。Pagefind はAPI障害、レート制限、無効化、または有効なVectorize結果がない場合だけ使います。
-- Production 用 Vectorize index は `acecore-systems-search-bge-m3-1024-production-v1`、モデルは `@cf/baai/bge-m3`、`dimensions: 1024`、metric は cosine です。query はPages Functionのネイティブ `AI` binding、corpus同期はWorkers AI REST APIで同じモデルを使用します。
+- Production 用 Vectorize index は `acecore-systems-search-voyage-4-lite-1024-production-v1`、モデルは `voyage-4-lite`、`dimensions: 1024`、metric は cosine です。query は共有Workerの `VoyageEmbedding` binding、文書同期はAtlasモデルAPIを使用します。
 - 旧OpenAI index `acecore-systems-search-openai-1536-production` は即時rollback用に保持し、この移行では削除しません。過去の [GitHub Actions run 30599301122](https://github.com/acecore-systems/acecore-systems/actions/runs/30599301122) と [run 30600076505](https://github.com/acecore-systems/acecore-systems/actions/runs/30600076505) は旧indexの証跡であり、新indexの同期完了判定には使いません。
 - Production 用 D1 database `acecore-systems-search-production`（database ID `ac8a06c2-deb4-4b27-9fbc-0fa2eef3c76d`）は APAC に作成済みで、検索レート制限の migration を適用済みです。
 - GitHub Environment `cloudflare-search-production` は、`main` branch だけを許可し、required reviewer と管理者 bypass 無効を設定済みです。
@@ -36,7 +36,7 @@ Acecore Systems の検索は、利用者が明示的に実行した場合に Clo
 
 同期スクリプトは次を fail closed で確認します。
 
-- 同期先が `acecore-systems-search-bge-m3-1024-production-v1` と完全一致する
+- 同期先がBGEまたはVoyageの許可済みProduction index名と完全一致する
 - index のdimensionsとmetricが1024 / cosineである
 - corpus が日本語 1 locale で、公開 root-relative URL と必須 metadata を持つ
 - 管理対象外の vector ID が index に混在していない
@@ -49,6 +49,17 @@ Acecore Systems の検索は、利用者が明示的に実行した場合に Clo
 
 GitHub Actionsから20%超削除のoverrideは指定できません。大規模なcorpus変更は通常同期と分離して
 レビューし、専用の移行手順を用意するまでProduction mutationを停止します。
+
+## Voyageへの移行
+
+`cloudflare-search-production` Environmentへ専用 `VOYAGE_API_KEY` を登録し、
+`SYSTEMS_VOYAGE_SYNC_ENABLED=true` で候補索引の継続同期を有効にします。
+既存の起動条件 `SYSTEMS_VECTORIZE_PRODUCTION_ENABLED=true` も必要です。
+BGE同期は移行中は既定で維持し、共有検索などからの依存がなくなった後に
+`SYSTEMS_BGE_SYNC_ENABLED=false` で停止できます。候補索引は事前に作成し、
+公開corpusの同期・ID一致・代表検索を確認してからサイト検索を切り替えます。
+問題時はPagesのモデル・service binding・indexの変更をrevertしてBGEへ戻し、
+Git連携deploymentと検索結果を確認します。旧索引は削除しません。
 
 ## Production の継続運用
 

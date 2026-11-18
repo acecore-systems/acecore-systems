@@ -1,6 +1,7 @@
 import { getSafeInternalUrl } from "../../src/scripts/search-url-safety.ts";
 
 const EMBEDDING_MODEL = "@cf/baai/bge-m3";
+const VOYAGE_EMBEDDING_MODEL = "voyage-4-lite";
 const EMBEDDING_DIMENSIONS = 1024;
 const SEARCH_LOCALE = "ja";
 const DEFAULT_MIN_SCORE = 0.5;
@@ -68,6 +69,7 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (context) => {
 
     const {
       AI,
+      VOYAGE_EMBEDDER,
       SEARCH_EMBEDDING_MODEL,
       SEARCH_EMBEDDING_DIMENSIONS,
       SEARCH_INDEX,
@@ -75,8 +77,11 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (context) => {
     } = env;
     if (
       String(env.SEARCH_ENABLED) !== "true" ||
-      !AI ||
-      SEARCH_EMBEDDING_MODEL !== EMBEDDING_MODEL ||
+      !(
+        (String(SEARCH_EMBEDDING_MODEL) === EMBEDDING_MODEL && AI) ||
+        (String(SEARCH_EMBEDDING_MODEL) === VOYAGE_EMBEDDING_MODEL &&
+          VOYAGE_EMBEDDER)
+      ) ||
       Number(SEARCH_EMBEDDING_DIMENSIONS) !== EMBEDDING_DIMENSIONS ||
       !SEARCH_INDEX ||
       !SEARCH_RATE_LIMIT_DB
@@ -156,7 +161,10 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (context) => {
 
     let embedding: number[];
     try {
-      embedding = await createWorkersAiEmbedding(AI, query, request.signal);
+      embedding =
+        String(SEARCH_EMBEDDING_MODEL) === VOYAGE_EMBEDDING_MODEL
+          ? await createVoyageEmbedding(VOYAGE_EMBEDDER!, query, request.signal)
+          : await createWorkersAiEmbedding(AI!, query, request.signal);
     } catch (error) {
       if (request.signal.aborted || isAbortError(error)) {
         return errorResponse("request_cancelled", 499, requestId, startedAt);
@@ -373,6 +381,62 @@ function normalizeMinScore(value: string | undefined): number {
   return Number.isFinite(score) && score >= 0 && score <= 1
     ? score
     : DEFAULT_MIN_SCORE;
+}
+
+async function createVoyageEmbedding(
+  embedder: Fetcher,
+  query: string,
+  signal: AbortSignal,
+): Promise<number[]> {
+  if (signal.aborted)
+    throw new DOMException("Request cancelled.", "AbortError");
+  let payload: unknown;
+  try {
+    const response = await embedder.fetch(
+      "https://voyage-embeddings.internal/v1/embeddings",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: VOYAGE_EMBEDDING_MODEL,
+          input: [query],
+          input_type: "query",
+          output_dimension: EMBEDDING_DIMENSIONS,
+          output_dtype: "float",
+          truncation: false,
+        }),
+        signal,
+      },
+    );
+    if (!response.ok) throw new Error();
+    payload = await response.json();
+  } catch (error) {
+    if (signal.aborted || isAbortError(error))
+      throw new DOMException("Request cancelled.", "AbortError");
+    throw new EmbeddingProviderError("provider_error");
+  }
+  if (signal.aborted)
+    throw new DOMException("Request cancelled.", "AbortError");
+  if (
+    !isJsonObject(payload) ||
+    payload.model !== VOYAGE_EMBEDDING_MODEL ||
+    !Array.isArray(payload.data) ||
+    payload.data.length !== 1 ||
+    !isJsonObject(payload.data[0]) ||
+    payload.data[0].index !== 0 ||
+    !Array.isArray(payload.data[0].embedding)
+  )
+    throw new EmbeddingProviderError("invalid_embedding_contract");
+  const values = payload.data[0].embedding;
+  if (
+    values.length !== EMBEDDING_DIMENSIONS ||
+    !values.every(
+      (value): value is number =>
+        typeof value === "number" && Number.isFinite(value),
+    )
+  )
+    throw new EmbeddingProviderError("invalid_embedding");
+  return values;
 }
 
 async function createWorkersAiEmbedding(
