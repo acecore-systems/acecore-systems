@@ -37,7 +37,12 @@ const PRIVATE_PATH_SEGMENTS = new Set(["admin", "api"]);
 export const PRODUCTION_INDEX_NAME =
   "acecore-systems-search-bge-m3-1024-production-v1";
 
-export const ALLOWED_INDEX_NAMES = new Set([PRODUCTION_INDEX_NAME]);
+export const VOYAGE_INDEX_NAME =
+  "acecore-systems-search-voyage-4-lite-1024-production-v1";
+export const ALLOWED_INDEX_NAMES = new Set([
+  PRODUCTION_INDEX_NAME,
+  VOYAGE_INDEX_NAME,
+]);
 
 class CloudflareApiError extends Error {
   constructor(message, status) {
@@ -271,14 +276,14 @@ function validateProductionConfirmation({
 }) {
   if (
     dryRun ||
-    indexName !== PRODUCTION_INDEX_NAME ||
-    productionConfirmation === PRODUCTION_INDEX_NAME
+    !ALLOWED_INDEX_NAMES.has(indexName) ||
+    productionConfirmation === indexName
   ) {
     return;
   }
 
   throw new Error(
-    `Refusing to sync the production index; pass --confirm-production ${PRODUCTION_INDEX_NAME}.`,
+    `Refusing to sync the production index; pass --confirm-production ${indexName}.`,
   );
 }
 
@@ -583,6 +588,60 @@ async function createEmbeddings(client, vectors) {
   return extractEmbeddingData(payload?.result, vectors.length);
 }
 
+async function createVoyageEmbeddings(
+  vectors,
+  { apiKey, fetchImpl, requestTimeoutMs },
+) {
+  let response;
+  try {
+    response = await fetchImpl("https://ai.mongodb.com/v1/embeddings", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "voyage-4-lite",
+        input: vectors.map(({ text }) => text),
+        input_type: "document",
+        output_dimension: 1024,
+        output_dtype: "float",
+        truncation: false,
+      }),
+      redirect: "error",
+      signal: AbortSignal.timeout(requestTimeoutMs),
+    });
+  } catch {
+    throw new Error("Voyage embeddings request failed.");
+  }
+  if (!response.ok) {
+    await response.body?.cancel().catch(() => {});
+    throw new Error(`Voyage embeddings returned HTTP ${response.status}.`);
+  }
+  const payload = await readJsonResponse(response);
+  if (
+    payload?.model !== "voyage-4-lite" ||
+    !Array.isArray(payload.data) ||
+    payload.data.length !== vectors.length
+  )
+    throw new Error("Voyage returned an invalid embedding response.");
+  const ordered = new Map();
+  for (const row of payload.data) {
+    if (
+      !Number.isInteger(row?.index) ||
+      row.index < 0 ||
+      row.index >= vectors.length ||
+      ordered.has(row.index)
+    )
+      throw new Error("Voyage returned an invalid embedding index.");
+    ordered.set(row.index, row.embedding);
+  }
+  return extractEmbeddingData(
+    { data: vectors.map((_, index) => ordered.get(index)) },
+    vectors.length,
+  );
+}
+
 async function upsertVectors(client, indexName, vectors) {
   const ndjson = vectors.map((vector) => JSON.stringify(vector)).join("\n");
   const form = new FormData();
@@ -702,6 +761,7 @@ function batches(items, size) {
 export async function syncVectorize({
   accountId = process.env.CLOUDFLARE_ACCOUNT_ID,
   apiToken = process.env.CLOUDFLARE_API_TOKEN,
+  voyageApiKey = process.env.VOYAGE_API_KEY,
   indexName = process.env.VECTORIZE_INDEX_NAME,
   corpusFile = DEFAULT_CORPUS_FILE,
   dryRun = false,
@@ -746,6 +806,10 @@ export async function syncVectorize({
     return result;
   }
 
+  if (indexName === VOYAGE_INDEX_NAME && !voyageApiKey?.trim()) {
+    throw new Error("VOYAGE_API_KEY is required for Voyage sync.");
+  }
+
   const cloudflareClient = createCloudflareClient({
     accountId,
     apiToken,
@@ -756,7 +820,7 @@ export async function syncVectorize({
     randomImpl,
   });
   const index = await ensureIndex(cloudflareClient, indexName, {
-    allowCreate: indexName !== PRODUCTION_INDEX_NAME,
+    allowCreate: false,
   });
   validateIndexConfiguration(index, indexName);
 
@@ -805,7 +869,14 @@ export async function syncVectorize({
   const upsertMutationIds = [];
 
   for (const embeddingBatch of batches(vectorsToUpsert, EMBEDDING_BATCH_SIZE)) {
-    const embeddings = await createEmbeddings(cloudflareClient, embeddingBatch);
+    const embeddings =
+      indexName === VOYAGE_INDEX_NAME
+        ? await createVoyageEmbeddings(embeddingBatch, {
+            apiKey: voyageApiKey,
+            fetchImpl,
+            requestTimeoutMs,
+          })
+        : await createEmbeddings(cloudflareClient, embeddingBatch);
     const records = embeddingBatch.map((vector, indexInBatch) => ({
       id: vector.id,
       namespace: SEARCH_NAMESPACE,
