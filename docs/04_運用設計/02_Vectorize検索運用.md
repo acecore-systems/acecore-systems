@@ -1,8 +1,18 @@
 # Vectorize検索運用
 
+種類: 仕様
+状態: 有効
+確認日: 未確認
+
+公開サイトの検索（Vectorize、Pagefind）と関連サイト表示の仕組み、現在の設定、同期の安全境界を定める。
+
+## 対象
+
 Acecore Systems の検索は、利用者が明示的に実行した場合に Voyage 4 Lite と Cloudflare Vectorize で当サイトの公開情報を検索します。結果が取得できない場合だけ、ブラウザ内の Pagefind をキーワード検索のフォールバックとして使います。ローカル結果を表示した後は、Acecore共通検索APIの検証済み結果だけを「Acecore関連サイト」として下部へ追加表示します。
 
-## 現在の状態
+## 定義
+
+### 現在の状態
 
 - 通常の Pages Preview は Vectorize と D1 の binding を持たず、`SEARCH_ENABLED=false` のまま、サイト内検索はPagefindのフォールバックだけを使います。
 - Production のサイト内検索は `SEARCH_ENABLED=true` で有効です。Pagefind はAPI障害、レート制限、無効化、または有効なVectorize結果がない場合だけ使います。
@@ -17,7 +27,7 @@ Acecore Systems の検索は、利用者が明示的に実行した場合に Voy
 
 サイト本文の raw query は corpus や Vectorize metadata に保存しません。同期 corpus は build output から公開対象の日本語ページだけを抽出し、`/admin`、`/api`、noindex、外部 canonical などを除外します。
 
-## Acecore関連サイトの補助表示
+### Acecore関連サイトの補助表示
 
 ローカルのVectorize検索（または必要時のPagefindフォールバック）を完了してから、ブラウザは
 `https://acecore.net/api/network-search` へ同一の検索語と`locale: "ja"`だけをJSON POSTします。`site`や任意の取得元は送らず、呼び出し元は中央APIが`Origin`から確定します。
@@ -30,7 +40,9 @@ Acecore Systems の検索は、利用者が明示的に実行した場合に Voy
 
 外部リンクには`noopener noreferrer`と`no-referrer`を付け、文字列はHTMLとして解釈せずtext nodeとして表示します。関連サイトのindexは中央APIがquery-onlyで読むだけであり、Systemsの同期workflowやVectorize削除権限を広げません。
 
-## 同期の安全境界
+## 制約
+
+### 同期の安全境界
 
 `.github/workflows/sync-vectorize.yml` はProduction専用です。保護された `main` のtoolingと、GitHub連携のPagesで公開中のcommitを照合し、その公開commitと同じsourceからcorpusを生成します。repository variable `SYSTEMS_VECTORIZE_PRODUCTION_ENABLED=true` と `main` branchの両方を満たさない場合は同期しません。
 
@@ -50,27 +62,10 @@ Acecore Systems の検索は、利用者が明示的に実行した場合に Voy
 GitHub Actionsから20%超削除のoverrideは指定できません。大規模なcorpus変更は通常同期と分離して
 レビューし、専用の移行手順を用意するまでProduction mutationを停止します。
 
-## Voyageへの移行
+## 実装と検証の参照先
 
-`cloudflare-search-production` Environmentへ専用 `VOYAGE_API_KEY` を登録し、
-`SYSTEMS_VOYAGE_SYNC_ENABLED=true` で候補索引の継続同期を有効にします。
-既存の起動条件 `SYSTEMS_VECTORIZE_PRODUCTION_ENABLED=true` も必要です。
-BGE同期は移行中は既定で維持し、共有検索などからの依存がなくなった後に
-`SYSTEMS_BGE_SYNC_ENABLED=false` で停止できます。候補索引は事前に作成し、
-公開corpusの同期・ID一致・代表検索を確認してからサイト検索を切り替えます。
-問題時はPagesのモデル・service binding・indexの変更をrevertしてBGEへ戻し、
-Git連携deploymentと検索結果を確認します。旧索引は削除しません。
+該当なし
 
-## Production の継続運用
+## 参照
 
-Production の自動同期は、次の条件と確認を維持します。
-
-1. repository variable `SYSTEMS_VECTORIZE_PRODUCTION_ENABLED=true` と `main` branch の両方を満たす場合だけworkflowを実行します。
-2. GitHub連携のPagesで公開中のcommitを照合し、そのcommitと同じsourceからcorpusを生成します。
-3. source数・vector数・upsert/delete数・mutation完了を確認し、同じcorpusの再実行がupsert/delete 0件へ収束することを確認します。
-4. `ja` namespace、1024 dimensions / cosine、既知の日本語queryを定期的に確認します。
-5. 本番で異常があればProductionの `SEARCH_ENABLED=false` を反映して関連検索を停止し、Pagefindだけへ戻します。
-
-Production 同期は公開 build marker の commit が `main` の祖先であることを確認し、公開中の commit と同じ source から corpus を再生成します。GitHub repository 連携の Pages deployment を完了条件とし、Direct Upload や手動 deploy は使いません。
-
-PreviewではPagefind、関連検索APIが無効時のフォールバック、表示崩れがないことだけを確認します。Preview用Vectorize indexの同期やbindingは完了条件に含めません。
+移行と継続運用の手順は [Vectorize検索の移行と継続運用手順](06_Vectorize検索の移行と継続運用手順.md) を参照する。
