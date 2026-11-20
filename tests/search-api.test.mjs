@@ -483,6 +483,130 @@ function searchRequest(body, headers = {}, signal) {
   });
 }
 
+test("低スコアでも公開文言の一致があるVoyage候補だけを補う", async () => {
+  const cases = [
+    {
+      query: "Pages",
+      matches: [
+        ["noise", 0.488, "/insights/noise/", "PageSpeed の改善"],
+        ["pages", 0.407, "/insights/pages/", "Cloudflare Pages の設定"],
+      ],
+      expected: ["/insights/pages/"],
+    },
+    {
+      query: "Astro",
+      matches: [
+        ["astro", 0.398, "/insights/astro/", "Astro の性能改善"],
+        ["weak", 0.349, "/insights/weak/", "Astro の情報"],
+      ],
+      expected: ["/insights/astro/"],
+    },
+    {
+      query: "料金",
+      matches: [["pricing", 0.438, "/pricing/", "料金の目安"]],
+      expected: ["/pricing/"],
+    },
+    {
+      query: "相談内容を送るフォームと受付窓口はどこですか？",
+      matches: [
+        ["article", 0.488, "/insights/contact/", "フォームの受付について"],
+        ["contact", 0.441, "/contact/", "相談内容を送るフォーム"],
+        ["noise", 0.44, "/services/noise/", "受付の説明"],
+      ],
+      expected: ["/insights/contact/", "/contact/"],
+    },
+    {
+      query: "月面の架空カボチャ料理",
+      matches: [["noise", 0.47, "/insights/noise/", "架空の文章だけ"]],
+      expected: [],
+    },
+  ];
+  for (const fixture of cases) {
+    const matches = fixture.matches.map(([id, score, url, title]) => ({
+      id,
+      score,
+      metadata: {
+        url,
+        title,
+        section: title,
+        excerpt: title,
+        contentType: "page",
+        locale: "ja",
+      },
+    }));
+    const env = createEnv({ matches });
+    env.SEARCH_EMBEDDING_MODEL = "voyage-4-lite";
+    env.VOYAGE_EMBEDDER = {
+      fetch: async () =>
+        Response.json({
+          model: "voyage-4-lite",
+          data: [{ index: 0, embedding: queryVector }],
+        }),
+    };
+    const response = await onRequestPost({
+      request: searchRequest({ query: fixture.query, locale: "ja" }),
+      env,
+    });
+    assert.equal(response.status, 200);
+    assert.deepEqual(
+      (await response.json()).results.map(({ url }) => url),
+      fixture.expected,
+      fixture.query,
+    );
+  }
+});
+
+test("高スコア結果とBGEの既存閾値は補助判定で変更しない", async () => {
+  const matches = [
+    {
+      ...searchMatch("high", 0.51, "/high/", "ja"),
+      metadata: {
+        ...searchMatch("high", 0.51, "/high/", "ja").metadata,
+        title: "関連",
+      },
+    },
+    {
+      ...searchMatch("low", 0.42, "/low/", "ja"),
+      metadata: {
+        ...searchMatch("low", 0.42, "/low/", "ja").metadata,
+        title: "Astro",
+      },
+    },
+  ];
+  const env = createEnv({ matches });
+  env.SEARCH_EMBEDDING_MODEL = "voyage-4-lite";
+  env.VOYAGE_EMBEDDER = {
+    fetch: async () =>
+      Response.json({
+        model: "voyage-4-lite",
+        data: [{ index: 0, embedding: queryVector }],
+      }),
+  };
+  const positive = await onRequestPost({
+    request: searchRequest({ query: "Astro", locale: "ja" }),
+    env,
+  });
+  assert.deepEqual(
+    (await positive.json()).results.map(({ url }) => url),
+    ["/high/"],
+  );
+  const bge = createEnv({ matches: [matches[1]] });
+  const baseline = await onRequestPost({
+    request: searchRequest({ query: "Astro", locale: "ja" }),
+    env: bge,
+  });
+  assert.deepEqual((await baseline.json()).results, []);
+
+  const strict = createEnv({ matches: [matches[1]], searchMinScore: "0.70" });
+  strict.SEARCH_EMBEDDING_MODEL = "voyage-4-lite";
+  strict.VOYAGE_EMBEDDER = env.VOYAGE_EMBEDDER;
+  const strictResult = await onRequestPost({
+    request: searchRequest({ query: "Astro", locale: "ja" }),
+    env: strict,
+  });
+  assert.deepEqual((await strictResult.json()).results, []);
+});
+
 test("Voyage指定時はqueryを共有Workerへ送りBGEを実行しない", async () => {
   const env = createEnv({
     onAiRun() {

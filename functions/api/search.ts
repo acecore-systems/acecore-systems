@@ -5,6 +5,7 @@ const VOYAGE_EMBEDDING_MODEL = "voyage-4-lite";
 const EMBEDDING_DIMENSIONS = 1024;
 const SEARCH_LOCALE = "ja";
 const DEFAULT_MIN_SCORE = 0.5;
+const LEXICAL_RESCUE_SCORE_MARGIN = 0.15;
 const MAX_REQUEST_BYTES = 2048;
 const MIN_QUERY_LENGTH = 2;
 const MAX_QUERY_LENGTH = 160;
@@ -204,6 +205,7 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (context) => {
       queryResult,
       normalizeMinScore(env.SEARCH_MIN_SCORE),
       request.url,
+      String(SEARCH_EMBEDDING_MODEL) === VOYAGE_EMBEDDING_MODEL ? query : "",
     );
     if (!results) {
       logSearchError(requestId, locale, "vectorize", "invalid_matches");
@@ -494,15 +496,35 @@ function normalizeMatches(
   queryResult: unknown,
   minScore: number,
   requestUrl: string,
+  lexicalQuery: string,
 ): SearchResult[] | null {
   if (!isJsonObject(queryResult) || !Array.isArray(queryResult.matches)) {
     return null;
   }
 
+  const results = collectMatches(queryResult.matches, minScore, requestUrl);
+  if (results.length > 0 || !lexicalQuery) return results;
+
+  const terms = getLexicalTerms(lexicalQuery);
+  if (terms.length === 0) return results;
+  return collectMatches(
+    queryResult.matches,
+    Math.max(0, minScore - LEXICAL_RESCUE_SCORE_MARGIN),
+    requestUrl,
+    terms,
+  );
+}
+
+function collectMatches(
+  matches: unknown[],
+  minScore: number,
+  requestUrl: string,
+  lexicalTerms?: string[],
+): SearchResult[] {
   const results: SearchResult[] = [];
   const seenUrls = new Set<string>();
 
-  for (const value of queryResult.matches) {
+  for (const value of matches) {
     if (!isJsonObject(value)) continue;
 
     const id = readMetadataText(value.id, 64);
@@ -518,6 +540,7 @@ function normalizeMatches(
 
     const metadata = normalizeMetadata(value.metadata, requestUrl);
     if (!metadata || seenUrls.has(metadata.url)) continue;
+    if (lexicalTerms && !hasLexicalEvidence(lexicalTerms, metadata)) continue;
 
     seenUrls.add(metadata.url);
     results.push({
@@ -531,8 +554,63 @@ function normalizeMatches(
     });
     if (results.length >= RESULT_LIMIT) break;
   }
-
   return results;
+}
+
+const LEXICAL_STOP_WORDS = new Set([
+  "ある",
+  "いる",
+  "する",
+  "です",
+  "ます",
+  "たい",
+  "どこ",
+  "こと",
+  "ため",
+  "これ",
+  "それ",
+  "について",
+]);
+
+function getLexicalTerms(query: string): string[] {
+  const normalized = query.normalize("NFKC").toLowerCase();
+  const segments =
+    typeof Intl.Segmenter === "function"
+      ? Array.from(
+          new Intl.Segmenter("ja", { granularity: "word" }).segment(normalized),
+        )
+          .filter((segment) => segment.isWordLike)
+          .map((segment) => segment.segment)
+      : normalized.match(
+          /[a-z0-9_]+|[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]{2}/gu,
+        ) || [];
+  return [
+    ...new Set(
+      segments.filter(
+        (term) => [...term].length >= 2 && !LEXICAL_STOP_WORDS.has(term),
+      ),
+    ),
+  ].slice(0, 16);
+}
+
+function hasLexicalEvidence(
+  terms: string[],
+  metadata: SearchMetadata,
+): boolean {
+  const text = [metadata.title, metadata.section, metadata.excerpt]
+    .join(" ")
+    .normalize("NFKC")
+    .toLowerCase();
+  const matched = terms.filter((term) => {
+    if (/^[a-z0-9_]+$/u.test(term)) {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+      return new RegExp(`(^|[^a-z0-9_])${escaped}(?=$|[^a-z0-9_])`, "u").test(
+        text,
+      );
+    }
+    return text.includes(term);
+  }).length;
+  return matched >= Math.min(2, terms.length);
 }
 
 function normalizeMetadata(
