@@ -1,8 +1,14 @@
 # CMS保存・自動公開運用
 
-最終確認日: 2026-07-29
+種類: 仕様
+状態: 有効
+確認日: 2026-07-29
 
-## 構成
+Sveltia CMSで日本語のコンテンツを保存し、GitHub連携の本番公開へつなぐ仕組みを定める。構成、認証、管理対象、保存から公開までの流れを含む。
+
+## 対象
+
+### 構成
 
 - Repository: `acecore-systems/acecore-systems`
 - CMS: Sveltia CMS
@@ -17,7 +23,31 @@
 
 `publish_mode: editorial_workflow` は設定しません。Sveltia CMSではEditorial Workflowが未実装であり、設定だけではCMS作業branchやPull Requestが作られないためです。
 
-## 認証
+### CMS管理対象
+
+更新可能なJSONは次の14ファイルに完全列挙します。
+
+- `src/data/site.json`
+- `src/data/home.json`
+- `src/data/services.json`
+- `src/data/it-advisor.json`
+- `src/data/service-details/website.json`（ホームページ制作・更新サポート）
+- `src/data/pricing.json`
+- `src/data/guide.json`
+- `src/data/works.json`
+- `src/data/contact.json`
+- `src/data/privacy.json`
+- `src/data/service-details/development.json`
+- `src/data/service-details/site-functions.json`
+- `src/data/service-details/site-quality.json`
+- `src/data/service-details/operations.json`
+- `src/data/work-details/acecore-site-platform.json`
+
+画像は`public/uploads/**`配下の`.avif`、`.gif`、`.jpeg`、`.jpg`、`.png`、`.webp`だけを扱います。参照中画像を誤って消さないよう、CMSからの削除はJSON・画像とも拒否します。不要画像の削除は参照確認を含む通常のPull Requestで行います。source code、workflow、設定、列挙外のデータもproxyが拒否します。JSONはGitHub GraphQLの完全なtextとして再読込できる448 KiB以下、1回の保存は最大100ファイル、追加データ合計25 MiBです。
+
+## 定義
+
+### 認証
 
 GitHub Appはこのrepositoryだけにinstallし、次のrepository権限だけを付与します。
 
@@ -55,29 +85,7 @@ Pages Functionsでは次の環境変数を使います。
 
 private keyはGitHubから取得したPKCS#1またはPKCS#8 PEMをProduction encrypted secretだけへ登録し、repository、ログ、Preview環境、ブラウザへは配布しません。CMS設定とAPIも `systems.acecore.net` 以外では配信・通信前に拒否します。
 
-## CMS管理対象
-
-更新可能なJSONは次の14ファイルに完全列挙します。
-
-- `src/data/site.json`
-- `src/data/home.json`
-- `src/data/services.json`
-- `src/data/it-advisor.json`
-- `src/data/service-details/website.json`（ホームページ制作・更新サポート）
-- `src/data/pricing.json`
-- `src/data/guide.json`
-- `src/data/works.json`
-- `src/data/contact.json`
-- `src/data/privacy.json`
-- `src/data/service-details/development.json`
-- `src/data/service-details/site-functions.json`
-- `src/data/service-details/site-quality.json`
-- `src/data/service-details/operations.json`
-- `src/data/work-details/acecore-site-platform.json`
-
-画像は`public/uploads/**`配下の`.avif`、`.gif`、`.jpeg`、`.jpg`、`.png`、`.webp`だけを扱います。参照中画像を誤って消さないよう、CMSからの削除はJSON・画像とも拒否します。不要画像の削除は参照確認を含む通常のPull Requestで行います。source code、workflow、設定、列挙外のデータもproxyが拒否します。JSONはGitHub GraphQLの完全なtextとして再読込できる448 KiB以下、1回の保存は最大100ファイル、追加データ合計25 MiBです。
-
-## 保存から公開まで
+### 保存から公開まで
 
 1. 編集者が本番の`/admin/`から専用GitHub Appでログインする。
 2. Pages Functionsがuser tokenで編集者、installation、対象repository、push権限を再確認し、変更path、ファイル数、合計サイズ、削除可否を同期検証する。
@@ -92,35 +100,14 @@ CMSの「保存」は`main`への反映を意味し、人によるPull Request�
 
 CMS proxyは列挙済みのJSONと画像以外を拒否します。GitHub rulesetは2つに分け、branch削除、force push、非linear履歴の禁止はbypassなしで全actorに適用します。Pull Requestとrequired checksだけを別rulesetにし、Systems専用GitHub Appだけを`always` bypassにします。これによりCMSは通常のfast-forward commitだけを直接反映でき、コード、設定、schema変更には従来の保護を引き続き要求します。
 
-## コード変更の検証
+## 制約
 
-```powershell
-npm run test:cms
-npm run typecheck:functions
-npm run format:check
-npm run validate:content
-npm run build
-git diff --check
-```
+該当なし
 
-## 本番有効化と確認状況
+## 実装と検証の参照先
 
-2026-07-28から29日に次の外部設定と診断結果を確認しました。
+検証と本番有効化後の確認の手順は [CMS保存・自動公開の確認手順](04_CMS保存・自動公開の確認手順.md) を参照する。
 
-- 組織所有のSystems専用GitHub Appを作成し、callback URLを`https://systems.acecore.net/admin/api/callback`に設定
-- Appを`acecore-systems/acecore-systems`の1件だけにinstall
-- ContentsをRead and write、MetadataをRead-onlyに限定
-- expiring user tokenを有効化し、Webhookとイベント購読を無効化
-- Cloudflare PagesのProduction環境へprivate key以外の4項目をsecretとして設定し、Preview環境は未設定のまま維持
-- `main`の履歴保護をbypassなし、Pull Request / `Build and Format` / Cloudflare PagesをSystems専用GitHub Appだけbypassできる2つのactive rulesetとして設定
-- rule suite `3483603616`で、GitHub App user tokenのactorが編集者`gui-ace`となり、Pull Request必須とrequired checksに拒否されたことを確認
+## 参照
 
-コードのmerge後、CMSを有効化する前にGitHub Appのprivate keyを発行して`CMS_GITHUB_APP_PRIVATE_KEY`へProduction encrypted secretとして登録します。GitHubやCloudflareの外部設定は、このコード変更とは別に本番作業として実施します。また、`Build and Format`とCloudflare Pagesの2件が通常変更のstrict required checkであり、Pull Request保護が維持され、Systems専用GitHub Appだけがrulesetを迂回できることを再取得して確認します。
-
-設定後に次の本番確認と後片付けを行います。
-
-1. 本番の`/admin/`からGitHub App認証を開始できることを確認する。
-2. 本番CMSで表示に影響しない確認用変更を保存し、`main`へ1 commitで直接反映されたことを確認する。
-3. GitHub連携による`main`のproduction deployと表示反映を確認する。
-4. HEAD競合では409となり、既存の本番表示が維持されることを確認する。
-5. 確認用変更をCMSから元に戻し、復元commitも直接公開されることを確認する。
+本番有効化の確認結果は [CMS本番有効化の確認記録](05_CMS本番有効化の確認記録.md) を参照する。
