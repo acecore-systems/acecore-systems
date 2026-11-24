@@ -2,6 +2,8 @@
 
 Acecore Systems の検索は、利用者が明示的に実行した場合に Voyage 4 Lite と Cloudflare Vectorize で当サイトの公開情報を検索します。結果が取得できない場合だけ、ブラウザ内の Pagefind をキーワード検索のフォールバックとして使います。ローカル結果を表示した後は、Acecore共通検索APIの検証済み結果だけを「Acecore関連サイト」として下部へ追加表示します。
 
+本番の検索クエリとVoyage索引への文書同期は、`config/ai-models.generated.json` の `search.embedding` を参照します。既存索引はVoyage 4 Lite・1,024次元です。配布設定が索引と互換性を満たさない場合は、埋め込みの送信前に停止します。モデルを変更する場合は、新しいモデルで文書を再埋め込みした索引を準備し、共有Workerと呼び出し元を合わせて切り替えます。公開コーパスの形式・IDとBGE-M3索引向けの同期には既存の契約を使います。
+
 ## 現在の状態
 
 - 通常の Pages Preview は Vectorize と D1 の binding を持たず、`SEARCH_ENABLED=false` のまま、サイト内検索はPagefindのフォールバックだけを使います。
