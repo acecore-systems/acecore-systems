@@ -23,6 +23,8 @@ Acecore Systems の検索は、利用者が明示的に実行した場合に Voy
 - Production 同期専用の Cloudflare account token は、Acecore account の Workers AI Read と Vectorize Read / Write だけを許可し、GitHub Environment secret に保存します。検索同期にOpenAI keyは使用しません。
 - 既存のPreview index、D1、GitHub Environment、secretはこの変更では削除しませんが、Pages runtimeとworkflowからは参照しません。
 
+本番の検索クエリとVoyage索引への文書同期は、`config/ai-models.generated.json` の `search.embedding` を参照します。既存索引はVoyage 4 Lite・1,024次元です。配布設定が索引と互換性を満たさない場合は、埋め込みの送信前に停止します。モデルを変更する場合は、新しいモデルで文書を再埋め込みした索引を準備し、共有Workerと呼び出し元を合わせて切り替えます。公開コーパスの形式・IDとBGE-M3索引向けの同期には既存の契約を使います。
+
 旧OpenAI用1536次元indexはrollback用に保持し、この移行では削除しません。
 
 サイト本文の raw query は corpus や Vectorize metadata に保存しません。同期 corpus は build output から公開対象の日本語ページだけを抽出し、`/admin`、`/api`、noindex、外部 canonical などを除外します。

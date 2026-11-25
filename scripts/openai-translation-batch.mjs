@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import selection from "../config/ai-models.generated.json" with { type: "json" };
 import { contactFormCopy } from "../src/i18n/contact-form.ts";
 import { ui } from "../src/i18n/ui.ts";
 import {
@@ -22,7 +23,6 @@ import { getPendingContentSourcePaths } from "./pending-content.mjs";
 
 const API_BASE_URL = "https://api.openai.com/v1";
 const BATCH_ENDPOINT = "/v1/responses";
-const BATCH_MODEL = "gpt-6.1-terra";
 const BATCH_EFFORT = "medium";
 const BATCH_METADATA_KEY = "translation_system";
 const BATCH_METADATA_VALUE = "acecore-systems-v1";
@@ -32,6 +32,46 @@ const SOURCE_MARKER_SUFFIX = " -->";
 const BATCH_MARKER_PREFIX = "<!-- openai-translation-batch:";
 const BATCH_MARKER_SUFFIX = " -->";
 const ZERO_SHA = "0000000000000000000000000000000000000000";
+
+function isModelId(value) {
+  return typeof value === "string" && /^[A-Za-z0-9_.-]{1,128}$/u.test(value);
+}
+
+function getTranslationRoute() {
+  const model = selection?.features?.["acecore-systems.translation.batch"];
+  if (
+    selection?.schema_version !== 1 ||
+    typeof selection.policy_revision !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}\.[1-9]\d*$/u.test(selection.policy_revision) ||
+    model?.profile !== "text.batch" ||
+    model.provider !== "openai" ||
+    model.execution_mode !== "provider_batch" ||
+    !isModelId(model.api_model_id)
+  ) {
+    throw new Error("Unsupported translation model selection");
+  }
+  return {
+    model: model.api_model_id,
+    effort: BATCH_EFFORT,
+    policyRevision: selection.policy_revision,
+  };
+}
+
+function getSavedTranslationRoute(metadata) {
+  const model = metadata?.requested_model;
+  const effort = metadata?.requested_effort;
+  const policyRevision = metadata?.requested_policy_revision;
+  if (
+    !isModelId(model) ||
+    effort !== BATCH_EFFORT ||
+    (policyRevision !== undefined &&
+      (typeof policyRevision !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}\.[1-9]\d*$/u.test(policyRevision)))
+  ) {
+    throw new Error("Retry parent model or effort requires reconciliation");
+  }
+  return { model, effort, policyRevision };
+}
 
 const sourceTargetPaths = structuredTranslationTargets;
 
@@ -314,7 +354,11 @@ export function decodeMetadata(customId) {
   return parsed;
 }
 
-export function createStructuredRequest(metadata, source) {
+export function createStructuredRequest(
+  metadata,
+  source,
+  route = getTranslationRoute(),
+) {
   const entries = listTextEntries(source, [], {
     omitStable: metadata.kind === "content",
   });
@@ -324,8 +368,8 @@ export function createStructuredRequest(metadata, source) {
     method: "POST",
     url: BATCH_ENDPOINT,
     body: {
-      model: BATCH_MODEL,
-      reasoning: { effort: BATCH_EFFORT },
+      model: route.model,
+      reasoning: { effort: route.effort },
       instructions: [
         "Translate Japanese Acecore Systems website copy into the requested target locale.",
         "Return one translation for every supplied id.",
@@ -348,14 +392,18 @@ export function createStructuredRequest(metadata, source) {
   };
 }
 
-export function createInsightRequest(metadata, markdown) {
+export function createInsightRequest(
+  metadata,
+  markdown,
+  route = getTranslationRoute(),
+) {
   return {
     custom_id: encodeMetadata({ ...metadata, protectionVersion: 1 }),
     method: "POST",
     url: BATCH_ENDPOINT,
     body: {
-      model: BATCH_MODEL,
-      reasoning: { effort: BATCH_EFFORT },
+      model: route.model,
+      reasoning: { effort: route.effort },
       instructions: [
         "Translate this Japanese Acecore Systems Insight article into the requested target locale.",
         "Return the entire Markdown document including YAML frontmatter.",
@@ -469,6 +517,7 @@ export async function createBatch(
   sourceHash,
   sourceCommit,
   metadata = {},
+  route = getTranslationRoute(),
 ) {
   return openAiJson("/batches", {
     method: "POST",
@@ -483,9 +532,12 @@ export async function createBatch(
           process.env.GITHUB_REPOSITORY ?? "acecore-systems/acecore-systems",
         source_hash: sourceHash,
         source_commit: sourceCommit,
-        requested_model: BATCH_MODEL,
-        requested_effort: BATCH_EFFORT,
         ...metadata,
+        requested_model: route.model,
+        requested_effort: route.effort,
+        ...(route.policyRevision !== undefined
+          ? { requested_policy_revision: route.policyRevision }
+          : {}),
       },
     }),
   });
@@ -559,7 +611,7 @@ async function closeStalePullRequests(currentSourceHash) {
   return pulls;
 }
 
-async function submitBatch(options) {
+export async function submitBatch(options) {
   const eventBase = options.base ?? process.env.GITHUB_EVENT_BEFORE ?? null;
   const base = eventBase === ZERO_SHA ? null : eventBase;
   const state = JSON.parse(
@@ -592,6 +644,7 @@ async function submitBatch(options) {
     return;
   }
 
+  const route = getTranslationRoute();
   const requests = [];
   for (const sourcePath of sourcePaths) {
     const insight = /^src\/content\/insights\/([^/]+)\.md$/u.test(sourcePath);
@@ -613,8 +666,8 @@ async function submitBatch(options) {
         sourceHash,
       };
       const request = insight
-        ? createInsightRequest(metadata, source)
-        : createStructuredRequest(metadata, source);
+        ? createInsightRequest(metadata, source, route)
+        : createStructuredRequest(metadata, source, route);
       if (request) requests.push(request);
     }
   }
@@ -627,7 +680,13 @@ async function submitBatch(options) {
     `${requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
   );
   const sourceCommit = runGit(["rev-parse", "HEAD"]);
-  const batch = await createBatch(inputFile.id, sourceHash, sourceCommit);
+  const batch = await createBatch(
+    inputFile.id,
+    sourceHash,
+    sourceCommit,
+    {},
+    route,
+  );
   console.log(
     `Submitted OpenAI translation batch ${batch.id} (${requests.length} requests).`,
   );
@@ -1101,14 +1160,9 @@ function assertRetryIdentity(metadata, sourceHash) {
 
 // Revalidate every original result. Valid responses remain in the parent output
 // file; only invalid request identities can be regenerated by an explicit retry.
-export function planBatchRetry(
-  outputLines,
-  sourceHash,
-  readers = { getSourceValue, readFile: readFileSync },
-) {
+function inspectBatchRetry(outputLines, sourceHash, readers) {
   const seen = new Set();
-  const requests = [];
-  const failures = [];
+  const invalid = [];
   for (const output of outputLines) {
     const metadata = decodeMetadata(output.custom_id);
     assertRetryIdentity(metadata, sourceHash);
@@ -1119,34 +1173,44 @@ export function planBatchRetry(
     try {
       prepareBatchTranslations([output], sourceHash, readers);
     } catch (error) {
-      failures.push({ identity, error: error.message.slice(0, 1000) });
-      const source =
-        metadata.kind === "insight"
-          ? readers.readFile(metadata.sourcePath, "utf8")
-          : readers.getSourceValue(metadata.sourcePath);
-      const request =
-        metadata.kind === "insight"
-          ? createInsightRequest(metadata, source)
-          : createStructuredRequest(metadata, source);
-      if (!request) throw new Error("Retry source has no translatable strings");
-      request.body.instructions +=
-        "\nA prior response failed immutable-token validation. Preserve every supplied token exactly once, including list and heading numbers. Never surround tokens with backticks or spell numbers out. Do not add digits outside the supplied tokens.";
-      requests.push(request);
+      invalid.push({ metadata, identity, error: error.message.slice(0, 1000) });
     }
   }
-  const identities = requests
-    .map((request) => translationIdentity(decodeMetadata(request.custom_id)))
-    .sort();
+  return invalid;
+}
+
+export function planBatchRetry(
+  outputLines,
+  sourceHash,
+  readers = { getSourceValue, readFile: readFileSync },
+  route = getTranslationRoute(),
+) {
+  const invalid = inspectBatchRetry(outputLines, sourceHash, readers);
+  const requests = invalid.map(({ metadata }) => {
+    const source =
+      metadata.kind === "insight"
+        ? readers.readFile(metadata.sourcePath, "utf8")
+        : readers.getSourceValue(metadata.sourcePath);
+    const request =
+      metadata.kind === "insight"
+        ? createInsightRequest(metadata, source, route)
+        : createStructuredRequest(metadata, source, route);
+    if (!request) throw new Error("Retry source has no translatable strings");
+    request.body.instructions +=
+      "\nA prior response failed immutable-token validation. Preserve every supplied token exactly once, including list and heading numbers. Never surround tokens with backticks or spell numbers out. Do not add digits outside the supplied tokens.";
+    return request;
+  });
+  const identities = invalid.map(({ identity }) => identity).sort();
   return {
     requests,
     identities,
     identitiesHash: hashText(JSON.stringify(identities)),
     requestPayloadHash: hashText(
-      `${requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
+      requests.map((request) => JSON.stringify(request)).join("\n") + "\n",
     ),
     originalCount: outputLines.length,
     retainedCount: outputLines.length - requests.length,
-    failures,
+    failures: invalid.map(({ identity, error }) => ({ identity, error })),
   };
 }
 
@@ -1186,18 +1250,20 @@ export function mergeBatchRetry(
   retryOutputs,
   sourceHash,
   expectedIdentitiesHash,
-  readers,
+  readers = { getSourceValue, readFile: readFileSync },
 ) {
-  const plan = planBatchRetry(parentOutputs, sourceHash, readers);
+  const identities = inspectBatchRetry(parentOutputs, sourceHash, readers)
+    .map(({ identity }) => identity)
+    .sort();
   if (
-    plan.identitiesHash !== expectedIdentitiesHash ||
-    retryOutputs.length !== plan.identities.length
+    hashText(JSON.stringify(identities)) !== expectedIdentitiesHash ||
+    retryOutputs.length !== identities.length
   ) {
     throw new Error(
       "Retry result set does not match the original invalid requests",
     );
   }
-  const expected = new Set(plan.identities);
+  const expected = new Set(identities);
   const replacements = new Map();
   for (const output of retryOutputs) {
     const metadata = decodeMetadata(output.custom_id);
@@ -1371,7 +1437,8 @@ export async function retryBatch(options) {
   const outputs = await getBatchOutput(parent);
   if (outputs.length !== parent.request_counts.total)
     throw new Error("Retry parent output count is incomplete");
-  const plan = planBatchRetry(outputs, sourceHash);
+  const route = getSavedTranslationRoute(parent.metadata);
+  const plan = planBatchRetry(outputs, sourceHash, undefined, route);
   const report = {
     version: 1,
     state: plan.requests.length ? "planned" : "no_retry_needed",
@@ -1426,6 +1493,8 @@ export async function retryBatch(options) {
     requestPayloadHash: plan.requestPayloadHash,
     requestCount: plan.requests.length,
     retainedCount: plan.retainedCount,
+    requestedModel: route.model,
+    requestedEffort: route.effort,
   };
   writeRetryJson(options.receiptPath, receipt, { exclusive: true });
   let retry;
@@ -1438,12 +1507,18 @@ export async function retryBatch(options) {
     receipt.inputFileId = inputFile.id;
     receipt.phase = "before_batch_create";
     writeRetryJson(options.receiptPath, receipt);
-    retry = await createBatch(inputFile.id, sourceHash, sourceCommit, {
-      retry_of: parent.id,
-      retry_identities_hash: plan.identitiesHash,
-      request_payload_sha256: plan.requestPayloadHash,
-      retry_request_count: String(plan.requests.length),
-    });
+    retry = await createBatch(
+      inputFile.id,
+      sourceHash,
+      sourceCommit,
+      {
+        retry_of: parent.id,
+        retry_identities_hash: plan.identitiesHash,
+        request_payload_sha256: plan.requestPayloadHash,
+        retry_request_count: String(plan.requests.length),
+      },
+      route,
+    );
     receipt.retryBatchId = /^batch_[A-Za-z0-9_-]{1,100}$/u.test(retry.id ?? "")
       ? retry.id
       : null;
@@ -1456,8 +1531,9 @@ export async function retryBatch(options) {
       retry.metadata.retry_of !== parent.id ||
       retry.metadata.retry_identities_hash !== plan.identitiesHash ||
       retry.metadata.request_payload_sha256 !== plan.requestPayloadHash ||
-      retry.metadata.requested_model !== BATCH_MODEL ||
-      retry.metadata.requested_effort !== BATCH_EFFORT ||
+      retry.metadata.requested_model !== route.model ||
+      retry.metadata.requested_effort !== route.effort ||
+      retry.metadata.requested_policy_revision !== route.policyRevision ||
       retry.metadata.retry_request_count !== String(plan.requests.length)
     )
       throw new Error("Batch creation receipt does not match the retry plan");

@@ -3,6 +3,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { requireVoyageEmbeddingModel } from "../src/scripts/search-embedding-policy.ts";
+
 import {
   EMBEDDING_MODEL,
   MAX_SOURCE_PAGES,
@@ -590,7 +592,7 @@ async function createEmbeddings(client, vectors) {
 
 async function createVoyageEmbeddings(
   vectors,
-  { apiKey, fetchImpl, requestTimeoutMs },
+  { model, apiKey, fetchImpl, requestTimeoutMs },
 ) {
   let response;
   try {
@@ -601,7 +603,7 @@ async function createVoyageEmbeddings(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "voyage-4-lite",
+        model,
         input: vectors.map(({ text }) => text),
         input_type: "document",
         output_dimension: 1024,
@@ -620,7 +622,7 @@ async function createVoyageEmbeddings(
   }
   const payload = await readJsonResponse(response);
   if (
-    payload?.model !== "voyage-4-lite" ||
+    payload?.model !== model ||
     !Array.isArray(payload.data) ||
     payload.data.length !== vectors.length
   )
@@ -779,6 +781,8 @@ export async function syncVectorize({
   randomImpl = Math.random,
   logger = console,
 } = {}) {
+  const voyageModel =
+    indexName === VOYAGE_INDEX_NAME ? requireVoyageEmbeddingModel() : null;
   const corpus = JSON.parse(await readFile(corpusFile, "utf8"));
   validateCorpus(corpus);
 
@@ -806,7 +810,7 @@ export async function syncVectorize({
     return result;
   }
 
-  if (indexName === VOYAGE_INDEX_NAME && !voyageApiKey?.trim()) {
+  if (voyageModel && !voyageApiKey?.trim()) {
     throw new Error("VOYAGE_API_KEY is required for Voyage sync.");
   }
 
@@ -869,14 +873,14 @@ export async function syncVectorize({
   const upsertMutationIds = [];
 
   for (const embeddingBatch of batches(vectorsToUpsert, EMBEDDING_BATCH_SIZE)) {
-    const embeddings =
-      indexName === VOYAGE_INDEX_NAME
-        ? await createVoyageEmbeddings(embeddingBatch, {
-            apiKey: voyageApiKey,
-            fetchImpl,
-            requestTimeoutMs,
-          })
-        : await createEmbeddings(cloudflareClient, embeddingBatch);
+    const embeddings = voyageModel
+      ? await createVoyageEmbeddings(embeddingBatch, {
+          model: voyageModel,
+          apiKey: voyageApiKey,
+          fetchImpl,
+          requestTimeoutMs,
+        })
+      : await createEmbeddings(cloudflareClient, embeddingBatch);
     const records = embeddingBatch.map((vector, indexInBatch) => ({
       id: vector.id,
       namespace: SEARCH_NAMESPACE,

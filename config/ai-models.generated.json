@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "policy_revision": "2026-11-25.1",
+  "features": {
+    "acecore-systems.translation.batch": {
+      "profile": "text.batch",
+      "provider": "openai",
+      "api_model_id": "gpt-6.1-terra",
+      "execution_mode": "provider_batch"
+    },
+    "search.embedding": {
+      "profile": "embedding.default",
+      "provider": "mongodb",
+      "api_model_id": "voyage-4-lite",
+      "execution_mode": "realtime"
+    }
+  }
+}

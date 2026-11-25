@@ -1,3 +1,4 @@
+import selection from "../config/ai-models.generated.json" with { type: "json" };
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
@@ -31,6 +32,7 @@ import {
   parseArgs,
   retryBatch,
   selectCompletedBatch,
+  submitBatch,
   validateInsightTranslation,
 } from "../scripts/openai-translation-batch.mjs";
 import {
@@ -82,7 +84,9 @@ function batchResult(request, response) {
   };
 }
 
-test("新規の両形式は Terra medium の Responses Batch を使う", async () => {
+test("新規の両形式は 配布モデルと medium の Responses Batch を使う", async () => {
+  const selectedModel =
+    selection.features["acecore-systems.translation.batch"].api_model_id;
   const structured = createStructuredRequest(
     { ...metadata, kind: "content" },
     { title: "新しい説明" },
@@ -91,7 +95,7 @@ test("新規の両形式は Terra medium の Responses Batch を使う", async (
   for (const request of [structured, markdown]) {
     assert.equal(request.method, "POST");
     assert.equal(request.url, "/v1/responses");
-    assert.equal(request.body.model, "gpt-6.1-terra");
+    assert.equal(request.body.model, selectedModel);
     assert.deepEqual(request.body.reasoning, { effort: "medium" });
   }
   const originalFetch = globalThis.fetch;
@@ -103,7 +107,7 @@ test("新規の両形式は Terra medium の Responses Batch を使う", async (
       const body = JSON.parse(init.body);
       assert.equal(body.endpoint, "/v1/responses");
       assert.equal(body.completion_window, "24h");
-      assert.equal(body.metadata.requested_model, "gpt-6.1-terra");
+      assert.equal(body.metadata.requested_model, selectedModel);
       assert.equal(body.metadata.requested_effort, "medium");
       return Response.json({ id: "batch_fixture" });
     };
@@ -116,6 +120,115 @@ test("新規の両形式は Terra medium の Responses Batch を使う", async (
     if (originalKey === undefined)
       delete process.env.OPENAI_TRANSLATION_API_KEY;
     else process.env.OPENAI_TRANSLATION_API_KEY = originalKey;
+  }
+});
+
+test("新規送信のJSONLとBatchに配布モデルを固定し、受付済みbatchなら選定変更後も再送しない", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "systems-translation-selection-"));
+  const cwd = process.cwd();
+  const route = selection.features["acecore-systems.translation.batch"];
+  const originalModel = route.api_model_id;
+  const originalFetch = globalThis.fetch;
+  const keys = [
+    "OPENAI_TRANSLATION_API_KEY",
+    "GITHUB_REPOSITORY",
+    "GITHUB_TOKEN",
+    "GITHUB_OUTPUT",
+  ];
+  const env = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+  const git = (...args) =>
+    execFileSync("git", args, { cwd: dir, encoding: "utf8" }).trim();
+  const posts = [];
+  let accepted;
+  try {
+    for (const sourcePath of translationSourcePaths) {
+      const destination = join(dir, sourcePath);
+      await mkdir(dirname(destination), { recursive: true });
+      await copyFile(join(cwd, sourcePath), destination);
+    }
+    await mkdir(join(dir, "src/i18n"), { recursive: true });
+    await writeFile(join(dir, "src/i18n/translation-state.json"), "{}");
+    git("init", "-q");
+    git(
+      "-c",
+      "user.name=Test",
+      "-c",
+      "user.email=test@example.com",
+      "commit",
+      "--allow-empty",
+      "-qm",
+      "base",
+    );
+    const base = git("rev-parse", "HEAD");
+    git("add", "--", "src/data/site.json");
+    git(
+      "-c",
+      "user.name=Test",
+      "-c",
+      "user.email=test@example.com",
+      "commit",
+      "-qm",
+      "source",
+    );
+    const head = git("rev-parse", "HEAD");
+    process.chdir(dir);
+    process.env.OPENAI_TRANSLATION_API_KEY = "fixture";
+    delete process.env.GITHUB_REPOSITORY;
+    delete process.env.GITHUB_TOKEN;
+    delete process.env.GITHUB_OUTPUT;
+    route.api_model_id = "fixture-central-model";
+    globalThis.fetch = async (url, init = {}) => {
+      const endpoint = new URL(url);
+      assert.equal(endpoint.origin, "https://api.openai.com");
+      if (endpoint.pathname === "/v1/batches" && !init.method) {
+        return Response.json({ data: accepted ? [accepted] : [] });
+      }
+      assert.equal(init.method, "POST");
+      posts.push(endpoint.pathname);
+      if (endpoint.pathname === "/v1/files") {
+        const lines = (await init.body.get("file").text())
+          .trim()
+          .split("\n")
+          .map(JSON.parse);
+        assert.equal(lines.length, translatedLocales.length);
+        for (const request of lines) {
+          assert.equal(request.url, "/v1/responses");
+          assert.equal(request.body.model, route.api_model_id);
+          assert.deepEqual(request.body.reasoning, { effort: "medium" });
+        }
+        return Response.json({ id: "file_fixture" });
+      }
+      assert.equal(endpoint.pathname, "/v1/batches");
+      const body = JSON.parse(init.body);
+      assert.equal(body.endpoint, "/v1/responses");
+      assert.equal(body.completion_window, "24h");
+      assert.equal(body.metadata.requested_model, route.api_model_id);
+      assert.equal(body.metadata.requested_effort, "medium");
+      assert.equal(
+        body.metadata.requested_policy_revision,
+        selection.policy_revision,
+      );
+      accepted = {
+        id: "batch_fixture",
+        status: "validating",
+        metadata: body.metadata,
+      };
+      return Response.json(accepted);
+    };
+    await submitBatch({ base, head });
+    route.api_model_id = "fixture-next-selection";
+    await submitBatch({ base, head });
+    assert.deepEqual(posts, ["/v1/files", "/v1/batches"]);
+    assert.equal(accepted.metadata.requested_model, "fixture-central-model");
+  } finally {
+    process.chdir(cwd);
+    route.api_model_id = originalModel;
+    globalThis.fetch = originalFetch;
+    for (const key of keys) {
+      if (env[key] === undefined) delete process.env[key];
+      else process.env[key] = env[key];
+    }
+    await rm(dir, { recursive: true, force: true });
   }
 });
 
@@ -261,6 +374,8 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
       translation_system: "acecore-systems-v1",
       repository: "acecore-systems/acecore-systems",
       source_hash: currentHash,
+      requested_model: "gpt-6.1-terra",
+      requested_effort: "medium",
     },
   };
   const originalFetch = globalThis.fetch;
@@ -440,6 +555,9 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
       translation_system: "acecore-systems-v1",
       repository: recovery.repository,
       source_hash: currentHash,
+      requested_model: "fixture-parent-model",
+      requested_effort: "medium",
+      requested_policy_revision: "2026-11-14.1",
     },
   };
   const originalFetch = globalThis.fetch;
@@ -497,7 +615,7 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
       assert.equal(lines.length, 1);
       assert.equal(decodeMetadata(lines[0].custom_id).locale, "fr");
       assert.equal(lines[0].url, "/v1/responses");
-      assert.equal(lines[0].body.model, "gpt-6.1-terra");
+      assert.equal(lines[0].body.model, parent.metadata.requested_model);
       assert.deepEqual(lines[0].body.reasoning, { effort: "medium" });
       if (mode === "upload_lost") throw new Error("Upload response lost");
       return Response.json({ id: "file-retry" });
@@ -508,7 +626,14 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
       const payload = JSON.parse(init.body);
       assert.equal(payload.endpoint, "/v1/responses");
       assert.equal(payload.completion_window, "24h");
-      assert.equal(payload.metadata.requested_model, "gpt-6.1-terra");
+      assert.equal(
+        payload.metadata.requested_model,
+        parent.metadata.requested_model,
+      );
+      assert.equal(
+        payload.metadata.requested_policy_revision,
+        parent.metadata.requested_policy_revision,
+      );
       assert.equal(payload.metadata.requested_effort, "medium");
       return Response.json({
         id: "batch_retry",
@@ -528,6 +653,21 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
     throw new Error("Unexpected mock POST");
   };
   try {
+    const savedModel = parent.metadata.requested_model;
+    delete parent.metadata.requested_model;
+    await assert.rejects(
+      retryBatch({ batchId: parent.id, dryRun: false }),
+      /requires reconciliation/u,
+    );
+    parent.metadata.requested_model = savedModel;
+    parent.metadata.requested_effort = "high";
+    await assert.rejects(
+      retryBatch({ batchId: parent.id, dryRun: false }),
+      /requires reconciliation/u,
+    );
+    parent.metadata.requested_effort = "medium";
+    assert.deepEqual(posts, []);
+
     const plan = await retryBatch({
       batchId: parent.id,
       dryRun: true,
@@ -578,6 +718,8 @@ test("保存したdry-run計画と現在mainを照合して不正分のみ送り
       receiptPath,
     });
     assert.equal(receipt.state, "submitted");
+    assert.equal(receipt.requestedModel, parent.metadata.requested_model);
+    assert.equal(receipt.requestedEffort, parent.metadata.requested_effort);
     assert.equal(receipt.requestCount, 1);
     assert.equal(receipt.retainedCount, 1);
     assert.equal(receipt.retryBatchId, "batch_retry");
@@ -1460,7 +1602,7 @@ test("WorkflowはTerra/mediumをBatchへ投入し、回収後にBot PRを作る"
     collect,
     /failure\(\) && steps\.collector\.outputs\.validation_report_path/u,
   );
-  assert.match(script, /gpt-6\.1-terra/u);
+  assert.match(script, /config\/ai-models\.generated\.json/u);
   assert.match(script, /const BATCH_EFFORT = "medium"/u);
 });
 
