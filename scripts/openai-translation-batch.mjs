@@ -46,13 +46,14 @@ function getTranslationRoute() {
     model?.profile !== "text.batch" ||
     model.provider !== "openai" ||
     model.execution_mode !== "provider_batch" ||
+    model.reasoning_effort !== BATCH_EFFORT ||
     !isModelId(model.api_model_id)
   ) {
     throw new Error("Unsupported translation model selection");
   }
   return {
     model: model.api_model_id,
-    effort: BATCH_EFFORT,
+    effort: model.reasoning_effort,
     policyRevision: selection.policy_revision,
   };
 }
@@ -1437,7 +1438,9 @@ export async function retryBatch(options) {
   const outputs = await getBatchOutput(parent);
   if (outputs.length !== parent.request_counts.total)
     throw new Error("Retry parent output count is incomplete");
-  const route = getSavedTranslationRoute(parent.metadata);
+  const savedRoute = getSavedTranslationRoute(parent.metadata);
+  const route =
+    savedRoute.model === "gpt-6.1-terra" ? getTranslationRoute() : savedRoute;
   const plan = planBatchRetry(outputs, sourceHash, undefined, route);
   const report = {
     version: 1,

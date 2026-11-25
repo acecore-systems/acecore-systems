@@ -393,6 +393,8 @@ test("dry-run・既存retry・件数上限ではAPI GETだけを行いupload/cre
         const payload = JSON.parse(init.body);
         assert.equal(payload.metadata.retry_request_count, "11");
         assert.equal(payload.metadata.retry_of, parent.id);
+        assert.equal(payload.metadata.requested_model, "gpt-6.2-sol");
+        assert.equal(payload.metadata.requested_effort, "medium");
         return Response.json({
           id: "batch_retry",
           status: "validating",
