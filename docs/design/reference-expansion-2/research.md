@@ -49,12 +49,6 @@
 | [Superside](https://www.superside.com/pricing)                    | 400+ global brandsと掲載。集計時点は未確認。 [一次根拠](https://www.superside.com/pricing)                                                                                                 | 安定需要/変動需要/単発の適合条件を短く並べ、契約の違いを見せる。 / services, website                                                    | 年契約、繰越、最低額、専属チーム/AI訴求を当社条件へ転用しない。                                                            |
 | [WP Buffs](https://wpbuffs.com/plans/)                            | Kinsta/WP Engine/Rank Math/HubSpot等の提携を公式掲載。定量案件数は未確認。 [一次根拠](https://wpbuffs.com/plans/)                                                                          | 保守/更新/高度機能/独自コードの用途文と費用・範囲を同じ比較単位へ。単発相談は別入口。 / website, services                               | 無制限修正/24時間対応/返金は転記しない。2025終了の販促バナーを現行料金と扱わない。                                         |
 
-### 情報保全
-
-開始点3e869e0（Hatt最新画像PR147を含む）を正本とする。画像を書き換えず、既存本文と料金を移設前後で照合する。全7サービス・全7実績・旧anchors・33料金・CMS/翻訳/検索/AI/フォーム経路を維持する。新UI文言を日本語の共通テンプレートに直書きせず、全9localeのUI辞書とsourceHashを更新する。未生成website翻訳はpendingのまま扱う。
-
-通常検証、親のbefore/after情報監査と実画面受入、PRレビューの後に共有する。merge・本番反映の実施は親担当。
-
 ## 判断
 
 ### 合意した実装
@@ -64,6 +58,12 @@
 3. **実績からの接続**: 各事例に適切な既存サービスを示し、問い合わせqueryを文脈に合わせる。Cherry/Hatt/portalはwebsite、contact/platformはsite-functions、Storeはbusiness-system、Aceserverはit-advisor。既存作品・事実・画像・外部リンクを保持。
 4. **サービス比較**: 新たな比較入口を重ねず、既存7行を名称/対象/主な対応/料金の比較しやすい配置へ再構成。大きなwizardや新しい分類は追加しない。
 5. **料金番号**: 元配列の28番等を見せず、各カテゴリ内の連番にする。JSONの並び、key、URL/anchorと全33料金条件は変更しない。
+
+### 情報保全
+
+開始点3e869e0（Hatt最新画像PR147を含む）を正本とする。画像を書き換えず、既存本文と料金を移設前後で照合する。全7サービス・全7実績・旧anchors・33料金・CMS/翻訳/検索/AI/フォーム経路を維持する。新UI文言を日本語の共通テンプレートに直書きせず、全9localeのUI辞書とsourceHashを更新する。未生成website翻訳はpendingのまま扱う。
+
+通常検証、親のbefore/after情報監査と実画面受入、PRレビューの後に共有する。merge・本番反映の実施は親担当。
 
 ## 残件
 

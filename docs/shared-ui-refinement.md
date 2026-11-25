@@ -12,8 +12,6 @@
 
 ## 対象と方法
 
-[4サイトの監査表と共通仕様](https://github.com/acecore-systems/acecore-net/blob/3b891aa86e0d157bfc32cefcd246b5b30f289eb0/docs/03_詳細設計/08_共通UIと操作の整合.md)を参照する。
-
 - 52ルート家族PC/mobile計104画面と代表の操作確認を使用。事業固有の情報構成や検索/言語の有無は一律化しない。
 
 ## 経過
@@ -36,4 +34,4 @@
 
 ## 参照
 
-該当なし
+[4サイトの監査表と共通仕様](https://github.com/acecore-systems/acecore-net/blob/3b891aa86e0d157bfc32cefcd246b5b30f289eb0/docs/03_詳細設計/08_共通UIと操作の整合.md)を参照する。

@@ -8,7 +8,7 @@ Systems の Astro UI で使う Tailwind CSS v4 の入口、Preflight、Acecore �
 
 ## 適用範囲
 
-Acecore Systems の Astro UI は Tailwind CSS v4.3.1 を Vite プラグイン経由でビルドします。`npm ci` と `npm run build` がローカルと CI の再現手順です。
+Acecore Systems の Astro UI は Tailwind CSS v4.3.5 を Vite プラグイン経由でビルドします。`npm ci` と `npm run build` がローカルと CI の再現手順です。
 
 ## 決まり
 

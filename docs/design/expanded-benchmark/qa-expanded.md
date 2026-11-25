@@ -14,7 +14,7 @@
 
 ### 参照と採用判断
 
-[24公式サイトの根拠/採用・非採用](research.md)、[構造化台帳](sources.json)、[実画面の採取条件](visual-observations.json)を保存した。主要12サイトをin-app browserで深掘りし、追加3ページも取得。実装担当も比較ボード3枚を実見した。SmartHRの課題メニューを実際に開いた操作を含む。一部の画面外lazy画像は未読込で、全画像の完全監査とは扱わない。
+[24サイトの公式根拠と適用判断](research.md)、[構造化台帳](sources.json)、[実画面の採取条件](visual-observations.json)を保存した。主要12サイトをin-app browserで深掘りし、追加3ページも取得。実装担当も比較ボード3枚を実見した。SmartHRの課題メニューを実際に開いた操作を含む。一部の画面外lazy画像は未読込で、全画像の完全監査とは扱わない。
 
 STORESの初期/継続費用と準備・設定・引き継ぎ、LIG/GIGの大きな実績と実装意図、JOYZOの対象と契約範囲、IIJ等の管理対象と導入/FAQを採用。巨大メガメニュー、根拠のない顧客数・成果数値・保証・無料体験は追加していない。企業の事業規模は参照対象の根拠であり、UI成功の因果ではない。
 
@@ -60,7 +60,7 @@ final result: passed
 - 旧9分類の本文/具体例を関連7詳細とdesign補足へ移設。データJSONだけに残した状態を保全と扱っていない。
 - 旧process caption7件とoperations/securityのscope caption2件を表示本文に復元。複数端末の表示/操作確認、監視/権限/更新の引き継ぎ、障害記録/変更履歴/責任範囲を保持。
 - websiteは月額別契約、税込/外部実費、契約前見積り、固定5ページまで/10ページまで、保守30分の更新なし/更新合計90分を保持。
-- source記事・works・guide・privacy・pricing JSONは旧本番比で不変。移設先と残38を含む表現差分の理由は[情報保全台帳](information-migration.md)に記載。
+- source記事・works・guide・privacy・pricing JSONは旧本番比で不変。移設先と残38を含む表現差分の理由は[旧公開情報の移設・保持](information-migration.md)に記載。
 
 ### 操作・回帰
 
@@ -91,8 +91,6 @@ worksフィルター7件→目的2件→ブラウザで戻る7件、課題/提�
 
 ユーザーはレビュー後のmerge・本番反映まで明示承認済み。実装担当がcommit/push/PR更新とCI/immutable previewを確認し、親担当が最終PRレビュー・mergeとGitHub連携の本番反映を担当する。本記録のローカルpassedだけで本番公開完了とは扱わない。Git Provider/source repo、github:push deployment成功、custom domain activeと本番HEADは反映後に確認する。
 
-前回のQAは[全7サービスの選択構成](../service-selection/qa-before-expanded.md)、[案1と案3の統合](../purpose-ui-hybrid/qa-hybrid.md)に保存した。
-
 ## 参照
 
-該当なし
+前回のQAは[サービス選択・比較の改善のデザインQA](../service-selection/qa-before-expanded.md)、[内容は案3・見た目は案1のデザインQA](../purpose-ui-hybrid/qa-hybrid.md)に保存した。

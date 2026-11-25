@@ -116,6 +116,8 @@ Showma/aduce/Fun itの入口プランの税込時間単価は8,250/13,750/33,000
 | website-updates             |    月15,400円 |   1.5 | 改訂。更新60分＋保守30分維持。AXENOR表示月額比6.7%低、安価なGD-Cも併記。                                                   |
 | website-growth              |  月33,000円〜 |     3 | 据置。AXENOR38,500円より低いが更新60分＋改善2h＋保守なので総時間は同じといえない。                                         |
 
+専用branchからDraft PRを作成する。重要差分の受入・マージ・GitHub連携の本番反映確認と今回のbranch/worktree整理は親タスクが担当する。公開の確認条件はGit Provider: Yes、対象repo/main、github:push成功・commit一致、custom domain active。websiteの8言語追加は既存Batch回収待ちであり、その待機は本改訂で解消したと扱わない。
+
 ## 理由
 
 ### 採算の仮定・受入基準
@@ -171,8 +173,6 @@ Showma/aduce/Fun itの入口プランの税込時間単価は8,250/13,750/33,000
 接続一覧にin-app browserがなかったため、接続済みEdge拡張の専用タブで1440×1000と390×844を確認。日本語の料金一覧・顧問詳細4/12h、サイト開設・更新と年額341,550円、英語の顧問49,500/102,300円・4/12hを確認した。モバイル横はみ出しなし、console warn/errorなし。価格/時間はDOMでも照合し、スクリーンショットを作業証跡へ保存した。フォーム送信や新規契約は行っていない。
 
 調査・検証で作成した2タブを閉じて閉鎖を確認し、viewportを解除、専用previewサーバーを停止して4333番の待受がないことを確認した。通常Edgeプロファイルの外部Playwright起動は行っていない。棚卸しでは別のPlaywright設定のEdgeプロセスを検出したが、今回の作成物ではなく所有が不明なので停止せず親タスクへ共有した。他タスクのタブ・プロセス・worktreeは変更していない。
-
-専用branchからDraft PRを作成する。重要差分の受入・マージ・GitHub連携の本番反映確認と今回のbranch/worktree整理は親タスクが担当する。公開の確認条件はGit Provider: Yes、対象repo/main、github:push成功・commit一致、custom domain active。websiteの8言語追加は既存Batch回収待ちであり、その待機は本改訂で解消したと扱わない。
 
 ## 参照
 

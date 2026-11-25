@@ -15,7 +15,7 @@
 ### 参照・意図した差
 
 - 視覚方向: [案1の原本](../purpose-ui-hybrid/visual-reference-option1.jpg)。濃紺の太字、白と薄青、鮮明な青の丸いCTA、実案件のPC/スマホ画像を継承。
-- 構造参考: [調査と根拠](../service-selection/research.md)、[実サイト比較ボード](../service-selection/reference-pattern-board.jpg)。STORESの目的からの選択、LIGの実績・範囲・価格の比較、JOYZOの対象と進め方、SmartHRの課題別入口を参考にした。
+- 構造参考: [サービス選択の構造改善と公式ベンチマーク](../service-selection/research.md)、[実サイト比較ボード](../service-selection/reference-pattern-board.jpg)。STORESの目的からの選択、LIGの実績・範囲・価格の比較、JOYZOの対象と進め方、SmartHRの課題別入口を参考にした。
 - 参考企業の利用規模は事業実績の根拠であり、UIによる成功の因果関係ではない。競合の顧客数・保証・料金を自社の主張へ転用していない。
 - 案1は3ページの画像コンセプト。構成の完全複製ではなく、今回の要求に合わせて重複を除き、7サービスの独立URLと既存の価格・契約条件を維持した。
 
@@ -79,8 +79,6 @@ final result: passed
 
 既存website翻訳がpendingのため英独のwebsite詳細は未生成で、日本語のみの言語リンクを維持。存在する `/en/services/site-functions/` と `/de/services/site-functions/` で共通テンプレートを検証した。翻訳未生成ページを表示成功として扱っていない。既存の翻訳待ち、実機Safari、網羅的アクセシビリティ監査、成約率比較は残る。本番マージ・本番公開は対象外。Draft PRとGitHub連携プレビューでレビュー可能な状態にする。
 
-前回の受入記録は[案1と案3の統合時のQA](../purpose-ui-hybrid/qa-hybrid.md)に保存した。
-
 ## 参照
 
-該当なし
+前回の受入記録は[内容は案3・見た目は案1のデザインQA](../purpose-ui-hybrid/qa-hybrid.md)に保存した。
