@@ -415,6 +415,13 @@
 .purpose-contact .contact-intro {
   grid-area: intro;
 }
+.purpose-contact .contact-form-area {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
 .purpose-contact .contact-form {
   grid-area: form;
 }
