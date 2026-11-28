@@ -66,7 +66,7 @@ export const contactFormCopy: Record<Locale, ContactFormText> = {
     messageHelp:
       "今の状況、希望すること、関連するURL、希望時期などを、分かる範囲でお知らせください。",
     submissionNote:
-      "送信はAcecore共通窓口で受け付けます。送信後はこのサイトの完了画面へ移動します。",
+      "入力された内容はAcecoreに送信されます。パスワードやクレジットカード情報は入力しないでください。",
     validationError:
       "送信前の確認が完了していません。少し待ってからもう一度お試しください。",
     submit: "送信する",

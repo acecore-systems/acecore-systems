@@ -1384,6 +1384,7 @@
   .principle-row > p:last-child {
     color: var(--ink-soft);
     line-height: 1.9;
+    white-space: pre-line;
   }
 
   .home-domains {
