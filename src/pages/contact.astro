@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import OutageNotice from "../components/OutageNotice.astro";
 import site from "../data/site.json";
 import { getLocalizedContent } from "../i18n/content";
 import { htmlLangMap, type Locale } from "../i18n";
@@ -44,111 +45,114 @@ const formText = getContactFormText(locale);
           <p>{data.formLead}</p>
         </header>
       </aside>
-      <form
-        id="contact-form"
-        data-website-category={contactCategoryValues.website}
-        class="contact-form"
-        action={site.contactFormAction}
-        method="post"
-        aria-labelledby="contact-form-title"
-        data-consultation-suffix={formText.consultationSuffix}
-        data-submitting-text={formText.submitting}
-        data-security-service-label={content.serviceDetails.security.title}
-      >
-        <input type="hidden" name="locale" value={locale} />
-        <input type="hidden" name="submission_id" value="" />
-        <input type="hidden" name="source" value="systems.acecore.net" />
-        <input id="contact-service" type="hidden" name="service" value="" />
-        <input id="contact-from" type="hidden" name="from" value="" />
-        <input id="contact-entry" type="hidden" name="entry" value="" />
-        <div class="contact-honeypot" aria-hidden="true">
-          <label for="company-website">{formText.companyWebsite}</label>
-          <input
-            id="company-website"
-            name="company_website"
-            autocomplete="off"
-            tabindex="-1"
-          />
-        </div>
-        <div class="contact-field">
-          <label for="category">
-            {formText.category}
-            <span class="field-required">{formText.required}</span>
-          </label>
-          <select id="category" name="お問い合わせ種別" required>
-            <option value="">{formText.select}</option>
-            {formText.categoryOptions.map((option) => (
-              <option value={option.value}>{option.label}</option>
-            ))}
-          </select>
-        </div>
-        <div class="contact-field">
-          <label for="name">
-            {formText.name}
-            <span class="field-required">{formText.required}</span>
-          </label>
-          <input id="name" name="お名前" autocomplete="name" required />
-        </div>
-        <div class="contact-field">
-          <label for="email">
-            {formText.email}
-            <span class="field-required">{formText.required}</span>
-          </label>
-          <input
-            id="email"
-            name="メールアドレス"
-            type="email"
-            autocomplete="email"
-            required
-          />
-        </div>
-        <div class="contact-field">
-          <label for="subject">
-            {formText.subject}
-            <span class="field-required">{formText.required}</span>
-          </label>
-          <input id="subject" name="件名" required />
-        </div>
-        <div class="contact-field">
-          <label for="message">
-            {formText.message}
-            <span class="field-required">{formText.required}</span>
-          </label>
-          <p id="contact-message-help" class="contact-field__help">
-            {formText.messageHelp}
+      <div class="contact-form-area">
+        <OutageNotice variant="contact" />
+        <form
+          id="contact-form"
+          data-website-category={contactCategoryValues.website}
+          class="contact-form"
+          action={site.contactFormAction}
+          method="post"
+          aria-labelledby="contact-form-title"
+          data-consultation-suffix={formText.consultationSuffix}
+          data-submitting-text={formText.submitting}
+          data-security-service-label={content.serviceDetails.security.title}
+        >
+          <input type="hidden" name="locale" value={locale} />
+          <input type="hidden" name="submission_id" value="" />
+          <input type="hidden" name="source" value="systems.acecore.net" />
+          <input id="contact-service" type="hidden" name="service" value="" />
+          <input id="contact-from" type="hidden" name="from" value="" />
+          <input id="contact-entry" type="hidden" name="entry" value="" />
+          <div class="contact-honeypot" aria-hidden="true">
+            <label for="company-website">{formText.companyWebsite}</label>
+            <input
+              id="company-website"
+              name="company_website"
+              autocomplete="off"
+              tabindex="-1"
+            />
+          </div>
+          <div class="contact-field">
+            <label for="category">
+              {formText.category}
+              <span class="field-required">{formText.required}</span>
+            </label>
+            <select id="category" name="お問い合わせ種別" required>
+              <option value="">{formText.select}</option>
+              {formText.categoryOptions.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </div>
+          <div class="contact-field">
+            <label for="name">
+              {formText.name}
+              <span class="field-required">{formText.required}</span>
+            </label>
+            <input id="name" name="お名前" autocomplete="name" required />
+          </div>
+          <div class="contact-field">
+            <label for="email">
+              {formText.email}
+              <span class="field-required">{formText.required}</span>
+            </label>
+            <input
+              id="email"
+              name="メールアドレス"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="contact-field">
+            <label for="subject">
+              {formText.subject}
+              <span class="field-required">{formText.required}</span>
+            </label>
+            <input id="subject" name="件名" required />
+          </div>
+          <div class="contact-field">
+            <label for="message">
+              {formText.message}
+              <span class="field-required">{formText.required}</span>
+            </label>
+            <p id="contact-message-help" class="contact-field__help">
+              {formText.messageHelp}
+            </p>
+            <textarea
+              id="message"
+              name="お問い合わせ内容"
+              aria-describedby="contact-message-help"
+              required
+            ></textarea>
+          </div>
+          <div
+            id="turnstile-widget"
+            class="cf-turnstile"
+            data-sitekey={site.turnstileSiteKey}
+            data-theme="light"
+            data-language={htmlLangMap[locale]}
+            data-action="systems-contact"
+            data-cdata="acecore-systems"
+          ></div>
+          <p class="contact-form__note">{formText.submissionNote}</p>
+          <p
+            id="contact-form-status"
+            class="contact-form__status"
+            role="alert"
+            hidden
+          >
+            {formText.validationError}
           </p>
-          <textarea
-            id="message"
-            name="お問い合わせ内容"
-            aria-describedby="contact-message-help"
-            required
-          ></textarea>
-        </div>
-        <div
-          id="turnstile-widget"
-          class="cf-turnstile"
-          data-sitekey={site.turnstileSiteKey}
-          data-theme="light"
-          data-language={htmlLangMap[locale]}
-          data-action="systems-contact"
-          data-cdata="acecore-systems"
-        ></div>
-        <p class="contact-form__note">{formText.submissionNote}</p>
-        <p
-          id="contact-form-status"
-          class="contact-form__status"
-          role="alert"
-          hidden
-        >
-          {formText.validationError}
-        </p>
-        <button
-          class="editorial-link editorial-link--primary contact-submit"
-          type="submit"
-        >
-          {formText.submit}
-        </button>
-      </form>
+          <button
+            class="editorial-link editorial-link--primary contact-submit"
+            type="submit"
+          >
+            {formText.submit}
+          </button>
+        </form>
+      </div>
       <aside class="contact-faq" aria-label={formText.faqLabel}>
         {data.faqs.map((faq, index) => (
           <details class="contact-faq__item">

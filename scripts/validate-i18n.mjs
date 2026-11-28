@@ -28,6 +28,11 @@ const localizedExternalOrigins = new Set([
   acecoreOrigin,
   "https://asv.acecore.net",
 ]);
+// メール・電話障害の臨時案内用。OutageNotice の撤去時に一緒に削除する。
+// 完全一致の URL だけを、非日本語ページの cross-locale 検査から除外する。
+const temporaryCrossLocaleExternalLinks = new Set([
+  "https://acecore.net/notice/mail-phone-outage/",
+]);
 const locales = ["ja", "en", "zh-cn", "es", "pt", "fr", "ko", "de", "ru"];
 const translatedLocales = locales.slice(1);
 const htmlLanguages = {
@@ -766,7 +771,7 @@ function validateInternalLinks(html, route, locale) {
             false,
             `${route}: Japanese page links to localized external route: ${href}`,
           );
-        } else {
+        } else if (!temporaryCrossLocaleExternalLinks.has(url.href)) {
           assert.equal(
             url.pathname === `/${locale}/` ||
               url.pathname.startsWith(`/${locale}/`),

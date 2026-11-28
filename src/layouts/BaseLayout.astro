@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import OutageNotice from "../components/OutageNotice.astro";
 import SearchModal from "../components/SearchModal.astro";
 import AiGuideChat from "../components/AiGuideChat.astro";
 import site from "../data/site.json";
@@ -245,6 +246,7 @@ const pagefindMainAttributes =
     <a class="skip-link" href="#main">
       {text.skipToContent}
     </a>
+    <OutageNotice />
     <Header locale={locale} />
     {locale === "ja" && <SearchModal />}
     <main id="main" {...pagefindMainAttributes}>

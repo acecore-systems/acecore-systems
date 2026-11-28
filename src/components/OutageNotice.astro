@@ -1,0 +1,97 @@
+---
+interface Props {
+  variant?: "banner" | "contact";
+}
+
+const { variant = "banner" } = Astro.props;
+const detailHref = "https://acecore.net/notice/mail-phone-outage/";
+---
+
+{variant === "banner" ? (
+  <div
+    class="outage-notice outage-notice--banner"
+    role="region"
+    aria-label="重要なお知らせ"
+    data-pagefind-ignore
+  >
+    <div class="container outage-notice__inner">
+      <p class="outage-notice__title">
+        <strong>
+          【重要】現在、メール・電話・お問い合わせフォームでのご連絡を受け付けられません
+        </strong>
+      </p>
+      <p class="outage-notice__text">
+        当社が利用しているメール・電話サービスの障害によるものです。ご迷惑をおかけし、誠に申し訳ございません。
+        <a class="outage-notice__link" href={detailHref}>
+          詳細を見る
+        </a>
+      </p>
+    </div>
+  </div>
+) : (
+  <div
+    class="outage-notice outage-notice--contact"
+    role="region"
+    aria-label="重要なお知らせ"
+    data-pagefind-ignore
+  >
+    <p class="outage-notice__text">
+      現在、メール基盤の障害により、このフォームから送信された内容は当社に届きません。復旧後に改めてご送信ください。
+      <a class="outage-notice__link" href={detailHref}>
+        詳細はこちら
+      </a>
+    </p>
+  </div>
+)}
+
+<style>
+  .outage-notice {
+    background: #b91c1c;
+    color: #ffffff;
+  }
+
+  .outage-notice--banner {
+    padding-block: 14px;
+  }
+
+  .outage-notice__inner {
+    display: grid;
+    gap: 6px;
+  }
+
+  .outage-notice--contact {
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .outage-notice p {
+    margin: 0;
+    max-width: none;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+  }
+
+  .outage-notice .outage-notice__title {
+    font-size: 1rem;
+  }
+
+  .outage-notice__link {
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+
+  .outage-notice__link:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .outage-notice--banner {
+      padding-block: 12px;
+    }
+  }
+</style>
